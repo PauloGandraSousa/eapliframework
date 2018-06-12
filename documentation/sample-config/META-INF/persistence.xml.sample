@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence">
+  <persistence-unit name="default">
+    <!-- managed classes -->
+    <class>eapli.ecafeteria.domain.authz.RoleSet</class>
+    <class>eapli.ecafeteria.domain.authz.Role</class>
+    <class>eapli.ecafeteria.domain.authz.SystemUser</class>
+
+    <class>eapli.ecafeteria.domain.cafeteria.Cafeteria</class>
+    <class>eapli.ecafeteria.domain.cafeteria.CafeteriaUser</class>
+    <class>eapli.ecafeteria.domain.cafeteria.CardMovement</class>
+    <class>eapli.ecafeteria.domain.cafeteria.OrganicUnit</class>
+    <class>eapli.ecafeteria.domain.cafeteria.SignupRequest</class>
+    <class>eapli.ecafeteria.domain.cafeteria.UserCard</class>
+
+    <class>eapli.ecafeteria.domain.delivery.DeliveryStationWorkSession</class>
+
+    <class>eapli.ecafeteria.domain.mealbooking.Booking</class>
+
+    <class>eapli.ecafeteria.domain.meals.Dish</class>
+    <class>eapli.ecafeteria.domain.meals.DishType</class>
+    <class>eapli.ecafeteria.domain.meals.Meal</class>
+    <class>eapli.ecafeteria.domain.meals.MealPlan</class>
+    <class>eapli.ecafeteria.domain.meals.MealPlanItem</class>
+    <class>eapli.ecafeteria.domain.meals.Menu</class>
+    <class>eapli.ecafeteria.domain.meals.Price</class>
+    <class>eapli.ecafeteria.domain.meals.PriceOnPeriod</class>
+    
+    <class>eapli.ecafeteria.domain.sales.CreditRecharge</class>
+    
+    <!-- Properties -->    
+    <properties>
+      	<property name="javax.persistence.schema-generation.database.action" value="create"/>
+    	<!--
+ 	    <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      	 -->
+    </properties>
+  </persistence-unit>
+</persistence>

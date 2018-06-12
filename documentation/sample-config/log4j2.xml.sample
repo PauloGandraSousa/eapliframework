@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="local">
+	<Appenders>
+		<Console name="SysOut" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{dd MMM yyyy HH:mm:ss,SSS} [%X{userName}] %p %c{1} %m%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- default logger for all ERROR messages -->
+		<Root level="Error">
+			<AppenderRef ref="SysOut" />
+		</Root>
+		
+		
+		<!-- standard namespaces -->
+		<Logger name="net" level="OFF">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+		<Logger name="org" level="OFF">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+		<Logger name="com" level="OFF">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+		
+
+		<!-- EAPLI Framework namespaces -->
+		<Logger name="eapli.framework" additivity="false" level="DEBUG">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+
+		
+		<!-- eCafeteria namespaces -->
+		<Logger name="eapli.ecafeteria" additivity="false" level="DEBUG">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+
+
+		<!-- Spring Framework namespaces -->
+		<Logger name="org.springframework" additivity="false" level="ERROR">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+
+
+		<!-- Hibernate debugs -->
+		<Logger name="org.hibernate.SQL" level="ERROR">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+		<Logger name="org.hibernate.type" level="ERROR">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+		<Logger name="org.hibernate.util.DTDEntityResolver" level="ERROR">
+			<AppenderRef ref="SysOut" />
+		</Logger>
+	</Loggers>
+</Configuration>

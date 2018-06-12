@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/context
+    					http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<import resource="applicationContext-persistence.xml" />
+
+	<!-- Enable annotation driven configuration -->
+	<context:annotation-config />
+
+
+	<!-- Packages where components are defined. Persistence packages are defined 
+		in applicationContext-persistence.xml -->
+	<context:component-scan
+		base-package="eapli.ecafeteria.application" />
+	<context:component-scan
+		base-package="eapli.ecafeteria.domain" />
+	<context:component-scan
+		base-package="eapli.framework.infrastructure.eventpubsub.impl.simplepersistent" />
+	<context:component-scan
+		base-package="eapli.framework.infrastructure.authz.application" />
+
+
+	<!-- beans with specific ID -->
+
+	<bean id="listusers"
+		class="eapli.ecafeteria.application.cafeteriausermanagement.RepoBasedListCafeteriaUsersController">
+	</bean>
+	<!-- <bean id="listusers" class="eapli.ecafeteria.application.cafeteriausermanagement.DummyListCafeteriaUsersController"> 
+		</bean> -->
+
+	<bean id="acceptsignup"
+		class="eapli.ecafeteria.application.cafeteriausermanagement.AcceptRefuseSignupRequestEventfulController">
+	</bean>
+	<!-- <bean id="acceptsignup" class="eapli.ecafeteria.application.cafeteriausermanagement.AcceptRefuseSignupRequestTransactionalController"> 
+		</bean> -->
+
+	<!-- the instance key to use in this application context -->
+	<bean id="instanceKey" class="java.lang.String">
+		<constructor-arg>
+			<value>${instanceKey}</value>
+		</constructor-arg>
+	</bean>
+
+
+	<!-- property replacement -->
+	<context:property-placeholder
+		location="classpath:ecafeteria.properties" />
+	<bean id="propertyPlaceHolderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" />
+
+
+	<!-- repositories implementation. use either regular component scan or the 
+		spring data repositories specifyed in applicationContext-persistence.xml 
+		but not both -->
+
+	<!-- "regular JPA" implementation. -->
+	<!-- <context:component-scan base-package="eapli.ecafeteria.persistence.impl.jpa"/> -->
+</beans>

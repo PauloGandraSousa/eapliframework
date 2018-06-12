@@ -1,0 +1,33 @@
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+
+persistence.persistenceUnit=default
+ui.menu.layout=horizontal
+
+# simpledb event dispatcher
+instanceKey=XXX
+
+
+#####################################################
+##
+## Spring Data
+##
+#####################################################
+
+#Database Configuration
+db.driver=org.h2.Driver
+#db.url=jdbc:h2:..\\db\\ecafeteria-docentes;MV_STORE=FALSE
+db.url=jdbc:h2:tcp://localhost/~/ecafeteria-docentes
+#db.url=jdbc:oracle:thin:@//gandalf.dei.isep.ipp.pt:1521/pdborcl
+db.username=
+db.password= 
+
+#Hibernate Configuration
+hibernate.dialect=org.hibernate.dialect.H2Dialect
+hibernate.format_sql=true
+hibernate.hbm2ddl.auto=validate
+hibernate.ejb.naming_strategy=org.hibernate.cfg.ImprovedNamingStrategy
+hibernate.show_sql=false
+
+#data model generation
+javax.persistence.schema-generation.database.action=none

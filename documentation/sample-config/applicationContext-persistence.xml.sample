@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+    <!-- Configures the database connection. -->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="jdbcUrl" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+
+    <!-- Creates the datasource bean. -->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+        <constructor-arg index="0" ref="hikariConfig"/>
+    </bean>
+
+    <!--
+        Creates the transaction manager bean that integrates the used JPA provider with the
+        Spring transaction mechanism.
+    -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Enables annotation-driven transaction management. -->
+    <tx:annotation-driven/>
+
+    <!-- Specifies the default settings that are compatible with Hibernate. -->
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+
+    <!-- Specifies the default settings that are compatible with EclipseLink. -->
+    <!-- 
+    <bean id="eclipseLinkJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter"/>
+	-->
+
+    <!-- Creates the bean that creates the JPA entity manager factory. -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/> 
+        <!-- <property name="jpaVendorAdapter" ref="eclipseLinkJpaVendorAdapter"/> -->  
+       
+       <!-- JPA managed entities -->
+        <property name="packagesToScan">
+        	<array>
+	        	<value>eapli.ecafeteria.domain.authz</value>
+	        	<value>eapli.ecafeteria.domain.users</value>
+	        	<value>eapli.ecafeteria.domain.users.cafeteriausers</value>
+	        	<value>eapli.ecafeteria.domain.delivery</value>
+	        	<value>eapli.ecafeteria.domain.organizationalstructure</value>
+	        	<value>eapli.ecafeteria.domain.mealbooking</value>
+	        	<value>eapli.ecafeteria.domain.mealexecution</value>
+	        	<value>eapli.ecafeteria.domain.mealplanning</value>
+	        	<value>eapli.ecafeteria.domain.dishes</value>
+	        	<value>eapli.ecafeteria.domain.meals</value>
+	        	<value>eapli.ecafeteria.domain.sales</value>
+	        	<value>eapli.ecafeteria.domain.traceability</value>
+	        	
+	        	<value>eapli.framework.infrastructure.eventpubsub.impl.simplepersistent</value>
+	        	<value>eapli.framework.infrastructure.authz.domain</value>
+         	</array>
+        </property>
+        
+        <!-- enable load time weaving to optimize SQL -->
+        <!-- 
+        <property name="loadTimeWeaver">
+            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+		</property>
+ 		-->
+ 
+        <property name="jpaProperties">
+            <props>
+   				<!-- disable load time weaving. this should not be used in production!!!!  -->          
+				<prop key="eclipselink.weaving">false</prop>
+  
+                <!--
+                    Configures the used database dialect. This allows Hibernate to create SQL
+                    that is optimized for the used database.
+                -->
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+
+                <!--
+                    Specifies the action that is invoked to the database when the Hibernate
+                    SessionFactory is created or closed.
+                -->
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+
+                <!--
+                    Configures the naming strategy that is used when Hibernate creates
+                    new database objects and schema elements
+                -->
+                <prop key="hibernate.ejb.naming_strategy">${hibernate.ejb.naming_strategy}</prop>
+
+                <!--
+                    If the value of this property is true, Hibernate writes all SQL
+                    statements to the console.
+                -->
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+
+                <!--
+                    If the value of this property is true, Hibernate will use prettyprint
+                    when it writes SQL to the console.
+                -->
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+
+				<!--
+					table creation strategy 
+				 -->
+      			<prop key="javax.persistence.schema-generation.database.action">${javax.persistence.schema-generation.database.action}</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- 
+    repositories implementation. 
+    use either regular component scan defined in applicationcontext.xml
+    or the spring data repositories bellow but not both 
+    -->
+    
+    <!-- Spring Data Repository implementation -->
+    <jpa:repositories base-package="eapli.ecafeteria.persistence.impl.springdata"/>
+    <jpa:repositories base-package="eapli.framework.infrastructure.eventpubsub.impl.simplepersistent"/>
+    <jpa:repositories base-package="eapli.framework.infrastructure.authz.persistence.impl"/>
+</beans>
