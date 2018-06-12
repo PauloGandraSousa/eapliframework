@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import eapli.framework.domain.DomainFactory;
 import eapli.framework.domain.general.EmailAddress;
-import eapli.framework.util.Strings;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * A factory for User entities.
@@ -63,7 +63,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
     public SystemUserBuilder withFirstName(final String firstName) {
         this.firstName = firstName;
-        if (!Strings.isNullOrEmpty(lastName)) {
+        if (!StringPredicates.isNullOrEmpty(lastName)) {
             name = new Name(this.firstName, lastName);
         }
         return this;
@@ -71,7 +71,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
     public SystemUserBuilder withLastName(final String lastName) {
         this.lastName = lastName;
-        if (!Strings.isNullOrEmpty(firstName)) {
+        if (!StringPredicates.isNullOrEmpty(firstName)) {
             name = new Name(firstName, this.lastName);
         }
         return this;

@@ -8,10 +8,10 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.ValueObject;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.HashCoder;
+import eapli.framework.util.Preconditions;
 import eapli.framework.util.StringMixin;
-import eapli.framework.util.Strings;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * @author Paulo Gandra Sousa
@@ -25,7 +25,7 @@ public class EmailAddress implements ValueObject, Serializable, StringMixin {
 
     protected EmailAddress(final String address) {
         Preconditions.nonEmpty(address, "email address  should neither be null nor empty");
-        Preconditions.ensure(() -> Strings.isEmail(address), "Invalid E-mail format");
+        Preconditions.ensure(() -> StringPredicates.isEmail(address), "Invalid E-mail format");
 
         email = address;
     }

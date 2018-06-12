@@ -8,9 +8,9 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.ValueObject;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Strings;
+import eapli.framework.util.Preconditions;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * a username.
@@ -31,7 +31,7 @@ public class Username implements ValueObject, Serializable {
     }
 
     protected Username(final String username) {
-        Preconditions.ensure(() -> Strings.isSingleWord(username), "username should neither be null nor empty");
+        Preconditions.ensure(() -> StringPredicates.isSingleWord(username), "username should neither be null nor empty");
         this.username = username;
     }
 

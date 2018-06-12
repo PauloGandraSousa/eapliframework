@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import eapli.framework.persistence.repositories.TransactionalContext;
 import eapli.framework.util.Preconditions;
-import eapli.framework.util.Strings;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * An utility class for providing transactional context to JPA repositories not
@@ -58,7 +58,7 @@ import eapli.framework.util.Strings;
     @SuppressWarnings({ "squid:S3346", "squid:S2696" })
     /* package */ final EntityManagerFactory entityManagerFactory() {
         if (singletonEMF == null) {
-            assert !Strings.isNullOrEmpty(persistenceUnitName) : "the persistence unit name must be provided";
+            assert !StringPredicates.isNullOrEmpty(persistenceUnitName) : "the persistence unit name must be provided";
             LOGGER.info("Not runing in container mode.");
             singletonEMF = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
         }

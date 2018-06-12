@@ -18,28 +18,6 @@ public final class Math implements Utilitarian {
     }
 
     /**
-     * checks whether an int is prime or not.
-     * http://www.mkyong.com/java/how-to-determine-a-prime-number-in-java/
-     *
-     * see also {@link org.apache.commons.math4.primes.Primes}
-     *
-     * @param number
-     * @return
-     */
-    public static boolean isPrime(final long number) {
-        if (Numbers.isEven(number)) {
-            return false;
-        }
-        // if not, then just check the odds
-        for (long i = 3; i * i <= number; i += 2) {
-            if (number % i == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Permite efectuar a conversão de um valor para outra escala.
      *
      * @param oldMin

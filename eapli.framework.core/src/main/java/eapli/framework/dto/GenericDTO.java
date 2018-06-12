@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.util.Preconditions;
-import eapli.framework.util.Strings;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * A generic DTO that implements the Map interface. This class can be used when
@@ -33,8 +33,8 @@ public class GenericDTO implements DTO, Map<String, Object> {
     private final Map<String, Object> data = new HashMap<>();
     private final String type;
 
-    public GenericDTO(String type) {
-        Preconditions.ensure(() -> !Strings.isNullOrWhiteSpace(type));
+    public GenericDTO(final String type) {
+        Preconditions.ensure(() -> !StringPredicates.isNullOrWhiteSpace(type));
 
         this.type = type;
     }
@@ -45,7 +45,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
      * @param o
      * @return
      */
-    public static GenericDTO of(Object o) {
+    public static GenericDTO of(final Object o) {
         final GenericDTO out = new GenericDTO(o.getClass().getName());
         final List<Field> fields = getInheritedFields(o.getClass());
         for (final Field aField : fields) {
@@ -55,7 +55,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
     }
 
     @SuppressWarnings("unchecked")
-    private static void ofField(Object o, final GenericDTO out, final Field aField) {
+    private static void ofField(final Object o, final GenericDTO out, final Field aField) {
         try {
             aField.setAccessible(true);
             if (aField.getType().isPrimitive() || aField.getType() == String.class) {
@@ -77,7 +77,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
         }
     }
 
-    public static Iterable<GenericDTO> ofMany(Iterable<?> col) {
+    public static Iterable<GenericDTO> ofMany(final Iterable<?> col) {
         final List<GenericDTO> data = new ArrayList<>();
         for (final Object member : col) {
             data.add(of(member));
@@ -87,7 +87,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
 
     /**
      */
-    private static void buildDtoForIterable(String name, Iterable<Object> col, final GenericDTO out) {
+    private static void buildDtoForIterable(final String name, final Iterable<Object> col, final GenericDTO out) {
 
         final Iterable<GenericDTO> data = ofMany(col);
         out.put(name, data);
@@ -95,7 +95,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
 
     /**
      */
-    private static void buildDtoForArray(Class<?> type, String name, Object array, final GenericDTO out) {
+    private static void buildDtoForArray(final Class<?> type, final String name, final Object array, final GenericDTO out) {
         final int length = Array.getLength(array);
         Object data = null;
         if (type == int.class) {
@@ -117,11 +117,11 @@ public class GenericDTO implements DTO, Map<String, Object> {
         out.put(name, data);
     }
 
-    public static Object valueOf(GenericDTO dto) {
+    public static Object valueOf(final GenericDTO dto) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    private static List<Field> getInheritedFields(Class<?> type) {
+    private static List<Field> getInheritedFields(final Class<?> type) {
         final List<Field> fields = new ArrayList<>();
         for (Class<?> c = type; c != null; c = c.getSuperclass()) {
             fields.addAll(Arrays.asList(c.getDeclaredFields()));
@@ -145,12 +145,12 @@ public class GenericDTO implements DTO, Map<String, Object> {
     }
 
     @Override
-    public boolean containsKey(Object arg0) {
+    public boolean containsKey(final Object arg0) {
         return data.containsKey(arg0);
     }
 
     @Override
-    public boolean containsValue(Object arg0) {
+    public boolean containsValue(final Object arg0) {
         return data.containsValue(arg0);
     }
 
@@ -160,7 +160,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
     }
 
     @Override
-    public Object get(Object arg0) {
+    public Object get(final Object arg0) {
         return data.get(arg0);
     }
 
@@ -175,17 +175,17 @@ public class GenericDTO implements DTO, Map<String, Object> {
     }
 
     @Override
-    public Object put(String arg0, Object arg1) {
+    public Object put(final String arg0, final Object arg1) {
         return data.put(arg0, arg1);
     }
 
     @Override
-    public void putAll(Map<? extends String, ? extends Object> arg0) {
+    public void putAll(final Map<? extends String, ? extends Object> arg0) {
         data.putAll(arg0);
     }
 
     @Override
-    public Object remove(Object arg0) {
+    public Object remove(final Object arg0) {
         return data.remove(arg0);
     }
 

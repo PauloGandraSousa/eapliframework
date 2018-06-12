@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 import eapli.framework.actions.Action;
+import eapli.framework.util.predicates.NumberPredicates;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * @author SOU03408
@@ -36,15 +38,15 @@ public final class Invariants implements Utilitarian {
     }
 
     public static void nonEmpty(final String arg, final String msg) {
-        ifNotThen(arg, x -> !Strings.isNullOrEmpty(x), THROW_STATE_WITH_MESSAGE, msg);
+        ifNotThen(arg, x -> !StringPredicates.isNullOrEmpty(x), THROW_STATE_WITH_MESSAGE, msg);
     }
 
     public static void isPositive(final long arg, final String msg) {
-        ifNotThen(arg, Numbers::isPositive, THROW_STATE_WITH_MESSAGE, msg);
+        ifNotThen(arg, NumberPredicates::isPositive, THROW_STATE_WITH_MESSAGE, msg);
     }
 
     public static void nonNegative(final long arg, final String msg) {
-        ifNotThen(arg, Numbers::isNonNegative, THROW_STATE_WITH_MESSAGE, msg);
+        ifNotThen(arg, NumberPredicates::isNonNegative, THROW_STATE_WITH_MESSAGE, msg);
     }
 
     public static void nonEmpty(final List<?> arg) {

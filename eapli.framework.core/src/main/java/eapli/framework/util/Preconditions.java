@@ -12,6 +12,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import eapli.framework.actions.Action;
+import eapli.framework.util.predicates.NumberPredicates;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * utility class for validating preconditions, usually on function parameters.
@@ -51,7 +53,7 @@ public final class Preconditions implements Utilitarian {
     }
 
     public static void nonEmpty(final String arg, final String msg) {
-        ifNotThen(arg, x -> !Strings.isNullOrEmpty(x), THROW_ARGUMENT_WITH_MESSAGE, msg);
+        ifNotThen(arg, x -> !StringPredicates.isNullOrEmpty(x), THROW_ARGUMENT_WITH_MESSAGE, msg);
     }
 
     public static void isPositive(final long arg) {
@@ -59,11 +61,11 @@ public final class Preconditions implements Utilitarian {
     }
 
     public static void isPositive(final long arg, final String msg) {
-        ifNotThen(arg, Numbers::isPositive, THROW_ARGUMENT_WITH_MESSAGE, msg);
+        ifNotThen(arg, NumberPredicates::isPositive, THROW_ARGUMENT_WITH_MESSAGE, msg);
     }
 
     public static void nonNegative(final long arg, final String msg) {
-        ifNotThen(arg, Numbers::isNonNegative, THROW_ARGUMENT_WITH_MESSAGE, msg);
+        ifNotThen(arg, NumberPredicates::isNonNegative, THROW_ARGUMENT_WITH_MESSAGE, msg);
     }
 
     public static void nonEmpty(final Set<?> arg, final String msg) {

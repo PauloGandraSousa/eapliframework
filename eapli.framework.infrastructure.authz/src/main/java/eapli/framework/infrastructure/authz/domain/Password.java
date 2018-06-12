@@ -9,9 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.ValueObject;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Strings;
+import eapli.framework.util.Preconditions;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * a password of a user.
@@ -46,7 +46,7 @@ public class Password implements ValueObject, Serializable {
 
     private boolean meetsMinimumRequirements(final String password) {
         // sanity check
-        if (Strings.isNullOrEmpty(password)) {
+        if (StringPredicates.isNullOrEmpty(password)) {
             return false;
         }
 
@@ -56,12 +56,12 @@ public class Password implements ValueObject, Serializable {
         }
 
         // at least one digit
-        if (!Strings.containsDigit(password)) {
+        if (!StringPredicates.containsDigit(password)) {
             return false;
         }
 
         // at least one capital letter
-        if (!Strings.containsCapital(password)) {
+        if (!StringPredicates.containsCapital(password)) {
             return false;
         }
 

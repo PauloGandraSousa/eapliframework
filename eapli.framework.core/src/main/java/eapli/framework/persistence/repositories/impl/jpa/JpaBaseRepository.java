@@ -22,9 +22,9 @@ import javax.persistence.TypedQuery;
 import eapli.framework.persistence.DataConcurrencyException;
 import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.IterableRepository;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.Invariants;
-import eapli.framework.util.Strings;
+import eapli.framework.util.Preconditions;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * An utility class for implementing JPA repositories. This class' methods don't
@@ -265,7 +265,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     private TypedQuery<T> query(final String where) {
         Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
 
-        assert !Strings.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final String className = this.entityClass.getSimpleName();
         return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where, this.entityClass);
@@ -280,7 +280,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      */
     @SuppressWarnings("squid:S3346")
     protected TypedQuery<T> query(final String where, final Map<String, Object> params) {
-        assert !Strings.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(where);
@@ -297,7 +297,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      */
     @SuppressWarnings("squid:S3346")
     protected TypedQuery<T> query(final String where, final Object... args) {
-        assert !Strings.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert args != null && args.length >= 2 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
         assert args.length % 2 == 0 : "uneven number of arguments passed";
 
@@ -382,7 +382,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      */
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String where) {
-        assert !Strings.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(where);
         return q.getResultList();
@@ -390,7 +390,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
 
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
-        assert !Strings.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(whereWithParameters, params);

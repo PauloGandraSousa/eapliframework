@@ -8,10 +8,10 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.ValueObject;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.HashCoder;
+import eapli.framework.util.Preconditions;
 import eapli.framework.util.StringMixin;
-import eapli.framework.util.Strings;
+import eapli.framework.util.predicates.StringPredicates;
 
 /**
  * Generic designation concept, e.g., name, short name, nickname. A designation
@@ -34,7 +34,7 @@ public class Designation implements ValueObject, Serializable, StringMixin {
      * @param name
      */
     protected Designation(final String name) {
-        Preconditions.ensure(() -> Strings.isPhrase(name),
+        Preconditions.ensure(() -> StringPredicates.isPhrase(name),
                 "Name should neither be null nor empty nor have starting blank spaces");
 
         this.name = name;
