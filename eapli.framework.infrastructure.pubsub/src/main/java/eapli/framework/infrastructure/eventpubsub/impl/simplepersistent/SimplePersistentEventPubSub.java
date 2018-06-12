@@ -29,11 +29,11 @@ import eapli.framework.util.Singleton;
  *
  */
 @Component
-public class SimplePersistentEventDispatcher implements EventDispatcher, EventPublisher, Singleton {
+public class SimplePersistentEventPubSub implements EventDispatcher, EventPublisher, Singleton {
 
     private static final int POLL_EVENTS_INTERVAL = 60000;
 
-    private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventDispatcher.class);
+    private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventPubSub.class);
 
     @Autowired
     private EventRecordRepository eventRepo;
@@ -52,7 +52,7 @@ public class SimplePersistentEventDispatcher implements EventDispatcher, EventPu
      *            have multiple instances of the same application and want to
      *            dispatch events to all of them
      */
-    protected SimplePersistentEventDispatcher(final String instanceKey) {
+    protected SimplePersistentEventPubSub(final String instanceKey) {
         this.instanceKey = instanceKey;
 
         init();
