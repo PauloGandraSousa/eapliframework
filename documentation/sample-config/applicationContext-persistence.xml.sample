@@ -49,19 +49,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
        <!-- JPA managed entities -->
         <property name="packagesToScan">
         	<array>
-	        	<value>eapli.ecafeteria.domain.authz</value>
-	        	<value>eapli.ecafeteria.domain.users</value>
-	        	<value>eapli.ecafeteria.domain.users.cafeteriausers</value>
-	        	<value>eapli.ecafeteria.domain.delivery</value>
-	        	<value>eapli.ecafeteria.domain.organizationalstructure</value>
-	        	<value>eapli.ecafeteria.domain.mealbooking</value>
-	        	<value>eapli.ecafeteria.domain.mealexecution</value>
-	        	<value>eapli.ecafeteria.domain.mealplanning</value>
-	        	<value>eapli.ecafeteria.domain.dishes</value>
-	        	<value>eapli.ecafeteria.domain.meals</value>
-	        	<value>eapli.ecafeteria.domain.sales</value>
-	        	<value>eapli.ecafeteria.domain.traceability</value>
-	        	
 	        	<value>eapli.framework.infrastructure.eventpubsub.impl.simplepersistent</value>
 	        	<value>eapli.framework.infrastructure.authz.domain</value>
          	</array>
@@ -124,7 +111,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     -->
     
     <!-- Spring Data Repository implementation -->
-    <jpa:repositories base-package="eapli.ecafeteria.persistence.impl.springdata"/>
     <jpa:repositories base-package="eapli.framework.infrastructure.eventpubsub.impl.simplepersistent"/>
     <jpa:repositories base-package="eapli.framework.infrastructure.authz.persistence.impl"/>
 </beans>

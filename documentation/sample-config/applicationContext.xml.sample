@@ -16,30 +16,12 @@
 	<!-- Packages where components are defined. Persistence packages are defined 
 		in applicationContext-persistence.xml -->
 	<context:component-scan
-		base-package="eapli.ecafeteria.application" />
-	<context:component-scan
-		base-package="eapli.ecafeteria.domain" />
-	<context:component-scan
 		base-package="eapli.framework.infrastructure.eventpubsub.impl.simplepersistent" />
 	<context:component-scan
 		base-package="eapli.framework.infrastructure.authz.application" />
 
 
-	<!-- beans with specific ID -->
-
-	<bean id="listusers"
-		class="eapli.ecafeteria.application.cafeteriausermanagement.RepoBasedListCafeteriaUsersController">
-	</bean>
-	<!-- <bean id="listusers" class="eapli.ecafeteria.application.cafeteriausermanagement.DummyListCafeteriaUsersController"> 
-		</bean> -->
-
-	<bean id="acceptsignup"
-		class="eapli.ecafeteria.application.cafeteriausermanagement.AcceptRefuseSignupRequestEventfulController">
-	</bean>
-	<!-- <bean id="acceptsignup" class="eapli.ecafeteria.application.cafeteriausermanagement.AcceptRefuseSignupRequestTransactionalController"> 
-		</bean> -->
-
-	<!-- the instance key to use in this application context -->
+	<!-- the instance key to use with eapli.framework pub/sub in this application context -->
 	<bean id="instanceKey" class="java.lang.String">
 		<constructor-arg>
 			<value>${instanceKey}</value>
@@ -49,7 +31,7 @@
 
 	<!-- property replacement -->
 	<context:property-placeholder
-		location="classpath:ecafeteria.properties" />
+		location="classpath:application.properties" />
 	<bean id="propertyPlaceHolderConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" />
 

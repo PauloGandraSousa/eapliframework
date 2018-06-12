@@ -30,12 +30,6 @@
 		</Logger>
 
 		
-		<!-- eCafeteria namespaces -->
-		<Logger name="eapli.ecafeteria" additivity="false" level="DEBUG">
-			<AppenderRef ref="SysOut" />
-		</Logger>
-
-
 		<!-- Spring Framework namespaces -->
 		<Logger name="org.springframework" additivity="false" level="ERROR">
 			<AppenderRef ref="SysOut" />

@@ -1,8 +1,4 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
 persistence.persistenceUnit=default
-ui.menu.layout=horizontal
 
 # simpledb event dispatcher
 instanceKey=XXX
