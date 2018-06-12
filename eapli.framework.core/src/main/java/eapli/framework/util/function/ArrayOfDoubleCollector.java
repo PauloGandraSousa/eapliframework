@@ -1,0 +1,109 @@
+/**
+ *
+ */
+package eapli.framework.util.function;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+
+import eapli.framework.util.Preconditions;
+
+/**
+ * a Collector to be used with Stream<Double> objects
+ *
+ * @author sou03408
+ *
+ */
+public class ArrayOfDoubleCollector {
+
+    private final double[] result;
+    private int lastIdx = -1;
+
+    /**
+     * you will need to define a Supplier function that initializes the Collector
+     * with the correct destination array
+     *
+     * @param destination
+     */
+    public ArrayOfDoubleCollector(final double[] destination) {
+        Preconditions.nonNull(destination);
+
+        result = destination;
+    }
+
+    /**
+     * the accumulator function of the collector
+     *
+     * @param o
+     * @return
+     */
+    public void push(final Double o) {
+        Preconditions.nonNull(o);
+
+        result[++lastIdx] = o;
+    }
+
+    /**
+     * the combiner function of the Collector
+     *
+     * @param o
+     * @return
+     */
+    public ArrayOfDoubleCollector aggregate(final ArrayOfDoubleCollector o) {
+        Preconditions.nonNull(o);
+
+        for (int i = 0; i <= o.lastIdx; i++) {
+            push(o.result[i]);
+        }
+        return this;
+    }
+
+    public double[] result() {
+        return result;
+    }
+
+    /**
+     * helper factory method
+     *
+     * @param seed
+     * @return
+     */
+    public static Collector<Double, ArrayOfDoubleCollector, ArrayOfDoubleCollector> collector(
+            final double[] destination) {
+        return new Collector<Double, ArrayOfDoubleCollector, ArrayOfDoubleCollector>() {
+
+            @Override
+            public BiConsumer<ArrayOfDoubleCollector, Double> accumulator() {
+                return ArrayOfDoubleCollector::push;
+            }
+
+            @Override
+            public BinaryOperator<ArrayOfDoubleCollector> combiner() {
+                return ArrayOfDoubleCollector::aggregate;
+            }
+
+            @Override
+            public Function<ArrayOfDoubleCollector, ArrayOfDoubleCollector> finisher() {
+                return e -> e;
+            }
+
+            @Override
+            public Supplier<ArrayOfDoubleCollector> supplier() {
+                return () -> new ArrayOfDoubleCollector(destination);
+            }
+
+            @Override
+            public Set<java.util.stream.Collector.Characteristics> characteristics() {
+
+                final Set<java.util.stream.Collector.Characteristics> ch = new HashSet<>();
+                ch.add(Collector.Characteristics.IDENTITY_FINISH);
+                return ch;
+            }
+        };
+    }
+}
