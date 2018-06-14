@@ -4,7 +4,7 @@
  */
 package eapli.framework.presentation.console;
 
-import eapli.framework.actions.NullAction;
+import eapli.framework.actions.Actions;
 
 /**
  * A separator for vertical menus.
@@ -17,7 +17,7 @@ public class VerticalSeparator extends MenuItem {
     private static VerticalSeparator instance = new VerticalSeparator();
 
     public VerticalSeparator() {
-        super(-1, "------------------", NullAction.instance());
+        super(-1, "------------------", Actions.noop(false));
     }
 
     public static VerticalSeparator separator() {

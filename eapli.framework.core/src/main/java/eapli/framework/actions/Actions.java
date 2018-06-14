@@ -18,6 +18,20 @@ public final class Actions implements Utilitarian {
         // ensure utility
     }
 
+    private static final Action NOOP_SUCESS = () -> true;
+    private static final Action NOOP_FAIL = () -> false;
+
+    /**
+     * creates a generic NO-OP action that will always succeed or fail
+     *
+     * @param ret
+     *            the desired return value for the action
+     * @return
+     */
+    public static Action noop(final boolean ret) {
+        return ret ? NOOP_SUCESS : NOOP_FAIL;
+    }
+
     /**
      * executes an action n times
      *

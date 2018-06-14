@@ -30,7 +30,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * For ORM tool only
      */
     protected Money() {
-        // for ORM tool only
         amount = null;
         currency = null;
     }
@@ -118,26 +117,16 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * creates a collector that can be used to sum up a stream of Money objects in a
      * reduction style. that is, since Money is an immutable object, collecting
      * Money objects from streams have the implication of creating a new Money
-     * object for each collect step which might impact performance
+     * object for each collect step which might impact performance.
+     *
+     * alternatively the collector returned could use an internal mutable
+     * representation of Money and just create an instance when combining streams
      *
      * @return
      */
     public static Collector<Money, Money, Money> adderReduction(final Money zero) {
         Preconditions.nonNull(zero);
 
-        return Collector.of(() -> zero, (a, b) -> a.add(b), (a, b) -> a.add(b));
-    }
-
-    /**
-     * creates a collector that can be used to sum up a stream of Money objects.
-     *
-     * the collector returned uses an internal mutable representation of Money and
-     * just creates an instance when combining streams
-     *
-     * @return
-     */
-    public static Collector<Money, Money, Money> adder(final Money zero) {
-        // FIXME actually do a fast adder
         return Collector.of(() -> zero, (a, b) -> a.add(b), (a, b) -> a.add(b));
     }
 
