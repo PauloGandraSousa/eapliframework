@@ -1,5 +1,9 @@
 package eapli.framework.infrastructure.authz.domain;
 
+/**
+ * @FIXME this enum is tightly coupled to the eCafeteria project. as such it is
+ *        not a reusable concept for this generic infrastructure component
+ */
 public enum RoleType {
     /**
      * poweruser

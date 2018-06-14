@@ -1,9 +1,10 @@
 /**
- *
- */
-/**
  * @author pgsou_000
  *
+ */
+/*
+ *
+
 @startuml
 class SimplePersistentEventPubSub [[java:eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.SimplePersistentEventPubSub]] {
     -{static}int POLL_EVENTS_INTERVAL

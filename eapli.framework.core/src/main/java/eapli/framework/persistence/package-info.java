@@ -1,9 +1,9 @@
 /**
- *
- */
-/**
  * @author pgsou_000
  *
+ */
+
+/*
 @startuml
 skinparam classAttributeIconSize 0
 
@@ -105,5 +105,6 @@ JpaBaseRepository <--  "repo" JpaAutoTxRepository
 class JpaTransactionalContext implements TransactionalContext
 
 @enduml
+
  */
 package eapli.framework.persistence;

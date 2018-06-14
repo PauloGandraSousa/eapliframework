@@ -1,9 +1,8 @@
 /**
- *
- */
-/**
  * @author pgsou_000
- *
+ */
+/*
+
 @startuml
 
 interface DomainEvent [[java:eapli.framework.domain.events.DomainEvent]] {
@@ -42,6 +41,6 @@ DomainEvent <.. EventHandler
 EventHandler <.. EventDispatcher
 
 @enduml
- *
+
  */
 package eapli.framework.infrastructure.eventpubsub;
