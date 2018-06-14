@@ -26,7 +26,7 @@ public final class NumberPredicates implements Utilitarian {
      * @return
      */
     public static boolean isPrime(final long number) {
-        if (NumberPredicates.isEven(number)) {
+        if (isEven(number)) {
             return false;
         }
         // if not, then just check the odds

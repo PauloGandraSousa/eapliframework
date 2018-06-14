@@ -14,7 +14,8 @@ import java.util.stream.Collector;
 import eapli.framework.util.Preconditions;
 
 /**
- * a Collector to be used with Stream<Double> objects
+ * a Collector to be used with Stream<Double> objects to collect the elements of
+ * the stream into a double array
  *
  * @author sou03408
  *

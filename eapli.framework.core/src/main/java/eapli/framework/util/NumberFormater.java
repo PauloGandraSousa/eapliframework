@@ -10,9 +10,9 @@ import java.math.BigDecimal;
  *
  * @author Paulo Gandra Sousa
  */
-public final class Numbers implements Utilitarian {
+public final class NumberFormater implements Utilitarian {
 
-    private Numbers() {
+    private NumberFormater() {
         // to make sure this is an utility class
     }
 

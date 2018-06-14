@@ -15,10 +15,10 @@ import eapli.framework.visitor.Visitor;
  *
  * e.g., create a widget for User
  *
- * Collection<User> itens = controller.all(); <br/>
- * ListWidget<User> wg = new ListWidget<>(itens, new ShowUserVisitor());
- *
- *
+ * <pre>
+ * Collection<User> items = controller.all();
+ * ListWidget<User> wg = new ListWidget<>(items, new ShowUserVisitor());
+ * </pre>
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -40,9 +40,7 @@ public class ListWidget<T> {
     }
 
     public ListWidget(final String header, final Collection<T> source, final Visitor<T> visitor) {
-        Preconditions.nonNull(header);
-        Preconditions.nonNull(source);
-        Preconditions.nonNull(visitor);
+        Preconditions.nonNull(header, source, visitor);
 
         this.header = header;
         this.source = source;
@@ -50,9 +48,7 @@ public class ListWidget<T> {
     }
 
     public ListWidget(final String header, final Iterable<T> source, final Visitor<T> visitor) {
-        Preconditions.nonNull(header);
-        Preconditions.nonNull(source);
-        Preconditions.nonNull(visitor);
+        Preconditions.nonNull(header, source, visitor);
 
         this.header = header;
         this.source = new ArrayList<>();
