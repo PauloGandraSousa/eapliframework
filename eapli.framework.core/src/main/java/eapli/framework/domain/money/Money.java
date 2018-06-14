@@ -124,7 +124,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      *
      * @return
      */
-    public static Collector<Money, Money, Money> adderReduction(final Money zero) {
+    public static Collector<Money, Money, Money> adder(final Money zero) {
         Preconditions.nonNull(zero);
 
         return Collector.of(() -> zero, (a, b) -> a.add(b), (a, b) -> a.add(b));

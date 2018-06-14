@@ -17,7 +17,7 @@ public class VerticalSeparator extends MenuItem {
     private static VerticalSeparator instance = new VerticalSeparator();
 
     public VerticalSeparator() {
-        super(-1, "------------------", Actions.noop(false));
+        super(-1, "------------------", Actions.FAIL);
     }
 
     public static VerticalSeparator separator() {
