@@ -71,16 +71,16 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
      * @param roles
      */
     public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-            final Set<RoleType> roles) {
+            final Set<Role> roles) {
         this(username, password, name, email, roles, DateTime.now());
     }
 
     public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-            final Set<RoleType> roles, final Calendar createdOn) {
+            final Set<Role> roles, final Calendar createdOn) {
         Preconditions.nonEmpty(roles, "roles cannot be null");
 
         final RoleSet roleset = new RoleSet();
-        roleset.addAll(roles.stream().map(rt -> new Role(rt, this.createdOn)).collect(Collectors.toList()));
+        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, this.createdOn)).collect(Collectors.toList()));
         init(username, password, name, email, roleset, createdOn);
     }
 
@@ -144,11 +144,11 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
      * @param role
      *            Role to assign to SystemUser.
      */
-    public void addRole(final Role role) {
+    public void addRole(final RoleAssignment role) {
         roles.add(role);
     }
 
-    public Collection<RoleType> roleTypes() {
+    public Collection<Role> roleTypes() {
         return roles.roleTypes();
     }
 
@@ -172,27 +172,9 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
      * @param role
      *            Role to remove from SystemUser.
      */
-    public void removeRole(final Role role) {
+    public void removeRole(final RoleAssignment role) {
         // TODO should the role be removed or marked as "expired"?
         roles.remove(role);
-    }
-
-    public boolean isAuthorizedTo(final ActionRight... actions) {
-        // power user with ADMIN rights can do anything
-        if (isPowerUser()) {
-            return true;
-        }
-
-        for (final ActionRight a : actions) {
-            if (a != null && a.canBePerformedBy(roles.roleTypes())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isPowerUser() {
-        return roles.roleTypes().contains(RoleType.POWER_USER);
     }
 
     public boolean passwordMatches(final Password password) {
@@ -256,6 +238,22 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
 
     public boolean resetPassword(final String token) {
         // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * checks if this user has any of a set of roles
+     * 
+     * @param roles
+     * @return
+     */
+    public boolean hasAny(final Role[] roles) {
+        for (final Role r : roles) {
+            if (this.roles.contains(r)) {
+                return true;
+            }
+        }
+
         return false;
     }
 }

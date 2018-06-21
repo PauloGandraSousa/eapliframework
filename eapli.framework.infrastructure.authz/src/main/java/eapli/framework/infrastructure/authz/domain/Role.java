@@ -3,78 +3,39 @@
  */
 package eapli.framework.infrastructure.authz.domain;
 
-import java.io.Serializable;
-import java.util.Calendar;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import eapli.framework.domain.ValueObject;
-import eapli.framework.util.DateTime;
-import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
 
 /**
- * @author Paulo Gandra Sousa
+ * A generic concept for a role that can be used by application code to classify
+ * users
+ *
+ * @author pgsou_000
+ *
  */
-@Entity
-public class Role implements ValueObject, Serializable {
+public class Role implements ValueObject {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue // (strategy = GenerationType.IDENTITY)
-    private Long pk;
+    private final String roleName;
 
-    private final RoleType type;
-    @Temporal(TemporalType.DATE)
-    private final Calendar assignedOn;
+    private Role(final String role) {
+        Preconditions.nonEmpty(role);
 
-    public Role(final RoleType type) {
-        this(type, DateTime.now());
+        roleName = role;
     }
 
-    public Role(final RoleType type, final Calendar assignedOn) {
-        Preconditions.nonNull(type, assignedOn);
-
-        this.type = type;
-        this.assignedOn = assignedOn;
-    }
-
-    protected Role() {
+    private Role() {
         // for ORM
-        type = null;
-        assignedOn = null;
+        roleName = null;
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Role)) {
-            return false;
-        }
-
-        final Role other = (Role) o;
-        return type == other.type && assignedOn.equals(other.assignedOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().of(type).code();
-    }
-
-    @Override
-
     public String toString() {
-        return type + "@" + assignedOn;
+        return roleName;
     }
 
-    public RoleType type() {
-        return type;
+    public static Role valueOf(final String role) {
+        return new Role(role);
     }
 }

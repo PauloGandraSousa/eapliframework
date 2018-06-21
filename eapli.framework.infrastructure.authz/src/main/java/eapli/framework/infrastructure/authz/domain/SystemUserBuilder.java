@@ -31,7 +31,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
     }
 
     public SystemUserBuilder(final String userName2, final String password2, final String firstName,
-            final String lastName, final String email2, final Set<RoleType> roles2) {
+            final String lastName, final String email2, final Set<Role> roles2) {
         withUsername(userName2);
         withPassword(password2);
         withFirstName(firstName);
@@ -99,12 +99,12 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         return this;
     }
 
-    public SystemUserBuilder withRole(final RoleType role) {
-        roles.add(new Role(role));
+    public SystemUserBuilder withRole(final Role role) {
+        roles.add(new RoleAssignment(role));
         return this;
     }
 
-    public SystemUserBuilder withRole(final Role role) {
+    public SystemUserBuilder withRole(final RoleAssignment role) {
         roles.add(role);
         return this;
     }
@@ -114,12 +114,12 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         return this;
     }
 
-    public SystemUserBuilder withRoles(final Set<RoleType> someRoles) {
-        List<Role> theRoles;
+    public SystemUserBuilder withRoles(final Set<Role> someRoles) {
+        List<RoleAssignment> theRoles;
         if (createdOn == null) {
-            theRoles = someRoles.stream().map(rt -> new Role(rt)).collect(Collectors.toList());
+            theRoles = someRoles.stream().map(RoleAssignment::new).collect(Collectors.toList());
         } else {
-            theRoles = someRoles.stream().map(rt -> new Role(rt, createdOn)).collect(Collectors.toList());
+            theRoles = someRoles.stream().map(rt -> new RoleAssignment(rt, createdOn)).collect(Collectors.toList());
         }
         roles.addAll(theRoles);
         return this;

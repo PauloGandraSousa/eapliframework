@@ -8,11 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import eapli.framework.infrastructure.authz.domain.Password;
-import eapli.framework.infrastructure.authz.domain.Role;
-import eapli.framework.infrastructure.authz.domain.RoleType;
-import eapli.framework.infrastructure.authz.domain.SystemUser;
-import eapli.framework.infrastructure.authz.domain.SystemUserBuilder;
 import eapli.framework.util.DateTime;
 
 public class SystemUserTest {
@@ -48,17 +43,6 @@ public class SystemUserTest {
     public void ensureAfterDeactivationUserIsInactive() {
         instance.deactivate(DateTime.now());
         assertFalse(instance.isActive());
-    }
-
-    @Test
-    public void ensureIsPowerUserIfHasRolePowerUser() {
-        instance.addRole(new Role(RoleType.POWER_USER));
-        assertTrue(instance.isPowerUser());
-    }
-
-    @Test
-    public void ensureIsNotPowerUserIfHasntRolePowerUser() {
-        assertFalse(instance.isPowerUser());
     }
 
     @Test

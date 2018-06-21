@@ -29,7 +29,7 @@ import eapli.framework.util.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Entity
-class RoleSet implements Set<Role>, Serializable {
+class RoleSet implements Set<RoleAssignment>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,10 +38,10 @@ class RoleSet implements Set<Role>, Serializable {
     private Long pk;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private final Set<Role> data = new HashSet<>();
+    private final Set<RoleAssignment> data = new HashSet<>();
 
     @Override
-    public boolean add(final Role arg0) {
+    public boolean add(final RoleAssignment arg0) {
         Preconditions.nonNull(arg0);
 
         // TODO validations are missing, e.g., no overlap in roles with the same
@@ -50,7 +50,7 @@ class RoleSet implements Set<Role>, Serializable {
     }
 
     @Override
-    public boolean addAll(final Collection<? extends Role> arg0) {
+    public boolean addAll(final Collection<? extends RoleAssignment> arg0) {
         return data.addAll(arg0);
     }
 
@@ -76,7 +76,7 @@ class RoleSet implements Set<Role>, Serializable {
     }
 
     @Override
-    public Iterator<Role> iterator() {
+    public Iterator<RoleAssignment> iterator() {
         return data.iterator();
     }
 
@@ -124,9 +124,9 @@ class RoleSet implements Set<Role>, Serializable {
         // we need to perform a deep equals() as we want to compare values and
         // not object instances, so we cannot do: return
         // this.data.equals(roles.data);
-        for (final Role r : data) {
+        for (final RoleAssignment r : data) {
             boolean found = false;
-            for (final Role or : roles.data) {
+            for (final RoleAssignment or : roles.data) {
                 if (r.equals(or)) {
                     found = true;
                     break;
@@ -144,8 +144,8 @@ class RoleSet implements Set<Role>, Serializable {
         return new HashCoder().of(data).code();
     }
 
-    public Collection<RoleType> roleTypes() {
-        final List<RoleType> ret = new ArrayList<>();
+    public Collection<Role> roleTypes() {
+        final List<Role> ret = new ArrayList<>();
         data.forEach(role -> ret.add(role.type()));
         return ret;
     }

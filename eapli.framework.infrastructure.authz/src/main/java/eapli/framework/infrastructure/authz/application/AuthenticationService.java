@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import eapli.framework.infrastructure.authz.domain.ActionRight;
 import eapli.framework.infrastructure.authz.domain.Password;
+import eapli.framework.infrastructure.authz.domain.Role;
 import eapli.framework.infrastructure.authz.domain.SystemUser;
 import eapli.framework.infrastructure.authz.domain.Username;
 import eapli.framework.infrastructure.authz.persistence.UserRepository;
@@ -33,7 +33,7 @@ public class AuthenticationService {
      * @return the authenticated user or null otherwise
      */
     public Optional<UserSession> authenticate(final Username username, final Password pass,
-            final ActionRight... onlyWithThis) {
+            final Role... onlyWithThis) {
         Preconditions.nonNull(username, "a username must be provided");
 
         final Optional<SystemUser> user = retrieveUser(username);
@@ -41,7 +41,7 @@ public class AuthenticationService {
             return Optional.empty();
         }
         if (user.get().passwordMatches(pass) && user.get().isActive()) {
-            if (anyActionRight(onlyWithThis) || user.get().isAuthorizedTo(onlyWithThis)) {
+            if (anyActionRight(onlyWithThis) || user.get().hasAny(onlyWithThis)) {
                 return Optional.of(createSessionForUser(user.get()));
             } else {
                 return Optional.empty();
@@ -51,7 +51,7 @@ public class AuthenticationService {
         }
     }
 
-    private boolean anyActionRight(final ActionRight... onlyWithThis) {
+    private boolean anyActionRight(final Role... onlyWithThis) {
         return onlyWithThis.length == 0 || (onlyWithThis.length == 1 && onlyWithThis[0] == null);
     }
 
