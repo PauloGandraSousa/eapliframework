@@ -106,7 +106,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      */
     public static Money valueOf(final String arg0) {
         final String[] parts = arg0.split(" ");
-        Preconditions.ensureEquals(parts.length, 2);
+        Preconditions.areEqual(parts.length, 2);
 
         final double am = Double.parseDouble(parts[0]);
         final Currency curr = Currency.getInstance(parts[1]);
@@ -223,7 +223,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      */
     @Override
     public int compareTo(final Money arg) {
-        Preconditions.ensureEquals(currency, arg.currency, "Cannot add different currencies");
+        Preconditions.areEqual(currency, arg.currency, "Cannot add different currencies");
 
         return amount.compareTo(arg.amount);
     }

@@ -8,8 +8,8 @@ import static eapli.framework.util.function.Functions.ifNotThen;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
-import eapli.framework.actions.Action;
 import eapli.framework.util.predicates.NumberPredicates;
 import eapli.framework.util.predicates.StringPredicates;
 
@@ -21,11 +21,11 @@ public final class Invariants implements Utilitarian {
     private Invariants() {
     }
 
-    public static void ensure(final Action test) {
+    public static void ensure(final Supplier<Boolean> test) {
         ensure(test, "");
     }
 
-    public static void ensure(final Action test, final String msg) {
+    public static void ensure(final Supplier<Boolean> test, final String msg) {
         ifNotThen(test, THROW_STATE_WITH_MESSAGE, msg);
     }
 
@@ -50,6 +50,6 @@ public final class Invariants implements Utilitarian {
     }
 
     public static void nonEmpty(final List<?> arg) {
-        ensure(() -> !arg.isEmpty());
+        ensure(() -> arg != null && !arg.isEmpty());
     }
 }

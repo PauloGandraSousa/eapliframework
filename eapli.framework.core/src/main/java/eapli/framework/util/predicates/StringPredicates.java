@@ -9,9 +9,16 @@ import java.util.regex.Pattern;
 import eapli.framework.util.Utilitarian;
 
 /**
- * utility class for string manipulation.
+ * String predicates. Predicates are functions that test a condition and return
+ * a boolean value. in this case the test is done over a String argument.
  *
- * see also {@link org.apache.commons.lang3.StringUtils StringUtils}
+ * the function signature is
+ *
+ * <pre>
+ * String -> Boolean
+ *
+ * <pre>
+ *
  *
  * @author Paulo Gandra Sousa
  *
@@ -45,23 +52,23 @@ public final class StringPredicates implements Utilitarian {
      * checks if a string is a "phrase". phrases are not empty and do not have
      * heading or trailing spaces
      *
-     * @param name
+     * @param text
      * @return
      */
-    public static boolean isPhrase(final String name) {
-        return !StringPredicates.isNullOrEmpty(name) && !name.matches(HEADING_WHITESPACE_REGEX)
-                && !name.matches(TRAILING_WHITESPACE_REGEX);
+    public static boolean isPhrase(final String text) {
+        return !isNullOrEmpty(text) && !text.matches(HEADING_WHITESPACE_REGEX)
+                && !text.matches(TRAILING_WHITESPACE_REGEX);
     }
 
     /**
      * checks if a string is composed of a single "word", i.e., does not contain
      * separating spaces
      *
-     * @param username
+     * @param text
      * @return
      */
-    public static boolean isSingleWord(final String username) {
-        return !StringPredicates.isNullOrEmpty(username) && username.indexOf(' ') == -1;
+    public static boolean isSingleWord(final String text) {
+        return !isNullOrEmpty(text) && text.indexOf(' ') == -1;
     }
 
     /**
@@ -84,15 +91,15 @@ public final class StringPredicates implements Utilitarian {
         return text == null || text.trim().isEmpty();
     }
 
-    public static boolean containsDigit(final String password) {
-        return password.matches(".*\\d.*");
+    public static boolean containsDigit(final String text) {
+        return text.matches(".*\\d.*");
     }
 
-    public static boolean containsAlpha(final String password) {
-        return password.matches(".*[a-zA-Z].*");
+    public static boolean containsAlpha(final String text) {
+        return text.matches(".*[a-zA-Z].*");
     }
 
-    public static boolean containsCapital(final String password) {
-        return password.matches(".*[A-Z].*");
+    public static boolean containsCapital(final String text) {
+        return text.matches(".*[A-Z].*");
     }
 }

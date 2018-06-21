@@ -8,10 +8,9 @@ import static eapli.framework.util.function.Functions.ifNotThen;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Matcher;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
-import eapli.framework.actions.Action;
 import eapli.framework.util.predicates.NumberPredicates;
 import eapli.framework.util.predicates.StringPredicates;
 
@@ -26,11 +25,11 @@ public final class Preconditions implements Utilitarian {
     private Preconditions() {
     }
 
-    public static void ensure(final Action test) {
+    public static void ensure(final Supplier<Boolean> test) {
         ensure(test, "");
     }
 
-    public static void ensure(final Action test, final String msg) {
+    public static void ensure(final Supplier<Boolean> test, final String msg) {
         ifNotThen(test, THROW_ARGUMENT_WITH_MESSAGE, msg);
     }
 
@@ -69,21 +68,18 @@ public final class Preconditions implements Utilitarian {
     }
 
     public static void nonEmpty(final Set<?> arg, final String msg) {
-        ensure(() -> !arg.isEmpty(), msg);
+        ensure(() -> arg != null && !arg.isEmpty(), msg);
     }
 
-    public static void ensureEquals(final int a, final int b) {
+    public static void areEqual(final int a, final int b) {
         ensure(() -> a == b);
     }
 
-    public static void ensureEquals(final Object a, final Object b, final String msg) {
+    public static void areEqual(final Object a, final Object b, final String msg) {
         ensure(() -> a.equals(b), msg);
     }
 
     public static void matches(final Pattern regex, final String arg, final String msg) {
-        final Matcher matcher = regex.matcher(arg);
-        if (!matcher.find()) {
-            throw new IllegalArgumentException(msg);
-        }
+        ensure(() -> regex.matcher(arg).find(), msg);
     }
 }

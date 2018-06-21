@@ -11,6 +11,7 @@ import java.util.Spliterators;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -47,8 +48,8 @@ public final class Functions implements Utilitarian {
     };
 
     /**
-     * executes the predicate on the parameter arg. if the predicate is not met, the
-     * action is executed
+     * ensures a certain condition is met.executes the predicate on the parameter
+     * arg. if the predicate is not met, the action is executed
      *
      * @param arg
      * @param validator
@@ -58,6 +59,12 @@ public final class Functions implements Utilitarian {
      */
     public static <T> void ensure(final T arg, final Predicate<T> validator, final Action onFail) {
         if (!validator.test(arg)) {
+            onFail.execute();
+        }
+    }
+
+    public static void ensure(final Supplier<Boolean> test, final Action onFail) {
+        if (!test.get()) {
             onFail.execute();
         }
     }
@@ -78,15 +85,45 @@ public final class Functions implements Utilitarian {
         }
     }
 
-    public static void ifNotThen(final Action test, final Action onFail) {
-        if (!test.execute()) {
-            onFail.execute();
+    public static void ifNotThen(final Supplier<Boolean> test, final Consumer<String> onFail, final String msg) {
+        if (!test.get()) {
+            onFail.accept(msg);
         }
     }
 
-    public static void ifNotThen(final Action test, final Consumer<String> onFail, final String msg) {
-        if (!test.execute()) {
-            onFail.accept(msg);
+    /**
+     * treating an If-Then-Else structure as an expression
+     *
+     * @param arg
+     * @param test
+     * @param onSucess
+     * @param onFail
+     * @return
+     */
+    public static <T, R> R ifThenElse(final T arg, final Predicate<T> test, final Supplier<R> onSucess,
+            final Supplier<R> onFail) {
+        if (test.test(arg)) {
+            return onSucess.get();
+        } else {
+            return onFail.get();
+        }
+    }
+
+    /**
+     * treating an If-Then-Else structure as an expression
+     *
+     * @param arg
+     * @param test
+     * @param onSucess
+     * @param onFail
+     * @return
+     */
+    public static <R> R ifThenElse(final Supplier<Boolean> predicate, final Supplier<R> onSucess,
+            final Supplier<R> onFail) {
+        if (predicate.get()) {
+            return onSucess.get();
+        } else {
+            return onFail.get();
         }
     }
 

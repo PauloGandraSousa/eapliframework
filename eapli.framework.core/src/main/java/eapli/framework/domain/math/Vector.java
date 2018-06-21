@@ -73,8 +73,8 @@ public class Vector implements ValueObject {
     }
 
     private Vector(final Vector a, final Vector b, final BiFunction<Double, Double, Double> op) {
-        Preconditions.ensureEquals(a.dimensions, b.dimensions);
-        Preconditions.ensureEquals(a.type, b.type, VECTOR_TYPE_MUST_BE_THE_SAME);
+        Preconditions.areEqual(a.dimensions, b.dimensions);
+        Preconditions.areEqual(a.type, b.type, VECTOR_TYPE_MUST_BE_THE_SAME);
 
         dimensions = a.dimensions;
         type = a.type;
@@ -169,8 +169,8 @@ public class Vector implements ValueObject {
      * @return the dot product of two vectors
      */
     public double dotProduct(final Vector other) {
-        Preconditions.ensureEquals(dimensions, other.dimensions);
-        Preconditions.ensureEquals(type, other.type, VECTOR_TYPE_MUST_BE_THE_SAME);
+        Preconditions.areEqual(dimensions, other.dimensions);
+        Preconditions.areEqual(type, other.type, VECTOR_TYPE_MUST_BE_THE_SAME);
 
         double accum = 0;
         for (int i = 0; i < dimensions; i++) {
