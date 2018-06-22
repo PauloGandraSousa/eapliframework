@@ -17,21 +17,19 @@ import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.Singleton;
 
 /**
- * a simple event dispatcher using database tables to persist events and allow
+ * A simple event dispatcher using database tables to persist events and allow
  * for out of process publish-subscribe.
  *
- * this class is just for demonstration purposes. you should consider using a
+ * This class is just for demonstration purposes. you should consider using a
  * true pub/sub mechanism such as message queueing instead of this class.
  *
- * this class is only prepared to be used by Spring Dependency Injection
+ * This class is only prepared to be used by Spring Dependency Injection
  *
  * @author pgsou_000
  *
  */
 @Component
 public class SimplePersistentEventPubSub implements EventDispatcher, EventPublisher, Singleton {
-
-    private static final int POLL_EVENTS_INTERVAL = 60000;
 
     private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventPubSub.class);
 
@@ -44,6 +42,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     private final EventPublisher inprocPublisher = InProcessEventPublisher.instance();
 
     private volatile String instanceKey;
+    private volatile int poolInterval;
 
     /**
      *
@@ -51,9 +50,12 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
      *            used to identify the consumer application instance. useful if you
      *            have multiple instances of the same application and want to
      *            dispatch events to all of them
+     * @param poolInterval
+     *            interval (in milliseconds) between pollings to the event store
      */
-    protected SimplePersistentEventPubSub(final String instanceKey) {
+    protected SimplePersistentEventPubSub(final String instanceKey, final int poolInterval) {
         this.instanceKey = instanceKey;
+        this.poolInterval = poolInterval;
 
         init();
     }
@@ -81,7 +83,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     }
 
     private void init() {
-        TimedActions.atFixedRate(this::pollEvents, POLL_EVENTS_INTERVAL);
+        TimedActions.atFixedRate(this::pollEvents, poolInterval);
     }
 
     @Override
