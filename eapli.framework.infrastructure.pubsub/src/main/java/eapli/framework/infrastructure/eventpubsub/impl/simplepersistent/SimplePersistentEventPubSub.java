@@ -45,11 +45,13 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
      * identify the consumer application instance. useful if you have multiple
      * instances of the same application and want to dispatch events to all of them
      */
-    private volatile String instanceKey;
+    private final String instanceKey;
     /**
      * interval (in milliseconds) between poolings to the event store
      */
-    private volatile int poolInterval;
+    private final int poolInterval;
+
+    private volatile boolean timerInitialized;
 
     /**
      *
@@ -61,8 +63,6 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     protected SimplePersistentEventPubSub(final String instanceKey, final int poolInterval) {
         this.instanceKey = instanceKey;
         this.poolInterval = poolInterval;
-
-        init();
     }
 
     private void storeConsumptionAndPublish(final EventRecord x) {
@@ -87,12 +87,17 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
         return true;
     }
 
-    private void init() {
-        TimedActions.atFixedRate(this::pollEvents, poolInterval);
+    private void initTimersIfNeeded() {
+        if (!timerInitialized) {
+            TimedActions.atFixedRate(this::pollEvents, poolInterval);
+            timerInitialized = true;
+        }
     }
 
     @Override
     public void publish(final DomainEvent event) {
+        initTimersIfNeeded();
+
         storeEvent(event);
 
         // we do not immediately publish the event as it will be polled and
@@ -111,6 +116,8 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 
     @Override
     public void subscribe(final EventHandler observer, final Class<? extends DomainEvent>... events) {
+        initTimersIfNeeded();
+
         inprocDispatcher.subscribe(observer, events);
     }
 
