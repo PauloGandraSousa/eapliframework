@@ -61,4 +61,23 @@ public final class Strings implements Utilitarian {
     public static String right(final String org, final int len) {
         return org.substring(org.length() - len);
     }
+
+    /**
+     * constructs a string with the same character repeated n times.
+     *
+     * @param symbol
+     *            the character to repeat
+     * @param size
+     *            the desired length of the resulting string. if this value is
+     *            negative an empty string will be returned
+     * @return a string with all characters being the symbol and length size
+     */
+    public static String repeat(final char symbol, int size) {
+        final StringBuilder b = new StringBuilder();
+        while (size > 0) {
+            b.append(symbol);
+            size--;
+        }
+        return b.toString();
+    }
 }

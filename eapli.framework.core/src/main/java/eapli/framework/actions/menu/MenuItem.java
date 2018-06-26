@@ -7,14 +7,15 @@ package eapli.framework.actions.menu;
 import java.util.Optional;
 
 import eapli.framework.actions.Action;
+import eapli.framework.actions.Actions;
 import eapli.framework.util.Preconditions;
+import eapli.framework.util.Strings;
 
 /**
  * a menu item
  *
  * @author Paulo Gandra Sousa
  */
-@SuppressWarnings("squid:S106")
 public class MenuItem {
 
     private final Optional<Integer> option;
@@ -42,15 +43,40 @@ public class MenuItem {
      *
      * @param text
      */
-    public MenuItem(final String text) {
+    private MenuItem(final String text) {
         Preconditions.nonNull(text);
 
         this.text = text;
 
         this.option = Optional.empty();
-        this.action = null;
+        this.action = Actions.FAIL;
     }
 
+    public static MenuItem separator() {
+
+        return separator("------------------");
+    }
+
+    public static MenuItem separator(final char symbol, final int size) {
+
+        return separator(Strings.repeat(symbol, size));
+    }
+
+    public static MenuItem separator(final String label) {
+        return new MenuItem(label);
+    }
+
+    public static MenuItem of(final int option, final String text, final Action action) {
+        return new MenuItem(option, text, action);
+    }
+
+    /**
+     * executes the action associated with this item. note that if this a
+     * non-actionable item this method do nothing but return false
+     *
+     * @return true in case of success. false if the action failed or if this is a
+     *         non-actionable item
+     */
     public boolean select() {
         return action.execute();
     }

@@ -5,6 +5,12 @@ import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.util.Console;
 import eapli.framework.util.Preconditions;
 
+/**
+ * base class for menu renderers using the console as I/O
+ * 
+ * @author pgsou_000
+ *
+ */
 public abstract class MenuRenderer {
 
     protected final Menu menu;

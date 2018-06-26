@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * a collection of actions that can be executed as one single action (Composite
+ * pattern). execution stops on the first action that returns false
+ *
  * @author sou03408
  *
  */
@@ -17,13 +20,13 @@ public class Macro implements Action {
     public Macro() {
     }
 
-    public Macro(Action... actions) {
+    public Macro(final Action... actions) {
         for (final Action a : actions) {
             this.actions.add(a);
         }
     }
 
-    public void record(Action action) {
+    public void record(final Action action) {
         actions.add(action);
     }
 
