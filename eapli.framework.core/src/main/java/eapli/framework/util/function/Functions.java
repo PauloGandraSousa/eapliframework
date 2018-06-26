@@ -48,7 +48,7 @@ public final class Functions implements Utilitarian {
     };
 
     /**
-     * ensures a certain condition is met.executes the predicate on the parameter
+     * ensures a certain condition is met. executes the predicate on the parameter
      * arg. if the predicate is not met, the action is executed
      *
      * @param arg

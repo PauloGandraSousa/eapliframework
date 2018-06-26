@@ -7,33 +7,13 @@ package eapli.framework.util;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class StringsTest {
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
+public class StringsRepeatTest {
 
     @Test
     public void ensureRepeat0Isempty() {

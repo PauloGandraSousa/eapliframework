@@ -46,20 +46,45 @@ public final class Strings implements Utilitarian {
         return sb.toString();
     }
 
+    /**
+     * truncates a string to a specified length
+     *
+     * @param org
+     *            the string to truncate
+     * @param len
+     *            the desired length
+     * @return the original string if the desired length is less than the actual
+     *         length of the original string. otherwise a string composed of the
+     *         first len characters from the original string
+     */
     public static String truncate(final String org, final int len) {
-        if (len < org.length()) {
-            return org.substring(0, len);
-        } else {
-            return org;
-        }
+        return len < org.length() ? org.substring(0, len) : org;
     }
 
+    /**
+     * returns the first n chars of a string
+     *
+     * @param org
+     * @param len
+     * @return
+     */
     public static String left(final String org, final int len) {
-        return org.substring(0, len);
+        return len < 0 ? "" : org.substring(0, len);
     }
 
+    /**
+     * returns the last n chars of a string
+     *
+     * @param org
+     * @param len
+     * @return
+     */
     public static String right(final String org, final int len) {
-        return org.substring(org.length() - len);
+        if (len < 0) {
+            return "";
+        }
+        final int newLen = org.length() - len;
+        return newLen < 0 ? org : org.substring(newLen);
     }
 
     /**
