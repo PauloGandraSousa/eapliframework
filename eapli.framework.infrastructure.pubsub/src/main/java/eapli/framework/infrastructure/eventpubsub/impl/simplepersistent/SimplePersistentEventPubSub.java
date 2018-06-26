@@ -41,17 +41,22 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     private final EventDispatcher inprocDispatcher = InProcessEventDispatcher.instance();
     private final EventPublisher inprocPublisher = InProcessEventPublisher.instance();
 
+    /**
+     * identify the consumer application instance. useful if you have multiple
+     * instances of the same application and want to dispatch events to all of them
+     */
     private volatile String instanceKey;
+    /**
+     * interval (in milliseconds) between poolings to the event store
+     */
     private volatile int poolInterval;
 
     /**
      *
      * @param instanceKey
-     *            used to identify the consumer application instance. useful if you
-     *            have multiple instances of the same application and want to
-     *            dispatch events to all of them
+     *            the consumer application instance.
      * @param poolInterval
-     *            interval (in milliseconds) between pollings to the event store
+     *            interval (in milliseconds) between poolings to the event store
      */
     protected SimplePersistentEventPubSub(final String instanceKey, final int poolInterval) {
         this.instanceKey = instanceKey;

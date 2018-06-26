@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package eapli.framework.presentation.console;
+package eapli.framework.actions.menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,15 +25,17 @@ public class Menu {
         title = "";
     }
 
-    public Menu(String title) {
+    public Menu(final String title) {
         this.title = title;
     }
 
-    public void add(MenuItem item) {
+    public void add(final MenuItem item) {
         Preconditions.nonNull(item);
 
         itens.add(item);
-        itemByOption.put(item.option(), item);
+        if (item.option().isPresent()) {
+            itemByOption.put(item.option().get(), item);
+        }
     }
 
     public String title() {
@@ -44,7 +46,7 @@ public class Menu {
         return itens;
     }
 
-    public MenuItem item(int option) {
+    public MenuItem item(final int option) {
         return itemByOption.get(option);
     }
 }

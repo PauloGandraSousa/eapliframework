@@ -1,19 +1,23 @@
-package eapli.framework.presentation.console;
+package eapli.framework.presentation.console.menu;
 
-import eapli.framework.util.Preconditions;
+import eapli.framework.actions.menu.Menu;
+import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.util.Console;
+import eapli.framework.util.Preconditions;
 
 public abstract class MenuRenderer {
 
     protected final Menu menu;
+    protected final MenuItemRenderer itemRenderer;
 
-    public MenuRenderer(Menu menu) {
+    public MenuRenderer(final Menu menu, final MenuItemRenderer itemRenderer) {
         Preconditions.nonNull(menu);
 
         this.menu = menu;
+        this.itemRenderer = itemRenderer;
     }
 
-    public boolean show() {
+    public boolean render() {
         doShow();
 
         final MenuItem item = readOption();

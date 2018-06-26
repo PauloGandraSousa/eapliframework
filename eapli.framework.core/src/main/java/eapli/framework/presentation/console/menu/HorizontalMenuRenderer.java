@@ -1,7 +1,10 @@
 /**
  *
  */
-package eapli.framework.presentation.console;
+package eapli.framework.presentation.console.menu;
+
+import eapli.framework.actions.menu.Menu;
+import eapli.framework.actions.menu.MenuItem;
 
 /**
  * @author Paulo Gandra Sousa
@@ -10,15 +13,16 @@ package eapli.framework.presentation.console;
 @SuppressWarnings("squid:S106")
 public class HorizontalMenuRenderer extends MenuRenderer {
 
-    public HorizontalMenuRenderer(Menu menu) {
-        super(menu);
+    public HorizontalMenuRenderer(final Menu menu, final MenuItemRenderer itemRenderer) {
+        super(menu, itemRenderer);
     }
 
     @Override
     protected void doShow() {
         System.out.print("| ");
         for (final MenuItem item : menu.itens()) {
-            item.show();
+            itemRenderer.render(item);
+
             System.out.print(" | ");
         }
     }

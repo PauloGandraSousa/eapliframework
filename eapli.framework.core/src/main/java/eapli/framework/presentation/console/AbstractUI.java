@@ -5,6 +5,11 @@
 package eapli.framework.presentation.console;
 
 /**
+ * simple user interface abstract base class for Console I/O
+ *
+ * derived classes should implement the purely abstract methods and client code
+ * should call the final methods {@link #mainLoop} or {@link #show} - Template
+ * Method pattern
  *
  * @author Paulo Gandra Sousa
  */
@@ -41,6 +46,7 @@ public abstract class AbstractUI {
     }
 
     /**
+     * Template Method pattern
      *
      * @return true if the user wants to leave this UI
      */

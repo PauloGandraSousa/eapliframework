@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package eapli.framework.presentation.console;
+package eapli.framework.actions.menu;
 
 import eapli.framework.actions.Action;
 
