@@ -237,16 +237,19 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
     }
 
     public boolean resetPassword(final String token) {
+        Preconditions.nonEmpty(token);
+
         // TODO Auto-generated method stub
         return false;
     }
 
     /**
      * checks if this user has any of a set of roles
-     * 
+     *
      * @param roles
      * @return
      */
+    @SuppressWarnings("unlikely-arg-type")
     public boolean hasAny(final Role[] roles) {
         for (final Role r : roles) {
             if (this.roles.contains(r)) {

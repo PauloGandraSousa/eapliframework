@@ -122,8 +122,7 @@ class RoleSet implements Set<RoleAssignment>, Serializable {
         final RoleSet roles = (RoleSet) o;
 
         // we need to perform a deep equals() as we want to compare values and
-        // not object instances, so we cannot do: return
-        // this.data.equals(roles.data);
+        // not object instances, so we cannot do this.data.equals(roles.data)
         for (final RoleAssignment r : data) {
             boolean found = false;
             for (final RoleAssignment or : roles.data) {

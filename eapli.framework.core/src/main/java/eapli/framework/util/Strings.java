@@ -31,7 +31,8 @@ public final class Strings implements Utilitarian {
     }
 
     /**
-     * returns a random string with a specified length
+     * returns a random string with a specified length based on characters in a
+     * specified char set
      *
      * @param len
      * @param charSet
