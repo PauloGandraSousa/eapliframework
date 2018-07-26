@@ -14,7 +14,7 @@ import java.util.stream.Collector;
 import eapli.framework.util.Preconditions;
 
 /**
- * a Collector to be used with Stream<Double> objects to collect the elements of
+ * A Collector to be used with Stream<Double> objects to collect the elements of
  * the stream into a double array
  *
  * @author sou03408
@@ -26,8 +26,8 @@ public class ArrayOfDoubleCollector {
     private int lastIdx = -1;
 
     /**
-     * you will need to define a Supplier function that initializes the Collector
-     * with the correct destination array
+     * you will need to define a Supplier function that initializes the
+     * Collector with the correct destination array
      *
      * @param destination
      */

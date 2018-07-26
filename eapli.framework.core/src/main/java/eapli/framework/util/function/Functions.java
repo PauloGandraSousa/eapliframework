@@ -48,8 +48,8 @@ public final class Functions implements Utilitarian {
     };
 
     /**
-     * ensures a certain condition is met. executes the predicate on the parameter
-     * arg. if the predicate is not met, the action is executed
+     * Ensures a certain condition is met. Executes the predicate on the
+     * parameter arg and if the predicate is not met, the action is executed.
      *
      * @param arg
      * @param validator
@@ -63,6 +63,16 @@ public final class Functions implements Utilitarian {
         }
     }
 
+    /**
+     * Ensures a certain condition is met. If the predicate is not met, the
+     * action is executed.
+     *
+     * @param arg
+     * @param validator
+     *            the invariant to validate arg
+     * @param onFail
+     * @return
+     */
     public static void ensure(final Supplier<Boolean> test, final Action onFail) {
         if (!test.get()) {
             onFail.execute();
@@ -70,8 +80,8 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * executes the predicate on the parameter arg. if the predicate is not met, the
-     * action is executed passing the parameter message
+     * Executes the predicate on the parameter arg. If the predicate is not met,
+     * the action is executed passing the parameter message
      *
      * @param arg
      * @param validator
@@ -85,6 +95,15 @@ public final class Functions implements Utilitarian {
         }
     }
 
+    /**
+     * Executes the predicate and if the predicate is not met, the action is
+     * executed passing the parameter message
+     *
+     * @param arg
+     * @param validator
+     * @param onFail
+     * @param msg
+     */
     public static void ifNotThen(final Supplier<Boolean> test, final Consumer<String> onFail, final String msg) {
         if (!test.get()) {
             onFail.accept(msg);
@@ -92,7 +111,7 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * treating an If-Then-Else structure as an expression
+     * Treating an If-Then-Else structure as an expression
      *
      * @param arg
      * @param test
@@ -110,7 +129,7 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * treating an If-Then-Else structure as an expression
+     * Treating an If-Then-Else structure as an expression
      *
      * @param arg
      * @param test
@@ -132,8 +151,8 @@ public final class Functions implements Utilitarian {
     //
 
     /**
-     * retries an operation with a given interval time between invocations up to a
-     * certain number of attempts. the retry stops if the operation returned
+     * Retries an operation with a given interval time between invocations up to
+     * a certain number of attempts. the retry stops if the operation returned
      * optional contains a value or the maximum number of attempts is reached.
      *
      * @param op
@@ -141,15 +160,24 @@ public final class Functions implements Utilitarian {
      * @param maxAttempts
      * @return
      */
-    public static <T> Optional<T> retry(final OptionalSupplier<T> op, final int sleep, final int maxAttempts) {
+    public static <T> Optional<T> retry(final OptionalSupplier<T> op, final int sleep, final int maxAttempts,
+            final boolean progressive) {
         int atempts = 1;
         Optional<T> u = op.get();
         while (!u.isPresent() && atempts <= maxAttempts) {
             atempts++;
-            TimedActions.delay(sleep, atempts);
+            if (progressive) {
+                TimedActions.delay(sleep, atempts);
+            } else {
+                TimedActions.delay(sleep);
+            }
             u = op.get();
         }
         return u;
+    }
+
+    public static <T> Optional<T> retry(final OptionalSupplier<T> op, final int sleep, final int maxAttempts) {
+        return retry(op, sleep, maxAttempts, true);
     }
 
     //
@@ -178,8 +206,7 @@ public final class Functions implements Utilitarian {
                 & ~(Spliterator.DISTINCT | Spliterator.SORTED);
 
         final long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown())
-                : -1;
+                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown()) : -1;
 
         final Iterator<A> aIterator = Spliterators.iterator(aSpliterator);
         final Iterator<B> bIterator = Spliterators.iterator(bSpliterator);
