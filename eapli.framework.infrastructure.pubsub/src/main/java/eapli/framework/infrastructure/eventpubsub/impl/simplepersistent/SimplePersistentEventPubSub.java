@@ -42,8 +42,9 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     private final EventPublisher inprocPublisher = InProcessEventPublisher.instance();
 
     /**
-     * identify the application instance. useful if you have multiple instances of
-     * the same application and want to dispatch events to all of them
+     * identify the consumer application instance. useful if you have multiple
+     * instances of the same application and want to dispatch events to all of
+     * them
      */
     private final String instanceKey;
     /**
@@ -65,14 +66,14 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
         this.poolInterval = poolInterval;
     }
 
-    private void storeConsumptionAndPublish(final EventRecord x) {
-        final EventConsumption entity = new EventConsumption(instanceKey, x);
+    private void storeConsumptionAndPublish(final EventRecord record) {
+        final EventConsumption entity = new EventConsumption(instanceKey, record);
         try {
             consumptionRepo.save(entity);
             LOGGER.trace("Stored event consumption {}", entity);
-            inprocPublisher.publish(x.event());
+            inprocPublisher.publish(record.event());
         } catch (DataConcurrencyException | DataIntegrityViolationException e) {
-            LOGGER.error("Error storing consumption {} of event {}", entity, x, e);
+            LOGGER.error("Error storing consumption {} of event {}", entity, record, e);
         }
     }
 
@@ -100,8 +101,8 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 
         storeEvent(event);
 
-        // we do not immediately publish the event as it will be polled and
-        // marked as consumed soon enough
+        // we do not immediately publish the event in process as it will be
+        // polled and marked as consumed soon enough
     }
 
     private void storeEvent(final DomainEvent event) {
