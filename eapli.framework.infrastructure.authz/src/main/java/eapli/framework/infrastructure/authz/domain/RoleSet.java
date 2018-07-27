@@ -59,6 +59,15 @@ class RoleSet implements Set<RoleAssignment>, Serializable {
         data.clear();
     }
 
+    public boolean hasAssignment(final Role r) {
+        for (final RoleAssignment assignment : data) {
+            if (assignment.isOf(r)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean contains(final Object arg0) {
         return data.contains(arg0);

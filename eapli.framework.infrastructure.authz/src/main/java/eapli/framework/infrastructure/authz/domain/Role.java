@@ -4,6 +4,7 @@
 package eapli.framework.infrastructure.authz.domain;
 
 import eapli.framework.domain.ValueObject;
+import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
 
 /**
@@ -37,5 +38,22 @@ public class Role implements ValueObject {
 
     public static Role valueOf(final String role) {
         return new Role(role);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (!(other instanceof Role)) {
+            return false;
+        }
+        if (this == other) {
+            return true;
+        }
+        final Role that = (Role) other;
+        return this.roleName.equals(that.roleName);
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCoder().of(roleName).code();
     }
 }

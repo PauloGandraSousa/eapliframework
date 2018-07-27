@@ -29,12 +29,16 @@ class EventRecord implements AggregateRoot<Long> {
     private Long pk;
 
     private final String eventName;
+
+    private final String publisherName;
+
     @Lob
     private final byte[] event;
 
-    public EventRecord(final DomainEvent event) {
+    public EventRecord(final String publisherName, final DomainEvent event) {
         Preconditions.nonNull(event);
 
+        this.publisherName = publisherName;
         eventName = event.getClass().getName();
         this.event = SerializationUtils.serialize(event);
     }
@@ -43,6 +47,7 @@ class EventRecord implements AggregateRoot<Long> {
         // for ORM
         eventName = null;
         event = null;
+        publisherName = null;
     }
 
     public DomainEvent event() {

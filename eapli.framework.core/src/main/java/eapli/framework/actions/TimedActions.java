@@ -91,7 +91,7 @@ public final class TimedActions implements Utilitarian {
 
         LOGGER.debug("Scheduling task {} each {} milliseconds", cmd, period);
         scheduledThreadPool.scheduleAtFixedRate(() -> {
-            LOGGER.debug("Executing recurring task {}", cmd);
+            LOGGER.trace("Executing recurring task {}", cmd);
             cmd.execute();
         }, 0, period, TimeUnit.MILLISECONDS);
     }

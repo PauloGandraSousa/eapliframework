@@ -21,9 +21,20 @@ public class UnauthorizedException extends RuntimeException {
      * @param message
      */
     public UnauthorizedException(final String message, final SystemUser user, final Role... roles) {
-        super(message);
+        super(buildMessage(message, user, roles));
         this.roles = roles;
         this.user = user;
+    }
+
+    public UnauthorizedException(final SystemUser user, final Role... roles) {
+        super(buildMessage("", user, roles));
+        this.roles = roles;
+        this.user = user;
+    }
+
+    private static String buildMessage(final String original, final SystemUser user, final Role... roles) {
+        return "User " + user.username() + " is not authorized to perform one of these actions: " + roles + "\n"
+                + original;
     }
 
     public SystemUser user() {

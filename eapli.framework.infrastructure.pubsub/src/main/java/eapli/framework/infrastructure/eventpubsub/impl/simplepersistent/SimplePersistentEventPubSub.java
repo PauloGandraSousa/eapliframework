@@ -42,8 +42,8 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     private final EventPublisher inprocPublisher = InProcessEventPublisher.instance();
 
     /**
-     * identify the consumer application instance. useful if you have multiple
-     * instances of the same application and want to dispatch events to all of them
+     * identify the application instance. useful if you have multiple instances of
+     * the same application and want to dispatch events to all of them
      */
     private final String instanceKey;
     /**
@@ -56,7 +56,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     /**
      *
      * @param instanceKey
-     *            the consumer application instance.
+     *            the application instance.
      * @param poolInterval
      *            interval (in milliseconds) between poolings to the event store
      */
@@ -77,7 +77,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     }
 
     private boolean pollEvents() {
-        LOGGER.debug("Polling events from database");
+        LOGGER.trace("Polling events from database");
         try {
             final Iterable<EventRecord> notConsumedEvents = eventRepo.findNotConsumed(instanceKey);
             notConsumedEvents.forEach(this::storeConsumptionAndPublish);
@@ -105,7 +105,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     }
 
     private void storeEvent(final DomainEvent event) {
-        final EventRecord record = new EventRecord(event);
+        final EventRecord record = new EventRecord(instanceKey, event);
         try {
             eventRepo.save(record);
             LOGGER.trace("Stored event {}", event);

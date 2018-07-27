@@ -77,4 +77,8 @@ public class RoleAssignment implements ValueObject, Serializable {
     public Role type() {
         return type;
     }
+
+    public boolean isOf(final Role r) {
+        return type.equals(r);
+    }
 }

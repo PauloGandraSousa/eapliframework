@@ -26,32 +26,71 @@ public class AuthenticationService {
     private UserRepository repo;
 
     /**
-     * Checks if a user can be authenticated with the username/password pair
+     * the current logged in user session
+     */
+    private UserSession theSession = null;
+
+    // in a real life situation this method should not exist! anyone could
+    // circunvent the authentication
+    public void setSession(final UserSession session) {
+        Preconditions.nonNull(session);
+
+        theSession = session;
+    }
+
+    private void setSession(final Optional<UserSession> session) {
+        Preconditions.nonNull(session);
+
+        if (session.isPresent()) {
+            theSession = session.get();
+        } else {
+            clearSession();
+        }
+    }
+
+    public void clearSession() {
+        theSession = null;
+    }
+
+    public boolean hasSession() {
+        return theSession != null;
+    }
+
+    public UserSession session() {
+        return theSession;
+    }
+
+    /**
+     * Checks if a user can be authenticated with the username/password pair and if
+     * so creates a user session for it.
      *
      * @param username
      * @param pass
-     * @return the authenticated user or null otherwise
+     * @return the authenticated user session or an empty optional otherwise
      */
     public Optional<UserSession> authenticate(final Username username, final Password pass,
             final Role... onlyWithThis) {
         Preconditions.nonNull(username, "a username must be provided");
 
+        Optional<UserSession> newSession;
         final Optional<SystemUser> user = retrieveUser(username);
         if (!user.isPresent()) {
-            return Optional.empty();
-        }
-        if (user.get().passwordMatches(pass) && user.get().isActive()) {
-            if (anyActionRight(onlyWithThis) || user.get().hasAny(onlyWithThis)) {
-                return Optional.of(createSessionForUser(user.get()));
+            newSession = Optional.empty();
+        } else if (user.get().passwordMatches(pass) && user.get().isActive()) {
+            if (noActionRightsToValidate(onlyWithThis) || user.get().hasAny(onlyWithThis)) {
+                newSession = Optional.of(createSessionForUser(user.get()));
             } else {
-                return Optional.empty();
+                newSession = Optional.empty();
             }
         } else {
-            return Optional.empty();
+            newSession = Optional.empty();
         }
+
+        setSession(newSession);
+        return newSession;
     }
 
-    private boolean anyActionRight(final Role... onlyWithThis) {
+    private boolean noActionRightsToValidate(final Role... onlyWithThis) {
         return onlyWithThis.length == 0 || (onlyWithThis.length == 1 && onlyWithThis[0] == null);
     }
 

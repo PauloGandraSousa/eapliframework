@@ -20,7 +20,7 @@ public class ChangePasswordController implements Controller {
 
     public boolean changePassword(final String oldPassword, final String newPassword)
             throws DataConcurrencyException, DataIntegrityViolationException {
-        return authenticationService.changePassword(AuthorizationService.session().authenticatedUser(),
+        return authenticationService.changePassword(authenticationService.session().authenticatedUser(),
                 Password.valueOf(oldPassword), Password.valueOf(newPassword));
     }
 }

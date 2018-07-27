@@ -71,8 +71,6 @@ final class InProcessPubSub implements Singleton, EventDispatcher, EventPublishe
             final List<EventHandler> observers = new ArrayList<>();
             observers.add(observer);
             handlers.merge(classz, observers, (o, n) -> {
-                assert o == handlers.get(classz);
-                assert n.get(0) == observer;
                 o.add(n.get(0));
                 return o;
             });

@@ -249,10 +249,9 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
      * @param roles
      * @return
      */
-    @SuppressWarnings("unlikely-arg-type")
     public boolean hasAny(final Role[] roles) {
         for (final Role r : roles) {
-            if (this.roles.contains(r)) {
+            if (this.roles.hasAssignment(r)) {
                 return true;
             }
         }
