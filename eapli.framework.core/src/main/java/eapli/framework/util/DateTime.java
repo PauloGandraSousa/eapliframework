@@ -11,8 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Utility class for Calendar manipulation and several date and time related
@@ -25,6 +26,7 @@ import java.util.logging.Logger;
  * @author Paulo Gandra Sousa
  */
 public final class DateTime implements Utilitarian {
+    private static final Logger LOGGER = LogManager.getLogger(DateTime.class);
 
     private static final int DAYS_TILL_END_OF_WEEK = 6;
 
@@ -175,7 +177,7 @@ public final class DateTime implements Utilitarian {
             final Date date = df.parse(aDateString);
             return calendarFromDate(date);
         } catch (final ParseException ex) {
-            Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex);
         }
         return null;
     }
