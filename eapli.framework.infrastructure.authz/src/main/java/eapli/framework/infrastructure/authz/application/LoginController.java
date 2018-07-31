@@ -24,14 +24,13 @@ public class LoginController implements Controller {
      *
      * @param userName
      * @param password
+     * @throws IllegalArgumentException
+     *             if the username or password cannot be constructed from the passed
+     *             string arguments
      */
     public boolean login(final String userName, final String password, final Role... onlyWithThis) {
-        try {
-            final Optional<UserSession> newSession = authenticationService.authenticate(Username.valueOf(userName),
-                    Password.valueOf(password), onlyWithThis);
-            return newSession.isPresent();
-        } catch (final IllegalArgumentException e) {
-            return false;
-        }
+        final Optional<UserSession> newSession = authenticationService.authenticate(Username.valueOf(userName),
+                Password.valueOf(password), onlyWithThis);
+        return newSession.isPresent();
     }
 }

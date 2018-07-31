@@ -30,14 +30,6 @@ public class AuthenticationService {
      */
     private UserSession theSession = null;
 
-    // in a real life situation this method should not exist! anyone could
-    // circunvent the authentication
-    public void setSession(final UserSession session) {
-        Preconditions.nonNull(session);
-
-        theSession = session;
-    }
-
     private void setSession(final Optional<UserSession> session) {
         Preconditions.nonNull(session);
 
