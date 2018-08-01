@@ -70,7 +70,13 @@ public final class Strings implements Utilitarian {
      * @return
      */
     public static String left(final String org, final int len) {
-        return len < 0 ? "" : org.substring(0, len);
+        if (len <= 0) {
+            return "";
+        } else if (len >= org.length()) {
+            return org;
+        } else {
+            return org.substring(0, len);
+        }
     }
 
     /**

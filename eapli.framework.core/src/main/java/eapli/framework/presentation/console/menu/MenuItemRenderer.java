@@ -11,7 +11,7 @@ import eapli.framework.actions.menu.MenuItem;
  */
 public interface MenuItemRenderer {
 
-    @SuppressWarnings("squid:S106")
+    @SuppressWarnings({ "squid:S106", "squid:S3655" })
     default void render(final MenuItem item) {
         if (item.option().isPresent()) {
             System.out.print(item.option().get() + ". ");
