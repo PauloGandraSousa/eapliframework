@@ -48,8 +48,18 @@ public final class Functions implements Utilitarian {
     };
 
     /**
-     * Ensures a certain condition is met. Executes the predicate on the
-     * parameter arg and if the predicate is not met, the action is executed.
+     * Identity function
+     *
+     * @param x
+     * @return the same object passed as input parameter
+     */
+    public static <T> T id(final T x) {
+        return x;
+    }
+
+    /**
+     * Ensures a certain condition is met. Executes the predicate on the parameter
+     * arg and if the predicate is not met, the action is executed.
      *
      * @param arg
      * @param validator
@@ -64,8 +74,8 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Ensures a certain condition is met. If the predicate is not met, the
-     * action is executed.
+     * Ensures a certain condition is met. If the predicate is not met, the action
+     * is executed.
      *
      * @param arg
      * @param validator
@@ -80,8 +90,8 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Executes the predicate on the parameter arg. If the predicate is not met,
-     * the action is executed passing the parameter message
+     * Executes the predicate on the parameter arg. If the predicate is not met, the
+     * action is executed passing the parameter message
      *
      * @param arg
      * @param validator
@@ -151,8 +161,8 @@ public final class Functions implements Utilitarian {
     //
 
     /**
-     * Retries an operation with a given interval time between invocations up to
-     * a certain number of attempts. the retry stops if the operation returned
+     * Retries an operation with a given interval time between invocations up to a
+     * certain number of attempts. the retry stops if the operation returned
      * optional contains a value or the maximum number of attempts is reached.
      *
      * @param op
@@ -206,7 +216,8 @@ public final class Functions implements Utilitarian {
                 & ~(Spliterator.DISTINCT | Spliterator.SORTED);
 
         final long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown()) : -1;
+                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown())
+                : -1;
 
         final Iterator<A> aIterator = Spliterators.iterator(aSpliterator);
         final Iterator<B> bIterator = Spliterators.iterator(bSpliterator);
