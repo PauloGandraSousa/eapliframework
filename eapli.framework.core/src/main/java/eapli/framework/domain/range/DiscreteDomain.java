@@ -10,13 +10,12 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import eapli.framework.domain.ValueObject;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.HashCoder;
+import eapli.framework.util.Preconditions;
 
 /**
- * a discrete domain, mathematically a Set.
- *
- * allows for empty domains
+ * An immutable discrete domain, that is, a set of possible known values. allows
+ * for empty domains
  *
  * @todo should T extends ValueObject? the elements of a domain should be
  *       values...
@@ -41,7 +40,7 @@ public class DiscreteDomain<T> implements Iterable<T>, ValueObject {
 
     @Override
     public boolean equals(final Object o) {
-        if (o == null || !(o instanceof DiscreteDomain<?>)) {
+        if (!(o instanceof DiscreteDomain<?>)) {
             return false;
         }
 

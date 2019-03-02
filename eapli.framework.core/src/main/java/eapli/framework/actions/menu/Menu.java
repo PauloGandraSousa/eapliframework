@@ -40,9 +40,7 @@ public class Menu {
         itens.add(item);
 
         final Optional<Integer> op = item.option();
-        if (op.isPresent()) {
-            itemByOption.put(op.get(), item);
-        }
+        op.ifPresent(i -> itemByOption.put(i, item));
     }
 
     /**
