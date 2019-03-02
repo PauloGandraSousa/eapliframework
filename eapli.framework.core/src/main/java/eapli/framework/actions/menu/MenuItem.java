@@ -12,7 +12,7 @@ import eapli.framework.util.Preconditions;
 import eapli.framework.util.Strings;
 
 /**
- * a menu item
+ * A menu item
  *
  * @author Paulo Gandra Sousa
  */

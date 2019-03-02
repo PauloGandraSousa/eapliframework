@@ -14,7 +14,7 @@ import eapli.framework.actions.Action;
 import eapli.framework.util.Preconditions;
 
 /**
- * a collection of actions identified by a label and id
+ * A collection of actions identified by a label and id,
  *
  * @author Paulo Gandra Sousa
  */
