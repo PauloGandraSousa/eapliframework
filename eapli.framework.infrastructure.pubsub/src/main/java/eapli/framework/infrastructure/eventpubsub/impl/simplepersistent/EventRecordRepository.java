@@ -3,13 +3,13 @@
  */
 package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 
-import eapli.framework.persistence.repositories.DataRepository;
+import eapli.framework.domain.repositories.Repository;
 
 /**
  * @author pgsou_000
  *
  */
-interface EventRecordRepository extends DataRepository<EventRecord, Long> {
+interface EventRecordRepository extends Repository<EventRecord, Long> {
 
     Iterable<EventRecord> findNotConsumed(String instanceKey);
 

@@ -8,7 +8,7 @@ package eapli.framework.domain.events;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import eapli.framework.domain.ValueObject;
+import eapli.framework.domain.model.ValueObject;
 
 /**
  * A Domain event is a domain/driven design pattern to signal significant events

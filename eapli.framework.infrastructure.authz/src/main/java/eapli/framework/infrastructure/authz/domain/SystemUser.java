@@ -15,9 +15,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import eapli.framework.domain.AggregateRoot;
-import eapli.framework.domain.DomainEntities;
-import eapli.framework.domain.general.EmailAddress;
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.dto.DTOable;
 import eapli.framework.dto.GenericDTO;
 import eapli.framework.util.DateTime;

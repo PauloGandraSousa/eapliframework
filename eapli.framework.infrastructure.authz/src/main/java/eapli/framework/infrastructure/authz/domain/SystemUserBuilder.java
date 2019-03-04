@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import eapli.framework.domain.DomainFactory;
-import eapli.framework.domain.general.EmailAddress;
+import eapli.framework.domain.model.DomainFactory;
+import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.util.predicates.StringPredicates;
 
 /**

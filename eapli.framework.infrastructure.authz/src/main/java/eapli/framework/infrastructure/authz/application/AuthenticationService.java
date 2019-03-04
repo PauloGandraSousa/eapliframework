@@ -5,13 +5,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.Password;
 import eapli.framework.infrastructure.authz.domain.Role;
 import eapli.framework.infrastructure.authz.domain.SystemUser;
 import eapli.framework.infrastructure.authz.domain.Username;
 import eapli.framework.infrastructure.authz.persistence.UserRepository;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.Preconditions;
 
 /**
@@ -95,7 +95,7 @@ public class AuthenticationService {
     }
 
     public boolean changePassword(final SystemUser user, final Password oldPassword, final Password newPassword)
-            throws DataConcurrencyException, DataIntegrityViolationException {
+            throws ConcurrencyException, IntegrityViolationException {
         final boolean sucess = user.changePassword(oldPassword, newPassword);
         if (sucess) {
             repo.save(user);
@@ -104,14 +104,14 @@ public class AuthenticationService {
     }
 
     public String resetPassword(final SystemUser user)
-            throws DataConcurrencyException, DataIntegrityViolationException {
+            throws ConcurrencyException, IntegrityViolationException {
         final String token = user.resetPassword();
         repo.save(user);
         return token;
     }
 
     public boolean resetPassword(final SystemUser user, final String token)
-            throws DataConcurrencyException, DataIntegrityViolationException {
+            throws ConcurrencyException, IntegrityViolationException {
         if (user.resetPassword(token)) {
             repo.save(user);
             return true;

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-import eapli.framework.domain.AggregateRoot;
+import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.util.Preconditions;
 
 /**

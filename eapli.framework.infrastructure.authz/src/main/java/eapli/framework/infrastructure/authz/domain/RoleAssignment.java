@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import eapli.framework.domain.ValueObject;
+import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.DateTime;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;

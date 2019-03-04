@@ -8,7 +8,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import eapli.framework.domain.ValueObject;
+import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
 import eapli.framework.util.predicates.StringPredicates;

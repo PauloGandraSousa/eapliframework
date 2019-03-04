@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 import eapli.framework.actions.TimedActions;
 import eapli.framework.domain.events.DomainEvent;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.EventHandler;
 import eapli.framework.infrastructure.eventpubsub.EventPublisher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessEventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessEventPublisher;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
 import eapli.framework.util.Singleton;
 
 /**
@@ -72,7 +72,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
             consumptionRepo.save(entity);
             LOGGER.trace("Stored event consumption {}", entity);
             inprocPublisher.publish(record.event());
-        } catch (DataConcurrencyException | DataIntegrityViolationException e) {
+        } catch (ConcurrencyException | IntegrityViolationException e) {
             LOGGER.error("Error storing consumption {} of event {}", entity, record, e);
         }
     }
@@ -110,7 +110,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
         try {
             eventRepo.save(record);
             LOGGER.trace("Stored event {}", event);
-        } catch (DataConcurrencyException | DataIntegrityViolationException e) {
+        } catch (ConcurrencyException | IntegrityViolationException e) {
             LOGGER.error("Error storing event {}", event, e);
         }
     }
