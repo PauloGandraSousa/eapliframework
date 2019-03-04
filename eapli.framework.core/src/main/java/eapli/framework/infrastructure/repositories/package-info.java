@@ -7,7 +7,7 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-interface DataRepository<T, K extends Serializable> {
+interface Repository<T, K extends Serializable> {
     void delete(T entity)
     void delete(K entityId)
     T save(T entity)
@@ -92,8 +92,8 @@ class JpaTransactionalContext {
    + void close()
 }
 
-DataRepository  <|..  JpaAutoTxRepository
-DataRepository  <|..  IterableRepository
+Repository  <|..  JpaAutoTxRepository
+Repository  <|..  IterableRepository
 IterableRepository  <|..  JpaBaseRepository
 JpaBaseRepository  <|-- JpaWithTransactionalContextRepository
 JpaWithTransactionalContextRepository  <|-- JpaTransactionalRepository

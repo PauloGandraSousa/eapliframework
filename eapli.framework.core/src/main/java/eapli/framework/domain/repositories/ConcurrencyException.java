@@ -15,6 +15,14 @@ public class ConcurrencyException extends Exception {
 
     private static final long serialVersionUID = -6364660249001279449L;
 
+    public ConcurrencyException(final String arg0, final Throwable arg1) {
+        super(arg0, arg1);
+    }
+
+    public ConcurrencyException(final String arg0) {
+        super(arg0);
+    }
+
     public ConcurrencyException(final Throwable arg0) {
         super(arg0);
     }
