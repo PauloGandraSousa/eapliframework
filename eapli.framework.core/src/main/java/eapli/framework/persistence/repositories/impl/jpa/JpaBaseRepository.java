@@ -19,8 +19,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.DataConcurrencyException;
+import eapli.framework.persistence.repositories.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.IterableRepository;
 import eapli.framework.util.Invariants;
 import eapli.framework.util.Preconditions;
@@ -226,7 +226,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      *
      * @param entity
      * @return the persisted entity - might be a different object than the parameter
-     * @throws eapli.framework.persistence.DataConcurrencyException
+     * @throws eapli.framework.persistence.repositories.DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
     @Override

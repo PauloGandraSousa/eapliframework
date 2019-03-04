@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import eapli.framework.application.Controller;
 import eapli.framework.infrastructure.authz.domain.Password;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.DataConcurrencyException;
+import eapli.framework.persistence.repositories.DataIntegrityViolationException;
 
 /**
  * @author Paulo Gandra de Sousa

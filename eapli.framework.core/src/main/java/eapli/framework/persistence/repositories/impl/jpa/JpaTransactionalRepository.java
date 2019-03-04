@@ -10,8 +10,8 @@ import java.util.Map;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.DataConcurrencyException;
+import eapli.framework.persistence.repositories.DataIntegrityViolationException;
 import eapli.framework.util.Preconditions;
 
 /**
@@ -129,7 +129,7 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
      *
      * @param entity
      * @return the persisted entity - might be a different object than the parameter
-     * @throws eapli.framework.persistence.DataConcurrencyException
+     * @throws eapli.framework.persistence.repositories.DataConcurrencyException
      * @throws DataIntegrityViolationException
      */
     @Override

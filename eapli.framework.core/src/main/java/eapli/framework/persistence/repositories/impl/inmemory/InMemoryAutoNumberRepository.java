@@ -1,6 +1,6 @@
 package eapli.framework.persistence.repositories.impl.inmemory;
 
-import eapli.framework.domain.identities.impl.NumberSequenceGenerator;
+import eapli.framework.domain.model.identities.impl.NumberSequenceGenerator;
 
 public class InMemoryAutoNumberRepository<T> extends InMemoryRepository<T, Long> {
 

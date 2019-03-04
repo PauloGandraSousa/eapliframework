@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.DataConcurrencyException;
+import eapli.framework.persistence.repositories.DataIntegrityViolationException;
 import eapli.framework.persistence.repositories.DataRepository;
 import eapli.framework.persistence.repositories.TransactionalContext;
 import eapli.framework.util.Preconditions;

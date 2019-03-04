@@ -10,8 +10,8 @@ import eapli.framework.infrastructure.authz.domain.Role;
 import eapli.framework.infrastructure.authz.domain.SystemUser;
 import eapli.framework.infrastructure.authz.domain.Username;
 import eapli.framework.infrastructure.authz.persistence.UserRepository;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.DataConcurrencyException;
+import eapli.framework.persistence.repositories.DataIntegrityViolationException;
 import eapli.framework.util.Preconditions;
 
 /**

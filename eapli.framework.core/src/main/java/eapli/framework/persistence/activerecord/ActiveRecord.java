@@ -4,7 +4,7 @@
  */
 package eapli.framework.persistence.activerecord;
 
-import eapli.framework.domain.identities.Identifiable;
+import eapli.framework.domain.model.identities.Identifiable;
 
 /**
  * An interface to mark a class as an Active Record.

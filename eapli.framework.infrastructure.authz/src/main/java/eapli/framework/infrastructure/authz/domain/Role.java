@@ -3,7 +3,7 @@
  */
 package eapli.framework.infrastructure.authz.domain;
 
-import eapli.framework.domain.ValueObject;
+import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
 

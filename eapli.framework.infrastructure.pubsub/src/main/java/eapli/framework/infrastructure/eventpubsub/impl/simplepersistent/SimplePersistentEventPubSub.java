@@ -12,8 +12,8 @@ import eapli.framework.infrastructure.eventpubsub.EventHandler;
 import eapli.framework.infrastructure.eventpubsub.EventPublisher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessEventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessEventPublisher;
-import eapli.framework.persistence.DataConcurrencyException;
-import eapli.framework.persistence.DataIntegrityViolationException;
+import eapli.framework.persistence.repositories.DataConcurrencyException;
+import eapli.framework.persistence.repositories.DataIntegrityViolationException;
 import eapli.framework.util.Singleton;
 
 /**
