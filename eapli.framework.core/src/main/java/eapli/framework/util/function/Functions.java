@@ -20,7 +20,7 @@ import eapli.framework.actions.TimedActions;
 import eapli.framework.util.Utilitarian;
 
 /**
- * utility class
+ * A utility class with some handy functions
  *
  * @author sou03408
  *
@@ -58,8 +58,8 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Ensures a certain condition is met. Executes the predicate on the parameter
-     * arg and if the predicate is not met, the action is executed.
+     * Ensures a certain condition is met. Executes the predicate on the
+     * parameter arg and if the predicate is not met, the action is executed.
      *
      * @param arg
      * @param validator
@@ -74,8 +74,8 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Ensures a certain condition is met. If the predicate is not met, the action
-     * is executed.
+     * Ensures a certain condition is met. If the predicate is not met, the
+     * action is executed.
      *
      * @param arg
      * @param validator
@@ -90,18 +90,18 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Executes the predicate on the parameter arg. If the predicate is not met, the
-     * action is executed passing the parameter message
+     * Executes the predicate on the parameter arg. If the predicate is not met,
+     * the action is executed passing the parameter message
      *
      * @param arg
      * @param validator
-     * @param onFail
+     * @param consequence
      * @param msg
      */
-    public static <T> void ifNotThen(final T arg, final Predicate<T> validator, final Consumer<String> onFail,
+    public static <T> void ifNotThen(final T arg, final Predicate<T> validator, final Consumer<String> consequence,
             final String msg) {
         if (!validator.test(arg)) {
-            onFail.accept(msg);
+            consequence.accept(msg);
         }
     }
 
@@ -111,12 +111,12 @@ public final class Functions implements Utilitarian {
      *
      * @param arg
      * @param validator
-     * @param onFail
+     * @param consequence
      * @param msg
      */
-    public static void ifNotThen(final Supplier<Boolean> test, final Consumer<String> onFail, final String msg) {
+    public static void ifNotThen(final Supplier<Boolean> test, final Consumer<String> consequence, final String msg) {
         if (!test.get()) {
-            onFail.accept(msg);
+            consequence.accept(msg);
         }
     }
 
@@ -161,8 +161,8 @@ public final class Functions implements Utilitarian {
     //
 
     /**
-     * Retries an operation with a given interval time between invocations up to a
-     * certain number of attempts. the retry stops if the operation returned
+     * Retries an operation with a given interval time between invocations up to
+     * a certain number of attempts. the retry stops if the operation returned
      * optional contains a value or the maximum number of attempts is reached.
      *
      * @param op
@@ -216,8 +216,7 @@ public final class Functions implements Utilitarian {
                 & ~(Spliterator.DISTINCT | Spliterator.SORTED);
 
         final long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown())
-                : -1;
+                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown()) : -1;
 
         final Iterator<A> aIterator = Spliterators.iterator(aSpliterator);
         final Iterator<B> bIterator = Spliterators.iterator(bSpliterator);
