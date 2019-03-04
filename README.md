@@ -7,7 +7,9 @@
 
 Sample Application Framework for teaching Domain Driven Design and JPA Persistence in the course unit "Engenharia de Aplicações" of the course "Licenciatura em Engenharia Informática" of the [Instituto Superior de Engenharia do Porto](http://www.isep.ipp.pt).
 
-Version: 6.0.0
+Feel free to fork and pull-request.
+
+Version: 6.1.0
 
 ## How do I get set up? ##
 
