@@ -8,6 +8,7 @@ package eapli.framework.visitor;
  * a visitor (GoF)
  *
  * @author Paulo Gandra Sousa
+ * @todo consider adding beforeVisit() and afterVisit() default methods
  * @param <T>
  *            the specific type we want to visit
  */
