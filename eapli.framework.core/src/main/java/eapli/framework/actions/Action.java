@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 /**
  * An Action (the GoF Command pattern)
- *
+ * @todo this should not extend Supplier
  * @author Paulo Gandra Sousa
  */
 @FunctionalInterface
