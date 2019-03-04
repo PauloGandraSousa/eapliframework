@@ -58,6 +58,20 @@ public final class Functions implements Utilitarian {
     }
 
     /**
+     * No-Op
+     */
+    public static void nop() {
+        // no-op
+    }
+
+    /**
+     * No-Op
+     */
+    public static <T> void nop(final T x) {
+        // no-op
+    }
+
+    /**
      * Ensures a certain condition is met. Executes the predicate on the
      * parameter arg and if the predicate is not met, the action is executed.
      *
@@ -170,7 +184,7 @@ public final class Functions implements Utilitarian {
      * @param maxAttempts
      * @return
      */
-    public static <T> Optional<T> retry(final OptionalSupplier<T> op, final int sleep, final int maxAttempts,
+    public static <T> Optional<T> retry(final Supplier<Optional<T>> op, final int sleep, final int maxAttempts,
             final boolean progressive) {
         int atempts = 1;
         Optional<T> u = op.get();
@@ -186,7 +200,7 @@ public final class Functions implements Utilitarian {
         return u;
     }
 
-    public static <T> Optional<T> retry(final OptionalSupplier<T> op, final int sleep, final int maxAttempts) {
+    public static <T> Optional<T> retry(final Supplier<Optional<T>> op, final int sleep, final int maxAttempts) {
         return retry(op, sleep, maxAttempts, true);
     }
 
