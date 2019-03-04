@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package eapli.framework.persistence.repositories.impl.jpa;
+package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -19,9 +19,9 @@ import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
-import eapli.framework.persistence.repositories.DataConcurrencyException;
-import eapli.framework.persistence.repositories.DataIntegrityViolationException;
-import eapli.framework.persistence.repositories.IterableRepository;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.domain.repositories.IterableRepository;
 import eapli.framework.util.Invariants;
 import eapli.framework.util.Preconditions;
 import eapli.framework.util.predicates.StringPredicates;
@@ -101,7 +101,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      * @param entity
      * @return the newly created persistent object
      */
-    public T create(final T entity) throws DataIntegrityViolationException {
+    public T create(final T entity) throws IntegrityViolationException {
         Preconditions.nonNull(entity);
 
         try {
@@ -109,7 +109,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         } catch (final PersistenceException ex) {
             // TODO need to check and make sure we only throw
             // DataIntegrityViolationException if we get sql state 23505
-            throw new DataIntegrityViolationException(ex);
+            throw new IntegrityViolationException(ex);
         }
         return entity;
     }
@@ -139,7 +139,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         return read(id);
     }
 
-    public T update(final T entity) throws DataConcurrencyException, DataIntegrityViolationException {
+    public T update(final T entity) throws ConcurrencyException, IntegrityViolationException {
         return save(entity);
     }
 
@@ -149,11 +149,11 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      * manager
      *
      * @param entity
-     * @throws DataIntegrityViolationException
+     * @throws IntegrityViolationException
      */
     @Override
     @SuppressWarnings("squid:S1226")
-    public void delete(T entity) throws DataIntegrityViolationException {
+    public void delete(T entity) throws IntegrityViolationException {
         Preconditions.nonNull(entity);
 
         try {
@@ -162,7 +162,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         } catch (final PersistenceException ex) {
             // TODO need to check and make sure we only throw
             // DataIntegrityViolationException if we get sql state 23505
-            throw new DataIntegrityViolationException(ex);
+            throw new IntegrityViolationException(ex);
         }
     }
 
@@ -170,12 +170,12 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      * Removes the entity with the specified ID from the repository.
      *
      * @param entityId
-     * @throws DataIntegrityViolationException
+     * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     @Override
-    public void deleteById(final K entityId) throws DataIntegrityViolationException {
+    public void deleteById(final K entityId) throws IntegrityViolationException {
         Preconditions.nonNull(entityId);
 
         // TODO this is not efficient...
@@ -226,18 +226,18 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      *
      * @param entity
      * @return the persisted entity - might be a different object than the parameter
-     * @throws eapli.framework.persistence.repositories.DataConcurrencyException
-     * @throws DataIntegrityViolationException
+     * @throws eapli.framework.domain.repositories.ConcurrencyException
+     * @throws IntegrityViolationException
      */
     @Override
-    public <S extends T> S save(final S entity) throws DataConcurrencyException, DataIntegrityViolationException {
+    public <S extends T> S save(final S entity) throws ConcurrencyException, IntegrityViolationException {
         try {
             return entityManager().merge(entity);
         } catch (final PersistenceException ex) {
             if (ex.getCause() instanceof OptimisticLockException) {
-                throw new DataConcurrencyException(ex);
+                throw new ConcurrencyException(ex);
             }
-            throw new DataIntegrityViolationException(ex);
+            throw new IntegrityViolationException(ex);
         }
     }
 

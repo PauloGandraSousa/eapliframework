@@ -1,7 +1,7 @@
 /**
  *
  */
-package eapli.framework.persistence.repositories.impl.jpa;
+package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import javax.persistence.Persistence;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import eapli.framework.persistence.repositories.TransactionalContext;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.util.Preconditions;
 import eapli.framework.util.predicates.StringPredicates;
 

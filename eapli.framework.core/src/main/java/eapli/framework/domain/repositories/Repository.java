@@ -2,58 +2,57 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package eapli.framework.persistence.repositories;
+package eapli.framework.domain.repositories;
 
 import java.io.Serializable;
 import java.util.Optional;
 
 /**
- * A generic interface for repositories. A repository is a domain-driven design
- * pattern to abstract the details of persisting domain objects. it exposes a
- * pure domain based interface without leaking details of the implementation of
- * the actual persistence mechanism. there should be one repository per
- * aggregate root
+ * A repository is a domain-driven design pattern to abstract the details of
+ * persisting domain objects. it exposes a pure domain based interface without
+ * leaking details of the implementation of the actual persistence mechanism.
+ * there should be one repository per aggregate root
  *
  * @param T
  *            the class we want to manage in the repository. Eventough it is not
- *            enforced to make this interface more reusable, T should extend
- *            AggregateRoot<?>
+ *            enforced - in order to make this interface more reusable - the
+ *            type T should extend AggregateRoot<?>
  * @param K
  *            the class denoting the primary key of the entity in the database
  * @author Paulo Gandra Sousa
  */
-public interface DataRepository<T, K extends Serializable> {
+public interface Repository<T, K extends Serializable> {
 
     /**
      * removes the specified entity from the repository.
      *
      * @param entity
-     * @throws DataIntegrityViolationException
+     * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void delete(T entity) throws DataIntegrityViolationException;
+    void delete(T entity) throws IntegrityViolationException;
 
     /**
      * Removes the entity with the specified primary key from the repository.
      *
      * @param entity
-     * @throws DataIntegrityViolationException
+     * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void deleteById(K entityId) throws DataIntegrityViolationException;
+    void deleteById(K entityId) throws IntegrityViolationException;
 
     /**
      * removes the specified entity from the repository. Alias to delete() in
      * order to better fit the "List"-like nature of a repository
      *
      * @param entity
-     * @throws DataIntegrityViolationException
+     * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    default void remove(final T entity) throws DataIntegrityViolationException {
+    default void remove(final T entity) throws IntegrityViolationException {
         delete(entity);
     }
 
@@ -63,11 +62,11 @@ public interface DataRepository<T, K extends Serializable> {
      * repository
      *
      * @param entity
-     * @throws DataIntegrityViolationException
+     * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    default void remove(final K entityId) throws DataIntegrityViolationException {
+    default void remove(final K entityId) throws IntegrityViolationException {
         deleteById(entityId);
     }
 
@@ -77,10 +76,10 @@ public interface DataRepository<T, K extends Serializable> {
      *
      * @param entity
      * @return
-     * @throws DataConcurrencyException
-     * @throws DataIntegrityViolationException
+     * @throws ConcurrencyException
+     * @throws IntegrityViolationException
      */
-    <S extends T> S save(S entity) throws DataConcurrencyException, DataIntegrityViolationException;
+    <S extends T> S save(S entity) throws ConcurrencyException, IntegrityViolationException;
 
     /**
      * gets all entities from the repository.

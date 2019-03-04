@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package eapli.framework.persistence.activerecord;
+package eapli.framework.domain.activerecord;
 
 import eapli.framework.domain.model.identities.Identifiable;
 
 /**
- * An interface to mark a class as an Active Record.
+ * An Active Record is a design pattern where an object both holds behavior
+ * (business logic) and knows how to handle its own persistence.
  *
  * Active Records might have static finder methods or use a separated Finder
  * class.

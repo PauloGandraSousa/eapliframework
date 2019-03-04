@@ -107,4 +107,4 @@ class JpaTransactionalContext implements TransactionalContext
 @enduml
 
  */
-package eapli.framework.persistence;
+package eapli.framework.infrastructure.repositories;

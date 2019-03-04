@@ -1,4 +1,4 @@
-package eapli.framework.persistence.repositories.impl.inmemory;
+package eapli.framework.infrastructure.repositories.impl.inmemory;
 
 import java.io.Serializable;
 

@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates and open the template
  * in the editor.
  */
-package eapli.framework.persistence.repositories;
+package eapli.framework.domain.repositories;
 
 /**
  * An exception that occurs when data cannot be updated because it has changed
- * or been deleted since it was last read
+ * or has been deleted since it was last read
  *
  * @author arocha
  */
-public class DataConcurrencyException extends Exception {
+public class ConcurrencyException extends Exception {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -6364660249001279449L;
 
-    public DataConcurrencyException(Throwable arg0) {
+    public ConcurrencyException(final Throwable arg0) {
         super(arg0);
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import eapli.framework.infrastructure.authz.domain.SystemUser;
 import eapli.framework.infrastructure.authz.domain.Username;
 import eapli.framework.infrastructure.authz.persistence.UserRepository;
-import eapli.framework.persistence.repositories.impl.jpa.JpaBaseRepository;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**
  *

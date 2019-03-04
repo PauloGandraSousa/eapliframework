@@ -5,4 +5,4 @@
  * @author Paulo Gandra Sousa
  *
  */
-package eapli.framework.persistence.activerecord;
+package eapli.framework.domain.activerecord;

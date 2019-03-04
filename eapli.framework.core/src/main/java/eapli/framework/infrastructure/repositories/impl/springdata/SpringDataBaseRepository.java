@@ -1,7 +1,7 @@
 /**
  *
  */
-package eapli.framework.persistence.repositories.impl.springdata;
+package eapli.framework.infrastructure.repositories.impl.springdata;
 
 import java.io.Serializable;
 import java.util.Optional;

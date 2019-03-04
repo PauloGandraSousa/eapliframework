@@ -1,4 +1,4 @@
-package eapli.framework.persistence.repositories.impl.inmemory;
+package eapli.framework.infrastructure.repositories.impl.inmemory;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import eapli.framework.persistence.repositories.IterableRepository;
+import eapli.framework.domain.repositories.IterableRepository;
 import eapli.framework.util.Invariants;
 
 /**

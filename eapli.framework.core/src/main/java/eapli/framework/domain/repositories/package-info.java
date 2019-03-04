@@ -9,4 +9,4 @@
  * @author Paulo Gandra Sousa
  * 
  */
-package eapli.framework.persistence.repositories;
+package eapli.framework.domain.repositories;

@@ -1,14 +1,14 @@
 /**
  *
  */
-package eapli.framework.persistence.repositories.impl.jpa;
+package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import eapli.framework.persistence.repositories.TransactionalContext;
+import eapli.framework.domain.repositories.TransactionalContext;
 
 /**
  * An utility class for implementing JPA repositories not running in containers.

@@ -1,4 +1,4 @@
-package eapli.framework.persistence.repositories.impl.jpa;
+package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package eapli.framework.persistence.repositories;
+package eapli.framework.domain.repositories;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -18,7 +18,7 @@ import java.util.Optional;
  *            the class denoting the primary key of the table
  * @author Paulo Gandra Sousa
  */
-public interface IterableRepository<T, K extends Serializable> extends DataRepository<T, K>, Iterable<T> {
+public interface IterableRepository<T, K extends Serializable> extends Repository<T, K>, Iterable<T> {
 
     /**
      * returns an iterator over the repository with an hint of pagesize results for

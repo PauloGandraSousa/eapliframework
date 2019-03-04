@@ -1,7 +1,7 @@
 /**
  *
  */
-package eapli.framework.persistence.repositories;
+package eapli.framework.domain.repositories;
 
 /**
  * an abstraction to the actual transaction management mechanism.

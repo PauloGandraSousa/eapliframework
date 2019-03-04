@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates and open the template
  * in the editor.
  */
-package eapli.framework.persistence.repositories.impl.jpa;
+package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import eapli.framework.persistence.repositories.DataConcurrencyException;
-import eapli.framework.persistence.repositories.DataIntegrityViolationException;
-import eapli.framework.persistence.repositories.DataRepository;
-import eapli.framework.persistence.repositories.TransactionalContext;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.domain.repositories.Repository;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.util.Preconditions;
 
 /**
@@ -28,7 +28,7 @@ import eapli.framework.util.Preconditions;
  *
  * @author Paulo Gandra Sousa
  */
-public class JpaAutoTxRepository<T, K extends Serializable> implements DataRepository<T, K> {
+public class JpaAutoTxRepository<T, K extends Serializable> implements Repository<T, K> {
 
     protected final JpaBaseRepository<T, K> repo;
     private final TransactionalContext autoTx;
@@ -84,17 +84,17 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements DataRepos
     }
 
     @Override
-    public void delete(final T entity) throws DataIntegrityViolationException {
+    public void delete(final T entity) throws IntegrityViolationException {
         this.repo.delete(entity);
     }
 
     @Override
-    public void deleteById(final K id) throws DataIntegrityViolationException {
+    public void deleteById(final K id) throws IntegrityViolationException {
         this.repo.deleteById(id);
     }
 
     @Override
-    public <S extends T> S save(final S entity) throws DataConcurrencyException, DataIntegrityViolationException {
+    public <S extends T> S save(final S entity) throws ConcurrencyException, IntegrityViolationException {
         return this.repo.save(entity);
     }
 
