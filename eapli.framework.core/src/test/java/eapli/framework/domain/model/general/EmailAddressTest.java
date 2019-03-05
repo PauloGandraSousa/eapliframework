@@ -5,11 +5,10 @@ package eapli.framework.domain.model.general;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import eapli.framework.domain.model.general.EmailAddress;
 
 /**
  * @author Paulo Gandra Sousa
@@ -51,7 +50,7 @@ public class EmailAddressTest {
      */
     @Test
     public void testEmailAddress() {
-        new EmailAddress("geral@acme.com");
+        Assert.assertNotNull(new EmailAddress("geral@acme.com"));
     }
 
     @Test(expected = IllegalArgumentException.class)

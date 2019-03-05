@@ -5,12 +5,12 @@
  */
 package eapli.framework.domain.model.range;
 
-import eapli.framework.domain.model.range.Range;
-
 /**
- *
+ * base class for testing Range
+ * 
  * @author Paulo Gandra Sousa
  */
+@SuppressWarnings("squid:S2187")
 public class AbstractRangeTest {
 
     protected static final Long START_VALUE = 5L;
@@ -21,7 +21,4 @@ public class AbstractRangeTest {
     protected static final Long END = END_VALUE;
 
     protected static Range<Long> instance;
-
-    public AbstractRangeTest() {
-    }
 }

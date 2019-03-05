@@ -5,11 +5,10 @@ package eapli.framework.infrastructure.authz.domain;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import eapli.framework.infrastructure.authz.domain.Password;
 
 /**
  * @author Paulo Gandra Sousa
@@ -47,7 +46,7 @@ public class PasswordTest {
 
     @Test
     public void ensurePasswordHasAtLeastOneDigitOneCapitalAnd6CharactersLong() {
-        new Password("abCfefgh1");
+        Assert.assertNotNull(new Password("abCfefgh1"));
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -93,7 +93,10 @@ public class Range<T extends Comparable<T> & Serializable> implements ValueObjec
      * special private constructor for empty ranges
      *
      * @param b
+     *            marker parameter to enable the compiler to distinguish the
+     *            constructors
      */
+    @SuppressWarnings("squid:S1172")
     private Range(final boolean b) {
         start = end = null;
         endBoundary = startBoundary = null;
@@ -254,8 +257,8 @@ public class Range<T extends Comparable<T> & Serializable> implements ValueObjec
     }
 
     /**
-     * returns the range consisting of the intersection of this range and another
-     * one
+     * returns the range consisting of the intersection of this range and
+     * another one
      *
      * @param other
      * @return
@@ -266,8 +269,8 @@ public class Range<T extends Comparable<T> & Serializable> implements ValueObjec
 
     /**
      * returns a new range by extending the start of this one. the
-     * openness/closeness of the start boundary as well as the end will be the same
-     * of the original range
+     * openness/closeness of the start boundary as well as the end will be the
+     * same of the original range
      *
      * @param other
      * @return
@@ -277,9 +280,9 @@ public class Range<T extends Comparable<T> & Serializable> implements ValueObjec
     }
 
     /**
-     * returns a new range by extending the end of this one. the openness/closeness
-     * of the end boundary as well as the start will be the same of the original
-     * range
+     * returns a new range by extending the end of this one. the
+     * openness/closeness of the end boundary as well as the start will be the
+     * same of the original range
      *
      * @param other
      * @return

@@ -178,7 +178,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     public void deleteById(final K entityId) throws IntegrityViolationException {
         Preconditions.nonNull(entityId);
 
-        // TODO this is not efficient...
+        // this is not efficient as it will fetch the data first and only
+        // afterwards will delete it. a more efficient implementation might
+        // issue a DELETE statement directly
         final Optional<T> entity = findById(entityId);
         if (entity.isPresent()) {
             delete(entity.get());
@@ -205,6 +207,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      * @param key
      * @return
      */
+    @Override
     public boolean contains(final K key) {
         return findById(key).isPresent();
     }
@@ -216,16 +219,18 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     /**
      * Inserts or updates an entity <b>and commits</b>.
      *
-     * note that you should reference the return value to use the persisted entity,
-     * as the original object passed as argument might be copied to a new object
+     * note that you should reference the return value to use the persisted
+     * entity, as the original object passed as argument might be copied to a
+     * new object
      *
      * check <a href=
      * "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
-     * > JPA implementation patterns</a> for a discussion on saveOrUpdate() behavior
-     * and merge()
+     * > JPA implementation patterns</a> for a discussion on saveOrUpdate()
+     * behavior and merge()
      *
      * @param entity
-     * @return the persisted entity - might be a different object than the parameter
+     * @return the persisted entity - might be a different object than the
+     *         parameter
      * @throws eapli.framework.domain.repositories.ConcurrencyException
      * @throws IntegrityViolationException
      */
@@ -429,9 +434,10 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      * @param where
      *            the where clause should use "e" as the query object
      * @param args
-     *            a list of parameters to be used in the query. each odd parameter
-     *            is assumed to be the name of the parameter; each even parameter is
-     *            assumed to be the value of the preceeding parameter
+     *            a list of parameters to be used in the query. each odd
+     *            parameter is assumed to be the name of the parameter; each
+     *            even parameter is assumed to be the value of the preceeding
+     *            parameter
      * @return
      */
     protected Optional<T> matchOne(final String where, final Object... args) {
@@ -445,9 +451,10 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      * @param where
      *            the where clause should use "e" as the query object
      * @param args
-     *            a list of parameters to be used in the query. each odd parameter
-     *            is assumed to be the name of the parameter; each even parameter is
-     *            assumed to be the value of the preceeding parameter
+     *            a list of parameters to be used in the query. each odd
+     *            parameter is assumed to be the name of the parameter; each
+     *            even parameter is assumed to be the value of the preceeding
+     *            parameter
      * @return
      */
     protected List<T> match(final String where, final Object... args) {

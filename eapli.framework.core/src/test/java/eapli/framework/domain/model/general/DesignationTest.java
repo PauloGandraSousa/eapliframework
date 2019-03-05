@@ -1,9 +1,8 @@
 package eapli.framework.domain.model.general;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import eapli.framework.domain.model.general.Designation;
 
 public class DesignationTest {
 
@@ -43,6 +42,6 @@ public class DesignationTest {
 
     @Test
     public void ensureStartsWithSomething() {
-        Designation.valueOf("ABC");
+        Assert.assertNotNull(Designation.valueOf("ABC"));
     }
 }

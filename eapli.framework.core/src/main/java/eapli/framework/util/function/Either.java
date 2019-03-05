@@ -3,6 +3,8 @@ package eapli.framework.util.function;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
+import eapli.framework.util.Preconditions;
+
 /**
  * A simple approach to the functional Monad Either
  *
@@ -17,10 +19,13 @@ import java.util.function.UnaryOperator;
  */
 public final class Either<T, U> {
 
+    private enum SideType {
+        LEFT, RIGHT
+    };
+
     private T left;
-    private boolean hasLeft;
+    private final SideType type;
     private U right;
-    private boolean hasRight;
 
     /**
      * factory method to create a left value Either
@@ -49,20 +54,18 @@ public final class Either<T, U> {
      *            just to make the compiler happy due to the erasure of both
      *            constructors
      */
+    @SuppressWarnings("squid:S1172")
     private Either(final T left, final boolean marker) {
-        if (left == null) {
-            throw new IllegalArgumentException();
-        }
+        Preconditions.nonNull(left);
 
-        hasLeft = true;
+        type = SideType.LEFT;
         this.left = left;
     }
 
     private Either(final U right) {
-        if (right == null) {
-            throw new IllegalArgumentException();
-        }
-        hasRight = true;
+        Preconditions.nonNull(right);
+
+        type = SideType.RIGHT;
         this.right = right;
     }
 
@@ -73,47 +76,49 @@ public final class Either<T, U> {
      * @param func
      */
     public void projectLeft(final Consumer<T> func) {
-        if (hasLeft) {
+        if (type == SideType.LEFT) {
             func.accept(left);
         }
     }
 
     /**
-     * applies a function to the right value if this Either instance holds a right
-     * value
+     * applies a function to the right value if this Either instance holds a
+     * right value
      *
      * @param func
      */
     public void projectRight(final Consumer<U> func) {
-        if (hasRight) {
+        if (type == SideType.RIGHT) {
             func.accept(right);
         }
     }
 
     /**
-     * applies the "normal" function to the left value if this Either instance holds
-     * a left value, otherwise applies the "error" function to the right value.
-     * since this method returns a new Either it is suitable for composition.
+     * applies the "normal" function to the left value if this Either instance
+     * holds a left value, otherwise applies the "error" function to the right
+     * value. since this method returns a new Either it is suitable for
+     * composition.
      *
      * @param normal
      * @param error
      */
     public Either<T, U> project(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
-        if (hasLeft) {
+        if (type == SideType.LEFT) {
             return ofLeft(normal.apply(left));
         }
         return ofRight(error.apply(right));
     }
 
     /**
-     * applies the "normal" function to the left value if this Either instance holds
-     * a left value, otherwise applies the "error" function to the right value
+     * applies the "normal" function to the left value if this Either instance
+     * holds a left value, otherwise applies the "error" function to the right
+     * value
      *
      * @param normal
      * @param error
      */
     public void project(final Consumer<T> normal, final Consumer<U> error) {
-        if (hasLeft) {
+        if (type == SideType.LEFT) {
             normal.accept(left);
         } else {
             error.accept(right);

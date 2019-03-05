@@ -3,10 +3,10 @@
  */
 package eapli.framework.domain.model.math;
 
-import eapli.framework.util.Preconditions;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.Invariants;
+import eapli.framework.util.Preconditions;
 
 /**
  * An immutable matrix.
@@ -245,7 +245,8 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * @return the diagonal matrix with the same elements in this matrix's diagonal
+     * @return the diagonal matrix with the same elements in this matrix's
+     *         diagonal
      */
     public Matrix diagonal() {
         Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
@@ -259,12 +260,13 @@ public class Matrix implements ValueObject {
 
     /**
      *
-     * @return a row vector (a matrix with just one row) with the elements in this
-     *         matrix's diagonal
+     * @return a row vector (a matrix with just one row) with the elements in
+     *         this matrix's diagonal
      */
     public Matrix diagonalElements() {
-        // if (!IsSquare)
-        // throw new InvalidOperationException("matrix should be square");
+        if (!isSquare()) {
+            throw new IllegalStateException("matrix should be square");
+        }
         final int k = java.lang.Math.min(rows, cols);
 
         final Matrix diag = Matrix.zero(1, k + 1);
