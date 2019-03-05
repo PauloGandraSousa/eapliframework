@@ -20,8 +20,8 @@ public final class Strings implements Utilitarian {
     }
 
     /**
-     * returns a random string with a specified length consisting only of letters
-     * (capitals and lower) and digits
+     * returns a random string with a specified length consisting only of
+     * letters (capitals and lower) and digits
      *
      * @param len
      * @return
@@ -104,11 +104,12 @@ public final class Strings implements Utilitarian {
      *            negative an empty string will be returned
      * @return a string with all characters being the symbol and length size
      */
-    public static String repeat(final char symbol, int size) {
+    public static String repeat(final char symbol, final int size) {
+        int n = size;
         final StringBuilder b = new StringBuilder();
-        while (size > 0) {
+        while (n > 0) {
             b.append(symbol);
-            size--;
+            n--;
         }
         return b.toString();
     }
