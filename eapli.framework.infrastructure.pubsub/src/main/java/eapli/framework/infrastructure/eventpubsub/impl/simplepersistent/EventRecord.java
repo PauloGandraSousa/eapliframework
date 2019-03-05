@@ -54,6 +54,10 @@ class EventRecord implements AggregateRoot<Long> {
         return SerializationUtils.deserialize(event);
     }
 
+    public String publisher() {
+        return publisherName;
+    }
+
     @Override
     public boolean sameAs(final Object other) {
         if (!(other instanceof EventRecord)) {

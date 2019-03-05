@@ -62,7 +62,7 @@ public class EitherTest {
     public void ensureLeftHoldsValue() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.projectLeft(stringLength);
+        subject.project(stringLengthOp, intValueOp);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -70,7 +70,7 @@ public class EitherTest {
     public void ensureRightHoldsValue() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.projectRight(intValue);
+        subject.project(stringLengthOp, intValueOp);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 
@@ -78,7 +78,7 @@ public class EitherTest {
     public void ensureProjectToLeftConsumer() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.project(stringLength, intValue);
+        subject.visit(stringLength, intValue);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -86,7 +86,7 @@ public class EitherTest {
     public void ensureProjectToRightConsumer() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.project(stringLength, intValue);
+        subject.visit(stringLength, intValue);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 
