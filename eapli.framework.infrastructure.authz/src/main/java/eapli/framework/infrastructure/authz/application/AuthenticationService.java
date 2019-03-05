@@ -48,6 +48,10 @@ public class AuthenticationService {
         return theSession != null;
     }
 
+    /**
+     * @TODO consider returning Optional<UserSession>
+     * @return
+     */
     public UserSession session() {
         return theSession;
     }
@@ -103,8 +107,7 @@ public class AuthenticationService {
         return sucess;
     }
 
-    public String resetPassword(final SystemUser user)
-            throws ConcurrencyException, IntegrityViolationException {
+    public String resetPassword(final SystemUser user) throws ConcurrencyException, IntegrityViolationException {
         final String token = user.resetPassword();
         repo.save(user);
         return token;
