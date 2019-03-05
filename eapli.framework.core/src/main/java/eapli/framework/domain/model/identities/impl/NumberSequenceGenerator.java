@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.domain.model.identities.IdentityGenerator;
+import eapli.framework.util.Invariants;
 
 /**
  * @author sou03408
@@ -15,14 +16,15 @@ import eapli.framework.domain.model.identities.IdentityGenerator;
 public class NumberSequenceGenerator implements IdentityGenerator<Long> {
     private static final Logger LOGGER = LogManager.getLogger(NumberSequenceGenerator.class);
 
-    private volatile Long lastId;
+    private volatile long lastId;
 
     public NumberSequenceGenerator() {
-        lastId = Long.valueOf(0L);
+        lastId = 0L;
     }
 
-    public NumberSequenceGenerator(Long seed) {
-        lastId = Long.valueOf(seed);
+    public NumberSequenceGenerator(final Long seed) {
+        Invariants.nonNull(seed);
+        lastId = seed;
     }
 
     @Override
@@ -31,6 +33,6 @@ public class NumberSequenceGenerator implements IdentityGenerator<Long> {
             lastId++;
         }
         LOGGER.trace("Generated id {}", lastId);
-        return lastId;
+        return Long.valueOf(lastId);
     }
 }

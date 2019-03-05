@@ -4,16 +4,16 @@
 package eapli.framework.domain.model.math;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
+import java.util.function.BinaryOperator;
+import java.util.function.DoubleSupplier;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-import eapli.framework.util.Preconditions;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
+import eapli.framework.util.Preconditions;
 import eapli.framework.util.function.ArrayOfDoubleCollector;
 
 /**
@@ -63,16 +63,16 @@ public class Vector implements ValueObject {
         data = src.limit(maxSize).toArray();
     }
 
-    private Vector(final VectorType type, final int maxSize, final Supplier<Double> src) {
+    private Vector(final VectorType type, final int maxSize, final DoubleSupplier src) {
         dimensions = maxSize;
         this.type = type;
         data = new double[dimensions];
         for (int i = 0; i < maxSize; i++) {
-            data[i] = src.get();
+            data[i] = src.getAsDouble();
         }
     }
 
-    private Vector(final Vector a, final Vector b, final BiFunction<Double, Double, Double> op) {
+    private Vector(final Vector a, final Vector b, final BinaryOperator<Double> op) {
         Preconditions.areEqual(a.dimensions, b.dimensions);
         Preconditions.areEqual(a.type, b.type, VECTOR_TYPE_MUST_BE_THE_SAME);
 

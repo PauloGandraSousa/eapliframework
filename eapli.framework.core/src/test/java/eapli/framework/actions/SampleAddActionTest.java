@@ -28,13 +28,13 @@ public class SampleAddActionTest {
     @Test
     public void ensureExecuteAdds() {
         instance.execute();
-        assertEquals(target.current(), 5);
+        assertEquals(5, target.current());
     }
 
     @Test
     public void ensureUndo() {
         instance.execute();
         instance.undo();
-        assertEquals(target.current(), 0);
+        assertEquals(0, target.current());
     }
 }

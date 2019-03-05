@@ -29,7 +29,7 @@ import eapli.framework.util.predicates.StringPredicates;
     private static final Logger LOGGER = LogManager.getLogger(JpaTransactionalContext.class);
 
     private final String persistenceUnitName;
-    private static volatile EntityManagerFactory singletonEMF;
+    private static EntityManagerFactory singletonEMF;
     private EntityManager entityManager;
     @SuppressWarnings("rawtypes")
     private final Map properties = new HashMap();

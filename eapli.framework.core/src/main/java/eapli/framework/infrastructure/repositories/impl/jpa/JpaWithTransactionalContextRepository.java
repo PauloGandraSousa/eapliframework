@@ -44,7 +44,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
     }
 
     private void setTxCtx(final TransactionalContext txCtx) {
-        if (txCtx == null || !(txCtx instanceof JpaTransactionalContext)) {
+        if (!(txCtx instanceof JpaTransactionalContext)) {
             throw new IllegalArgumentException();
         }
         this.txContext = (JpaTransactionalContext) txCtx;
