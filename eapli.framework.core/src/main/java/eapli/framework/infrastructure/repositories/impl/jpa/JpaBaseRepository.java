@@ -108,7 +108,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
             this.entityManager().persist(entity);
         } catch (final PersistenceException ex) {
             // TODO need to check and make sure we only throw
-            // DataIntegrityViolationException if we get sql state 23505
+            // IntegrityViolationException if we get sql state 23505
             throw new IntegrityViolationException(ex);
         }
         return entity;
@@ -161,7 +161,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
             entityManager().remove(entity);
         } catch (final PersistenceException ex) {
             // TODO need to check and make sure we only throw
-            // DataIntegrityViolationException if we get sql state 23505
+            // IntegrityViolationException if we get sql state 23505
             throw new IntegrityViolationException(ex);
         }
     }

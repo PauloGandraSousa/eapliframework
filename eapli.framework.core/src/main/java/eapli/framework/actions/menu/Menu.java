@@ -34,6 +34,11 @@ public class Menu {
         this.title = title;
     }
 
+    /**
+     * adds an item to the menu
+     * 
+     * @param item
+     */
     public void addItem(final MenuItem item) {
         Preconditions.nonNull(item);
 
@@ -49,8 +54,8 @@ public class Menu {
      * @param option
      * @param menu
      * @param action
-     *            the action to execute when the user selects (opens) this submenu.
-     *            usually it's a renderer
+     *            the action to execute when the user selects (opens) this
+     *            submenu. usually it's a renderer
      */
     public void addSubMenu(final int option, final Menu menu, final Action action) {
         addItem(MenuItem.of(option, menu.title(), action));
@@ -62,13 +67,19 @@ public class Menu {
 
     /**
      *
-     * @return the collection of items in this menu. this collection can be directly
-     *         manipulated by the caller, that is, it is mutable
+     * @return the collection of items in this menu. this collection can be
+     *         directly manipulated by the caller, that is, it is mutable
      */
     public Iterable<MenuItem> itens() {
         return itens;
     }
 
+    /**
+     * returns the MenuItem associated with an option in the menu
+     *
+     * @param option
+     * @return
+     */
     public MenuItem item(final int option) {
         return itemByOption.get(option);
     }

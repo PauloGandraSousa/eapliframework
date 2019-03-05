@@ -22,8 +22,7 @@ public class ShowVerticalSubMenuAction implements Action {
         Preconditions.nonNull(menu);
 
         this.menu = menu;
-        renderer = new VerticalMenuRenderer(menu, new MenuItemRenderer() {
-        });
+        renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
     }
 
     @Override

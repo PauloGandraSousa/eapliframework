@@ -107,7 +107,7 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
             context().commit();
         } catch (final PersistenceException ex) {
             // TODO need to check and make sure we only throw
-            // DataIntegrityViolationException if we get sql state 23505
+            // IntegrityViolationException if we get sql state 23505
             throw new IntegrityViolationException(ex);
         } finally {
             context().close();
@@ -146,7 +146,7 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
                 throw new ConcurrencyException(ex);
             }
             // TODO need to check and make sure we only throw
-            // DataIntegrityViolationException if we get sql state 23505
+            // IntegrityViolationException if we get sql state 23505
             throw new IntegrityViolationException(ex);
         } finally {
             context().close();
