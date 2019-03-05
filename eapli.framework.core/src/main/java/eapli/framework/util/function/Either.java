@@ -49,6 +49,7 @@ public final class Either<T, U> {
      *            just to make the compiler happy due to the erasure of both
      *            constructors
      */
+    @SuppressWarnings("squid:S1172")
     private Either(final T left, final boolean marker) {
         if (left == null) {
             throw new IllegalArgumentException();
@@ -67,30 +68,6 @@ public final class Either<T, U> {
     }
 
     /**
-     * applies a function to the left value if this Either instance holds a left
-     * value
-     *
-     * @param func
-     */
-    public void projectLeft(final Consumer<T> func) {
-        if (hasLeft) {
-            func.accept(left);
-        }
-    }
-
-    /**
-     * applies a function to the right value if this Either instance holds a right
-     * value
-     *
-     * @param func
-     */
-    public void projectRight(final Consumer<U> func) {
-        if (hasRight) {
-            func.accept(right);
-        }
-    }
-
-    /**
      * applies the "normal" function to the left value if this Either instance holds
      * a left value, otherwise applies the "error" function to the right value.
      * since this method returns a new Either it is suitable for composition.
@@ -106,13 +83,14 @@ public final class Either<T, U> {
     }
 
     /**
-     * applies the "normal" function to the left value if this Either instance holds
-     * a left value, otherwise applies the "error" function to the right value
+     * acts on the value of this Either instance, executing the "normal" function
+     * with the left value if this Either instance holds a left value, otherwise
+     * executes the "error" function with the right value
      *
      * @param normal
      * @param error
      */
-    public void project(final Consumer<T> normal, final Consumer<U> error) {
+    public void visit(final Consumer<T> normal, final Consumer<U> error) {
         if (hasLeft) {
             normal.accept(left);
         } else {
