@@ -1,4 +1,4 @@
-package eapli.framework.infrastructure.authz.domain;
+package eapli.framework.infrastructure.authz.domain.model;
 
 import java.util.Calendar;
 import java.util.List;

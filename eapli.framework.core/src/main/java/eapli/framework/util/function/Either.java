@@ -93,7 +93,7 @@ public final class Either<T, U> {
      * @param normal
      * @param error
      */
-    public void visit(final Consumer<T> normal, final Consumer<U> error) {
+    public void accept(final Consumer<T> normal, final Consumer<U> error) {
         if (type == SideType.LEFT) {
             normal.accept(left);
         } else {

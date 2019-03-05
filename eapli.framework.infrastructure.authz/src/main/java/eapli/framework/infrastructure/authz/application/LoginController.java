@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import eapli.framework.application.Controller;
-import eapli.framework.infrastructure.authz.domain.Password;
-import eapli.framework.infrastructure.authz.domain.Role;
-import eapli.framework.infrastructure.authz.domain.Username;
+import eapli.framework.infrastructure.authz.domain.model.Password;
+import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.Username;
 
 /**
  * Created by nuno on 21/03/16.

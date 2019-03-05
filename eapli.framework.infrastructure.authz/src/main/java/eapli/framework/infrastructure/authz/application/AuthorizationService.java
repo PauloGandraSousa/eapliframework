@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedException;
 import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
-import eapli.framework.infrastructure.authz.domain.Role;
-import eapli.framework.infrastructure.authz.domain.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.util.Utilitarian;
 
 /**

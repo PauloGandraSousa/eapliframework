@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.infrastructure.authz.domain.Password;
-import eapli.framework.infrastructure.authz.domain.Role;
-import eapli.framework.infrastructure.authz.domain.SystemUser;
-import eapli.framework.infrastructure.authz.domain.Username;
-import eapli.framework.infrastructure.authz.persistence.UserRepository;
+import eapli.framework.infrastructure.authz.domain.model.Password;
+import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.util.Preconditions;
 
 /**

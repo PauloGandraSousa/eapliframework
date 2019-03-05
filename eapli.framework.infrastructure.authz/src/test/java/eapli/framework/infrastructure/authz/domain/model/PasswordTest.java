@@ -1,7 +1,7 @@
 /**
  *
  */
-package eapli.framework.infrastructure.authz.domain;
+package eapli.framework.infrastructure.authz.domain.model;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -9,6 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import eapli.framework.infrastructure.authz.domain.model.Password;
 
 /**
  * @author Paulo Gandra Sousa
