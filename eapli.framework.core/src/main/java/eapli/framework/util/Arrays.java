@@ -46,11 +46,24 @@ public final class Arrays implements Utilitarian {
      * @param map
      * @return
      */
-    public static double[] copyMapped(final double[] src, final DoubleUnaryOperator map) {
+    public static double[] map(final double[] src, final DoubleUnaryOperator map) {
         final double[] dest = new double[src.length];
         for (int i = 0; i < src.length; i++) {
             dest[i] = map.applyAsDouble(src[i]);
         }
         return dest;
+    }
+
+    /**
+     * applies a transformation to each element of an array
+     *
+     * @param src
+     * @param map
+     * @return
+     */
+    public static void transform(final double[] dest, final DoubleUnaryOperator map) {
+        for (int i = 0; i < dest.length; i++) {
+            dest[i] = map.applyAsDouble(dest[i]);
+        }
     }
 }
