@@ -25,7 +25,7 @@ public final class Files implements Utilitarian {
 
     /**
      * returns the current working directory of the application
-     *
+     * @todo check https://docs.oracle.com/javase/tutorial/essential/io/pathOps.html to avoid security vulnerability
      * @return the current working directory of the application
      */
     public static String currentDirectory() {
