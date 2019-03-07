@@ -19,6 +19,10 @@ public class EitherTest {
     private UnaryOperator<String> stringLengthOp;
     private UnaryOperator<Integer> intValueOp;
 
+    private static class Helper {
+        int i;
+    }
+
     /**
      * @throws java.lang.Exception
      */
@@ -54,10 +58,6 @@ public class EitherTest {
         Either.ofRight(null);
     }
 
-    private static class Helper {
-        int i;
-    }
-
     @Test
     public void ensureLeftHoldsValue() {
         final Either<String, Integer> subject = leftSubject();
@@ -75,18 +75,18 @@ public class EitherTest {
     }
 
     @Test
-    public void ensureProjectToLeftConsumer() {
+    public void ensureAcceptOnLeft() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.visit(stringLength, intValue);
+        subject.accept(stringLength, intValue);
         assertEquals(TESTING.length(), helper.i);
     }
 
     @Test
-    public void ensureProjectToRightConsumer() {
+    public void ensureAcceptOnRight() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.visit(stringLength, intValue);
+        subject.accept(stringLength, intValue);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 

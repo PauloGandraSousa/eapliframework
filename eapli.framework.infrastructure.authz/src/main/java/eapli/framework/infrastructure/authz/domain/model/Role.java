@@ -1,7 +1,7 @@
 /**
  *
  */
-package eapli.framework.infrastructure.authz.domain;
+package eapli.framework.infrastructure.authz.domain.model;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;

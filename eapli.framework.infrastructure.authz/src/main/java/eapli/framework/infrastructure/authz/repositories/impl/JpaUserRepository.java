@@ -1,10 +1,10 @@
-package eapli.framework.infrastructure.authz.persistence.impl;
+package eapli.framework.infrastructure.authz.repositories.impl;
 
 import org.springframework.stereotype.Component;
 
-import eapli.framework.infrastructure.authz.domain.SystemUser;
-import eapli.framework.infrastructure.authz.domain.Username;
-import eapli.framework.infrastructure.authz.persistence.UserRepository;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**

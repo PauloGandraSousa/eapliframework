@@ -1,4 +1,4 @@
-package eapli.framework.infrastructure.authz.domain;
+package eapli.framework.infrastructure.authz.domain.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,6 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.infrastructure.authz.domain.model.Password;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.util.DateTime;
 
 public class SystemUserTest {

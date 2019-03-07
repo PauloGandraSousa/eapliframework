@@ -3,8 +3,8 @@
  */
 package eapli.framework.infrastructure.authz.application.exceptions;
 
-import eapli.framework.infrastructure.authz.domain.Role;
-import eapli.framework.infrastructure.authz.domain.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 /**
  * @author Paulo Gandra Sousa

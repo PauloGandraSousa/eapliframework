@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedException;
 import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
-import eapli.framework.infrastructure.authz.domain.Role;
-import eapli.framework.infrastructure.authz.domain.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.util.Utilitarian;
 
 /**
@@ -41,9 +41,12 @@ public final class AuthorizationService implements Utilitarian {
 
     /**
      * helper method to check the permission of the currently logged in user
+     *
+     * @todo consider other ways to perform this check without throwing exceptions,
+     *       as these scenarios are not really exceptions, they are accounted for
      */
     public void ensurePermissionOfLoggedInUser(final Role... actions) {
-        if (authz.session() == null) {
+        if (authz.hasSession()) {
             throw new UserSessionNotInitiatedException();
         }
         if (!isLoggedInUserAuthorizedTo(actions)) {
