@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Paths;
 
 /**
  * utility class for file manipulation.
@@ -20,16 +21,16 @@ import java.io.UnsupportedEncodingException;
 public final class Files implements Utilitarian {
 
     private Files() {
-        // to make sure this is an utility class
+        // to make sure this is a utility class
     }
 
     /**
      * returns the current working directory of the application
-     * @todo check https://docs.oracle.com/javase/tutorial/essential/io/pathOps.html to avoid security vulnerability
+     *
      * @return the current working directory of the application
      */
     public static String currentDirectory() {
-        return new java.io.File(".").getAbsolutePath();
+        return Paths.get(".").toAbsolutePath().toString();
     }
 
     /**
@@ -38,7 +39,7 @@ public final class Files implements Utilitarian {
      * @param extension
      * @return
      * @deprecated use {@link java.io.File} or
-     *             {@link org.appache.commons.io.FilenameUtils}
+     *             {@link org.apache.commons.io.FilenameUtils}
      */
     @Deprecated
     public static String ensureExtension(final String filename, final String extension) {
@@ -54,8 +55,8 @@ public final class Files implements Utilitarian {
     }
 
     /**
-     * gets the full content of an input string as a single String. the input stream
-     * is still active and open after calling this method
+     * gets the full content of an input string as a single String. the input
+     * stream is still active and open after calling this method
      *
      * @param is
      *            the input stream
