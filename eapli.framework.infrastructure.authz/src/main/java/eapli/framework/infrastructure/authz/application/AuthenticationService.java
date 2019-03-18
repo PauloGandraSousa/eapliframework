@@ -15,6 +15,12 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.util.Preconditions;
 
 /**
+ * the current logged user session holder
+ *
+ * note that this class is conceptually a singleton as it holds the Session
+ * object. ensure that you set up spring correctly and if you create the
+ * instances yourself, make sure you handle the singletonness nature of the
+ * obejct
  *
  * @author Paulo Gandra Sousa
  *
@@ -29,6 +35,23 @@ public class AuthenticationService {
      * the current logged in user session
      */
     private UserSession theSession = null;
+
+    /**
+     * default constructor for Spring dependency injection
+     */
+    protected AuthenticationService() {
+        // empty
+    }
+
+    /**
+     * in scenarios where there is no dependency injector, this constructor allows
+     * the controller to be be built and manually inject the dependency.
+     *
+     * @param authenticationService
+     */
+    public AuthenticationService(final UserRepository repo) {
+        this.repo = repo;
+    }
 
     private void setSession(final Optional<UserSession> session) {
         Preconditions.nonNull(session);

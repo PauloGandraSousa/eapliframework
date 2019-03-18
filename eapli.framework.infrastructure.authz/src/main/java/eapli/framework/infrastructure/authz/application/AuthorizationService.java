@@ -7,22 +7,33 @@ import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedE
 import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.util.Utilitarian;
 
 /**
- * helper "singleton" session holder
  *
  * @author Paulo Gandra de Sousa
  *
  */
 @Component
-public final class AuthorizationService implements Utilitarian {
+public final class AuthorizationService {
 
     @Autowired
     private AuthenticationService authz;
 
-    private AuthorizationService() {
-        // ensure utility
+    /**
+     * default constructor for Spring dependency injection
+     */
+    protected AuthorizationService() {
+        // empty
+    }
+
+    /**
+     * in scenarios where there is no dependency injector, this constructor allows
+     * the controller to be be built and manually inject the dependency
+     *
+     * @param authenticationService
+     */
+    public AuthorizationService(final AuthenticationService authenticationService) {
+        this.authz = authenticationService;
     }
 
     /**
@@ -46,7 +57,7 @@ public final class AuthorizationService implements Utilitarian {
      *       as these scenarios are not really exceptions, they are accounted for
      */
     public void ensurePermissionOfLoggedInUser(final Role... actions) {
-        if (authz.hasSession()) {
+        if (!authz.hasSession()) {
             throw new UserSessionNotInitiatedException();
         }
         if (!isLoggedInUserAuthorizedTo(actions)) {
