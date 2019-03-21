@@ -3,6 +3,7 @@
  */
 package eapli.framework.domain.model.range;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,18 +18,20 @@ import eapli.framework.util.Preconditions;
  * An immutable discrete domain, that is, a set of possible known values. allows
  * for empty domains
  *
- * @todo should T extends ValueObject? the elements of a domain should be
- *       values...
+ * @param <T>
+ *            the type of values of the domain. T should extend ValueObject,
+ *            however, to make this class more general we are not adding that
+ *            constraint
  *
  * @author Paulo Gandra Sousa
  *
  */
-public class DiscreteDomain<T> implements Iterable<T>, ValueObject {
+public class DiscreteDomain<T extends Serializable> implements Iterable<T>, ValueObject {
 
     private static final long serialVersionUID = 1626025693468901924L;
     private final Set<T> elements = new HashSet<>();
 
-    public static <T> DiscreteDomain<T> empty() {
+    public static <T extends Serializable> DiscreteDomain<T> empty() {
         return new DiscreteDomainBuilder<T>().build();
     }
 
@@ -67,8 +70,8 @@ public class DiscreteDomain<T> implements Iterable<T>, ValueObject {
     }
 
     /**
-     * creates a new domain consisting of the intersection of elements between this
-     * domain and another domain.
+     * creates a new domain consisting of the intersection of elements between
+     * this domain and another domain.
      *
      * for instance, <br/>
      * D1 = [1, 2 , 3, 4] <br/>
@@ -96,8 +99,8 @@ public class DiscreteDomain<T> implements Iterable<T>, ValueObject {
     }
 
     /**
-     * creates a new domain consisting of the union of elements between this domain
-     * and another domain
+     * creates a new domain consisting of the union of elements between this
+     * domain and another domain
      *
      * for instance, <br/>
      * D1 = [1, 2 , 3, 4] <br/>
@@ -122,9 +125,10 @@ public class DiscreteDomain<T> implements Iterable<T>, ValueObject {
     }
 
     /**
-     * creates a new domain consisting of the complement of elements between this
-     * domain and another domain, that is, a domain with the elements of this domain
-     * if and only if those elements do not exist in the other domain
+     * creates a new domain consisting of the complement of elements between
+     * this domain and another domain, that is, a domain with the elements of
+     * this domain if and only if those elements do not exist in the other
+     * domain
      *
      * for instance, <br/>
      * D1 = [1, 2 , 3, 4] <br/>

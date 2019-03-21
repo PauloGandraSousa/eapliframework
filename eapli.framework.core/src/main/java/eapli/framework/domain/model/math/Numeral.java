@@ -3,9 +3,9 @@
  */
 package eapli.framework.domain.model.math;
 
-import eapli.framework.util.Preconditions;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
+import eapli.framework.util.Preconditions;
 
 /**
  * an integer number in any base. allows to easily convert to/from decimal,
@@ -55,8 +55,8 @@ public class Numeral implements ValueObject {
     }
 
     /**
-     * factory method to construct a new numeral from a string representation in a
-     * certain numeral system
+     * factory method to construct a new numeral from a string representation in
+     * a certain numeral system
      *
      * @param value
      *            the representation of the number

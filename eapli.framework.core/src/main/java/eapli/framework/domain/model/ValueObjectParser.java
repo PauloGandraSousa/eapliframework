@@ -8,7 +8,7 @@ package eapli.framework.domain.model;
  *
  */
 @FunctionalInterface
-public interface ValueObjectFactory<T extends ValueObject> {
+public interface ValueObjectParser<T extends ValueObject> {
 
     /**
      * parses a string in order to create a new value object instance. works in

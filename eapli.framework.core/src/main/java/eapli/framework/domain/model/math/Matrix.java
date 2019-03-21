@@ -233,6 +233,7 @@ public class Matrix implements ValueObject {
         return this.submatrix(i, j).determinant1();
     }
 
+    @SuppressWarnings("squid:S2234")
     public Matrix transpose() {
         final Matrix dest = new Matrix(cols, rows);
 
@@ -467,13 +468,9 @@ public class Matrix implements ValueObject {
                 }
 
                 if (m.getAt(col, col) != 0) {
-                    try {
-                        final double f1 = (-1) * m.getAt(row, col) / m.getAt(col, col);
-                        for (int i = col; i < tms; i++) {
-                            m.putAt(row, i, f1 * m.getAt(col, i) + m.getAt(row, i));
-                        }
-                    } catch (final Exception e) {
-                        // System.out.println("Still Here!!!");
+                    final double f1 = (-1.0) * m.getAt(row, col) / m.getAt(col, col);
+                    for (int i = col; i < tms; i++) {
+                        m.putAt(row, i, f1 * m.getAt(col, i) + m.getAt(row, i));
                     }
                 }
             }
@@ -568,6 +565,7 @@ public class Matrix implements ValueObject {
      *
      * @return
      */
+    @SuppressWarnings("squid:S2234")
     public boolean isSkewSymmetric() {
         Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
 

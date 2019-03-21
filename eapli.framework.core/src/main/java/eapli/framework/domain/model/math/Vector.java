@@ -4,7 +4,7 @@
 package eapli.framework.domain.model.math;
 
 import java.util.Arrays;
-import java.util.function.BinaryOperator;
+import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleSupplier;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
@@ -72,7 +72,7 @@ public class Vector implements ValueObject {
         }
     }
 
-    private Vector(final Vector a, final Vector b, final BinaryOperator<Double> op) {
+    private Vector(final Vector a, final Vector b, final DoubleBinaryOperator op) {
         Preconditions.areEqual(a.dimensions, b.dimensions);
         Preconditions.areEqual(a.type, b.type, VECTOR_TYPE_MUST_BE_THE_SAME);
 
@@ -80,7 +80,7 @@ public class Vector implements ValueObject {
         type = a.type;
         data = new double[dimensions];
         for (int i = 0; i < dimensions; i++) {
-            data[i] = op.apply(a.data[i], b.data[i]);
+            data[i] = op.applyAsDouble(a.data[i], b.data[i]);
         }
     }
 

@@ -31,7 +31,7 @@ import eapli.framework.util.StringMixin;
 public class Text implements ValueObject, StringMixin {
 
     private static final long serialVersionUID = 1L;
-    private final String text;
+    private final String theText;
 
     public static class TextBuilder implements Factory<Text> {
         private final StringBuilder builder = new StringBuilder("");
@@ -78,7 +78,7 @@ public class Text implements ValueObject, StringMixin {
     }
 
     private Text(final String text) {
-        this.text = text;
+        theText = text;
     }
 
     /**
@@ -107,7 +107,7 @@ public class Text implements ValueObject, StringMixin {
     }
 
     public long lineCount() {
-        return text.split("\\n", -1).length;
+        return theText.split("\\n", -1).length;
     }
 
     public long wordCount() {
@@ -120,12 +120,12 @@ public class Text implements ValueObject, StringMixin {
     }
 
     private String[] wordArray() {
-        return text.split("[\\s\\.,;!\\?]+");
+        return theText.split("[\\s\\.,;!\\?]+");
     }
 
     @Override
     public String toString() {
-        return text;
+        return theText;
     }
 
     @Override
@@ -138,17 +138,17 @@ public class Text implements ValueObject, StringMixin {
         }
 
         final Text that = (Text) other;
-        return text.equals(that.text);
+        return theText.equals(that.theText);
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(text).code();
+        return new HashCoder().of(theText).code();
     }
 
     /**
-     * sentence capitalize, i.e., first word of each sentence is capital letter. a
-     * sentence is defined by the punctuation signals ".", "!" and "?"
+     * sentence capitalize, i.e., first word of each sentence is capital letter.
+     * a sentence is defined by the punctuation signals ".", "!" and "?"
      *
      * @return
      */
@@ -162,6 +162,6 @@ public class Text implements ValueObject, StringMixin {
      * @return
      */
     public Text allCaps() {
-        return valueOf(text.toUpperCase());
+        return valueOf(theText.toUpperCase());
     }
 }

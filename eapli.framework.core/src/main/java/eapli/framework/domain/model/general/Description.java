@@ -22,7 +22,7 @@ import eapli.framework.util.StringMixin;
 public class Description implements ValueObject, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
-    private final String description;
+    private final String theDescription;
 
     /**
      * protected constructor. to construct a new Designation instance use the
@@ -33,17 +33,17 @@ public class Description implements ValueObject, Serializable, StringMixin {
     protected Description(final String name) {
         Preconditions.nonEmpty(name, "Description should neither be null nor empty");
 
-        description = name;
+        theDescription = name;
     }
 
     protected Description() {
         // for ORM
-        description = null;
+        theDescription = null;
     }
 
     @Override
     public int length() {
-        return description.length();
+        return theDescription.length();
     }
 
     /**
@@ -67,16 +67,16 @@ public class Description implements ValueObject, Serializable, StringMixin {
         }
 
         final Description other = (Description) o;
-        return description.equals(other.description);
+        return theDescription.equals(other.theDescription);
     }
 
     @Override
     public String toString() {
-        return description;
+        return theDescription;
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(description).code();
+        return new HashCoder().of(theDescription).code();
     }
 }
