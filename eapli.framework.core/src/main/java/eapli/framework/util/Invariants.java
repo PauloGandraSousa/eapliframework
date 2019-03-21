@@ -8,7 +8,7 @@ import static eapli.framework.util.function.Functions.ifNotThen;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
+import java.util.function.BooleanSupplier;
 
 import eapli.framework.util.predicates.NumberPredicates;
 import eapli.framework.util.predicates.StringPredicates;
@@ -21,11 +21,11 @@ public final class Invariants implements Utilitarian {
     private Invariants() {
     }
 
-    public static void ensure(final Supplier<Boolean> test) {
+    public static void ensure(final BooleanSupplier test) {
         ensure(test, "");
     }
 
-    public static void ensure(final Supplier<Boolean> test, final String msg) {
+    public static void ensure(final BooleanSupplier test, final String msg) {
         ifNotThen(test, THROW_STATE_WITH_MESSAGE, msg);
     }
 

@@ -20,7 +20,7 @@ import eapli.framework.util.Invariants;
  * @param <T>
  */
 @Embeddable
-public class Range<T extends Comparable<T> & Serializable> implements ValueObject {
+public class Range<T extends Serializable & Comparable<T>> implements ValueObject {
 
     private static final long serialVersionUID = 1L;
 

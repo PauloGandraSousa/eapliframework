@@ -23,16 +23,17 @@ import eapli.framework.util.predicates.StringPredicates;
 public class Username implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final String username;
+    private final String theUsername;
 
     protected Username() {
         // for ORM
-        username = null;
+        theUsername = null;
     }
 
     protected Username(final String username) {
-        Preconditions.ensure(() -> StringPredicates.isSingleWord(username), "username should neither be null nor empty");
-        this.username = username;
+        Preconditions.ensure(() -> StringPredicates.isSingleWord(username),
+                "username should neither be null nor empty");
+        theUsername = username;
     }
 
     public static Username valueOf(final String username) {
@@ -50,17 +51,17 @@ public class Username implements ValueObject, Serializable {
 
         final Username other = (Username) o;
 
-        return username.equals(other.username);
+        return theUsername.equals(other.theUsername);
 
     }
 
     @Override
     public String toString() {
-        return username;
+        return theUsername;
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(username).code();
+        return new HashCoder().of(theUsername).code();
     }
 }

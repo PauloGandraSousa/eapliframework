@@ -3,7 +3,7 @@
  */
 package eapli.framework.util;
 
-import java.util.function.BinaryOperator;
+import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleUnaryOperator;
 
 /**
@@ -26,14 +26,14 @@ public final class Arrays implements Utilitarian {
      * @param op
      * @return
      */
-    public static double[] zip(final double[] a, final double[] b, final BinaryOperator<Double> op) {
+    public static double[] zip(final double[] a, final double[] b, final DoubleBinaryOperator op) {
         Preconditions.nonNull(a, b, op);
         final int size = java.lang.Math.min(a.length, b.length);
 
         final double[] res = new double[size];
 
         for (int i = 0; i < size; i++) {
-            res[i] = op.apply(a[i], b[i]);
+            res[i] = op.applyAsDouble(a[i], b[i]);
         }
         return res;
     }

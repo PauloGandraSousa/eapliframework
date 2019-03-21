@@ -21,7 +21,7 @@ public final class Either<T, U> {
 
     private enum SideType {
         LEFT, RIGHT
-    };
+    }
 
     private T left;
     private final SideType type;
@@ -86,9 +86,9 @@ public final class Either<T, U> {
     }
 
     /**
-     * acts on the value of this Either instance, executing the "normal" function
-     * with the left value if this Either instance holds a left value, otherwise
-     * executes the "error" function with the right value
+     * acts on the value of this Either instance, executing the "normal"
+     * function with the left value if this Either instance holds a left value,
+     * otherwise executes the "error" function with the right value
      *
      * @param normal
      * @param error

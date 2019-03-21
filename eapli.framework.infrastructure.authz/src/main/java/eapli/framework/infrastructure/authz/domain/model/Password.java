@@ -44,6 +44,7 @@ public class Password implements ValueObject, Serializable {
         return new Password(password);
     }
 
+    @SuppressWarnings("squid:S1126")
     private boolean meetsMinimumRequirements(final String password) {
         // sanity check
         if (StringPredicates.isNullOrEmpty(password)) {

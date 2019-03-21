@@ -8,7 +8,7 @@ import static eapli.framework.util.function.Functions.ifNotThen;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Supplier;
+import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
 
 import eapli.framework.util.predicates.NumberPredicates;
@@ -25,11 +25,11 @@ public final class Preconditions implements Utilitarian {
     private Preconditions() {
     }
 
-    public static void ensure(final Supplier<Boolean> test) {
+    public static void ensure(final BooleanSupplier test) {
         ensure(test, "");
     }
 
-    public static void ensure(final Supplier<Boolean> test, final String msg) {
+    public static void ensure(final BooleanSupplier test, final String msg) {
         ifNotThen(test, THROW_ARGUMENT_WITH_MESSAGE, msg);
     }
 

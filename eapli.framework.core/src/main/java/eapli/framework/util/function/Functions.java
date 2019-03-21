@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.BiFunction;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -67,6 +68,7 @@ public final class Functions implements Utilitarian {
     /**
      * No-Op
      */
+    @SuppressWarnings("squid:S1172")
     public static <T> void nop(final T x) {
         // no-op
     }
@@ -97,8 +99,8 @@ public final class Functions implements Utilitarian {
      * @param onFail
      * @return
      */
-    public static void ensure(final Supplier<Boolean> test, final Action onFail) {
-        if (!test.get()) {
+    public static void ensure(final BooleanSupplier test, final Action onFail) {
+        if (!test.getAsBoolean()) {
             onFail.execute();
         }
     }
@@ -128,8 +130,8 @@ public final class Functions implements Utilitarian {
      * @param consequence
      * @param msg
      */
-    public static void ifNotThen(final Supplier<Boolean> test, final Consumer<String> consequence, final String msg) {
-        if (!test.get()) {
+    public static void ifNotThen(final BooleanSupplier test, final Consumer<String> consequence, final String msg) {
+        if (!test.getAsBoolean()) {
             consequence.accept(msg);
         }
     }
@@ -161,9 +163,9 @@ public final class Functions implements Utilitarian {
      * @param onFail
      * @return
      */
-    public static <R> R ifThenElse(final Supplier<Boolean> predicate, final Supplier<R> onSucess,
+    public static <R> R ifThenElse(final BooleanSupplier predicate, final Supplier<R> onSucess,
             final Supplier<R> onFail) {
-        if (predicate.get()) {
+        if (predicate.getAsBoolean()) {
             return onSucess.get();
         } else {
             return onFail.get();
