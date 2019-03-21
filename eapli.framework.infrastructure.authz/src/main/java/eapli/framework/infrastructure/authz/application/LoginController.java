@@ -20,6 +20,23 @@ public class LoginController implements Controller {
     private AuthenticationService authenticationService;
 
     /**
+     * default constructor for Spring dependency injection
+     */
+    protected LoginController() {
+        // empty
+    }
+
+    /**
+     * in scenarios where there is no dependency injector, this constructor allows
+     * the controller to be be built and manually inject the dependency
+     *
+     * @param authenticationService
+     */
+    public LoginController(final AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
+    /**
      * This method allows a user to perform login and creates the session.
      *
      * @param userName
