@@ -17,6 +17,7 @@ import eapli.framework.util.Preconditions;
 public class Name implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
+    @SuppressWarnings("squid:S4784")
     public static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z]+[a-zA-Z ]+$", Pattern.CASE_INSENSITIVE);
     private final String firstName;
     private final String lastName;

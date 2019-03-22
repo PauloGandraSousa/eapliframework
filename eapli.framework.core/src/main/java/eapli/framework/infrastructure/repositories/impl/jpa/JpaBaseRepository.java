@@ -261,12 +261,12 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     /**
      * helper method to create a typed query. since this method concatenates the
      * where clause, be careful if this results from external input, e.g., user
-     * entered data
+     * entered data, to avoid SQL injection exploits
      *
      * @param where
      * @return
      */
-    @SuppressWarnings("squid:S3346")
+    @SuppressWarnings({ "squid:S3346", "squid:S2077" })
     private TypedQuery<T> query(final String where) {
         Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
 
@@ -378,7 +378,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * searches for objects that match the given criteria
+     * searches for objects that match the given criteria. be careful if the
+     * content of the where parameter is coming from external input, e.g., user
+     * entered data, to avoid SQL injection exploits
      *
      * @param where
      *            the where clause should use "e" as the query object
@@ -393,6 +395,15 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         return q.getResultList();
     }
 
+    /**
+     * searches for objects that match the given criteria. be careful if the
+     * content of the where parameter is coming from external input, e.g., user
+     * entered data, to avoid SQL injection exploits
+     *
+     * @param whereWithParameters
+     * @param params
+     * @return
+     */
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
         assert !StringPredicates.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
@@ -403,7 +414,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * searches for one object that matches the given criteria
+     * searches for one object that matches the given criteria be careful if the
+     * content of the where parameter is coming from external input, e.g., user
+     * entered data, to avoid SQL injection exploits
      *
      * @param where
      *            the where clause should use "e" as the query object
@@ -416,6 +429,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
 
     /**
      * searches for one object that matches the given criteria with parameters
+     * be careful if the content of the where parameter is coming from external
+     * input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param whereWithParameters
      *            the where clause should use "e" as the query object
@@ -430,6 +445,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
 
     /**
      * searches for one object that matches the given criteria with parameters
+     * be careful if the content of the where parameter is coming from external
+     * input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param where
      *            the where clause should use "e" as the query object
@@ -446,7 +463,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * searches for objects that matches the given criteria with parameters
+     * searches for objects that matches the given criteria with parameters be
+     * careful if the content of the where parameter is coming from external
+     * input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param where
      *            the where clause should use "e" as the query object

@@ -18,9 +18,11 @@ public interface NumeralSystem extends ValueObject {
      *
      * symbols = "01234567" ==> base = 8
      *
-     * the string of symbols is handled as an ordered string, however,
-     * implementations are free to define which symbols to use. e.g., a base 2
-     * numeral system may define that its symbols are "TF" and not "01"
+     * be careful not to use unicode symbols which actually occupy two bytes and
+     * will make the base calculation wrong. the string of symbols is handled as
+     * an ordered string, however, implementations are free to define which
+     * symbols to use. e.g., a base 2 numeral system may define that its symbols
+     * are "TF" and not "01"
      *
      * @return
      */
@@ -50,7 +52,6 @@ public interface NumeralSystem extends ValueObject {
      * @return
      */
     default boolean isValidNumeral(final String numeralToTest) {
-        final String pattern = "^[" + symbols() + "]+$";
-        return numeralToTest.matches(pattern);
+        return numeralToTest.chars().allMatch(c -> digit((char) c) != -1);
     }
 }

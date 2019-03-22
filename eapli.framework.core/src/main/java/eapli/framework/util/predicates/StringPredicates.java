@@ -25,6 +25,7 @@ import eapli.framework.util.Utilitarian;
  */
 public final class StringPredicates implements Utilitarian {
 
+    @SuppressWarnings("squid:S4784")
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
             .compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private static final String TRAILING_WHITESPACE_REGEX = ".*[ \t]+$";
@@ -55,6 +56,7 @@ public final class StringPredicates implements Utilitarian {
      * @param text
      * @return
      */
+    @SuppressWarnings("squid:S4784")
     public static boolean isPhrase(final String text) {
         return !isNullOrEmpty(text) && !text.matches(HEADING_WHITESPACE_REGEX)
                 && !text.matches(TRAILING_WHITESPACE_REGEX);
@@ -91,14 +93,37 @@ public final class StringPredicates implements Utilitarian {
         return text == null || text.trim().isEmpty();
     }
 
+    /**
+     * checks if a string contains at least one digit character
+     *
+     * @param text
+     * @return
+     */
+    @SuppressWarnings("squid:S4784")
     public static boolean containsDigit(final String text) {
         return text.matches(".*\\d.*");
     }
 
+    /**
+     * checks if a string contains at least one alphabetic character (regular
+     * Latin alphabet)
+     *
+     * @param text
+     * @return
+     */
+    @SuppressWarnings("squid:S4784")
     public static boolean containsAlpha(final String text) {
         return text.matches(".*[a-zA-Z].*");
     }
 
+    /**
+     * checks whether a string contains at least one capital letter (regular
+     * Latin alphabet)
+     *
+     * @param text
+     * @return
+     */
+    @SuppressWarnings("squid:S4784")
     public static boolean containsCapital(final String text) {
         return text.matches(".*[A-Z].*");
     }

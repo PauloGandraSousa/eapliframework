@@ -25,10 +25,14 @@ public final class Files implements Utilitarian {
     }
 
     /**
-     * returns the current working directory of the application
+     * returns the current working directory of the application. be carefull no
+     * to expose this information to the outside as it may expose security risks
+     * - see
+     * https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4797&rule_key=squid%3AS4797
      *
      * @return the current working directory of the application
      */
+    @SuppressWarnings("squid:S4797")
     public static String currentDirectory() {
         return Paths.get(".").toAbsolutePath().toString();
     }

@@ -53,14 +53,20 @@ public abstract class NumeralTestBase {
     }
 
     @Test
-    public void ensureNoStrangeSymbols() {
+    public void ensureConvertingToBaseDoesNotProduceStrangeSymbols() {
         final Stream<String> results = IntStream.range(0, 10000)
                 .<String>mapToObj(x -> Numeral.valueOf(x).toBase(getBase()).toString());
         assertTrue(results.allMatch(x -> validateSymbols(x, getBase())));
     }
 
-    private boolean validateSymbols(String x, int base) {
+    private boolean validateSymbols(final String x, final int base) {
         final String pattern = "^[" + SYMBOLS.substring(0, getBase()) + "]+$";
         return x.matches(pattern);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureInvalidNumeralIsNotAccepted() {
+        final String subject = "12=F";
+        Numeral.valueOf(subject, getBase());
     }
 }
