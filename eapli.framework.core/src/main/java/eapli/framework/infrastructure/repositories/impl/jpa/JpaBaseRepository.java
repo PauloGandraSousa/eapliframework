@@ -197,7 +197,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
 
         final TypedQuery<Long> q = entityManager()
-                .createQuery("SELECT COUNT(*) FROM " + this.entityClass.getSimpleName(), Long.class);
+                .createQuery("SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename", Long.class);
         return q.getSingleResult();
     }
 
