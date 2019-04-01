@@ -420,38 +420,36 @@ public class Matrix implements ValueObject {
 
         final Matrix adj = new Matrix(rows, cols);
 
-        double det;
-        final int tms = rows;
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                int ia = 0;
-                int ja = 0;
-
-                final Matrix ap = new Matrix(tms - 1, tms - 1);
-
-                for (int ii = 0; ii < tms; ii++) {
-                    int jj;
-                    for (jj = 0; jj < tms; jj++) {
-
-                        if ((ii != i) && (jj != j)) {
-                            ap.putAt(ia, ja, getAt(ii, jj));
-                            ja++;
-                        }
-
-                    }
-                    if ((ii != i) && (jj != j)) {
-                        ia++;
-                    }
-                    ja = 0;
-                }
-
-                det = ap.determinant2();
-                adj.putAt(i, j, java.lang.Math.pow(-1, (double) i + j) * det);
+                setAdjointCell(adj, rows, i, j);
             }
         }
 
         return adj.transpose();
+    }
+
+    private void setAdjointCell(final Matrix adj, final int tms, final int i, final int j) {
+        int ia = 0;
+        int ja = 0;
+
+        final Matrix ap = new Matrix(tms - 1, tms - 1);
+        for (int ii = 0; ii < tms; ii++) {
+            int jj;
+            for (jj = 0; jj < tms; jj++) {
+                if ((ii != i) && (jj != j)) {
+                    ap.putAt(ia, ja, getAt(ii, jj));
+                    ja++;
+                }
+            }
+            if ((ii != i) && (jj != j)) {
+                ia++;
+            }
+            ja = 0;
+        }
+
+        final double det = ap.determinant2();
+        adj.putAt(i, j, java.lang.Math.pow(-1, (double) i + j) * det);
     }
 
     public Matrix upperTriangle() {
@@ -465,26 +463,7 @@ public class Matrix implements ValueObject {
 
         for (int col = 0; col < tms - 1; col++) {
             for (int row = col + 1; row < tms; row++) {
-                int v = 1;
-                // check if 0 in diagonal
-                while (m.getAt(col, col) == 0) {
-                    // if so switch until not
-                    // check if switched all rows
-                    if (col + v >= tms) {
-                        iDF = 0;
-                    } else {
-                        for (int c = 0; c < tms; c++) {
-                            // switch rows
-                            final double temp = m.getAt(col, c);
-                            m.putAt(col, c, m.getAt(col + v, c));
-                            m.putAt(col + v, c, temp);
-                        }
-                        // count row switches
-                        v++;
-                        // each switch changes determinant factor
-                        iDF *= -1;
-                    }
-                }
+                switchZeroInDiagonal(tms, m, col);
 
                 if (m.getAt(col, col) != 0) {
                     final double f1 = (-1.0) * m.getAt(row, col) / m.getAt(col, col);
@@ -496,6 +475,29 @@ public class Matrix implements ValueObject {
         }
 
         return m;
+    }
+
+    private void switchZeroInDiagonal(final int tms, final Matrix m, int col) {
+        int v = 1;
+        // check if 0 in diagonal
+        while (m.getAt(col, col) == 0) {
+            // if so switch until not
+            // check if switched all rows
+            if (col + v >= tms) {
+                iDF = 0;
+            } else {
+                for (int c = 0; c < tms; c++) {
+                    // switch rows
+                    final double temp = m.getAt(col, c);
+                    m.putAt(col, c, m.getAt(col + v, c));
+                    m.putAt(col + v, c, temp);
+                }
+                // count row switches
+                v++;
+                // each switch changes determinant factor
+                iDF *= -1;
+            }
+        }
     }
 
     public double determinant2() {
@@ -566,6 +568,7 @@ public class Matrix implements ValueObject {
      *
      * @return
      */
+    @SuppressWarnings("squid:S2234")
     public boolean isSymmetric() {
         Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
 

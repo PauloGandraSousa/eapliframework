@@ -23,26 +23,17 @@
  */
 package eapli.framework.actions;
 
-import java.util.function.Supplier;
-
 /**
  * An Action (the GoF Command pattern)
- *
- * @todo this should not extend Supplier
  *
  * @author Paulo Gandra Sousa
  */
 @FunctionalInterface
-public interface Action extends Supplier<Boolean> {
+public interface Action {
     /**
      *
      * @return true if this "scope" should end or to signal OK; false otherwise,
      *         e.g., signal an error
      */
     boolean execute();
-
-    @Override
-    default Boolean get() {
-        return execute();
-    }
 }
