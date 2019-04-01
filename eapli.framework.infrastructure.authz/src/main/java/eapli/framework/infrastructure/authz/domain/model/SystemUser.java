@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package eapli.framework.infrastructure.authz.domain.model;
 
 import java.io.Serializable;
@@ -40,8 +63,7 @@ import eapli.framework.visitor.Visitor;
  *
  */
 @Entity
-public class SystemUser
-        implements AggregateRoot<Username>, DTOable, Visitable<GenericDTO>, Serializable {
+public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<GenericDTO>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,33 +93,32 @@ public class SystemUser
      * @param email
      * @param roles
      */
-    public SystemUser(final Username username, final Password password, final Name name,
-            final EmailAddress email, final Set<Role> roles) {
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final Set<Role> roles) {
         this(username, password, name, email, roles, DateTime.now());
     }
 
-    public SystemUser(final Username username, final Password password, final Name name,
-            final EmailAddress email, final Set<Role> roles, final Calendar createdOn) {
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final Set<Role> roles, final Calendar createdOn) {
         Preconditions.nonEmpty(roles, "roles cannot be null");
 
         final RoleSet roleset = new RoleSet();
-        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, this.createdOn))
-                .collect(Collectors.toList()));
+        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, this.createdOn)).collect(Collectors.toList()));
         init(username, password, name, email, roleset, createdOn);
     }
 
-    public SystemUser(final Username username, final Password password, final Name name,
-            final EmailAddress email, final RoleSet roles) {
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles) {
         this(username, password, name, email, roles, DateTime.now());
     }
 
-    public SystemUser(final Username username, final Password password, final Name name,
-            final EmailAddress email, final RoleSet roles, final Calendar createdOn) {
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles, final Calendar createdOn) {
         init(username, password, name, email, roles, createdOn);
     }
 
-    private void init(final Username username, final Password password, final Name name,
-            final EmailAddress email, final RoleSet roles, final Calendar createdOn) {
+    private void init(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles, final Calendar createdOn) {
         Preconditions.nonNull(roles, username, password, name, email, createdOn);
 
         this.createdOn = createdOn;
@@ -124,8 +145,8 @@ public class SystemUser
         if (this == that) {
             return true;
         }
-        if (!username.equals(that.username) || !password.equals(that.password)
-                || !name.equals(that.name) || !email.equals(that.email)) {
+        if (!username.equals(that.username) || !password.equals(that.password) || !name.equals(that.name)
+                || !email.equals(that.email)) {
             return false;
         }
         return roles.equals(that.roles);
