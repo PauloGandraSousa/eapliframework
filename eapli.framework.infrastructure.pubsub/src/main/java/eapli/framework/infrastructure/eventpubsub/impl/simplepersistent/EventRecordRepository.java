@@ -26,7 +26,7 @@ package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 import eapli.framework.domain.repositories.Repository;
 
 /**
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 interface EventRecordRepository extends Repository<EventRecord, Long> {

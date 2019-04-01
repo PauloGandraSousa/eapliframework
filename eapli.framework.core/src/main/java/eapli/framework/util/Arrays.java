@@ -29,7 +29,7 @@ import java.util.function.DoubleUnaryOperator;
 /**
  * utility class
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class Arrays implements Utilitarian {

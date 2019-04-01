@@ -37,7 +37,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.util.Preconditions;
 
 /**
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 @Entity

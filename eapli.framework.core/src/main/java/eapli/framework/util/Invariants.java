@@ -34,7 +34,7 @@ import eapli.framework.util.predicates.NumberPredicates;
 import eapli.framework.util.predicates.StringPredicates;
 
 /**
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class Invariants implements Utilitarian {

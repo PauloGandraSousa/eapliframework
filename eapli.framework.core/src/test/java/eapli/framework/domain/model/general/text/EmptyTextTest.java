@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public class EmptyTextTest extends TextTestBase {

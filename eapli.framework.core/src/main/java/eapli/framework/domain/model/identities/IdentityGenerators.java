@@ -30,7 +30,7 @@ import eapli.framework.util.Preconditions;
 import eapli.framework.util.Singleton;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class IdentityGenerators implements Singleton {

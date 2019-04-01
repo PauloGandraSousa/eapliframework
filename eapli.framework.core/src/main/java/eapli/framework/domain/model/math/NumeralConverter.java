@@ -29,7 +29,7 @@ import eapli.framework.util.Utilitarian;
  * utility class (private to the package) to extract the conversion logic from
  * the Numeral class and enforce the Single Responsibility Principle
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 class NumeralConverter implements Utilitarian {

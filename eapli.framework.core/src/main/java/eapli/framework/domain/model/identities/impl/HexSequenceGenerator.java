@@ -28,7 +28,7 @@ import eapli.framework.domain.model.identities.IdentityGenerator;
 /**
  * An id generator that produces an hexadecimal representation
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class HexSequenceGenerator implements IdentityGenerator<String> {

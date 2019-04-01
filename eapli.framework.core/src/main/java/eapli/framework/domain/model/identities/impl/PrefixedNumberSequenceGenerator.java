@@ -29,7 +29,7 @@ import eapli.framework.util.Preconditions;
 /**
  * An id generator that uses a prefix and a sequence number, e.g., AX00001
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class PrefixedNumberSequenceGenerator implements IdentityGenerator<String> {

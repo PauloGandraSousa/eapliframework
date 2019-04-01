@@ -30,7 +30,7 @@ import eapli.framework.domain.model.DomainEntity;
 /**
  * an in-memory repository that uses the domain object's identity as primary key
  * 
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  * @param <T>
  * @param <K>

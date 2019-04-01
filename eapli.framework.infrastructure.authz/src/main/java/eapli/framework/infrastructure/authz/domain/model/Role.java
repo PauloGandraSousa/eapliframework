@@ -31,7 +31,7 @@ import eapli.framework.util.Preconditions;
  * A generic concept for a role that can be used by application code to classify
  * users
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public class Role implements ValueObject {

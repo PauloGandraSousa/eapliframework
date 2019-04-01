@@ -31,7 +31,7 @@ import eapli.framework.util.Utilitarian;
 /**
  * just a playground to use the Java 8 Streams and Lambda features
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class MathFunctions implements Utilitarian {

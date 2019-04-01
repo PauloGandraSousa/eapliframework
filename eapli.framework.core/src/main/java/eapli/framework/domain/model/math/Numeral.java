@@ -31,7 +31,7 @@ import eapli.framework.util.Preconditions;
  * an integer number in any base. allows to easily convert to/from decimal,
  * binary, octal and hexadecimal bases
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class Numeral implements ValueObject {

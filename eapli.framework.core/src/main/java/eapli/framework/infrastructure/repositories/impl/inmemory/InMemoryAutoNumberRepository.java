@@ -29,7 +29,7 @@ import eapli.framework.domain.model.identities.impl.NumberSequenceGenerator;
  * an in-memory repository implementation that automatically generates a
  * sequence for ID of each object
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  * @param <T>
  */

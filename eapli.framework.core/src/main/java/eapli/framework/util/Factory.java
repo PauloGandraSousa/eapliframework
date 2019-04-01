@@ -28,7 +28,7 @@ package eapli.framework.util;
  * or a large value object, becomes complicated or reveals too much of the
  * internal structure, factories provide encapsulation.
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 @FunctionalInterface

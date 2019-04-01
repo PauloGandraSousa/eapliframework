@@ -1,5 +1,5 @@
 /**
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 /*

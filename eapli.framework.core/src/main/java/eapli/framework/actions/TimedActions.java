@@ -38,7 +38,7 @@ import eapli.framework.util.Utilitarian;
 /**
  * Utility functions for action execution with time control.
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class TimedActions implements Utilitarian {

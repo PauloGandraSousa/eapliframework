@@ -37,7 +37,7 @@ import eapli.framework.util.Preconditions;
  * A Collector to be used with Stream<Double> objects to collect the elements of
  * the stream into a double array
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class ArrayOfDoubleCollector {

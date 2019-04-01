@@ -30,7 +30,7 @@ import eapli.framework.domain.events.DomainEvent;
  * register their interest in certain Domain Events and be notified when those
  * events occur.
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public interface EventDispatcher {

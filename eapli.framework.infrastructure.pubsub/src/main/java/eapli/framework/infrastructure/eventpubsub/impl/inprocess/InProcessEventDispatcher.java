@@ -39,7 +39,7 @@ import eapli.framework.util.Singleton;
  * memory.
  *
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 @Component

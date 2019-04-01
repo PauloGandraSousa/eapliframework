@@ -16,7 +16,7 @@ import eapli.framework.util.Collections;
 import eapli.framework.util.function.MathFunctions;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class MathFunctionsTest {

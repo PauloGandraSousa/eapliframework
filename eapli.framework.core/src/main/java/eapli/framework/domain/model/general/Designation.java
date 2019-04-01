@@ -39,7 +39,7 @@ import eapli.framework.util.predicates.StringPredicates;
  * (but spaces in between are allowed)
  *
  * @author Jorge Santos ajs@isep.ipp.pt
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  */
 @Embeddable
 public class Designation implements ValueObject, Serializable, StringMixin {

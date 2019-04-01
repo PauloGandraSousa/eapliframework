@@ -32,7 +32,7 @@ import eapli.framework.util.Preconditions;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  * @param <T>
  */

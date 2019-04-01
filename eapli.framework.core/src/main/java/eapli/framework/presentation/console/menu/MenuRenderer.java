@@ -31,7 +31,7 @@ import eapli.framework.util.Preconditions;
 /**
  * base class for menu renderers using the console as I/O
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public abstract class MenuRenderer {

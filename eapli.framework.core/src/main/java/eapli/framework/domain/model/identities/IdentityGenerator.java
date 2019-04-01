@@ -24,7 +24,7 @@
 package eapli.framework.domain.model.identities;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 @FunctionalInterface

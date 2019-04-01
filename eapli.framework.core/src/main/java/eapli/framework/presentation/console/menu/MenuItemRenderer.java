@@ -26,7 +26,7 @@ package eapli.framework.presentation.console.menu;
 import eapli.framework.actions.menu.MenuItem;
 
 /**
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public class MenuItemRenderer {

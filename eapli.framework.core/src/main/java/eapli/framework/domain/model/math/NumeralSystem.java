@@ -26,7 +26,7 @@ package eapli.framework.domain.model.math;
 import eapli.framework.domain.model.ValueObject;
 
 /**
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 @FunctionalInterface

@@ -43,7 +43,7 @@ import eapli.framework.util.Utilitarian;
 /**
  * A utility class with some handy functions
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class Functions implements Utilitarian {

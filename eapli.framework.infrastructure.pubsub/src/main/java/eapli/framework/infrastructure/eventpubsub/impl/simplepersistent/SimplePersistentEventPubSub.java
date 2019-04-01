@@ -48,7 +48,7 @@ import eapli.framework.util.Singleton;
  *
  * This class is only prepared to be used by Spring Dependency Injection
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 @Component

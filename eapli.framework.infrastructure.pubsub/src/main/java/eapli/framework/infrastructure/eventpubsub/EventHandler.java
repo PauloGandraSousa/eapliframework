@@ -28,7 +28,7 @@ import eapli.framework.domain.events.DomainEvent;
 /**
  * an observer of domain events
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 @FunctionalInterface

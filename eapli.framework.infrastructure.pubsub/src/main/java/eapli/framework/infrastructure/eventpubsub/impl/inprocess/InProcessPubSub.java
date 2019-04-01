@@ -49,7 +49,7 @@ import eapli.framework.util.Singleton;
  * publishing an event is performed in a separate thread of execution from the
  * calling thread
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 final class InProcessPubSub implements Singleton, EventDispatcher, EventPublisher {

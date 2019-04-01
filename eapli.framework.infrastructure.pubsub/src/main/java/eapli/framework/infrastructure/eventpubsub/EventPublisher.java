@@ -29,7 +29,7 @@ import eapli.framework.domain.events.DomainEvent;
  * An Event publisher publishes events to interested parties. Parties would have
  * mentioned their interest via an EventDispatcher.
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public interface EventPublisher {

@@ -15,7 +15,7 @@ import org.junit.Test;
 import eapli.framework.domain.model.general.Text;
 
 /**
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public abstract class TextTestBase {

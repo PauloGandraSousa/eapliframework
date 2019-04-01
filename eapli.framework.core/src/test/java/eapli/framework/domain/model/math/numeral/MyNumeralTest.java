@@ -17,7 +17,7 @@ import eapli.framework.domain.model.math.Numeral;
 import eapli.framework.domain.model.math.NumeralSystem;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class MyNumeralTest {

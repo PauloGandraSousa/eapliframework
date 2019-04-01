@@ -3,7 +3,7 @@ package eapli.framework.memento;
 /**
  * very simple sample class for the use of memento
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 class SampleAdder implements Restorable {

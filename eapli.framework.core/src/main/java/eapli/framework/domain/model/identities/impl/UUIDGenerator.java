@@ -29,7 +29,7 @@ import eapli.framework.domain.model.identities.IdentityGenerator;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class UUIDGenerator implements IdentityGenerator<UUID> {

@@ -28,7 +28,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 /**
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 interface SpringDataEventRecordRepository extends EventRecordRepository, CrudRepository<EventRecord, Long> {

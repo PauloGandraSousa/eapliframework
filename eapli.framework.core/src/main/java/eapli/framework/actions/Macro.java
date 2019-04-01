@@ -31,7 +31,7 @@ import java.util.Optional;
  * a collection of actions that can be executed as one single action (Composite
  * pattern). execution stops on the first action that returns false
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class Macro implements Action {

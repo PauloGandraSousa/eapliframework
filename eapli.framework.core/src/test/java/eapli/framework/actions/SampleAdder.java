@@ -3,7 +3,7 @@ package eapli.framework.actions;
 /**
  * very simple sample class for the use of actions
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 class SampleAdder {

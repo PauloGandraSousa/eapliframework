@@ -26,7 +26,7 @@ package eapli.framework.domain.model;
 /**
  * a simple base class for aggregate roots
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public abstract class AggregateRootBase<I> extends DomainEntityBase<I> implements AggregateRoot<I> {

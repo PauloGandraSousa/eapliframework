@@ -29,7 +29,7 @@ import java.io.Serializable;
  * a simple base class for domain entities providing for equality test thru
  * business identity
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public abstract class DomainEntityBase<I> implements DomainEntity<I>, Serializable {

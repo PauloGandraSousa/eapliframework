@@ -28,7 +28,7 @@ package eapli.framework.util;
  * Strings, e.g., the name concept Designation.
  *
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public interface StringMixin {

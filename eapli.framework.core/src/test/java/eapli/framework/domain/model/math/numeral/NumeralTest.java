@@ -12,7 +12,7 @@ import org.junit.Test;
 import eapli.framework.domain.model.math.Numeral;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class NumeralTest {

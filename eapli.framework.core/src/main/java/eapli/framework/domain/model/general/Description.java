@@ -36,7 +36,7 @@ import eapli.framework.util.StringMixin;
  * Generic description concept.it must have some content but no special rules
  * about the content exist.
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  */
 @Embeddable
 public class Description implements ValueObject, Serializable, StringMixin {

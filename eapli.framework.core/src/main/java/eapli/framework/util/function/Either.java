@@ -35,7 +35,7 @@ import eapli.framework.util.Preconditions;
  * error handling where, by convention, the left type is the correct response
  * and the right type is the error response
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  * @param <T>
  * @param <U>

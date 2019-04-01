@@ -38,7 +38,7 @@ import eapli.framework.util.predicates.StringPredicates;
  * utility class for validating preconditions, usually on function parameters.
  * if the precondition is not met, an IllegalArgumentException is thrown
  *
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class Preconditions implements Utilitarian {

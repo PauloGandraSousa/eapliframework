@@ -30,7 +30,7 @@ import eapli.framework.domain.model.identities.IdentityGenerator;
 import eapli.framework.util.Invariants;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class NumberSequenceGenerator implements IdentityGenerator<Long> {

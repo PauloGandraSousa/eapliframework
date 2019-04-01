@@ -45,7 +45,7 @@ import eapli.framework.util.StringMixin;
  * that into consideration. example, the text "the red fox" has one line while
  * the text "the red fox\n" has two lines
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public class Text implements ValueObject, StringMixin {
@@ -104,7 +104,7 @@ public class Text implements ValueObject, StringMixin {
     /**
      * helper Collector
      *
-     * @author pgsou_000
+     * @author Paulo Gandra de Sousa
      *
      */
     private class WordCounterCollector {

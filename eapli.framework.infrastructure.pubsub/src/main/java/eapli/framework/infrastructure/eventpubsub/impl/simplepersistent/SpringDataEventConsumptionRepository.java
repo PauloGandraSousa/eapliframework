@@ -26,7 +26,7 @@ package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 interface SpringDataEventConsumptionRepository

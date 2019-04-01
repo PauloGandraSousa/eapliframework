@@ -28,7 +28,7 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
 
 /**
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class StandardNumeralSystem implements ValueObject, NumeralSystem {

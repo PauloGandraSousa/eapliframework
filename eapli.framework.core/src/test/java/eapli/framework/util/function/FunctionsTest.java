@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author SOU03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class FunctionsTest {

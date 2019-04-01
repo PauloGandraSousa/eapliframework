@@ -29,7 +29,7 @@ import eapli.framework.util.Utilitarian;
 /**
  * utility class
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class Actions implements Utilitarian {

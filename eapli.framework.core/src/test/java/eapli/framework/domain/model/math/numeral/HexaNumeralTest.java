@@ -4,7 +4,7 @@
 package eapli.framework.domain.model.math.numeral;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class HexaNumeralTest extends NumeralTestBase {
