@@ -47,8 +47,10 @@ import eapli.framework.util.function.ArrayOfDoubleCollector;
  */
 public class Vector implements ValueObject {
 
-    private static final String VECTOR_TYPE_MUST_BE_THE_SAME = "vector type must be the same";
     private static final long serialVersionUID = -3010865637192089056L;
+
+    private static final String VECTOR_TYPE_MUST_BE_THE_SAME = "vector type must be the same";
+    private static final double EPSILON = 0.0000001;
 
     public enum VectorType {
         ROW, COLUMN
@@ -137,18 +139,14 @@ public class Vector implements ValueObject {
         return data[i - 1];
     }
 
+    /**
+     * returns the corresponding unit vector of this vector
+     *
+     * @return
+     */
     public Vector normalized() {
-        final Double denominator = Math.sqrt(sum());
-
-        return new Vector(type, dimensions, Arrays.stream(data).map(e -> e / denominator));
-    }
-
-    private double sum() {
-        double sum = 0;
-        for (final double x : data) {
-            sum += x;
-        }
-        return sum;
+        final double magnitude = magnitude();
+        return new Vector(type, dimensions, Arrays.stream(data).map(e -> e / magnitude));
     }
 
     @Override
@@ -222,11 +220,34 @@ public class Vector implements ValueObject {
         return Math.sqrt(accum);
     }
 
+    public double length() {
+        return magnitude();
+    }
+
     public boolean isUnit() {
-        return magnitude() == 1.0;
+        final double mag = magnitude();
+        return mag >= 1.0 - EPSILON && mag <= 1.0 + EPSILON;
     }
 
     public int dimensions() {
         return dimensions;
+    }
+
+    /**
+     * checks if all elements of the vector are zero
+     *
+     * @return
+     */
+    public boolean isZero() {
+        return stream().allMatch(e -> e == 0);
+    }
+
+    /**
+     * returns the data elements of the vector
+     *
+     * @return
+     */
+    public double[] elements() {
+        return Arrays.copyOf(data, 1);
     }
 }
