@@ -1,6 +1,25 @@
 /*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
+ * MIT License
+ *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package eapli.framework.domain.repositories;
 
@@ -44,8 +63,8 @@ public interface Repository<T, K extends Serializable> {
     void deleteById(K entityId) throws IntegrityViolationException;
 
     /**
-     * removes the specified entity from the repository. Alias to delete() in
-     * order to better fit the "List"-like nature of a repository
+     * removes the specified entity from the repository. Alias to delete() in order
+     * to better fit the "List"-like nature of a repository
      *
      * @param entity
      * @throws IntegrityViolationException
@@ -57,9 +76,8 @@ public interface Repository<T, K extends Serializable> {
     }
 
     /**
-     * Removes the entity with the specified primary key from the repository.
-     * Alias to deleteById() in order to better fit the "List"-like nature of a
-     * repository
+     * Removes the entity with the specified primary key from the repository. Alias
+     * to deleteById() in order to better fit the "List"-like nature of a repository
      *
      * @param entity
      * @throws IntegrityViolationException
@@ -97,8 +115,8 @@ public interface Repository<T, K extends Serializable> {
     Optional<T> findById(K id);
 
     /**
-     * Gets the entity with the specified primary key. Alias to findById() in
-     * order to better fit the "List"-like nature of a repository
+     * Gets the entity with the specified primary key. Alias to findById() in order
+     * to better fit the "List"-like nature of a repository
      *
      * @param id
      * @return
@@ -115,8 +133,8 @@ public interface Repository<T, K extends Serializable> {
     long count();
 
     /**
-     * Returns the number of entities in the repository. Alias to count() in
-     * order to better fit the "List"-like nature of a repository
+     * Returns the number of entities in the repository. Alias to count() in order
+     * to better fit the "List"-like nature of a repository
      *
      * @return
      */

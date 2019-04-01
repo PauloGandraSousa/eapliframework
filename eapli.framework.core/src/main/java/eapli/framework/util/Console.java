@@ -1,6 +1,25 @@
 /*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
+ * MIT License
+ *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package eapli.framework.util;
 
@@ -32,7 +51,7 @@ public final class Console implements Utilitarian {
         // to make sure this is an utility class
     }
 
-    public static String readLine(String prompt) {
+    public static String readLine(final String prompt) {
         try {
             System.out.println(prompt);
             final InputStreamReader converter = new InputStreamReader(System.in);
@@ -45,7 +64,7 @@ public final class Console implements Utilitarian {
         }
     }
 
-    public static int readInteger(String prompt) {
+    public static int readInteger(final String prompt) {
         do {
             try {
                 final String input = readLine(prompt);
@@ -56,7 +75,7 @@ public final class Console implements Utilitarian {
         } while (true);
     }
 
-    public static long readLong(String prompt) {
+    public static long readLong(final String prompt) {
         do {
             try {
                 final String input = readLine(prompt);
@@ -67,7 +86,7 @@ public final class Console implements Utilitarian {
         } while (true);
     }
 
-    public static boolean readBoolean(String prompt) {
+    public static boolean readBoolean(final String prompt) {
         do {
             try {
                 final String strBool = readLine(prompt).toLowerCase();
@@ -82,7 +101,7 @@ public final class Console implements Utilitarian {
         } while (true);
     }
 
-    public static int readOption(int low, int high, int exit) {
+    public static int readOption(final int low, final int high, final int exit) {
         int option;
         do {
             option = Console.readInteger("Select an option: ");
@@ -93,11 +112,11 @@ public final class Console implements Utilitarian {
         return option;
     }
 
-    public static Date readDate(String prompt) {
+    public static Date readDate(final String prompt) {
         return readDate(prompt, "yyyy/MM/dd");
     }
 
-    public static Date readDate(String prompt, String dateFormat) {
+    public static Date readDate(final String prompt, final String dateFormat) {
         do {
             try {
                 final String strDate = readLine(prompt);
@@ -109,11 +128,11 @@ public final class Console implements Utilitarian {
         } while (true);
     }
 
-    public static Calendar readCalendar(String prompt) {
+    public static Calendar readCalendar(final String prompt) {
         return readCalendar(prompt, "dd-MM-yyyy");
     }
 
-    public static Calendar readCalendar(String prompt, String dateFormat) {
+    public static Calendar readCalendar(final String prompt, final String dateFormat) {
         do {
             try {
                 final String strDate = readLine(prompt);
@@ -125,7 +144,7 @@ public final class Console implements Utilitarian {
         } while (true);
     }
 
-    public static double readDouble(String prompt) {
+    public static double readDouble(final String prompt) {
         do {
             try {
                 final String input = readLine(prompt);
@@ -137,7 +156,7 @@ public final class Console implements Utilitarian {
     }
 
     @SuppressWarnings("squid:S1166")
-    public static void waitForKey(String prompt) {
+    public static void waitForKey(final String prompt) {
         System.out.println(prompt);
         try {
             System.in.read();
