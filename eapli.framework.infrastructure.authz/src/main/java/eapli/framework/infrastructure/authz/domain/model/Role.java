@@ -23,6 +23,8 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
+import java.io.Serializable;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
@@ -34,7 +36,7 @@ import eapli.framework.util.Preconditions;
  * @author Paulo Gandra de Sousa
  *
  */
-public class Role implements ValueObject {
+public class Role implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
 
