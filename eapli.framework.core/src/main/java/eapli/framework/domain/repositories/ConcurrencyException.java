@@ -29,7 +29,7 @@ package eapli.framework.domain.repositories;
  *
  * @author arocha
  */
-public class ConcurrencyException extends Exception {
+public class ConcurrencyException extends RuntimeException {
 
     private static final long serialVersionUID = -6364660249001279449L;
 

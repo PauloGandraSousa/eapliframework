@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.domain.repositories.Repository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.util.Preconditions;
@@ -91,28 +89,28 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
     }
 
     /**
-     * returns if the repository is running in single transaction mode or within a
-     * TransactionalContext
+     * returns if the repository is running in single transaction mode or within
+     * a TransactionalContext
      *
-     * @return true if the repository is running in single transaction mode false if
-     *         running within a Transactional Context
+     * @return true if the repository is running in single transaction mode
+     *         false if running within a Transactional Context
      */
     public boolean isInTransaction() {
         return context() == null;
     }
 
     @Override
-    public void delete(final T entity) throws IntegrityViolationException {
+    public void delete(final T entity) {
         this.repo.delete(entity);
     }
 
     @Override
-    public void deleteById(final K id) throws IntegrityViolationException {
+    public void deleteById(final K id) {
         this.repo.deleteById(id);
     }
 
     @Override
-    public <S extends T> S save(final S entity) throws ConcurrencyException, IntegrityViolationException {
+    public <S extends T> S save(final S entity) {
         return this.repo.save(entity);
     }
 

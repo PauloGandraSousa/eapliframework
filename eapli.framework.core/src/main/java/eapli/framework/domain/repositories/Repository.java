@@ -50,7 +50,7 @@ public interface Repository<T, K extends Serializable> {
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void delete(T entity) throws IntegrityViolationException;
+    void delete(T entity);
 
     /**
      * Removes the entity with the specified primary key from the repository.
@@ -60,31 +60,32 @@ public interface Repository<T, K extends Serializable> {
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void deleteById(K entityId) throws IntegrityViolationException;
+    void deleteById(K entityId);
 
     /**
-     * removes the specified entity from the repository. Alias to delete() in order
-     * to better fit the "List"-like nature of a repository
+     * removes the specified entity from the repository. Alias to delete() in
+     * order to better fit the "List"-like nature of a repository
      *
      * @param entity
      * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    default void remove(final T entity) throws IntegrityViolationException {
+    default void remove(final T entity) {
         delete(entity);
     }
 
     /**
-     * Removes the entity with the specified primary key from the repository. Alias
-     * to deleteById() in order to better fit the "List"-like nature of a repository
+     * Removes the entity with the specified primary key from the repository.
+     * Alias to deleteById() in order to better fit the "List"-like nature of a
+     * repository
      *
      * @param entity
      * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    default void remove(final K entityId) throws IntegrityViolationException {
+    default void remove(final K entityId) {
         deleteById(entityId);
     }
 
@@ -97,7 +98,7 @@ public interface Repository<T, K extends Serializable> {
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
      */
-    <S extends T> S save(S entity) throws ConcurrencyException, IntegrityViolationException;
+    <S extends T> S save(S entity);
 
     /**
      * gets all entities from the repository.
@@ -115,8 +116,8 @@ public interface Repository<T, K extends Serializable> {
     Optional<T> findById(K id);
 
     /**
-     * Gets the entity with the specified primary key. Alias to findById() in order
-     * to better fit the "List"-like nature of a repository
+     * Gets the entity with the specified primary key. Alias to findById() in
+     * order to better fit the "List"-like nature of a repository
      *
      * @param id
      * @return
@@ -133,8 +134,8 @@ public interface Repository<T, K extends Serializable> {
     long count();
 
     /**
-     * Returns the number of entities in the repository. Alias to count() in order
-     * to better fit the "List"-like nature of a repository
+     * Returns the number of entities in the repository. Alias to count() in
+     * order to better fit the "List"-like nature of a repository
      *
      * @return
      */

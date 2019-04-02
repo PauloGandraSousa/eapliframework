@@ -82,7 +82,7 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
      * @throws IntegrityViolationException
      */
     @Override
-    public void delete(final T entity) throws IntegrityViolationException {
+    public void delete(final T entity) {
         try {
             context().beginTransaction();
             super.delete(entity);
@@ -101,7 +101,7 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
      *             if the delete operation makes no sense for this repository
      */
     @Override
-    public void deleteById(final K entityId) throws IntegrityViolationException {
+    public void deleteById(final K entityId) {
         try {
             context().beginTransaction();
             super.deleteById(entityId);
@@ -119,7 +119,7 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
      * @throws IntegrityViolationException
      */
     @Override
-    public T create(final T entity) throws IntegrityViolationException {
+    public T create(final T entity) {
         try {
             context().beginTransaction();
             super.create(entity);
@@ -138,8 +138,9 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
     /**
      * Inserts or updates an entity <b>and commits</b>.
      *
-     * note that you should reference the return value to use the persisted entity,
-     * as the original object passed as argument might be copied to a new object
+     * note that you should reference the return value to use the persisted
+     * entity, as the original object passed as argument might be copied to a
+     * new object
      *
      * check <a href=
      * "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
@@ -147,13 +148,14 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
      * Behaviour and merge()
      *
      * @param entity
-     * @return the persisted entity - might be a different object than the parameter
+     * @return the persisted entity - might be a different object than the
+     *         parameter
      * @throws eapli.framework.domain.repositories.ConcurrencyException
      * @throws IntegrityViolationException
      */
     @Override
     @SuppressWarnings("squid:S1226")
-    public <S extends T> S save(S entity) throws ConcurrencyException, IntegrityViolationException {
+    public <S extends T> S save(S entity) {
         Preconditions.nonNull(entity);
 
         try {

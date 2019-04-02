@@ -28,8 +28,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import eapli.framework.application.Controller;
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
 import eapli.framework.infrastructure.authz.domain.model.Password;
 
@@ -62,14 +60,9 @@ public class ChangePasswordController implements Controller {
         this.authorizationService = authorizationService;
     }
 
-    public boolean changePassword(final String oldPassword, final String newPassword)
-            throws ConcurrencyException, IntegrityViolationException {
+    public boolean changePassword(final String oldPassword, final String newPassword) {
         final Optional<UserSession> s = authorizationService.session();
-        if (s.isPresent()) {
-            return authenticationService.changePassword(s.get().authenticatedUser(), Password.valueOf(oldPassword),
-                    Password.valueOf(newPassword));
-        } else {
-            throw new UserSessionNotInitiatedException();
-        }
+        return s.map(u -> authenticationService.changePassword(u.authenticatedUser(), Password.valueOf(oldPassword),
+                Password.valueOf(newPassword))).orElseThrow(UserSessionNotInitiatedException::new);
     }
 }

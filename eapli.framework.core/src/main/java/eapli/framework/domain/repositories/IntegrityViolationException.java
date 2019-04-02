@@ -30,7 +30,7 @@ package eapli.framework.domain.repositories;
  * @author Paulo Gandra Sousa
  *
  */
-public class IntegrityViolationException extends Exception {
+public class IntegrityViolationException extends RuntimeException {
 
     private static final long serialVersionUID = 7328099647714453484L;
 

@@ -40,6 +40,10 @@ public final class AuthzRegistry implements Singleton {
     private static LoginController loginController;
     private static ChangePasswordController changePwdController;
 
+    private AuthzRegistry() {
+        // ensure utility
+    }
+
     public static void configure(final UserRepository userRepo) {
         authenticationService = new AuthenticationService(userRepo, authorizationSvc);
         loginController = new LoginController(authenticationService);

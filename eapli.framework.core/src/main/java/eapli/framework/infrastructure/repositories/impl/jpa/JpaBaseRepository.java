@@ -120,7 +120,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      * @param entity
      * @return the newly created persistent object
      */
-    public T create(final T entity) throws IntegrityViolationException {
+    public T create(final T entity) {
         Preconditions.nonNull(entity);
 
         try {
@@ -158,7 +158,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         return read(id);
     }
 
-    public T update(final T entity) throws ConcurrencyException, IntegrityViolationException {
+    public T update(final T entity) {
         return save(entity);
     }
 
@@ -172,7 +172,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      */
     @Override
     @SuppressWarnings("squid:S1226")
-    public void delete(T entity) throws IntegrityViolationException {
+    public void delete(T entity) {
         Preconditions.nonNull(entity);
 
         try {
@@ -194,7 +194,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      *             if the delete operation makes no sense for this repository
      */
     @Override
-    public void deleteById(final K entityId) throws IntegrityViolationException {
+    public void deleteById(final K entityId) {
         Preconditions.nonNull(entityId);
 
         // this is not efficient as it will fetch the data first and only
@@ -238,21 +238,23 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     /**
      * Inserts or updates an entity <b>and commits</b>.
      *
-     * note that you should reference the return value to use the persisted entity,
-     * as the original object passed as argument might be copied to a new object
+     * note that you should reference the return value to use the persisted
+     * entity, as the original object passed as argument might be copied to a
+     * new object
      *
      * check <a href=
      * "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
-     * > JPA implementation patterns</a> for a discussion on saveOrUpdate() behavior
-     * and merge()
+     * > JPA implementation patterns</a> for a discussion on saveOrUpdate()
+     * behavior and merge()
      *
      * @param entity
-     * @return the persisted entity - might be a different object than the parameter
+     * @return the persisted entity - might be a different object than the
+     *         parameter
      * @throws eapli.framework.domain.repositories.ConcurrencyException
      * @throws IntegrityViolationException
      */
     @Override
-    public <S extends T> S save(final S entity) throws ConcurrencyException, IntegrityViolationException {
+    public <S extends T> S save(final S entity) {
         try {
             return entityManager().merge(entity);
         } catch (final PersistenceException ex) {
@@ -395,9 +397,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * searches for objects that match the given criteria. be careful if the content
-     * of the where parameter is coming from external input, e.g., user entered
-     * data, to avoid SQL injection exploits
+     * searches for objects that match the given criteria. be careful if the
+     * content of the where parameter is coming from external input, e.g., user
+     * entered data, to avoid SQL injection exploits
      *
      * @param where
      *            the where clause should use "e" as the query object
@@ -413,9 +415,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * searches for objects that match the given criteria. be careful if the content
-     * of the where parameter is coming from external input, e.g., user entered
-     * data, to avoid SQL injection exploits
+     * searches for objects that match the given criteria. be careful if the
+     * content of the where parameter is coming from external input, e.g., user
+     * entered data, to avoid SQL injection exploits
      *
      * @param whereWithParameters
      * @param params
@@ -445,9 +447,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * searches for one object that matches the given criteria with parameters be
-     * careful if the content of the where parameter is coming from external input,
-     * e.g., user entered data, to avoid SQL injection exploits
+     * searches for one object that matches the given criteria with parameters
+     * be careful if the content of the where parameter is coming from external
+     * input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param whereWithParameters
      *            the where clause should use "e" as the query object
@@ -461,16 +463,17 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * searches for one object that matches the given criteria with parameters be
-     * careful if the content of the where parameter is coming from external input,
-     * e.g., user entered data, to avoid SQL injection exploits
+     * searches for one object that matches the given criteria with parameters
+     * be careful if the content of the where parameter is coming from external
+     * input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param where
      *            the where clause should use "e" as the query object
      * @param args
-     *            a list of parameters to be used in the query. each odd parameter
-     *            is assumed to be the name of the parameter; each even parameter is
-     *            assumed to be the value of the preceeding parameter
+     *            a list of parameters to be used in the query. each odd
+     *            parameter is assumed to be the name of the parameter; each
+     *            even parameter is assumed to be the value of the preceeding
+     *            parameter
      * @return
      */
     protected Optional<T> matchOne(final String where, final Object... args) {
@@ -480,15 +483,16 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
 
     /**
      * searches for objects that matches the given criteria with parameters be
-     * careful if the content of the where parameter is coming from external input,
-     * e.g., user entered data, to avoid SQL injection exploits
+     * careful if the content of the where parameter is coming from external
+     * input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param where
      *            the where clause should use "e" as the query object
      * @param args
-     *            a list of parameters to be used in the query. each odd parameter
-     *            is assumed to be the name of the parameter; each even parameter is
-     *            assumed to be the value of the preceeding parameter
+     *            a list of parameters to be used in the query. each odd
+     *            parameter is assumed to be the name of the parameter; each
+     *            even parameter is assumed to be the value of the preceeding
+     *            parameter
      * @return
      */
     protected List<T> match(final String where, final Object... args) {
