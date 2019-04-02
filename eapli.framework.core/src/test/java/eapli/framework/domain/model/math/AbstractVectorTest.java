@@ -24,11 +24,14 @@
 package eapli.framework.domain.model.math;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.domain.model.math.Vector.VectorType;
+import eapli.framework.util.predicates.NumberPredicates;
 
 /**
  *
@@ -39,6 +42,7 @@ public abstract class AbstractVectorTest {
 
     private static final Vector ONE = new Vector(new double[] { 1, 1, 1 }, VectorType.ROW);
     private static final Vector ZERO = new Vector(new double[] { 0, 0, 0 }, VectorType.ROW);
+    private static final double EPSILON = 0.001;
 
     protected Vector instance;
 
@@ -49,12 +53,21 @@ public abstract class AbstractVectorTest {
 
     @Test
     public void ensureMagnitude() {
-        assertEquals(expectedMagnitude(), instance.magnitude(), 0.01);
+        assertEquals(expectedMagnitude(), instance.magnitude(), EPSILON);
     }
 
     @Test
     public void ensureNormalized() {
-        assertEquals(expectedNormalized(), instance.normalized());
+
+        final Vector norm = expectedNormalized();
+        final Vector subject = instance.normalized();
+        for (int i = 1; i <= subject.length(); i++) {
+            if (!NumberPredicates.isWithinMargin(subject.elementAt(i), norm.elementAt(i), EPSILON)) {
+                fail();
+            }
+        }
+        assertTrue(true);
+
     }
 
     protected abstract Vector expectedNormalized();
