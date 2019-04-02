@@ -24,6 +24,7 @@
 package eapli.framework.infrastructure.authz.application;
 
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
+import eapli.framework.util.Invariants;
 import eapli.framework.util.Singleton;
 
 /**
@@ -46,18 +47,22 @@ public final class AuthzRegistry implements Singleton {
     }
 
     public static AuthenticationService getAuthenticationService() {
+        Invariants.nonNull(authenticationService);
         return authenticationService;
     }
 
     public static AuthorizationService getAuthorizationService() {
+        Invariants.nonNull(authorizationSvc);
         return authorizationSvc;
     }
 
     public static LoginController getLoginController() {
+        Invariants.nonNull(loginController);
         return loginController;
     }
 
     public static ChangePasswordController getChangePwdController() {
+        Invariants.nonNull(changePwdController);
         return changePwdController;
     }
 }
