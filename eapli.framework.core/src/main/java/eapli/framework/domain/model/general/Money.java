@@ -61,8 +61,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Constructs a new Money object.
      *
      * You'll notice there are no setters. Money is a Value Object and is thus
-     * immutable. It helps to have a variety of constructors to make it easy to make
-     * monies. Constructors that convert from basic numeric types are always useful.
+     * immutable. It helps to have a variety of constructors to make it easy to
+     * make monies. Constructors that convert from basic numeric types are
+     * always useful.
      *
      * @param amount
      *            the amount in the units of currency, e.g., 100.50 EUR
@@ -79,9 +80,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * special constructor to reconstruct objects from the database - to be used in
-     * SELECT NEW JPQL queries. this is an example of a "public but not published"
-     * interface
+     * special constructor to reconstruct objects from the database - to be used
+     * in SELECT NEW JPQL queries. this is an example of a "public but not
+     * published" interface
      *
      * @TODO check other ways to avoid having this special constructor
      * @param amount
@@ -106,16 +107,16 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * If you use one currency a lot, you may want a special constructor for that
-     * currency.
+     * If you use one currency a lot, you may want a special constructor for
+     * that currency.
      */
     public static Money dollars(final double amount) {
         return new Money(amount, Currency.getInstance("USD"));
     }
 
     /**
-     * If you use one currency a lot, you may want a special constructor for that
-     * currency.
+     * If you use one currency a lot, you may want a special constructor for
+     * that currency.
      */
     public static Money euros(final double amount) {
         return new Money(amount, Currency.getInstance("EUR"));
@@ -137,31 +138,51 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * creates a collector that can be used to sum up a stream of Money objects in a
-     * reduction style. that is, since Money is an immutable object, collecting
-     * Money objects from streams have the implication of creating a new Money
-     * object for each collect step which might impact performance.
+     * creates a collector that can be used to sum up a stream of Money objects
+     * in a reduction style. that is, since Money is an immutable object,
+     * collecting Money objects from streams have the implication of creating a
+     * new Money object for each collect step which might impact performance.
      *
      * alternatively the collector returned could use an internal mutable
-     * representation of Money and just create an instance when combining streams
+     * representation of Money and just create an instance when combining
+     * streams
      *
      * @return
      */
-    public static Collector<Money, Money, Money> adder(final Money zero) {
+    public static Collector<Money, MoneyCollector, Money> collector(final Money zero) {
         Preconditions.nonNull(zero);
 
-        return Collector.of(() -> zero, (a, b) -> a.add(b), (a, b) -> a.add(b));
+        return Collector.of(() -> new MoneyCollector(zero), (a, e) -> a.add(e), (a1, a2) -> a1.combine(a2),
+                a -> a.current);
+    }
+
+    private static class MoneyCollector {
+        private Money current;
+
+        public MoneyCollector(final Money zero) {
+            current = zero;
+        }
+
+        public void add(final Money b) {
+            current = current.add(b);
+        }
+
+        public MoneyCollector combine(final MoneyCollector other) {
+            current = current.add(other.current);
+            return this;
+        }
     }
 
     /**
      * Returns the amount portion of this Money object.
      *
      * Notice that I use a BigInteger. In Java I could equally well use a
-     * BigDecimal, but in many languages an integer is the only decent option, so
-     * using an integer seems the best for explanation. Don't be afraid to choose
-     * your representation of the amount part of a quantity based on performance
-     * factors. The beauty of objects is that you can choose any data structure you
-     * like on the inside, providing you hide it on the outside.
+     * BigDecimal, but in many languages an integer is the only decent option,
+     * so using an integer seems the best for explanation. Don't be afraid to
+     * choose your representation of the amount part of a quantity based on
+     * performance factors. The beauty of objects is that you can choose any
+     * data structure you like on the inside, providing you hide it on the
+     * outside.
      */
     public double amount() {
         return amount.doubleValue() / HUNDRED;
@@ -215,14 +236,15 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Divides this Money object by a certain integer denominator doing the right
-     * allocation of cents.
+     * Divides this Money object by a certain integer denominator doing the
+     * right allocation of cents.
      *
-     * Multiplication is very straightforward. But division is not, as we have to
-     * take care of errant pennies. We'll do that by returning an array of monies,
-     * such that the sum of the array is equal to the original amount, and the
-     * original amount is distributed fairly between the elements of the array.
-     * Fairly in this sense means those at the begining get the extra pennies.
+     * Multiplication is very straightforward. But division is not, as we have
+     * to take care of errant pennies. We'll do that by returning an array of
+     * monies, such that the sum of the array is equal to the original amount,
+     * and the original amount is distributed fairly between the elements of the
+     * array. Fairly in this sense means those at the begining get the extra
+     * pennies.
      */
     public Money[] divide(final int denominator) {
         final BigInteger bigDenominator = BigInteger.valueOf(denominator);
@@ -254,8 +276,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * Compares two Money objects.
      *
-     * It's also useful to provide some better named operations such as: That makes
-     * methods that need the comparison much easier to read.
+     * It's also useful to provide some better named operations such as: That
+     * makes methods that need the comparison much easier to read.
      */
     public boolean greaterThan(final Money arg) {
         return compareTo(arg) > 0;

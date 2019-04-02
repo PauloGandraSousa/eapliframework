@@ -5,8 +5,6 @@ package eapli.framework.domain.model.general.text;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.domain.model.general.Text;
@@ -16,20 +14,6 @@ import eapli.framework.domain.model.general.Text;
  *
  */
 public class TextTest {
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
 
     @Test
     public void ensureNullWillBeEmpty() {

@@ -131,4 +131,16 @@ public final class NumberPredicates implements Utilitarian {
     public static boolean isEven(final long number) {
         return number % 2 == 0;
     }
+
+    /**
+     * checks whether a number is within a certain margin of another
+     *
+     * @param x
+     * @param axis
+     * @param epsilon
+     * @return
+     */
+    public static boolean isWithinMargin(final double x, final double axis, final double epsilon) {
+        return x >= axis - epsilon && x <= axis + epsilon;
+    }
 }

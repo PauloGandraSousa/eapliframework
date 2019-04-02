@@ -1,12 +1,31 @@
-/**
+/*
+ * MIT License
  *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package eapli.framework.domain.model.math.numeral;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.domain.model.math.Numeral;
@@ -16,13 +35,6 @@ import eapli.framework.domain.model.math.Numeral;
  *
  */
 public class NumeralTest {
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureBaseIsBiggerThan2() {
@@ -75,7 +87,7 @@ public class NumeralTest {
         public String octal;
         public String hexa;
 
-        public TestCaseData(long decimal, String binary, String octal, String hexa) {
+        public TestCaseData(final long decimal, final String binary, final String octal, final String hexa) {
             this.decimal = decimal;
             this.binary = binary;
             this.octal = octal;
@@ -120,59 +132,59 @@ public class NumeralTest {
         }
     }
 
-    private void testToSameBase(TestCaseData data) {
+    private void testToSameBase(final TestCaseData data) {
         assertEquals(data.binary, Numeral.valueOf(data.binary, 2).toBase2().toString());
         assertEquals(data.octal, Numeral.valueOf(data.octal, 8).toBase8().toString());
         assertEquals(String.valueOf(data.decimal), Numeral.valueOf(data.decimal).toBase10().toString());
         assertEquals(data.hexa, Numeral.valueOf(data.hexa, 16).toBase16().toString());
     }
 
-    private void testFromBase10(TestCaseData data) {
+    private void testFromBase10(final TestCaseData data) {
         assertEquals(data.binary, Numeral.valueOf(data.decimal).toBase2().toString());
         assertEquals(data.octal, Numeral.valueOf(data.decimal).toBase8().toString());
         assertEquals(data.hexa, Numeral.valueOf(data.decimal).toBase16().toString());
     }
 
-    private void testFromBase10EqualsLongToString(TestCaseData data) {
+    private void testFromBase10EqualsLongToString(final TestCaseData data) {
         assertEquals(Long.toBinaryString(data.decimal), Numeral.valueOf(data.decimal).toBase2().toString());
         assertEquals(Long.toOctalString(data.decimal), Numeral.valueOf(data.decimal).toBase8().toString());
         assertTrue(
                 Long.toHexString(data.decimal).equalsIgnoreCase(Numeral.valueOf(data.decimal).toBase16().toString()));
     }
 
-    private void testFromBase2(TestCaseData data) {
+    private void testFromBase2(final TestCaseData data) {
         assertEquals(Long.toString(data.decimal), Numeral.valueOf(data.binary, 2).toBase10().toString());
         assertEquals(data.octal, Numeral.valueOf(data.binary, 2).toBase8().toString());
         assertEquals(data.hexa, Numeral.valueOf(data.binary, 2).toBase16().toString());
     }
 
-    private void testFromBase8(TestCaseData data) {
+    private void testFromBase8(final TestCaseData data) {
         assertEquals(Long.toString(data.decimal), Numeral.valueOf(data.octal, 8).toBase10().toString());
         assertEquals(data.binary, Numeral.valueOf(data.octal, 8).toBase2().toString());
         assertEquals(data.hexa, Numeral.valueOf(data.octal, 8).toBase16().toString());
     }
 
-    private void testFromBase16(TestCaseData data) {
+    private void testFromBase16(final TestCaseData data) {
         assertEquals(Long.toString(data.decimal), Numeral.valueOf(data.hexa, 16).toBase10().toString());
         assertEquals(data.binary, Numeral.valueOf(data.hexa, 16).toBase2().toString());
         assertEquals(data.hexa, Numeral.valueOf(data.hexa, 16).toBase16().toString());
     }
 
-    private void testValueOf(TestCaseData data) {
+    private void testValueOf(final TestCaseData data) {
         assertEquals(String.valueOf(data.decimal), Numeral.valueOf(String.valueOf(data.decimal), 10).toString());
         assertEquals(data.binary, Numeral.valueOf(data.binary, 2).toString());
         assertEquals(data.octal, Numeral.valueOf(data.octal, 8).toString());
         assertEquals(data.hexa, Numeral.valueOf(data.hexa, 16).toString());
     }
 
-    private void testDecimalValue(TestCaseData data) {
+    private void testDecimalValue(final TestCaseData data) {
         assertEquals(data.decimal, Numeral.valueOf(String.valueOf(data.decimal), 10).decimalValue());
         assertEquals(data.decimal, Numeral.valueOf(data.binary, 2).decimalValue());
         assertEquals(data.decimal, Numeral.valueOf(data.octal, 8).decimalValue());
         assertEquals(data.decimal, Numeral.valueOf(data.hexa, 16).decimalValue());
     }
 
-    private void testToBase2(TestCaseData data) {
+    private void testToBase2(final TestCaseData data) {
         final Numeral expected = Numeral.valueOf(data.binary, 2);
         assertEquals(expected, Numeral.valueOf(String.valueOf(data.decimal), 10).toBase2());
         assertEquals(expected, Numeral.valueOf(data.binary, 2).toBase2());
@@ -180,7 +192,7 @@ public class NumeralTest {
         assertEquals(expected, Numeral.valueOf(data.hexa, 16).toBase2());
     }
 
-    private void testToBase8(TestCaseData data) {
+    private void testToBase8(final TestCaseData data) {
         final Numeral expected = Numeral.valueOf(data.octal, 8);
         assertEquals(expected, Numeral.valueOf(String.valueOf(data.decimal), 10).toBase8());
         assertEquals(expected, Numeral.valueOf(data.binary, 2).toBase8());
@@ -188,7 +200,7 @@ public class NumeralTest {
         assertEquals(expected, Numeral.valueOf(data.hexa, 16).toBase8());
     }
 
-    private void testToBase10(TestCaseData data) {
+    private void testToBase10(final TestCaseData data) {
         final Numeral expected = Numeral.valueOf(data.decimal);
         assertEquals(expected, Numeral.valueOf(String.valueOf(data.decimal), 10).toBase10());
         assertEquals(expected, Numeral.valueOf(data.binary, 2).toBase10());
@@ -196,7 +208,7 @@ public class NumeralTest {
         assertEquals(expected, Numeral.valueOf(data.hexa, 16).toBase10());
     }
 
-    private void testToBase16(TestCaseData data) {
+    private void testToBase16(final TestCaseData data) {
         final Numeral expected = Numeral.valueOf(data.hexa, 16);
         assertEquals(expected, Numeral.valueOf(String.valueOf(data.decimal), 10).toBase16());
         assertEquals(expected, Numeral.valueOf(data.binary, 2).toBase16());

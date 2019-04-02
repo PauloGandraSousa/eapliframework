@@ -35,6 +35,7 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
 import eapli.framework.util.function.ArrayOfDoubleCollector;
+import eapli.framework.util.predicates.NumberPredicates;
 
 /**
  * An immutable vector.
@@ -158,8 +159,19 @@ public class Vector implements ValueObject {
             return false;
         }
         final Vector other = (Vector) obj;
-        return new EqualsBuilder().append(dimensions, other.dimensions).append(type, other.type)
-                .append(data, other.data).isEquals();
+        final boolean partial = new EqualsBuilder().append(dimensions, other.dimensions).append(type, other.type)
+                .isEquals();
+        if (!partial) {
+            return false;
+        }
+
+        // compare values with epsilon margin
+        for (int i = 0; i < dimensions; i++) {
+            if (!NumberPredicates.isWithinMargin(data[i], other.data[i], EPSILON)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -226,7 +238,7 @@ public class Vector implements ValueObject {
 
     public boolean isUnit() {
         final double mag = magnitude();
-        return mag >= 1.0 - EPSILON && mag <= 1.0 + EPSILON;
+        return NumberPredicates.isWithinMargin(mag, 1.0, EPSILON);
     }
 
     public int dimensions() {

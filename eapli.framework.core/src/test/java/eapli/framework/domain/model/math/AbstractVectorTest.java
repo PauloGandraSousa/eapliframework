@@ -1,15 +1,40 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package eapli.framework.domain.model.math;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import eapli.framework.domain.model.math.Vector;
 import eapli.framework.domain.model.math.Vector.VectorType;
 
+/**
+ *
+ * @author sou03408
+ *
+ */
 public abstract class AbstractVectorTest {
 
     private static final Vector ONE = new Vector(new double[] { 1, 1, 1 }, VectorType.ROW);
@@ -22,16 +47,11 @@ public abstract class AbstractVectorTest {
         instance = new Vector(expectedElements(), VectorType.ROW);
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @Test
     public void ensureMagnitude() {
         assertEquals(expectedMagnitude(), instance.magnitude(), 0.01);
     }
 
-    @Ignore
     @Test
     public void ensureNormalized() {
         assertEquals(expectedNormalized(), instance.normalized());

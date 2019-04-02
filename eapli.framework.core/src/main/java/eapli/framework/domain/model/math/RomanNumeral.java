@@ -41,8 +41,8 @@ public class RomanNumeral implements ValueObject {
 
     /*
      * The following arrays are used by the toString() function to construct the
-     * standard Roman numeral representation of the number. For each i, the number
-     * numbers[i] is represented by the corresponding string, letters[i].
+     * standard Roman numeral representation of the number. For each i, the
+     * number numbers[i] is represented by the corresponding string, letters[i].
      */
     private static int[] numbers = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 
@@ -51,8 +51,10 @@ public class RomanNumeral implements ValueObject {
 
     /**
      * Constructor. Creates the Roman number with the int value specified by the
-     * parameter. Throws a NumberFormatException if arabic is not in the range 1 to
-     * 3999 inclusive.
+     * parameter.
+     *
+     * @throws NumberFormatException
+     *             if arabic is not in the range 1 to 3999 inclusive.
      *
      * @param arabic
      *            the number we want to express as a Roman literal
@@ -69,9 +71,9 @@ public class RomanNumeral implements ValueObject {
 
     /*
      * Constructor. Creates the Roman number with the given representation. For
-     * example, RomanNumeral("xvii") is 17. If the parameter is not a legal Roman
-     * numeral, a NumberFormatException is thrown. Both upper and lower case letters
-     * are allowed.
+     * example, RomanNumeral("xvii") is 17. If the parameter is not a legal
+     * Roman numeral, a NumberFormatException is thrown. Both upper and lower
+     * case letters are allowed.
      */
     public RomanNumeral(String roman) {
         if (roman.length() == 0) {
@@ -143,9 +145,11 @@ public class RomanNumeral implements ValueObject {
     }
 
     /**
-     * Find the integer value of letter considered as a Roman numeral. Throws
-     * NumberFormatException if letter is not a legal Roman numeral. The letter must
-     * be upper case.
+     * Find the integer value of letter considered as a Roman numeral.
+     *
+     * @throws NumberFormatException
+     *             if letter is not a legal Roman numeral. The letter must be
+     *             upper case.
      */
     private int letterToNumber(final char letter) {
         switch (letter) {
