@@ -63,7 +63,8 @@ import eapli.framework.visitor.Visitor;
  *
  */
 @Entity
-public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<GenericDTO>, Serializable {
+public class SystemUser
+        implements AggregateRoot<Username>, DTOable, Visitable<GenericDTO>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -93,32 +94,33 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
      * @param email
      * @param roles
      */
-    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-            final Set<Role> roles) {
+    public SystemUser(final Username username, final Password password, final Name name,
+            final EmailAddress email, final Set<Role> roles) {
         this(username, password, name, email, roles, DateTime.now());
     }
 
-    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-            final Set<Role> roles, final Calendar createdOn) {
+    public SystemUser(final Username username, final Password password, final Name name,
+            final EmailAddress email, final Set<Role> roles, final Calendar createdOn) {
         Preconditions.nonEmpty(roles, "roles cannot be null");
 
         final RoleSet roleset = new RoleSet();
-        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, this.createdOn)).collect(Collectors.toList()));
+        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, createdOn))
+                .collect(Collectors.toList()));
         init(username, password, name, email, roleset, createdOn);
     }
 
-    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-            final RoleSet roles) {
+    public SystemUser(final Username username, final Password password, final Name name,
+            final EmailAddress email, final RoleSet roles) {
         this(username, password, name, email, roles, DateTime.now());
     }
 
-    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-            final RoleSet roles, final Calendar createdOn) {
+    public SystemUser(final Username username, final Password password, final Name name,
+            final EmailAddress email, final RoleSet roles, final Calendar createdOn) {
         init(username, password, name, email, roles, createdOn);
     }
 
-    private void init(final Username username, final Password password, final Name name, final EmailAddress email,
-            final RoleSet roles, final Calendar createdOn) {
+    private void init(final Username username, final Password password, final Name name,
+            final EmailAddress email, final RoleSet roles, final Calendar createdOn) {
         Preconditions.nonNull(roles, username, password, name, email, createdOn);
 
         this.createdOn = createdOn;
@@ -145,8 +147,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
         if (this == that) {
             return true;
         }
-        if (!username.equals(that.username) || !password.equals(that.password) || !name.equals(that.name)
-                || !email.equals(that.email)) {
+        if (!username.equals(that.username) || !password.equals(that.password)
+                || !name.equals(that.name) || !email.equals(that.email)) {
             return false;
         }
         return roles.equals(that.roles);
