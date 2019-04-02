@@ -35,10 +35,9 @@ import eapli.framework.util.Singleton;
  */
 public final class AuthzRegistry implements Singleton {
 
-    private static AuthenticationService authenticationService;
     private static final AuthorizationService authorizationSvc = new AuthorizationService();
-    private static LoginController loginController;
-    private static ChangePasswordController changePwdController;
+    private static AuthenticationService authenticationService;
+    private static UserManagementService userService;
 
     private AuthzRegistry() {
         // ensure utility
@@ -46,8 +45,11 @@ public final class AuthzRegistry implements Singleton {
 
     public static void configure(final UserRepository userRepo) {
         authenticationService = new AuthenticationService(userRepo, authorizationSvc);
-        loginController = new LoginController(authenticationService);
-        changePwdController = new ChangePasswordController(authorizationSvc, authenticationService);
+        userService = new UserManagementService(userRepo);
+    }
+
+    public static UserManagementService getUserService() {
+        return userService;
     }
 
     public static AuthenticationService getAuthenticationService() {
@@ -58,15 +60,5 @@ public final class AuthzRegistry implements Singleton {
     public static AuthorizationService getAuthorizationService() {
         Invariants.nonNull(authorizationSvc);
         return authorizationSvc;
-    }
-
-    public static LoginController getLoginController() {
-        Invariants.nonNull(loginController);
-        return loginController;
-    }
-
-    public static ChangePasswordController getChangePwdController() {
-        Invariants.nonNull(changePwdController);
-        return changePwdController;
     }
 }

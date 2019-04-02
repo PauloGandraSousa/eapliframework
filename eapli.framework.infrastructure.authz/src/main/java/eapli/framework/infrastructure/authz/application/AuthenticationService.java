@@ -28,6 +28,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
 import eapli.framework.infrastructure.authz.domain.model.Password;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -107,6 +108,21 @@ public class AuthenticationService {
         return newSession;
     }
 
+    /**
+     * allows a user to perform login and creates the session.
+     *
+     * @param userName
+     * @param password
+     * @throws IllegalArgumentException
+     *             if the username or password cannot be constructed from the
+     *             passed string arguments
+     */
+    public boolean login(final String userName, final String password, final Role... onlyWithThis) {
+        final Optional<UserSession> newSession = authenticate(Username.valueOf(userName), Password.valueOf(password),
+                onlyWithThis);
+        return newSession.isPresent();
+    }
+
     private boolean noActionRightsToValidate(final Role... onlyWithThis) {
         return onlyWithThis.length == 0 || (onlyWithThis.length == 1 && onlyWithThis[0] == null);
     }
@@ -119,12 +135,33 @@ public class AuthenticationService {
         return repo.findById(userName);
     }
 
+    /**
+     * change the password of a certain user
+     * 
+     * @param user
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
     public boolean changePassword(final SystemUser user, final Password oldPassword, final Password newPassword) {
         final boolean sucess = user.changePassword(oldPassword, newPassword);
         if (sucess) {
             repo.save(user);
         }
         return sucess;
+    }
+
+    /**
+     * change the password of the currently logged in user
+     * 
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    public boolean changePassword(final String oldPassword, final String newPassword) {
+        final Optional<UserSession> s = authz.session();
+        return s.map(u -> changePassword(u.authenticatedUser(), Password.valueOf(oldPassword),
+                Password.valueOf(newPassword))).orElseThrow(UserSessionNotInitiatedException::new);
     }
 
     public String resetPassword(final SystemUser user) {
