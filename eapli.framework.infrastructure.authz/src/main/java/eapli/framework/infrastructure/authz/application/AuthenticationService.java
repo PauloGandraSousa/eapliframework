@@ -38,12 +38,6 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.util.Preconditions;
 
 /**
- * the current logged user session holder
- *
- * note that this class is conceptually a singleton as it holds the Session
- * object. ensure that you set up spring correctly and if you create the
- * instances yourself, make sure you handle the singletonness nature of the
- * obejct
  *
  * @author Paulo Gandra Sousa
  *
@@ -51,120 +45,103 @@ import eapli.framework.util.Preconditions;
 @Component
 public class AuthenticationService {
 
-    @Autowired
-    private UserRepository repo;
+	@Autowired
+	private UserRepository repo;
 
-    /**
-     * the current logged in user session
-     */
-    private UserSession theSession = null;
+	@Autowired
+	private AuthorizationService authz;
 
-    /**
-     * default constructor for Spring dependency injection
-     */
-    protected AuthenticationService() {
-        // empty
-    }
+	/**
+	 * default constructor for Spring dependency injection
+	 */
+	protected AuthenticationService() {
+		// empty
+	}
 
-    /**
-     * in scenarios where there is no dependency injector, this constructor allows
-     * the controller to be be built and manually inject the dependency.
-     *
-     * @param authenticationService
-     */
-    public AuthenticationService(final UserRepository repo) {
-        this.repo = repo;
-    }
+	/**
+	 * in scenarios where there is no dependency injector, this constructor allows
+	 * the object to be be built and manually inject the dependency.
+	 *
+	 * @param authenticationService
+	 */
+	public AuthenticationService(final UserRepository repo, final AuthorizationService authz) {
+		Preconditions.nonNull(repo, authz);
+		this.repo = repo;
+		this.authz = authz;
+	}
 
-    private void setSession(final Optional<UserSession> session) {
-        Preconditions.nonNull(session);
+	/**
+	 * for helper AuthzHolder class
+	 *
+	 * @param session
+	 */
+	/* package */ void setRepository(final UserRepository repo) {
+		this.repo = repo;
+	}
 
-        if (session.isPresent()) {
-            theSession = session.get();
-        } else {
-            clearSession();
-        }
-    }
+	/**
+	 * Checks if a user can be authenticated with the username/password pair and if
+	 * so creates a user session for it.
+	 *
+	 * @param username
+	 * @param pass
+	 * @return the authenticated user session or an empty optional otherwise
+	 */
+	public Optional<UserSession> authenticate(final Username username, final Password pass,
+			final Role... onlyWithThis) {
+		Preconditions.nonNull(username, "a username must be provided");
 
-    public void clearSession() {
-        theSession = null;
-    }
+		Optional<UserSession> newSession;
+		final Optional<SystemUser> user = retrieveUser(username);
+		if (!user.isPresent()) {
+			newSession = Optional.empty();
+		} else if (user.get().passwordMatches(pass) && user.get().isActive()) {
+			if (noActionRightsToValidate(onlyWithThis) || user.get().hasAny(onlyWithThis)) {
+				newSession = user.map(this::createSessionForUser);
+			} else {
+				newSession = Optional.empty();
+			}
+		} else {
+			newSession = Optional.empty();
+		}
 
-    public boolean hasSession() {
-        return theSession != null;
-    }
+		authz.setSession(newSession);
+		return newSession;
+	}
 
-    /**
-     * @TODO consider returning Optional<UserSession>
-     * @return
-     */
-    public UserSession session() {
-        return theSession;
-    }
+	private boolean noActionRightsToValidate(final Role... onlyWithThis) {
+		return onlyWithThis.length == 0 || (onlyWithThis.length == 1 && onlyWithThis[0] == null);
+	}
 
-    /**
-     * Checks if a user can be authenticated with the username/password pair and if
-     * so creates a user session for it.
-     *
-     * @param username
-     * @param pass
-     * @return the authenticated user session or an empty optional otherwise
-     */
-    public Optional<UserSession> authenticate(final Username username, final Password pass,
-            final Role... onlyWithThis) {
-        Preconditions.nonNull(username, "a username must be provided");
+	private UserSession createSessionForUser(final SystemUser user) {
+		return new UserSession(user);
+	}
 
-        Optional<UserSession> newSession;
-        final Optional<SystemUser> user = retrieveUser(username);
-        if (!user.isPresent()) {
-            newSession = Optional.empty();
-        } else if (user.get().passwordMatches(pass) && user.get().isActive()) {
-            if (noActionRightsToValidate(onlyWithThis) || user.get().hasAny(onlyWithThis)) {
-                newSession = Optional.of(createSessionForUser(user.get()));
-            } else {
-                newSession = Optional.empty();
-            }
-        } else {
-            newSession = Optional.empty();
-        }
+	private Optional<SystemUser> retrieveUser(final Username userName) {
+		return repo.findById(userName);
+	}
 
-        setSession(newSession);
-        return newSession;
-    }
+	public boolean changePassword(final SystemUser user, final Password oldPassword, final Password newPassword)
+			throws ConcurrencyException, IntegrityViolationException {
+		final boolean sucess = user.changePassword(oldPassword, newPassword);
+		if (sucess) {
+			repo.save(user);
+		}
+		return sucess;
+	}
 
-    private boolean noActionRightsToValidate(final Role... onlyWithThis) {
-        return onlyWithThis.length == 0 || (onlyWithThis.length == 1 && onlyWithThis[0] == null);
-    }
+	public String resetPassword(final SystemUser user) throws ConcurrencyException, IntegrityViolationException {
+		final String token = user.resetPassword();
+		repo.save(user);
+		return token;
+	}
 
-    private UserSession createSessionForUser(final SystemUser user) {
-        return new UserSession(user);
-    }
-
-    private Optional<SystemUser> retrieveUser(final Username userName) {
-        return repo.findById(userName);
-    }
-
-    public boolean changePassword(final SystemUser user, final Password oldPassword, final Password newPassword)
-            throws ConcurrencyException, IntegrityViolationException {
-        final boolean sucess = user.changePassword(oldPassword, newPassword);
-        if (sucess) {
-            repo.save(user);
-        }
-        return sucess;
-    }
-
-    public String resetPassword(final SystemUser user) throws ConcurrencyException, IntegrityViolationException {
-        final String token = user.resetPassword();
-        repo.save(user);
-        return token;
-    }
-
-    public boolean resetPassword(final SystemUser user, final String token)
-            throws ConcurrencyException, IntegrityViolationException {
-        if (user.resetPassword(token)) {
-            repo.save(user);
-            return true;
-        }
-        return false;
-    }
+	public boolean resetPassword(final SystemUser user, final String token)
+			throws ConcurrencyException, IntegrityViolationException {
+		if (user.resetPassword(token)) {
+			repo.save(user);
+			return true;
+		}
+		return false;
+	}
 }

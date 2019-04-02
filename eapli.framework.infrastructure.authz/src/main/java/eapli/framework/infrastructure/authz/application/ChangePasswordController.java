@@ -36,6 +36,8 @@ import eapli.framework.infrastructure.authz.domain.model.Password;
  */
 public class ChangePasswordController implements Controller {
     @Autowired
+    private AuthorizationService authorizationService;
+    @Autowired
     private AuthenticationService authenticationService;
 
     /**
@@ -51,13 +53,19 @@ public class ChangePasswordController implements Controller {
      *
      * @param authenticationService
      */
-    public ChangePasswordController(final AuthenticationService authenticationService) {
+    public ChangePasswordController(final AuthorizationService authorizationService,
+            final AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
+        this.authorizationService = authorizationService;
     }
 
     public boolean changePassword(final String oldPassword, final String newPassword)
             throws ConcurrencyException, IntegrityViolationException {
-        return authenticationService.changePassword(authenticationService.session().authenticatedUser(),
+        // authenticationService.session().map(s ->
+        // authenticationService.changePassword(s.authenticatedUser(),
+        // Password.valueOf(oldPassword), Password.valueOf(newPassword))).orElse(other);
+
+        return authenticationService.changePassword(authorizationService.session().get().authenticatedUser(),
                 Password.valueOf(oldPassword), Password.valueOf(newPassword));
     }
 }

@@ -23,15 +23,23 @@
  */
 package eapli.framework.infrastructure.authz.application;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedException;
 import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.util.Preconditions;
 
 /**
+ * the current logged user session holder
+ *
+ * note that this class is conceptually a singleton as it holds the Session
+ * object. ensure that you set up spring correctly and if you create the
+ * instances yourself, make sure you handle the singletonness nature of the
+ * object
  *
  * @author Paulo Gandra de Sousa
  *
@@ -39,52 +47,70 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 @Component
 public final class AuthorizationService {
 
-    @Autowired
-    private AuthenticationService authz;
+	/**
+	 * the current logged in user session
+	 */
+	private Optional<UserSession> theSession = Optional.empty();
 
-    /**
-     * default constructor for Spring dependency injection
-     */
-    protected AuthorizationService() {
-        // empty
-    }
+	/**
+	 * default constructor for Spring dependency injection
+	 */
+	protected AuthorizationService() {
+		// empty
+	}
 
-    /**
-     * in scenarios where there is no dependency injector, this constructor allows
-     * the controller to be be built and manually inject the dependency
-     *
-     * @param authenticationService
-     */
-    public AuthorizationService(final AuthenticationService authenticationService) {
-        this.authz = authenticationService;
-    }
+	/* package */ void setSession(final Optional<UserSession> session) {
+		Preconditions.nonNull(session);
 
-    /**
-     * helper method to check the permission of a user
-     */
-    public boolean isAuthorizedTo(final SystemUser user, final Role... actions) {
-        return user.hasAny(actions);
-    }
+		if (session.isPresent()) {
+			theSession = session;
+		} else {
+			clearSession();
+		}
+	}
 
-    /**
-     * helper method to check the permission of the currently logged in user
-     */
-    public boolean isLoggedInUserAuthorizedTo(final Role... actions) {
-        return authz.session().authenticatedUser().hasAny(actions);
-    }
+	public void clearSession() {
+		theSession = Optional.empty();
+	}
 
-    /**
-     * helper method to check the permission of the currently logged in user
-     *
-     * @todo consider other ways to perform this check without throwing exceptions,
-     *       as these scenarios are not really exceptions, they are accounted for
-     */
-    public void ensurePermissionOfLoggedInUser(final Role... actions) {
-        if (!authz.hasSession()) {
-            throw new UserSessionNotInitiatedException();
-        }
-        if (!isLoggedInUserAuthorizedTo(actions)) {
-            throw new UnauthorizedException(authz.session().authenticatedUser(), actions);
-        }
-    }
+	public boolean hasSession() {
+		return theSession.isPresent();
+	}
+
+	/**
+	 * @return
+	 */
+	public Optional<UserSession> session() {
+		return theSession;
+	}
+
+	/**
+	 * helper method to check the permission of a user
+	 */
+	public boolean isAuthorizedTo(final SystemUser user, final Role... actions) {
+		return user.hasAny(actions);
+	}
+
+	/**
+	 * helper method to check the permission of the currently logged in user
+	 */
+	public boolean isLoggedInUserAuthorizedTo(final Role... actions) {
+		return session().map(u -> u.authenticatedUser().hasAny(actions)).orElse(false);
+	}
+
+	/**
+	 * helper method to check the permission of the currently logged in user
+	 *
+	 * @todo consider other ways to perform this check without throwing exceptions,
+	 *       as these scenarios are not really exceptions, they are accounted for
+	 */
+	@SuppressWarnings("squid:S3655")
+	public void ensurePermissionOfLoggedInUser(final Role... actions) {
+		if (!hasSession()) {
+			throw new UserSessionNotInitiatedException();
+		}
+		if (!isLoggedInUserAuthorizedTo(actions)) {
+			throw new UnauthorizedException(session().get().authenticatedUser(), actions);
+		}
+	}
 }
