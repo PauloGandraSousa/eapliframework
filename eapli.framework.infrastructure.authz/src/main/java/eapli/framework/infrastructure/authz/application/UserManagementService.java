@@ -62,10 +62,11 @@ public class UserManagementService {
 
     @Transactional
     public SystemUser addUser(final String username, final String password, final String firstName,
-            final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
+            final String lastName, final String email, final Set<Role> roles,
+            final Calendar createdOn) {
         final SystemUserBuilder userBuilder = new SystemUserBuilder();
-        userBuilder.withUsername(username).withPassword(password).withFirstName(firstName).withLastName(lastName)
-                .withEmail(email).withCreatedOn(createdOn).withRoles(roles);
+        userBuilder.withUsername(username).withPassword(password).withFirstName(firstName)
+                .withLastName(lastName).withEmail(email).withCreatedOn(createdOn).withRoles(roles);
         final SystemUser newUser = userBuilder.build();
         return userRepository.save(newUser);
     }
@@ -77,8 +78,11 @@ public class UserManagementService {
     }
 
     public Iterable<SystemUser> activeUsers() {
-        // todo call the right finder
-        return userRepository.findAll();
+        return userRepository.findByActive(true);
+    }
+
+    public Iterable<SystemUser> deactivatedUsers() {
+        return userRepository.findByActive(false);
     }
 
     public Iterable<SystemUser> allUsers() {

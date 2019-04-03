@@ -35,4 +35,8 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainE
 public class InMemoryUserRepository extends InMemoryDomainEntityRepository<SystemUser, Username>
         implements UserRepository {
 
+    @Override
+    public Iterable<SystemUser> findByActive(boolean active) {
+        return match(e -> e.isActive() == active);
+    }
 }

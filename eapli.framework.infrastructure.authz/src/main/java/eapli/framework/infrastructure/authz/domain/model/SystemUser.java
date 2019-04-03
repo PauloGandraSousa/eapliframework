@@ -231,8 +231,7 @@ public class SystemUser
         // cannot deactivate an inactive user
         if (!active) {
             // we could simply do nothing instead of taking a harsh approach of
-            // throwing an
-            // exception
+            // throwing an exception
             throw new IllegalStateException();
         }
         active = false;

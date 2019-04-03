@@ -32,4 +32,10 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
  */
 public interface UserRepository extends Repository<SystemUser, Username> {
 
+    /**
+     * returns the currently active users
+     *
+     * @return
+     */
+    Iterable<SystemUser> findByActive(boolean active);
 }

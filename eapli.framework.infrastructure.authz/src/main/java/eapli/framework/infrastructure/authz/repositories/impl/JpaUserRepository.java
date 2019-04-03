@@ -31,10 +31,16 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**
+ * the JPA implementation for scenarios running in a container
  *
  * Created by nuno on 20/03/16.
  */
 @Component
 class JpaUserRepository extends JpaBaseRepository<SystemUser, Username> implements UserRepository {
 
+    // TODO avoid duplication with JpaUserRepository
+    @Override
+    public Iterable<SystemUser> findByActive(boolean active) {
+        return match(JpaUserRepositoryMixin.ACTIVE_USERS, "active", active);
+    }
 }
