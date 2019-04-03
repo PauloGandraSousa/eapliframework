@@ -16,6 +16,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data.version>Kay-SR2</spring-data.version>
+		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
 	</properties>
 
 
