@@ -71,6 +71,12 @@ public final class Preconditions implements Utilitarian {
         nonEmpty(arg, "");
     }
 
+    /**
+     * checks if a string is neither null nor empty
+     * 
+     * @param arg
+     * @param msg
+     */
     public static void nonEmpty(final String arg, final String msg) {
         ifNotThen(arg, x -> !StringPredicates.isNullOrEmpty(x), THROW_ARGUMENT_WITH_MESSAGE, msg);
     }

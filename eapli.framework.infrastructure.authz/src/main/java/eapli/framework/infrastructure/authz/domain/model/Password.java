@@ -116,7 +116,7 @@ public class Password implements ValueObject, Serializable {
      */
     public PasswordStrength strength() {
         PasswordStrength passwordStrength = PasswordStrength.WEAK;
-        if (3 > thePassword.length()) {
+        if (6 >= thePassword.length()) {
             passwordStrength = PasswordStrength.WEAK;
         }
         // TODO implement the rest of the method

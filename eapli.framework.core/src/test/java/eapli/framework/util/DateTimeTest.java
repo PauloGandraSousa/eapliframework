@@ -26,11 +26,8 @@ package eapli.framework.util;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -39,31 +36,13 @@ import org.junit.Test;
  * @author Paulo Gandra Sousa
  */
 public class DateTimeTest {
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of weekNumber method, of class DateTime.
      */
     @Test
     public void testJanuaryFirst2014IsWeekOne() {
         System.out.println("weekNumber");
-        // TODO do not use own methods whcih have not been tested yet
-        final Calendar date = DateTime.newCalendar(2014, 01, 01);
+        final Calendar date = new GregorianCalendar(2014, 0, 1);
         final int expResult = 1;
         final int result = DateTime.weekNumber(date);
         assertEquals(expResult, result);
@@ -75,8 +54,7 @@ public class DateTimeTest {
     @Test
     public void testMarch21st2014IsWeek12() {
         System.out.println("weekNumber");
-        // TODO do not use own methods whcih have not been tested yet
-        final Calendar date = DateTime.newCalendar(2014, 03, 21);
+        final Calendar date = new GregorianCalendar(2014, 2, 21);
         final int expResult = 12;
         final int result = DateTime.weekNumber(date);
         assertEquals(expResult, result);

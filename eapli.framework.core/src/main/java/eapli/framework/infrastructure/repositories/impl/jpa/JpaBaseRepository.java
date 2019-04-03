@@ -69,8 +69,7 @@ import eapli.framework.util.predicates.StringPredicates;
  * @param <K>
  *            the key type of the entity
  */
-public abstract class JpaBaseRepository<T, K extends Serializable>
-        implements IterableRepository<T, K> {
+public abstract class JpaBaseRepository<T, K extends Serializable> implements IterableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
@@ -89,8 +88,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable>
     public JpaBaseRepository() {
         final Boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
         if (isGeneric) {
-            final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                    .getGenericSuperclass();
+            final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
             entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         } else {
             // special case when this class is used without parametrization.
@@ -221,8 +219,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable>
         Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
 
         final TypedQuery<Long> q = entityManager().createQuery(
-                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename",
-                Long.class);
+                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename", Long.class);
         return q.getSingleResult();
     }
 
@@ -256,7 +253,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable>
      * @param entity
      * @return the persisted entity - might be a different object than the
      *         parameter
-     * @throws eapli.framework.domain.repositories.ConcurrencyException
+     * @throws ConcurrencyException
      * @throws IntegrityViolationException
      */
     @Override
@@ -298,8 +295,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable>
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final String className = this.entityClass.getSimpleName();
-        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
-                this.entityClass);
+        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where, this.entityClass);
     }
 
     /**
@@ -432,8 +428,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable>
      */
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
-        assert !StringPredicates
-                .isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(whereWithParameters, params);
@@ -465,8 +460,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable>
      *            a map of the parameter name and its value to use in the query
      * @return
      */
-    protected Optional<T> matchOne(final String whereWithParameters,
-            final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
         final TypedQuery<T> q = query(whereWithParameters, params);
         return getOptionalResult(q);
     }

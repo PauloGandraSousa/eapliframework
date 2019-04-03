@@ -26,9 +26,6 @@ package eapli.framework.infrastructure.repositories.impl.jpa;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
-
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.util.Preconditions;
@@ -124,10 +121,6 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
             context().beginTransaction();
             super.create(entity);
             context().commit();
-        } catch (final PersistenceException ex) {
-            // TODO need to check and make sure we only throw
-            // IntegrityViolationException if we get sql state 23505
-            throw new IntegrityViolationException(ex);
         } finally {
             context().close();
         }
@@ -150,7 +143,7 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
      * @param entity
      * @return the persisted entity - might be a different object than the
      *         parameter
-     * @throws eapli.framework.domain.repositories.ConcurrencyException
+     * @throws ConcurrencyException
      * @throws IntegrityViolationException
      */
     @Override
@@ -162,13 +155,6 @@ public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWi
             context().beginTransaction();
             entity = super.save(entity);
             context().commit();
-        } catch (final PersistenceException ex) {
-            if (ex.getCause() instanceof OptimisticLockException) {
-                throw new ConcurrencyException(ex);
-            }
-            // TODO need to check and make sure we only throw
-            // IntegrityViolationException if we get sql state 23505
-            throw new IntegrityViolationException(ex);
         } finally {
             context().close();
         }
