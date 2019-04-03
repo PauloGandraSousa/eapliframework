@@ -23,11 +23,9 @@
  */
 package eapli.framework.domain.model.range;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,25 +35,10 @@ import org.junit.Test;
  */
 public class OpenRangeTest extends AbstractRangeTest {
 
-    public OpenRangeTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
         System.out.println("openRange");
         instance = Range.openFrom(START).openTo(END).build();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -72,5 +55,12 @@ public class OpenRangeTest extends AbstractRangeTest {
         final Long target = new Long(END_VALUE);
         final boolean result = instance.includes(target);
         assertFalse("end cannot be part of an open range", result);
+    }
+
+    @Test
+    public void ensureStringRepresentationIsOk() {
+        final String expected = "]" + START + ", " + END + "[";
+        final String actual = instance.toString();
+        assertEquals(expected, actual);
     }
 }

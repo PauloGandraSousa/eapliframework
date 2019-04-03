@@ -58,7 +58,8 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      *
      * @param <R>
      */
-    public static class RangeBuilder<R extends Comparable<R> & Serializable> implements Factory<Range<R>> {
+    public static class RangeBuilder<R extends Comparable<R> & Serializable>
+            implements Factory<Range<R>> {
         private final R start;
         private R end;
         private final BoundaryLimitType startBoundary;
@@ -140,10 +141,12 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
         }
 
         if (end != null && start != null && end.compareTo(start) < 0) {
-            throw new IllegalArgumentException("The end value of a range must be bigger than its start");
+            throw new IllegalArgumentException(
+                    "The end value of a range must be bigger than its start");
         }
         if (end != null && start != null && end.compareTo(start) == 0
-                && (startBoundary == BoundaryLimitType.OPEN || endBoundary == BoundaryLimitType.OPEN)) {
+                && (startBoundary == BoundaryLimitType.OPEN
+                        || endBoundary == BoundaryLimitType.OPEN)) {
             throw new IllegalArgumentException("An empty range is not allowed");
         }
 
@@ -167,7 +170,8 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      *
      * @return a builder
      */
-    public static <T extends Comparable<T> & Serializable> RangeBuilder<T> closedFrom(final T start) {
+    public static <T extends Comparable<T> & Serializable> RangeBuilder<T> closedFrom(
+            final T start) {
         return new RangeBuilder<>(start, BoundaryLimitType.CLOSED);
     }
 
@@ -210,7 +214,8 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
     public boolean includes(final T target) {
         if (isEmpty()) {
             return false;
-        } else if (this.startBoundary != BoundaryLimitType.INFINITY && this.endBoundary != BoundaryLimitType.INFINITY) {
+        } else if (this.startBoundary != BoundaryLimitType.INFINITY
+                && this.endBoundary != BoundaryLimitType.INFINITY) {
             return includesInFiniteRanges(target);
         } else if (this.endBoundary == BoundaryLimitType.INFINITY) {
             return includesInToInfinityRanges(target);
@@ -275,8 +280,8 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
     }
 
     /**
-     * returns the range consisting of the intersection of this range and another
-     * one
+     * returns the range consisting of the intersection of this range and
+     * another one
      *
      * @param other
      * @return
@@ -287,8 +292,8 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
 
     /**
      * returns a new range by extending the start of this one. the
-     * openness/closeness of the start boundary as well as the end will be the same
-     * of the original range
+     * openness/closeness of the start boundary as well as the end will be the
+     * same of the original range
      *
      * @param other
      * @return
@@ -298,9 +303,9 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
     }
 
     /**
-     * returns a new range by extending the end of this one. the openness/closeness
-     * of the end boundary as well as the start will be the same of the original
-     * range
+     * returns a new range by extending the end of this one. the
+     * openness/closeness of the end boundary as well as the start will be the
+     * same of the original range
      *
      * @param other
      * @return
@@ -343,11 +348,13 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
     }
 
     public boolean hasOpenEnd() {
-        return this.endBoundary == BoundaryLimitType.OPEN;
+        return this.endBoundary == BoundaryLimitType.OPEN
+                || endBoundary == BoundaryLimitType.INFINITY;
     }
 
     public boolean hasOpenStart() {
-        return this.startBoundary == BoundaryLimitType.OPEN;
+        return this.startBoundary == BoundaryLimitType.OPEN
+                || startBoundary == BoundaryLimitType.INFINITY;
     }
 
     @Override

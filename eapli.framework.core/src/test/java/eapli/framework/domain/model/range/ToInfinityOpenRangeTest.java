@@ -23,12 +23,10 @@
  */
 package eapli.framework.domain.model.range;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -38,25 +36,10 @@ import org.junit.Test;
  */
 public class ToInfinityOpenRangeTest extends AbstractRangeTest {
 
-    public ToInfinityOpenRangeTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
         System.out.println("ToInfinityOpenRange");
         instance = Range.openFrom(START).toInfinity().build();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -80,5 +63,12 @@ public class ToInfinityOpenRangeTest extends AbstractRangeTest {
         System.out.println("ensureIsToInfinity");
         final boolean result = instance.isToInfinity();
         assertTrue("to inifinity ranges must be to infinity", result);
+    }
+
+    @Test
+    public void ensureStringRepresentationIsOk() {
+        final String expected = "]" + START + ", oo[";
+        final String actual = instance.toString();
+        assertEquals(expected, actual);
     }
 }

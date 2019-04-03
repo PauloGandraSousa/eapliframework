@@ -26,9 +26,6 @@ package eapli.framework.domain.model.range;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -38,25 +35,10 @@ import org.junit.Test;
  */
 public class RangeTest extends AbstractRangeTest {
 
-    public RangeTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Range");
         instance = Range.openFrom(START).openTo(END).build();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test(expected = IllegalArgumentException.class)
