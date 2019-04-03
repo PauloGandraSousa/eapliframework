@@ -69,7 +69,8 @@ import eapli.framework.util.predicates.StringPredicates;
  * @param <K>
  *            the key type of the entity
  */
-public abstract class JpaBaseRepository<T, K extends Serializable> implements IterableRepository<T, K> {
+public abstract class JpaBaseRepository<T, K extends Serializable>
+        implements IterableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
@@ -88,7 +89,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     public JpaBaseRepository() {
         final Boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
         if (isGeneric) {
-            final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+            final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                    .getGenericSuperclass();
             entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         } else {
             // special case when this class is used without parametrization.
@@ -119,6 +121,10 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      *
      * @param entity
      * @return the newly created persistent object
+     * @throws IntegrityViolationException
+     *             in case there is an underlying persistence store exception.
+     *             usually this is caused by a constraint violation (e.g., sql
+     *             state 23505) but it will wrap any persistence exception
      */
     public T create(final T entity) {
         Preconditions.nonNull(entity);
@@ -126,8 +132,6 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         try {
             this.entityManager().persist(entity);
         } catch (final PersistenceException ex) {
-            // TODO need to check and make sure we only throw
-            // IntegrityViolationException if we get sql state 23505
             throw new IntegrityViolationException(ex);
         }
         return entity;
@@ -169,6 +173,9 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      *
      * @param entity
      * @throws IntegrityViolationException
+     *             in case there is an underlying persistence store exception.
+     *             usually this is caused by a constraint violation (e.g., sql
+     *             state 23505) but it will wrap any persistence exception
      */
     @Override
     @SuppressWarnings("squid:S1226")
@@ -179,8 +186,6 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
             entity = entityManager().merge(entity);
             entityManager().remove(entity);
         } catch (final PersistenceException ex) {
-            // TODO need to check and make sure we only throw
-            // IntegrityViolationException if we get sql state 23505
             throw new IntegrityViolationException(ex);
         }
     }
@@ -216,7 +221,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
 
         final TypedQuery<Long> q = entityManager().createQuery(
-                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename", Long.class);
+                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename",
+                Long.class);
         return q.getSingleResult();
     }
 
@@ -292,7 +298,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final String className = this.entityClass.getSimpleName();
-        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where, this.entityClass);
+        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
+                this.entityClass);
     }
 
     /**
@@ -425,7 +432,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      */
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
-        assert !StringPredicates.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates
+                .isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(whereWithParameters, params);
@@ -457,7 +465,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      *            a map of the parameter name and its value to use in the query
      * @return
      */
-    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters,
+            final Map<String, Object> params) {
         final TypedQuery<T> q = query(whereWithParameters, params);
         return getOptionalResult(q);
     }

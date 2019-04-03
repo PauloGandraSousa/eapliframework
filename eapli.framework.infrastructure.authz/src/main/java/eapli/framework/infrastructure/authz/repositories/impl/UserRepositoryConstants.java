@@ -28,6 +28,10 @@ package eapli.framework.infrastructure.authz.repositories.impl;
  * @author sou03408
  *
  */
-class JpaUserRepositoryMixin {
-    public static final String ACTIVE_USERS = "e.active=:active";
+final class UserRepositoryConstants {
+    private UserRepositoryConstants() {
+        // ensure utility
+    }
+
+    public static final String FIND_BY_ACTIVE = "e.active=:active";
 }

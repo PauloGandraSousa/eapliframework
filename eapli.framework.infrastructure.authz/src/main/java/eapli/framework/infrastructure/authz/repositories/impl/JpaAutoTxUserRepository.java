@@ -25,9 +25,8 @@ public class JpaAutoTxUserRepository extends JpaAutoTxRepository<SystemUser, Use
         super(puname, properties);
     }
 
-    // TODO avoid duplication with JpaUserRepository
     @Override
     public Iterable<SystemUser> findByActive(boolean active) {
-        return match(JpaUserRepositoryMixin.ACTIVE_USERS, "active", active);
+        return match(UserRepositoryConstants.FIND_BY_ACTIVE, "active", active);
     }
 }

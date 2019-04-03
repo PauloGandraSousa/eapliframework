@@ -25,6 +25,7 @@ package eapli.framework.infrastructure.authz.domain.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,9 +53,20 @@ public class RoleAssignment implements ValueObject, Serializable {
     private final Role type;
     @Temporal(TemporalType.DATE)
     private final Calendar assignedOn;
+    @Temporal(TemporalType.DATE)
+    private Calendar unassignedOn;
+    private boolean expired;
 
     public RoleAssignment(final Role type) {
         this(type, DateTime.now());
+    }
+
+    public Optional<Calendar> getUnassignedOn() {
+        return Optional.ofNullable(unassignedOn);
+    }
+
+    public boolean isExpired() {
+        return expired;
     }
 
     public RoleAssignment(final Role type, final Calendar assignedOn) {
@@ -62,6 +74,7 @@ public class RoleAssignment implements ValueObject, Serializable {
 
         this.type = type;
         this.assignedOn = assignedOn;
+        expired = false;
     }
 
     protected RoleAssignment() {
@@ -80,12 +93,13 @@ public class RoleAssignment implements ValueObject, Serializable {
         }
 
         final RoleAssignment other = (RoleAssignment) o;
-        return type == other.type && assignedOn.equals(other.assignedOn);
+        return type == other.type && assignedOn.equals(other.assignedOn) && expired == other.expired
+                && unassignedOn.equals(other.unassignedOn);
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(type).code();
+        return new HashCoder().of(type).of(assignedOn).of(expired).of(unassignedOn).code();
     }
 
     @Override
@@ -100,5 +114,10 @@ public class RoleAssignment implements ValueObject, Serializable {
 
     public boolean isOf(final Role r) {
         return type.equals(r);
+    }
+
+    public void unassign() {
+        expired = true;
+        unassignedOn = DateTime.now();
     }
 }

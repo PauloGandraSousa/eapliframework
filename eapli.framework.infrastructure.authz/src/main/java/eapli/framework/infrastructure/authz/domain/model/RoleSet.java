@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -69,6 +70,45 @@ class RoleSet implements Set<RoleAssignment>, Serializable {
         return data.add(arg0);
     }
 
+    public boolean hasAssignment(final Role r) {
+        for (final RoleAssignment assignment : data) {
+            if (assignment.isOf(r)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Collection<Role> roleTypes() {
+        final List<Role> ret = new ArrayList<>();
+        data.forEach(role -> ret.add(role.type()));
+        return ret;
+    }
+
+    /**
+     * returns the first assignment to a role or an empty optional if no
+     * assignment to that role exists
+     *
+     * the following implementation uses the java Stream API, but is
+     * conceptually equivalent to the following more traditional java code:
+     *
+     * <pre>
+     * for (final RoleAssignment assignment : data) {
+     *     if (assignment.isOf(role)) {
+     *         return Optional.of(assignment);
+     *     }
+     * }
+     * return Optional.empty();
+     *
+     * </pre>
+     *
+     * @param role
+     * @return
+     */
+    public Optional<RoleAssignment> getAssignment(Role role) {
+        return data.stream().filter(e -> e.isOf(role)).limit(1).max((a, b) -> 1);
+    }
+
     @Override
     public boolean addAll(final Collection<? extends RoleAssignment> arg0) {
         return data.addAll(arg0);
@@ -77,15 +117,6 @@ class RoleSet implements Set<RoleAssignment>, Serializable {
     @Override
     public void clear() {
         data.clear();
-    }
-
-    public boolean hasAssignment(final Role r) {
-        for (final RoleAssignment assignment : data) {
-            if (assignment.isOf(r)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -170,11 +201,5 @@ class RoleSet implements Set<RoleAssignment>, Serializable {
     @Override
     public int hashCode() {
         return new HashCoder().of(data).code();
-    }
-
-    public Collection<Role> roleTypes() {
-        final List<Role> ret = new ArrayList<>();
-        data.forEach(role -> ret.add(role.type()));
-        return ret;
     }
 }

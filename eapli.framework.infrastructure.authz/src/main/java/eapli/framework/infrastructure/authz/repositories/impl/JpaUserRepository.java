@@ -38,9 +38,8 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 @Component
 class JpaUserRepository extends JpaBaseRepository<SystemUser, Username> implements UserRepository {
 
-    // TODO avoid duplication with JpaUserRepository
     @Override
     public Iterable<SystemUser> findByActive(boolean active) {
-        return match(JpaUserRepositoryMixin.ACTIVE_USERS, "active", active);
+        return match(UserRepositoryConstants.FIND_BY_ACTIVE, "active", active);
     }
 }

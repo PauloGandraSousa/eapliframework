@@ -26,6 +26,7 @@ package eapli.framework.infrastructure.authz.domain.model;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -169,8 +170,29 @@ public class SystemUser
      * @param role
      *            Role to assign to SystemUser.
      */
-    public void addRole(final RoleAssignment role) {
+    public void assignToRole(final RoleAssignment role) {
         roles.add(role);
+    }
+
+    /**
+     * Add role to user.
+     *
+     * @param role
+     *            Role to assign to SystemUser.
+     */
+    public void assignToRole(final Role role) {
+        roles.add(new RoleAssignment(role));
+    }
+
+    /**
+     * Removes a role from user, marking the assignment as expired.
+     *
+     * @param role
+     *            Role to remove from SystemUser.
+     */
+    public void unassignRole(final Role role) {
+        final Optional<RoleAssignment> ra = roles.getAssignment(role);
+        ra.ifPresent(RoleAssignment::unassign);
     }
 
     public Collection<Role> roleTypes() {
@@ -185,21 +207,8 @@ public class SystemUser
         ret.put("name", name.toString());
         ret.put("email", email.toString());
         ret.put("roles", roles.roleTypes().toString());
-        // TODO: ASK Isn't it easy to forget mapping an element to DTO when
-        // manipulating members?
 
         return ret;
-    }
-
-    /**
-     * Remove role from user.
-     *
-     * @param role
-     *            Role to remove from SystemUser.
-     */
-    public void removeRole(final RoleAssignment role) {
-        // TODO should the role be removed or marked as "expired"?
-        roles.remove(role);
     }
 
     public boolean passwordMatches(final Password password) {
