@@ -90,19 +90,10 @@ public class AuthenticationService {
             final Role... onlyWithThis) {
         Preconditions.nonNull(username, "a username must be provided");
 
-        Optional<UserSession> newSession;
-        final Optional<SystemUser> user = retrieveUser(username);
-        if (!user.isPresent()) {
-            newSession = Optional.empty();
-        } else if (user.get().passwordMatches(pass) && user.get().isActive()) {
-            if (noActionRightsToValidate(onlyWithThis) || user.get().hasAny(onlyWithThis)) {
-                newSession = user.map(this::createSessionForUser);
-            } else {
-                newSession = Optional.empty();
-            }
-        } else {
-            newSession = Optional.empty();
-        }
+        final Optional<UserSession> newSession = retrieveUser(username)
+                .filter(u -> u.passwordMatches(pass) && u.isActive()
+                        && (noActionRightsToValidate(onlyWithThis) || u.hasAny(onlyWithThis)))
+                .map(this::createSessionForUser);
 
         authz.setSession(newSession);
         return newSession;
@@ -137,7 +128,7 @@ public class AuthenticationService {
 
     /**
      * change the password of a certain user
-     * 
+     *
      * @param user
      * @param oldPassword
      * @param newPassword
@@ -153,7 +144,7 @@ public class AuthenticationService {
 
     /**
      * change the password of the currently logged in user
-     * 
+     *
      * @param oldPassword
      * @param newPassword
      * @return

@@ -33,11 +33,9 @@ public class MenuItemRenderer {
 
     public static final MenuItemRenderer DEFAULT = new MenuItemRenderer();
 
-    @SuppressWarnings({ "squid:S106", "squid:S3655" })
+    @SuppressWarnings("squid:S106")
     public void render(final MenuItem item) {
-        if (item.option().isPresent()) {
-            System.out.print(item.option().get() + ". ");
-        }
+        item.option().ifPresent(o -> System.out.print(o + ". "));
         System.out.print(item.text());
     }
 }

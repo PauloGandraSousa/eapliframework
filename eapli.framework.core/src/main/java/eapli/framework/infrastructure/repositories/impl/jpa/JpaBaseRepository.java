@@ -203,10 +203,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         // this is not efficient as it will fetch the data first and only
         // afterwards will delete it. a more efficient implementation might
         // issue a DELETE statement directly
-        final Optional<T> entity = findById(entityId);
-        if (entity.isPresent()) {
-            delete(entity.get());
-        }
+        findById(entityId).ifPresent(this::delete);
     }
 
     /**

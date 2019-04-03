@@ -47,70 +47,86 @@ import eapli.framework.util.Preconditions;
 @Component
 public final class AuthorizationService {
 
-	/**
-	 * the current logged in user session
-	 */
-	private Optional<UserSession> theSession = Optional.empty();
+    /**
+     * the current logged in user session
+     */
+    private Optional<UserSession> theSession = Optional.empty();
 
-	/**
-	 * default constructor for Spring dependency injection
-	 */
-	protected AuthorizationService() {
-		// empty
-	}
+    /**
+     * default constructor for Spring dependency injection
+     */
+    protected AuthorizationService() {
+        // empty
+    }
 
-	/* package */ void setSession(final Optional<UserSession> session) {
-		Preconditions.nonNull(session);
+    /* package */ void setSession(final Optional<UserSession> session) {
+        Preconditions.nonNull(session);
 
-		if (session.isPresent()) {
-			theSession = session;
-		} else {
-			clearSession();
-		}
-	}
+        if (session.isPresent()) {
+            theSession = session;
+        } else {
+            clearSession();
+        }
+    }
 
-	public void clearSession() {
-		theSession = Optional.empty();
-	}
+    public void clearSession() {
+        theSession = Optional.empty();
+    }
 
-	public boolean hasSession() {
-		return theSession.isPresent();
-	}
+    public boolean hasSession() {
+        return theSession.isPresent();
+    }
 
-	/**
-	 * @return
-	 */
-	public Optional<UserSession> session() {
-		return theSession;
-	}
+    /**
+     * @return
+     */
+    public Optional<UserSession> session() {
+        return theSession;
+    }
 
-	/**
-	 * helper method to check the permission of a user
-	 */
-	public boolean isAuthorizedTo(final SystemUser user, final Role... actions) {
-		return user.hasAny(actions);
-	}
+    /**
+     * helper method to check the permission of a user
+     */
+    public boolean isAuthorizedTo(final SystemUser user, final Role... actions) {
+        return user.hasAny(actions);
+    }
 
-	/**
-	 * helper method to check the permission of the currently logged in user
-	 */
-	public boolean isLoggedInUserAuthorizedTo(final Role... actions) {
-		return session().map(u -> u.authenticatedUser().hasAny(actions)).orElse(false);
-	}
+    /**
+     * helper method to check the permission of the currently logged in user
+     */
+    public boolean isAuthenticatedUserAuthorizedTo(final Role... actions) {
+        return session().map(u -> u.authenticatedUser().hasAny(actions)).orElse(false);
+    }
 
-	/**
-	 * helper method to check the permission of the currently logged in user
-	 *
-	 * @todo consider other ways to perform this check without throwing exceptions,
-	 *       as these scenarios are not really exceptions, they are accounted for
-	 */
-	@SuppressWarnings("squid:S3655")
-	public void ensurePermissionOfLoggedInUser(final Role... actions) {
-		if (!hasSession()) {
-			throw new UserSessionNotInitiatedException();
-		}
-		if (!isLoggedInUserAuthorizedTo(actions)) {
-			throw new UnauthorizedException(session().get().authenticatedUser(), actions);
-		}
-	}
+    /**
+     * helper method to check the permission of the currently logged in user
+     *
+     * @throws UserSessionNotInitiated
+     * @throws UnauthorizedException
+     *
+     * @todo consider other ways to perform this check without throwing
+     *       exceptions, as these scenarios are not really exceptions, they are
+     *       accounted for
+     */
+    @SuppressWarnings("squid:S3655")
+    public void ensurePermissionOfAuthenticatedUser(final Role... actions) {
+        if (!hasSession()) {
+            throw new UserSessionNotInitiatedException();
+        }
+        if (!isAuthenticatedUserAuthorizedTo(actions)) {
+            throw new UnauthorizedException(session().get().authenticatedUser(), actions);
+        }
+    }
+
+    /**
+     * returns the user session of the logged in user if there is a session and
+     * the authenticated user has the desired permissions. otherwise returns an
+     * empty optional.
+     *
+     * @param actions
+     * @return
+     */
+    public Optional<UserSession> loggedinUserWithPermissions(final Role... actions) {
+        return session().filter(u -> u.authenticatedUser().hasAny(actions));
+    }
 }
