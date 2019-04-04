@@ -89,13 +89,29 @@ public final class Functions implements Utilitarian {
      * No-Op
      */
     @SuppressWarnings("squid:S1172")
-    public static <T> void nop(final T x) {
+    public static <T> void ignore(final T x) {
         // no-op
     }
 
     /**
-     * Ensures a certain condition is met. Executes the predicate on the parameter
-     * arg and if the predicate is not met, the action is executed.
+     * Ensures a certain condition is met. Executes the predicate on the
+     * parameter arg and if the predicate is not met, the action is executed.
+     *
+     * @param arg
+     * @param condition
+     *            the invariant to validate arg
+     * @param onFail
+     * @return
+     */
+    public static <T> void ensure(final T arg, final Predicate<T> condition, final Action onFail) {
+        if (!condition.test(arg)) {
+            onFail.execute();
+        }
+    }
+
+    /**
+     * Ensures a certain condition is met. If the predicate is not met, the
+     * action is executed.
      *
      * @param arg
      * @param validator
@@ -103,40 +119,24 @@ public final class Functions implements Utilitarian {
      * @param onFail
      * @return
      */
-    public static <T> void ensure(final T arg, final Predicate<T> validator, final Action onFail) {
-        if (!validator.test(arg)) {
+    public static void ensure(final BooleanSupplier condition, final Action onFail) {
+        if (!condition.getAsBoolean()) {
             onFail.execute();
         }
     }
 
     /**
-     * Ensures a certain condition is met. If the predicate is not met, the action
-     * is executed.
+     * Executes the predicate on the parameter arg. If the predicate is not met,
+     * the action is executed passing the parameter message
      *
      * @param arg
-     * @param validator
-     *            the invariant to validate arg
-     * @param onFail
-     * @return
-     */
-    public static void ensure(final BooleanSupplier test, final Action onFail) {
-        if (!test.getAsBoolean()) {
-            onFail.execute();
-        }
-    }
-
-    /**
-     * Executes the predicate on the parameter arg. If the predicate is not met, the
-     * action is executed passing the parameter message
-     *
-     * @param arg
-     * @param validator
+     * @param condition
      * @param consequence
      * @param msg
      */
-    public static <T> void ifNotThen(final T arg, final Predicate<T> validator, final Consumer<String> consequence,
+    public static <T> void ifNotThen(final T arg, final Predicate<T> condition, final Consumer<String> consequence,
             final String msg) {
-        if (!validator.test(arg)) {
+        if (!condition.test(arg)) {
             consequence.accept(msg);
         }
     }
@@ -150,8 +150,9 @@ public final class Functions implements Utilitarian {
      * @param consequence
      * @param msg
      */
-    public static void ifNotThen(final BooleanSupplier test, final Consumer<String> consequence, final String msg) {
-        if (!test.getAsBoolean()) {
+    public static void ifNotThen(final BooleanSupplier condition, final Consumer<String> consequence,
+            final String msg) {
+        if (!condition.getAsBoolean()) {
             consequence.accept(msg);
         }
     }
@@ -160,17 +161,17 @@ public final class Functions implements Utilitarian {
      * Treating an If-Then-Else structure as an expression
      *
      * @param arg
-     * @param test
-     * @param onSucess
-     * @param onFail
+     * @param condition
+     * @param success
+     * @param failure
      * @return
      */
-    public static <T, R> R ifThenElse(final T arg, final Predicate<T> test, final Supplier<R> onSucess,
-            final Supplier<R> onFail) {
-        if (test.test(arg)) {
-            return onSucess.get();
+    public static <T, R> R ifThenElse(final T arg, final Predicate<T> condition, final Supplier<R> success,
+            final Supplier<R> failure) {
+        if (condition.test(arg)) {
+            return success.get();
         } else {
-            return onFail.get();
+            return failure.get();
         }
     }
 
@@ -179,16 +180,16 @@ public final class Functions implements Utilitarian {
      *
      * @param arg
      * @param test
-     * @param onSucess
-     * @param onFail
+     * @param success
+     * @param failure
      * @return
      */
-    public static <R> R ifThenElse(final BooleanSupplier predicate, final Supplier<R> onSucess,
-            final Supplier<R> onFail) {
-        if (predicate.getAsBoolean()) {
-            return onSucess.get();
+    public static <R> R ifThenElse(final BooleanSupplier condition, final Supplier<R> success,
+            final Supplier<R> failure) {
+        if (condition.getAsBoolean()) {
+            return success.get();
         } else {
-            return onFail.get();
+            return failure.get();
         }
     }
 
@@ -197,19 +198,23 @@ public final class Functions implements Utilitarian {
     //
 
     /**
-     * Retries an operation with a given interval time between invocations up to a
-     * certain number of attempts. the retry stops if the operation returned
+     * Retries an operation with a given interval time between invocations up to
+     * a certain number of attempts. the retry stops if the operation returned
      * optional contains a value or the maximum number of attempts is reached.
      *
-     * @param op
+     * @param operation
      * @param sleep
+     *            seed time in milliseconds to wait for retrying. it will
+     *            progressively increase between attempts if progressive is set
+     *            to true
      * @param maxAttempts
+     * @param progressive
      * @return
      */
-    public static <T> Optional<T> retry(final Supplier<Optional<T>> op, final int sleep, final int maxAttempts,
+    public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep, final int maxAttempts,
             final boolean progressive) {
         int atempts = 1;
-        Optional<T> u = op.get();
+        Optional<T> u = operation.get();
         while (!u.isPresent() && atempts <= maxAttempts) {
             atempts++;
             if (progressive) {
@@ -217,13 +222,13 @@ public final class Functions implements Utilitarian {
             } else {
                 TimedActions.delay(sleep);
             }
-            u = op.get();
+            u = operation.get();
         }
         return u;
     }
 
-    public static <T> Optional<T> retry(final Supplier<Optional<T>> op, final int sleep, final int maxAttempts) {
-        return retry(op, sleep, maxAttempts, true);
+    public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep, final int maxAttempts) {
+        return retry(operation, sleep, maxAttempts, true);
     }
 
     //
@@ -252,8 +257,7 @@ public final class Functions implements Utilitarian {
                 & ~(Spliterator.DISTINCT | Spliterator.SORTED);
 
         final long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown())
-                : -1;
+                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown()) : -1;
 
         final Iterator<A> aIterator = Spliterators.iterator(aSpliterator);
         final Iterator<B> bIterator = Spliterators.iterator(bSpliterator);

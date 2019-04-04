@@ -89,6 +89,7 @@ public class AuthenticationService {
     public Optional<UserSession> authenticate(final Username username, final Password pass,
             final Role... onlyWithThis) {
         Preconditions.nonNull(username, "a username must be provided");
+        Preconditions.nonNull(pass, "a password must be provided");
 
         final Optional<UserSession> newSession = retrieveUser(username)
                 .filter(u -> u.passwordMatches(pass) && u.isActive()

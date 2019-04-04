@@ -34,7 +34,9 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.util.Preconditions;
 
 /**
- * the current logged user session holder
+ * Very simple session holder and permission checking helper. note that it does
+ * not check the permissions against any type of database but relies on the
+ * roles assigned to a user.
  *
  * note that this class is conceptually a singleton as it holds the Session
  * object. ensure that you set up spring correctly and if you create the
@@ -59,6 +61,12 @@ public final class AuthorizationService {
         // empty
     }
 
+    /**
+     * internal method to set the session after authentication has been
+     * performed
+     *
+     * @param session
+     */
     /* package */ void setSession(final Optional<UserSession> session) {
         Preconditions.nonNull(session);
 
@@ -69,10 +77,18 @@ public final class AuthorizationService {
         }
     }
 
+    /**
+     * clear the session
+     */
     public void clearSession() {
         theSession = Optional.empty();
     }
 
+    /**
+     * verifies if there is an authenticated user session
+     *
+     * @return
+     */
     public boolean hasSession() {
         return theSession.isPresent();
     }
@@ -95,7 +111,7 @@ public final class AuthorizationService {
      * helper method to check the permission of the currently logged in user
      */
     public boolean isAuthenticatedUserAuthorizedTo(final Role... actions) {
-        return session().map(u -> u.authenticatedUser().hasAny(actions)).orElse(false);
+        return session().map(u -> hasAny(u, actions)).orElse(false);
     }
 
     /**
@@ -110,10 +126,8 @@ public final class AuthorizationService {
      */
     @SuppressWarnings("squid:S3655")
     public void ensurePermissionOfAuthenticatedUser(final Role... actions) {
-        if (!hasSession()) {
-            throw new UserSessionNotInitiatedException();
-        }
-        if (!isAuthenticatedUserAuthorizedTo(actions)) {
+        final UserSession us = session().orElseThrow(UserSessionNotInitiatedException::new);
+        if (!hasAny(us, actions)) {
             throw new UnauthorizedException(session().get().authenticatedUser(), actions);
         }
     }
@@ -127,6 +141,10 @@ public final class AuthorizationService {
      * @return
      */
     public Optional<UserSession> loggedinUserWithPermissions(final Role... actions) {
-        return session().filter(u -> u.authenticatedUser().hasAny(actions));
+        return session().filter(u -> hasAny(u, actions));
+    }
+
+    private boolean hasAny(final UserSession u, final Role... actions) {
+        return u.authenticatedUser().hasAny(actions);
     }
 }
