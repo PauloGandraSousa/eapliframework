@@ -39,7 +39,7 @@ public class DateTimeTest {
      * Test of weekNumber method, of class DateTime.
      */
     @Test
-    public void testJanuaryFirst2014IsWeekOne() {
+    public void ensureJanuaryFirst2014IsWeekOne() {
         System.out.println("weekNumber");
         final Calendar date = new GregorianCalendar(2014, 0, 1);
         final int expResult = 1;
@@ -51,7 +51,7 @@ public class DateTimeTest {
      * Test of weekNumber method, of class DateTime.
      */
     @Test
-    public void testMarch21st2014IsWeek12() {
+    public void ensureMarch21st2014IsWeek12() {
         System.out.println("weekNumber");
         final Calendar date = new GregorianCalendar(2014, 2, 21);
         final int expResult = 12;
@@ -63,7 +63,7 @@ public class DateTimeTest {
      * Test of beginningOfWeek method, of class DateTime.
      */
     @Test
-    public void testFirstDayOfWeek13Of2014Is16() {
+    public void ensureFirstDayOfWeek13Of2014Is16() {
         System.out.println("beginningOfWeek");
         final int year = 2014;
         final int week = 13;
@@ -76,7 +76,7 @@ public class DateTimeTest {
      * Test of endOfWeek method, of class DateTime.
      */
     @Test
-    public void testLastDayOfWeek13Of2014Is22() {
+    public void ensureLastDayOfWeek13Of2014Is22() {
         System.out.println("endOfWeek");
         final int year = 2014;
         final int week = 13;
@@ -89,7 +89,7 @@ public class DateTimeTest {
      * Test of endOfMonth method, of class DateTime.
      */
     @Test
-    public void testLastDayOfMarch2014is31() {
+    public void ensureLastDayOfMarch2014is31() {
         System.out.println("endOfMonth");
         final Calendar reference = DateTime.newCalendar(2014, 3, 21);
         final Calendar expResult = DateTime.newCalendar(2014, 3, 31);
@@ -101,7 +101,7 @@ public class DateTimeTest {
      * Test of endOfMonth method, of class DateTime.
      */
     @Test
-    public void testLastDayOfFebruary2014is28() {
+    public void ensureLastDayOfFebruary2014is28() {
         System.out.println("endOfMonth");
         final Calendar reference = DateTime.newCalendar(2014, 2, 21);
         final Calendar expResult = DateTime.newCalendar(2014, 2, 28);
@@ -113,7 +113,7 @@ public class DateTimeTest {
      * Test of endOfMonth method, of class DateTime.
      */
     @Test
-    public void testLastDayOfFebruary2012is29() {
+    public void ensureLastDayOfFebruary2012is29() {
         System.out.println("endOfMonth");
         final Calendar reference = DateTime.newCalendar(2012, 2, 21);
         final Calendar expResult = DateTime.newCalendar(2012, 2, 29);
@@ -125,7 +125,7 @@ public class DateTimeTest {
      * Test of parseDate method, of class DateTime.
      */
     @Test
-    public void testParseDate_String_String() {
+    public void ensureParseDate_String_String() {
         System.out.println("parseDate");
         final String aDateString = "2014-03-21";
         final String format = "yyyy-MM-dd";
