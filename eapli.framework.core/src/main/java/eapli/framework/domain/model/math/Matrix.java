@@ -266,7 +266,8 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * @return the diagonal matrix with the same elements in this matrix's diagonal
+     * @return the diagonal matrix with the same elements in this matrix's
+     *         diagonal
      */
     public Matrix diagonal() {
         Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
@@ -280,8 +281,8 @@ public class Matrix implements ValueObject {
 
     /**
      *
-     * @return a row vector (a matrix with just one row) with the elements in this
-     *         matrix's diagonal
+     * @return a row vector (a matrix with just one row) with the elements in
+     *         this matrix's diagonal
      */
     public Matrix diagonalElements() {
         if (!isSquare()) {
@@ -477,7 +478,7 @@ public class Matrix implements ValueObject {
         return m;
     }
 
-    private void switchZeroInDiagonal(final int tms, final Matrix m, int col) {
+    private void switchZeroInDiagonal(final int tms, final Matrix m, final int col) {
         int v = 1;
         // check if 0 in diagonal
         while (m.getAt(col, col) == 0) {
@@ -756,35 +757,38 @@ public class Matrix implements ValueObject {
     /* ??? */
     private void nSolve(final int rows, final double[][] data) {
         final int columns = rows + 1;
-        int i;
-        for (i = 0; i < rows; i++) {
-            int j;
-            for (j = i; j < rows && data[j][j] == 0.0; j++) {
-                // do nothing
-            }
-            if (data[j][j] == 0.0) {
-                throw new IllegalStateException("singular matrix");
-            }
-            if (j != i) {
-                for (int k = 0; k < columns; k++) {
-                    final double dtemp = data[i][k];
-                    data[i][k] = data[j][k];
-                    data[j][k] = dtemp;
-                }
-            }
-            for (j = columns - 1; j >= 0; j--) {
-                data[i][j] /= data[i][i];
-            }
-            for (j = i + 1; j < rows; j++) {
-                for (int k = columns - 1; k >= i; k--) {
-                    data[j][k] -= data[j][i] * data[i][k];
-                }
-            }
+        for (int i = 0; i < rows; i++) {
+            nSolveStep1(rows, data, columns, i);
         }
-        for (i = rows - 2; i >= 0; i--) {
+        for (int i = rows - 2; i >= 0; i--) {
             for (int j = columns - 2; j > i; j--) {
                 data[i][columns - 1] -= data[i][j] * data[j][columns - 1];
                 data[i][j] = 0;
+            }
+        }
+    }
+
+    private void nSolveStep1(final int rows, final double[][] data, final int columns, final int i) {
+        int j;
+        for (j = i; j < rows && data[j][j] == 0.0; j++) {
+            // do nothing
+        }
+        if (data[j][j] == 0.0) {
+            throw new IllegalStateException("singular matrix");
+        }
+        if (j != i) {
+            for (int k = 0; k < columns; k++) {
+                final double dtemp = data[i][k];
+                data[i][k] = data[j][k];
+                data[j][k] = dtemp;
+            }
+        }
+        for (j = columns - 1; j >= 0; j--) {
+            data[i][j] /= data[i][i];
+        }
+        for (j = i + 1; j < rows; j++) {
+            for (int k = columns - 1; k >= i; k--) {
+                data[j][k] -= data[j][i] * data[i][k];
             }
         }
     }

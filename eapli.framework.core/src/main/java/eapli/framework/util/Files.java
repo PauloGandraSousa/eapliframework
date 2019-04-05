@@ -44,8 +44,9 @@ public final class Files implements Utilitarian {
     }
 
     /**
-     * returns the current working directory of the application. be carefull no to
-     * expose this information to the outside as it may expose security risks - see
+     * returns the current working directory of the application. be carefull no
+     * to expose this information to the outside as it may expose security risks
+     * - see
      * https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4797&rule_key=squid%3AS4797
      *
      * @return the current working directory of the application
@@ -60,10 +61,7 @@ public final class Files implements Utilitarian {
      * @param filename
      * @param extension
      * @return
-     * @deprecated use {@link java.io.File} or
-     *             {@link org.apache.commons.io.FilenameUtils}
      */
-    @Deprecated
     public static String ensureExtension(final String filename, final String extension) {
         if (!filename.endsWith(extension)) {
             if (extension.startsWith(".")) {
@@ -77,8 +75,8 @@ public final class Files implements Utilitarian {
     }
 
     /**
-     * gets the full content of an input string as a single String. the input stream
-     * is still active and open after calling this method
+     * gets the full content of an input string as a single String. the input
+     * stream is still active and open after calling this method
      *
      * @param is
      *            the input stream
