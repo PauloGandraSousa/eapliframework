@@ -28,7 +28,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -63,13 +62,12 @@ public class DateTimeTest {
     /**
      * Test of beginningOfWeek method, of class DateTime.
      */
-    @Ignore
     @Test
     public void testFirstDayOfWeek13Of2014Is16() {
         System.out.println("beginningOfWeek");
         final int year = 2014;
         final int week = 13;
-        final Calendar expResult = DateTime.newCalendar(2014, 03, 16);
+        final Calendar expResult = DateTime.newCalendar(2014, 3, 24);
         final Calendar result = DateTime.beginningOfWeek(year, week);
         assertEquals(expResult, result);
     }
@@ -77,13 +75,12 @@ public class DateTimeTest {
     /**
      * Test of endOfWeek method, of class DateTime.
      */
-    @Ignore
     @Test
     public void testLastDayOfWeek13Of2014Is22() {
         System.out.println("endOfWeek");
         final int year = 2014;
         final int week = 13;
-        final Calendar expResult = DateTime.newCalendar(2014, 03, 22);
+        final Calendar expResult = DateTime.newCalendar(2014, 3, 30);
         final Calendar result = DateTime.endOfWeek(year, week);
         assertEquals(expResult, result);
     }
@@ -94,8 +91,8 @@ public class DateTimeTest {
     @Test
     public void testLastDayOfMarch2014is31() {
         System.out.println("endOfMonth");
-        final Calendar reference = DateTime.newCalendar(2014, 03, 21);
-        final Calendar expResult = DateTime.newCalendar(2014, 03, 31);
+        final Calendar reference = DateTime.newCalendar(2014, 3, 21);
+        final Calendar expResult = DateTime.newCalendar(2014, 3, 31);
         final Calendar result = DateTime.endOfMonth(reference);
         assertEquals(expResult, result);
     }
@@ -106,8 +103,8 @@ public class DateTimeTest {
     @Test
     public void testLastDayOfFebruary2014is28() {
         System.out.println("endOfMonth");
-        final Calendar reference = DateTime.newCalendar(2014, 02, 21);
-        final Calendar expResult = DateTime.newCalendar(2014, 02, 28);
+        final Calendar reference = DateTime.newCalendar(2014, 2, 21);
+        final Calendar expResult = DateTime.newCalendar(2014, 2, 28);
         final Calendar result = DateTime.endOfMonth(reference);
         assertEquals(expResult, result);
     }
@@ -118,8 +115,8 @@ public class DateTimeTest {
     @Test
     public void testLastDayOfFebruary2012is29() {
         System.out.println("endOfMonth");
-        final Calendar reference = DateTime.newCalendar(2012, 02, 21);
-        final Calendar expResult = DateTime.newCalendar(2012, 02, 29);
+        final Calendar reference = DateTime.newCalendar(2012, 2, 21);
+        final Calendar expResult = DateTime.newCalendar(2012, 2, 29);
         final Calendar result = DateTime.endOfMonth(reference);
         assertEquals(expResult, result);
     }
@@ -127,13 +124,12 @@ public class DateTimeTest {
     /**
      * Test of parseDate method, of class DateTime.
      */
-    @Ignore
     @Test
     public void testParseDate_String_String() {
         System.out.println("parseDate");
         final String aDateString = "2014-03-21";
-        final String format = "YYYY-MM-DD";
-        final Calendar expResult = DateTime.newCalendar(2014, 03, 21);
+        final String format = "yyyy-MM-dd";
+        final Calendar expResult = DateTime.newCalendar(2014, 3, 21);
         final Calendar result = DateTime.parseDate(aDateString, format);
         assertEquals(expResult, result);
     }
