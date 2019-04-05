@@ -59,6 +59,10 @@ public class DateTimeTest {
         assertEquals(expResult, result);
     }
 
+    private String toString(final Calendar d) {
+        return d.get(Calendar.YEAR) + "/" + d.get(Calendar.MONTH) + 1 + "/" + d.get(Calendar.DATE);
+    }
+
     /**
      * Test of beginningOfWeek method, of class DateTime.
      */
@@ -68,7 +72,9 @@ public class DateTimeTest {
         final int year = 2014;
         final int week = 13;
         final Calendar expResult = DateTime.newCalendar(2014, 3, 24);
+        System.out.println("beginningOfWeek - expected: " + toString(expResult));
         final Calendar result = DateTime.beginningOfWeek(year, week);
+        System.out.println("beginningOfWeek - actual: " + toString(result));
         assertEquals(expResult, result);
     }
 
@@ -81,7 +87,9 @@ public class DateTimeTest {
         final int year = 2014;
         final int week = 13;
         final Calendar expResult = DateTime.newCalendar(2014, 3, 30);
+        System.out.println("endOfWeek - expected: " + toString(expResult));
         final Calendar result = DateTime.endOfWeek(year, week);
+        System.out.println("endOfWeek - actual: " + toString(result));
         assertEquals(expResult, result);
     }
 
