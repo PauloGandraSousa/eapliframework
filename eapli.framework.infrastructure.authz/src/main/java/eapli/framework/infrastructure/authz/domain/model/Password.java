@@ -36,10 +36,15 @@ import eapli.framework.util.predicates.StringPredicates;
 /**
  * a password of a user.
  *
- * passwords must be at least 6 characters long and have at least one digit and
- * one capital letter
+ * this classes enforces that passwords must be at least 6 characters long and
+ * have at least one digit and one capital letter. in fact, password policies
+ * should be externalized from this class.
  *
- * TODO passwords should never be stored in plain format
+ * look into
+ * https://documentation.cpanel.net/display/CKB/How+to+Determine+Password+Strength
+ * for example rules of password strength
+ *
+ * IMPORTANT: passwords should never be stored in plain format
  *
  * @author Paulo Gandra Sousa
  */
@@ -112,14 +117,21 @@ public class Password implements ValueObject, Serializable {
     /**
      * Check how strong a password is
      *
+     * look into
+     * https://documentation.cpanel.net/display/CKB/How+to+Determine+Password+Strength
+     * for example rules of password strength
+     *
      * @return how strong a password is
      */
     public PasswordStrength strength() {
         PasswordStrength passwordStrength = PasswordStrength.WEAK;
-        if (6 >= thePassword.length()) {
+        if (thePassword.length() >= 12 || (thePassword.length() >= 8 && thePassword.matches(".+[$#!%&?]+.+"))) {
+            passwordStrength = PasswordStrength.EXCELENT;
+        } else if (thePassword.length() >= 8) {
+            passwordStrength = PasswordStrength.GOOD;
+        } else if (thePassword.length() >= 6) {
             passwordStrength = PasswordStrength.WEAK;
         }
-        // TODO implement the rest of the method
         return passwordStrength;
     }
 

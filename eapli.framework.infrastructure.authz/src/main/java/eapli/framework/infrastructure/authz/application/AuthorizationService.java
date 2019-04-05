@@ -117,12 +117,13 @@ public final class AuthorizationService {
     /**
      * helper method to check the permission of the currently logged in user
      *
+     * consider using {@link #loggedinUserWithPermissions(Role...)} to perform
+     * this check without throwing exceptions, as these scenarios are not really
+     * exceptions but accounted for
+     * 
      * @throws UserSessionNotInitiated
      * @throws UnauthorizedException
      *
-     * @todo consider other ways to perform this check without throwing
-     *       exceptions, as these scenarios are not really exceptions, they are
-     *       accounted for
      */
     @SuppressWarnings("squid:S3655")
     public void ensurePermissionOfAuthenticatedUser(final Role... actions) {

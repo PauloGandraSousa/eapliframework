@@ -23,8 +23,12 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import eapli.framework.infrastructure.authz.domain.model.Password.PasswordStrength;
 
 /**
  * @author Paulo Gandra Sousa
@@ -50,5 +54,65 @@ public class PasswordTest {
     @Test(expected = IllegalArgumentException.class)
     public void ensurePasswordsWithoutCapitalLetterAreNotAllowed() {
         new Password("abcefghi1");
+    }
+
+    @Test
+    public void testWeakPassword1() {
+        final Password instance = new Password("A23456");
+        assertEquals(PasswordStrength.WEAK, instance.strength());
+    }
+
+    @Test
+    public void testWeakPassword2() {
+        final Password instance = new Password("A234567");
+        assertEquals(PasswordStrength.WEAK, instance.strength());
+    }
+
+    @Test
+    public void testGoodPassword1() {
+        final Password instance = new Password("A2345678");
+        assertEquals(PasswordStrength.GOOD, instance.strength());
+    }
+
+    @Test
+    public void testGoodPassword2() {
+        final Password instance = new Password("A23456789");
+        assertEquals(PasswordStrength.GOOD, instance.strength());
+    }
+
+    @Test
+    public void testExcelentPassword1() {
+        final Password instance = new Password("123456789ABC");
+        assertEquals(PasswordStrength.EXCELENT, instance.strength());
+    }
+
+    @Test
+    public void testExcelentPassword2() {
+        final Password instance = new Password("123456789ABCD");
+        assertEquals(PasswordStrength.EXCELENT, instance.strength());
+    }
+
+    @Test
+    public void testExcelentPassword3() {
+        final Password instance = new Password("A234$5678");
+        assertEquals(PasswordStrength.EXCELENT, instance.strength());
+    }
+
+    @Test
+    public void testExcelentPassword4() {
+        final Password instance = new Password("A234#5678");
+        assertEquals(PasswordStrength.EXCELENT, instance.strength());
+    }
+
+    @Test
+    public void testExcelentPassword5() {
+        final Password instance = new Password("A234!5678");
+        assertEquals(PasswordStrength.EXCELENT, instance.strength());
+    }
+
+    @Test
+    public void testExcelentPassword6() {
+        final Password instance = new Password("A234?5678");
+        assertEquals(PasswordStrength.EXCELENT, instance.strength());
     }
 }

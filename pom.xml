@@ -12,11 +12,15 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data.version>Kay-SR2</spring-data.version>
+		
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
+		<sonar.exclusions>src/main/java/**/*/package-info.java</sonar.exclusions>
 	</properties>
 
 

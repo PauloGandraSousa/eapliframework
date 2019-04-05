@@ -32,7 +32,8 @@ import eapli.framework.util.DateTime;
 import eapli.framework.util.Preconditions;
 
 /**
- * @FIXME javadoc
+ * the session of an authenticated user
+ * 
  * @author Paulo Gandra Sousa
  *
  */
