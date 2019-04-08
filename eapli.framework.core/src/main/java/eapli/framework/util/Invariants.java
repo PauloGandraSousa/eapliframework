@@ -26,6 +26,7 @@ package eapli.framework.util;
 import static eapli.framework.util.function.Functions.THROW_STATE_WITH_MESSAGE;
 import static eapli.framework.util.function.Functions.ifNotThen;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
@@ -39,6 +40,10 @@ import eapli.framework.util.predicates.StringPredicates;
  */
 public final class Invariants implements Utilitarian {
     private Invariants() {
+    }
+
+    public static void ensure(final boolean b) {
+        ensure(() -> b);
     }
 
     public static void ensure(final BooleanSupplier test) {
@@ -55,6 +60,16 @@ public final class Invariants implements Utilitarian {
 
     public static void nonNull(final Object arg, final String msg) {
         ifNotThen(arg, Objects::nonNull, THROW_STATE_WITH_MESSAGE, msg);
+    }
+
+    /**
+     * checks if a collection is non null and contains at least an element
+     *
+     * @param items
+     */
+    public static void nonEmpty(final Collection<?> items) {
+        nonNull(items);
+        ensure(!items.isEmpty());
     }
 
     public static void nonEmpty(final String arg, final String msg) {
