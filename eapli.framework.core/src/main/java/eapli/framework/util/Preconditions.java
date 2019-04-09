@@ -26,6 +26,7 @@ package eapli.framework.util;
 import static eapli.framework.util.function.Functions.THROW_ARGUMENT_WITH_MESSAGE;
 import static eapli.framework.util.function.Functions.ifNotThen;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
@@ -43,6 +44,10 @@ import eapli.framework.util.predicates.StringPredicates;
  */
 public final class Preconditions implements Utilitarian {
     private Preconditions() {
+    }
+
+    public static void ensure(final boolean b) {
+        ensure(() -> b);
     }
 
     public static void ensure(final BooleanSupplier test) {
@@ -67,13 +72,28 @@ public final class Preconditions implements Utilitarian {
         }
     }
 
+    /**
+     * checks if a collection is non null and contains at least an element
+     *
+     * @param items
+     */
+    public static void nonEmpty(final Collection<?> items) {
+        nonNull(items);
+        ensure(!items.isEmpty());
+    }
+
+    /**
+     * checks if a string is neither null nor empty
+     *
+     * @param arg
+     */
     public static void nonEmpty(final String arg) {
         nonEmpty(arg, "");
     }
 
     /**
      * checks if a string is neither null nor empty
-     * 
+     *
      * @param arg
      * @param msg
      */
