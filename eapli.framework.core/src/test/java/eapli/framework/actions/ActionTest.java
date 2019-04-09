@@ -77,6 +77,6 @@ public class ActionTest {
         };
         final boolean result = Actions.retry(add1, 10, 3);
 
-        assertTrue(result == false && helper.i == 10);
+        assertTrue(result == false && helper.i == 3);
     }
 }

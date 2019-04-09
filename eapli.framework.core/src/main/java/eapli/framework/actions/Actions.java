@@ -77,7 +77,7 @@ public final class Actions implements Utilitarian {
     public static boolean retry(final Action op, final int sleep, final int maxAttempts, final boolean progressive) {
         int atempts = 1;
         boolean result = op.execute();
-        while (!result && atempts <= maxAttempts) {
+        while (!result && atempts < maxAttempts) {
             atempts++;
             if (progressive) {
                 TimedActions.delay(sleep, atempts);
