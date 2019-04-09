@@ -62,4 +62,26 @@ public class ActionTest {
 
         assertEquals(0, helper.i);
     }
+
+    @Test
+    public void ensureRetryWorksAtFirst() {
+        assertTrue(Actions.retry(Actions.SUCCESS, 10, 10));
+    }
+
+    @Test
+    public void ensureRetryFailsAfterNIfActionFails() {
+        assertFalse(Actions.retry(Actions.FAIL, 10, 3));
+    }
+
+    @Test
+    public void ensureRetryRunsNTimes() {
+        final AdderHelper helper = new AdderHelper();
+        final Action add1 = () -> {
+            helper.i++;
+            return false;
+        };
+        final boolean result = Actions.retry(add1, 10, 3);
+
+        assertTrue(result == false && helper.i == 10);
+    }
 }
