@@ -52,10 +52,16 @@ public final class Functions implements Utilitarian {
         // ensure utility
     }
 
+    /**
+     * a default action to throw IllegalArgumentException
+     */
     public static final Action THROW_ARGUMENT = () -> {
         throw new IllegalArgumentException();
     };
 
+    /**
+     * a default action to throw IllegalStateException
+     */
     public static final Action THROW_STATE = () -> {
         throw new IllegalStateException();
     };
