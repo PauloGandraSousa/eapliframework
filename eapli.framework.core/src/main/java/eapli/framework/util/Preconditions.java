@@ -109,6 +109,10 @@ public final class Preconditions implements Utilitarian {
         ifNotThen(arg, NumberPredicates::isPositive, THROW_ARGUMENT_WITH_MESSAGE, msg);
     }
 
+    public static void nonNegative(final long arg) {
+        nonNegative(arg, "");
+    }
+
     public static void nonNegative(final long arg, final String msg) {
         ifNotThen(arg, NumberPredicates::isNonNegative, THROW_ARGUMENT_WITH_MESSAGE, msg);
     }
