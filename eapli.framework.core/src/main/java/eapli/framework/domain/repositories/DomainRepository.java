@@ -30,66 +30,21 @@ import eapli.framework.domain.model.ValueObject;
 
 /**
  * A repository is a domain-driven design pattern to abstract the details of
- * persisting domain objects. it exposes a pure domain based interface without
+ * persisting domain objects. It exposes a pure domain based interface without
  * leaking details of the implementation of the actual persistence mechanism.
- * there should be one repository per aggregate root
+ * there should be one repository per aggregate root.
+ *
+ * if you are not using the DDD interfaces of the framework use
+ * {@link eapli.framework.infrastructure.repositories.Repository} instead
  *
  * @param <T>
  *            the type of the entity we want to manage in the repository.
  * @param <I>
- *            the type of the business identity of the entity. not the primary
- *            key
+ *            the type of the business identity of the entity.
  *
  * @author Paulo Gandra Sousa
  */
 public interface DomainRepository<I extends ValueObject, T extends AggregateRoot<I>> {
-
-    /**
-     * removes the specified entity from the repository.
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    void delete(T entity);
-
-    /**
-     * Removes the entity with the specified identity from the repository.
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    void deleteWithIdentity(I entityId);
-
-    /**
-     * removes the specified entity from the repository. Alias to delete() in
-     * order to better fit the "List"-like nature of a repository
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    default void remove(final T entity) {
-        delete(entity);
-    }
-
-    /**
-     * Removes the entity with the specified identity from the repository. Alias
-     * to deleteById() in order to better fit the "List"-like nature of a
-     * repository
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    default void removeWithIdentity(final I entityId) {
-        deleteWithIdentity(entityId);
-    }
 
     /**
      * Saves an entity either by creating it or updating it in the persistence
@@ -100,7 +55,7 @@ public interface DomainRepository<I extends ValueObject, T extends AggregateRoot
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
      */
-    <S extends T> S save(S entity);
+    <S extends T> S save(final S entity);
 
     /**
      * gets all entities from the repository.
@@ -110,38 +65,57 @@ public interface DomainRepository<I extends ValueObject, T extends AggregateRoot
     Iterable<T> findAll();
 
     /**
-     * gets the entity with the specified identity
+     * gets the entity with the specified identity.
      *
      * @param id
      * @return
      */
-    Optional<T> get(I id);
+    Optional<T> ofIdentity(final I id);
 
     /**
-     * Gets the entity with the specified primary key. Alias to findById() in
-     * order to better fit the "List"-like nature of a repository
+     * checks for the existence of the entity identified by id
      *
      * @param id
      * @return
      */
-    default boolean contains(final I id) {
-        return get(id).isPresent();
+    default boolean containsOf(final I id) {
+        return ofIdentity(id).isPresent();
     }
 
     /**
-     * returns the number of entities in the repository.
+     * checks for the existence of the entity
      *
+     * @param id
      * @return
      */
-    long count();
+    default boolean contains(final T entity) {
+        return containsOf(entity.identity());
+    }
 
     /**
-     * Returns the number of entities in the repository. Alias to count() in
-     * order to better fit the "List"-like nature of a repository
+     * removes the specified entity from the repository.
+     *
+     * @param entity
+     * @throws IntegrityViolationException
+     * @throws UnsuportedOperationException
+     *             if the delete operation makes no sense for this repository
+     */
+    void remove(final T entity);
+
+    /**
+     * Removes the entity with the specified identity from the repository.
+     *
+     * @param entityId
+     * @throws IntegrityViolationException
+     * @throws UnsuportedOperationException
+     *             if the delete operation makes no sense for this repository
+     */
+    void removeOf(final I entityId);
+
+    /**
+     * Returns the number of entities in the repository.
      *
      * @return
      */
-    default long size() {
-        return count();
-    }
+    long size();
 }

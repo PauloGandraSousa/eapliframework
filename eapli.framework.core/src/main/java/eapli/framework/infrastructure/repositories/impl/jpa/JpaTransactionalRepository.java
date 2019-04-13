@@ -23,7 +23,6 @@
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -44,20 +43,24 @@ import eapli.framework.util.Preconditions;
  * the case to be running under an application server with a JPA container and
  * managed transactions/sessions, one should not be doing this
  *
- * @author Paulo Gandra Sousa
  * @param <T>
- *            the entity type managed by this repository (a table in the
- *            database)
+ *            the entity type that we want to build a repository for
  * @param <K>
- *            the primary key of the table
+ *            the primary key type of the table
+ * @param <I>
+ *            the type of the <b>business identity</b> of the entity
+ *
+ * @author Paulo Gandra Sousa
  */
-public class JpaTransactionalRepository<T, K extends Serializable> extends JpaWithTransactionalContextRepository<T, K> {
+public class JpaTransactionalRepository<T, K, I>
+        extends JpaWithTransactionalContextRepository<T, K, I> {
 
     public JpaTransactionalRepository(final String persistenceUnitName) {
         super(new JpaTransactionalContext(persistenceUnitName));
     }
 
-    /* package */ JpaTransactionalRepository(final String persistenceUnitName, final Class<T> classz) {
+    /* package */ JpaTransactionalRepository(final String persistenceUnitName,
+            final Class<T> classz) {
         super(new JpaTransactionalContext(persistenceUnitName), classz);
     }
 

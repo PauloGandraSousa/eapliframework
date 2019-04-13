@@ -110,8 +110,8 @@ public class AuthenticationService {
      *             passed string arguments
      */
     public boolean login(final String userName, final String password, final Role... onlyWithThis) {
-        final Optional<UserSession> newSession = authenticate(Username.valueOf(userName), Password.valueOf(password),
-                onlyWithThis);
+        final Optional<UserSession> newSession = authenticate(Username.valueOf(userName),
+                Password.valueOf(password), onlyWithThis);
         return newSession.isPresent();
     }
 
@@ -124,7 +124,7 @@ public class AuthenticationService {
     }
 
     private Optional<SystemUser> retrieveUser(final Username userName) {
-        return repo.findById(userName);
+        return repo.ofIdentity(userName);
     }
 
     /**
@@ -135,7 +135,8 @@ public class AuthenticationService {
      * @param newPassword
      * @return
      */
-    public boolean changePassword(final SystemUser user, final Password oldPassword, final Password newPassword) {
+    public boolean changePassword(final SystemUser user, final Password oldPassword,
+            final Password newPassword) {
         final boolean sucess = user.changePassword(oldPassword, newPassword);
         if (sucess) {
             repo.save(user);

@@ -23,8 +23,6 @@
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
-import java.io.Serializable;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -39,14 +37,17 @@ import eapli.framework.domain.repositories.TransactionalContext;
  * responsibility of the controller by calling the methods of the
  * TransactionalContext interface.
  *
- * @author Paulo Gandra Sousa
  * @param <T>
- *            the entity type managed by this repository (a table in the
- *            database)
+ *            the entity type that we want to build a repository for
  * @param <K>
- *            the primary key of the table
+ *            the primary key type of the table
+ * @param <I>
+ *            the type of the <b>business identity</b> of the entity
+ *
+ * @author Paulo Gandra Sousa
  */
-/* package */ class JpaWithTransactionalContextRepository<T, K extends Serializable> extends JpaBaseRepository<T, K> {
+/* package */ class JpaWithTransactionalContextRepository<T, K, I>
+        extends JpaBaseRepository<T, K, I> {
 
     private JpaTransactionalContext txContext;
 
@@ -58,7 +59,8 @@ import eapli.framework.domain.repositories.TransactionalContext;
         setTxCtx(txCtx);
     }
 
-    /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final Class<T> classz) {
+    /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx,
+            final Class<T> classz) {
         super(classz);
         setTxCtx(txCtx);
     }

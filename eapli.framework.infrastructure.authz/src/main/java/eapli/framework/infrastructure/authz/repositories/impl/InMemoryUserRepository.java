@@ -32,7 +32,7 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainE
  *
  * Created by nuno on 20/03/16.
  */
-public class InMemoryUserRepository extends InMemoryDomainEntityRepository<SystemUser, Username>
+public class InMemoryUserRepository extends InMemoryDomainEntityRepository<Username, SystemUser>
         implements UserRepository {
 
     @Override

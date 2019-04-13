@@ -23,7 +23,6 @@
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.List;
@@ -63,13 +62,17 @@ import eapli.framework.util.predicates.StringPredicates;
  * <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
  * implementation patterns</a>
  *
- * @author Paulo Gandra Sousa
  * @param <T>
  *            the entity type that we want to build a repository for
  * @param <K>
- *            the primary key type of the entity
+ *            the primary key type of the table
+ * @param <I>
+ *            the type of the <b>business identity</b> of the entity
+ *
+ * @author Paulo Gandra Sousa
+ *
  */
-public abstract class JpaBaseRepository<T, K extends Serializable> implements IterableRepository<T, K> {
+public abstract class JpaBaseRepository<T, K, I> implements IterableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
@@ -88,7 +91,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     public JpaBaseRepository() {
         final Boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
         if (isGeneric) {
-            final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+            final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                    .getGenericSuperclass();
             entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         } else {
             // special case when this class is used without parametrization.
@@ -148,7 +152,7 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
     }
 
     /**
-     * reads an entity given its K
+     * reads an entity given its primary key
      *
      * @param id
      * @return
@@ -160,6 +164,35 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         return read(id);
     }
 
+    /**
+     * gets the entity with the specified identity
+     *
+     * @param id
+     * @return
+     */
+    public Optional<T> ofIdentity(final I id) {
+        return matchOne("e.identity() = :id", "id", id);
+    }
+
+    /**
+     * Removes the entity with the specified identity from the repository.
+     *
+     * @param entityId
+     * @throws IntegrityViolationException
+     * @throws UnsuportedOperationException
+     *             if the delete operation makes no sense for this repository
+     */
+    public void removeOf(final I entityId) {
+        // FIXME
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    /**
+     * updates an entity to the persistence store
+     *
+     * @param entity
+     * @return
+     */
     public T update(final T entity) {
         return save(entity);
     }
@@ -186,6 +219,10 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         } catch (final PersistenceException ex) {
             throw new IntegrityViolationException(ex);
         }
+    }
+
+    public void remove(T entity) {
+        delete(entity);
     }
 
     /**
@@ -216,23 +253,23 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
 
         final TypedQuery<Long> q = entityManager().createQuery(
-                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename", Long.class);
+                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename",
+                Long.class);
         return q.getSingleResult();
     }
 
+    public long size() {
+        return count();
+    }
+
     /**
-     * checks for the existence of an entity with the provided K.
+     * checks for the existence of an entity with the provided key.
      *
      * @param key
      * @return
      */
-    @Override
-    public boolean contains(final K key) {
+    public boolean containsKey(final K key) {
         return findById(key).isPresent();
-    }
-
-    public boolean existsById(final K key) {
-        return contains(key);
     }
 
     /**
@@ -292,7 +329,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final String className = this.entityClass.getSimpleName();
-        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where, this.entityClass);
+        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
+                this.entityClass);
     }
 
     /**
@@ -425,7 +463,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      */
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
-        assert !StringPredicates.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates
+                .isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(whereWithParameters, params);
@@ -457,7 +496,8 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      *            a map of the parameter name and its value to use in the query
      * @return
      */
-    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters,
+            final Map<String, Object> params) {
         final TypedQuery<T> q = query(whereWithParameters, params);
         return getOptionalResult(q);
     }
@@ -517,12 +557,12 @@ public abstract class JpaBaseRepository<T, K extends Serializable> implements It
      */
     private class JpaPagedIterator implements Iterator<T> {
 
-        private final JpaBaseRepository<T, K> repository;
+        private final JpaBaseRepository<T, K, I> repository;
         private final int pageSize;
         private int currentPageNumber;
         private Iterator<T> currentPage;
 
-        private JpaPagedIterator(final JpaBaseRepository<T, K> repository, final int pagesize) {
+        private JpaPagedIterator(final JpaBaseRepository<T, K, I> repository, final int pagesize) {
             this.repository = repository;
             this.pageSize = pagesize;
         }

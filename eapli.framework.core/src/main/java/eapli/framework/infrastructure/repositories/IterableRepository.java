@@ -23,7 +23,6 @@
  */
 package eapli.framework.infrastructure.repositories;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -37,11 +36,11 @@ import java.util.Optional;
  *            the class denoting the primary key of the table
  * @author Paulo Gandra Sousa
  */
-public interface IterableRepository<T, K extends Serializable> extends Repository<T, K>, Iterable<T> {
+public interface IterableRepository<T, K> extends Repository<T, K>, Iterable<T> {
 
     /**
-     * returns an iterator over the repository with an hint of pagesize results for
-     * each fetch from the persistence storage
+     * returns an iterator over the repository with an hint of pagesize results
+     * for each fetch from the persistence storage
      *
      * @param pagesize
      *            hint about the result size of each fetch to the persistence

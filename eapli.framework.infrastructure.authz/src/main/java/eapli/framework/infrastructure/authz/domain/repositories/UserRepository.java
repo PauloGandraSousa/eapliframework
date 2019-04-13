@@ -23,14 +23,14 @@
  */
 package eapli.framework.infrastructure.authz.domain.repositories;
 
+import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
-import eapli.framework.infrastructure.repositories.Repository;
 
 /**
  * Created by nuno on 21/03/16.
  */
-public interface UserRepository extends Repository<SystemUser, Username> {
+public interface UserRepository extends DomainRepository<Username, SystemUser> {
 
     /**
      * returns the currently active users

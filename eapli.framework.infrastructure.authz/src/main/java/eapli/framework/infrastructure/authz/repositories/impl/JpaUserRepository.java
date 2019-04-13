@@ -36,7 +36,8 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
  * Created by nuno on 20/03/16.
  */
 @Component
-class JpaUserRepository extends JpaBaseRepository<SystemUser, Username> implements UserRepository {
+class JpaUserRepository extends JpaBaseRepository<SystemUser, Username, Username>
+        implements UserRepository {
 
     @Override
     public Iterable<SystemUser> findByActive(boolean active) {

@@ -68,7 +68,8 @@ public class InMemoryRepository<T, K extends Serializable> implements IterableRe
      */
     @SuppressWarnings("unchecked")
     public InMemoryRepository(final Function<? super T, ? extends K> identityGenerator) {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         this.identityGenerator = identityGenerator;
     }
@@ -174,5 +175,13 @@ public class InMemoryRepository<T, K extends Serializable> implements IterableRe
         Invariants.ensure(() -> all.size() == 1, "More than result was returned");
         final T ret = all.get(0);
         return Optional.of(ret);
+    }
+
+    public long size() {
+        return count();
+    }
+
+    public void remove(T entity) {
+        delete(entity);
     }
 }

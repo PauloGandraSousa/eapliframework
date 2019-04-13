@@ -23,7 +23,6 @@
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,11 +41,18 @@ import eapli.framework.util.Preconditions;
  * single immediate mode a transaction is initiated, committed and the
  * connection closed in the scope of each repository method call.
  *
+ * @param <T>
+ *            the entity type that we want to build a repository for
+ * @param <K>
+ *            the primary key type of the table
+ * @param <I>
+ *            the type of the <b>business identity</b> of the entity
+ *
  * @author Paulo Gandra Sousa
  */
-public class JpaAutoTxRepository<T, K extends Serializable> implements Repository<T, K> {
+public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
 
-    protected final JpaBaseRepository<T, K> repo;
+    protected final JpaBaseRepository<T, K, I> repo;
     private final TransactionalContext autoTx;
 
     @SuppressWarnings("rawtypes")
@@ -54,8 +60,10 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
         this(persistenceUnitName, new HashMap());
     }
 
-    public JpaAutoTxRepository(final String persistenceUnitName, @SuppressWarnings("rawtypes") final Map properties) {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+    public JpaAutoTxRepository(final String persistenceUnitName,
+            @SuppressWarnings("rawtypes") final Map properties) {
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
@@ -66,7 +74,8 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
     public JpaAutoTxRepository(final TransactionalContext autoTx) {
         Preconditions.nonNull(autoTx);
 
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
 
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
@@ -104,9 +113,17 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
         this.repo.delete(entity);
     }
 
+    public void remove(final T entity) {
+        delete(entity);
+    }
+
     @Override
     public void deleteById(final K id) {
         this.repo.deleteById(id);
+    }
+
+    public void removeOf(final I entityId) {
+        this.repo.removeOf(entityId);
     }
 
     @Override
@@ -124,9 +141,17 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
         return this.repo.findById(id);
     }
 
+    public Optional<T> ofIdentity(final I id) {
+        return this.repo.ofIdentity(id);
+    }
+
     @Override
     public long count() {
         return this.repo.count();
+    }
+
+    public long size() {
+        return count();
     }
 
     public Iterator<T> iterator() {
@@ -149,7 +174,8 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
         return repo.matchOne(where);
     }
 
-    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters,
+            final Map<String, Object> params) {
         return repo.matchOne(whereWithParameters, params);
     }
 }

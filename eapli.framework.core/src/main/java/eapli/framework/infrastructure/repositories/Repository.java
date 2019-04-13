@@ -23,74 +23,24 @@
  */
 package eapli.framework.infrastructure.repositories;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 
 /**
- * A repository is a domain-driven design pattern to abstract the details of
- * persisting domain objects. it exposes a pure domain based interface without
- * leaking details of the implementation of the actual persistence mechanism.
- * there should be one repository per aggregate root
+ * A repository is an abstraction to the persistence mechanism. if you are using
+ * the DDD interfaces from the framework use
+ * {@link eapli.framework.domain.repositories.DomainRepository} instead.
  *
  * @param T
- *            the class we want to manage in the repository. Eventough it is not
- *            enforced - in order to make this interface more reusable - the
- *            type T should extend AggregateRoot<?>
+ *            the class we want to manage in the repository
  * @param K
  *            the class denoting the primary key of the entity in the database
+ *
  * @author Paulo Gandra Sousa
  */
-public interface Repository<T, K extends Serializable> {
-
-    /**
-     * removes the specified entity from the repository.
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    void delete(T entity);
-
-    /**
-     * Removes the entity with the specified primary key from the repository.
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    void deleteById(K entityId);
-
-    /**
-     * removes the specified entity from the repository. Alias to delete() in
-     * order to better fit the "List"-like nature of a repository
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    default void remove(final T entity) {
-        delete(entity);
-    }
-
-    /**
-     * Removes the entity with the specified primary key from the repository.
-     * Alias to deleteById() in order to better fit the "List"-like nature of a
-     * repository
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
-     *             if the delete operation makes no sense for this repository
-     */
-    default void removeById(final K entityId) {
-        deleteById(entityId);
-    }
+public interface Repository<T, K> {
 
     /**
      * Saves an entity either by creating it or updating it in the persistence
@@ -119,15 +69,24 @@ public interface Repository<T, K extends Serializable> {
     Optional<T> findById(K id);
 
     /**
-     * Gets the entity with the specified primary key. Alias to findById() in
-     * order to better fit the "List"-like nature of a repository
+     * removes the specified entity from the repository.
      *
-     * @param id
-     * @return
+     * @param entity
+     * @throws IntegrityViolationException
+     * @throws UnsuportedOperationException
+     *             if the delete operation makes no sense for this repository
      */
-    default boolean contains(final K id) {
-        return findById(id).isPresent();
-    }
+    void delete(T entity);
+
+    /**
+     * Removes the entity with the specified primary key from the repository.
+     *
+     * @param entity
+     * @throws IntegrityViolationException
+     * @throws UnsuportedOperationException
+     *             if the delete operation makes no sense for this repository
+     */
+    void deleteById(K entityId);
 
     /**
      * returns the number of entities in the repository.
@@ -135,14 +94,4 @@ public interface Repository<T, K extends Serializable> {
      * @return
      */
     long count();
-
-    /**
-     * Returns the number of entities in the repository. Alias to count() in
-     * order to better fit the "List"-like nature of a repository
-     *
-     * @return
-     */
-    default long size() {
-        return count();
-    }
 }

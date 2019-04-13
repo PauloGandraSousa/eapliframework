@@ -26,7 +26,9 @@ package eapli.framework.infrastructure.repositories.impl.springdata;
 import java.io.Serializable;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.query.Param;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.ValueObject;
@@ -40,11 +42,11 @@ import eapli.framework.domain.model.ValueObject;
  * return an Optional.
  *
  * @param <K>
- *            the primary key of the entity in the database
+ *            the primary key of the entity in the database, e.g., Long
  * @param <I>
- *            the type of the business identity
+ *            the type of the business identity, e.g., SSN
  * @param <T>
- *            the managed entity type
+ *            the managed entity type, e.g., Person
  *
  * @author Paulo Gandra Sousa
  *
@@ -53,7 +55,10 @@ import eapli.framework.domain.model.ValueObject;
 public interface SpringDataDomainBaseRepository<K extends Serializable, I extends ValueObject, T extends AggregateRoot<I>>
         extends SpringDataBaseRepository<T, K> {
 
-    void deleteWithIdentity(I id);
+    // TODO
+    void delete(I id);
 
-    Optional<T> get(I id);
+    // TODO
+    @Query("SELECT e FROM ??? e WHERE e.identity() = :id")
+    Optional<T> get(@Param("id") I id);
 }

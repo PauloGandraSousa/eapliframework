@@ -90,7 +90,7 @@ public class UserManagementService {
     }
 
     public Optional<SystemUser> find(final Username id) {
-        return userRepository.findById(id);
+        return userRepository.ofIdentity(id);
     }
 
     @Transactional

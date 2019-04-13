@@ -14,7 +14,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
  *
  * @author sou03408.
  */
-public class JpaAutoTxUserRepository extends JpaAutoTxRepository<SystemUser, Username>
+public class JpaAutoTxUserRepository extends JpaAutoTxRepository<SystemUser, Username, Username>
         implements UserRepository {
 
     public JpaAutoTxUserRepository(TransactionalContext autoTx) {
