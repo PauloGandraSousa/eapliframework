@@ -89,7 +89,7 @@ class EventRecord implements AggregateRoot<Long> {
     }
 
     @Override
-    public Long id() {
+    public Long identity() {
         return pk;
     }
 

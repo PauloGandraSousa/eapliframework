@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import eapli.framework.domain.repositories.Repository;
 import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.repositories.Repository;
 import eapli.framework.util.Preconditions;
 
 /**
@@ -54,10 +54,8 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
         this(persistenceUnitName, new HashMap());
     }
 
-    public JpaAutoTxRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties) {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                .getGenericSuperclass();
+    public JpaAutoTxRepository(final String persistenceUnitName, @SuppressWarnings("rawtypes") final Map properties) {
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
@@ -68,8 +66,7 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
     public JpaAutoTxRepository(final TransactionalContext autoTx) {
         Preconditions.nonNull(autoTx);
 
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                .getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
@@ -152,8 +149,7 @@ public class JpaAutoTxRepository<T, K extends Serializable> implements Repositor
         return repo.matchOne(where);
     }
 
-    protected Optional<T> matchOne(final String whereWithParameters,
-            final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
         return repo.matchOne(whereWithParameters, params);
     }
 }

@@ -40,7 +40,7 @@ import javax.persistence.TypedQuery;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.domain.repositories.IterableRepository;
+import eapli.framework.infrastructure.repositories.IterableRepository;
 import eapli.framework.util.Invariants;
 import eapli.framework.util.Preconditions;
 import eapli.framework.util.predicates.StringPredicates;
@@ -67,7 +67,7 @@ import eapli.framework.util.predicates.StringPredicates;
  * @param <T>
  *            the entity type that we want to build a repository for
  * @param <K>
- *            the key type of the entity
+ *            the primary key type of the entity
  */
 public abstract class JpaBaseRepository<T, K extends Serializable> implements IterableRepository<T, K> {
 

@@ -39,6 +39,6 @@ public abstract class InMemoryDomainEntityRepository<T extends DomainEntity<K>, 
         extends InMemoryRepository<T, K> {
 
     public InMemoryDomainEntityRepository() {
-        super(DomainEntity::id);
+        super(DomainEntity::identity);
     }
 }

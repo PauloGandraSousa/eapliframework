@@ -30,10 +30,18 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
 /**
- * base interface for spring Data repositories.
+ * Base interface for spring Data repositories. Note that this interface expects
+ * K to be the primary key type, which mat or may not be the business identity
+ * of the type <T> being managed. see also
+ * {@link SpringDataDomainBaseRepository}
  *
  * we decided to use Repository instead of CrudRepository to have findById
  * return an Optional.
+ *
+ * @param <T>
+ *            the managed entity type
+ * @param <K>
+ *            the primary key of the entity in the database
  *
  * @author Paulo Gandra Sousa
  *

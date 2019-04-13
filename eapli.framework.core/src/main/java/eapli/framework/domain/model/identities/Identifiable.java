@@ -39,5 +39,5 @@ public interface Identifiable<T> {
      *
      * @return the primary <b>business</b> id of the entity
      */
-    T id();
+    T identity();
 }

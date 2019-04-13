@@ -21,47 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.repositories;
+package eapli.framework.infrastructure.repositories.impl.springdata;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Optional;
 
+import org.springframework.data.repository.NoRepositoryBean;
+
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.ValueObject;
+
 /**
- * A generic interface for iterable repositories.
+ * Base interface for spring Data repositories. Note that this interface expects
+ * K to be the primary key type, which mat or may not be the business identity
+ * of the type <T> being managed
  *
- * @param T
- *            the class we want to manage in the repository (a table in the
- *            database)
- * @param K
- *            the class denoting the primary key of the table
+ * we decided to use Repository instead of CrudRepository to have findById
+ * return an Optional.
+ *
+ * @param <K>
+ *            the primary key of the entity in the database
+ * @param <I>
+ *            the type of the business identity
+ * @param <T>
+ *            the managed entity type
+ *
  * @author Paulo Gandra Sousa
+ *
  */
-public interface IterableRepository<T, K extends Serializable> extends Repository<T, K>, Iterable<T> {
+@NoRepositoryBean
+public interface SpringDataDomainBaseRepository<K extends Serializable, I extends ValueObject, T extends AggregateRoot<I>>
+        extends SpringDataBaseRepository<T, K> {
 
-    /**
-     * returns an iterator over the repository with an hint of pagesize results for
-     * each fetch from the persistence storage
-     *
-     * @param pagesize
-     *            hint about the result size of each fetch to the persistence
-     *            storage
-     * @return an iterator over the repository
-     */
-    Iterator<T> iterator(int pagesize);
+    void deleteWithIdentity(I id);
 
-    /**
-     * returns the first entity according to its "natural" order
-     *
-     * @return
-     */
-    Optional<T> first();
-
-    /**
-     * returns the first n entities according to its "natural" order
-     *
-     * @param n
-     * @return
-     */
-    Iterable<T> first(int n);
+    Optional<T> get(I id);
 }

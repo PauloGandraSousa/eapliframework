@@ -23,8 +23,10 @@
  */
 package eapli.framework.domain.repositories;
 
-import java.io.Serializable;
 import java.util.Optional;
+
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.ValueObject;
 
 /**
  * A repository is a domain-driven design pattern to abstract the details of
@@ -32,15 +34,15 @@ import java.util.Optional;
  * leaking details of the implementation of the actual persistence mechanism.
  * there should be one repository per aggregate root
  *
- * @param T
- *            the class we want to manage in the repository. Eventough it is not
- *            enforced - in order to make this interface more reusable - the
- *            type T should extend AggregateRoot<?>
- * @param K
- *            the class denoting the primary key of the entity in the database
+ * @param <T>
+ *            the type of the entity we want to manage in the repository.
+ * @param <I>
+ *            the type of the business identity of the entity. not the primary
+ *            key
+ *
  * @author Paulo Gandra Sousa
  */
-public interface Repository<T, K extends Serializable> {
+public interface DomainRepository<I extends ValueObject, T extends AggregateRoot<I>> {
 
     /**
      * removes the specified entity from the repository.
@@ -53,14 +55,14 @@ public interface Repository<T, K extends Serializable> {
     void delete(T entity);
 
     /**
-     * Removes the entity with the specified primary key from the repository.
+     * Removes the entity with the specified identity from the repository.
      *
      * @param entity
      * @throws IntegrityViolationException
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void deleteById(K entityId);
+    void deleteWithIdentity(I entityId);
 
     /**
      * removes the specified entity from the repository. Alias to delete() in
@@ -76,8 +78,8 @@ public interface Repository<T, K extends Serializable> {
     }
 
     /**
-     * Removes the entity with the specified primary key from the repository.
-     * Alias to deleteById() in order to better fit the "List"-like nature of a
+     * Removes the entity with the specified identity from the repository. Alias
+     * to deleteById() in order to better fit the "List"-like nature of a
      * repository
      *
      * @param entity
@@ -85,8 +87,8 @@ public interface Repository<T, K extends Serializable> {
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    default void remove(final K entityId) {
-        deleteById(entityId);
+    default void removeWithIdentity(final I entityId) {
+        deleteWithIdentity(entityId);
     }
 
     /**
@@ -108,12 +110,12 @@ public interface Repository<T, K extends Serializable> {
     Iterable<T> findAll();
 
     /**
-     * gets the entity with the specified primary key
+     * gets the entity with the specified identity
      *
      * @param id
      * @return
      */
-    Optional<T> findById(K id);
+    Optional<T> get(I id);
 
     /**
      * Gets the entity with the specified primary key. Alias to findById() in
@@ -122,8 +124,8 @@ public interface Repository<T, K extends Serializable> {
      * @param id
      * @return
      */
-    default boolean contains(final K id) {
-        return findById(id).isPresent();
+    default boolean contains(final I id) {
+        return get(id).isPresent();
     }
 
     /**

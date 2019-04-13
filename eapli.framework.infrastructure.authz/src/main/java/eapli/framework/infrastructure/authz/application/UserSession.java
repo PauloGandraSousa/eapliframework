@@ -65,6 +65,6 @@ public class UserSession implements ValueObject {
 
     @Override
     public String toString() {
-        return user.id() + "@" + token;
+        return user.identity() + "@" + token;
     }
 }

@@ -154,7 +154,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
     }
 
     @Override
-    public Username id() {
+    public Username identity() {
         return username;
     }
 

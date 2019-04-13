@@ -56,7 +56,7 @@ public final class DomainEntities {
         }
 
         final DomainEntity<?> that = (DomainEntity<?>) other;
-        return one.id().equals(that.id());
+        return one.identity().equals(that.identity());
     }
 
     /**
@@ -67,6 +67,6 @@ public final class DomainEntities {
      * @return
      */
     public static int hashCode(final DomainEntity<?> one) {
-        return new HashCoder().of(one.id()).code();
+        return new HashCoder().of(one.identity()).code();
     }
 }

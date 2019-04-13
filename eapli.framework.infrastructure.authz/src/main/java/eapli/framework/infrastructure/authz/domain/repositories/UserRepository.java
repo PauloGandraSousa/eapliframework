@@ -23,9 +23,9 @@
  */
 package eapli.framework.infrastructure.authz.domain.repositories;
 
-import eapli.framework.domain.repositories.Repository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.infrastructure.repositories.Repository;
 
 /**
  * Created by nuno on 21/03/16.

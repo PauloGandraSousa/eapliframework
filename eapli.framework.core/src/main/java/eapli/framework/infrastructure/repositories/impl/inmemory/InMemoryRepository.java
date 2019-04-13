@@ -37,7 +37,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import eapli.framework.domain.repositories.IterableRepository;
+import eapli.framework.infrastructure.repositories.IterableRepository;
 import eapli.framework.util.Invariants;
 
 /**

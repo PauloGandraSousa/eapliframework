@@ -23,7 +23,7 @@
  */
 package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 
-import eapli.framework.domain.repositories.Repository;
+import eapli.framework.infrastructure.repositories.Repository;
 
 /**
  * @author Paulo Gandra de Sousa

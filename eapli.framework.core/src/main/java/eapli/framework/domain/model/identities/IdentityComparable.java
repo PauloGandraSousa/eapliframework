@@ -42,7 +42,7 @@ public interface IdentityComparable<T> extends Identifiable<T> {
      *            the object to check the identity of
      * @return true if the object has that identity
      */
-    default boolean hasId(final T otherId) {
-        return id().equals(otherId);
+    default boolean hasIdentity(final T otherId) {
+        return identity().equals(otherId);
     }
 }
