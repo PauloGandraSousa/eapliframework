@@ -23,7 +23,6 @@
  */
 package eapli.framework.infrastructure.repositories.impl.inmemory;
 
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +49,7 @@ import eapli.framework.util.Invariants;
  * @param K
  *            the type to be used as key of an object
  */
-public class InMemoryRepository<T, K extends Serializable> implements IterableRepository<T, K> {
+public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
 
     // Ideally this would be a typed generic Map but since it is a static member
     // it cannot be generic. the solution is to use the old-style untyped Map

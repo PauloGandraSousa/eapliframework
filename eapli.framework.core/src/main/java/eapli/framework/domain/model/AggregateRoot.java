@@ -44,8 +44,9 @@ package eapli.framework.domain.model;
  *
  * @param <I>
  *            the type of the primary <b>business</b> identity of the entity
+ *
  * @author Paulo Gandra Sousa
  */
-public interface AggregateRoot<I> extends DomainEntity<I> {
+public interface AggregateRoot<I /* extends ValueObject */> extends DomainEntity<I> {
 
 }

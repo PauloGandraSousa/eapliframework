@@ -26,7 +26,6 @@ package eapli.framework.domain.repositories;
 import java.util.Optional;
 
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.ValueObject;
 
 /**
  * A repository is a domain-driven design pattern to abstract the details of
@@ -44,7 +43,7 @@ import eapli.framework.domain.model.ValueObject;
  *
  * @author Paulo Gandra Sousa
  */
-public interface DomainRepository<I extends ValueObject, T extends AggregateRoot<I>> {
+public interface DomainRepository<I /* extends ValueObject */, T extends AggregateRoot<I>> {
 
     /**
      * Saves an entity either by creating it or updating it in the persistence

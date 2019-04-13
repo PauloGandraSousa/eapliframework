@@ -47,12 +47,13 @@ import eapli.framework.domain.model.identities.IdentityComparable;
  *            the type of the primary <b>business</b> id of the entity
  * @author Paulo Gandra Sousa
  */
-public interface DomainEntity<I> extends Identifiable<I>, IdentityComparable<I> {
+public interface DomainEntity<I /* extends ValueObject */>
+        extends Identifiable<I>, IdentityComparable<I> {
 
     /**
-     * Entities are compared by identity only. no need to compare all fields of the
-     * object. you can use the domainEntityHelper.areEqual() method as default
-     * implementation
+     * Entities are compared by identity only. no need to compare all fields of
+     * the object. you can use the domainEntityHelper.areEqual() method as
+     * default implementation
      *
      * see sameAs().
      *
@@ -63,8 +64,8 @@ public interface DomainEntity<I> extends Identifiable<I>, IdentityComparable<I> 
     boolean equals(Object other);
 
     /**
-     * hash code of this object according to java rules. i.e., the same fields used
-     * in equals() should be used in hashCode().
+     * hash code of this object according to java rules. i.e., the same fields
+     * used in equals() should be used in hashCode().
      *
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
@@ -77,8 +78,8 @@ public interface DomainEntity<I> extends Identifiable<I>, IdentityComparable<I> 
 
     /**
      * Entities are compared by identity only, so equals() must only compares
-     * identities. in some situations however we might want to compare the content
-     * of the object by value.
+     * identities. in some situations however we might want to compare the
+     * content of the object by value.
      *
      * @param other
      * @return

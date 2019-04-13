@@ -27,7 +27,6 @@ import java.util.Optional;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
-import eapli.framework.domain.model.ValueObject;
 import eapli.framework.domain.repositories.DomainRepository;
 
 /**
@@ -38,7 +37,7 @@ import eapli.framework.domain.repositories.DomainRepository;
  * @param <T>
  * @param <K>
  */
-public abstract class InMemoryDomainEntityRepository<I extends ValueObject, T extends AggregateRoot<I>>
+public abstract class InMemoryDomainEntityRepository<I /* extends ValueObject */, T extends AggregateRoot<I>>
         extends InMemoryRepository<T, I> implements DomainRepository<I, T> {
 
     public InMemoryDomainEntityRepository() {

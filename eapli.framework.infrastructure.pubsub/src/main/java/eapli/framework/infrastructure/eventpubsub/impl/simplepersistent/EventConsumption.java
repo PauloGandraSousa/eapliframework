@@ -43,7 +43,7 @@ import eapli.framework.util.Preconditions;
 class EventConsumption implements AggregateRoot<Long> {
     @Id
     @GeneratedValue
-    private Long pk;
+    private Long eventId;
 
     @ManyToOne
     private EventRecord event;
@@ -67,13 +67,13 @@ class EventConsumption implements AggregateRoot<Long> {
             return false;
         }
         final EventConsumption that = (EventConsumption) other;
-        return new EqualsBuilder().append(pk, that.pk).append(event, that.event).append(consumerName, that.consumerName)
+        return new EqualsBuilder().append(eventId, that.eventId).append(event, that.event).append(consumerName, that.consumerName)
                 .isEquals();
     }
 
     @Override
     public Long identity() {
-        return pk;
+        return eventId;
     }
 
     @Override

@@ -29,7 +29,8 @@ package eapli.framework.domain.model;
  * @author Paulo Gandra de Sousa
  *
  */
-public abstract class AggregateRootBase<I> extends DomainEntityBase<I> implements AggregateRoot<I> {
+public abstract class AggregateRootBase<I extends ValueObject> extends DomainEntityBase<I>
+        implements AggregateRoot<I> {
 
     /**
      *
