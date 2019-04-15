@@ -25,6 +25,7 @@ package eapli.framework.util;
 
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleUnaryOperator;
+import java.util.function.UnaryOperator;
 
 /**
  * utility class
@@ -59,8 +60,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * creates a new double array picking up the elements of the source array and
-     * applying a mapping function to each element
+     * creates a new double array picking up the elements of the source array
+     * and applying a mapping function to each element
      *
      * @param src
      * @param map
@@ -75,7 +76,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * applies a transformation to each element of an array
+     * applies a transformation to each element of an array, mutating the
+     * original array
      *
      * @param src
      * @param map
@@ -85,5 +87,48 @@ public final class Arrays implements Utilitarian {
         for (int i = 0; i < dest.length; i++) {
             dest[i] = map.applyAsDouble(dest[i]);
         }
+    }
+
+    /**
+     * applies a transformation to each element of an array, mutating the
+     * original array
+     *
+     * @param src
+     * @param map
+     * @return
+     */
+    public static <T> void transform(final T[] dest, final UnaryOperator<T> map) {
+        for (int i = 0; i < dest.length; i++) {
+            dest[i] = map.apply(dest[i]);
+        }
+    }
+
+    /**
+     * checks whether an element is present in the array or not. this methods
+     * has O(n) complexity
+     *
+     * @param src
+     * @param elem
+     * @return
+     */
+    public <T> boolean contains(final T[] src, final T elem) {
+        return indexOf(src, elem) != -1;
+    }
+
+    /**
+     * returns the index of an element is present in the array or -1 otherwise.
+     * this methods has O(n) complexity
+     *
+     * @param src
+     * @param elem
+     * @return
+     */
+    public <T> int indexOf(final T[] src, final T elem) {
+        for (int i = 0; i < src.length; i++) {
+            if (src[i].equals(elem)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
