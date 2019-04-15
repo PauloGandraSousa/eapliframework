@@ -99,7 +99,7 @@ public interface DomainRepository<I /* extends ValueObject */, T extends Aggrega
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void remove(final T entity);
+    void delete(final T entity);
 
     /**
      * Removes the entity with the specified identity from the repository.
@@ -109,7 +109,7 @@ public interface DomainRepository<I /* extends ValueObject */, T extends Aggrega
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void removeOfIdentity(final I entityId);
+    void deleteOfIdentity(final I entityId);
 
     /**
      * Returns the number of entities in the repository.

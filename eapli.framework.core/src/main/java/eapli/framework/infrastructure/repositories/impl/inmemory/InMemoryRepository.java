@@ -67,8 +67,7 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
      */
     @SuppressWarnings("unchecked")
     public InMemoryRepository(final Function<? super T, ? extends K> identityGenerator) {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                .getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         this.identityGenerator = identityGenerator;
     }
@@ -178,9 +177,5 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
 
     public long size() {
         return count();
-    }
-
-    public void remove(T entity) {
-        delete(entity);
     }
 }

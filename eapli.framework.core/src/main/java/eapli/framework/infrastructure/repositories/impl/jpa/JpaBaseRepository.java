@@ -69,8 +69,7 @@ import eapli.framework.util.predicates.StringPredicates;
  * @author Paulo Gandra Sousa
  *
  */
-public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
-        implements IterableRepository<T, K> {
+public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider implements IterableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
@@ -82,20 +81,18 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
     private final String identityFieldName;
 
     @SuppressWarnings("unchecked")
-    public JpaBaseRepository(String identityFieldName) {
+    public JpaBaseRepository(final String identityFieldName) {
         final Boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
         if (!isGeneric) {
-            throw new IllegalStateException(
-                    "The repository must be parametrized to a specific managed class");
+            throw new IllegalStateException("The repository must be parametrized to a specific managed class");
         }
 
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                .getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         this.identityFieldName = identityFieldName;
     }
 
-    /* package */ JpaBaseRepository(final Class<T> classz, String identityFieldName) {
+    /* package */ JpaBaseRepository(final Class<T> classz, final String identityFieldName) {
         assert classz != null : "you must parametrize the class";
         entityClass = classz;
         this.identityFieldName = identityFieldName;
@@ -169,11 +166,10 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    public void removeOfIdentity(final I entityId) {
+    public void deleteOfIdentity(final I entityId) {
         final String className = this.entityClass.getSimpleName();
         final TypedQuery<T> cmd = entityManager().createQuery(
-                "DELETE e FROM " + className + " e WHERE e." + identityFieldName() + " = :id",
-                this.entityClass);
+                "DELETE e FROM " + className + " e WHERE e." + identityFieldName() + " = :id", this.entityClass);
         cmd.setParameter("id", entityId);
         cmd.executeUpdate();
     }
@@ -210,10 +206,6 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
         } catch (final PersistenceException ex) {
             throw new IntegrityViolationException(ex);
         }
-    }
-
-    public void remove(T entity) {
-        delete(entity);
     }
 
     /**
@@ -301,8 +293,7 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final String className = this.entityClass.getSimpleName();
-        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
-                this.entityClass);
+        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where, this.entityClass);
     }
 
     /**
@@ -435,8 +426,7 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
      */
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
-        assert !StringPredicates
-                .isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(whereWithParameters, params);
@@ -468,8 +458,7 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
      *            a map of the parameter name and its value to use in the query
      * @return
      */
-    protected Optional<T> matchOne(final String whereWithParameters,
-            final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
         final TypedQuery<T> q = query(whereWithParameters, params);
         return getOptionalResult(q);
     }
@@ -531,8 +520,7 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
         Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
 
         final TypedQuery<Long> q = entityManager().createQuery(
-                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename",
-                Long.class);
+                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename", Long.class);
         return q.getSingleResult();
     }
 

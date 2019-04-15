@@ -56,33 +56,29 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
     private final TransactionalContext autoTx;
 
     @SuppressWarnings("rawtypes")
-    public JpaAutoTxRepository(final String persistenceUnitName, String identityFieldName) {
+    public JpaAutoTxRepository(final String persistenceUnitName, final String identityFieldName) {
         this(persistenceUnitName, new HashMap(), identityFieldName);
     }
 
-    public JpaAutoTxRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties, String identityFieldName) {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                .getGenericSuperclass();
+    public JpaAutoTxRepository(final String persistenceUnitName, @SuppressWarnings("rawtypes") final Map properties,
+            final String identityFieldName) {
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass,
-                identityFieldName);
+        this.repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass, identityFieldName);
         this.autoTx = null;
     }
 
-    public JpaAutoTxRepository(final TransactionalContext autoTx, String identityFieldName) {
+    public JpaAutoTxRepository(final TransactionalContext autoTx, final String identityFieldName) {
         Preconditions.nonNull(autoTx);
 
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                .getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaWithTransactionalContextRepository<>(autoTx, entityClass,
-                identityFieldName);
+        this.repo = new JpaWithTransactionalContextRepository<>(autoTx, entityClass, identityFieldName);
         this.autoTx = autoTx;
     }
 
@@ -115,17 +111,13 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
         this.repo.delete(entity);
     }
 
-    public void remove(final T entity) {
-        delete(entity);
-    }
-
     @Override
     public void deleteById(final K id) {
         this.repo.deleteById(id);
     }
 
-    public void removeOfIdentity(final I entityId) {
-        this.repo.removeOfIdentity(entityId);
+    public void deleteOfIdentity(final I entityId) {
+        this.repo.deleteOfIdentity(entityId);
     }
 
     @Override
@@ -176,8 +168,7 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
         return repo.matchOne(where);
     }
 
-    protected Optional<T> matchOne(final String whereWithParameters,
-            final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
         return repo.matchOne(whereWithParameters, params);
     }
 

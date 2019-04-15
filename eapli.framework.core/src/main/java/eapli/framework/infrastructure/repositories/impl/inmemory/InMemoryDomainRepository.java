@@ -57,7 +57,7 @@ public class InMemoryDomainRepository<I /* extends ValueObject */, T extends Agg
     }
 
     @Override
-    public void removeOfIdentity(final I id) {
+    public void deleteOfIdentity(final I id) {
         deleteById(id);
     }
 }
