@@ -54,14 +54,15 @@ import eapli.framework.domain.repositories.TransactionalContext;
     /**
      *
      */
-    public JpaWithTransactionalContextRepository(final TransactionalContext txCtx) {
-        super();
+    public JpaWithTransactionalContextRepository(final TransactionalContext txCtx,
+            String identityFieldName) {
+        super(identityFieldName);
         setTxCtx(txCtx);
     }
 
     /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx,
-            final Class<T> classz) {
-        super(classz);
+            final Class<T> classz, String identityFieldName) {
+        super(classz, identityFieldName);
         setTxCtx(txCtx);
     }
 

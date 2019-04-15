@@ -29,12 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -72,50 +69,36 @@ import eapli.framework.util.predicates.StringPredicates;
  * @author Paulo Gandra Sousa
  *
  */
-public abstract class JpaBaseRepository<T, K, I> implements IterableRepository<T, K> {
+public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
+        implements IterableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
-    private static final String THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME = "This repository was not parametrized at construction time";
+    static final String THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME = "This repository was not parametrized at construction time";
     private static final String QUERY_MUST_NOT_BE_NULL_OR_EMPTY = "query must not be null or empty";
     private static final int DEFAULT_PAGESIZE = 20;
 
     protected final Class<T> entityClass;
-
-    // will be injected by Spring Container
-    @PersistenceUnit
-    private EntityManagerFactory emFactory;
-    private EntityManager entityManager;
+    private final String identityFieldName;
 
     @SuppressWarnings("unchecked")
-    public JpaBaseRepository() {
+    public JpaBaseRepository(String identityFieldName) {
         final Boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
-        if (isGeneric) {
-            final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-                    .getGenericSuperclass();
-            entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-        } else {
-            // special case when this class is used without parametrization.
-            // we are assuming this only happens if you are creating a pure
-            // Reporting Repository
-            entityClass = null;
+        if (!isGeneric) {
+            throw new IllegalStateException(
+                    "The repository must be parametrized to a specific managed class");
         }
+
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
+        entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+        this.identityFieldName = identityFieldName;
     }
 
-    /* package */ JpaBaseRepository(final Class<T> classz) {
+    /* package */ JpaBaseRepository(final Class<T> classz, String identityFieldName) {
         assert classz != null : "you must parametrize the class";
         entityClass = classz;
-    }
-
-    protected EntityManagerFactory entityManagerFactory() {
-        return this.emFactory;
-    }
-
-    protected EntityManager entityManager() {
-        if (this.entityManager == null || !this.entityManager.isOpen()) {
-            this.entityManager = entityManagerFactory().createEntityManager();
-        }
-        return this.entityManager;
+        this.identityFieldName = identityFieldName;
     }
 
     /**
@@ -164,6 +147,10 @@ public abstract class JpaBaseRepository<T, K, I> implements IterableRepository<T
         return read(id);
     }
 
+    protected String identityFieldName() {
+        return identityFieldName;
+    }
+
     /**
      * gets the entity with the specified identity
      *
@@ -171,7 +158,7 @@ public abstract class JpaBaseRepository<T, K, I> implements IterableRepository<T
      * @return
      */
     public Optional<T> ofIdentity(final I id) {
-        return matchOne("e.identity() = :id", "id", id);
+        return matchOne("e." + identityFieldName() + " = :id", "id", id);
     }
 
     /**
@@ -182,9 +169,13 @@ public abstract class JpaBaseRepository<T, K, I> implements IterableRepository<T
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    public void removeOf(final I entityId) {
-        // FIXME
-        throw new UnsupportedOperationException("not implemented yet");
+    public void removeOfIdentity(final I entityId) {
+        final String className = this.entityClass.getSimpleName();
+        final TypedQuery<T> cmd = entityManager().createQuery(
+                "DELETE e FROM " + className + " e WHERE e." + identityFieldName() + " = :id",
+                this.entityClass);
+        cmd.setParameter("id", entityId);
+        cmd.executeUpdate();
     }
 
     /**
@@ -241,25 +232,6 @@ public abstract class JpaBaseRepository<T, K, I> implements IterableRepository<T
         // afterwards will delete it. a more efficient implementation might
         // issue a DELETE statement directly
         findById(entityId).ifPresent(this::delete);
-    }
-
-    /**
-     * returns the number of entities in the persistence store
-     *
-     * @return the number of entities in the persistence store
-     */
-    @Override
-    public long count() {
-        Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
-
-        final TypedQuery<Long> q = entityManager().createQuery(
-                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename",
-                Long.class);
-        return q.getSingleResult();
-    }
-
-    public long size() {
-        return count();
     }
 
     /**
@@ -547,6 +519,25 @@ public abstract class JpaBaseRepository<T, K, I> implements IterableRepository<T
         } catch (final NoResultException e) {
             return Optional.empty();
         }
+    }
+
+    /**
+     * returns the number of entities in the persistence store
+     *
+     * @return the number of entities in the persistence store
+     */
+    @Override
+    public long count() {
+        Invariants.nonNull(entityClass, THIS_REPOSITORY_WAS_NOT_PARAMETRIZED_AT_CONSTRUCTION_TIME);
+
+        final TypedQuery<Long> q = entityManager().createQuery(
+                "SELECT COUNT(tablename) FROM " + this.entityClass.getSimpleName() + " tablename",
+                Long.class);
+        return q.getSingleResult();
+    }
+
+    public long size() {
+        return count();
     }
 
     /**

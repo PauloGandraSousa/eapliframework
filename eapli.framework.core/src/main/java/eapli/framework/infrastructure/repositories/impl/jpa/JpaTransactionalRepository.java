@@ -55,23 +55,25 @@ import eapli.framework.util.Preconditions;
 public class JpaTransactionalRepository<T, K, I>
         extends JpaWithTransactionalContextRepository<T, K, I> {
 
-    public JpaTransactionalRepository(final String persistenceUnitName) {
-        super(new JpaTransactionalContext(persistenceUnitName));
+    public JpaTransactionalRepository(final String persistenceUnitName, String identityFieldName) {
+        super(new JpaTransactionalContext(persistenceUnitName), identityFieldName);
     }
 
     /* package */ JpaTransactionalRepository(final String persistenceUnitName,
-            final Class<T> classz) {
-        super(new JpaTransactionalContext(persistenceUnitName), classz);
+            final Class<T> classz, String identityFieldName) {
+        super(new JpaTransactionalContext(persistenceUnitName), classz, identityFieldName);
     }
 
     public JpaTransactionalRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties) {
-        super(new JpaTransactionalContext(persistenceUnitName, properties));
+            @SuppressWarnings("rawtypes") final Map properties, String identityFieldName) {
+        super(new JpaTransactionalContext(persistenceUnitName, properties), identityFieldName);
     }
 
     /* package */ JpaTransactionalRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties, final Class<T> classz) {
-        super(new JpaTransactionalContext(persistenceUnitName, properties), classz);
+            @SuppressWarnings("rawtypes") final Map properties, final Class<T> classz,
+            String identityFieldName) {
+        super(new JpaTransactionalContext(persistenceUnitName, properties), classz,
+                identityFieldName);
     }
 
     /**

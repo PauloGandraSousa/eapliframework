@@ -23,15 +23,14 @@
  */
 package eapli.framework.infrastructure.repositories.impl.springdata;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.ValueObject;
 
 /**
  * Base interface for spring Data repositories. Note that this interface expects
@@ -52,13 +51,22 @@ import eapli.framework.domain.model.ValueObject;
  *
  */
 @NoRepositoryBean
-public interface SpringDataDomainBaseRepository<K extends Serializable, I extends ValueObject, T extends AggregateRoot<I>>
-        extends SpringDataBaseRepository<T, K> {
+public interface SpringDataDomainBaseRepository<K, I /* extends ValueObject */, T extends AggregateRoot<I>>
+        extends Repository<T, K> {
+
+    long count();
+
+    <S extends T> S save(S entity);
+
+    <S extends T> void delete(S entity);
+
+    Iterable<T> findAll();
 
     // TODO
-    void delete(I id);
+    @Query("DELETE e FROM ??? e WHERE e.identity() = :id")
+    void deleteOfIdentity(@Param("id") I id);
 
     // TODO
     @Query("SELECT e FROM ??? e WHERE e.identity() = :id")
-    Optional<T> get(@Param("id") I id);
+    Optional<T> ofIdentity(@Param("id") I id);
 }

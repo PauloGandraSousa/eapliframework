@@ -77,7 +77,7 @@ public interface DomainRepository<I /* extends ValueObject */, T extends Aggrega
      * @param id
      * @return
      */
-    default boolean containsOf(final I id) {
+    default boolean containsOfIdentity(final I id) {
         return ofIdentity(id).isPresent();
     }
 
@@ -88,7 +88,7 @@ public interface DomainRepository<I /* extends ValueObject */, T extends Aggrega
      * @return
      */
     default boolean contains(final T entity) {
-        return containsOf(entity.identity());
+        return containsOfIdentity(entity.identity());
     }
 
     /**
@@ -109,7 +109,7 @@ public interface DomainRepository<I /* extends ValueObject */, T extends Aggrega
      * @throws UnsuportedOperationException
      *             if the delete operation makes no sense for this repository
      */
-    void removeOf(final I entityId);
+    void removeOfIdentity(final I entityId);
 
     /**
      * Returns the number of entities in the repository.

@@ -24,33 +24,40 @@
 package eapli.framework.infrastructure.repositories.impl.inmemory;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 import eapli.framework.domain.repositories.DomainRepository;
 
 /**
- * an in-memory repository that uses the domain object's identity as primary key
+ * an in-memory repository that uses the domain object's identity as primary
+ * key. expects the domain identity to be assigned to the object prior to
+ * passing it to the repository
  *
  * @author Paulo Gandra de Sousa
  *
  * @param <T>
  * @param <K>
  */
-public abstract class InMemoryDomainEntityRepository<I /* extends ValueObject */, T extends AggregateRoot<I>>
+public class InMemoryDomainRepository<I /* extends ValueObject */, T extends AggregateRoot<I>>
         extends InMemoryRepository<T, I> implements DomainRepository<I, T> {
 
-    public InMemoryDomainEntityRepository() {
+    public InMemoryDomainRepository() {
         super(DomainEntity::identity);
     }
 
+    protected InMemoryDomainRepository(final Function<? super T, I> identityGenerator) {
+        super(identityGenerator);
+    }
+
     @Override
-    public Optional<T> ofIdentity(I id) {
+    public Optional<T> ofIdentity(final I id) {
         return findById(id);
     }
 
     @Override
-    public void removeOf(I id) {
+    public void removeOfIdentity(final I id) {
         deleteById(id);
     }
 }

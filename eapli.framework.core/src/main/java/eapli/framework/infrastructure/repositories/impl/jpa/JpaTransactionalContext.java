@@ -45,7 +45,7 @@ import eapli.framework.util.predicates.StringPredicates;
  *
  * @author Paulo Gandra Sousa
  */
-/* package */ class JpaTransactionalContext implements TransactionalContext {
+public class JpaTransactionalContext implements TransactionalContext {
     private static final Logger LOGGER = LogManager.getLogger(JpaTransactionalContext.class);
 
     private final String persistenceUnitName;
@@ -76,16 +76,17 @@ import eapli.framework.util.predicates.StringPredicates;
     }
 
     @SuppressWarnings({ "squid:S3346", "squid:S2696" })
-    /* package */ final EntityManagerFactory entityManagerFactory() {
+    public final EntityManagerFactory entityManagerFactory() {
         if (singletonEMF == null) {
-            assert !StringPredicates.isNullOrEmpty(persistenceUnitName) : "the persistence unit name must be provided";
+            assert !StringPredicates.isNullOrEmpty(
+                    persistenceUnitName) : "the persistence unit name must be provided";
             LOGGER.info("Not runing in container mode.");
             singletonEMF = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
         }
         return singletonEMF;
     }
 
-    /* package */ EntityManager entityManager() {
+    public EntityManager entityManager() {
         if (entityManager == null || !entityManager.isOpen()) {
             LOGGER.trace("Creating a new entity manager");
             entityManager = entityManagerFactory().createEntityManager();

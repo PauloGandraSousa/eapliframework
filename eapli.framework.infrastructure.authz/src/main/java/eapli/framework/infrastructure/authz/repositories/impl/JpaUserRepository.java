@@ -23,6 +23,8 @@
  */
 package eapli.framework.infrastructure.authz.repositories.impl;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -39,8 +41,17 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 class JpaUserRepository extends JpaBaseRepository<SystemUser, Username, Username>
         implements UserRepository {
 
+    public JpaUserRepository() {
+        super("username");
+    }
+
     @Override
     public Iterable<SystemUser> findByActive(boolean active) {
         return match(UserRepositoryConstants.FIND_BY_ACTIVE, "active", active);
+    }
+
+    @Override
+    public Optional<SystemUser> ofIdentity(final Username id) {
+        return matchOne("e.username = :id", "id", id);
     }
 }
