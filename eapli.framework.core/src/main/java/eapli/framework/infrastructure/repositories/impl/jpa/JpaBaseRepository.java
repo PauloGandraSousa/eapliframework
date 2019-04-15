@@ -169,7 +169,7 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider impleme
     public void deleteOfIdentity(final I entityId) {
         final String className = this.entityClass.getSimpleName();
         final TypedQuery<T> cmd = entityManager().createQuery(
-                "DELETE e FROM " + className + " e WHERE e." + identityFieldName() + " = :id", this.entityClass);
+                "DELETE FROM " + className + " e WHERE e." + identityFieldName() + " = :id", this.entityClass);
         cmd.setParameter("id", entityId);
         cmd.executeUpdate();
     }

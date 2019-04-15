@@ -63,7 +63,7 @@ public interface SpringDataDomainBaseRepository<K, I /* extends ValueObject */, 
     Iterable<T> findAll();
 
     // TODO
-    @Query("DELETE e FROM ??? e WHERE e.identity() = :id")
+    @Query("DELETE FROM ??? e WHERE e.identity() = :id")
     void deleteOfIdentity(@Param("id") I id);
 
     // TODO

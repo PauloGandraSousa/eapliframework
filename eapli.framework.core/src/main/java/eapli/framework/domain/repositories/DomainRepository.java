@@ -116,5 +116,40 @@ public interface DomainRepository<I /* extends ValueObject */, T extends Aggrega
      *
      * @return
      */
-    long size();
+    long count();
+
+    // ALIAS
+
+    /**
+     * Returns the number of entities in the repository.
+     *
+     * @return
+     */
+    default long size() {
+        return count();
+    }
+
+    /**
+     * removes the specified entity from the repository.
+     *
+     * @param entity
+     * @throws IntegrityViolationException
+     * @throws UnsuportedOperationException
+     *             if the delete operation makes no sense for this repository
+     */
+    default void remove(final T entity) {
+        delete(entity);
+    }
+
+    /**
+     * Removes the entity with the specified identity from the repository.
+     *
+     * @param entityId
+     * @throws IntegrityViolationException
+     * @throws UnsuportedOperationException
+     *             if the delete operation makes no sense for this repository
+     */
+    default void removeOfIdentity(final I entityId) {
+        deleteOfIdentity(entityId);
+    }
 }

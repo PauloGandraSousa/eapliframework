@@ -23,6 +23,12 @@
  */
 package eapli.framework.infrastructure.authz.repositories.impl;
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -35,4 +41,12 @@ import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBas
  */
 public interface SpringDataUserRepository extends UserRepository, SpringDataBaseRepository<SystemUser, Username> {
 
+    @Override
+    @Modifying
+    @Query("DELETE FROM SystemUser e WHERE e.username = :id")
+    void deleteOfIdentity(@Param("id") Username entityId);
+
+    @Override
+    @Query("SELECT e FROM SystemUser e WHERE e.username = :id")
+    Optional<SystemUser> ofIdentity(@Param("id") Username entityId);
 }
