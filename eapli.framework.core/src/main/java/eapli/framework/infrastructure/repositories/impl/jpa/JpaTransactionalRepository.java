@@ -94,6 +94,29 @@ public class JpaTransactionalRepository<T, K, I>
         }
     }
 
+    @Override
+    public void deleteOfIdentity(I entityId) {
+        try {
+            context().beginTransaction();
+            super.deleteOfIdentity(entityId);
+            context().commit();
+        } finally {
+            context().close();
+        }
+    }
+
+    @Override
+    public T update(T entity) {
+        try {
+            context().beginTransaction();
+            final T r = super.update(entity);
+            context().commit();
+            return r;
+        } finally {
+            context().close();
+        }
+    }
+
     /**
      * Removes the entity with the specified ID from the repository.
      *
