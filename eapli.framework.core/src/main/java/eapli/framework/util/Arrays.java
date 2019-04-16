@@ -25,6 +25,8 @@ package eapli.framework.util;
 
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleUnaryOperator;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.UnaryOperator;
 
 /**
@@ -71,6 +73,31 @@ public final class Arrays implements Utilitarian {
         final double[] dest = new double[src.length];
         for (int i = 0; i < src.length; i++) {
             dest[i] = map.applyAsDouble(src[i]);
+        }
+        return dest;
+    }
+
+    /**
+     * creates a new array picking up the elements of the source array and
+     * applying a mapping function to each element
+     *
+     * @param <T>
+     *            the type of the source elements
+     * @param <U>
+     *            the type of the mapped elements
+     * @param src
+     *            the source elements
+     * @param creator
+     *            a constructor to create the destination array with the
+     *            expected number of positions
+     * @param map
+     *            the mapping function from source to destination, T -> U
+     * @return
+     */
+    public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator, final Function<T, U> map) {
+        final U[] dest = creator.apply(src.length);
+        for (int i = 0; i < src.length; i++) {
+            dest[i] = map.apply(src[i]);
         }
         return dest;
     }
