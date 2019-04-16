@@ -86,11 +86,12 @@ public final class HashCoder {
     }
 
     public static int part(final Object f) {
-        return f == null ? 0 : f.hashCode();
+        return Objects.hashCode(f);
     }
 
     /**
-     * computes the hash based on the current hash and the hash of a part (field)
+     * computes the hash based on the current hash and the hash of a part
+     * (field)
      *
      * @param currentHash
      * @param partHash

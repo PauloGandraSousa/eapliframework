@@ -23,6 +23,8 @@
  */
 package eapli.framework.domain.model;
 
+import java.util.Objects;
+
 import eapli.framework.util.HashCoder;
 
 /**
@@ -37,8 +39,9 @@ public final class DomainEntities {
     }
 
     /**
-     * checks if two domain objects refer to the same real world entity by checking
-     * their identities. if any of the parameters is null this method returns false
+     * checks if two domain objects refer to the same real world entity by
+     * checking their identities. if any of the parameters is null this method
+     * returns false
      *
      * @param one
      * @param other
@@ -56,12 +59,12 @@ public final class DomainEntities {
         }
 
         final DomainEntity<?> that = (DomainEntity<?>) other;
-        return one.identity().equals(that.identity());
+        return Objects.equals(one.identity(), that.identity());
     }
 
     /**
-     * creates an hash code of the domain entity passed as argument, based on its
-     * identity
+     * creates an hash code of the domain entity passed as argument, based on
+     * its identity
      *
      * @param one
      * @return

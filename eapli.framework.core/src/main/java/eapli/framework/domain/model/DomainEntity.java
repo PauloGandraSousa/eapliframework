@@ -47,13 +47,19 @@ import eapli.framework.domain.model.identities.IdentityComparable;
  *            the type of the primary <b>business</b> id of the entity
  * @author Paulo Gandra Sousa
  */
-public interface DomainEntity<I /* extends ValueObject */>
-        extends Identifiable<I>, IdentityComparable<I> {
+public interface DomainEntity<I /* extends ValueObject */> extends Identifiable<I>, IdentityComparable<I> {
 
     /**
      * Entities are compared by identity only. no need to compare all fields of
-     * the object. you can use the domainEntityHelper.areEqual() method as
-     * default implementation
+     * the object. you can use the
+     * {@link DomainEntities#areEqual(DomainEntity, Object)} method as default
+     * implementation
+     *
+     * be careful that if your entities are using the ORM generated primary key
+     * as their business identity, you properly implement equals() and
+     * hashcode(). see <a href=
+     * "https://thoughts-on-java.org/ultimate-guide-to-implementing-equals-and-hashcode-with-hibernate/">Toughts
+     * on java</a>
      *
      * see sameAs().
      *
@@ -65,7 +71,8 @@ public interface DomainEntity<I /* extends ValueObject */>
 
     /**
      * hash code of this object according to java rules. i.e., the same fields
-     * used in equals() should be used in hashCode().
+     * used in equals() should be used in hashCode(). you can use
+     * {@link DomainEntities#hashCode(DomainEntity)} as default implementation
      *
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
