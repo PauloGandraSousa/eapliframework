@@ -111,7 +111,7 @@ public final class Arrays implements Utilitarian {
      * @param elem
      * @return
      */
-    public <T> boolean contains(final T[] src, final T elem) {
+    public static <T> boolean contains(final T[] src, final T elem) {
         return indexOf(src, elem) != -1;
     }
 
@@ -123,7 +123,7 @@ public final class Arrays implements Utilitarian {
      * @param elem
      * @return
      */
-    public <T> int indexOf(final T[] src, final T elem) {
+    public static <T> int indexOf(final T[] src, final T elem) {
         for (int i = 0; i < src.length; i++) {
             if (src[i].equals(elem)) {
                 return i;
