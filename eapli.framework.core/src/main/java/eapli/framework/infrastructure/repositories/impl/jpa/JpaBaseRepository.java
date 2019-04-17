@@ -518,6 +518,20 @@ public class JpaBaseRepository<T, K, I> extends JpaEntityManagerProvider
     }
 
     /**
+     * helper method to access the createQuery method of the entity manager
+     *
+     * @param queryString
+     * @return
+     */
+    protected Query createQuery(String queryString) {
+        return entityManager().createQuery(queryString);
+    }
+
+    public <U> TypedQuery<U> createQuery(String queryString, Class<U> class1) {
+        return entityManager().createQuery(queryString, class1);
+    }
+
+    /**
      * returns the number of entities in the persistence store
      *
      * @return the number of entities in the persistence store
