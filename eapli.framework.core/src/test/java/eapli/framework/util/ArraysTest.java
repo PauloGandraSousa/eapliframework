@@ -76,7 +76,7 @@ public class ArraysTest {
 
     @Test
     public void ensureMapStringToIntKeepsOriginal() {
-        final Integer[] subject = Arrays.map(testStrings, Integer[]::new, x -> x.length());
+        Arrays.map(testStrings, Integer[]::new, x -> x.length());
 
         assertArrayEquals(originalStrings, testStrings);
     }
@@ -93,7 +93,7 @@ public class ArraysTest {
 
     @Test
     public void ensureMapPrimitiveDoubleKeepsOriginal() {
-        final double[] subject = Arrays.map(testDoubles, x -> x * 2);
+        Arrays.map(testDoubles, x -> x * 2);
 
         for (int i = 0; i < testDoubles.length; i++) {
             assertEquals(i + 1.0, testDoubles[i], 0.001);
