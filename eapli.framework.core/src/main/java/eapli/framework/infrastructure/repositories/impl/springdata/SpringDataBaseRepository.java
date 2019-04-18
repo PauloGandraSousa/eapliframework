@@ -23,7 +23,6 @@
  */
 package eapli.framework.infrastructure.repositories.impl.springdata;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 import org.springframework.data.repository.NoRepositoryBean;
@@ -31,7 +30,7 @@ import org.springframework.data.repository.Repository;
 
 /**
  * Base interface for spring Data repositories. Note that this interface expects
- * K to be the primary key type, which mat or may not be the business identity
+ * K to be the primary key type, which may or may not be the business identity
  * of the type <T> being managed. see also
  * {@link SpringDataDomainBaseRepository}
  *
@@ -47,7 +46,7 @@ import org.springframework.data.repository.Repository;
  *
  */
 @NoRepositoryBean
-public interface SpringDataBaseRepository<T, K extends Serializable> extends Repository<T, K> {
+public interface SpringDataBaseRepository<T, K> extends Repository<T, K> {
 
     long count();
 

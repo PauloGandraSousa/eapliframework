@@ -23,12 +23,12 @@
  */
 package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 
-import eapli.framework.infrastructure.repositories.Repository;
+import eapli.framework.domain.repositories.DomainRepository;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-interface EventConsumptionRepository extends Repository<EventConsumption, Long> {
+interface EventConsumptionRepository extends DomainRepository<Long, EventConsumption> {
 
 }

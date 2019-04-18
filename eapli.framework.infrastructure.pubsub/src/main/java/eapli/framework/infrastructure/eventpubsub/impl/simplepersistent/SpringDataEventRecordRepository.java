@@ -23,16 +23,29 @@
  */
 package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBaseRepository;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-interface SpringDataEventRecordRepository extends EventRecordRepository, CrudRepository<EventRecord, Long> {
+interface SpringDataEventRecordRepository extends EventRecordRepository, SpringDataBaseRepository<EventRecord, Long> {
     @Override
     @Query("SELECT e FROM EventRecord e WHERE e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)")
     Iterable<EventRecord> findNotConsumed(@Param("instance") String instanceKey);
+
+    @Override
+    @Query("SELECT e FROM EventRecord e WHERE e.id = :id")
+    Optional<EventRecord> ofIdentity(@Param("id") Long entityId);
+
+    @Override
+    @Modifying
+    @Query("DELETE FROM EventRecord e WHERE e.id = :id")
+    void deleteOfIdentity(@Param("id") Long entityId);
 }

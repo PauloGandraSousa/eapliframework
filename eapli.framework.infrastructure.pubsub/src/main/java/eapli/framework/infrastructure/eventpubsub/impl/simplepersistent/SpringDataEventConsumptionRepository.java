@@ -23,13 +23,27 @@
  */
 package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBaseRepository;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
 interface SpringDataEventConsumptionRepository
-        extends EventConsumptionRepository, CrudRepository<EventConsumption, Long> {
+        extends EventConsumptionRepository, SpringDataBaseRepository<EventConsumption, Long> {
 
+    @Override
+    @Query("SELECT e FROM EventConsumption e WHERE e.id = :id")
+    Optional<EventConsumption> ofIdentity(@Param("id") Long entityId);
+
+    @Override
+    @Modifying
+    @Query("DELETE FROM EventConsumption e WHERE e.id = :id")
+    void deleteOfIdentity(@Param("id") Long entityId);
 }
