@@ -30,9 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,59 +37,14 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class GenericDtoForCollectionClassTest {
+public class GeneralDtoForCollectionClassTest extends GeneralDtoBaseTest {
 
-    private static String STRING_FIELD_VALUE = "abc";
-    private static int INT_FIELD_VALUE = 3;
-    private static final SimpleClass sample = new SimpleClass(STRING_FIELD_VALUE, INT_FIELD_VALUE);
-    private static final WithListClass subject = new WithListClass(INT_FIELD_VALUE, sample);
-    private static GenericDTO instance;
+    private static final WithListClass BIZ_OBJ = new WithListClass(INT_FIELD_VALUE_1, BIZ_OBJ_S1);
+    private static GeneralDTO subject;
 
-    public GenericDtoForCollectionClassTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-        System.out.println("GenericDtoForCollectionClassTest");
-
-        instance = GenericDTO.of(subject);
-
-        System.out.println("===========");
-        System.out.println(instance);
-        System.out.println(instance.type());
-        for (final Map.Entry<String, Object> e : instance.entrySet()) {
-            System.out.println("[" + e.getKey() + "] => [" + e.getValue() + "]");
-        }
-        System.out.println("===========");
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    @SuppressWarnings("unused")
-    private static class SimpleClass {
-        private final String stringField;
-        private final int intField;
-
-        public SimpleClass(final String s, final int i) {
-            stringField = s;
-            intField = i;
-        }
-    }
-
-    private static class WithListClass {
-        private final int intField;
-        private final List<SimpleClass> data = new ArrayList<SimpleClass>();
+    protected static class WithListClass {
+        protected final int intField;
+        protected final List<SimpleClass> data = new ArrayList<SimpleClass>();
 
         public WithListClass(final int n, final SimpleClass c) {
             intField = n;
@@ -102,32 +54,47 @@ public class GenericDtoForCollectionClassTest {
         }
     }
 
+    @BeforeClass
+    public static void setUpClass() {
+        System.out.println("GenericDtoForCollectionClassTest");
+
+        subject = GeneralDTO.of(BIZ_OBJ);
+
+        System.out.println("===========");
+        System.out.println(subject);
+        System.out.println(subject.type());
+        for (final Map.Entry<String, Object> e : subject.entrySet()) {
+            System.out.println("[" + e.getKey() + "] => [" + e.getValue() + "]");
+        }
+        System.out.println("===========");
+    }
+
     @Test
     public void ensureType() {
         System.out.println("ensureType");
 
-        assertEquals("Name of type is incorrect", subject.getClass().getName(), instance.type());
+        assertEquals("Name of type is incorrect", BIZ_OBJ.getClass().getName(), subject.type());
     }
 
     @Test
     public void ensureDTOHas2Fields() {
         System.out.println("ensureDTOHas2Fields");
 
-        assertEquals("Name of type is incorrect", 2, instance.size());
+        assertEquals("Name of type is incorrect", 2, subject.size());
     }
 
     @Test
     public void ensureListFieldIsList() {
         System.out.println("ensureListFieldIsList");
 
-        assertTrue("'data' is not a List", List.class.isAssignableFrom(instance.get("data").getClass()));
+        assertTrue("'data' is not a List", List.class.isAssignableFrom(subject.get("data").getClass()));
     }
 
     @Test
     public void ensureListFieldHasAllMembers() {
         System.out.println("ensureListFieldHasAllMembers");
 
-        assertEquals("'data' list is missing elements", INT_FIELD_VALUE, ((List<?>) (instance.get("data"))).size());
+        assertEquals("'data' list is missing elements", INT_FIELD_VALUE_1, ((List<?>) (subject.get("data"))).size());
     }
 
     @SuppressWarnings("unchecked")
@@ -135,9 +102,9 @@ public class GenericDtoForCollectionClassTest {
     public void ensureListFieldIsTransformed() {
         System.out.println("ensureListFieldIsTransformed");
 
-        for (final GenericDTO e : (List<GenericDTO>) (instance.get("data"))) {
-            assertEquals("'intField' is incorrect", INT_FIELD_VALUE, e.get("intField"));
-            assertEquals("'stringField' is incorrect", STRING_FIELD_VALUE, e.get("stringField"));
+        for (final GeneralDTO e : (List<GeneralDTO>) (subject.get("data"))) {
+            assertEquals("'intField' is incorrect", INT_FIELD_VALUE_1, e.get("intField"));
+            assertEquals("'stringField' is incorrect", STRING_FIELD_VALUE_1, e.get("stringField"));
         }
         assertTrue(true);
     }
@@ -146,6 +113,6 @@ public class GenericDtoForCollectionClassTest {
     public void ensureIntFieldIsTransformed() {
         System.out.println("ensureIntFieldIsTransformed");
 
-        assertEquals("'intField' is incorrectly transformed", INT_FIELD_VALUE, instance.get("intField"));
+        assertEquals("'intField' is incorrectly transformed", INT_FIELD_VALUE_1, subject.get("intField"));
     }
 }

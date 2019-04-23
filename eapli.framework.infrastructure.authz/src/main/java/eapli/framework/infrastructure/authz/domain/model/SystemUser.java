@@ -43,7 +43,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.dto.DTOable;
-import eapli.framework.dto.GenericDTO;
+import eapli.framework.dto.GeneralDTO;
 import eapli.framework.util.DateTime;
 import eapli.framework.util.Preconditions;
 import eapli.framework.visitor.Visitable;
@@ -64,7 +64,7 @@ import eapli.framework.visitor.Visitor;
  *
  */
 @Entity
-public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<GenericDTO>, Serializable {
+public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<GeneralDTO>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -198,8 +198,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
     }
 
     @Override
-    public GenericDTO toDTO() {
-        final GenericDTO ret = new GenericDTO("user");
+    public GeneralDTO toDTO() {
+        final GeneralDTO ret = new GeneralDTO("user");
         ret.put("username", username.toString());
         ret.put("password", password.toString());
         ret.put("name", name.toString());
@@ -214,7 +214,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<G
     }
 
     @Override
-    public void accept(final Visitor<GenericDTO> visitor) {
+    public void accept(final Visitor<GeneralDTO> visitor) {
         visitor.visit(toDTO());
     }
 

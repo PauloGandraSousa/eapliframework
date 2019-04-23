@@ -30,9 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -42,32 +39,26 @@ import eapli.framework.util.Collections;
  *
  * @author Paulo Gandra Sousa
  */
-public class GenericDtoForCollectionTest {
+public class GeneralDtoForCollectionTest extends GeneralDtoBaseTest {
 
-    private static String STRING_FIELD_VALUE = "abc";
-    private static int INT_FIELD_VALUE = 3;
     private static int N_SAMPLES = 5;
-    private static List<SimpleClass> subject;
-    private static Iterable<GenericDTO> instance;
-
-    public GenericDtoForCollectionTest() {
-    }
+    private static final List<SimpleClass> BIZ_OBJ = new ArrayList<>();
+    private static Iterable<GeneralDTO> subject;
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("GenericDtoForCollectionClassTest");
 
-        subject = new ArrayList<>();
         for (int i = 0; i < N_SAMPLES; i++) {
-            final SimpleClass sample = new SimpleClass(STRING_FIELD_VALUE + i, INT_FIELD_VALUE + i);
-            subject.add(sample);
+            final SimpleClass sample = new SimpleClass(STRING_FIELD_VALUE_1 + i, INT_FIELD_VALUE_1 + i);
+            BIZ_OBJ.add(sample);
         }
 
-        instance = GenericDTO.ofMany(subject);
+        subject = GeneralDTO.ofMany(BIZ_OBJ);
 
         System.out.println("===========");
-        System.out.println(instance);
-        for (final GenericDTO o : instance) {
+        System.out.println(subject);
+        for (final GeneralDTO o : subject) {
             for (final Map.Entry<String, Object> e : o.entrySet()) {
                 System.out.println("[" + e.getKey() + "] => [" + e.getValue() + "]");
             }
@@ -75,34 +66,10 @@ public class GenericDtoForCollectionTest {
         System.out.println("===========");
     }
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    @SuppressWarnings("unused")
-    private static class SimpleClass {
-        private final String stringField;
-        private final int intField;
-
-        public SimpleClass(final String s, final int i) {
-            stringField = s;
-            intField = i;
-        }
-    }
-
     @Test
     public void ensureListHasAllMembers() {
         System.out.println("ensureListHasAllMembers");
-        final int n = Collections.sizeOf(instance);
+        final int n = Collections.sizeOf(subject);
         assertEquals("list is missing elements", N_SAMPLES, n);
     }
 
@@ -111,9 +78,9 @@ public class GenericDtoForCollectionTest {
         System.out.println("ensureListFieldIsTransformed");
 
         int i = 0;
-        for (final GenericDTO e : instance) {
-            assertEquals("'intField' is incorrect", INT_FIELD_VALUE + i, e.get("intField"));
-            assertEquals("'stringField' is incorrect", STRING_FIELD_VALUE + i, e.get("stringField"));
+        for (final GeneralDTO e : subject) {
+            assertEquals("'intField' is incorrect", INT_FIELD_VALUE_1 + i, e.get("intField"));
+            assertEquals("'stringField' is incorrect", STRING_FIELD_VALUE_1 + i, e.get("stringField"));
 
             i++;
         }

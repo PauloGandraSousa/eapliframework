@@ -24,8 +24,9 @@
 package eapli.framework.dto;
 
 /**
- * A Data Transfer Object is a "data bag" used for interfacing between systems
- * such as remote communication and the UI and the domain layer.
+ * A marker interface for DTOs. A Data Transfer Object is a "data bag" used for
+ * interfacing between systems such as remote communication and the UI and the
+ * domain layer.
  *
  * @author Paulo Gandra Sousa
  *

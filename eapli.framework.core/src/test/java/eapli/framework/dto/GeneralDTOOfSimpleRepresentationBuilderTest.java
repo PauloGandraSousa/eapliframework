@@ -23,49 +23,46 @@
  */
 package eapli.framework.dto;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class GenericDTOTest {
+public class GeneralDTOOfSimpleRepresentationBuilderTest extends GeneralDtoBaseTest {
 
-    public GenericDTOTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-        System.out.println("GenericDTO");
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    private GeneralDTORepresentationBuilder subject;
+    private GeneralDTO representation;
 
     @Before
-    public void setUp() {
-
+    public void setUp() throws Exception {
+        subject = new GeneralDTORepresentationBuilder("SimpleClass");
+        representation = BIZ_OBJ_S1.buildRepresentation(subject);
     }
 
-    @After
-    public void tearDown() {
+    @Test
+    public void ensureDTOHas2Fields() {
+        System.out.println("ensureDTOHas2Fields");
+
+        assertEquals("Name of type is incorrect", 2, representation.size());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureTypeIsNotNull() {
-        System.out.println("ensureTypeIsNotNull");
-        new GenericDTO(null);
+    @Test
+    public void ensureStringFieldIsTransformed() {
+        System.out.println("ensureStringFieldIsTransformed");
+
+        assertEquals("'stringField' is incorrectly transformed", STRING_FIELD_VALUE_1,
+                representation.get("stringField"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureTypeIsNotEmpty() {
-        System.out.println("ensureTypeIsNotEmpty");
-        new GenericDTO("");
+    @Test
+    public void ensureIntFieldIsTransformed() {
+        System.out.println("ensureIntFieldIsTransformed");
+
+        assertEquals("'intField' is incorrectly transformed", Long.valueOf(INT_FIELD_VALUE_1),
+                representation.get("intField"));
     }
 }

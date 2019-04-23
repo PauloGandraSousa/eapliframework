@@ -24,18 +24,18 @@
 package eapli.framework.dto;
 
 /**
- * a domain object that can be transformed to a GenericDTO
+ * A domain object that can be transformed to a DTO, e.g., {@link GeneralDTO}
  *
  * @author Paulo Gandra Sousa
  *
  */
 @FunctionalInterface
-public interface DTOable {
+public interface DTOable<T> {
 
     /**
      * returns a representation of the content of the object as a DTO.
      *
      * @return
      */
-    GenericDTO toDTO();
+    T toDTO();
 }

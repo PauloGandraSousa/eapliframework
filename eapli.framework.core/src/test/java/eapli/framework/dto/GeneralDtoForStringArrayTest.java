@@ -29,9 +29,6 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.Array;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -39,50 +36,35 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class GenericDtoForPrimitiveArrayTest {
+public class GeneralDtoForStringArrayTest extends GeneralDtoBaseTest {
 
-    private static int INT_FIELD_VALUE = 3;
-    private static final WithPrimitiveArrayClass subject = new WithPrimitiveArrayClass(INT_FIELD_VALUE);
-    private static GenericDTO instance;
+    private static final WithStringArrayClass BIZ_OBJ = new WithStringArrayClass(INT_FIELD_VALUE_1,
+            STRING_FIELD_VALUE_1);
 
-    public GenericDtoForPrimitiveArrayTest() {
-    }
+    private static GeneralDTO subject;
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("GenericDtoForPrimitiveArrayTest");
 
-        instance = GenericDTO.of(subject);
+        subject = GeneralDTO.of(BIZ_OBJ);
 
         System.out.println("===========");
-        System.out.println(instance);
-        System.out.println(instance.type());
-        for (final Map.Entry<String, Object> e : instance.entrySet()) {
+        System.out.println(subject);
+        System.out.println(subject.type());
+        for (final Map.Entry<String, Object> e : subject.entrySet()) {
             System.out.println("[" + e.getKey() + "] => [" + e.getValue() + "]");
         }
         System.out.println("===========");
     }
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    private static class WithStringArrayClass {
+        private final String[] data;
 
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    private static class WithPrimitiveArrayClass {
-        private final int[] data;
-
-        public WithPrimitiveArrayClass(final int n) {
-            data = new int[n];
+        public WithStringArrayClass(final int n, final String seed) {
+            data = new String[n];
             for (int i = 0; i < n; i++) {
-                data[i] = i;
+                data[i] = seed + i;
             }
         }
     }
@@ -91,28 +73,28 @@ public class GenericDtoForPrimitiveArrayTest {
     public void ensureType() {
         System.out.println("ensureType");
 
-        assertEquals("Name of type is incorrect", subject.getClass().getName(), instance.type());
+        assertEquals("Name of type is incorrect", BIZ_OBJ.getClass().getName(), subject.type());
     }
 
     @Test
     public void ensureDTOHas1Field() {
         System.out.println("ensureDTOHas1Field");
 
-        assertEquals("Number of fields is incorrect", 1, instance.size());
+        assertEquals("Number of fields is incorrect", 1, subject.size());
     }
 
     @Test
-    public void ensureArrayFieldIsArray() {
-        System.out.println("ensureArrayFieldIsArray");
+    public void ensureArrayFieldIsList() {
+        System.out.println("ensureArrayFieldIsList");
 
-        assertTrue("'data' is not an array", instance.get("data").getClass().isArray());
+        assertTrue("'data' is not an array", subject.get("data").getClass().isArray());
     }
 
     @Test
     public void ensureArrayFieldHasAllMembers() {
         System.out.println("ensureArrayFieldHasAllMembers");
 
-        assertEquals("'data' list is missing elements", INT_FIELD_VALUE, Array.getLength(instance.get("data")));
+        assertEquals("'data' list is missing elements", INT_FIELD_VALUE_1, Array.getLength(subject.get("data")));
     }
 
     @Test
@@ -120,8 +102,8 @@ public class GenericDtoForPrimitiveArrayTest {
         System.out.println("ensureArrayFieldIsTransformed");
 
         int i = 0;
-        for (final int e : (int[]) (instance.get("data"))) {
-            assertEquals("ith member is incorrect", i, e);
+        for (final String e : (String[]) (subject.get("data"))) {
+            assertEquals("ith member is incorrect", STRING_FIELD_VALUE_1 + i, e);
             i++;
         }
     }

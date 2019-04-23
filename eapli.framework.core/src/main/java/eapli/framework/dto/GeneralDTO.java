@@ -40,20 +40,21 @@ import eapli.framework.util.Preconditions;
 import eapli.framework.util.predicates.StringPredicates;
 
 /**
- * A generic DTO that implements the Map interface. This class can be used when
- * you don't want to build your own custom DTO classes.
+ * A general collection of key-value pairs to work as a DTO avoiding to create
+ * your own custom DTO classes. As a convenience, it implements the Map
+ * interface.
  *
  * @author Paulo Gandra Sousa
  *
  */
-public class GenericDTO implements DTO, Map<String, Object> {
+public class GeneralDTO implements DTO, Map<String, Object> {
 
-    private static final Logger LOGGER = LogManager.getLogger(GenericDTO.class);
+    private static final Logger LOGGER = LogManager.getLogger(GeneralDTO.class);
 
     private final Map<String, Object> data = new HashMap<>();
     private final String type;
 
-    public GenericDTO(final String type) {
+    public GeneralDTO(final String type) {
         Preconditions.ensure(() -> !StringPredicates.isNullOrWhiteSpace(type));
 
         this.type = type;
@@ -65,8 +66,8 @@ public class GenericDTO implements DTO, Map<String, Object> {
      * @param o
      * @return
      */
-    public static GenericDTO of(final Object o) {
-        final GenericDTO out = new GenericDTO(o.getClass().getName());
+    public static GeneralDTO of(final Object o) {
+        final GeneralDTO out = new GeneralDTO(o.getClass().getName());
         final List<Field> fields = getInheritedFields(o.getClass());
         for (final Field aField : fields) {
             ofField(o, out, aField);
@@ -75,7 +76,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
     }
 
     @SuppressWarnings("unchecked")
-    private static void ofField(final Object o, final GenericDTO out, final Field aField) {
+    private static void ofField(final Object o, final GeneralDTO out, final Field aField) {
         try {
             aField.setAccessible(true);
             if (aField.getType().isPrimitive() || aField.getType() == String.class) {
@@ -97,8 +98,8 @@ public class GenericDTO implements DTO, Map<String, Object> {
         }
     }
 
-    public static Iterable<GenericDTO> ofMany(final Iterable<?> col) {
-        final List<GenericDTO> data = new ArrayList<>();
+    public static Iterable<GeneralDTO> ofMany(final Iterable<?> col) {
+        final List<GeneralDTO> data = new ArrayList<>();
         for (final Object member : col) {
             data.add(of(member));
         }
@@ -107,16 +108,16 @@ public class GenericDTO implements DTO, Map<String, Object> {
 
     /**
      */
-    private static void buildDtoForIterable(final String name, final Iterable<Object> col, final GenericDTO out) {
+    private static void buildDtoForIterable(final String name, final Iterable<Object> col, final GeneralDTO out) {
 
-        final Iterable<GenericDTO> data = ofMany(col);
+        final Iterable<GeneralDTO> data = ofMany(col);
         out.put(name, data);
     }
 
     /**
      */
     private static void buildDtoForArray(final Class<?> type, final String name, final Object array,
-            final GenericDTO out) {
+            final GeneralDTO out) {
         final int length = Array.getLength(array);
         Object data = null;
         if (type == int.class) {
@@ -138,7 +139,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
         out.put(name, data);
     }
 
-    public static Object valueOf(final GenericDTO dto) {
+    public static Object valueOf(final GeneralDTO dto) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -176,7 +177,7 @@ public class GenericDTO implements DTO, Map<String, Object> {
     }
 
     @Override
-    public Set<java.util.Map.Entry<String, Object>> entrySet() {
+    public Set<Map.Entry<String, Object>> entrySet() {
         return data.entrySet();
     }
 

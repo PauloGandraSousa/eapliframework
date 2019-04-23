@@ -24,13 +24,18 @@
 package eapli.framework.dto;
 
 /**
- * A class that can build an instance of a domain object based on a GenericDTO
+ * A class that can build an instance of a domain object based on a
+ * representation, e.g., GenericDTO
  *
+ * @param <R>
+ *            the type of the representation to parse
+ * @param <T>
+ *            the type of the business object to create from the representation
  * @author Paulo Gandra Sousa
  *
  */
 @FunctionalInterface
-public interface DTOParser<T extends DTOable> {
+public interface DTOParser<R, T extends DTOable<R>> {
 
     /**
      * parses the DTO and builds a new T based on the content of the DTO
@@ -38,5 +43,5 @@ public interface DTOParser<T extends DTOable> {
      * @param dto
      * @return
      */
-    T valueOf(GenericDTO dto);
+    T valueOf(R dto);
 }
