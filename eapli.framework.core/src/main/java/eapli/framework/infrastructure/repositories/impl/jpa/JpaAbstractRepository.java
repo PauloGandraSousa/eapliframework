@@ -26,11 +26,13 @@ package eapli.framework.infrastructure.repositories.impl.jpa;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.TypedQuery;
 
 /**
  * An utility class for implementing simple agnostic JPA repositories, that is,
- * not tied to any particular managed entity. it is a base for Reporting
- * Repositories
+ * not tied to any particular managed entity. Can be usefull if you want to have
+ * a Reporting repository that returns different types of DTOs. If you want a
+ * repository for a JPA Entity use the typed {@link JpaBaseRepository}
  *
  * <p>
  * based on <a href=
@@ -45,24 +47,28 @@ import javax.persistence.PersistenceUnit;
  * @author sou03408
  *
  */
-public abstract class JpaEntityManagerProvider {
+public abstract class JpaAbstractRepository {
 
     @PersistenceUnit
     private EntityManagerFactory emFactory;
     private EntityManager entityManager;
 
-    public JpaEntityManagerProvider() {
+    public JpaAbstractRepository() {
         super();
     }
 
     protected EntityManagerFactory entityManagerFactory() {
-        return this.emFactory;
+        return emFactory;
     }
 
     protected EntityManager entityManager() {
-        if (this.entityManager == null || !this.entityManager.isOpen()) {
-            this.entityManager = entityManagerFactory().createEntityManager();
+        if (entityManager == null || !entityManager.isOpen()) {
+            entityManager = entityManagerFactory().createEntityManager();
         }
-        return this.entityManager;
+        return entityManager;
+    }
+
+    protected <R> TypedQuery<R> createQuery(final String jpql, final Class<R> classz) {
+        return entityManager().createQuery(jpql, classz);
     }
 }
