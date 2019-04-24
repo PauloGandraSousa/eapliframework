@@ -21,32 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.dto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Array;
 import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eapli.framework.representations.dto.GeneralDTO;
+
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class GeneralDtoForPrimitiveArrayTest extends GeneralDtoBaseTest {
-
-    private static final WithPrimitiveArrayClass BIZ_OBJ = new WithPrimitiveArrayClass(INT_FIELD_VALUE_1);
+public class GeneralDtoForComplexClassTest extends GeneralDtoBaseTest {
 
     private static GeneralDTO subject;
 
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("GenericDtoForPrimitiveArrayTest");
+        System.out.println("GenericDtoForComplexClassTest");
 
-        subject = GeneralDTO.of(BIZ_OBJ);
+        subject = GeneralDTO.of(BIZ_OBJ_C1);
 
         System.out.println("===========");
         System.out.println(subject);
@@ -57,53 +56,45 @@ public class GeneralDtoForPrimitiveArrayTest extends GeneralDtoBaseTest {
         System.out.println("===========");
     }
 
-    private static class WithPrimitiveArrayClass {
-        private final int[] data;
-
-        public WithPrimitiveArrayClass(final int n) {
-            data = new int[n];
-            for (int i = 0; i < n; i++) {
-                data[i] = i;
-            }
-        }
-    }
-
     @Test
     public void ensureType() {
         System.out.println("ensureType");
 
-        assertEquals("Name of type is incorrect", BIZ_OBJ.getClass().getName(), subject.type());
+        assertEquals("Name of type is incorrect", BIZ_OBJ_C1.getClass().getName(), subject.type());
     }
 
     @Test
-    public void ensureDTOHas1Field() {
-        System.out.println("ensureDTOHas1Field");
+    public void ensureDTOHas4Fields() {
+        System.out.println("ensureDTOHas2Fields");
 
-        assertEquals("Number of fields is incorrect", 1, subject.size());
+        assertEquals("Name of type is incorrect", 4, subject.size());
     }
 
     @Test
-    public void ensureArrayFieldIsArray() {
-        System.out.println("ensureArrayFieldIsArray");
+    public void ensureChildOneIsDTO() {
+        System.out.println("ensureChildIsDTO");
 
-        assertTrue("'data' is not an array", subject.get("data").getClass().isArray());
+        assertTrue("'one' is incorrectly transformed", subject.get("one") instanceof GeneralDTO);
     }
 
     @Test
-    public void ensureArrayFieldHasAllMembers() {
-        System.out.println("ensureArrayFieldHasAllMembers");
+    public void ensureChildTwoIsDTO() {
+        System.out.println("ensureChildTwoIsDTO");
 
-        assertEquals("'data' list is missing elements", INT_FIELD_VALUE_1, Array.getLength(subject.get("data")));
+        assertTrue("'two' is incorrectly transformed", subject.get("two") instanceof GeneralDTO);
     }
 
     @Test
-    public void ensureArrayFieldIsTransformed() {
-        System.out.println("ensureArrayFieldIsTransformed");
+    public void ensureChildSameAsOneIsDTO() {
+        System.out.println("ensureChildSameAsOneIsDTO");
 
-        int i = 0;
-        for (final int e : (int[]) (subject.get("data"))) {
-            assertEquals("ith member is incorrect", i, e);
-            i++;
-        }
+        assertTrue("'sameAsOne' is incorrectly transformed", subject.get("sameAsOne") instanceof GeneralDTO);
+    }
+
+    @Test
+    public void ensureFloatFieldIsTransformed() {
+        System.out.println("ensureFloatFieldIsTransformed");
+
+        assertEquals("'floatField' is incorrectly transformed", FLOAT_FIELD_VALUE, subject.get("floatField"));
     }
 }

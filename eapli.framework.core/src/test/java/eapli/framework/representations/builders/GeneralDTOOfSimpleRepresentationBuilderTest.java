@@ -21,12 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.builders;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import eapli.framework.representations.dto.GeneralDTO;
+import eapli.framework.representations.dto.GeneralDtoBaseTest;
 
 /**
  *
@@ -62,7 +65,14 @@ public class GeneralDTOOfSimpleRepresentationBuilderTest extends GeneralDtoBaseT
     public void ensureIntFieldIsTransformed() {
         System.out.println("ensureIntFieldIsTransformed");
 
-        assertEquals("'intField' is incorrectly transformed", Long.valueOf(INT_FIELD_VALUE_1),
+        assertEquals("'intField' is incorrectly transformed", Integer.valueOf(INT_FIELD_VALUE_1),
                 representation.get("intField"));
+    }
+
+    @Test
+    public void ensureSamePropertyTwiceIsIgnored() {
+        final GeneralDTORepresentationBuilder otherSubject = new GeneralDTORepresentationBuilder("Test");
+        final GeneralDTO actual = otherSubject.withProperty("name", "value").withProperty("name", "value").build();
+        assertEquals(1, actual.size());
     }
 }

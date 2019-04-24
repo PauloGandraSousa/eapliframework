@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.dto;
 
-import eapli.framework.domain.model.RepresentationBuilder;
-import eapli.framework.domain.model.Representationable;
+import eapli.framework.representations.RepresentationBuilder;
+import eapli.framework.representations.Representationable;
 
 /**
  *
@@ -53,7 +53,7 @@ public abstract class GeneralDtoBaseTest {
 
         @Override
         public <R> R buildRepresentation(final RepresentationBuilder<R> builder) {
-            return builder.start("SimpleClass").withProperty("intField", intField)
+            return builder.of("SimpleClass").withProperty("intField", intField)
                     .withProperty("stringField", stringField).build();
         }
     }

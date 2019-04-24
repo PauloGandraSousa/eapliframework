@@ -27,9 +27,15 @@ import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -162,8 +168,8 @@ public final class DateTime implements Utilitarian {
      * @param year
      *            the year
      * @param month
-     *            the month (1 - 12). note that the Calendar class uses months from
-     *            0 to 11, not 1 to 12
+     *            the month (1 - 12). note that the Calendar class uses months
+     *            from 0 to 11, not 1 to 12
      * @param day
      *            the day of the month
      * @return a newly create Calendar object
@@ -173,8 +179,8 @@ public final class DateTime implements Utilitarian {
     }
 
     /**
-     * creates a new Calendar instance with the date part set (year, month, date)
-     * from the source object
+     * creates a new Calendar instance with the date part set (year, month,
+     * date) from the source object
      *
      * @param source
      * @return
@@ -209,6 +215,52 @@ public final class DateTime implements Utilitarian {
         return format(ocurrs, "YYYY/MM/dd");
     }
 
+    /**
+     * Formats a date according to ISO8601.
+     *
+     * based on
+     * https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute/33532945
+     *
+     * @param when
+     * @return
+     */
+    public static String iso8601(final Calendar when) {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC).format(when.toInstant());
+    }
+
+    /**
+     * Converts a Calendar object to Java 8 LocalDateTime
+     *
+     * Taken from
+     * https://www.logicbig.com/how-to/java-8-date-time-api/calender-to-localdatetime.html
+     *
+     * and https://www.baeldung.com/java-date-to-localdate-and-localdatetime
+     *
+     * @param calendar
+     * @return
+     */
+    public static LocalDateTime toLocalDateTime(final Calendar calendar) {
+        if (calendar == null) {
+            return null;
+        }
+        final TimeZone tz = calendar.getTimeZone();
+        final ZoneId zid = tz == null ? ZoneId.systemDefault() : tz.toZoneId();
+        return LocalDateTime.ofInstant(calendar.toInstant(), zid);
+    }
+
+    /**
+     * returns the current time according to ISO8601.
+     *
+     * based on
+     * https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute/33532945
+     *
+     * @param when
+     * @return
+     */
+    public static String iso8601() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC).format(Instant.now());
+    }
+
     public static String format(final Calendar ocurrs, final String dateFormat) {
         final SimpleDateFormat formater = new SimpleDateFormat(dateFormat);
         return formater.format(ocurrs.getTime());
@@ -233,404 +285,8 @@ public final class DateTime implements Utilitarian {
     }
 
     /**
-     * checks if the two calendar instances represent dates of the same year.
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static boolean areSameYear(final Calendar a, final Calendar b) {
-        return a.get(Calendar.YEAR) == b.get(Calendar.YEAR);
-    }
-
-    /**
-     * checks if the two calendar instances represent dates of the same month
-     * (regardless of the year).
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static boolean areSameMonth(final Calendar a, final Calendar b) {
-        return a.get(Calendar.MONTH) == b.get(Calendar.MONTH);
-    }
-
-    /**
-     * checks if the two calendar instances represent dates of the same day
-     * (regardless of the year and the month).
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static boolean areSameDay(final Calendar a, final Calendar b) {
-        return a.get(Calendar.DAY_OF_MONTH) == b.get(Calendar.DAY_OF_MONTH);
-    }
-
-    /**
-     * checks if the two calendar instances represent the same dates, i.e. if both
-     * have the same year, month and day.
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    public static boolean areSameDate(final Calendar a, final Calendar b) {
-        return areSameYear(a, b) && areSameMonth(a, b) && areSameDay(a, b);
-    }
-
-    /* ============================================================= */
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is before the other
-     * calendar.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is before the other calendar or
-     *         "false" otherwise.
-     */
-    public static boolean isBefore(final Calendar a, final Calendar b) {
-        return compareDates(a, b) < 0;
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is before the other
-     * calendar or both have the same date.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is before/equal the other
-     *         calendar or "false" otherwise.
-     */
-    public static boolean isUntil(final Calendar a, final Calendar b) {
-        return compareDates(a, b) <= 0;
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is before the other
-     * calendar.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is before the other calendar or
-     *         "false" otherwise.
-     */
-    public static boolean isAfter(final Calendar a, final Calendar b) {
-        return compareDates(a, b) > 0;
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is after the other calendar
-     * or both have the same date.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is after/equal the other
-     *         calendar or "false" otherwise.
-     */
-    public static boolean isOnwards(final Calendar a, final Calendar b) {
-        return compareDates(a, b) >= 0;
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is before today.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The calendar to check.
-     * @return It returns "true" if the calendar is before today or "false"
-     *         otherwise.
-     */
-    public static boolean isBeforeToday(final Calendar a) {
-        return isBefore(a, now());
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is today or before.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The calendar to check.
-     * @return It returns "true" if the calendar is today or before or "false"
-     *         otherwise.
-     */
-    public static boolean isUntilToday(final Calendar a) {
-        return isUntil(a, now());
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is today.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The calendar to check.
-     * @return It returns "true" if the calendar is equal to today or "false"
-     *         otherwise.
-     */
-    public static boolean isToday(final Calendar a) {
-        return areSameDate(a, now());
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is today or after.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The calendar to check.
-     * @return It returns "true" if the calendar is today or after or "false"
-     *         otherwise.
-     */
-    public static boolean isTodayOnwards(final Calendar a) {
-        return isOnwards(a, now());
-    }
-
-    /**
-     * checks if the calendar date (Year, Month and Day) is after today.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The calendar to check.
-     * @return It returns "true" if the calendar is after today or "false"
-     *         otherwise.
-     */
-    public static boolean isAfterToday(final Calendar a) {
-        return isAfter(a, now());
-    }
-
-    /**
-     * compares a Calendar field between the two calendars.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar
-     * @param b
-     *            The other calendar.
-     * @param dateField
-     *            The Calendar field to compare (it must be an integer field).
-     * @return It returns "1" if the one calendar field is greater, "-1" if lesser
-     *         or "0" if equal.
-     */
-    private static int compareField(final Calendar a, final Calendar b, final int dateField) {
-        final int difference = a.get(dateField) - b.get(dateField);
-        if (difference > 0) {
-            return 1;
-        } else {
-            return difference < 0 ? -1 : 0;
-        }
-    }
-
-    /**
-     * it compares the dates (regardless of the time).
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "1" if the one calendar's date is greater, "-1" if lesser
-     *         or "0" if equal.
-     */
-    private static int compareDates(final Calendar a, final Calendar b) {
-        int result = compareField(a, b, Calendar.YEAR);
-        if (result == 0) {
-            result = compareField(a, b, Calendar.MONTH);
-            if (result == 0) {
-                result = compareField(a, b, Calendar.DAY_OF_MONTH);
-            }
-        }
-        return result;
-    }
-
-    /**
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     *
-     * @param a
-     * @param b
-     * @return
-     */
-    private static int compareTimes(final Calendar a, final Calendar b) {
-        int result = compareField(a, b, Calendar.HOUR_OF_DAY);
-        if (result == 0) {
-            result = compareField(a, b, Calendar.MINUTE);
-            if (result == 0) {
-                result = compareField(a, b, Calendar.SECOND);
-                if (result == 0) {
-                    result = compareField(a, b, Calendar.MILLISECOND);
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is before
-     * the other calendar.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is before the other calendar or
-     *         "false" otherwise.
-     */
-    public static boolean isBeforeTime(final Calendar a, final Calendar b) {
-        return compareTimes(a, b) < 0;
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is before
-     * or equal the other calendar.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is before or equal the other
-     *         calendar or "false" otherwise.
-     */
-    public static boolean isUntilTime(final Calendar a, final Calendar b) {
-        return compareTimes(a, b) <= 0;
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is equal
-     * the other calendar.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is before the other calendar or
-     *         "false" otherwise.
-     */
-    public static boolean haveSameTime(final Calendar a, final Calendar b) {
-        return compareTimes(a, b) == 0;
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is after
-     * the other calendar.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is before the other calendar or
-     *         "false" otherwise.
-     */
-    public static boolean isAfterTime(final Calendar a, final Calendar b) {
-        return compareTimes(a, b) > 0;
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is after
-     * or equal the other calendar.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @param b
-     *            The other calendar.
-     * @return It returns "true" if the one calendar is after or equal the other
-     *         calendar or "false" otherwise.
-     */
-    public static boolean isTimeOnwards(final Calendar a, final Calendar b) {
-        return compareTimes(a, b) >= 0;
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is before
-     * the current time.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @return It returns "true" if the one calendar is before the current time or
-     *         "false" otherwise.
-     */
-    public static boolean isBeforeNow(final Calendar a) {
-        return isBeforeTime(a, now());
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is the
-     * current time or before.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @return It returns "true" if the one calendar is the current time or before
-     *         or "false" otherwise.
-     */
-    public static boolean isUntilNow(final Calendar a) {
-        return isUntilTime(a, now());
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is the
-     * current time or before.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @return It returns "true" if the one calendar is the current time or before
-     *         or "false" otherwise.
-     */
-    public static boolean isNow(final Calendar a) {
-        return haveSameTime(a, now());
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is the
-     * current time or after.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @return It returns "true" if the one calendar is the current time or after or
-     *         "false" otherwise.
-     */
-    public static boolean isNowOnwards(final Calendar a) {
-        return isTimeOnwards(a, now());
-    }
-
-    /**
-     * checks if the calendar time (Hour, Minute, Second and Millisecond) is after
-     * the current time.
-     *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
-     * @param a
-     *            The one calendar.
-     * @return It returns "true" if the one calendar is after the current time or
-     *         "false" otherwise.
-     */
-    public static boolean isAfterNow(final Calendar a) {
-        return isAfterTime(a, now());
-    }
-
-    /**
-     * <p>
      * Creates and returns a {@link Calendar} instance by parsing a given string
      * base on a data format.
-     * </p>
-     *
      *
      * @param value
      *            the date in string format

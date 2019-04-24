@@ -27,8 +27,7 @@ import eapli.framework.util.Utilitarian;
 
 /**
  * Number Predicates. Predicates are functions that test a condition and return
- * a boolean value. in this case the test is done over a numeric (long)
- * argument.
+ * a boolean value. in this case the test is done over numeric (long) arguments.
  *
  * the function signature is
  *

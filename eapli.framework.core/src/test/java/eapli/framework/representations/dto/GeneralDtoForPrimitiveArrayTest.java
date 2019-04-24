@@ -21,29 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.dto;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Array;
 import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eapli.framework.representations.dto.GeneralDTO;
+
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class GeneralDtoForInheritedClassTest extends GeneralDtoBaseTest {
+public class GeneralDtoForPrimitiveArrayTest extends GeneralDtoBaseTest {
 
-    private static final SimpleClassEx BIZ_OBJ = new SimpleClassEx(STRING_FIELD_VALUE_1, INT_FIELD_VALUE_1,
-            FLOAT_FIELD_VALUE);
+    private static final WithPrimitiveArrayClass BIZ_OBJ = new WithPrimitiveArrayClass(INT_FIELD_VALUE_1);
 
     private static GeneralDTO subject;
 
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("GenericDtoForInheritedClassTest");
+        System.out.println("GenericDtoForPrimitiveArrayTest");
 
         subject = GeneralDTO.of(BIZ_OBJ);
 
@@ -56,13 +59,14 @@ public class GeneralDtoForInheritedClassTest extends GeneralDtoBaseTest {
         System.out.println("===========");
     }
 
-    @SuppressWarnings("unused")
-    private static class SimpleClassEx extends SimpleClass {
-        private final float floatField;
+    private static class WithPrimitiveArrayClass {
+        private final int[] data;
 
-        public SimpleClassEx(final String s, final int i, final float f) {
-            super(s, i);
-            floatField = f;
+        public WithPrimitiveArrayClass(final int n) {
+            data = new int[n];
+            for (int i = 0; i < n; i++) {
+                data[i] = i;
+            }
         }
     }
 
@@ -70,34 +74,38 @@ public class GeneralDtoForInheritedClassTest extends GeneralDtoBaseTest {
     public void ensureType() {
         System.out.println("ensureType");
 
-        assertEquals("Name of type is incorrect", subject.type(), BIZ_OBJ.getClass().getName());
+        assertEquals("Name of type is incorrect", BIZ_OBJ.getClass().getName(), subject.type());
     }
 
     @Test
-    public void ensureDTOHas3Fields() {
-        System.out.println("ensureDTOHas3Fields");
+    public void ensureDTOHas1Field() {
+        System.out.println("ensureDTOHas1Field");
 
-        assertEquals("Name of type is incorrect", 3, subject.size());
+        assertEquals("Number of fields is incorrect", 1, subject.size());
     }
 
     @Test
-    public void ensureStringFieldIsTransformed() {
-        System.out.println("ensureStringFieldIsTransformed");
+    public void ensureArrayFieldIsArray() {
+        System.out.println("ensureArrayFieldIsArray");
 
-        assertEquals("'stringField' is incorrectly transformed", STRING_FIELD_VALUE_1, subject.get("stringField"));
+        assertTrue("'data' is not an array", subject.get("data").getClass().isArray());
     }
 
     @Test
-    public void ensureIntFieldIsTransformed() {
-        System.out.println("ensureIntFieldIsTransformed");
+    public void ensureArrayFieldHasAllMembers() {
+        System.out.println("ensureArrayFieldHasAllMembers");
 
-        assertEquals("'intField' is incorrectly transformed", INT_FIELD_VALUE_1, subject.get("intField"));
+        assertEquals("'data' list is missing elements", INT_FIELD_VALUE_1, Array.getLength(subject.get("data")));
     }
 
     @Test
-    public void ensureFloatFieldIsTransformed() {
-        System.out.println("ensureFloatFieldIsTransformed");
+    public void ensureArrayFieldIsTransformed() {
+        System.out.println("ensureArrayFieldIsTransformed");
 
-        assertEquals("'floatField' is incorrectly transformed", FLOAT_FIELD_VALUE, subject.get("floatField"));
+        int i = 0;
+        for (final int e : (int[]) (subject.get("data"))) {
+            assertEquals("ith member is incorrect", i, e);
+            i++;
+        }
     }
 }

@@ -21,21 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.dto;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import eapli.framework.representations.dto.GeneralDTO;
 
 /**
- * A domain object that can be transformed to a DTO, e.g., {@link GeneralDTO}
  *
  * @author Paulo Gandra Sousa
- *
  */
-@FunctionalInterface
-public interface DTOable<T> {
+public class GeneralDTOTest {
 
-    /**
-     * returns a representation of the content of the object as a DTO.
-     *
-     * @return
-     */
-    T toDTO();
+    @BeforeClass
+    public static void setUpClass() {
+        System.out.println("GenericDTO");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureTypeIsNotNull() {
+        System.out.println("ensureTypeIsNotNull");
+        new GeneralDTO(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureTypeIsNotEmpty() {
+        System.out.println("ensureTypeIsNotEmpty");
+        new GeneralDTO("");
+    }
 }

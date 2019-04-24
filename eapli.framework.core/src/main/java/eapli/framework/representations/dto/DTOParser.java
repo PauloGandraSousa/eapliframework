@@ -21,31 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
+package eapli.framework.representations.dto;
 
 /**
+ * A class that can build an instance of a domain object based on a
+ * representation, e.g., GenericDTO
  *
+ * @param <R>
+ *            the type of the representation to parse
+ * @param <T>
+ *            the type of the business object to create from the representation
  * @author Paulo Gandra Sousa
+ *
  */
-public class GeneralDTOTest {
+@FunctionalInterface
+public interface DTOParser<R, T extends DTOable<R>> {
 
-    @BeforeClass
-    public static void setUpClass() {
-        System.out.println("GenericDTO");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureTypeIsNotNull() {
-        System.out.println("ensureTypeIsNotNull");
-        new GeneralDTO(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureTypeIsNotEmpty() {
-        System.out.println("ensureTypeIsNotEmpty");
-        new GeneralDTO("");
-    }
+    /**
+     * parses the DTO and builds a new T based on the content of the DTO
+     *
+     * @param dto
+     * @return
+     */
+    T valueOf(R dto);
 }

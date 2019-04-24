@@ -21,24 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model;
+package eapli.framework.representations.dto;
 
 /**
- * A business object that can guide the generation of a representation of itself
+ * A marker interface for DTOs. A Data Transfer Object is a "data bag" used for
+ * interfacing between systems such as remote communication and the UI and the
+ * domain layer.
  *
- * @author sou03408
+ * @author Paulo Gandra Sousa
  *
  */
-@FunctionalInterface
-public interface Representationable {
-    /**
-     * Guides the construction of a representation of this business object's
-     * current status
-     *
-     * @param builder
-     * @param <R>
-     *            the type of representation that will be created, e.g., a DTO
-     * @return
-     */
-    <R> R buildRepresentation(RepresentationBuilder<R> builder);
+public interface DTO {
 }

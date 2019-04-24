@@ -21,13 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.builders;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 
-import eapli.framework.domain.model.RepresentationBuilder;
+import eapli.framework.domain.model.general.Description;
+import eapli.framework.domain.model.general.Designation;
+import eapli.framework.domain.model.general.EmailAddress;
+import eapli.framework.domain.model.general.Money;
+import eapli.framework.representations.RepresentationBuilder;
+import eapli.framework.representations.dto.GeneralDTO;
 
 /**
  * @author sou03408
@@ -46,31 +51,61 @@ public class GeneralDTORepresentationBuilder implements RepresentationBuilder<Ge
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Object value) {
-        dto.put(name, value);
-        return this;
-    }
-
-    @Override
     public RepresentationBuilder<GeneralDTO> withProperty(final String name, final String value) {
         dto.put(name, value);
         return this;
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final long value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Integer value) {
         dto.put(name, value);
         return this;
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final double value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Float value) {
         dto.put(name, value);
         return this;
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final boolean value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Money value) {
+        dto.put(name, value);
+        return this;
+    }
+
+    @Override
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Designation value) {
+        dto.put(name, value);
+        return this;
+    }
+
+    @Override
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Description value) {
+        dto.put(name, value);
+        return this;
+    }
+
+    @Override
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final EmailAddress value) {
+        dto.put(name, value);
+        return this;
+    }
+
+    @Override
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Long value) {
+        dto.put(name, value);
+        return this;
+    }
+
+    @Override
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Double value) {
+        dto.put(name, value);
+        return this;
+    }
+
+    @Override
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Boolean value) {
         dto.put(name, value);
         return this;
     }
@@ -91,5 +126,10 @@ public class GeneralDTORepresentationBuilder implements RepresentationBuilder<Ge
     public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Calendar value) {
         dto.put(name, value);
         return this;
+    }
+
+    @Override
+    public RepresentationBuilder<GeneralDTO> withElement(final String value) {
+        throw new UnsupportedOperationException("Not implemnted yet");
     }
 }

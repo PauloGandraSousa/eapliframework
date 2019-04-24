@@ -42,8 +42,8 @@ import javax.persistence.Version;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.general.EmailAddress;
-import eapli.framework.dto.DTOable;
-import eapli.framework.dto.GeneralDTO;
+import eapli.framework.representations.dto.DTOable;
+import eapli.framework.representations.dto.GeneralDTO;
 import eapli.framework.util.DateTime;
 import eapli.framework.util.Preconditions;
 import eapli.framework.visitor.Visitable;
@@ -64,7 +64,7 @@ import eapli.framework.visitor.Visitor;
  *
  */
 @Entity
-public class SystemUser implements AggregateRoot<Username>, DTOable, Visitable<GeneralDTO>, Serializable {
+public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>, Visitable<GeneralDTO>, Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -54,6 +54,10 @@ public final class Invariants implements Utilitarian {
         ifNotThen(test, THROW_STATE_WITH_MESSAGE, msg);
     }
 
+    public static void ensure(final boolean b, final String msg) {
+        ensure(() -> b, msg);
+    }
+
     public static void nonNull(final Object arg) {
         nonNull(arg, "");
     }

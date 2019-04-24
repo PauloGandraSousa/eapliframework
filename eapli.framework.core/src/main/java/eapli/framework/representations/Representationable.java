@@ -21,27 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations;
 
 /**
- * A class that can build an instance of a domain object based on a
- * representation, e.g., GenericDTO
+ * A business object that can guide the generation of a representation of itself
  *
- * @param <R>
- *            the type of the representation to parse
- * @param <T>
- *            the type of the business object to create from the representation
- * @author Paulo Gandra Sousa
+ * @author sou03408
  *
  */
 @FunctionalInterface
-public interface DTOParser<R, T extends DTOable<R>> {
-
+public interface Representationable {
     /**
-     * parses the DTO and builds a new T based on the content of the DTO
+     * Guides the construction of a representation of this business object's
+     * current status
      *
-     * @param dto
+     * @param builder
+     * @param <R>
+     *            the type of representation that will be created, e.g., a DTO
      * @return
      */
-    T valueOf(R dto);
+    <R> R buildRepresentation(RepresentationBuilder<R> builder);
 }

@@ -21,28 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.dto;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eapli.framework.representations.dto.GeneralDTO;
+
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class GeneralDtoForSimpleClassTest extends GeneralDtoBaseTest {
+public class GeneralDtoForCollectionClassTest extends GeneralDtoBaseTest {
 
+    private static final WithListClass BIZ_OBJ = new WithListClass(INT_FIELD_VALUE_1, BIZ_OBJ_S1);
     private static GeneralDTO subject;
+
+    protected static class WithListClass {
+        protected final int intField;
+        protected final List<SimpleClass> data = new ArrayList<SimpleClass>();
+
+        public WithListClass(final int n, final SimpleClass c) {
+            intField = n;
+            for (int i = 0; i < intField; i++) {
+                data.add(c);
+            }
+        }
+    }
 
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("GenericDtoForSimpleClassTest");
+        System.out.println("GenericDtoForCollectionClassTest");
 
-        subject = GeneralDTO.of(BIZ_OBJ_S1);
+        subject = GeneralDTO.of(BIZ_OBJ);
 
         System.out.println("===========");
         System.out.println(subject);
@@ -57,7 +75,7 @@ public class GeneralDtoForSimpleClassTest extends GeneralDtoBaseTest {
     public void ensureType() {
         System.out.println("ensureType");
 
-        assertEquals("Name of type is incorrect", BIZ_OBJ_S1.getClass().getName(), subject.type());
+        assertEquals("Name of type is incorrect", BIZ_OBJ.getClass().getName(), subject.type());
     }
 
     @Test
@@ -68,10 +86,29 @@ public class GeneralDtoForSimpleClassTest extends GeneralDtoBaseTest {
     }
 
     @Test
-    public void ensureStringFieldIsTransformed() {
-        System.out.println("ensureStringFieldIsTransformed");
+    public void ensureListFieldIsList() {
+        System.out.println("ensureListFieldIsList");
 
-        assertEquals("'stringField' is incorrectly transformed", STRING_FIELD_VALUE_1, subject.get("stringField"));
+        assertTrue("'data' is not a List", List.class.isAssignableFrom(subject.get("data").getClass()));
+    }
+
+    @Test
+    public void ensureListFieldHasAllMembers() {
+        System.out.println("ensureListFieldHasAllMembers");
+
+        assertEquals("'data' list is missing elements", INT_FIELD_VALUE_1, ((List<?>) (subject.get("data"))).size());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void ensureListFieldIsTransformed() {
+        System.out.println("ensureListFieldIsTransformed");
+
+        for (final GeneralDTO e : (List<GeneralDTO>) (subject.get("data"))) {
+            assertEquals("'intField' is incorrect", INT_FIELD_VALUE_1, e.get("intField"));
+            assertEquals("'stringField' is incorrect", STRING_FIELD_VALUE_1, e.get("stringField"));
+        }
+        assertTrue(true);
     }
 
     @Test

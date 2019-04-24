@@ -21,15 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.dto;
+package eapli.framework.representations.dto;
 
 /**
- * A marker interface for DTOs. A Data Transfer Object is a "data bag" used for
- * interfacing between systems such as remote communication and the UI and the
- * domain layer.
+ * A domain object that can be transformed to a DTO, e.g., {@link GeneralDTO}
  *
  * @author Paulo Gandra Sousa
  *
  */
-public interface DTO {
+@FunctionalInterface
+public interface DTOable<T> {
+
+    /**
+     * returns a representation of the content of the object as a DTO.
+     *
+     * @return
+     */
+    T toDTO();
 }
