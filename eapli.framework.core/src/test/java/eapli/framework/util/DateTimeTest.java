@@ -70,8 +70,8 @@ public class DateTimeTest {
      * ignoring since the build is failing on bitbucket pipelines due to
      * Calendar settings
      */
-    @Ignore
     @Test
+    @Ignore // due to differences in time zones with bitbucket pipeline
     public void ensureFirstDayOfWeek13Of2014Is16() {
         System.out.println("beginningOfWeek");
         final int year = 2014;
