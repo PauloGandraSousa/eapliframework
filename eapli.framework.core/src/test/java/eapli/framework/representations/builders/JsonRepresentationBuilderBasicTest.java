@@ -27,135 +27,141 @@ public class JsonRepresentationBuilderBasicTest {
 
     @Test
     public void ensureEmpty() {
-        final String actual = subject.of("Test").build();
+        final String actual = subject.startObject("Test").endObject().build();
+        assertEquals("{}", actual);
+    }
+
+    @Test
+    public void ensureEmptyAutoFinish() {
+        final String actual = subject.startObject("Test").build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureStringProperty() {
-        final String actual = subject.of("Test").withProperty("name", "value").build();
+        final String actual = subject.startObject("Test").withProperty("name", "value").build();
         assertEquals("{\"name\":\"value\"}", actual);
     }
 
     @Test
     public void ensureNullStringProperty() {
         final String value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureNullLongProperty() {
         final Long value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureNullIntegerProperty() {
         final Integer value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureNullBigDecimalProperty() {
         final BigDecimal value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureNullBigIntegrProperty() {
         final BigInteger value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureNullDoubleProperty() {
         final Double value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureNullFloatProperty() {
         final Float value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensureNullMoneyProperty() {
         final Money value = null;
-        final String actual = subject.of("Test").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("name", value).build();
         assertEquals("{}", actual);
     }
 
     @Test
     public void ensurePrimitiveLongProperty() {
-        final String actual = subject.of("Test").withProperty("name", 1L).build();
+        final String actual = subject.startObject("Test").withProperty("name", 1L).build();
         assertEquals("{\"name\":1}", actual);
     }
 
     @Test
     public void ensurePrimitiveIntProperty() {
-        final String actual = subject.of("Test").withProperty("name", 1).build();
+        final String actual = subject.startObject("Test").withProperty("name", 1).build();
         assertEquals("{\"name\":1}", actual);
     }
 
     @Test
     public void ensureLongProperty() {
-        final String actual = subject.of("Test").withProperty("name", Long.valueOf(1L)).build();
+        final String actual = subject.startObject("Test").withProperty("name", Long.valueOf(1L)).build();
         assertEquals("{\"name\":1}", actual);
     }
 
     @Test
     public void ensureIntegerProperty() {
-        final String actual = subject.of("Test").withProperty("name", Integer.valueOf(1)).build();
+        final String actual = subject.startObject("Test").withProperty("name", Integer.valueOf(1)).build();
         assertEquals("{\"name\":1}", actual);
     }
 
     @Test
     public void ensurePrimitiveDoubleProperty() {
-        final String actual = subject.of("Test").withProperty("name", 1.0D).build();
+        final String actual = subject.startObject("Test").withProperty("name", 1.0D).build();
         assertEquals("{\"name\":1.0}", actual);
     }
 
     @Test
     public void ensurePrimitiveFloatProperty() {
-        final String actual = subject.of("Test").withProperty("name", 1.0F).build();
+        final String actual = subject.startObject("Test").withProperty("name", 1.0F).build();
         assertEquals("{\"name\":1.0}", actual);
     }
 
     @Test
     public void ensureDoubleProperty() {
-        final String actual = subject.of("Test").withProperty("name", Double.valueOf(1.0D)).build();
+        final String actual = subject.startObject("Test").withProperty("name", Double.valueOf(1.0D)).build();
         assertEquals("{\"name\":1.0}", actual);
     }
 
     @Test
     public void ensureFloatProperty() {
-        final String actual = subject.of("Test").withProperty("name", Float.valueOf(1.0F)).build();
+        final String actual = subject.startObject("Test").withProperty("name", Float.valueOf(1.0F)).build();
         assertEquals("{\"name\":1.0}", actual);
     }
 
     @Test
     public void ensurePrimitiveBooleanProperty() {
-        final String actual = subject.of("Test").withProperty("name", true).build();
+        final String actual = subject.startObject("Test").withProperty("name", true).build();
         assertEquals("{\"name\":true}", actual);
     }
 
     @Test
     public void ensureBooleanProperty() {
-        final String actual = subject.of("Test").withProperty("name", Boolean.TRUE).build();
+        final String actual = subject.startObject("Test").withProperty("name", Boolean.TRUE).build();
         assertEquals("{\"name\":true}", actual);
     }
 
     @Test
     public void ensureMoneyProperty() {
-        final String actual = subject.of("Test").withProperty("name", Money.euros(10)).build();
+        final String actual = subject.startObject("Test").withProperty("name", Money.euros(10)).build();
         final String expected = "{\"name\":{\"amount\":10.0,\"currency\":\"EUR\"}}";
 
         System.out.println("ensureMoneyProperty");
@@ -168,7 +174,8 @@ public class JsonRepresentationBuilderBasicTest {
     @Test
     @Ignore // due to differences in time zones with bitbucket pipeline
     public void ensureDateProperty() {
-        final String actual = subject.of("Test").withProperty("name", DateTime.newCalendar(2019, 4, 23)).build();
+        final String actual = subject.startObject("Test").withProperty("name", DateTime.newCalendar(2019, 4, 23))
+                .build();
         final String expected = "{\"name\":\"2019-04-22T23:00Z\"}";
 
         System.out.println("ensureDateProperty");
@@ -180,14 +187,15 @@ public class JsonRepresentationBuilderBasicTest {
 
     @Test
     public void ensureTwoProperties() {
-        final String actual = subject.of("Test").withProperty("one", "value").withProperty("two", 2).build();
+        final String actual = subject.startObject("Test").withProperty("one", "value").withProperty("two", 2).build();
         assertEquals("{\"one\":\"value\",\"two\":2}", actual);
     }
 
     @Test
     public void ensureTwoPropertiesButOneIsNull() {
         final String value = null;
-        final String actual = subject.of("Test").withProperty("one", "value").withProperty("name", value).build();
+        final String actual = subject.startObject("Test").withProperty("one", "value").withProperty("name", value)
+                .build();
         assertEquals("{\"one\":\"value\"}", actual);
     }
 }

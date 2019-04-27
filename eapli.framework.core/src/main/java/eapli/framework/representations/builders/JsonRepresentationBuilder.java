@@ -43,27 +43,15 @@ import eapli.framework.util.Invariants;
  */
 public class JsonRepresentationBuilder implements RepresentationBuilder<String> {
 
+    private static final String PROPERTIES_CAN_ONLY_BE_ADDED_TO_OBJECTS = "Properties can only be added to objects";
+
     private static final String CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED = "Cannot add an element to a collection that has not started";
 
     private static final String CALL_START_FIRST = "call start() first";
 
-    private final StringBuilder buffer = new StringBuilder("{");
+    private final StringBuilder buffer = new StringBuilder();
 
-    /**
-     * level of object nesting to track down child objects
-     */
-    private int childDepth = 0;
-
-    /**
-     * level of object nesting to track down collections
-     */
-    private int collectionDepth = 0;
-
-    /**
-     * flag to indicate if the starting method {@link #of(String)} has been
-     * called
-     */
-    private boolean hasStarted = false;
+    private final JsonRepresentationBuilderState state = new JsonRepresentationBuilderState();
 
     private void appendWrappedStringValue(final String value) {
         if (value != null) {
@@ -96,44 +84,62 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
         buffer.append(value);
     }
 
+    private void ensurePropertyInvariants() {
+        Invariants.ensure(state.hasStarted(), CALL_START_FIRST);
+        Invariants.ensure(state.isInObject(), PROPERTIES_CAN_ONLY_BE_ADDED_TO_OBJECTS);
+        Invariants.ensure(!state.isInCollection(), "Cannot add a property to a collection");
+    }
+
+    private void ensureElementInvariants() {
+        Invariants.ensure(state.hasStarted(), CALL_START_FIRST);
+        Invariants.ensure(state.isInCollection(), CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+    }
+
     @Override
     public String build() {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(childDepth == 0, "cannot build because there are child objects that weren't ended");
-        Invariants.ensure(collectionDepth == 0, "cannot build because there are collections that weren't ended");
+        Invariants.ensure(state.hasStarted(), CALL_START_FIRST);
+        Invariants.ensure(state.canFinish(),
+                "cannot build because there are child objects or collections that weren't ended");
 
-        buffer.append('}');
+        if (state.needsClosing()) {
+            if (state.isRootObject()) {
+                buffer.append('}');
+            } else {
+                buffer.append(']');
+            }
+        }
+
         return buffer.toString();
     }
 
     @Override
-    public RepresentationBuilder<String> of(final String typeName) {
-        Invariants.ensure(!hasStarted, "cannot start more than once");
+    public RepresentationBuilder<String> startObject(final String name) {
+        if (!state.hasStarted()) {
+            // root object
+            buffer.append('{');
+            state.startRootObject();
+        } else {
+            // child object
+            Invariants.ensure(!state.hasClosed());
 
-        hasStarted = true;
+            appendSeparatorIfNeeded();
+            if (state.isInObject()) {
+                appendWrappedStringValue(name);
+                buffer.append(':');
+            }
+            buffer.append('{');
+            state.enterObject();
+        }
+
         return this;
     }
 
     @Override
-    public RepresentationBuilder<String> startChild(final String name) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+    public RepresentationBuilder<String> endObject() {
+        Invariants.ensure(state.hasStarted(), CALL_START_FIRST);
+        Invariants.ensure(state.isInObject(), "Cannot end an object if there was no object started");
 
-        childDepth++;
-
-        appendSeparatorIfNeeded();
-
-        appendWrappedStringValue(name);
-        buffer.append(':');
-        buffer.append('{');
-        return this;
-    }
-
-    @Override
-    public RepresentationBuilder<String> endChild() {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.isPositive(childDepth, "Cannot end a child if there was no child started");
-
-        childDepth--;
+        state.leave();
 
         buffer.append('}');
         return this;
@@ -141,8 +147,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final String value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         appendWrappedStringValue(value);
@@ -151,8 +156,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final Long value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         buffer.append(value != null ? value.toString() : "null");
@@ -161,8 +165,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final Integer value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         buffer.append(value != null ? value.toString() : "null");
@@ -171,8 +174,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final Double value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         buffer.append(value != null ? value.toString() : "null");
@@ -181,8 +183,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final Float value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         buffer.append(value != null ? value.toString() : "null");
@@ -191,8 +192,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final Boolean value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         buffer.append(value != null ? value.toString() : "null");
@@ -201,8 +201,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final BigInteger value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         buffer.append(value != null ? value.toString() : "null");
@@ -211,8 +210,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final BigDecimal value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         buffer.append(value != null ? value.toString() : "null");
@@ -221,8 +219,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withElement(final Money value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        ensureElementInvariants();
 
         appendSeparatorIfNeeded();
         if (value != null) {
@@ -235,23 +232,36 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> startCollection(final String name) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        if (!state.hasStarted()) {
+            // root collection
+            buffer.append('[');
+            state.startRootCollection();
+        } else {
+            // collection property or element
+            Invariants.ensure(!state.hasClosed());
 
-        collectionDepth++;
+            appendSeparatorIfNeeded();
+            appendPropertyIfAppropriate(name);
+            buffer.append('[');
+            state.enterCollection();
+        }
 
-        appendSeparatorIfNeeded();
-        appendWrappedStringValue(name);
-        buffer.append(':');
-        buffer.append('[');
         return this;
+    }
+
+    private void appendPropertyIfAppropriate(final String name) {
+        if (state.isInObject()) {
+            appendWrappedStringValue(name);
+            buffer.append(':');
+        }
     }
 
     @Override
     public RepresentationBuilder<String> endCollection() {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
-        Invariants.ensure(collectionDepth > 0, "Cannot end a collection that has not started");
+        Invariants.ensure(state.hasStarted(), CALL_START_FIRST);
+        Invariants.ensure(state.isInCollection(), "Cannot end a collection that has not started");
 
-        collectionDepth--;
+        state.leave();
 
         buffer.append(']');
         return this;
@@ -259,7 +269,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final String value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
 
         if (value != null) {
             appendStringProperty(name, value);
@@ -269,7 +279,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final Long value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
 
         if (value != null) {
             appendNativeProperty(name, String.valueOf(value));
@@ -279,7 +289,8 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final Integer value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
+
         if (value != null) {
             appendNativeProperty(name, String.valueOf(value));
         }
@@ -288,7 +299,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final Double value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
 
         if (value != null) {
             appendNativeProperty(name, String.valueOf(value));
@@ -298,7 +309,8 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final Float value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
+
         if (value != null) {
             appendNativeProperty(name, String.valueOf(value));
         }
@@ -307,7 +319,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final Boolean value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
 
         if (value != null) {
             appendNativeProperty(name, String.valueOf(value));
@@ -317,7 +329,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final Money value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
 
         if (value != null) {
             appendWrappedStringValue(name);
@@ -336,7 +348,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final BigInteger value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
 
         if (value != null) {
             appendNativeProperty(name, String.valueOf(value));
@@ -346,7 +358,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     @Override
     public RepresentationBuilder<String> withProperty(final String name, final BigDecimal value) {
-        Invariants.ensure(hasStarted, CALL_START_FIRST);
+        ensurePropertyInvariants();
 
         if (value != null) {
             appendNativeProperty(name, String.valueOf(value));

@@ -53,7 +53,7 @@ public abstract class GeneralDtoBaseTest {
 
         @Override
         public <R> R buildRepresentation(final RepresentationBuilder<R> builder) {
-            return builder.of("SimpleClass").withProperty("intField", intField)
+            return builder.startObject("SimpleClass").withProperty("intField", intField)
                     .withProperty("stringField", stringField).build();
         }
     }

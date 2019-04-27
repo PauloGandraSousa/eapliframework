@@ -36,12 +36,11 @@ import eapli.framework.util.Factory;
 
 /**
  * A Builder interface to generate representations of business objects, usually
- * a DTO
- *
- * the agreed contract is that the driver object will call start() prior to any
- * other method in the interface. however, implementations of this contract are
- * advised to program defensively and account for situation where start() is not
- * called or called out of order.
+ * a DTO. Root documents are initiated either as a single object
+ * ({@link #startObject(String)}) or as a collection
+ * {@link #startCollection(String)}. An object is a set of named properties
+ * (defined by {@link #withProperty}. A collection is a collection of elements
+ * {@link #withElement} or objects}
  *
  * Implementations are free to handle duplicate properties in whatever form
  * suits it best, either by ignoring, adding duplicates or launching exceptions.
@@ -54,33 +53,21 @@ import eapli.framework.util.Factory;
  */
 public interface RepresentationBuilder<T> extends Factory<T> {
     /**
-     * Signals the starting of the object
-     *
-     * @param typeName
-     *            the name of the type of object being represented. usually the
-     *            simplified class name
-     * @return this builder instance
-     */
-    default RepresentationBuilder<T> of(final String typeName) {
-        return this;
-    }
-
-    /**
-     * Signals the start of a child object
+     * Signals the start of the root document or of a child object
      *
      * @param name
      * @return this builder instance
      */
-    default RepresentationBuilder<T> startChild(final String name) {
+    default RepresentationBuilder<T> startObject(final String name) {
         return this;
     }
 
     /**
-     * Signals the end of a child object
+     * Signals the end of the root document or of a child object
      *
      * @return this builder instance
      */
-    default RepresentationBuilder<T> endChild() {
+    default RepresentationBuilder<T> endObject() {
         return this;
     }
 
@@ -418,7 +405,8 @@ public interface RepresentationBuilder<T> extends Factory<T> {
     }
 
     /**
-     * Signals the start of a named collection of elements
+     * Signals the start of the root document or of a named collection of
+     * elements
      *
      * @param name
      * @return this builder instance
@@ -428,7 +416,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
     }
 
     /**
-     * Signals the end of a collection
+     * Signals the end of the root document or of a collection
      *
      * @return this builder instance
      */

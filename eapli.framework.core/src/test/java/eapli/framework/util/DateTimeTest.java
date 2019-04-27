@@ -67,8 +67,6 @@ public class DateTimeTest {
     /**
      * Test of beginningOfWeek method, of class DateTime.
      *
-     * ignoring since the build is failing on bitbucket pipelines due to
-     * Calendar settings
      */
     @Test
     @Ignore // due to differences in time zones with bitbucket pipeline
