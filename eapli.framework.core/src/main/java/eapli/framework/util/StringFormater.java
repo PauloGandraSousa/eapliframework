@@ -23,6 +23,7 @@
  */
 package eapli.framework.util;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -35,6 +36,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * utility class for string formating
  *
@@ -45,6 +48,25 @@ public final class StringFormater implements Utilitarian {
 
     private StringFormater() {
         // ensure utility
+    }
+
+    /**
+     * returns a pretty formatted JSON object
+     *
+     * From <a href=
+     * "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
+     *
+     * @param input
+     * @return
+     */
+    public static String prettyformatJson(final String input) {
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            final Object json = mapper.readValue(input, Object.class);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+        } catch (final IOException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     public static String prettyFormatXml(final String input) {
@@ -74,7 +96,7 @@ public final class StringFormater implements Utilitarian {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(xmlInput, xmlOutput);
         } catch (final TransformerException e) {
-            throw new IllegalStateException(e);
+            throw new IllegalArgumentException(e);
         }
         return xmlOutput.getWriter().toString();
     }

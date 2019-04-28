@@ -44,6 +44,13 @@ public class JsonRepresentationBuilderBasicTest {
     }
 
     @Test
+    public void ensureStringAndMoneyProperty() {
+        final String actual = subject.startObject("Test").withProperty("name", "value")
+                .withProperty("p", Money.euros(15.0)).build();
+        assertEquals("{\"name\":\"value\",\"p\":{\"amount\":15.0,\"currency\":\"EUR\"}}", actual);
+    }
+
+    @Test
     public void ensureNullStringProperty() {
         final String value = null;
         final String actual = subject.startObject("Test").withProperty("name", value).build();

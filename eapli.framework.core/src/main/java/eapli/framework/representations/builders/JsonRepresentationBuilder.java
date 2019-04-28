@@ -332,6 +332,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
         ensurePropertyInvariants();
 
         if (value != null) {
+            appendSeparatorIfNeeded();
             appendWrappedStringValue(name);
             buffer.append(':');
             appendMoneyObject(value);
