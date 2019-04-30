@@ -120,7 +120,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
             state.startRootObject();
         } else {
             // child object
-            Invariants.ensure(!state.hasClosed());
+            Invariants.ensure(!state.hasEnded());
 
             appendSeparatorIfNeeded();
             if (state.isInObject()) {
@@ -238,7 +238,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
             state.startRootCollection();
         } else {
             // collection property or element
-            Invariants.ensure(!state.hasClosed());
+            Invariants.ensure(!state.hasEnded());
 
             appendSeparatorIfNeeded();
             appendPropertyIfAppropriate(name);

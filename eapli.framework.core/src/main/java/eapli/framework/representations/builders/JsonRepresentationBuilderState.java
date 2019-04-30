@@ -29,85 +29,137 @@ import java.util.Deque;
 import eapli.framework.util.Invariants;
 
 /**
+ * Internal state management for the JSON representation builder
+ *
  * @author sou03408
  *
  */
 /* package */ class JsonRepresentationBuilderState {
 
-    private enum StartingDocument {
-        NOT_STARTED, ROOT_OBJECT, ROOT_COLLECTION
+    /**
+     * type of JSON document we are building, either a collection or an object.
+     *
+     * @author sou03408
+     *
+     */
+    private enum JsonDocumentType {
+        NOT_YET_DEFINED, ROOT_OBJECT, ROOT_COLLECTION
     }
 
-    private StartingDocument hasStarted;
+    private JsonDocumentType type;
 
+    /**
+     * indicates whether the builder is currently building an object or a
+     * collection
+     *
+     * @author sou03408
+     *
+     */
     private static final class StateContext {
-        public enum Type {
+        public enum StateContextType {
             OBJECT, COLLECTION
         }
 
-        private final Type type;
+        private final StateContextType ctxType;
 
         public boolean isInCollection() {
-            return type == StateContext.Type.COLLECTION;
+            return ctxType == StateContext.StateContextType.COLLECTION;
         }
 
         public boolean isInObject() {
-            return type == StateContext.Type.OBJECT;
+            return ctxType == StateContext.StateContextType.OBJECT;
         }
 
-        public StateContext(final Type type) {
-            this.type = type;
+        public StateContext(final StateContextType type) {
+            ctxType = type;
         }
 
         public static StateContext moveToObject() {
-            return new StateContext(Type.OBJECT);
+            return new StateContext(StateContextType.OBJECT);
         }
 
         public static StateContext moveToCollection() {
-            return new StateContext(Type.COLLECTION);
+            return new StateContext(StateContextType.COLLECTION);
         }
     }
 
+    /**
+     * stack of object/collection state
+     */
     private final Deque<StateContext> state = new ArrayDeque<>();
 
     public JsonRepresentationBuilderState() {
-        hasStarted = StartingDocument.NOT_STARTED;
+        type = JsonDocumentType.NOT_YET_DEFINED;
     }
 
+    /**
+     * begins the construction state for an object document
+     */
     public void startRootObject() {
-        Invariants.ensure(hasStarted == StartingDocument.NOT_STARTED);
+        Invariants.ensure(type == JsonDocumentType.NOT_YET_DEFINED);
 
         state.push(StateContext.moveToObject());
-        hasStarted = StartingDocument.ROOT_OBJECT;
+        type = JsonDocumentType.ROOT_OBJECT;
     }
 
+    /**
+     * begins the construction state for a collection document
+     */
     public void startRootCollection() {
-        Invariants.ensure(hasStarted == StartingDocument.NOT_STARTED);
+        Invariants.ensure(type == JsonDocumentType.NOT_YET_DEFINED);
 
         state.push(StateContext.moveToCollection());
-        hasStarted = StartingDocument.ROOT_COLLECTION;
+        type = JsonDocumentType.ROOT_COLLECTION;
     }
 
+    /**
+     * returns true if the current document was signaled as an object, i.e., {
+     * ... }
+     *
+     * @return
+     */
     public boolean isRootObject() {
-        return hasStarted == StartingDocument.ROOT_OBJECT;
+        return type == JsonDocumentType.ROOT_OBJECT;
     }
 
+    /**
+     * returns true if the current document was signaled as a collection, i.e.,
+     * [ ... ]
+     *
+     * @return
+     */
     public boolean isRootCollection() {
-        return hasStarted == StartingDocument.ROOT_COLLECTION;
+        return type == JsonDocumentType.ROOT_COLLECTION;
     }
 
+    /**
+     * returns if the builder has been initialized for a document type
+     *
+     * @return
+     */
     public boolean hasStarted() {
-        return hasStarted != StartingDocument.NOT_STARTED;
+        return type != JsonDocumentType.NOT_YET_DEFINED;
     }
 
+    /**
+     * signals a new state to construct a collection in the current document
+     */
     public void enterCollection() {
         state.push(StateContext.moveToCollection());
     }
 
+    /**
+     * signals a new state to construct an object in the current document
+     */
     public void enterObject() {
         state.push(StateContext.moveToObject());
     }
 
+    /**
+     * returns if the current state is a collection
+     *
+     * @return
+     */
     public boolean isInCollection() {
         if (state.isEmpty()) {
             return false;
@@ -116,24 +168,53 @@ import eapli.framework.util.Invariants;
         }
     }
 
+    /**
+     * returns if the current state is an object
+     *
+     * @return
+     */
     public boolean isInObject() {
-        return state.isEmpty() ? false : state.peek().isInObject();
+        if (state.isEmpty()) {
+            return false;
+        } else {
+            return state.peek().isInObject();
+        }
     }
 
-    public boolean canFinish() {
-        return state.size() <= 1;
-    }
-
+    /**
+     * signals to leave the current state and return to the previous one
+     */
     public void leave() {
         Invariants.ensure(!state.isEmpty());
         state.pop();
     }
 
+    /**
+     * checks if the current state allows to end the creation of the root
+     * document
+     *
+     * @return
+     */
+    public boolean canFinish() {
+        return state.size() <= 1;
+    }
+
+    /**
+     * checks if there is the need to close the root document
+     *
+     * @return
+     */
     public boolean needsClosing() {
         return state.size() == 1;
     }
 
-    public boolean hasClosed() {
+    /**
+     * checks if the builder has properly closed (left) all the
+     * objects/collections
+     *
+     * @return
+     */
+    public boolean hasEnded() {
         return state.isEmpty();
     }
 }
