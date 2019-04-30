@@ -48,16 +48,16 @@ public final class AuthzRegistry implements Singleton {
         userService = new UserManagementService(userRepo);
     }
 
-    public static UserManagementService getUserService() {
+    public static UserManagementService userService() {
         return userService;
     }
 
-    public static AuthenticationService getAuthenticationService() {
+    public static AuthenticationService authenticationService() {
         Invariants.nonNull(authenticationService);
         return authenticationService;
     }
 
-    public static AuthorizationService getAuthorizationService() {
+    public static AuthorizationService authorizationService() {
         Invariants.nonNull(authorizationSvc);
         return authorizationSvc;
     }
