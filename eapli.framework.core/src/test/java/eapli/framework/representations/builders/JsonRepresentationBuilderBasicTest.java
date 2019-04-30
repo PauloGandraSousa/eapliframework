@@ -21,8 +21,13 @@ public class JsonRepresentationBuilderBasicTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void ensureStartingIsMandatoryBeforeAddingProperty() {
+    public void ensureCannotAddPropertyBeforeStarting() {
         subject.withProperty("name", 1).build();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void ensureCannotBuildWithoutStarting() {
+        subject.build();
     }
 
     @Test

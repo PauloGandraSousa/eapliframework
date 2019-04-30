@@ -36,7 +36,7 @@ import eapli.framework.util.Invariants;
 
     private enum StartingDocument {
         NOT_STARTED, ROOT_OBJECT, ROOT_COLLECTION
-    };
+    }
 
     private StartingDocument hasStarted;
 
@@ -109,13 +109,11 @@ import eapli.framework.util.Invariants;
     }
 
     public boolean isInCollection() {
-        final StateContext h = state.peek();
-        return h != null ? h.isInCollection() : false;
+        return state.isEmpty() ? false : state.peek().isInCollection();
     }
 
     public boolean isInObject() {
-        final StateContext h = state.peek();
-        return h != null ? h.isInObject() : false;
+        return state.isEmpty() ? false : state.peek().isInObject();
     }
 
     public boolean canFinish() {
