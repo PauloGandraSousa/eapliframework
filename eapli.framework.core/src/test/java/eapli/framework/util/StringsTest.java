@@ -23,6 +23,10 @@
  */
 package eapli.framework.util;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 /**
  *
  * @author Paulo Gandra Sousa
@@ -30,6 +34,41 @@ package eapli.framework.util;
 public class StringsTest {
 
     private static final String TEST_STRING = "1234567890";
-    private static final String CHAR_LIST = "6";
 
+    @Test
+    public void ensureTruncate5HasLength5() {
+        final String subject = Strings.truncate(TEST_STRING, 5);
+        assertEquals(5, subject.length());
+    }
+
+    @Test
+    public void ensureTruncate5HasFirst5CharsOfOriginal() {
+        final String subject = Strings.truncate(TEST_STRING, 5);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(TEST_STRING.charAt(i), subject.charAt(i));
+        }
+    }
+
+    @Test
+    public void ensureTruncateBiggerThanLengthHasOriginalString() {
+        final String subject = Strings.truncate(TEST_STRING, 2 + TEST_STRING.length());
+        assertEquals(TEST_STRING, subject);
+    }
+
+    @Test
+    public void ensureTruncateLengthHasOriginalString() {
+        final String subject = Strings.truncate(TEST_STRING, TEST_STRING.length());
+        assertEquals(TEST_STRING, subject);
+    }
+
+    @Test(expected = StringIndexOutOfBoundsException.class)
+    public void ensureTruncateNegativeHasOriginalString() {
+        Strings.truncate(TEST_STRING, -1);
+    }
+
+    @Test
+    public void ensureTruncateZeroHasemptyString() {
+        final String subject = Strings.truncate(TEST_STRING, 0);
+        assertEquals("", subject);
+    }
 }
