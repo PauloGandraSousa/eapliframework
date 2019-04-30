@@ -109,7 +109,11 @@ import eapli.framework.util.Invariants;
     }
 
     public boolean isInCollection() {
-        return state.isEmpty() ? false : state.peek().isInCollection();
+        if (state.isEmpty()) {
+            return false;
+        } else {
+            return state.peek().isInCollection();
+        }
     }
 
     public boolean isInObject() {
