@@ -106,7 +106,6 @@ public class Password implements ValueObject, Serializable {
         final Password password1 = (Password) o;
 
         return thePassword.equals(password1.thePassword);
-
     }
 
     @Override
@@ -125,7 +124,8 @@ public class Password implements ValueObject, Serializable {
      */
     public PasswordStrength strength() {
         PasswordStrength passwordStrength = PasswordStrength.WEAK;
-        if (thePassword.length() >= 12 || (thePassword.length() >= 8 && thePassword.matches(".+[$#!%&?]+.+"))) {
+        if (thePassword.length() >= 12
+                || (thePassword.length() >= 8 && StringPredicates.containsAny(thePassword, "$#!%&?"))) {
             passwordStrength = PasswordStrength.EXCELENT;
         } else if (thePassword.length() >= 8) {
             passwordStrength = PasswordStrength.GOOD;

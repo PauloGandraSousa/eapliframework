@@ -40,8 +40,8 @@ public final class Strings implements Utilitarian {
     }
 
     /**
-     * returns a random string with a specified length consisting only of letters
-     * (capitals and lower) and digits
+     * returns a random string with a specified length consisting only of
+     * letters (capitals and lower) and digits
      *
      * @param len
      * @return

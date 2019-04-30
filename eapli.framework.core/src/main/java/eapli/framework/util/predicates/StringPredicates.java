@@ -125,8 +125,8 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks if a string contains at least one alphabetic character (regular Latin
-     * alphabet)
+     * checks if a string contains at least one alphabetic character (regular
+     * Latin alphabet)
      *
      * @param text
      * @return
@@ -137,8 +137,8 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks whether a string contains at least one capital letter (regular Latin
-     * alphabet)
+     * checks whether a string contains at least one capital letter (regular
+     * Latin alphabet)
      *
      * @param text
      * @return
@@ -146,5 +146,22 @@ public final class StringPredicates implements Utilitarian {
     @SuppressWarnings("squid:S4784")
     public static boolean containsCapital(final String text) {
         return text.matches(".*[A-Z].*");
+    }
+
+    /**
+     * Checks whether a string contains any of the characters of the second
+     * string, without using regular expressions to avoid potential security
+     * threats at the expense of performance. The complexity of this method
+     * O(n^2)
+     *
+     * @param subject
+     * @param chars
+     * @return
+     */
+    public static boolean containsAny(final String subject, final String chars) {
+        if (StringPredicates.isNullOrEmpty(chars) || StringPredicates.isNullOrEmpty(subject)) {
+            return false;
+        }
+        return subject.chars().anyMatch(c -> chars.indexOf(c) != -1);
     }
 }
