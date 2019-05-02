@@ -29,7 +29,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import eapli.framework.util.Calendars;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  *

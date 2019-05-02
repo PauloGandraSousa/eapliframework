@@ -26,8 +26,8 @@ package eapli.framework.actions;
 import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.Utilitarian;
+import eapli.framework.validations.Preconditions;
 
 /**
  * utility class

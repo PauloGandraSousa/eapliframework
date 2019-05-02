@@ -27,7 +27,7 @@ import java.util.Map;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * An utility class for implementing JPA repositories not running in containers

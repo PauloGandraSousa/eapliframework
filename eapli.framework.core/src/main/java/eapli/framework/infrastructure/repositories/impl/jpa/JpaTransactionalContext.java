@@ -35,8 +35,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.util.Preconditions;
-import eapli.framework.util.predicates.StringPredicates;
+import eapli.framework.validations.Preconditions;
+import eapli.framework.validations.StringPredicates;
 
 /**
  * An utility class for providing transactional context to JPA repositories not

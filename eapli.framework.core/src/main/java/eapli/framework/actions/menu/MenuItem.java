@@ -27,8 +27,8 @@ import java.util.Optional;
 
 import eapli.framework.actions.Action;
 import eapli.framework.actions.Actions;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.Strings;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A menu item

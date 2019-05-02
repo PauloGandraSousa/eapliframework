@@ -45,7 +45,7 @@ import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.representations.dto.GeneralDTO;
 import eapli.framework.util.Calendars;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitable;
 import eapli.framework.visitor.Visitor;
 

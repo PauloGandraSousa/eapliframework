@@ -25,8 +25,8 @@ package eapli.framework.util.function;
 
 import java.util.stream.IntStream;
 
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.Utilitarian;
+import eapli.framework.validations.Preconditions;
 
 /**
  * just a playground to use the Java 8 Streams and Lambda features

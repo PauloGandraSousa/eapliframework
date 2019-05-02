@@ -26,7 +26,7 @@ package eapli.framework.presentation.console.menu;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.util.Console;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * base class for menu renderers using the console as I/O

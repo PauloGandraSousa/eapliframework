@@ -26,7 +26,7 @@ package eapli.framework.presentation.console;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitor;
 
 /**

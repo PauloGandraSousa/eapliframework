@@ -26,7 +26,7 @@ package eapli.framework.representations.builders;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import eapli.framework.util.Invariants;
+import eapli.framework.validations.Invariants;
 
 /**
  * Internal state management for the JSON representation builder

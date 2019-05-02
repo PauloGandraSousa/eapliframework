@@ -26,8 +26,8 @@ package eapli.framework.memento;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import eapli.framework.util.Invariants;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Invariants;
+import eapli.framework.validations.Preconditions;
 
 /**
  * @author Paulo Gandra Sousa

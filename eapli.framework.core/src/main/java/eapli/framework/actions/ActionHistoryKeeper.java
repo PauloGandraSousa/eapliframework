@@ -26,7 +26,7 @@ package eapli.framework.actions;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import eapli.framework.util.Invariants;
+import eapli.framework.validations.Invariants;
 
 /**
  * A helper class to keep a simple history of actions and manage undo/redo

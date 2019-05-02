@@ -27,7 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.domain.model.identities.IdentityGenerator;
-import eapli.framework.util.Invariants;
+import eapli.framework.validations.Invariants;
 
 /**
  * @author Paulo Gandra de Sousa

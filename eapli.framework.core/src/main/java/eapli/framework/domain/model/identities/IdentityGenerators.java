@@ -26,8 +26,8 @@ package eapli.framework.domain.model.identities;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.Singleton;
+import eapli.framework.validations.Preconditions;
 
 /**
  * @author Paulo Gandra de Sousa

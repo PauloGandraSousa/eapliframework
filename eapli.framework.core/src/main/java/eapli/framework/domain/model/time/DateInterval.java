@@ -32,7 +32,7 @@ import javax.persistence.Transient;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.Calendars;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A persistent date period. only the date part of calendar is relevant.

@@ -29,8 +29,8 @@ import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.StringMixin;
+import eapli.framework.validations.Preconditions;
 
 /**
  * Generic description concept.it must have some content but no special rules

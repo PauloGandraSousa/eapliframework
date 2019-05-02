@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.domain.model.math.Vector.VectorType;
-import eapli.framework.util.predicates.NumberPredicates;
+import eapli.framework.validations.NumberPredicates;
 
 /**
  *

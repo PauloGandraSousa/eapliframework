@@ -36,8 +36,8 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import eapli.framework.util.Preconditions;
-import eapli.framework.util.predicates.StringPredicates;
+import eapli.framework.validations.Preconditions;
+import eapli.framework.validations.StringPredicates;
 
 /**
  * A general collection of key-value pairs to work as a DTO avoiding to create

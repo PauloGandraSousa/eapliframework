@@ -21,16 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util;
+package eapli.framework.validations;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 import java.util.function.BooleanSupplier;
+import java.util.regex.Pattern;
 
 import eapli.framework.actions.Actions;
-import eapli.framework.util.predicates.NumberPredicates;
-import eapli.framework.util.predicates.StringPredicates;
+import eapli.framework.util.Utilitarian;
 
 /**
  * Utility class for expressing and ensuring class/method's invariants. If the
@@ -39,33 +37,49 @@ import eapli.framework.util.predicates.StringPredicates;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Invariants implements Utilitarian {
+public final class Invariants extends Validations implements Utilitarian {
     private Invariants() {
         // ensure utility
     }
 
+    public static void areEqual(final int a, final int b) {
+        ensure(() -> a == b);
+    }
+
+    public static void areEqual(final Object a, final Object b, final String msg) {
+        ensure(() -> a.equals(b), msg);
+    }
+
+    public static void matches(final Pattern regex, final String arg, final String msg) {
+        ensure(() -> regex.matcher(arg).find(), msg);
+    }
+
     public static void ensure(final boolean b) {
-        ensure(() -> b);
+        ensure(() -> b, Actions.THROW_STATE);
     }
 
     public static void ensure(final BooleanSupplier test) {
-        ensure(test, "");
+        ensure(test, Actions.THROW_STATE);
     }
 
     public static void ensure(final BooleanSupplier test, final String msg) {
-        Actions.doIfNot(Actions.throwState(msg), test);
+        ensure(test, Actions.throwState(msg));
     }
 
     public static void ensure(final boolean b, final String msg) {
-        ensure(() -> b, msg);
+        ensure(() -> b, Actions.throwState(msg));
     }
 
     public static void nonNull(final Object arg) {
-        nonNull(arg, "");
+        nonNull(arg, Actions.THROW_STATE);
     }
 
     public static void nonNull(final Object arg, final String msg) {
-        Actions.doIfNot(Actions.throwState(msg), Objects::nonNull, arg);
+        nonNull(arg, Actions.throwState(msg));
+    }
+
+    public static void nonNull(final Object... arg) {
+        nonNull(Actions.THROW_STATE, arg);
     }
 
     /**
@@ -74,23 +88,49 @@ public final class Invariants implements Utilitarian {
      * @param items
      */
     public static void nonEmpty(final Collection<?> items) {
-        nonNull(items);
-        ensure(!items.isEmpty());
+        nonEmpty(items, Actions.THROW_STATE);
     }
 
+    /**
+     * checks if a collection is non null and contains at least an element
+     *
+     * @param items
+     */
+    public static void nonEmpty(final Collection<?> items, final String msg) {
+        nonEmpty(items, Actions.throwState(msg));
+    }
+
+    /**
+     * asserts that a string is neither null nor empty
+     *
+     * @param arg
+     */
+    public static void nonEmpty(final String arg) {
+        nonEmpty(arg, Actions.THROW_STATE);
+    }
+
+    /**
+     * asserts that a string is neither null nor empty
+     *
+     * @param arg
+     */
     public static void nonEmpty(final String arg, final String msg) {
-        Actions.doIfNot(Actions.throwState(msg), x -> !StringPredicates.isNullOrEmpty(x), arg);
+        nonEmpty(arg, Actions.throwState(msg));
+    }
+
+    public static void isPositive(final long arg) {
+        isPositive(arg, Actions.THROW_STATE);
     }
 
     public static void isPositive(final long arg, final String msg) {
-        Actions.doIfNot(Actions.throwState(msg), NumberPredicates::isPositive, arg);
+        isPositive(arg, Actions.throwState(msg));
+    }
+
+    public static void nonNegative(final long arg) {
+        nonNegative(arg, Actions.THROW_STATE);
     }
 
     public static void nonNegative(final long arg, final String msg) {
-        Actions.doIfNot(Actions.throwState(msg), NumberPredicates::isNonNegative, arg);
-    }
-
-    public static void nonEmpty(final List<?> arg) {
-        ensure(() -> arg != null && !arg.isEmpty());
+        nonNegative(arg, Actions.throwState(msg));
     }
 }

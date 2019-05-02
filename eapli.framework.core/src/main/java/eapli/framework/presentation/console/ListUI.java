@@ -23,7 +23,7 @@
  */
 package eapli.framework.presentation.console;
 
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitor;
 
 /**

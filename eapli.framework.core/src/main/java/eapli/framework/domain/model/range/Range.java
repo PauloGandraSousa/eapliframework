@@ -29,7 +29,7 @@ import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.Factory;
-import eapli.framework.util.Invariants;
+import eapli.framework.validations.Invariants;
 
 /**
  * a generic immutable range class, i.e., a continuous domain.

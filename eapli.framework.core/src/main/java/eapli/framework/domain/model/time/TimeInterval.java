@@ -31,7 +31,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A persistent time period. Both the date and the time part of calendar are

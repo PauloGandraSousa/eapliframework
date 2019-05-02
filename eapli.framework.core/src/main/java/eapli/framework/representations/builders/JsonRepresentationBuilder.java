@@ -28,7 +28,7 @@ import java.math.BigInteger;
 
 import eapli.framework.domain.model.general.Money;
 import eapli.framework.representations.RepresentationBuilder;
-import eapli.framework.util.Invariants;
+import eapli.framework.validations.Invariants;
 
 /**
  * A simple JSON Representation builder. null values are ignored and no property

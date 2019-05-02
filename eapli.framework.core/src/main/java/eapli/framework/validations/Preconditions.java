@@ -21,17 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util;
+package eapli.framework.validations;
 
 import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
 import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
 
 import eapli.framework.actions.Actions;
-import eapli.framework.util.predicates.NumberPredicates;
-import eapli.framework.util.predicates.StringPredicates;
+import eapli.framework.util.Utilitarian;
 
 /**
  * utility class for validating preconditions, usually on function parameters.
@@ -40,83 +37,16 @@ import eapli.framework.util.predicates.StringPredicates;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Preconditions implements Utilitarian {
+public final class Preconditions extends Validations implements Utilitarian {
     private Preconditions() {
     }
 
-    public static void ensure(final boolean b) {
-        ensure(() -> b);
-    }
-
-    public static void ensure(final BooleanSupplier test) {
-        ensure(test, "");
-    }
-
-    public static void ensure(final BooleanSupplier test, final String msg) {
-        Actions.doIfNot(Actions.throwArgument(msg), test);
-    }
-
-    public static void nonNull(final Object arg) {
-        nonNull(arg, "");
-    }
-
-    public static void nonNull(final Object arg, final String msg) {
-        Actions.doIfNot(Actions.throwArgument(msg), Objects::nonNull, arg);
-    }
-
     public static void nonNull(final Object... arg) {
-        for (final Object each : arg) {
-            nonNull(each);
-        }
-    }
-
-    /**
-     * checks if a collection is non null and contains at least an element
-     *
-     * @param items
-     */
-    public static void nonEmpty(final Collection<?> items) {
-        nonNull(items);
-        ensure(!items.isEmpty());
-    }
-
-    /**
-     * checks if a string is neither null nor empty
-     *
-     * @param arg
-     */
-    public static void nonEmpty(final String arg) {
-        nonEmpty(arg, "");
-    }
-
-    /**
-     * checks if a string is neither null nor empty
-     *
-     * @param arg
-     * @param msg
-     */
-    public static void nonEmpty(final String arg, final String msg) {
-        Actions.doIfNot(Actions.throwArgument(msg), x -> !StringPredicates.isNullOrEmpty(x), arg);
-    }
-
-    public static void isPositive(final long arg) {
-        isPositive(arg, "");
-    }
-
-    public static void isPositive(final long arg, final String msg) {
-        Actions.doIfNot(Actions.throwArgument(msg), NumberPredicates::isPositive, arg);
+        nonNull(Actions.THROW_ARGUMENT, arg);
     }
 
     public static void nonNegative(final long arg) {
-        nonNegative(arg, "");
-    }
-
-    public static void nonNegative(final long arg, final String msg) {
-        Actions.doIfNot(Actions.throwArgument(msg), NumberPredicates::isNonNegative, arg);
-    }
-
-    public static void nonEmpty(final Set<?> arg, final String msg) {
-        ensure(() -> arg != null && !arg.isEmpty(), msg);
+        nonNegative(arg, Actions.THROW_ARGUMENT);
     }
 
     public static void areEqual(final int a, final int b) {
@@ -129,5 +59,78 @@ public final class Preconditions implements Utilitarian {
 
     public static void matches(final Pattern regex, final String arg, final String msg) {
         ensure(() -> regex.matcher(arg).find(), msg);
+    }
+
+    public static void ensure(final boolean b) {
+        ensure(() -> b);
+    }
+
+    public static void ensure(final boolean b, final String msg) {
+        ensure(() -> b, Actions.throwArgument(msg));
+    }
+
+    public static void ensure(final BooleanSupplier test) {
+        ensure(test, Actions.THROW_ARGUMENT);
+    }
+
+    public static void ensure(final BooleanSupplier test, final String msg) {
+        ensure(test, Actions.throwArgument(msg));
+    }
+
+    public static void isPositive(final long arg) {
+        isPositive(arg, Actions.THROW_ARGUMENT);
+    }
+
+    public static void isPositive(final long arg, final String msg) {
+        isPositive(arg, Actions.throwArgument(msg));
+    }
+
+    public static void nonNull(final Object arg) {
+        nonNull(arg, Actions.THROW_ARGUMENT);
+    }
+
+    public static void nonNull(final Object arg, final String msg) {
+        nonNull(arg, Actions.throwArgument(msg));
+    }
+
+    /**
+     * checks if a collection is non null and contains at least an element
+     *
+     * @param items
+     */
+    public static void nonEmpty(final Collection<?> items) {
+        nonEmpty(items, Actions.THROW_ARGUMENT);
+    }
+
+    /**
+     * checks if a collection is non null and contains at least an element
+     *
+     * @param items
+     */
+    public static void nonEmpty(final Collection<?> items, final String msg) {
+        nonEmpty(items, Actions.throwArgument(msg));
+    }
+
+    /**
+     * checks if a string is neither null nor empty
+     *
+     * @param arg
+     */
+    public static void nonEmpty(final String arg) {
+        nonEmpty(arg, Actions.THROW_ARGUMENT);
+    }
+
+    /**
+     * checks if a string is neither null nor empty
+     *
+     * @param arg
+     * @param msg
+     */
+    public static void nonEmpty(final String arg, final String msg) {
+        nonEmpty(arg, Actions.throwArgument(msg));
+    }
+
+    public static void nonNegative(final long arg, final String msg) {
+        nonNegative(arg, Actions.throwArgument(msg));
     }
 }
