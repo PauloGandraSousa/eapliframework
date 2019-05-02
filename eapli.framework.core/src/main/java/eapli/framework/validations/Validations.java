@@ -64,7 +64,7 @@ import eapli.framework.util.Utilitarian;
     }
 
     /**
-     * checks if a List is non null and contains at least an element
+     * checks if a Collection is non null and contains at least an element
      *
      * @param items
      */

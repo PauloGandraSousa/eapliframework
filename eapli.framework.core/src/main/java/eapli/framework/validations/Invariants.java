@@ -42,7 +42,7 @@ public final class Invariants extends Validations implements Utilitarian {
         // ensure utility
     }
 
-    public static void areEqual(final int a, final int b) {
+    public static void areEqual(final long a, final long b) {
         ensure(() -> a == b);
     }
 
