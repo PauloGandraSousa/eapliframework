@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Utility functions to handle Collections.
+ *
+ * see also Apache Common Iterable Utils
+ * 
  * @author Paulo Gandra Sousa
  *
  */
@@ -37,9 +41,9 @@ public final class Collections implements Utilitarian {
     }
 
     /**
-     * returns the number of elements in an iterable. performance-wise this method
-     * is of complexity O(n) as it needs to traverse the full iterator to determine
-     * its size
+     * returns the number of elements in an iterable. performance-wise this
+     * method is of complexity O(n) as it needs to traverse the full iterator to
+     * determine its size
      *
      * @param col
      * @return
@@ -68,8 +72,8 @@ public final class Collections implements Utilitarian {
     }
 
     /**
-     * checks if a value exists in an array. performance-wise the complexity of this
-     * method is O(n)
+     * checks if a value exists in an array. performance-wise the complexity of
+     * this method is O(n)
      *
      * @param elements
      * @param x

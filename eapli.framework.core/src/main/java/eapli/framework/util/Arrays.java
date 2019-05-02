@@ -30,7 +30,7 @@ import java.util.function.IntFunction;
 import java.util.function.UnaryOperator;
 
 /**
- * utility class
+ * Utility class to handle Arrays
  *
  * @author Paulo Gandra de Sousa
  *

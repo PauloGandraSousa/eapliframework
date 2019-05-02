@@ -29,7 +29,8 @@ import eapli.framework.util.DateTime;
 import eapli.framework.util.Utilitarian;
 
 /**
- *
+ * Utility predicates handling dates
+ * 
  * @author sou03408
  *
  */

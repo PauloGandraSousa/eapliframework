@@ -85,18 +85,18 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * No-Op
+     * Nill Operation
      */
     public static void nop() {
-        // no-op
+        // do noting
     }
 
     /**
-     * No-Op
+     * Nill operation
      */
     @SuppressWarnings("squid:S1172")
     public static <T> void ignore(final T x) {
-        // no-op
+        // do noting
     }
 
     /**

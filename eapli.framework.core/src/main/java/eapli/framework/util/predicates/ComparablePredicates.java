@@ -21,15 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util;
+package eapli.framework.util.predicates;
+
+import eapli.framework.util.Utilitarian;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public final class Comparables implements Utilitarian {
+public final class ComparablePredicates implements Utilitarian {
 
-    private Comparables() {
+    private ComparablePredicates() {
         // to make sure this is an utility class
     }
 

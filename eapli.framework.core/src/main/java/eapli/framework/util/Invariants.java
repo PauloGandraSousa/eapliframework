@@ -35,11 +35,15 @@ import eapli.framework.util.predicates.NumberPredicates;
 import eapli.framework.util.predicates.StringPredicates;
 
 /**
+ * Utility class for expressing and ensuring class/method's invariants. If the
+ * invariant does not hold, an IllegalStateException is thrown
+ *
  * @author Paulo Gandra de Sousa
  *
  */
 public final class Invariants implements Utilitarian {
     private Invariants() {
+        // ensure utility
     }
 
     public static void ensure(final boolean b) {
