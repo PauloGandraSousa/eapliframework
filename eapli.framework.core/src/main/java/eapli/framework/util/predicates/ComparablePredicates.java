@@ -26,6 +26,7 @@ package eapli.framework.util.predicates;
 import eapli.framework.util.Utilitarian;
 
 /**
+ * Predicates handling Comparables
  *
  * @author Paulo Gandra Sousa
  */
