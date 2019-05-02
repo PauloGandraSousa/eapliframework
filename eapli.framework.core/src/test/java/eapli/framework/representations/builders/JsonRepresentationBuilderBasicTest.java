@@ -10,7 +10,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import eapli.framework.domain.model.general.Money;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 
 public class JsonRepresentationBuilderBasicTest {
     private JsonRepresentationBuilder subject;
@@ -186,7 +186,7 @@ public class JsonRepresentationBuilderBasicTest {
     @Test
     @Ignore // due to differences in time zones with bitbucket pipeline
     public void ensureDateProperty() {
-        final String actual = subject.startObject("Test").withProperty("name", DateTime.newCalendar(2019, 4, 23))
+        final String actual = subject.startObject("Test").withProperty("name", Calendars.of(2019, 4, 23))
                 .build();
         final String expected = "{\"name\":\"2019-04-22T23:00Z\"}";
 

@@ -23,14 +23,12 @@
  */
 package eapli.framework.util;
 
-import static eapli.framework.util.function.Functions.THROW_STATE_WITH_MESSAGE;
-import static eapli.framework.util.function.Functions.ifNotThen;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
+import eapli.framework.actions.Actions;
 import eapli.framework.util.predicates.NumberPredicates;
 import eapli.framework.util.predicates.StringPredicates;
 
@@ -55,7 +53,7 @@ public final class Invariants implements Utilitarian {
     }
 
     public static void ensure(final BooleanSupplier test, final String msg) {
-        ifNotThen(test, THROW_STATE_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwState(msg), test);
     }
 
     public static void ensure(final boolean b, final String msg) {
@@ -67,7 +65,7 @@ public final class Invariants implements Utilitarian {
     }
 
     public static void nonNull(final Object arg, final String msg) {
-        ifNotThen(arg, Objects::nonNull, THROW_STATE_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwState(msg), Objects::nonNull, arg);
     }
 
     /**
@@ -81,15 +79,15 @@ public final class Invariants implements Utilitarian {
     }
 
     public static void nonEmpty(final String arg, final String msg) {
-        ifNotThen(arg, x -> !StringPredicates.isNullOrEmpty(x), THROW_STATE_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwState(msg), x -> !StringPredicates.isNullOrEmpty(x), arg);
     }
 
     public static void isPositive(final long arg, final String msg) {
-        ifNotThen(arg, NumberPredicates::isPositive, THROW_STATE_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwState(msg), NumberPredicates::isPositive, arg);
     }
 
     public static void nonNegative(final long arg, final String msg) {
-        ifNotThen(arg, NumberPredicates::isNonNegative, THROW_STATE_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwState(msg), NumberPredicates::isNonNegative, arg);
     }
 
     public static void nonEmpty(final List<?> arg) {

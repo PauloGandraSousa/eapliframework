@@ -28,7 +28,7 @@ import java.util.UUID;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 import eapli.framework.util.Preconditions;
 
 /**
@@ -49,7 +49,7 @@ public class UserSession implements ValueObject {
 
         this.user = user;
         token = UUID.randomUUID();
-        startedOn = DateTime.now();
+        startedOn = Calendars.now();
     }
 
     public SystemUser authenticatedUser() {

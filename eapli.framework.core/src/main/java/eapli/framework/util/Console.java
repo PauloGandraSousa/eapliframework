@@ -137,7 +137,7 @@ public final class Console implements Utilitarian {
             try {
                 final String strDate = readLine(prompt);
                 final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
-                return DateTime.calendarFromDate(df.parse(strDate));
+                return Calendars.calendarFromDate(df.parse(strDate));
             } catch (final ParseException ex) {
                 // nothing to do
             }

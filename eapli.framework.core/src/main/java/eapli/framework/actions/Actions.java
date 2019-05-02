@@ -23,6 +23,9 @@
  */
 package eapli.framework.actions;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.Predicate;
+
 import eapli.framework.util.Preconditions;
 import eapli.framework.util.Utilitarian;
 
@@ -34,8 +37,75 @@ import eapli.framework.util.Utilitarian;
  */
 public final class Actions implements Utilitarian {
 
+    private abstract static class ThrowAction implements Action {
+
+        protected final String message;
+
+        public ThrowAction(final String m) {
+            message = m;
+        }
+    }
+
+    private static class ThrowStateAction extends ThrowAction {
+
+        public ThrowStateAction(final String m) {
+            super(m);
+        }
+
+        @Override
+        public boolean execute() {
+            throw new IllegalStateException(message);
+        }
+    }
+
+    private static class ThrowArgumentAction extends ThrowAction {
+
+        public ThrowArgumentAction(final String m) {
+            super(m);
+        }
+
+        @Override
+        public boolean execute() {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
     private Actions() {
         // ensure utility
+    }
+
+    /**
+     * a default action to throw IllegalArgumentException
+     */
+    public static final Action THROW_ARGUMENT = () -> {
+        throw new IllegalArgumentException();
+    };
+
+    /**
+     * a default action to throw IllegalStateException
+     */
+    public static final Action THROW_STATE = () -> {
+        throw new IllegalStateException();
+    };
+
+    /**
+     * A default action to throw IllegalStateException binded to a message
+     *
+     * @param m
+     * @return
+     */
+    public static final Action throwState(final String m) {
+        return new ThrowStateAction(m);
+    }
+
+    /**
+     * A default action to throw IllegalArgumentException binded to a message
+     *
+     * @param m
+     * @return
+     */
+    public static final Action throwArgument(final String m) {
+        return new ThrowArgumentAction(m);
     }
 
     /**
@@ -49,6 +119,46 @@ public final class Actions implements Utilitarian {
      *
      */
     public static final Action FAIL = () -> false;
+
+    /**
+     * Executes a function if a predicate is not met
+     * 
+     * @param consequence
+     * @param condition
+     * @param msg
+     */
+    public static void doIfNot(final Action consequence, final BooleanSupplier condition) {
+        if (!condition.getAsBoolean()) {
+            consequence.execute();
+        }
+    }
+
+    /**
+     * Executes a function if a predicate is not met
+     *
+     * @param consequence
+     * @param condition
+     * @param arg
+     * @param msg
+     */
+    public static <T> void doIfNot(final Action consequence, final Predicate<T> condition, final T arg) {
+        if (!condition.test(arg)) {
+            consequence.execute();
+        }
+    }
+
+    /**
+     * Executes a function if a predicate is met
+     *
+     * @param consequence
+     * @param condition
+     * @param msg
+     */
+    public static void doIf(final Action consequence, final BooleanSupplier condition) {
+        if (condition.getAsBoolean()) {
+            consequence.execute();
+        }
+    }
 
     /**
      * Executes an action n times.

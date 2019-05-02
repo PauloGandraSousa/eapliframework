@@ -30,7 +30,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 
 /**
  *
@@ -39,7 +39,7 @@ import eapli.framework.util.DateTime;
  */
 public class ClosedToInfinityTimeRangeTest {
 
-    private static final Calendar START = DateTime.newCalendar(2017, 05, 01);
+    private static final Calendar START = Calendars.of(2017, 05, 01);
     private static TimeRange INSTANCE = new TimeRange(START);
 
     @Test

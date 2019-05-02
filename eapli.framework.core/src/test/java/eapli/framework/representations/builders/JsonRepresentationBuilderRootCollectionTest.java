@@ -33,7 +33,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import eapli.framework.domain.model.general.Money;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 
 public class JsonRepresentationBuilderRootCollectionTest {
     private JsonRepresentationBuilder subject;
@@ -140,7 +140,7 @@ public class JsonRepresentationBuilderRootCollectionTest {
     @Ignore // due to differences in time zones with bitbucket pipeline
     public void ensureRootArrayWithDateElement() {
         final String expected = "[\"2019-04-22T23:00Z\"]";
-        final String actual = subject.startCollection("name").withElement(DateTime.newCalendar(2019, 4, 23))
+        final String actual = subject.startCollection("name").withElement(Calendars.of(2019, 4, 23))
                 .endCollection().build();
 
         System.out.println("ensureArrayWithDateElement");

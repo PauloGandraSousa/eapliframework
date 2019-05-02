@@ -36,7 +36,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 
 /**
  *
@@ -74,7 +74,7 @@ public class UserManagementService {
     @Transactional
     public SystemUser addUser(final String username, final String password, final String firstName,
             final String lastName, final String email, final Set<Role> roles) {
-        return addUser(username, password, firstName, lastName, email, roles, DateTime.now());
+        return addUser(username, password, firstName, lastName, email, roles, Calendars.now());
     }
 
     public Iterable<SystemUser> activeUsers() {
@@ -95,7 +95,7 @@ public class UserManagementService {
 
     @Transactional
     public SystemUser deactivateUser(final SystemUser user) {
-        user.deactivate(DateTime.now());
+        user.deactivate(Calendars.now());
         return userRepository.save(user);
     }
 }

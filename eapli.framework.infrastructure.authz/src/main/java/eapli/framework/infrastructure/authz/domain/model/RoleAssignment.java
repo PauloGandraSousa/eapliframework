@@ -34,7 +34,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.Preconditions;
 
@@ -58,7 +58,7 @@ public class RoleAssignment implements ValueObject, Serializable {
     private boolean expired;
 
     public RoleAssignment(final Role type) {
-        this(type, DateTime.now());
+        this(type, Calendars.now());
     }
 
     public Optional<Calendar> getUnassignedOn() {
@@ -118,6 +118,6 @@ public class RoleAssignment implements ValueObject, Serializable {
 
     public void unassign() {
         expired = true;
-        unassignedOn = DateTime.now();
+        unassignedOn = Calendars.now();
     }
 }

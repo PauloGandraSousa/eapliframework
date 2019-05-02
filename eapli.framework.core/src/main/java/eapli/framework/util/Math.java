@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
+ * Utility mathematical functions
  *
  * @author Paulo Gandra Sousa
  */
@@ -85,8 +86,8 @@ public final class Math implements Utilitarian {
     }
 
     /**
-     * calculates base to the power of exp as a long value instead of double from
-     * the standard Java Library
+     * calculates base to the power of exp as a long value instead of double
+     * from the standard Java Library
      *
      * @param base
      * @param exp

@@ -30,13 +30,11 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.BiFunction;
 import java.util.function.BooleanSupplier;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import eapli.framework.actions.Action;
 import eapli.framework.actions.TimedActions;
 import eapli.framework.util.Utilitarian;
 
@@ -47,32 +45,9 @@ import eapli.framework.util.Utilitarian;
  *
  */
 public final class Functions implements Utilitarian {
-
     private Functions() {
         // ensure utility
     }
-
-    /**
-     * a default action to throw IllegalArgumentException
-     */
-    public static final Action THROW_ARGUMENT = () -> {
-        throw new IllegalArgumentException();
-    };
-
-    /**
-     * a default action to throw IllegalStateException
-     */
-    public static final Action THROW_STATE = () -> {
-        throw new IllegalStateException();
-    };
-
-    public static final Consumer<String> THROW_ARGUMENT_WITH_MESSAGE = m -> {
-        throw new IllegalArgumentException(m);
-    };
-
-    public static final Consumer<String> THROW_STATE_WITH_MESSAGE = m -> {
-        throw new IllegalStateException(m);
-    };
 
     /**
      * Identity function
@@ -100,79 +75,19 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Ensures a certain condition is met. Executes the predicate on the
-     * parameter arg and if the predicate is not met, the action is executed.
+     * Gets the value of a supplier based a predicate
      *
      * @param arg
+     *            the argument to test against the predicate
      * @param condition
-     *            the invariant to validate arg
-     * @param onFail
-     * @return
-     */
-    public static <T> void ensure(final T arg, final Predicate<T> condition, final Action onFail) {
-        if (!condition.test(arg)) {
-            onFail.execute();
-        }
-    }
-
-    /**
-     * Ensures a certain condition is met. If the predicate is not met, the
-     * action is executed.
-     *
-     * @param arg
-     * @param validator
-     *            the invariant to validate arg
-     * @param onFail
-     * @return
-     */
-    public static void ensure(final BooleanSupplier condition, final Action onFail) {
-        if (!condition.getAsBoolean()) {
-            onFail.execute();
-        }
-    }
-
-    /**
-     * Executes the predicate on the parameter arg. If the predicate is not met,
-     * the action is executed passing the parameter message
-     *
-     * @param arg
-     * @param condition
-     * @param consequence
-     * @param msg
-     */
-    public static <T> void ifNotThen(final T arg, final Predicate<T> condition, final Consumer<String> consequence,
-            final String msg) {
-        if (!condition.test(arg)) {
-            consequence.accept(msg);
-        }
-    }
-
-    /**
-     * Executes the predicate and if the predicate is not met, the action is
-     * executed passing the parameter message
-     *
-     * @param arg
-     * @param validator
-     * @param consequence
-     * @param msg
-     */
-    public static void ifNotThen(final BooleanSupplier condition, final Consumer<String> consequence,
-            final String msg) {
-        if (!condition.getAsBoolean()) {
-            consequence.accept(msg);
-        }
-    }
-
-    /**
-     * Treating an If-Then-Else structure as an expression
-     *
-     * @param arg
-     * @param condition
+     *            the predicate to meet
      * @param success
+     *            the supplier in case of success of the predicate
      * @param failure
+     *            the supplier in case of insuccess of the predicate
      * @return
      */
-    public static <T, R> R ifThenElse(final T arg, final Predicate<T> condition, final Supplier<R> success,
+    public static <T, R> R getIfOrElse(final T arg, final Predicate<T> condition, final Supplier<R> success,
             final Supplier<R> failure) {
         if (condition.test(arg)) {
             return success.get();
@@ -182,7 +97,7 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Treating an If-Then-Else structure as an expression
+     * Gets the value of a supplier based on a predicate
      *
      * @param arg
      * @param test
@@ -190,7 +105,7 @@ public final class Functions implements Utilitarian {
      * @param failure
      * @return
      */
-    public static <R> R ifThenElse(final BooleanSupplier condition, final Supplier<R> success,
+    public static <R> R getIfOrElse(final BooleanSupplier condition, final Supplier<R> success,
             final Supplier<R> failure) {
         if (condition.getAsBoolean()) {
             return success.get();

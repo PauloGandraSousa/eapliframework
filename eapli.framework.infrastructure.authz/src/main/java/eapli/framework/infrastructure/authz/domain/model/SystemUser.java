@@ -44,7 +44,7 @@ import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.representations.dto.GeneralDTO;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 import eapli.framework.util.Preconditions;
 import eapli.framework.visitor.Visitable;
 import eapli.framework.visitor.Visitor;
@@ -96,7 +96,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      */
     public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
             final Set<Role> roles) {
-        this(username, password, name, email, roles, DateTime.now());
+        this(username, password, name, email, roles, Calendars.now());
     }
 
     public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
@@ -110,7 +110,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
             final RoleSet roles) {
-        this(username, password, name, email, roles, DateTime.now());
+        this(username, password, name, email, roles, Calendars.now());
     }
 
     public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,

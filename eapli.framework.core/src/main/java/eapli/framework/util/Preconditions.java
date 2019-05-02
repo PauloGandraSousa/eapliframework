@@ -23,15 +23,13 @@
  */
 package eapli.framework.util;
 
-import static eapli.framework.util.function.Functions.THROW_ARGUMENT_WITH_MESSAGE;
-import static eapli.framework.util.function.Functions.ifNotThen;
-
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
 
+import eapli.framework.actions.Actions;
 import eapli.framework.util.predicates.NumberPredicates;
 import eapli.framework.util.predicates.StringPredicates;
 
@@ -55,7 +53,7 @@ public final class Preconditions implements Utilitarian {
     }
 
     public static void ensure(final BooleanSupplier test, final String msg) {
-        ifNotThen(test, THROW_ARGUMENT_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwArgument(msg), test);
     }
 
     public static void nonNull(final Object arg) {
@@ -63,7 +61,7 @@ public final class Preconditions implements Utilitarian {
     }
 
     public static void nonNull(final Object arg, final String msg) {
-        ifNotThen(arg, Objects::nonNull, THROW_ARGUMENT_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwArgument(msg), Objects::nonNull, arg);
     }
 
     public static void nonNull(final Object... arg) {
@@ -98,7 +96,7 @@ public final class Preconditions implements Utilitarian {
      * @param msg
      */
     public static void nonEmpty(final String arg, final String msg) {
-        ifNotThen(arg, x -> !StringPredicates.isNullOrEmpty(x), THROW_ARGUMENT_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwArgument(msg), x -> !StringPredicates.isNullOrEmpty(x), arg);
     }
 
     public static void isPositive(final long arg) {
@@ -106,7 +104,7 @@ public final class Preconditions implements Utilitarian {
     }
 
     public static void isPositive(final long arg, final String msg) {
-        ifNotThen(arg, NumberPredicates::isPositive, THROW_ARGUMENT_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwArgument(msg), NumberPredicates::isPositive, arg);
     }
 
     public static void nonNegative(final long arg) {
@@ -114,7 +112,7 @@ public final class Preconditions implements Utilitarian {
     }
 
     public static void nonNegative(final long arg, final String msg) {
-        ifNotThen(arg, NumberPredicates::isNonNegative, THROW_ARGUMENT_WITH_MESSAGE, msg);
+        Actions.doIfNot(Actions.throwArgument(msg), NumberPredicates::isNonNegative, arg);
     }
 
     public static void nonEmpty(final Set<?> arg, final String msg) {
