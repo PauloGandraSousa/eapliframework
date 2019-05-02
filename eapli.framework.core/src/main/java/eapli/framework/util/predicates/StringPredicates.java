@@ -32,13 +32,15 @@ import eapli.framework.util.Utilitarian;
  * String predicates. Predicates are functions that test a condition and return
  * a boolean value. in this case the test is done over a String argument.
  *
- * the function signature is
+ *
+ * For most of the functions, the signature is:
  *
  * <pre>
  * String -> Boolean
- *
+ * 
  * <pre>
  *
+ * see also {@link org.apache.commons.lang3.StringUtils}
  *
  * @author Paulo Gandra Sousa
  *

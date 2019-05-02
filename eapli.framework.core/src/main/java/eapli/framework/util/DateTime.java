@@ -45,8 +45,12 @@ import org.apache.logging.log4j.Logger;
  * functions.
  *
  * If you are using Java 8+, you should use the Time API:
- * <li>https://docs.oracle.com/javase/tutorial/datetime/TOC.html
- * <li>https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html
+ * <li><a href=
+ * "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8
+ * Date Time Tutorial</a>
+ * <li><a href=
+ * "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
+ * Java 8 Documentation</a>
  *
  * @author Paulo Gandra Sousa
  */
