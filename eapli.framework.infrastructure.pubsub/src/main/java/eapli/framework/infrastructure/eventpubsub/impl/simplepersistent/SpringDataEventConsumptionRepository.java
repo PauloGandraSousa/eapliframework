@@ -39,11 +39,11 @@ interface SpringDataEventConsumptionRepository
         extends EventConsumptionRepository, SpringDataBaseRepository<EventConsumption, Long> {
 
     @Override
-    @Query("SELECT e FROM EventConsumption e WHERE e.id = :id")
+    @Query("SELECT e FROM #{#entityName} e WHERE e.id = :id")
     Optional<EventConsumption> ofIdentity(@Param("id") Long entityId);
 
     @Override
     @Modifying
-    @Query("DELETE FROM EventConsumption e WHERE e.id = :id")
+    @Query("DELETE FROM #{#entityName} e WHERE e.id = :id")
     void deleteOfIdentity(@Param("id") Long entityId);
 }

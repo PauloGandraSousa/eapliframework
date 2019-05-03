@@ -25,6 +25,7 @@ package eapli.framework.infrastructure.repositories.impl.springdata;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
@@ -62,11 +63,22 @@ public interface SpringDataDomainBaseRepository<K, I /* extends ValueObject */, 
 
     Iterable<T> findAll();
 
-    // TODO
-    @Query("DELETE FROM ??? e WHERE e.identity() = :id")
+    /**
+     * Each specific repository MUST implement this method and define the exact
+     * JPQL query.
+     *
+     * @param id
+     */
+    @Query("DELETE FROM #{#entityName} e WHERE e.«entity-id» = :id")
+    @Modifying
     void deleteOfIdentity(@Param("id") I id);
 
-    // TODO
-    @Query("SELECT e FROM ??? e WHERE e.identity() = :id")
+    /**
+     * Each specific repository MUST implement this method and define the exact
+     * JPQL query
+     *
+     * @param id
+     */
+    @Query("SELECT e FROM #{#entityName} e WHERE e.«entity-id» = :id")
     Optional<T> ofIdentity(@Param("id") I id);
 }

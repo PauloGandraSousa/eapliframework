@@ -43,10 +43,10 @@ public interface SpringDataUserRepository extends UserRepository, SpringDataBase
 
     @Override
     @Modifying
-    @Query("DELETE FROM SystemUser e WHERE e.username = :id")
+    @Query("DELETE FROM #{#entityName} e WHERE e.username = :id")
     void deleteOfIdentity(@Param("id") Username entityId);
 
     @Override
-    @Query("SELECT e FROM SystemUser e WHERE e.username = :id")
+    @Query("SELECT e FROM #{#entityName} e WHERE e.username = :id")
     Optional<SystemUser> ofIdentity(@Param("id") Username entityId);
 }
