@@ -64,5 +64,6 @@ public class TimeRange extends Range<Calendar> {
     }
 
     protected TimeRange() {
+        // protect against incomplete instantiation
     }
 }

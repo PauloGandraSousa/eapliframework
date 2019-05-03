@@ -124,6 +124,7 @@ public class ValidationsTest {
         final Collection<String> col = new ArrayList<>();
         col.add("abc");
         Validations.nonEmpty(col, Actions.THROW_STATE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
