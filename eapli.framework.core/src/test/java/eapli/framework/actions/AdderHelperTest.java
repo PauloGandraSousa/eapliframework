@@ -23,28 +23,30 @@
  */
 package eapli.framework.actions;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 /**
  *
  * @author sou03408
  *
  */
-class SampleAddAction implements UndoableAction {
-    private final SampleAdder target;
-    private final int lump;
+public class AdderHelperTest {
 
-    public SampleAddAction(final SampleAdder target, final int lump) {
-        this.target = target;
-        this.lump = lump;
+    private final AdderHelper instance = new AdderHelper();
+
+    @Test
+    public void testAdd10() {
+        final int expected = 10;
+        instance.add(10);
+        assertEquals(expected, instance.current());
     }
 
-    @Override
-    public boolean execute() {
-        target.add(lump);
-        return true;
-    }
-
-    @Override
-    public void undo() {
-        target.subtract(lump);
+    @Test
+    public void testSubtract10() {
+        final int expected = -10;
+        instance.subtract(10);
+        assertEquals(expected, instance.current());
     }
 }

@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package eapli.framework.actions;
 
 import static org.junit.Assert.assertEquals;
@@ -7,11 +30,14 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class ActionsTest {
+import eapli.framework.actions.AdderHelper.Add1Action;
 
-    private static class AdderHelper {
-        private int i = 0;
-    }
+/**
+ *
+ * @author sou03408
+ *
+ */
+public class ActionsTest {
 
     @Test
     public void testSucess() {
@@ -68,102 +94,78 @@ public class ActionsTest {
     @Test
     public void ensureDoIf() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
-            return true;
-        };
-        Actions.doIf(add1, () -> true);
-        assertEquals(1, helper.i);
+        Actions.doIf(new Add1Action(helper), () -> true);
+        assertEquals(1, helper.current());
     }
 
     @Test
     public void ensureDoIfDoesnotExecuteIfFalse() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
-            return true;
-        };
-        Actions.doIf(add1, () -> false);
-        assertEquals(0, helper.i);
+        Actions.doIf(new Add1Action(helper), () -> false);
+        assertEquals(0, helper.current());
     }
 
     @Test
     public void ensureDoIfNot() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
-            return true;
-        };
-        Actions.doIfNot(add1, () -> false);
-        assertEquals(1, helper.i);
+        Actions.doIfNot(new Add1Action(helper), () -> false);
+        assertEquals(1, helper.current());
     }
 
     @Test
     public void ensureDoIfNotDoesnotExecuteIfTrue() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
-            return true;
-        };
-        Actions.doIfNot(add1, () -> true);
-        assertEquals(0, helper.i);
+        Actions.doIfNot(new Add1Action(helper), () -> true);
+        assertEquals(0, helper.current());
     }
 
     @Test
     public void ensureRepeat10Times() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
-            return true;
-        };
-        Actions.repeat(add1, 10);
-
-        assertEquals(10, helper.i);
+        Actions.repeat(new Add1Action(helper), 10);
+        assertEquals(10, helper.current());
     }
 
     @Test
     public void ensureRepeat0Times() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
-            return true;
-        };
-        Actions.repeat(add1, 0);
-
-        assertEquals(0, helper.i);
+        Actions.repeat(new Add1Action(helper), 0);
+        assertEquals(0, helper.current());
     }
 
     @Test
     public void ensureRepeatMinus1Times() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
-            return true;
-        };
-        Actions.repeat(add1, -1);
+        Actions.repeat(new Add1Action(helper), -1);
+        assertEquals(0, helper.current());
+    }
 
-        assertEquals(0, helper.i);
+    @Test
+    public void ensureRetryWorksIfActionSucceeds() {
+        assertTrue(Actions.retry(Actions.SUCCESS, 10, 20));
     }
 
     @Test
     public void ensureRetryWorksAtFirst() {
-        assertTrue(Actions.retry(Actions.SUCCESS, 10, 10));
+        final AdderHelper helper = new AdderHelper();
+        final boolean result = Actions.retry(new Add1Action(helper), 10, 20);
+        assertTrue(result && helper.current() == 1);
     }
 
     @Test
-    public void ensureRetryFailsAfterNIfActionFails() {
+    public void ensureRetryFailsIfActionFails() {
         assertFalse(Actions.retry(Actions.FAIL, 10, 3));
     }
 
     @Test
-    public void ensureRetryRunsNTimes() {
+    public void ensureRetryRunsNTimesIfActionFails() {
         final AdderHelper helper = new AdderHelper();
-        final Action add1 = () -> {
-            helper.i++;
+        final Action add1AndFail = () -> {
+            helper.add1();
+            // returning false to force the retry
             return false;
         };
-        final boolean result = Actions.retry(add1, 10, 3);
-
-        assertTrue(result == false && helper.i == 3);
+        final boolean result = Actions.retry(add1AndFail, 10, 3);
+        assertTrue(!result && helper.current() == 3);
     }
 }

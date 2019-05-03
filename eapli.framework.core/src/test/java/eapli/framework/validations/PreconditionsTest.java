@@ -1,4 +1,29 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package eapli.framework.validations;
+
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,6 +32,11 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+/**
+ *
+ * @author sou03408
+ *
+ */
 public class PreconditionsTest {
 
     private static final String MESSAGE = "message";
@@ -14,6 +44,7 @@ public class PreconditionsTest {
     @Test
     public void testAreEqualLong() {
         Preconditions.areEqual(42, 42);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -24,6 +55,7 @@ public class PreconditionsTest {
     @Test
     public void testAreEqualObject() {
         Preconditions.areEqual("abc", "abc", MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -44,6 +76,7 @@ public class PreconditionsTest {
     @Test
     public void testMatches() {
         Preconditions.matches(Pattern.compile("A"), "bcdA234", MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -54,6 +87,7 @@ public class PreconditionsTest {
     @Test
     public void testEnsureBoolean() {
         Preconditions.ensure(true);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -64,6 +98,7 @@ public class PreconditionsTest {
     @Test
     public void testEnsureBooleanSupplier() {
         Preconditions.ensure(() -> true);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -74,6 +109,7 @@ public class PreconditionsTest {
     @Test
     public void testEnsureBooleanSupplierString() {
         Preconditions.ensure(() -> true, MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -84,6 +120,7 @@ public class PreconditionsTest {
     @Test
     public void testEnsureBooleanString() {
         Preconditions.ensure(true, MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -94,6 +131,7 @@ public class PreconditionsTest {
     @Test
     public void testNonNullObject() {
         Preconditions.nonNull("abc");
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -105,6 +143,7 @@ public class PreconditionsTest {
     @Test
     public void testNonNullObjectString() {
         Preconditions.nonNull("abc", MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -116,6 +155,7 @@ public class PreconditionsTest {
     @Test
     public void testNonNullObjectArray() {
         Preconditions.nonNull("abc", Integer.valueOf(42), BigDecimal.ONE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -128,6 +168,7 @@ public class PreconditionsTest {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
         Preconditions.nonEmpty(items);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -147,6 +188,7 @@ public class PreconditionsTest {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
         Preconditions.nonEmpty(items, MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -164,6 +206,7 @@ public class PreconditionsTest {
     @Test
     public void testNonEmptyString() {
         Preconditions.nonEmpty("abc");
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -185,6 +228,7 @@ public class PreconditionsTest {
     @Test
     public void testNonEmptyStringString() {
         Preconditions.nonEmpty("abc", MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -206,6 +250,7 @@ public class PreconditionsTest {
     @Test
     public void testIsPositiveLong() {
         Preconditions.isPositive(42);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -221,6 +266,7 @@ public class PreconditionsTest {
     @Test
     public void testIsPositiveLongString() {
         Preconditions.isPositive(42, MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -236,11 +282,13 @@ public class PreconditionsTest {
     @Test
     public void testNonNegativeLong() {
         Preconditions.nonNegative(42);
+        assertTrue(true);
     }
 
     @Test
     public void testNonNegativeLong0() {
         Preconditions.nonNegative(0);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -251,11 +299,13 @@ public class PreconditionsTest {
     @Test
     public void testNonNegativeLongString() {
         Preconditions.nonNegative(42, MESSAGE);
+        assertTrue(true);
     }
 
     @Test
     public void testNonNegativeLongString0() {
         Preconditions.nonNegative(0, MESSAGE);
+        assertTrue(true);
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -24,17 +24,57 @@
 package eapli.framework.actions;
 
 /**
- * very simple sample class for the use of actions
+ * very simple sample class to test the use of actions
  *
  * @author Paulo Gandra de Sousa
  *
  */
-class SampleAdder {
+class AdderHelper {
+
+    static class Add1Action implements Action {
+        private final AdderHelper target;
+
+        public Add1Action(final AdderHelper target) {
+            this.target = target;
+        }
+
+        @Override
+        public boolean execute() {
+            target.add1();
+            return true;
+        }
+    }
+
+    static class AddAction implements UndoableAction {
+        private final AdderHelper target;
+        private final int lump;
+
+        public AddAction(final AdderHelper target, final int lump) {
+            this.target = target;
+            this.lump = lump;
+        }
+
+        @Override
+        public boolean execute() {
+            target.add(lump);
+            return true;
+        }
+
+        @Override
+        public void undo() {
+            target.subtract(lump);
+        }
+    }
 
     private int current;
 
     public int add(final int x) {
         current += x;
+        return current();
+    }
+
+    public int add1() {
+        current++;
         return current();
     }
 
