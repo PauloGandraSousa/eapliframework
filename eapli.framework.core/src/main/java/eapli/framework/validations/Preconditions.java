@@ -49,16 +49,16 @@ public final class Preconditions extends Validations implements Utilitarian {
         nonNegative(arg, Actions.THROW_ARGUMENT);
     }
 
-    public static void areEqual(final int a, final int b) {
-        ensure(() -> a == b);
+    public static void areEqual(final long a, final long b) {
+        areEqual(a, b, Actions.THROW_ARGUMENT);
     }
 
     public static void areEqual(final Object a, final Object b, final String msg) {
-        ensure(() -> a.equals(b), msg);
+        areEqual(a, b, Actions.throwArgument(msg));
     }
 
     public static void matches(final Pattern regex, final String arg, final String msg) {
-        ensure(() -> regex.matcher(arg).find(), msg);
+        matches(regex, arg, Actions.throwArgument(msg));
     }
 
     public static void ensure(final boolean b) {

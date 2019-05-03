@@ -2,12 +2,53 @@ package eapli.framework.validations;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
 import eapli.framework.actions.Actions;
 
 public class ValidationsTest {
+
+    @Test
+    public void testAreEqualLongDoesNothingIfTrue() {
+        Validations.areEqual(42, 42, Actions.THROW_STATE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAreEqualLongFail() {
+        Validations.areEqual(42, 24, Actions.THROW_STATE);
+    }
+
+    @Test
+    public void testAreEqualObjectDoesNothingIfTrue() {
+        Validations.areEqual("abc", "abc", Actions.THROW_STATE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAreEqualObjectFail() {
+        Validations.areEqual("abc", "xpto", Actions.THROW_STATE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAreEqualObjectFailOn1Null() {
+        Validations.areEqual(null, "xpto", Actions.THROW_STATE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAreEqualObjectFailOn2Null() {
+        Validations.areEqual("abc", null, Actions.THROW_STATE);
+    }
+
+    @Test
+    public void testMatchesDoNothingIfTrue() {
+        Validations.matches(Pattern.compile("A"), "bcdA234", Actions.THROW_STATE);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testMatchesDoesSomethingIfFalse() {
+        Validations.matches(Pattern.compile("x"), "bcdA234", Actions.THROW_STATE);
+    }
 
     @Test
     public void testEnsureDoesNothingIfTrue() {
@@ -76,7 +117,7 @@ public class ValidationsTest {
         Validations.nonEmpty("", Actions.THROW_STATE);
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testNonEmptyStringDoesSomethingIfEmpty2() {
         Validations.nonEmpty("  ", Actions.THROW_STATE);
     }

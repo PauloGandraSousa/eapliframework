@@ -37,7 +37,7 @@ import eapli.framework.util.Utilitarian;
  *
  * <pre>
  * String -> Boolean
- * 
+ *
  * <pre>
  *
  * see also {@link org.apache.commons.lang3.StringUtils}
@@ -112,7 +112,7 @@ public final class StringPredicates implements Utilitarian {
      * @return
      */
     public static boolean isNullOrWhiteSpace(final String text) {
-        return text == null || text.trim().isEmpty();
+        return isNullOrEmpty(text) || text.trim().isEmpty();
     }
 
     /**

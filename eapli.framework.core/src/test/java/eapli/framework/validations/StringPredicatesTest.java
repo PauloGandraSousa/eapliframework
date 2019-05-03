@@ -23,13 +23,10 @@
  */
 package eapli.framework.validations;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
-import eapli.framework.validations.StringPredicates;
 
 /**
  *
@@ -41,72 +38,63 @@ public class StringPredicatesTest {
     public void ensureStringWithContentIsNotNullNorEmpty() {
         System.out.println("string with content is not isNullOrEmpty");
         final String text = "abcdef";
-        final boolean expResult = false;
-        final boolean result = StringPredicates.isNullOrEmpty(text);
-        assertEquals(expResult, result);
+        assertFalse(StringPredicates.isNullOrEmpty(text));
     }
 
     @Test
     public void ensureNullIsNullOrEmpty() {
         System.out.println("null isNullOrEmpty");
         final String text = null;
-        final boolean expResult = true;
-        final boolean result = StringPredicates.isNullOrEmpty(text);
-        assertEquals(expResult, result);
+        assertTrue(StringPredicates.isNullOrEmpty(text));
     }
 
     @Test
     public void ensureEmptyStringIsNullOrEmpty() {
         System.out.println("empty string isNullOrEmpty");
         final String text = "";
-        final boolean expResult = true;
-        final boolean result = StringPredicates.isNullOrEmpty(text);
-        assertEquals(expResult, result);
+        assertTrue(StringPredicates.isNullOrEmpty(text));
+    }
+
+    @Test
+    public void ensureWhiteSpaceStringIsNotEmpty() {
+        System.out.println("empty string isNullOrEmpty");
+        final String text = "   ";
+        assertFalse(StringPredicates.isNullOrEmpty(text));
     }
 
     @Test
     public void testContainsDigitSingleChar() {
         System.out.println("ContainsDigit single char");
         final String text = "1";
-        final boolean expResult = true;
-        final boolean result = StringPredicates.containsDigit(text);
-        assertEquals(expResult, result);
+        assertTrue(StringPredicates.containsDigit(text));
     }
 
     @Test
     public void testContainsDigitInTheMiddle() {
         System.out.println("ContainsDigit in the middle");
         final String text = "ab1cd";
-        final boolean expResult = true;
-        final boolean result = StringPredicates.containsDigit(text);
-        assertEquals(expResult, result);
+        assertTrue(StringPredicates.containsDigit(text));
     }
 
     @Test
     public void testContainsDigitInTheBegining() {
         System.out.println("ContainsDigit in the begining");
         final String text = "1cd";
-        final boolean expResult = true;
-        final boolean result = StringPredicates.containsDigit(text);
-        assertEquals(expResult, result);
+        assertTrue(StringPredicates.containsDigit(text));
     }
 
     @Test
     public void testContainsDigitInTheEnd() {
         System.out.println("ContainsDigit in the end");
         final String text = "ad1";
-        final boolean expResult = true;
-        final boolean result = StringPredicates.containsDigit(text);
-        assertEquals(expResult, result);
+        assertTrue(StringPredicates.containsDigit(text));
     }
 
     @Test
     public void ensureContainsDigitDetectsNonDigit() {
         System.out.println("ContainsDigit without digits");
         final String text = "dd";
-        final boolean expResult = false;
-        final boolean result = StringPredicates.containsDigit(text);
-        assertEquals(expResult, result);
+        assertFalse(StringPredicates.containsDigit(text));
     }
 
     private static final String TEST_STRING = "1234567890";

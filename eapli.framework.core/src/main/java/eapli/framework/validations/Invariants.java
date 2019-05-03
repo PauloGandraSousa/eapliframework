@@ -43,15 +43,15 @@ public final class Invariants extends Validations implements Utilitarian {
     }
 
     public static void areEqual(final long a, final long b) {
-        ensure(() -> a == b);
+        areEqual(a, b, Actions.THROW_STATE);
     }
 
     public static void areEqual(final Object a, final Object b, final String msg) {
-        ensure(() -> a.equals(b), msg);
+        areEqual(a, b, Actions.throwState(msg));
     }
 
     public static void matches(final Pattern regex, final String arg, final String msg) {
-        ensure(() -> regex.matcher(arg).find(), msg);
+        matches(regex, arg, Actions.throwState(msg));
     }
 
     public static void ensure(final boolean b) {

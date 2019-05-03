@@ -26,6 +26,7 @@ package eapli.framework.validations;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
+import java.util.regex.Pattern;
 
 import eapli.framework.actions.Action;
 import eapli.framework.actions.Actions;
@@ -40,6 +41,18 @@ import eapli.framework.util.Utilitarian;
 /* package */ class Validations implements Utilitarian {
     protected Validations() {
         // ensure utility
+    }
+
+    public static void areEqual(final long a, final long b, final Action consequence) {
+        ensure(() -> a == b, consequence);
+    }
+
+    public static void areEqual(final Object a, final Object b, final Action consequence) {
+        ensure(() -> Objects.equals(a, b), consequence);
+    }
+
+    public static void matches(final Pattern regex, final String arg, final Action consequence) {
+        ensure(() -> regex.matcher(arg).find(), consequence);
     }
 
     /**
@@ -73,12 +86,12 @@ import eapli.framework.util.Utilitarian;
     }
 
     /**
-     * checks if a string is neither null nor empty
+     * checks if a string is neither null nor empty nor just white space
      *
      * @param arg
      */
     public static void nonEmpty(final String arg, final Action consequence) {
-        Actions.doIfNot(consequence, x -> !StringPredicates.isNullOrEmpty(x), arg);
+        Actions.doIfNot(consequence, x -> !StringPredicates.isNullOrWhiteSpace(x), arg);
     }
 
     public static void isPositive(final long arg, final Action consequence) {
