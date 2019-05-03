@@ -42,42 +42,125 @@ public final class Invariants extends Validations implements Utilitarian {
         // ensure utility
     }
 
+    /**
+     * ensures two values are equal
+     *
+     * @param a
+     * @param b
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void areEqual(final long a, final long b) {
         areEqual(a, b, Actions.THROW_STATE);
     }
 
+    /**
+     * ensures two objects are equal
+     *
+     * @param a
+     * @param b
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void areEqual(final Object a, final Object b, final String msg) {
         areEqual(a, b, Actions.throwState(msg));
     }
 
+    /**
+     * ensures a string matches a regular expression
+     *
+     * @param regex
+     * @param arg
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void matches(final Pattern regex, final String arg, final String msg) {
         matches(regex, arg, Actions.throwState(msg));
     }
 
+    /**
+     * asserts true
+     *
+     * @param b
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void ensure(final boolean b) {
         ensure(() -> b, Actions.THROW_STATE);
     }
 
+    /**
+     * asserts true
+     *
+     * @param test
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void ensure(final BooleanSupplier test) {
         ensure(test, Actions.THROW_STATE);
     }
 
+    /**
+     * asserts true
+     *
+     * @param test
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void ensure(final BooleanSupplier test, final String msg) {
         ensure(test, Actions.throwState(msg));
     }
 
+    /**
+     * asserts true
+     *
+     * @param b
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void ensure(final boolean b, final String msg) {
         ensure(() -> b, Actions.throwState(msg));
     }
 
+    /**
+     * ensures an object reference is not null
+     *
+     * @param arg
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void nonNull(final Object arg) {
         nonNull(arg, Actions.THROW_STATE);
     }
 
+    /**
+     * ensures an object reference is not null
+     *
+     * @param arg
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void nonNull(final Object arg, final String msg) {
         nonNull(arg, Actions.throwState(msg));
     }
 
+    /**
+     * ensures all object references are not null
+     *
+     * @param arg
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void nonNull(final Object... arg) {
         nonNull(Actions.THROW_STATE, arg);
     }
@@ -86,15 +169,21 @@ public final class Invariants extends Validations implements Utilitarian {
      * checks if a collection is non null and contains at least an element
      *
      * @param items
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items) {
         nonEmpty(items, Actions.THROW_STATE);
     }
 
     /**
-     * checks if a collection is non null and contains at least an element
+     * ensures a collection is non null and contains at least an element
      *
      * @param items
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items, final String msg) {
         nonEmpty(items, Actions.throwState(msg));
@@ -104,6 +193,8 @@ public final class Invariants extends Validations implements Utilitarian {
      * asserts that a string is neither null nor empty
      *
      * @param arg
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg) {
         nonEmpty(arg, Actions.THROW_STATE);
@@ -113,23 +204,59 @@ public final class Invariants extends Validations implements Utilitarian {
      * asserts that a string is neither null nor empty
      *
      * @param arg
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg, final String msg) {
         nonEmpty(arg, Actions.throwState(msg));
     }
 
+    /**
+     * ensures a value is positive
+     *
+     * @param arg
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void isPositive(final long arg) {
         isPositive(arg, Actions.THROW_STATE);
     }
 
+    /**
+     * ensures a value is positive
+     *
+     * @param arg
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void isPositive(final long arg, final String msg) {
         isPositive(arg, Actions.throwState(msg));
     }
 
+    /**
+     * ensures a value is non negative
+     *
+     * @param arg
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void nonNegative(final long arg) {
         nonNegative(arg, Actions.THROW_STATE);
     }
 
+    /**
+     * ensures a value is non negative
+     *
+     * @param arg
+     * @param msg
+     *            the message text to include in the throw exception
+     * @throws IllegalStateException
+     *             if the assertion is unfulfilled
+     */
     public static void nonNegative(final long arg, final String msg) {
         nonNegative(arg, Actions.throwState(msg));
     }

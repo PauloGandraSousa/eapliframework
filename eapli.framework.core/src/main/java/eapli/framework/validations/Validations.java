@@ -33,7 +33,7 @@ import eapli.framework.actions.Actions;
 import eapli.framework.util.Utilitarian;
 
 /**
- * Utility class for validations
+ * Utility class for execution actions based on validations
  *
  * @author Paulo Gandra de Sousa
  *
@@ -43,20 +43,42 @@ import eapli.framework.util.Utilitarian;
         // ensure utility
     }
 
+    /**
+     * checks if two values are equal and if not performs the specified action
+     *
+     * @param a
+     * @param b
+     * @param consequence
+     */
     public static void areEqual(final long a, final long b, final Action consequence) {
         ensure(() -> a == b, consequence);
     }
 
+    /**
+     * checks if two objects are equal and if not performs the specified action
+     *
+     * @param a
+     * @param b
+     * @param consequence
+     */
     public static void areEqual(final Object a, final Object b, final Action consequence) {
         ensure(() -> Objects.equals(a, b), consequence);
     }
 
+    /**
+     * checks if a string matches a regular expression
+     *
+     * @param regex
+     * @param arg
+     * @param consequence
+     */
     public static void matches(final Pattern regex, final String arg, final Action consequence) {
         ensure(() -> regex.matcher(arg).find(), consequence);
     }
 
     /**
-     * asserts true
+     * asserts the "trueness" of a function's result. if the function result is
+     * not true then the specified action is performed
      *
      * @param b
      */
@@ -94,10 +116,22 @@ import eapli.framework.util.Utilitarian;
         Actions.doIfNot(consequence, x -> !StringPredicates.isNullOrWhiteSpace(x), arg);
     }
 
+    /**
+     * checks if a value is positive
+     *
+     * @param arg
+     * @param consequence
+     */
     public static void isPositive(final long arg, final Action consequence) {
         Actions.doIfNot(consequence, NumberPredicates::isPositive, arg);
     }
 
+    /**
+     * checks if a value is non negative
+     *
+     * @param arg
+     * @param consequence
+     */
     public static void nonNegative(final long arg, final Action consequence) {
         Actions.doIfNot(consequence, NumberPredicates::isNonNegative, arg);
     }
