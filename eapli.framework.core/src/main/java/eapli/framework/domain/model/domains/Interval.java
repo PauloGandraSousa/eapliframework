@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
 import java.io.Serializable;
 
@@ -38,7 +38,7 @@ import eapli.framework.util.Invariants;
  * @param <T>
  */
 @Embeddable
-public class Range<T extends Serializable & Comparable<T>> implements ValueObject {
+public class Interval<T extends Serializable & Comparable<T>> implements ValueObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,7 +59,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @param <R>
      */
     public static class RangeBuilder<R extends Comparable<R> & Serializable>
-            implements Factory<Range<R>> {
+            implements Factory<Interval<R>> {
         private final R start;
         private R end;
         private final BoundaryLimitType startBoundary;
@@ -97,12 +97,12 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
         }
 
         @Override
-        public Range<R> build() {
-            return new Range<>(this.start, this.startBoundary, this.end, this.endBoundary);
+        public Interval<R> build() {
+            return new Interval<>(this.start, this.startBoundary, this.end, this.endBoundary);
         }
     }
 
-    protected Range() {
+    protected Interval() {
         // for ORM
         start = end = null;
         endBoundary = startBoundary = null;
@@ -116,7 +116,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      *            constructors
      */
     @SuppressWarnings("squid:S1172")
-    private Range(final boolean b) {
+    private Interval(final boolean b) {
         start = end = null;
         endBoundary = startBoundary = null;
     }
@@ -133,7 +133,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @param endBoundary
      *            indicates if the range is open or closed at the end anchor
      */
-    protected Range(final T start, final BoundaryLimitType startBoundary, final T end,
+    protected Interval(final T start, final BoundaryLimitType startBoundary, final T end,
             final BoundaryLimitType endBoundary) {
         if ((start == null && startBoundary != BoundaryLimitType.INFINITY)
                 || (end == null && endBoundary != BoundaryLimitType.INFINITY)) {
@@ -185,7 +185,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
     }
 
     @SuppressWarnings("rawtypes")
-    private static final Range EMPTY = new Range(true);
+    private static final Interval EMPTY = new Interval(true);
 
     /**
      * returns an empty range
@@ -193,7 +193,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Comparable<T> & Serializable> Range<T> empty() {
+    public static <T extends Comparable<T> & Serializable> Interval<T> empty() {
         return EMPTY;
     }
 
@@ -275,7 +275,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @param other
      * @return
      */
-    public boolean intersects(final Range<T> other) {
+    public boolean intersects(final Interval<T> other) {
         return !this.intersection(other).equals(empty());
     }
 
@@ -286,7 +286,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @param other
      * @return
      */
-    public Range<T> intersection(final Range<T> other) {
+    public Interval<T> intersection(final Interval<T> other) {
         throw new UnsupportedOperationException("Not yet developed");
     }
 
@@ -298,8 +298,8 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @param other
      * @return
      */
-    public Range<T> withStart(final T newStart) {
-        return new Range<>(newStart, this.startBoundary, this.end, this.endBoundary);
+    public Interval<T> withStart(final T newStart) {
+        return new Interval<>(newStart, this.startBoundary, this.end, this.endBoundary);
     }
 
     /**
@@ -310,8 +310,8 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @param other
      * @return
      */
-    public Range<T> withEnd(final T newEnd) {
-        return new Range<>(this.start, this.startBoundary, newEnd, this.endBoundary);
+    public Interval<T> withEnd(final T newEnd) {
+        return new Interval<>(this.start, this.startBoundary, newEnd, this.endBoundary);
     }
 
     /**
@@ -343,7 +343,7 @@ public class Range<T extends Serializable & Comparable<T>> implements ValueObjec
      * @param other
      * @return
      */
-    public boolean overlaps(final Range<T> other) {
+    public boolean overlaps(final Interval<T> other) {
         throw new UnsupportedOperationException("Not yet developed");
     }
 

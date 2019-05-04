@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -29,22 +29,24 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eapli.framework.domain.model.domains.Interval;
+
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class RangeTest extends AbstractRangeTest {
+public class IntervalTest extends AbstractIntervalTest {
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Range");
-        instance = Range.openFrom(START).openTo(END).build();
+        instance = Interval.openFrom(START).openTo(END).build();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureStartBiggerThanEndIsNotAllowed() {
         System.out.println("ensureStartBiggerThanEndIsNotAllowed");
-        Range.openFrom(END).openTo(START).build();
+        Interval.openFrom(END).openTo(START).build();
     }
 
     @Test
@@ -74,7 +76,7 @@ public class RangeTest extends AbstractRangeTest {
     @Test(expected = IllegalArgumentException.class)
     public void ensureEmptyRangeIsNotAllowed() {
         System.out.println("ensureEmptyRangeIsNotAllowed");
-        Range.openFrom(START).openTo(START).build();
+        Interval.openFrom(START).openTo(START).build();
     }
 
     @Test

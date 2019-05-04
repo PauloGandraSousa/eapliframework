@@ -23,46 +23,48 @@
  */
 package eapli.framework.domain.model.time;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Calendar;
 
-import eapli.framework.domain.model.range.Range;
+import org.junit.Test;
+
+import eapli.framework.util.DateTime;
 
 /**
- * A concrete range for Calendars.
  *
- * A time range is either a closed interval between time A and time B or a
- * closed interval starting at time A <i>ad infinitum<i>
- *
- * since this class inherits from a generic it cannot control how Calendar
- * objects will be persisted with JPA. see TimeInterval and DateInterval
- *
- * @author Paulo Gandra Sousa
+ * @author sou03408
  *
  */
-public class TimeRange extends Range<Calendar> {
+public class ClosedToInfinityTimeIntervalTest {
 
-    private static final long serialVersionUID = 1L;
+    private static final Calendar START = DateTime.newCalendar(2017, 05, 01);
+    private static TimeInterval INSTANCE = new TimeInterval(START);
 
-    /**
-     * creates a closed time interval on both ends
-     *
-     * @param begin
-     * @param end
-     */
-    public TimeRange(final Calendar begin, final Calendar end) {
-        super(begin, BoundaryLimitType.CLOSED, end, BoundaryLimitType.CLOSED);
+    @Test
+    public void ensureIncludesStart() {
+        assertTrue("Start is not included", INSTANCE.includes(START));
     }
 
-    /**
-     * creates a time interval from begin until "infinity"
-     *
-     * @param begin
-     * @param end
-     */
-    public TimeRange(final Calendar begin) {
-        super(begin, BoundaryLimitType.CLOSED, null, BoundaryLimitType.INFINITY);
+    @Test
+    public void ensureIncludesMid() {
+        final Calendar mid = (Calendar) START.clone();
+        mid.add(Calendar.DATE, 2);
+        assertTrue("Mid is not included", INSTANCE.includes(mid));
     }
 
-    protected TimeRange() {
+    @Test
+    public void ensureIncludesInTheFuture() {
+        final Calendar mid = (Calendar) START.clone();
+        mid.add(Calendar.YEAR, 2000);
+        assertTrue("Mid is not included", INSTANCE.includes(mid));
+    }
+
+    @Test
+    public void ensureDoesntIncludeBeforeStart() {
+        final Calendar before = (Calendar) START.clone();
+        before.add(Calendar.DATE, -2);
+        assertFalse("Mid is not included", INSTANCE.includes(before));
     }
 }

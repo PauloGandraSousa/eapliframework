@@ -21,46 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import eapli.framework.domain.model.domains.Interval;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class ClosedRangeTest extends AbstractRangeTest {
+public class ExtendedIntervalTest extends AbstractIntervalTest {
 
-    @BeforeClass
-    public static void setUpClass() {
-        System.out.println("closedRange");
-        instance = Range.closedFrom(START).closedTo(END).build();
+    private static final Long NEW_START = END + 2;
+    private static final Long NEW_END = START - 2;
+
+    public ExtendedIntervalTest() {
     }
 
-    @Test
-    public void ensureStartIsInRange() {
-        System.out.println("ensureStartIsInRange");
-        final Long target = new Long(START_VALUE);
-        final boolean result = instance.includes(target);
-        assertTrue("start must be part of a closed range", result);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureNewStartCannotBeAfterEnd() {
+        instance = Interval.closedFrom(START).closedTo(END).build().withStart(NEW_START);
     }
 
-    @Test
-    public void ensureEndIsInRange() {
-        System.out.println("ensureEndIsInRange");
-        final Long target = new Long(END_VALUE);
-        final boolean result = instance.includes(target);
-        assertTrue("end must be part of a closed range", result);
-    }
-
-    @Test
-    public void ensureStringRepresentationIsOk() {
-        final String expected = "[" + START + ", " + END + "]";
-        final String actual = instance.toString();
-        assertEquals(expected, actual);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureNewEndCannotBeBeforeStart() {
+        instance = Interval.closedFrom(START).closedTo(END).build().withEnd(NEW_END);
     }
 }

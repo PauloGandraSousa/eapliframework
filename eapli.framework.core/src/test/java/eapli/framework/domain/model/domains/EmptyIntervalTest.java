@@ -21,50 +21,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.time;
+package eapli.framework.domain.model.domains;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
+import java.util.stream.LongStream;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.util.DateTime;
+import eapli.framework.domain.model.domains.Interval;
 
 /**
  *
- * @author sou03408
- *
+ * @author Paulo Gandra Sousa
  */
-public class ClosedToInfinityTimeRangeTest {
+public class EmptyIntervalTest extends AbstractIntervalTest {
 
-    private static final Calendar START = DateTime.newCalendar(2017, 05, 01);
-    private static TimeRange INSTANCE = new TimeRange(START);
-
-    @Test
-    public void ensureIncludesStart() {
-        assertTrue("Start is not included", INSTANCE.includes(START));
+    @BeforeClass
+    public static void setUpClass() {
+        System.out.println("EmptyRange");
+        instance = Interval.empty();
     }
 
     @Test
-    public void ensureIncludesMid() {
-        final Calendar mid = (Calendar) START.clone();
-        mid.add(Calendar.DATE, 2);
-        assertTrue("Mid is not included", INSTANCE.includes(mid));
+    public void ensureIsEmpty() {
+        assertTrue(instance.isEmpty());
     }
 
     @Test
-    public void ensureIncludesInTheFuture() {
-        final Calendar mid = (Calendar) START.clone();
-        mid.add(Calendar.YEAR, 2000);
-        assertTrue("Mid is not included", INSTANCE.includes(mid));
+    public void ensureDoesNotInclude() {
+        final boolean result = LongStream.range(START_VALUE * -2L, END_VALUE * -2L)
+                .noneMatch(x -> instance.includes(x));
+        assertTrue(result);
     }
 
     @Test
-    public void ensureDoesntIncludeBeforeStart() {
-        final Calendar before = (Calendar) START.clone();
-        before.add(Calendar.DATE, -2);
-        assertFalse("Mid is not included", INSTANCE.includes(before));
+    public void ensureNotFromInfinity() {
+        assertFalse(instance.isFromInfinity());
+    }
+
+    @Test
+    public void ensureNotToInfinity() {
+        assertFalse(instance.isToInfinity());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void ensureStart() {
+        instance.start();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void ensureEnd() {
+        instance.end();
+    }
+
+    @Test
+    public void ensureStringRepresentationIsOk() {
+        final String expected = "[]";
+        final String actual = instance.toString();
+        assertEquals(expected, actual);
     }
 }

@@ -21,47 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
-import eapli.framework.util.Factory;
-import eapli.framework.util.Preconditions;
+import eapli.framework.domain.model.domains.Interval;
 
 /**
+ * base class for testing Range
  *
- * @author Paulo Gandra de Sousa
- *
- * @param <T>
+ * @author Paulo Gandra Sousa
  */
-public class DiscreteDomainBuilder<T extends Serializable> implements Factory<DiscreteDomain<T>> {
-    private final Set<T> from = new HashSet<>();
+@SuppressWarnings("squid:S2187")
+public class AbstractIntervalTest {
 
-    public DiscreteDomainBuilder<T> add(final T e) {
-        Preconditions.nonNull(e);
+    protected static final Long START_VALUE = 5L;
+    protected static final Long DELTA_VALUE = 5L;
+    protected static final Long END_VALUE = START_VALUE + DELTA_VALUE;
 
-        from.add(e);
-        return this;
-    }
+    protected static final Long START = START_VALUE;
+    protected static final Long END = END_VALUE;
 
-    public DiscreteDomainBuilder<T> add(final T... elements) {
-        for (final T e : elements) {
-            from.add(e);
-        }
-        return this;
-    }
-
-    public DiscreteDomainBuilder<T> forget(final T e) {
-        Preconditions.nonNull(e);
-
-        from.remove(e);
-        return this;
-    }
-
-    @Override
-    public DiscreteDomain<T> build() {
-        return new DiscreteDomain<>(from);
-    }
+    protected static Interval<Long> instance;
 }
