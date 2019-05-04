@@ -64,5 +64,6 @@ public class TimeInterval extends Interval<Calendar> {
     }
 
     protected TimeInterval() {
+        // ensure no instantion of incomplete object
     }
 }
