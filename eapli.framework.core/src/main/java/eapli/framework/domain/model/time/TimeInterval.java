@@ -28,14 +28,14 @@ import java.util.Calendar;
 import eapli.framework.domain.model.domains.Interval;
 
 /**
- * A concrete range for Calendars.
+ * A concrete interval for Calendars.
  *
- * A time range is either a closed interval between time A and time B or a
+ * A time interval is either a closed interval between time A and time B or a
  * closed interval starting at time A <i>ad infinitum<i>
  *
  * since this class inherits from a generic it cannot control how Calendar
  * objects will be persisted with JPA. see {@link TimestampInterval} and
- * {@link DateInterval}
+ * {@link DateInterval} for persistent alternatives
  *
  * @author Paulo Gandra Sousa
  *

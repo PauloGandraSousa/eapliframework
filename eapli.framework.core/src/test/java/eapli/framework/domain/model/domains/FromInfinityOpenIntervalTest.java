@@ -41,7 +41,7 @@ public class FromInfinityOpenIntervalTest extends AbstractIntervalTest {
     @BeforeClass
     public static void setUpClass() {
         System.out.println("FromInfinityOpenRangeTest");
-        final Interval.RangeBuilder<Long> b = Interval.fromInfinity();
+        final Interval.IntervalBuilder<Long> b = Interval.fromInfinity();
         instance = b.openTo(END).build();
     }
 
