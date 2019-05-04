@@ -30,18 +30,20 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.actions.AdderHelper.AddAction;
+
 /**
  * @author Paulo Gandra de Sousa
  *
  */
 public class ActionHistoryKeeperTest {
 
-    private SampleAdder subject;
+    private AdderHelper subject;
     private ActionHistoryKeeper instance;
 
     @Before
     public void setUp() {
-        subject = new SampleAdder();
+        subject = new AdderHelper();
         instance = new ActionHistoryKeeper();
     }
 
@@ -52,7 +54,7 @@ public class ActionHistoryKeeperTest {
 
     @Test
     public void ensureCanUndoIfThereWereActions() {
-        final SampleAddAction action = new SampleAddAction(subject, 5);
+        final AddAction action = new AddAction(subject, 5);
         instance.execute(action);
         assertTrue(instance.canUndo());
     }
@@ -64,7 +66,7 @@ public class ActionHistoryKeeperTest {
 
     @Test
     public void ensureCanRedoIfThereWereUndos() {
-        final SampleAddAction action = new SampleAddAction(subject, 5);
+        final AddAction action = new AddAction(subject, 5);
         instance.execute(action);
         instance.undo();
         assertTrue(instance.canRedo());
@@ -73,15 +75,15 @@ public class ActionHistoryKeeperTest {
     @Test
     public void testDoUndo() {
         // DO
-        SampleAddAction action = new SampleAddAction(subject, 2);
+        AddAction action = new AddAction(subject, 2);
         instance.execute(action);
         assert subject.current() == 2;
 
-        action = new SampleAddAction(subject, 4);
+        action = new AddAction(subject, 4);
         instance.execute(action);
         assert subject.current() == 6;
 
-        action = new SampleAddAction(subject, 8);
+        action = new AddAction(subject, 8);
         instance.execute(action);
         assert subject.current() == 14;
 

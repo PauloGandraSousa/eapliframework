@@ -31,7 +31,7 @@ import eapli.framework.domain.model.general.Description;
 import eapli.framework.domain.model.general.Designation;
 import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.domain.model.general.Money;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 import eapli.framework.util.Factory;
 
 /**
@@ -223,7 +223,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
      * @return this builder instance
      */
     default RepresentationBuilder<T> withElement(final Calendar value) {
-        return withElement(DateTime.iso8601(value));
+        return withElement(Calendars.iso8601(value));
     }
 
     /**
@@ -401,7 +401,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
      * @return this builder instance
      */
     default RepresentationBuilder<T> withProperty(final String name, final Calendar value) {
-        return withProperty(name, DateTime.iso8601(value));
+        return withProperty(name, Calendars.iso8601(value));
     }
 
     /**

@@ -40,7 +40,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * a set of roles.

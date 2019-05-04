@@ -35,8 +35,8 @@ import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.EventHandler;
 import eapli.framework.infrastructure.eventpubsub.EventPublisher;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.Singleton;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A simple global event dispatcher to be used for in-process event dispatching.

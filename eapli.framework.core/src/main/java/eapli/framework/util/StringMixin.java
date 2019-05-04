@@ -24,7 +24,7 @@
 package eapli.framework.util;
 
 /**
- * a Mixin for adding common functionality to objects that can be thought of as
+ * A Mixin for adding common functionality to objects that can be thought of as
  * Strings, e.g., the name concept Designation.
  *
  *
@@ -41,6 +41,16 @@ public interface StringMixin {
         return toString().isEmpty();
     }
 
+    /**
+     * See {@link java.lang.String#matches(String)}
+     *
+     * Note that regular expression might cause security issues. see <a href=
+     * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4784&rule_key=squid%3AS4784">squid:S4784</a>
+     *
+     * @param regex
+     * @return
+     */
+    @SuppressWarnings("squid:S4784")
     default boolean matches(final String regex) {
         return toString().matches(regex);
     }

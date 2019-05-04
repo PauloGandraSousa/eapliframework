@@ -24,7 +24,7 @@
 package eapli.framework.domain.model.identities.impl;
 
 import eapli.framework.domain.model.identities.IdentityGenerator;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * An id generator that uses a prefix and a sequence number, e.g., AX00001

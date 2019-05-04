@@ -29,8 +29,10 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.UnaryOperator;
 
+import eapli.framework.validations.Preconditions;
+
 /**
- * utility class
+ * Utility class to handle Arrays
  *
  * @author Paulo Gandra de Sousa
  *

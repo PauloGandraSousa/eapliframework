@@ -31,12 +31,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import eapli.framework.domain.model.general.EmailAddress;
+import eapli.framework.infrastructure.authz.domain.model.Name;
+import eapli.framework.infrastructure.authz.domain.model.Password;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 
 /**
  *
@@ -74,7 +77,14 @@ public class UserManagementService {
     @Transactional
     public SystemUser addUser(final String username, final String password, final String firstName,
             final String lastName, final String email, final Set<Role> roles) {
-        return addUser(username, password, firstName, lastName, email, roles, DateTime.now());
+        return addUser(username, password, firstName, lastName, email, roles, Calendars.now());
+    }
+
+    @Transactional
+    public SystemUser addUser(Username username, Password password, Name name, EmailAddress email,
+            final Set<Role> roles) {
+        final SystemUser newUser = new SystemUser(username, password, name, email, roles);
+        return userRepository.save(newUser);
     }
 
     public Iterable<SystemUser> activeUsers() {
@@ -95,7 +105,7 @@ public class UserManagementService {
 
     @Transactional
     public SystemUser deactivateUser(final SystemUser user) {
-        user.deactivate(DateTime.now());
+        user.deactivate(Calendars.now());
         return userRepository.save(user);
     }
 }

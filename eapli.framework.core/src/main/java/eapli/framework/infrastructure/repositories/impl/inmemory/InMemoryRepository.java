@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import eapli.framework.infrastructure.repositories.IterableRepository;
-import eapli.framework.util.Invariants;
+import eapli.framework.validations.Invariants;
 
 /**
  * an implementation of repositories in memory. useful for test purposes. this

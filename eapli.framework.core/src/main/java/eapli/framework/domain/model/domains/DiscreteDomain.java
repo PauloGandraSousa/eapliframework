@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * An immutable discrete domain, that is, a set of possible known values. allows

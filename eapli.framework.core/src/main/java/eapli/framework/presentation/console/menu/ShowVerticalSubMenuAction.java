@@ -25,7 +25,7 @@ package eapli.framework.presentation.console.menu;
 
 import eapli.framework.actions.Action;
 import eapli.framework.actions.menu.Menu;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  *

@@ -34,7 +34,7 @@ import javax.persistence.TypedQuery;
 
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.Repository;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A JPA repository implementation for use with applications not running inside

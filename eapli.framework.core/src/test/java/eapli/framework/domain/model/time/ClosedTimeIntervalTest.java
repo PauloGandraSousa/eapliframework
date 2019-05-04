@@ -30,7 +30,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 
 /**
  *
@@ -39,8 +39,8 @@ import eapli.framework.util.DateTime;
  */
 public class ClosedTimeIntervalTest {
 
-    private static final Calendar START = DateTime.newCalendar(2017, 05, 01);
-    private static final Calendar END = DateTime.newCalendar(2017, 05, 15);
+    private static final Calendar START = Calendars.of(2017, 05, 01);
+    private static final Calendar END = Calendars.of(2017, 05, 15);
     private static TimeInterval INSTANCE = new TimeInterval(START, END);
 
     @Test

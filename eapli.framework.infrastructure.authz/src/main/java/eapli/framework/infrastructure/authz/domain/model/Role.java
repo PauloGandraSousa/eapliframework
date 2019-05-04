@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A generic concept for a role that can be used by application code to classify

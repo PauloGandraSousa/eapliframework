@@ -21,19 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util.predicates;
+package eapli.framework.validations;
 
 import java.util.Calendar;
 
-import eapli.framework.util.DateTime;
+import eapli.framework.util.Calendars;
 import eapli.framework.util.Utilitarian;
 
 /**
- *
+ * Utility predicates handling dates
+ * 
  * @author sou03408
  *
  */
-public final class DateTimePredicates implements Utilitarian {
+public final class CalendarPredicates implements Utilitarian {
 
     /**
      * checks if the calendar time (Hour, Minute, Second and Millisecond) is
@@ -172,7 +173,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         otherwise.
      */
     public static boolean isBeforeToday(final Calendar a) {
-        return isBefore(a, DateTime.now());
+        return isBefore(a, Calendars.now());
     }
 
     /**
@@ -185,7 +186,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         otherwise.
      */
     public static boolean isUntilToday(final Calendar a) {
-        return isUntil(a, DateTime.now());
+        return isUntil(a, Calendars.now());
     }
 
     /**
@@ -198,7 +199,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         otherwise.
      */
     public static boolean isToday(final Calendar a) {
-        return areSameDate(a, DateTime.now());
+        return areSameDate(a, Calendars.now());
     }
 
     /**
@@ -211,7 +212,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         otherwise.
      */
     public static boolean isTodayOnwards(final Calendar a) {
-        return isOnwards(a, DateTime.now());
+        return isOnwards(a, Calendars.now());
     }
 
     /**
@@ -224,7 +225,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         otherwise.
      */
     public static boolean isAfterToday(final Calendar a) {
-        return isAfter(a, DateTime.now());
+        return isAfter(a, Calendars.now());
     }
 
     /**
@@ -367,7 +368,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         or "false" otherwise.
      */
     public static boolean isBeforeNow(final Calendar a) {
-        return isBeforeTime(a, DateTime.now());
+        return isBeforeTime(a, Calendars.now());
     }
 
     /**
@@ -381,7 +382,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         before or "false" otherwise.
      */
     public static boolean isUntilNow(final Calendar a) {
-        return isUntilTime(a, DateTime.now());
+        return isUntilTime(a, Calendars.now());
     }
 
     /**
@@ -395,7 +396,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         before or "false" otherwise.
      */
     public static boolean isNow(final Calendar a) {
-        return haveSameTime(a, DateTime.now());
+        return haveSameTime(a, Calendars.now());
     }
 
     /**
@@ -409,7 +410,7 @@ public final class DateTimePredicates implements Utilitarian {
      *         after or "false" otherwise.
      */
     public static boolean isNowOnwards(final Calendar a) {
-        return isTimeOnwards(a, DateTime.now());
+        return isTimeOnwards(a, Calendars.now());
     }
 
     /**
@@ -423,10 +424,10 @@ public final class DateTimePredicates implements Utilitarian {
      *         or "false" otherwise.
      */
     public static boolean isAfterNow(final Calendar a) {
-        return isAfterTime(a, DateTime.now());
+        return isAfterTime(a, Calendars.now());
     }
 
-    private DateTimePredicates() {
+    private CalendarPredicates() {
         // ensure utility
     }
 }

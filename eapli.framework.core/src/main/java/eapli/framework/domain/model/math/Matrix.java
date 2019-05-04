@@ -25,8 +25,8 @@ package eapli.framework.domain.model.math;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Invariants;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Invariants;
+import eapli.framework.validations.Preconditions;
 
 /**
  * An immutable matrix.

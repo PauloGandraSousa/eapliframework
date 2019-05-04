@@ -35,7 +35,7 @@ import java.util.Random;
  */
 public final class NumberGenerator implements Utilitarian {
     @SuppressWarnings("squid:S2245")
-    private static final Random RANDOM_GEN = new Random(DateTime.now().getTimeInMillis());
+    private static final Random RANDOM_GEN = new Random(Calendars.now().getTimeInMillis());
 
     private NumberGenerator() {
         // ensure utility

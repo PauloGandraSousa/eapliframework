@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.domain.model.general.EmailAddress;
-import eapli.framework.util.predicates.StringPredicates;
+import eapli.framework.validations.StringPredicates;
 
 /**
  * A factory for User entities.

@@ -34,7 +34,8 @@ import eapli.framework.domain.model.domains.Interval;
  * closed interval starting at time A <i>ad infinitum<i>
  *
  * since this class inherits from a generic it cannot control how Calendar
- * objects will be persisted with JPA. see TimeInterval and DateInterval
+ * objects will be persisted with JPA. see {@link TimestampInterval} and
+ * {@link DateInterval}
  *
  * @author Paulo Gandra Sousa
  *

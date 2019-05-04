@@ -1,0 +1,171 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+package eapli.framework.actions;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+
+import eapli.framework.actions.AdderHelper.Add1Action;
+
+/**
+ *
+ * @author sou03408
+ *
+ */
+public class ActionsTest {
+
+    @Test
+    public void testSucess() {
+        assertTrue(Actions.SUCCESS.execute());
+    }
+
+    @Test
+    public void testFail() {
+        assertFalse(Actions.FAIL.execute());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testThrowState() {
+        Actions.THROW_STATE.execute();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testThrowStateWithMsg() {
+        Actions.throwState("Test").execute();
+    }
+
+    @Test
+    public void testThrowStateWithMsgHasTheRightMessage() {
+        try {
+            Actions.throwState("Test").execute();
+        } catch (final IllegalStateException e) {
+            assertEquals("Test", e.getMessage());
+            return;
+        }
+        fail("somethign terrible just happened...");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testThrowArgument() {
+        Actions.THROW_ARGUMENT.execute();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testThrowArgumentWithMsg() {
+        Actions.throwArgument("Test").execute();
+    }
+
+    @Test
+    public void testThrowArgumentWithMsgHasTheRightMessage() {
+        try {
+            Actions.throwArgument("Test").execute();
+        } catch (final IllegalArgumentException e) {
+            assertEquals("Test", e.getMessage());
+            return;
+        }
+        fail("somethign terrible just happened...");
+    }
+
+    @Test
+    public void ensureDoIf() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.doIf(new Add1Action(helper), () -> true);
+        assertEquals(1, helper.current());
+    }
+
+    @Test
+    public void ensureDoIfDoesnotExecuteIfFalse() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.doIf(new Add1Action(helper), () -> false);
+        assertEquals(0, helper.current());
+    }
+
+    @Test
+    public void ensureDoIfNot() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.doIfNot(new Add1Action(helper), () -> false);
+        assertEquals(1, helper.current());
+    }
+
+    @Test
+    public void ensureDoIfNotDoesnotExecuteIfTrue() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.doIfNot(new Add1Action(helper), () -> true);
+        assertEquals(0, helper.current());
+    }
+
+    @Test
+    public void ensureRepeat10Times() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.repeat(new Add1Action(helper), 10);
+        assertEquals(10, helper.current());
+    }
+
+    @Test
+    public void ensureRepeat0Times() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.repeat(new Add1Action(helper), 0);
+        assertEquals(0, helper.current());
+    }
+
+    @Test
+    public void ensureRepeatMinus1Times() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.repeat(new Add1Action(helper), -1);
+        assertEquals(0, helper.current());
+    }
+
+    @Test
+    public void ensureRetryWorksIfActionSucceeds() {
+        assertTrue(Actions.retry(Actions.SUCCESS, 10, 20));
+    }
+
+    @Test
+    public void ensureRetryWorksAtFirst() {
+        final AdderHelper helper = new AdderHelper();
+        final boolean result = Actions.retry(new Add1Action(helper), 10, 20);
+        assertTrue(result && helper.current() == 1);
+    }
+
+    @Test
+    public void ensureRetryFailsIfActionFails() {
+        assertFalse(Actions.retry(Actions.FAIL, 10, 3));
+    }
+
+    @Test
+    public void ensureRetryRunsNTimesIfActionFails() {
+        final AdderHelper helper = new AdderHelper();
+        final Action add1AndFail = () -> {
+            helper.add1();
+            // returning false to force the retry
+            return false;
+        };
+        final boolean result = Actions.retry(add1AndFail, 10, 3);
+        assertTrue(!result && helper.current() == 3);
+    }
+}

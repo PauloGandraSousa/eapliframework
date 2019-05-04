@@ -28,7 +28,7 @@ import java.math.BigInteger;
 
 import eapli.framework.domain.model.general.Money;
 import eapli.framework.representations.RepresentationBuilder;
-import eapli.framework.util.Invariants;
+import eapli.framework.validations.Invariants;
 
 /**
  * A simple JSON Representation builder. null values are ignored and no property
@@ -120,7 +120,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
             state.startRootObject();
         } else {
             // child object
-            Invariants.ensure(!state.hasClosed());
+            Invariants.ensure(!state.hasEnded());
 
             appendSeparatorIfNeeded();
             if (state.isInObject()) {
@@ -238,7 +238,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
             state.startRootCollection();
         } else {
             // collection property or element
-            Invariants.ensure(!state.hasClosed());
+            Invariants.ensure(!state.hasEnded());
 
             appendSeparatorIfNeeded();
             appendPropertyIfAppropriate(name);

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util.predicates;
+package eapli.framework.validations;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,13 +32,15 @@ import eapli.framework.util.Utilitarian;
  * String predicates. Predicates are functions that test a condition and return
  * a boolean value. in this case the test is done over a String argument.
  *
- * the function signature is
+ *
+ * For most of the functions, the signature is:
  *
  * <pre>
  * String -> Boolean
  *
  * <pre>
  *
+ * see also {@link org.apache.commons.lang3.StringUtils}
  *
  * @author Paulo Gandra Sousa
  *
@@ -110,7 +112,7 @@ public final class StringPredicates implements Utilitarian {
      * @return
      */
     public static boolean isNullOrWhiteSpace(final String text) {
-        return text == null || text.trim().isEmpty();
+        return isNullOrEmpty(text) || text.trim().isEmpty();
     }
 
     /**
@@ -125,8 +127,8 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks if a string contains at least one alphabetic character (regular Latin
-     * alphabet)
+     * checks if a string contains at least one alphabetic character (regular
+     * Latin alphabet)
      *
      * @param text
      * @return
@@ -137,8 +139,8 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks whether a string contains at least one capital letter (regular Latin
-     * alphabet)
+     * checks whether a string contains at least one capital letter (regular
+     * Latin alphabet)
      *
      * @param text
      * @return
@@ -146,5 +148,22 @@ public final class StringPredicates implements Utilitarian {
     @SuppressWarnings("squid:S4784")
     public static boolean containsCapital(final String text) {
         return text.matches(".*[A-Z].*");
+    }
+
+    /**
+     * Checks whether a string contains any of the characters of the second
+     * string, without using regular expressions to avoid potential security
+     * threats at the expense of performance. The complexity of this method
+     * O(n^2)
+     *
+     * @param subject
+     * @param chars
+     * @return
+     */
+    public static boolean containsAny(final String subject, final String chars) {
+        if (StringPredicates.isNullOrEmpty(chars) || StringPredicates.isNullOrEmpty(subject)) {
+            return false;
+        }
+        return subject.chars().anyMatch(c -> chars.indexOf(c) != -1);
     }
 }

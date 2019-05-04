@@ -31,8 +31,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.DateTime;
-import eapli.framework.util.Preconditions;
+import eapli.framework.util.Calendars;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A persistent date period. only the date part of calendar is relevant.
@@ -65,8 +65,8 @@ public class DateInterval implements ValueObject {
         Preconditions.nonNull(start);
         Preconditions.nonNull(end);
 
-        this.start = DateTime.datePart(start);
-        this.end = DateTime.datePart(end);
+        this.start = Calendars.datePart(start);
+        this.end = Calendars.datePart(end);
         period = new TimeInterval(this.start, this.end);
     }
 
@@ -78,7 +78,7 @@ public class DateInterval implements ValueObject {
     public DateInterval(final Calendar start) {
         Preconditions.nonNull(start);
 
-        this.start = DateTime.datePart(start);
+        this.start = Calendars.datePart(start);
         end = null;
         period = new TimeInterval(this.start);
     }

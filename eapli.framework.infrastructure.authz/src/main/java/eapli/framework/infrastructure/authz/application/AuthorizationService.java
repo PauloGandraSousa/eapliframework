@@ -31,7 +31,7 @@ import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedE
 import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * Very simple session holder and permission checking helper. note that it does
@@ -137,6 +137,8 @@ public final class AuthorizationService {
      * returns the user session of the logged in user if there is a session and
      * the authenticated user has the desired permissions. otherwise returns an
      * empty optional.
+     *
+     * @todo should return an optional SystemUser
      *
      * @param actions
      * @return

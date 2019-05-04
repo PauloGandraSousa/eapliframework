@@ -24,8 +24,8 @@
 package eapli.framework.infrastructure.authz.application;
 
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.util.Invariants;
 import eapli.framework.util.Singleton;
+import eapli.framework.validations.Invariants;
 
 /**
  * helper class for scenarios without spring Dependency Injection
@@ -48,16 +48,16 @@ public final class AuthzRegistry implements Singleton {
         userService = new UserManagementService(userRepo);
     }
 
-    public static UserManagementService getUserService() {
+    public static UserManagementService userService() {
         return userService;
     }
 
-    public static AuthenticationService getAuthenticationService() {
+    public static AuthenticationService authenticationService() {
         Invariants.nonNull(authenticationService);
         return authenticationService;
     }
 
-    public static AuthorizationService getAuthorizationService() {
+    public static AuthorizationService authorizationService() {
         Invariants.nonNull(authorizationSvc);
         return authorizationSvc;
     }

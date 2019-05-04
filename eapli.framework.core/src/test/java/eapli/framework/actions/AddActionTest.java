@@ -28,21 +28,23 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.actions.AdderHelper.AddAction;
+
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-public class SampleAddActionTest {
-    private SampleAdder target;
-    private SampleAddAction instance;
+public class AddActionTest {
+    private AdderHelper target;
+    private AddAction instance;
 
     /**
      * @throws java.lang.Exception
      */
     @Before
     public void setUp() throws Exception {
-        target = new SampleAdder();
-        instance = new SampleAddAction(target, 5);
+        target = new AdderHelper();
+        instance = new AddAction(target, 5);
     }
 
     @Test

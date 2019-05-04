@@ -21,39 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util;
+package eapli.framework.actions;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  *
- * @author Paulo Gandra Sousa
+ * @author sou03408
+ *
  */
-public final class Comparables implements Utilitarian {
+public class AdderHelperTest {
 
-    private Comparables() {
-        // to make sure this is an utility class
+    private final AdderHelper instance = new AdderHelper();
+
+    @Test
+    public void testAdd10() {
+        final int expected = 10;
+        instance.add(10);
+        assertEquals(expected, instance.current());
     }
 
-    /**
-     * checks if a value is between (inclusive) a range
-     *
-     * @param e
-     * @param begin
-     * @param end
-     * @return
-     */
-    public static boolean isBetween(final long e, final long begin, final long end) {
-        return e >= begin && e <= end;
-    }
-
-    /**
-     * checks if a value is between (inclusive) a range
-     *
-     * @param e
-     * @param begin
-     * @param end
-     * @return
-     */
-    public static <T extends Comparable<T>> boolean isBetween(final T e, final T begin, final T end) {
-        return e.compareTo(begin) >= 0 && e.compareTo(end) <= 0;
+    @Test
+    public void testSubtract10() {
+        final int expected = -10;
+        instance.subtract(10);
+        assertEquals(expected, instance.current());
     }
 }

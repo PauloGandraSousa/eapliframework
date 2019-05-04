@@ -33,9 +33,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.function.ArrayOfDoubleCollector;
-import eapli.framework.util.predicates.NumberPredicates;
+import eapli.framework.validations.NumberPredicates;
+import eapli.framework.validations.Preconditions;
 
 /**
  * An immutable vector.

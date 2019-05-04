@@ -26,7 +26,7 @@ package eapli.framework.util;
 /**
  * utility class for string manipulation.
  *
- * see also {@link org.apache.commons.lang3.StringUtils StringUtils}
+ * see also {@link org.apache.commons.lang3.StringUtils}
  *
  * @author Paulo Gandra Sousa
  *
@@ -40,8 +40,8 @@ public final class Strings implements Utilitarian {
     }
 
     /**
-     * returns a random string with a specified length consisting only of letters
-     * (capitals and lower) and digits
+     * returns a random string with a specified length consisting only of
+     * letters (capitals and lower) and digits
      *
      * @param len
      * @return

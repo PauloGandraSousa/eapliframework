@@ -26,7 +26,7 @@ package eapli.framework.util.function;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
-import eapli.framework.util.Preconditions;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A simple approach to the functional Monad Either

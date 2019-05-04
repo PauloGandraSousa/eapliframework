@@ -29,9 +29,9 @@ import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.Preconditions;
 import eapli.framework.util.StringMixin;
-import eapli.framework.util.predicates.StringPredicates;
+import eapli.framework.validations.Preconditions;
+import eapli.framework.validations.StringPredicates;
 
 /**
  * Generic designation concept, e.g., name, short name, nickname. A designation

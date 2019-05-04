@@ -21,30 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.actions;
+package eapli.framework.validations;
+
+import eapli.framework.util.Utilitarian;
 
 /**
+ * Predicates handling Comparables
  *
- * @author sou03408
- *
+ * @author Paulo Gandra Sousa
  */
-class SampleAddAction implements UndoableAction {
-    private final SampleAdder target;
-    private final int lump;
+public final class ComparablePredicates implements Utilitarian {
 
-    public SampleAddAction(final SampleAdder target, final int lump) {
-        this.target = target;
-        this.lump = lump;
+    private ComparablePredicates() {
+        // to make sure this is an utility class
     }
 
-    @Override
-    public boolean execute() {
-        target.add(lump);
-        return true;
+    /**
+     * checks if a value is between (inclusive) a range
+     *
+     * @param e
+     * @param begin
+     * @param end
+     * @return
+     */
+    public static boolean isBetween(final long e, final long begin, final long end) {
+        return e >= begin && e <= end;
     }
 
-    @Override
-    public void undo() {
-        target.subtract(lump);
+    /**
+     * checks if a value is between (inclusive) a range
+     *
+     * @param e
+     * @param begin
+     * @param end
+     * @return
+     */
+    public static <T extends Comparable<T>> boolean isBetween(final T e, final T begin, final T end) {
+        return e.compareTo(begin) >= 0 && e.compareTo(end) <= 0;
     }
 }

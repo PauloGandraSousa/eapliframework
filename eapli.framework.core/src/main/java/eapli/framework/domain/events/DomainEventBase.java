@@ -28,8 +28,8 @@ import java.util.Calendar;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import eapli.framework.util.DateTime;
-import eapli.framework.util.Preconditions;
+import eapli.framework.util.Calendars;
+import eapli.framework.validations.Preconditions;
 
 /**
  *
@@ -45,14 +45,14 @@ public abstract class DomainEventBase implements DomainEvent {
     private final Calendar registeredAt;
 
     public DomainEventBase() {
-        occuredAt = registeredAt = DateTime.now();
+        occuredAt = registeredAt = Calendars.now();
     }
 
     public DomainEventBase(final Calendar occuredAt) {
         Preconditions.nonNull(occuredAt);
 
         this.occuredAt = occuredAt;
-        registeredAt = DateTime.now();
+        registeredAt = Calendars.now();
     }
 
     @Override

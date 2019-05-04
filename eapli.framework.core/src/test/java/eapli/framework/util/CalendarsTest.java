@@ -35,7 +35,7 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class DateTimeTest {
+public class CalendarsTest {
     /**
      * Test of weekNumber method, of class DateTime.
      */
@@ -44,7 +44,7 @@ public class DateTimeTest {
         System.out.println("weekNumber");
         final Calendar date = new GregorianCalendar(2014, 0, 1);
         final int expResult = 1;
-        final int result = DateTime.weekNumber(date);
+        final int result = Calendars.weekNumber(date);
         assertEquals(expResult, result);
     }
 
@@ -56,7 +56,7 @@ public class DateTimeTest {
         System.out.println("weekNumber");
         final Calendar date = new GregorianCalendar(2014, 2, 21);
         final int expResult = 12;
-        final int result = DateTime.weekNumber(date);
+        final int result = Calendars.weekNumber(date);
         assertEquals(expResult, result);
     }
 
@@ -74,9 +74,9 @@ public class DateTimeTest {
         System.out.println("beginningOfWeek");
         final int year = 2014;
         final int week = 13;
-        final Calendar expResult = DateTime.newCalendar(2014, 3, 24);
+        final Calendar expResult = Calendars.of(2014, 3, 24);
         System.out.println("beginningOfWeek - expected: " + toString(expResult));
-        final Calendar result = DateTime.beginningOfWeek(year, week);
+        final Calendar result = Calendars.beginningOfWeek(year, week);
         System.out.println("beginningOfWeek - actual: " + toString(result));
         assertEquals(expResult, result);
     }
@@ -93,9 +93,9 @@ public class DateTimeTest {
         System.out.println("endOfWeek");
         final int year = 2014;
         final int week = 13;
-        final Calendar expResult = DateTime.newCalendar(2014, 3, 30);
+        final Calendar expResult = Calendars.of(2014, 3, 30);
         System.out.println("endOfWeek - expected: " + toString(expResult));
-        final Calendar result = DateTime.endOfWeek(year, week);
+        final Calendar result = Calendars.endOfWeek(year, week);
         System.out.println("endOfWeek - actual: " + toString(result));
         assertEquals(expResult, result);
     }
@@ -106,9 +106,9 @@ public class DateTimeTest {
     @Test
     public void ensureLastDayOfMarch2014is31() {
         System.out.println("endOfMonth");
-        final Calendar reference = DateTime.newCalendar(2014, 3, 21);
-        final Calendar expResult = DateTime.newCalendar(2014, 3, 31);
-        final Calendar result = DateTime.endOfMonth(reference);
+        final Calendar reference = Calendars.of(2014, 3, 21);
+        final Calendar expResult = Calendars.of(2014, 3, 31);
+        final Calendar result = Calendars.endOfMonth(reference);
         assertEquals(expResult, result);
     }
 
@@ -118,9 +118,9 @@ public class DateTimeTest {
     @Test
     public void ensureLastDayOfFebruary2014is28() {
         System.out.println("endOfMonth");
-        final Calendar reference = DateTime.newCalendar(2014, 2, 21);
-        final Calendar expResult = DateTime.newCalendar(2014, 2, 28);
-        final Calendar result = DateTime.endOfMonth(reference);
+        final Calendar reference = Calendars.of(2014, 2, 21);
+        final Calendar expResult = Calendars.of(2014, 2, 28);
+        final Calendar result = Calendars.endOfMonth(reference);
         assertEquals(expResult, result);
     }
 
@@ -130,9 +130,9 @@ public class DateTimeTest {
     @Test
     public void ensureLastDayOfFebruary2012is29() {
         System.out.println("endOfMonth");
-        final Calendar reference = DateTime.newCalendar(2012, 2, 21);
-        final Calendar expResult = DateTime.newCalendar(2012, 2, 29);
-        final Calendar result = DateTime.endOfMonth(reference);
+        final Calendar reference = Calendars.of(2012, 2, 21);
+        final Calendar expResult = Calendars.of(2012, 2, 29);
+        final Calendar result = Calendars.endOfMonth(reference);
         assertEquals(expResult, result);
     }
 
@@ -144,8 +144,8 @@ public class DateTimeTest {
         System.out.println("parseDate");
         final String aDateString = "2014-03-21";
         final String format = "yyyy-MM-dd";
-        final Calendar expResult = DateTime.newCalendar(2014, 3, 21);
-        final Calendar result = DateTime.parseDate(aDateString, format);
+        final Calendar expResult = Calendars.of(2014, 3, 21);
+        final Calendar result = Calendars.parse(aDateString, format);
         assertEquals(expResult, result);
     }
 }

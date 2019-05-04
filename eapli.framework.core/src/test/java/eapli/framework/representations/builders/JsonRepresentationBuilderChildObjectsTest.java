@@ -28,12 +28,12 @@ public class JsonRepresentationBuilderChildObjectsTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void ensureUnfinishedChildObjectIsInvalid() {
+    public void ensureCannotBuildIfThereAreUnfinishedChildObjects() {
         subject.startObject("Test").startObject("name").build();
     }
 
     @Test(expected = IllegalStateException.class)
-    public void ensureEndingChildObjectWithoutStartingBuilderIsInvalid() {
+    public void ensureCannotEndChildObjectWithoutStartingBuilder() {
         subject.endObject().build();
     }
 

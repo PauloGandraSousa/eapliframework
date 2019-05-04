@@ -45,17 +45,21 @@ import org.apache.logging.log4j.Logger;
  * functions.
  *
  * If you are using Java 8+, you should use the Time API:
- * <li>https://docs.oracle.com/javase/tutorial/datetime/TOC.html
- * <li>https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html
+ * <li><a href=
+ * "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8
+ * Date Time Tutorial</a>
+ * <li><a href=
+ * "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
+ * Java 8 Documentation</a>
  *
  * @author Paulo Gandra Sousa
  */
-public final class DateTime implements Utilitarian {
-    private static final Logger LOGGER = LogManager.getLogger(DateTime.class);
+public final class Calendars implements Utilitarian {
+    private static final Logger LOGGER = LogManager.getLogger(Calendars.class);
 
     private static final int DAYS_TILL_END_OF_WEEK = 6;
 
-    private DateTime() {
+    private Calendars() {
         // to make sure this is an utility class
     }
 
@@ -143,12 +147,20 @@ public final class DateTime implements Utilitarian {
     /**
      * returns the date of the last day of a certain month
      *
+     * @param year
+     * @param month
+     *            month number (1 - 12)
      */
     public static Calendar endOfMonth(final int year, final int month) {
-        final Calendar date = newCalendar(year, month, year);
+        final Calendar date = of(year, month, year);
         return endOfMonth(date);
     }
 
+    /**
+     * returns the current year
+     *
+     * @return
+     */
     public static int currentYear() {
         return now().get(Calendar.YEAR);
     }
@@ -174,7 +186,7 @@ public final class DateTime implements Utilitarian {
      *            the day of the month
      * @return a newly create Calendar object
      */
-    public static Calendar newCalendar(final int year, final int month, final int day) {
+    public static Calendar of(final int year, final int month, final int day) {
         return new GregorianCalendar(year, month - 1, day);
     }
 
@@ -186,7 +198,7 @@ public final class DateTime implements Utilitarian {
      * @return
      */
     public static Calendar datePart(final Calendar source) {
-        return newCalendar(source.get(Calendar.YEAR), source.get(Calendar.MONTH) + 1, source.get(Calendar.DATE));
+        return of(source.get(Calendar.YEAR), source.get(Calendar.MONTH) + 1, source.get(Calendar.DATE));
     }
 
     /**
@@ -194,9 +206,10 @@ public final class DateTime implements Utilitarian {
      *
      * @param aDateString
      * @param format
-     * @return a Date object or null if there was an error parsing the string
+     * @return a Calendar object or null if there was an error parsing the
+     *         string
      */
-    public static Calendar parseDate(final String aDateString, final String format) {
+    public static Calendar parse(final String aDateString, final String format) {
         try {
             final SimpleDateFormat df = new SimpleDateFormat(format);
             final Date date = df.parse(aDateString);
@@ -207,8 +220,8 @@ public final class DateTime implements Utilitarian {
         return null;
     }
 
-    public static Calendar parseDate(final String aDateString) {
-        return parseDate(aDateString, "dd-MM-yyyy");
+    public static Calendar parse(final String aDateString) {
+        return parse(aDateString, "dd-MM-yyyy");
     }
 
     public static String format(final Calendar ocurrs) {
@@ -262,22 +275,45 @@ public final class DateTime implements Utilitarian {
     }
 
     public static String format(final Calendar ocurrs, final String dateFormat) {
-        final SimpleDateFormat formater = new SimpleDateFormat(dateFormat);
-        return formater.format(ocurrs.getTime());
+        return format(ocurrs, new SimpleDateFormat(dateFormat));
+    }
+
+    /**
+     * Creates and returns a {@link String} instance by parsing a given Calendar
+     * base on a data format.
+     *
+     * @param calendar
+     *            the Calendar object to parse
+     * @param dateFormat
+     *            the format to use when parsing the Calendar object
+     *
+     * @return the generated {@link String} instance.
+     */
+    public static String format(final Calendar calendar, final DateFormat dateFormat) {
+        return dateFormat.format(calendar.getTime());
     }
 
     public static String weekdayName(final Calendar calendar) {
         final String[] dayNames = new DateFormatSymbols().getWeekdays();
-
         return dayNames[calendar.get(Calendar.DAY_OF_WEEK)];
     }
 
+    /**
+     * returns yesterday's date
+     *
+     * @return
+     */
     public static Calendar yesterday() {
         final Calendar yesterday = now();
         yesterday.add(Calendar.DATE, -1);
         return yesterday;
     }
 
+    /**
+     * returns tomorrow's date
+     *
+     * @return
+     */
     public static Calendar tomorrow() {
         final Calendar yesterday = now();
         yesterday.add(Calendar.DATE, 1);
@@ -301,26 +337,5 @@ public final class DateTime implements Utilitarian {
         final Date date = dateFormat.parse(value);
         calendar.setTime(date);
         return calendar;
-    }
-
-    /**
-     * <p>
-     * Creates and returns a {@link String} instance by parsing a given Calendar
-     * base on a data format.
-     * </p>
-     *
-     *
-     * @param calendar
-     *            the Calendar object to parse
-     * @param dateFormat
-     *            the format to use when parsing the Calendar object
-     *
-     * @return the generated {@link String} instance.
-     */
-    @SuppressWarnings("squid:S1488")
-    public static String toString(final Calendar calendar, final DateFormat dateFormat) {
-        final Date date = calendar.getTime();
-        final String dateString = dateFormat.format(date);
-        return dateString;
     }
 }
