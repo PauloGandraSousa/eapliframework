@@ -1,6 +1,4 @@
 /**
- *
- *
  * <h1>Authentication and Authorizations</h1>
  *
  * <h2>General description</h2>
