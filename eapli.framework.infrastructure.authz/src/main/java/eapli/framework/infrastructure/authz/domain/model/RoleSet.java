@@ -50,7 +50,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Entity
-class RoleSet implements Set<RoleAssignment>, Serializable {
+/* package */ class RoleSet implements Set<RoleAssignment>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -70,7 +70,28 @@ class RoleSet implements Set<RoleAssignment>, Serializable {
         return data.add(arg0);
     }
 
+    /**
+     * checks if a user currently has an assignment of a certain role
+     *
+     * @param r
+     * @return
+     */
     public boolean hasAssignment(final Role r) {
+        for (final RoleAssignment assignment : data) {
+            if (!assignment.isExpired() && assignment.isOf(r)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a usar has or had in the past an assignment to a certain role
+     * 
+     * @param r
+     * @return
+     */
+    public boolean hasOrHadAssignment(final Role r) {
         for (final RoleAssignment assignment : data) {
             if (assignment.isOf(r)) {
                 return true;
@@ -105,7 +126,7 @@ class RoleSet implements Set<RoleAssignment>, Serializable {
      * @param role
      * @return
      */
-    public Optional<RoleAssignment> getAssignment(Role role) {
+    public Optional<RoleAssignment> getAssignment(final Role role) {
         return data.stream().filter(e -> e.isOf(role)).limit(1).max((a, b) -> 1);
     }
 

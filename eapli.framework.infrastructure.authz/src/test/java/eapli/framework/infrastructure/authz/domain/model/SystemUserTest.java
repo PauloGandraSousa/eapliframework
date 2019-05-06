@@ -23,13 +23,19 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.util.Calendars;
 
 /**
@@ -40,32 +46,63 @@ import eapli.framework.util.Calendars;
 public class SystemUserTest {
     private static final String PASSWORD1 = "Password1";
     private SystemUser instance;
+    private Calendar createdOn;
 
     @Before
     public void setUp() throws Exception {
+        createdOn = Calendars.now();
         instance = new SystemUserBuilder().withUsername("abc").withPassword(PASSWORD1).withFirstName("Ant")
-                .withLastName("Boocam").withEmail("a@b.com").withCreatedOn(Calendars.now()).build();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotDeactivateAnInactiveUser() {
-        try {
-            instance.deactivate(Calendars.now());
-        } catch (final Exception e) {
-            fail("something stange just happened. we are only interested in catching the exception on the second call to deactivate");
-        }
-        instance.deactivate(Calendars.now());
+                .withLastName("Boocam").withEmail("a@b.com").withCreatedOn(createdOn).build();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void ensureCannotDeactivatePriorToCreationDate() {
-        instance.deactivate(Calendars.yesterday());
+    public void ensureMustHaveUsername() {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(Role.valueOf("R"));
+        new SystemUser(null, Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"),
+                roles);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureMustHavePassword() {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(Role.valueOf("R"));
+        new SystemUser(Username.valueOf("username"), null, Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"),
+                roles);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureMustHaveName() {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(Role.valueOf("R"));
+        new SystemUser(Username.valueOf("username"), Password.valueOf(PASSWORD1), null, EmailAddress.valueOf("a@b.co"),
+                roles);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureMustHaveEmail() {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(Role.valueOf("R"));
+        new SystemUser(Username.valueOf("username"), Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Silva"), null,
+                roles);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureMustHaveDateOfCreation() {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(Role.valueOf("R"));
+        new SystemUser(Username.valueOf("username"), Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Silva"),
+                EmailAddress.valueOf("a@b.co"), roles, null);
     }
 
     @Test
-    public void ensureAfterDeactivationUserIsInactive() {
-        instance.deactivate(Calendars.now());
-        assertFalse(instance.isActive());
+    public void ensureDateOfCreationIsSameAsCreatedOn() {
+        assertEquals(createdOn, instance.createdOn());
+    }
+
+    @Test
+    public void ensureHasCreatedOn() {
+        assertNotNull(instance.createdOn());
     }
 
     @Test

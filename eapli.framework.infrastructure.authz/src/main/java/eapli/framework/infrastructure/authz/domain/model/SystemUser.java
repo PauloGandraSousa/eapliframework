@@ -101,7 +101,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
             final Set<Role> roles, final Calendar createdOn) {
-        Preconditions.nonEmpty(roles, "roles cannot be null");
+        Preconditions.nonNull(roles, "roles cannot be null");
 
         final RoleSet roleset = new RoleSet();
         roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, createdOn)).collect(Collectors.toList()));
@@ -179,18 +179,22 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      *            Role to assign to SystemUser.
      */
     public void assignToRole(final Role role) {
+        Preconditions.nonNull(role);
         roles.add(new RoleAssignment(role));
     }
 
     /**
-     * Removes a role from user, marking the assignment as expired.
+     * unassigns a role from user, marking the assignment as expired. the role
+     * assignment is kept in the roles of the user
      *
      * @param role
      *            Role to remove from SystemUser.
      */
-    public void unassignRole(final Role role) {
+    public boolean unassignRole(final Role role) {
+        Preconditions.nonNull(role);
         final Optional<RoleAssignment> ra = roles.getAssignment(role);
         ra.ifPresent(RoleAssignment::unassign);
+        return ra.isPresent();
     }
 
     public Collection<Role> roleTypes() {
@@ -295,7 +299,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      * @param roles
      * @return
      */
-    public boolean hasAll(final Role[] roles) {
+    public boolean hasAll(final Role... roles) {
         for (final Role r : roles) {
             if (!(this.roles.hasAssignment(r))) {
                 return false;
@@ -303,5 +307,10 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         }
 
         return true;
+    }
+
+    public Calendar createdOn() {
+        // TODO return an immutable copy
+        return createdOn;
     }
 }

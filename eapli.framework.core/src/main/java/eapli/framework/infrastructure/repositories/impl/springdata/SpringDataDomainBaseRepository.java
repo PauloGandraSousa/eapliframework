@@ -69,7 +69,7 @@ public interface SpringDataDomainBaseRepository<K, I /* extends ValueObject */, 
      *
      * @param id
      */
-    @Query("DELETE FROM #{#entityName} e WHERE e.«entity-id» = :id")
+    @Query("DELETE FROM #{#entityName} e WHERE e.«entity-biz-id» = :id")
     @Modifying
     void deleteOfIdentity(@Param("id") I id);
 
@@ -79,6 +79,6 @@ public interface SpringDataDomainBaseRepository<K, I /* extends ValueObject */, 
      *
      * @param id
      */
-    @Query("SELECT e FROM #{#entityName} e WHERE e.«entity-id» = :id")
+    @Query("SELECT e FROM #{#entityName} e WHERE e.«entity-biz-id» = :id")
     Optional<T> ofIdentity(@Param("id") I id);
 }
