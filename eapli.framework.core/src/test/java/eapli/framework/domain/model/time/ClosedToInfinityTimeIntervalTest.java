@@ -21,46 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.time;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.BeforeClass;
+import java.util.Calendar;
+
 import org.junit.Test;
+
+import eapli.framework.util.Calendars;
 
 /**
  *
- * @author Paulo Gandra Sousa
+ * @author sou03408
+ *
  */
-public class ClosedRangeTest extends AbstractRangeTest {
+public class ClosedToInfinityTimeIntervalTest {
 
-    @BeforeClass
-    public static void setUpClass() {
-        System.out.println("closedRange");
-        instance = Range.closedFrom(START).closedTo(END).build();
+    private static final Calendar START = Calendars.of(2017, 05, 01);
+    private static TimeInterval INSTANCE = new TimeInterval(START);
+
+    @Test
+    public void ensureIncludesStart() {
+        assertTrue("Start is not included", INSTANCE.includes(START));
     }
 
     @Test
-    public void ensureStartIsInRange() {
-        System.out.println("ensureStartIsInRange");
-        final Long target = new Long(START_VALUE);
-        final boolean result = instance.includes(target);
-        assertTrue("start must be part of a closed range", result);
+    public void ensureIncludesMid() {
+        final Calendar mid = (Calendar) START.clone();
+        mid.add(Calendar.DATE, 2);
+        assertTrue("Mid is not included", INSTANCE.includes(mid));
     }
 
     @Test
-    public void ensureEndIsInRange() {
-        System.out.println("ensureEndIsInRange");
-        final Long target = new Long(END_VALUE);
-        final boolean result = instance.includes(target);
-        assertTrue("end must be part of a closed range", result);
+    public void ensureIncludesInTheFuture() {
+        final Calendar mid = (Calendar) START.clone();
+        mid.add(Calendar.YEAR, 2000);
+        assertTrue("Mid is not included", INSTANCE.includes(mid));
     }
 
     @Test
-    public void ensureStringRepresentationIsOk() {
-        final String expected = "[" + START + ", " + END + "]";
-        final String actual = instance.toString();
-        assertEquals(expected, actual);
+    public void ensureDoesntIncludeBeforeStart() {
+        final Calendar before = (Calendar) START.clone();
+        before.add(Calendar.DATE, -2);
+        assertFalse("Mid is not included", INSTANCE.includes(before));
     }
 }

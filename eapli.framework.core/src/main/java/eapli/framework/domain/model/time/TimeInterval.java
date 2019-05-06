@@ -25,67 +25,46 @@ package eapli.framework.domain.model.time;
 
 import java.util.Calendar;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
-import eapli.framework.domain.model.ValueObject;
-import eapli.framework.validations.Preconditions;
+import eapli.framework.domain.model.domains.Interval;
 
 /**
- * A persistent time period. Both the date and the time part of calendar are
- * relevant
+ * A concrete interval for Calendars.
+ *
+ * A time interval is either a closed interval between time A and time B or a
+ * closed interval starting at time A <i>ad infinitum<i>
+ *
+ * since this class inherits from a generic it cannot control how Calendar
+ * objects will be persisted with JPA. see {@link TimestampInterval} and
+ * {@link DateInterval} for persistent alternatives
  *
  * @author Paulo Gandra Sousa
  *
  */
-@Embeddable
-public class TimeInterval implements ValueObject {
+public class TimeInterval extends Interval<Calendar> {
 
-    private static final long serialVersionUID = -4658136141745243778L;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar start;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar end;
-
-    @Transient
-    private final TimeRange period;
+    private static final long serialVersionUID = 1L;
 
     /**
-     * Constructs a closed time interval
+     * creates a closed time interval on both ends
      *
-     * @param start
+     * @param begin
      * @param end
      */
-    public TimeInterval(final Calendar start, final Calendar end) {
-        Preconditions.nonNull(start);
-        Preconditions.nonNull(end);
+    public TimeInterval(final Calendar begin, final Calendar end) {
+        super(begin, BoundaryLimitType.CLOSED, end, BoundaryLimitType.CLOSED);
+    }
 
-        this.start = start;
-        this.end = end;
-        period = new TimeRange(start, end);
+    /**
+     * creates a time interval from begin until "infinity"
+     *
+     * @param begin
+     * @param end
+     */
+    public TimeInterval(final Calendar begin) {
+        super(begin, BoundaryLimitType.CLOSED, null, BoundaryLimitType.INFINITY);
     }
 
     protected TimeInterval() {
-        // ORM
-        start = end = null;
-        period = null;
-    }
-
-    public Calendar start() {
-        return start;
-    }
-
-    public Calendar end() {
-        return start;
-    }
-
-    public boolean includes(final Calendar target) {
-        Preconditions.nonNull(target);
-
-        return period.includes(target);
+        // ensure no instantion of incomplete object
     }
 }

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,45 +30,46 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eapli.framework.domain.model.domains.Interval;
+
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class FromInfinityOpenRangeTest extends AbstractRangeTest {
+public class ToInfinityOpenIntervalTest extends AbstractIntervalTest {
 
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("FromInfinityOpenRangeTest");
-        final Range.RangeBuilder<Long> b = Range.fromInfinity();
-        instance = b.openTo(END).build();
+        System.out.println("ToInfinityOpenRange");
+        instance = Interval.openFrom(START).toInfinity().build();
     }
 
     @Test
-    public void ensureEndIsNotInRange() {
-        System.out.println("ensureEndIsNotInRange");
-        final Long target = new Long(END_VALUE);
+    public void ensureStartIsNotInRange() {
+        System.out.println("ensureStartIsNotInRange");
+        final Long target = new Long(START_VALUE);
         final boolean result = instance.includes(target);
-        assertFalse("end cannot be part of an open range", result);
+        assertFalse("start cannot be part of an open range", result);
     }
 
     @Test
-    public void ensureSmallValueIsIncluded() {
-        System.out.println("ensureSmallValueIsIncluded");
-        final Long target = Long.MIN_VALUE;
+    public void ensureBigValueIsIncluded() {
+        System.out.println("ensureBigValueIsIncluded");
+        final Long target = Long.MAX_VALUE;
         final boolean result = instance.includes(target);
-        assertTrue("From infinity range must include any value smaller than end", result);
+        assertTrue("to infinity range must include any value bigger than start", result);
     }
 
     @Test
-    public void ensureIsFromInfinity() {
-        System.out.println("ensureIsFromInfinity");
-        final boolean result = instance.isFromInfinity();
-        assertTrue("from infinity ranges must be from infinity", result);
+    public void ensureIsToInfinity() {
+        System.out.println("ensureIsToInfinity");
+        final boolean result = instance.isToInfinity();
+        assertTrue("to inifinity ranges must be to infinity", result);
     }
 
     @Test
     public void ensureStringRepresentationIsOk() {
-        final String expected = "]oo, " + END + "[";
+        final String expected = "]" + START + ", oo[";
         final String actual = instance.toString();
         assertEquals(expected, actual);
     }

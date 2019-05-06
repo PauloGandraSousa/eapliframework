@@ -21,56 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.time;
+package eapli.framework.domain.model.domains;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
-
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.util.Calendars;
+import eapli.framework.domain.model.domains.Interval;
 
 /**
  *
- * @author sou03408
- *
+ * @author Paulo Gandra Sousa
  */
-public class ClosedTimeRangeTest {
+public class OpenIntervalTest extends AbstractIntervalTest {
 
-    private static final Calendar START = Calendars.of(2017, 05, 01);
-    private static final Calendar END = Calendars.of(2017, 05, 15);
-    private static TimeRange INSTANCE = new TimeRange(START, END);
-
-    @Test
-    public void ensureIncludesStart() {
-        assertTrue("Start is not included", INSTANCE.includes(START));
+    @BeforeClass
+    public static void setUpClass() {
+        System.out.println("openRange");
+        instance = Interval.openFrom(START).openTo(END).build();
     }
 
     @Test
-    public void ensureIncludesEnd() {
-        assertTrue("End is not included", INSTANCE.includes(END));
+    public void ensureStartIsNotInRange() {
+        System.out.println("ensureStartIsNotInRange");
+        final Long target = new Long(START_VALUE);
+        final boolean result = instance.includes(target);
+        assertFalse("start cannot be part of an open range", result);
     }
 
     @Test
-    public void ensureIncludesMid() {
-        final Calendar mid = (Calendar) START.clone();
-        mid.add(Calendar.DATE, 2);
-        assertTrue("Mid is not included", INSTANCE.includes(mid));
+    public void ensureEndIsNotInRange() {
+        System.out.println("ensureEndIsNotInRange");
+        final Long target = new Long(END_VALUE);
+        final boolean result = instance.includes(target);
+        assertFalse("end cannot be part of an open range", result);
     }
 
     @Test
-    public void ensureDoesntIncludeBeforeStart() {
-        final Calendar before = (Calendar) START.clone();
-        before.add(Calendar.DATE, -2);
-        assertFalse("Mid is not included", INSTANCE.includes(before));
-    }
-
-    @Test
-    public void ensureDoesntIncludeAfterEnd() {
-        final Calendar after = (Calendar) END.clone();
-        after.add(Calendar.DATE, 2);
-        assertFalse("Mid is not included", INSTANCE.includes(after));
+    public void ensureStringRepresentationIsOk() {
+        final String expected = "]" + START + ", " + END + "[";
+        final String actual = instance.toString();
+        assertEquals(expected, actual);
     }
 }

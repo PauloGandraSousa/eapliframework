@@ -21,49 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.time;
+package eapli.framework.domain.model.domains;
 
-import java.util.Calendar;
+import org.junit.Test;
 
-import eapli.framework.domain.model.range.Range;
+import eapli.framework.domain.model.domains.Interval;
 
 /**
- * A concrete range for Calendars.
- *
- * A time range is either a closed interval between time A and time B or a
- * closed interval starting at time A <i>ad infinitum<i>
- *
- * since this class inherits from a generic it cannot control how Calendar
- * objects will be persisted with JPA. see TimeInterval and DateInterval
  *
  * @author Paulo Gandra Sousa
- *
  */
-public class TimeRange extends Range<Calendar> {
+public class ExtendedIntervalTest extends AbstractIntervalTest {
 
-    private static final long serialVersionUID = 1L;
+    private static final Long NEW_START = END + 2;
+    private static final Long NEW_END = START - 2;
 
-    /**
-     * creates a closed time interval on both ends
-     *
-     * @param begin
-     * @param end
-     */
-    public TimeRange(final Calendar begin, final Calendar end) {
-        super(begin, BoundaryLimitType.CLOSED, end, BoundaryLimitType.CLOSED);
+    public ExtendedIntervalTest() {
     }
 
-    /**
-     * creates a time interval from begin until "infinity"
-     *
-     * @param begin
-     * @param end
-     */
-    public TimeRange(final Calendar begin) {
-        super(begin, BoundaryLimitType.CLOSED, null, BoundaryLimitType.INFINITY);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureNewStartCannotBeAfterEnd() {
+        instance = Interval.closedFrom(START).closedTo(END).build().withStart(NEW_START);
     }
 
-    protected TimeRange() {
-        // protect against incomplete instantiation
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureNewEndCannotBeBeforeStart() {
+        instance = Interval.closedFrom(START).closedTo(END).build().withEnd(NEW_END);
     }
 }

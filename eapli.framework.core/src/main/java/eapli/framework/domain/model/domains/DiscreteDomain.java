@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
 import java.io.Serializable;
 import java.util.Collections;

@@ -53,7 +53,7 @@ public class DateInterval implements ValueObject {
     private final Calendar end;
 
     @Transient
-    private final TimeRange period;
+    private final TimeInterval period;
 
     /**
      * constructs a closed range between start and end
@@ -67,7 +67,7 @@ public class DateInterval implements ValueObject {
 
         this.start = Calendars.datePart(start);
         this.end = Calendars.datePart(end);
-        period = new TimeRange(this.start, this.end);
+        period = new TimeInterval(this.start, this.end);
     }
 
     /**
@@ -80,7 +80,7 @@ public class DateInterval implements ValueObject {
 
         this.start = Calendars.datePart(start);
         end = null;
-        period = new TimeRange(this.start);
+        period = new TimeInterval(this.start);
     }
 
     protected DateInterval() {

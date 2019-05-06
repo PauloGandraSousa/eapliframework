@@ -21,29 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
-import org.junit.Test;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import eapli.framework.util.Factory;
+import eapli.framework.validations.Preconditions;
 
 /**
  *
- * @author Paulo Gandra Sousa
+ * @author Paulo Gandra de Sousa
+ *
+ * @param <T>
  */
-public class ExtendedRangeTest extends AbstractRangeTest {
+public class DiscreteDomainBuilder<T extends Serializable> implements Factory<DiscreteDomain<T>> {
+    private final Set<T> from = new HashSet<>();
 
-    private static final Long NEW_START = END + 2;
-    private static final Long NEW_END = START - 2;
+    public DiscreteDomainBuilder<T> add(final T e) {
+        Preconditions.nonNull(e);
 
-    public ExtendedRangeTest() {
+        from.add(e);
+        return this;
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureNewStartCannotBeAfterEnd() {
-        instance = Range.closedFrom(START).closedTo(END).build().withStart(NEW_START);
+    public DiscreteDomainBuilder<T> add(final T... elements) {
+        for (final T e : elements) {
+            from.add(e);
+        }
+        return this;
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureNewEndCannotBeBeforeStart() {
-        instance = Range.closedFrom(START).closedTo(END).build().withEnd(NEW_END);
+    public DiscreteDomainBuilder<T> forget(final T e) {
+        Preconditions.nonNull(e);
+
+        from.remove(e);
+        return this;
+    }
+
+    @Override
+    public DiscreteDomain<T> build() {
+        return new DiscreteDomain<>(from);
     }
 }

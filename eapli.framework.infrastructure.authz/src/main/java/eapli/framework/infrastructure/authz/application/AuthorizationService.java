@@ -138,6 +138,8 @@ public final class AuthorizationService {
      * the authenticated user has the desired permissions. otherwise returns an
      * empty optional.
      *
+     * @todo should return an optional SystemUser
+     *
      * @param actions
      * @return
      */

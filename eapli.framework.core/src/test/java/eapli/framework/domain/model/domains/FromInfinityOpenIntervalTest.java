@@ -21,64 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eapli.framework.domain.model.domains.Interval;
+
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class RangeTest extends AbstractRangeTest {
+public class FromInfinityOpenIntervalTest extends AbstractIntervalTest {
 
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("Range");
-        instance = Range.openFrom(START).openTo(END).build();
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureStartBiggerThanEndIsNotAllowed() {
-        System.out.println("ensureStartBiggerThanEndIsNotAllowed");
-        Range.openFrom(END).openTo(START).build();
+        System.out.println("FromInfinityOpenRangeTest");
+        final Interval.IntervalBuilder<Long> b = Interval.fromInfinity();
+        instance = b.openTo(END).build();
     }
 
     @Test
-    public void ensureLowerIsNotInRange() {
-        System.out.println("ensureLowerIsNotInRange");
-        final Long target = new Long(START_VALUE - DELTA_VALUE);
+    public void ensureEndIsNotInRange() {
+        System.out.println("ensureEndIsNotInRange");
+        final Long target = new Long(END_VALUE);
         final boolean result = instance.includes(target);
-        assertFalse("value lower than start cannot be part of an open range", result);
+        assertFalse("end cannot be part of an open range", result);
     }
 
     @Test
-    public void ensureUpperIsNotInRange() {
-        System.out.println("ensureUpperIsNotInRange");
-        final Long target = new Long(END_VALUE + DELTA_VALUE);
+    public void ensureSmallValueIsIncluded() {
+        System.out.println("ensureSmallValueIsIncluded");
+        final Long target = Long.MIN_VALUE;
         final boolean result = instance.includes(target);
-        assertFalse("value greater than end cannot be part of an open range", result);
+        assertTrue("From infinity range must include any value smaller than end", result);
     }
 
     @Test
-    public void ensureMiddleIsInRange() {
-        System.out.println("ensureMiddleIsInRange");
-        final Long target = new Long(START_VALUE + DELTA_VALUE / 2);
-        final boolean result = instance.includes(target);
-        assertTrue("value in the middle is part of an open range", result);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureEmptyRangeIsNotAllowed() {
-        System.out.println("ensureEmptyRangeIsNotAllowed");
-        Range.openFrom(START).openTo(START).build();
+    public void ensureIsFromInfinity() {
+        System.out.println("ensureIsFromInfinity");
+        final boolean result = instance.isFromInfinity();
+        assertTrue("from infinity ranges must be from infinity", result);
     }
 
     @Test
-    public void ensureIsNotEmpty() {
-        assertFalse(instance.isEmpty());
+    public void ensureStringRepresentationIsOk() {
+        final String expected = "]oo, " + END + "[";
+        final String actual = instance.toString();
+        assertEquals(expected, actual);
     }
 }

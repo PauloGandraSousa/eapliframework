@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
+
+import eapli.framework.domain.model.domains.Interval;
 
 /**
  * base class for testing Range
@@ -29,7 +31,7 @@ package eapli.framework.domain.model.range;
  * @author Paulo Gandra Sousa
  */
 @SuppressWarnings("squid:S2187")
-public class AbstractRangeTest {
+public class AbstractIntervalTest {
 
     protected static final Long START_VALUE = 5L;
     protected static final Long DELTA_VALUE = 5L;
@@ -38,5 +40,5 @@ public class AbstractRangeTest {
     protected static final Long START = START_VALUE;
     protected static final Long END = END_VALUE;
 
-    protected static Range<Long> instance;
+    protected static Interval<Long> instance;
 }

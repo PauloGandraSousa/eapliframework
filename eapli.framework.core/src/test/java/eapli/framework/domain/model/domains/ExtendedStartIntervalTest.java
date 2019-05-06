@@ -21,54 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.domains;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import eapli.framework.domain.model.domains.Interval;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class ToInfinityOpenRangeTest extends AbstractRangeTest {
+public class ExtendedStartIntervalTest extends AbstractIntervalTest {
+
+    private static final Long NEW_START = START - 2;
+
+    public ExtendedStartIntervalTest() {
+    }
 
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("ToInfinityOpenRange");
-        instance = Range.openFrom(START).toInfinity().build();
+        System.out.println("Extended Start/End Range");
+        instance = Interval.closedFrom(START).closedTo(END).build().withStart(NEW_START);
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+    }
+
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void tearDown() {
     }
 
     @Test
-    public void ensureStartIsNotInRange() {
-        System.out.println("ensureStartIsNotInRange");
-        final Long target = new Long(START_VALUE);
-        final boolean result = instance.includes(target);
-        assertFalse("start cannot be part of an open range", result);
+    public void ensureNewStart() {
+        assertEquals(NEW_START, instance.start());
     }
 
     @Test
-    public void ensureBigValueIsIncluded() {
-        System.out.println("ensureBigValueIsIncluded");
-        final Long target = Long.MAX_VALUE;
-        final boolean result = instance.includes(target);
-        assertTrue("to infinity range must include any value bigger than start", result);
+    public void ensureClosedStart() {
+        assertFalse(instance.hasOpenStart());
     }
 
     @Test
-    public void ensureIsToInfinity() {
-        System.out.println("ensureIsToInfinity");
-        final boolean result = instance.isToInfinity();
-        assertTrue("to inifinity ranges must be to infinity", result);
+    public void ensureEnd() {
+        assertEquals(END, instance.end());
     }
 
     @Test
-    public void ensureStringRepresentationIsOk() {
-        final String expected = "]" + START + ", oo[";
-        final String actual = instance.toString();
-        assertEquals(expected, actual);
+    public void ensureClosedend() {
+        assertFalse(instance.hasOpenEnd());
     }
 }

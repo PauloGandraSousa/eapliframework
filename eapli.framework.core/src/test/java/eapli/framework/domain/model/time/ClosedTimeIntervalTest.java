@@ -21,63 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.domain.model.range;
+package eapli.framework.domain.model.time;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.Calendar;
+
 import org.junit.Test;
+
+import eapli.framework.util.Calendars;
 
 /**
  *
- * @author Paulo Gandra Sousa
+ * @author sou03408
+ *
  */
-public class ExtendedStartRangeTest extends AbstractRangeTest {
+public class ClosedTimeIntervalTest {
 
-    private static final Long NEW_START = START - 2;
+    private static final Calendar START = Calendars.of(2017, 05, 01);
+    private static final Calendar END = Calendars.of(2017, 05, 15);
+    private static TimeInterval INSTANCE = new TimeInterval(START, END);
 
-    public ExtendedStartRangeTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-        System.out.println("Extended Start/End Range");
-        instance = Range.closedFrom(START).closedTo(END).build().withStart(NEW_START);
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+    @Test
+    public void ensureIncludesStart() {
+        assertTrue("Start is not included", INSTANCE.includes(START));
     }
 
     @Test
-    public void ensureNewStart() {
-        assertEquals(NEW_START, instance.start());
+    public void ensureIncludesEnd() {
+        assertTrue("End is not included", INSTANCE.includes(END));
     }
 
     @Test
-    public void ensureClosedStart() {
-        assertFalse(instance.hasOpenStart());
+    public void ensureIncludesMid() {
+        final Calendar mid = (Calendar) START.clone();
+        mid.add(Calendar.DATE, 2);
+        assertTrue("Mid is not included", INSTANCE.includes(mid));
     }
 
     @Test
-    public void ensureEnd() {
-        assertEquals(END, instance.end());
+    public void ensureDoesntIncludeBeforeStart() {
+        final Calendar before = (Calendar) START.clone();
+        before.add(Calendar.DATE, -2);
+        assertFalse("Mid is not included", INSTANCE.includes(before));
     }
 
     @Test
-    public void ensureClosedend() {
-        assertFalse(instance.hasOpenEnd());
+    public void ensureDoesntIncludeAfterEnd() {
+        final Calendar after = (Calendar) END.clone();
+        after.add(Calendar.DATE, 2);
+        assertFalse("Mid is not included", INSTANCE.includes(after));
     }
 }
