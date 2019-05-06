@@ -69,7 +69,7 @@ public class UserManagementService {
             final Calendar createdOn) {
         final SystemUserBuilder userBuilder = new SystemUserBuilder();
         userBuilder.withUsername(username).withPassword(password).withFirstName(firstName)
-                .withLastName(lastName).withEmail(email).withCreatedOn(createdOn).withRoles(roles);
+                .withLastName(lastName).withEmail(email).createdOn(createdOn).withRoles(roles);
         final SystemUser newUser = userBuilder.build();
         return userRepository.save(newUser);
     }

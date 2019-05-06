@@ -46,13 +46,13 @@ import eapli.framework.util.Calendars;
 public class SystemUserTest {
     private static final String PASSWORD1 = "Password1";
     private SystemUser instance;
-    private Calendar createdOn;
+    private Calendar dateOfCreation;
 
     @Before
     public void setUp() throws Exception {
-        createdOn = Calendars.now();
+        dateOfCreation = Calendars.now();
         instance = new SystemUserBuilder().withUsername("abc").withPassword(PASSWORD1).withFirstName("Ant")
-                .withLastName("Boocam").withEmail("a@b.com").withCreatedOn(createdOn).build();
+                .withLastName("Boocam").withEmail("a@b.com").createdOn(dateOfCreation).build();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -97,7 +97,7 @@ public class SystemUserTest {
 
     @Test
     public void ensureDateOfCreationIsSameAsCreatedOn() {
-        assertEquals(createdOn, instance.createdOn());
+        assertEquals(dateOfCreation, instance.createdOn());
     }
 
     @Test

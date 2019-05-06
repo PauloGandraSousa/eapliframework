@@ -48,7 +48,7 @@ public class SystemUserActivateDeactivateTest {
     public void setUp() throws Exception {
         createdOn = Calendars.now();
         instance = new SystemUserBuilder().withUsername("abc").withPassword(PASSWORD1).withFirstName("Ant")
-                .withLastName("Boocam").withEmail("a@b.com").withCreatedOn(createdOn).build();
+                .withLastName("Boocam").withEmail("a@b.com").createdOn(createdOn).build();
     }
 
     @Test

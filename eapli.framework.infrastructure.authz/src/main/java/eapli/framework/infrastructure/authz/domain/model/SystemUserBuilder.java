@@ -132,7 +132,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         return this;
     }
 
-    public SystemUserBuilder withCreatedOn(final Calendar createdOn) {
+    public SystemUserBuilder createdOn(final Calendar createdOn) {
         this.createdOn = createdOn;
         return this;
     }
