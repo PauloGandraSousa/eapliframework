@@ -36,7 +36,7 @@ import eapli.framework.actions.AdderHelper.AddAction;
  */
 public class AddActionTest {
     private AdderHelper target;
-    private AddAction instance;
+    private AddAction subject;
 
     /**
      * @throws java.lang.Exception
@@ -44,19 +44,19 @@ public class AddActionTest {
     @Before
     public void setUp() throws Exception {
         target = new AdderHelper();
-        instance = new AddAction(target, 5);
+        subject = new AddAction(target, 5);
     }
 
     @Test
     public void ensureExecuteAdds() {
-        instance.execute();
+        subject.execute();
         assertEquals(5, target.current());
     }
 
     @Test
     public void ensureUndo() {
-        instance.execute();
-        instance.undo();
+        subject.execute();
+        subject.undo();
         assertEquals(0, target.current());
     }
 }

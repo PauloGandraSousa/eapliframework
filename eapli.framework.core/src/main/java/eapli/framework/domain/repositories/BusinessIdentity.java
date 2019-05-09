@@ -21,36 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.actions;
+package eapli.framework.domain.repositories;
+
+import static java.lang.annotation.ElementType.FIELD;
+
+import java.lang.annotation.Target;
 
 /**
- * An action that should only be executed if another action succeeds (IIF - if
- * and only if)
- *
- * @author Paulo Gandra Sousa
+ * @author sou03408
  *
  */
-public class IifAction extends CompoundAction {
+@Target(FIELD)
+public @interface BusinessIdentity {
 
-    private final Action condition;
-
-    /**
-     * @param then
-     *            the action to execute
-     * @param condition
-     *            the action that must complete successfully in order to the action
-     *            of this object to be executed
-     */
-    public IifAction(final Action then, final Action condition) {
-        super(then);
-        this.condition = condition;
-    }
-
-    @Override
-    public boolean execute() {
-        if (condition.execute()) {
-            return next();
-        }
-        return false;
-    }
 }

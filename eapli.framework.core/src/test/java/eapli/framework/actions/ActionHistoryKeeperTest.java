@@ -38,78 +38,78 @@ import eapli.framework.actions.AdderHelper.AddAction;
  */
 public class ActionHistoryKeeperTest {
 
-    private AdderHelper subject;
-    private ActionHistoryKeeper instance;
+    private AdderHelper target;
+    private ActionHistoryKeeper subject;
 
     @Before
     public void setUp() {
-        subject = new AdderHelper();
-        instance = new ActionHistoryKeeper();
+        target = new AdderHelper();
+        subject = new ActionHistoryKeeper();
     }
 
     @Test
     public void ensureCannotUndoIfThereWereNoActions() {
-        assertFalse(instance.canUndo());
+        assertFalse(subject.canUndo());
     }
 
     @Test
     public void ensureCanUndoIfThereWereActions() {
-        final AddAction action = new AddAction(subject, 5);
-        instance.execute(action);
-        assertTrue(instance.canUndo());
+        final AddAction action = new AddAction(target, 5);
+        subject.execute(action);
+        assertTrue(subject.canUndo());
     }
 
     @Test
     public void ensureCannotRedoIfThereWereNoUndos() {
-        assertFalse(instance.canRedo());
+        assertFalse(subject.canRedo());
     }
 
     @Test
     public void ensureCanRedoIfThereWereUndos() {
-        final AddAction action = new AddAction(subject, 5);
-        instance.execute(action);
-        instance.undo();
-        assertTrue(instance.canRedo());
+        final AddAction action = new AddAction(target, 5);
+        subject.execute(action);
+        subject.undo();
+        assertTrue(subject.canRedo());
     }
 
     @Test
     public void testDoUndo() {
         // DO
-        AddAction action = new AddAction(subject, 2);
-        instance.execute(action);
-        assert subject.current() == 2;
+        AddAction action = new AddAction(target, 2);
+        subject.execute(action);
+        assert target.current() == 2;
 
-        action = new AddAction(subject, 4);
-        instance.execute(action);
-        assert subject.current() == 6;
+        action = new AddAction(target, 4);
+        subject.execute(action);
+        assert target.current() == 6;
 
-        action = new AddAction(subject, 8);
-        instance.execute(action);
-        assert subject.current() == 14;
+        action = new AddAction(target, 8);
+        subject.execute(action);
+        assert target.current() == 14;
 
         // UNDO
-        instance.undo();
+        subject.undo();
         int expected = 6;
-        int curr = subject.current();
+        int curr = target.current();
         if (curr != expected) {
             fail("expected " + expected + " but got " + curr);
         }
 
-        instance.undo();
+        subject.undo();
         expected = 2;
-        curr = subject.current();
+        curr = target.current();
         if (curr != expected) {
             fail("expected " + expected + " but got " + curr);
         }
 
-        instance.undo();
+        subject.undo();
         expected = 0;
-        curr = subject.current();
+        curr = target.current();
         if (curr != expected) {
             fail("expected " + expected + " but got " + curr);
         }
 
-        assertFalse(instance.canUndo());
+        assertFalse(subject.canUndo());
     }
 
 }

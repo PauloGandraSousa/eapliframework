@@ -66,6 +66,14 @@ class AdderHelper {
         }
     }
 
+    public Action adder() {
+        return new Add1Action(this);
+    }
+
+    public Action adder(final int inc) {
+        return new AddAction(this, inc);
+    }
+
     private int current;
 
     public int add(final int x) {

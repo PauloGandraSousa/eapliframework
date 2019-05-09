@@ -122,15 +122,16 @@ public final class Actions implements Utilitarian {
 
     /**
      * Executes a function if a predicate is not met
-     * 
+     *
      * @param consequence
      * @param condition
      * @param msg
      */
-    public static void doIfNot(final Action consequence, final BooleanSupplier condition) {
+    public static boolean doIfNot(final Action consequence, final BooleanSupplier condition) {
         if (!condition.getAsBoolean()) {
-            consequence.execute();
+            return consequence.execute();
         }
+        return false;
     }
 
     /**
@@ -141,10 +142,11 @@ public final class Actions implements Utilitarian {
      * @param arg
      * @param msg
      */
-    public static <T> void doIfNot(final Action consequence, final Predicate<T> condition, final T arg) {
+    public static <T> boolean doIfNot(final Action consequence, final Predicate<T> condition, final T arg) {
         if (!condition.test(arg)) {
-            consequence.execute();
+            return consequence.execute();
         }
+        return false;
     }
 
     /**
@@ -154,10 +156,11 @@ public final class Actions implements Utilitarian {
      * @param condition
      * @param msg
      */
-    public static void doIf(final Action consequence, final BooleanSupplier condition) {
+    public static boolean doIf(final Action consequence, final BooleanSupplier condition) {
         if (condition.getAsBoolean()) {
-            consequence.execute();
+            return consequence.execute();
         }
+        return false;
     }
 
     /**

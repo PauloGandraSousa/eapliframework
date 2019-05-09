@@ -31,9 +31,9 @@ package eapli.framework.actions;
 @FunctionalInterface
 public interface Action {
     /**
+     * Perform the desired action represented by this object
      *
-     * @return true if this "scope" should end or to signal OK; false otherwise,
-     *         e.g., signal an error
+     * @return true to signal OK; false otherwise, e.g., signal an error
      */
     boolean execute();
 }

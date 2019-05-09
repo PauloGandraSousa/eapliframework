@@ -30,8 +30,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import eapli.framework.actions.AdderHelper.Add1Action;
-
 /**
  *
  * @author sou03408
@@ -94,49 +92,49 @@ public class ActionsTest {
     @Test
     public void ensureDoIf() {
         final AdderHelper helper = new AdderHelper();
-        Actions.doIf(new Add1Action(helper), () -> true);
+        Actions.doIf(helper.adder(), () -> true);
         assertEquals(1, helper.current());
     }
 
     @Test
     public void ensureDoIfDoesnotExecuteIfFalse() {
         final AdderHelper helper = new AdderHelper();
-        Actions.doIf(new Add1Action(helper), () -> false);
+        Actions.doIf(helper.adder(), () -> false);
         assertEquals(0, helper.current());
     }
 
     @Test
     public void ensureDoIfNot() {
         final AdderHelper helper = new AdderHelper();
-        Actions.doIfNot(new Add1Action(helper), () -> false);
+        Actions.doIfNot(helper.adder(), () -> false);
         assertEquals(1, helper.current());
     }
 
     @Test
     public void ensureDoIfNotDoesnotExecuteIfTrue() {
         final AdderHelper helper = new AdderHelper();
-        Actions.doIfNot(new Add1Action(helper), () -> true);
+        Actions.doIfNot(helper.adder(), () -> true);
         assertEquals(0, helper.current());
     }
 
     @Test
     public void ensureRepeat10Times() {
         final AdderHelper helper = new AdderHelper();
-        Actions.repeat(new Add1Action(helper), 10);
+        Actions.repeat(helper.adder(), 10);
         assertEquals(10, helper.current());
     }
 
     @Test
     public void ensureRepeat0Times() {
         final AdderHelper helper = new AdderHelper();
-        Actions.repeat(new Add1Action(helper), 0);
+        Actions.repeat(helper.adder(), 0);
         assertEquals(0, helper.current());
     }
 
     @Test
     public void ensureRepeatMinus1Times() {
         final AdderHelper helper = new AdderHelper();
-        Actions.repeat(new Add1Action(helper), -1);
+        Actions.repeat(helper.adder(), -1);
         assertEquals(0, helper.current());
     }
 
@@ -148,7 +146,7 @@ public class ActionsTest {
     @Test
     public void ensureRetryWorksAtFirst() {
         final AdderHelper helper = new AdderHelper();
-        final boolean result = Actions.retry(new Add1Action(helper), 10, 20);
+        final boolean result = Actions.retry(helper.adder(), 10, 20);
         assertTrue(result && helper.current() == 1);
     }
 
