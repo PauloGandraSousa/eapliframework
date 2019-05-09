@@ -46,58 +46,58 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public final class StringFormater implements Utilitarian {
 
-    private StringFormater() {
-        // ensure utility
-    }
+	private StringFormater() {
+		// ensure utility
+	}
 
-    /**
-     * returns a pretty formatted JSON object
-     *
-     * From <a href=
-     * "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
-     *
-     * @param input
-     * @return
-     */
-    public static String prettyformatJson(final String input) {
-        final ObjectMapper mapper = new ObjectMapper();
-        try {
-            final Object json = mapper.readValue(input, Object.class);
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
-        } catch (final IOException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
+	/**
+	 * returns a pretty formatted JSON object
+	 *
+	 * From <a href=
+	 * "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
+	 *
+	 * @param input
+	 * @return
+	 */
+	public static String prettyformatJson(final String input) {
+		try {
+			final ObjectMapper mapper = new ObjectMapper();
+			final Object json = mapper.readValue(input, Object.class);
+			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+		} catch (final IOException e) {
+			throw new IllegalArgumentException("Formatting to JSON:" + input, e);
+		}
+	}
 
-    public static String prettyFormatXml(final String input) {
-        return prettyFormatXml(input, 2);
-    }
+	public static String prettyFormatXml(final String input) {
+		return prettyFormatXml(input, 2);
+	}
 
-    /**
-     * returns an XML formated output.
-     * <p>
-     * based in code from <a href=
-     * "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java">
-     * stack overflow</a>
-     *
-     * @param input
-     * @param indent
-     * @return
-     */
-    public static String prettyFormatXml(final String input, final int indent) {
-        final Source xmlInput = new StreamSource(new StringReader(input));
-        final StringWriter stringWriter = new StringWriter();
-        final StreamResult xmlOutput = new StreamResult(stringWriter);
-        final TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        try {
-            transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            transformerFactory.setAttribute("indent-number", indent);
-            final Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.transform(xmlInput, xmlOutput);
-        } catch (final TransformerException e) {
-            throw new IllegalArgumentException(e);
-        }
-        return xmlOutput.getWriter().toString();
-    }
+	/**
+	 * returns an XML formated output.
+	 * <p>
+	 * based in code from <a href=
+	 * "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java">
+	 * stack overflow</a>
+	 *
+	 * @param input
+	 * @param indent
+	 * @return
+	 */
+	public static String prettyFormatXml(final String input, final int indent) {
+		final Source xmlInput = new StreamSource(new StringReader(input));
+		final StringWriter stringWriter = new StringWriter();
+		final StreamResult xmlOutput = new StreamResult(stringWriter);
+		final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		try {
+			transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			transformerFactory.setAttribute("indent-number", indent);
+			final Transformer transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.transform(xmlInput, xmlOutput);
+		} catch (final TransformerException e) {
+			throw new IllegalArgumentException(e);
+		}
+		return xmlOutput.getWriter().toString();
+	}
 }
