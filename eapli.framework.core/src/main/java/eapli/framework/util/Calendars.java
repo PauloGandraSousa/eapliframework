@@ -338,4 +338,34 @@ public final class Calendars implements Utilitarian {
         calendar.setTime(date);
         return calendar;
     }
+
+    /**
+     * sets a date to the last instant of the given day
+     *
+     * @param calendar
+     * @return the last instant of the day
+     */
+    public static Calendar setToEndOfTheDay(final Calendar calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+
+        return calendar;
+    }
+
+    /**
+     * sets a date to the beginning of the day
+     *
+     * @param calendar
+     * @return the first instant of the day
+     */
+    public static Calendar getStartOfTheDay(final Calendar calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar;
+    }
 }
