@@ -26,6 +26,7 @@ package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import eapli.framework.actions.TimedActions;
@@ -66,27 +67,19 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 
     /**
      * identify the consumer application instance. useful if you have multiple
-     * instances of the same application and want to dispatch events to all of them
+     * instances of the same application and want to dispatch events to all of
+     * them
      */
-    private final String instanceKey;
+    @Value("${instanceKey}")
+    private String instanceKey;
+
     /**
      * interval (in milliseconds) between poolings to the event store
      */
-    private final int poolInterval;
+    @Value("${poolInterval}")
+    private int poolInterval;
 
     private volatile boolean timerInitialized;
-
-    /**
-     *
-     * @param instanceKey
-     *            the application instance.
-     * @param poolInterval
-     *            interval (in milliseconds) between poolings to the event store
-     */
-    protected SimplePersistentEventPubSub(final String instanceKey, final int poolInterval) {
-        this.instanceKey = instanceKey;
-        this.poolInterval = poolInterval;
-    }
 
     private void storeConsumptionAndPublish(final EventRecord record) {
         final EventConsumption entity = new EventConsumption(instanceKey, record);
