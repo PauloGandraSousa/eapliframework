@@ -24,13 +24,14 @@
 package eapli.framework.domain.model;
 
 /**
- * a simple base class for aggregate roots
+ * A simple base class for aggregate roots
  *
+ * @param <I>
+ *            the type of business identity
  * @author Paulo Gandra de Sousa
  *
  */
-public abstract class AggregateRootBase<I extends ValueObject> extends DomainEntityBase<I>
-        implements AggregateRoot<I> {
+public abstract class AggregateRootBase<I extends ValueObject> extends DomainEntityBase<I> implements AggregateRoot<I> {
 
     /**
      *

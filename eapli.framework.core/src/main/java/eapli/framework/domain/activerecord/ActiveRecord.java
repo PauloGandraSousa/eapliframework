@@ -32,6 +32,8 @@ import eapli.framework.domain.model.identities.Identifiable;
  * Active Records might have static finder methods or use a separated Finder
  * class.
  *
+ * @param <I>
+ *            the type of the business identity
  * @author Paulo Gandra Sousa
  */
 public interface ActiveRecord<I> extends Identifiable<I> {

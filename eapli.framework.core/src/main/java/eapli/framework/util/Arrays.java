@@ -44,12 +44,13 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * zips two double arrays in to one
+     * zips two double arrays in to one. That is, uses the {@code op} operator
+     * to combine the contents of both source arrays z(i) = op(a(i), b(i))
      *
      * @param a
      * @param b
      * @param op
-     * @return
+     * @return a new array with the zipped contents
      */
     public static double[] zip(final double[] a, final double[] b, final DoubleBinaryOperator op) {
         Preconditions.nonNull(a, b, op);
@@ -69,7 +70,7 @@ public final class Arrays implements Utilitarian {
      *
      * @param src
      * @param map
-     * @return
+     * @return a new array with the mapped contents
      */
     public static double[] map(final double[] src, final DoubleUnaryOperator map) {
         final double[] dest = new double[src.length];
@@ -94,7 +95,7 @@ public final class Arrays implements Utilitarian {
      *            expected number of positions
      * @param map
      *            the mapping function from source to destination, T -> U
-     * @return
+     * @return a new array with the mapped contents
      */
     public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator, final Function<T, U> map) {
         final U[] dest = creator.apply(src.length);
@@ -108,9 +109,8 @@ public final class Arrays implements Utilitarian {
      * applies a transformation to each element of an array, mutating the
      * original array
      *
-     * @param src
+     * @param dest
      * @param map
-     * @return
      */
     public static void transform(final double[] dest, final DoubleUnaryOperator map) {
         for (int i = 0; i < dest.length; i++) {
@@ -122,9 +122,8 @@ public final class Arrays implements Utilitarian {
      * applies a transformation to each element of an array, mutating the
      * original array
      *
-     * @param src
+     * @param dest
      * @param map
-     * @return
      */
     public static <T> void transform(final T[] dest, final UnaryOperator<T> map) {
         for (int i = 0; i < dest.length; i++) {
@@ -138,7 +137,7 @@ public final class Arrays implements Utilitarian {
      *
      * @param src
      * @param elem
-     * @return
+     * @return true if the element is present in the array
      */
     public static <T> boolean contains(final T[] src, final T elem) {
         return indexOf(src, elem) != -1;
@@ -150,7 +149,8 @@ public final class Arrays implements Utilitarian {
      *
      * @param src
      * @param elem
-     * @return
+     * @return the zero-based index where the element is found in the array. -1
+     *         otherwise
      */
     public static <T> int indexOf(final T[] src, final T elem) {
         for (int i = 0; i < src.length; i++) {

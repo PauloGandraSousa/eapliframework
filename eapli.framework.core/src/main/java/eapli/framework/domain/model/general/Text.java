@@ -81,7 +81,7 @@ public class Text implements ValueObject, StringMixin {
      * fluent builder interface starting point
      *
      * @param text
-     * @return
+     * @return a builder
      */
     public static TextBuilder with(final String text) {
         return new TextBuilder(text);
@@ -91,7 +91,7 @@ public class Text implements ValueObject, StringMixin {
      * factory method
      *
      * @param fromText
-     * @return
+     * @return an object
      */
     public static Text valueOf(final String fromText) {
         return new TextBuilder(fromText).build();
@@ -167,10 +167,10 @@ public class Text implements ValueObject, StringMixin {
     }
 
     /**
-     * sentence capitalize, i.e., first word of each sentence is capital letter. a
-     * sentence is defined by the punctuation signals ".", "!" and "?"
+     * sentence capitalize, i.e., first word of each sentence is capital letter.
+     * a sentence is defined by the punctuation signals ".", "!" and "?"
      *
-     * @return
+     * @return a new object which content is this' capitalized
      */
     public Text capitalized() {
         throw new UnsupportedOperationException("Not yet implemented");
@@ -179,7 +179,7 @@ public class Text implements ValueObject, StringMixin {
     /**
      * all text as capital letters
      *
-     * @return
+     * @return a new object
      */
     public Text allCaps() {
         return valueOf(theText.toUpperCase());

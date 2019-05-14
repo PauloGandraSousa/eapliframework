@@ -69,9 +69,8 @@ public class Description implements ValueObject, Serializable, StringMixin {
     /**
      * factory method for obtaining Designation value objects.
      *
-     *
      * @param name
-     * @return
+     * @return a new object corresponding to the value
      */
     public static Description valueOf(final String name) {
         return new Description(name);

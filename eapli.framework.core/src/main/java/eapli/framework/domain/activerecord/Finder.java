@@ -29,6 +29,11 @@ import java.util.List;
  * A Finder provides methods to load (find) ActiveRecord objects in the
  * persistence store and loads then to memory
  *
+ * @param <T>
+ *            the type of business entity to find
+ * @param <K>
+ *            the type of the business identity
+ * 
  * @author Paulo Gandra Sousa
  */
 public interface Finder<T extends ActiveRecord<T>, K> {

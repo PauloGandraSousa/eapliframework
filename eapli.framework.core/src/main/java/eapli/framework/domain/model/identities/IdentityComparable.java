@@ -36,10 +36,10 @@ package eapli.framework.domain.model.identities;
 public interface IdentityComparable<T> extends Identifiable<T> {
 
     /**
-     * checks if the object has the passed business identity parameter
+     * checks if the object has a certain business identity
      *
-     * @param other
-     *            the object to check the identity of
+     * @param otherId
+     *            the identity to compare
      * @return true if the object has that identity
      */
     default boolean hasIdentity(final T otherId) {

@@ -54,17 +54,17 @@ public class Macro implements Action {
     }
 
     /**
-     * returns the action that caused macro execution to stop
+     * Returns the action that caused macro execution to stop
      *
-     * @return
+     * @return the action that caused macro execution to stop
      */
     public Optional<Action> errorCause() {
         return Optional.ofNullable(errorCause);
     }
 
     /**
-     * execute all the actions in the Macro stopping on the first action that fails
-     * (i.e., returns false)
+     * execute all the actions in the Macro stopping on the first action that
+     * fails (i.e., returns false)
      *
      * @see eapli.framework.actions.Action#execute()
      */

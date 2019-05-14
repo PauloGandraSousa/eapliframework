@@ -36,13 +36,13 @@ package eapli.framework.domain.model;
 public interface DomainFactory<T extends DomainEntity<?>> {
 
     /**
-     * Constructs a new instance of the domain entity. most likely this method
+     * Constructs a new instance of the domain entity. Most likely this method
      * is the last step in the building process (following the Builder GoF
      * pattern) where a series of steps to provide the necessary information to
      * the object constructor is previously loaded into the builder.
      *
      * @see org.apache.commons.lang3.builder.Builder
-     * @return
+     * @return a newly (properly) created domain entity
      */
     T build();
 }

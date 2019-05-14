@@ -92,7 +92,9 @@ public final class Actions implements Utilitarian {
      * A default action to throw IllegalStateException binded to a message
      *
      * @param m
-     * @return
+     *            the message to set as the description of the exception to be
+     *            thrown
+     * @return a new Action object that will throw an IllegalStateException
      */
     public static final Action throwState(final String m) {
         return new ThrowStateAction(m);
@@ -102,7 +104,9 @@ public final class Actions implements Utilitarian {
      * A default action to throw IllegalArgumentException binded to a message
      *
      * @param m
-     * @return
+     *            the message to set as the description of the exception to be
+     *            thrown
+     * @return a new Action object that will throw an IllegalArgumentException
      */
     public static final Action throwArgument(final String m) {
         return new ThrowArgumentAction(m);
@@ -125,7 +129,8 @@ public final class Actions implements Utilitarian {
      *
      * @param consequence
      * @param condition
-     * @param msg
+     * @return {@code false} if the condition is not met. otherwise, the result
+     *         of the {@code consequence} action
      */
     public static boolean doIfNot(final Action consequence, final BooleanSupplier condition) {
         if (!condition.getAsBoolean()) {
@@ -140,7 +145,8 @@ public final class Actions implements Utilitarian {
      * @param consequence
      * @param condition
      * @param arg
-     * @param msg
+     * @return {@code false} if the condition is not met. otherwise, the result
+     *         of the {@code consequence} action
      */
     public static <T> boolean doIfNot(final Action consequence, final Predicate<T> condition, final T arg) {
         if (!condition.test(arg)) {
@@ -154,7 +160,8 @@ public final class Actions implements Utilitarian {
      *
      * @param consequence
      * @param condition
-     * @param msg
+     * @return {@code false} if the condition is not met. otherwise, the result
+     *         of the {@code consequence} action
      */
     public static boolean doIf(final Action consequence, final BooleanSupplier condition) {
         if (condition.getAsBoolean()) {
@@ -185,7 +192,9 @@ public final class Actions implements Utilitarian {
      * @param op
      * @param sleep
      * @param maxAttempts
-     * @return
+     * @param progressive
+     * @return true if the action is successful or false if the maximum number
+     *         of retries has been reached
      */
     public static boolean retry(final Action op, final int sleep, final int maxAttempts, final boolean progressive) {
         int atempts = 1;

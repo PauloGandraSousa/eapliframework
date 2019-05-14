@@ -24,20 +24,28 @@
 package eapli.framework.domain.activerecord;
 
 /**
+ * A business object that knows how to handle persistence on its own including
+ * deletion
+ *
+ * @param <I>
+ *            the type of the business identity
  *
  * @author Paulo Gandra Sousa
  */
 public interface DeleteableActiveRecord<I> extends ActiveRecord<I> {
 
     /**
-     * deletes the current object from the persistence store. the object in memory
-     * no longer becomes managed by the repository
+     * deletes the current object from the persistence store. the object in
+     * memory no longer becomes managed by the repository
      */
     void delete();
 
     /**
-     * checks if the object in memory is currently disconnected from the persistence
-     * store
+     * checks if the object in memory is currently disconnected from the
+     * persistence store
+     *
+     * @return true if this instance has been deleted from the persistence store
+     *         or has been marked as deleted
      */
     boolean isDeleted();
 }

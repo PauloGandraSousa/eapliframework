@@ -57,9 +57,9 @@ import java.io.Serializable;
 public interface ValueObject extends Serializable {
 
     /**
-     * returns a representation of this value object as a String.
+     * Returns a representation of this value object as a String.
      *
-     * @return
+     * @return a representation of this value object as a String
      */
     @Override
     String toString();
@@ -71,20 +71,21 @@ public interface ValueObject extends Serializable {
      * "https://www.sitepoint.com/implement-javas-equals-method-correctly/">https://www.sitepoint.com/implement-javas-equals-method-correctly/</a>
      *
      * @param other
-     * @return
+     * @return true if this value object has the same content as the
+     *         {@code other}
      */
     @Override
     public boolean equals(Object other);
 
     /**
-     * hash code of this object according to java rules. i.e., the same fields used
-     * in equals() should be used in hashCode().
+     * hash code of this object according to java rules. i.e., the same fields
+     * used in equals() should be used in hashCode().
      *
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()
      *
-     * @return
+     * @return the hascode
      */
     @Override
     public int hashCode();

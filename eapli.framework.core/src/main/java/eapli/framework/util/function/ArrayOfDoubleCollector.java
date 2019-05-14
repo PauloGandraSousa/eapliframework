@@ -46,8 +46,8 @@ public class ArrayOfDoubleCollector {
     private int lastIdx = -1;
 
     /**
-     * you will need to define a Supplier function that initializes the Collector
-     * with the correct destination array
+     * you will need to define a Supplier function that initializes the
+     * Collector with the correct destination array
      *
      * @param destination
      */
@@ -70,10 +70,11 @@ public class ArrayOfDoubleCollector {
     }
 
     /**
-     * the combiner function of the Collector
+     * Combines the current result with a partial result - i.e., the combiner
+     * function of the Collector
      *
      * @param o
-     * @return
+     * @return the current collector object with an updated status
      */
     public ArrayOfDoubleCollector aggregate(final ArrayOfDoubleCollector o) {
         Preconditions.nonNull(o);
@@ -89,10 +90,11 @@ public class ArrayOfDoubleCollector {
     }
 
     /**
-     * helper factory method
+     * Factory method to create a new instance of a collector
      *
-     * @param seed
-     * @return
+     * @param destination
+     *            the underlying array where to collect the values
+     * @return the new object
      */
     public static Collector<Double, ArrayOfDoubleCollector, ArrayOfDoubleCollector> collector(
             final double[] destination) {

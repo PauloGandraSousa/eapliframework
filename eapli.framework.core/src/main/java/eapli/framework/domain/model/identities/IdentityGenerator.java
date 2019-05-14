@@ -24,10 +24,21 @@
 package eapli.framework.domain.model.identities;
 
 /**
+ * A capability to generate new identities
+ *
  * @author Paulo Gandra de Sousa
+ *
+ * @param <T>
+ *            the type of business identity that will be genrated
  *
  */
 @FunctionalInterface
 public interface IdentityGenerator<T> {
+
+    /**
+     * generates a new identity
+     *
+     * @return the generated identity
+     */
     T newId();
 }

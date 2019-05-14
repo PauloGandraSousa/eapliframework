@@ -32,6 +32,9 @@ import java.io.Serializable;
  * @todo need to check the implications in terms of JPA inheritance if we use
  *       this base class
  *
+ * @param <I>
+ *            the type of business identity
+ *
  * @author Paulo Gandra de Sousa
  *
  */

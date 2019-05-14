@@ -61,10 +61,11 @@ public interface DomainEntity<I /* extends ValueObject */> extends Identifiable<
      * "https://thoughts-on-java.org/ultimate-guide-to-implementing-equals-and-hashcode-with-hibernate/">Toughts
      * on java</a>
      *
-     * see sameAs().
+     * see {@link #sameAs(Object)}.
      *
      * @param other
-     * @return
+     * @return true if this domain entity refers to the same real-world entity
+     *         as the {@code other}
      */
     @Override
     boolean equals(Object other);
@@ -78,7 +79,7 @@ public interface DomainEntity<I /* extends ValueObject */> extends Identifiable<
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()
      *
-     * @return
+     * @return the hascode
      */
     @Override
     int hashCode();
@@ -89,7 +90,8 @@ public interface DomainEntity<I /* extends ValueObject */> extends Identifiable<
      * content of the object by value.
      *
      * @param other
-     * @return
+     * @return true if this domain entity have the "same content" as the
+     *         {@code other}
      */
     boolean sameAs(Object other);
 }

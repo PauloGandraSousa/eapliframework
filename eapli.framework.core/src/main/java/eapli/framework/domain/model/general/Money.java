@@ -26,6 +26,7 @@ package eapli.framework.domain.model.general;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.stream.Collector;
 
@@ -35,15 +36,57 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 /**
- * represents money values.
+ * Represents money values.
  *
- * based on http://martinfowler.com/eaaDev/quantity.html
+ * For a full description see the book Patterns of Enterprise Application
+ * Architecture (Martin Fowler) page 488 or
+ * <a href="https://www.martinfowler.com/eaaCatalog/money.html">PoEAA Money</a>
+ *
+ * See also a <a href=
+ * "https://deque.blog/2017/08/17/a-study-of-4-money-class-designs-featuring-martin-fowler-kent-beck-and-ward-cunningham-implementations/">good
+ * discussion</a> about pros and cons and different approaches
+ *
+ * A large proportion of the computers in this world manipulate money, so it's
+ * always puzzled me that money isn't actually a first class data type in any
+ * mainstream programming language. The lack of a type causes problems, the most
+ * obvious surrounding currencies. If all your calculations are done in a single
+ * m_currency, this isn't a huge problem, but once you involve multiple
+ * currencies you want to avoid adding your dollars to your yen without taking
+ * the m_currency differences into account. The more subtle problem is with
+ * rounding. Monetary calculations are often rounded to the smallest m_currency
+ * unit. When you do this it's easy to lose pennies (or your local equivalent)
+ * because of rounding errors.
+ *
+ * The good thing about object-oriented programming is that you can fix these
+ * problems by creating a Money class that handles them. Of course, it's still
+ * surprising that none of the mainstream base class libraries actually do this.
+ *
+ * - Martin Fowler
+ *
+ * Example Usage:
+ *
+ * <code>
+ * Money a = Money.dollars(12.98);
+ * Money b = Money.dollars(-11.98);
+ * Money expected = Money.dollars(1.00);
+ * Money result = a.add(b);
+ * assert expected.equals(result);
+ * </code>
+ *
+ * You'll notice there are no setters. Money is a Value Object and is thus
+ * immutable. It helps to have a variety of constructors to make it easy to make
+ * monies. Constructors that convert from basic numeric types are always useful.
+ *
+ * <strong>NOTE:</strong> The original source code was available at
+ * <a href="http://martinfowler.com/eaaDev/quantity.html">MF bliki</a>, however
+ * that link is now broken
  *
  */
 @Embeddable
 public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     private static final long serialVersionUID = 1L;
+
     private static final transient int HUNDRED = 100;
     // @Convert(converter = MoneyAmountConverter.class)
     private final BigInteger amount;
@@ -51,6 +94,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     /**
      * For ORM tool only
+     *
+     * @author sou03408
      */
     protected Money() {
         amount = null;
@@ -59,11 +104,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     /**
      * Constructs a new Money object.
-     *
-     * You'll notice there are no setters. Money is a Value Object and is thus
-     * immutable. It helps to have a variety of constructors to make it easy to
-     * make monies. Constructors that convert from basic numeric types are
-     * always useful.
      *
      * @param amount
      *            the amount in the units of currency, e.g., 100.50 EUR
@@ -74,6 +114,12 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
         this.currency = currency;
     }
 
+    /**
+     * Constructs a new Money object.
+     *
+     * @param amount
+     * @param currency
+     */
     public Money(final long amount, final Currency currency) {
         this.amount = BigInteger.valueOf(amount * HUNDRED);
         this.currency = currency;
@@ -85,6 +131,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * published" interface
      *
      * @TODO check other ways to avoid having this special constructor
+     * @author sou03408
      * @param amount
      * @param currency
      */
@@ -94,6 +141,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
+     * Constructs a new Money object.
      *
      * @param amountInCents
      * @param currency
@@ -107,16 +155,26 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * If you use one currency a lot, you may want a special constructor for
-     * that currency.
+     * Factory method to construct a Money object of {@code amount} EUR.
+     *
+     * @param amount
+     * @return a Money object of {@code amount} EUR
+     *
      */
     public static Money dollars(final double amount) {
+        /*
+         * If you use one currency a lot, you may want a special constructor for
+         * that currency.
+         */
         return new Money(amount, Currency.getInstance("USD"));
     }
 
     /**
-     * If you use one currency a lot, you may want a special constructor for
-     * that currency.
+     * Factory method to construct a Money object of {@code amount} USD.
+     *
+     * @author sou03408
+     * @param amount
+     * @return a Money object of {@code amount} USD
      */
     public static Money euros(final double amount) {
         return new Money(amount, Currency.getInstance("EUR"));
@@ -125,11 +183,12 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * parses a string representation of a money, e.g., "123.50 EUR"
      *
-     * @param arg0
-     * @return
+     * @author sou03408
+     * @param value
+     * @return a new object corresponding to the value
      */
-    public static Money valueOf(final String arg0) {
-        final String[] parts = arg0.split(" ");
+    public static Money valueOf(final String value) {
+        final String[] parts = value.split(" ");
         Preconditions.areEqual(parts.length, 2);
 
         final double am = Double.parseDouble(parts[0]);
@@ -143,19 +202,28 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * collecting Money objects from streams have the implication of creating a
      * new Money object for each collect step which might impact performance.
      *
-     * alternatively the collector returned could use an internal mutable
-     * representation of Money and just create an instance when combining
-     * streams
-     *
-     * @return
+     * @author sou03408
+     * @param zero
+     * @return a collector instance
      */
     public static Collector<Money, MoneyCollector, Money> collector(final Money zero) {
+        /*
+         * alternatively the collector returned could use an internal mutable
+         * representation of Money and just create an instance when combining
+         * streams
+         *
+         */
         Preconditions.nonNull(zero);
 
         return Collector.of(() -> new MoneyCollector(zero), (a, e) -> a.add(e), (a1, a2) -> a1.combine(a2),
                 a -> a.current);
     }
 
+    /**
+     *
+     * @author sou03408
+     *
+     */
     private static class MoneyCollector {
         private Money current;
 
@@ -176,26 +244,29 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * Returns the amount portion of this Money object.
      *
-     * Notice that I use a BigInteger. In Java I could equally well use a
-     * BigDecimal, but in many languages an integer is the only decent option,
-     * so using an integer seems the best for explanation. Don't be afraid to
-     * choose your representation of the amount part of a quantity based on
-     * performance factors. The beauty of objects is that you can choose any
-     * data structure you like on the inside, providing you hide it on the
-     * outside.
+     * @return the amount portion of this Money object
      */
     public double amount() {
+        /*
+         * Notice that I use a BigInteger. In Java I could equally well use a
+         * BigDecimal, but in many languages an integer is the only decent
+         * option, so using an integer seems the best for explanation. Don't be
+         * afraid to choose your representation of the amount part of a quantity
+         * based on performance factors. The beauty of objects is that you can
+         * choose any data structure you like on the inside, providing you hide
+         * it on the outside.
+         */
         return amount.doubleValue() / HUNDRED;
     }
 
     public BigDecimal amountAsDecimal() {
-        return BigDecimal.valueOf(amount());
+        return new BigDecimal(amount).divide(BigDecimal.valueOf(HUNDRED));
     }
 
     /**
      * Returns the currency of this Money object.
      *
-     * @return
+     * @return the currency
      */
     public Currency currency() {
         return currency;
@@ -204,10 +275,17 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * Adds two Money objects and returns the result as a new object.
      *
-     * For addition and subtraction I'm not trying to do any fancy conversion.
-     * Notice that I'm using a special constructor with a marker argument.
+     * @param arg
+     * @return a new Money with the value of the addition
+     * @throws IllegalArgumentException
+     *             if the currencies are not the same
      */
     public Money add(final Money arg) {
+        /*
+         * For addition and subtraction I'm not trying to do any fancy
+         * conversion. Notice that I'm using a special constructor with a marker
+         * argument.
+         */
         Preconditions.ensure(() -> currency.equals(arg.currency), "Cannot add different currencies");
 
         return new Money(amount.add(arg.amount), currency);
@@ -217,18 +295,37 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Subtracts two Money instances and returns a third one with the result.
      *
      * @param arg
-     * @return
+     * @return a new value corresponding to the subtraction
+     * @throws IllegalArgumentException
+     *             if the currencies are not the same
      */
     public Money subtract(final Money arg) {
         return add(arg.negate());
     }
 
+    /**
+     * Returns a new object which amount's sign is swapped, i.e., -this.amount.
+     * E.g.
+     *
+     * <pre>
+     * Money m1 = Money.euros(100);
+     * Money m2 = m1.negate(); // -100 EUR
+     * </pre>
+     *
+     * @return a new object which amount's sign is swapped
+     */
     public Money negate() {
         return new Money(amount.negate(), currency);
     }
 
     /**
-     * Multiplies two Money objects and returns the result a new object.
+     * Multiplies this Money object by a scalar and returns the result as a new
+     * Money. Business-wise it doesn't make sense to perform 5€ * 7€ but it
+     * makes sense to perform 12 * 5€, e.g., to get the total annual sum of a
+     * monthly payment
+     *
+     * @param arg
+     * @return a new Money with the value of the multiplication
      *
      */
     public Money multiply(final double arg) {
@@ -243,8 +340,12 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * to take care of errant pennies. We'll do that by returning an array of
      * monies, such that the sum of the array is equal to the original amount,
      * and the original amount is distributed fairly between the elements of the
-     * array. Fairly in this sense means those at the begining get the extra
+     * array. Fairly in this sense means those at the beginning get the extra
      * pennies.
+     *
+     * @param denominator
+     * @return an array of Money objects corresponding to the allocation of each
+     *         denominator
      */
     public Money[] divide(final int denominator) {
         final BigInteger bigDenominator = BigInteger.valueOf(denominator);
@@ -263,44 +364,71 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * Compares two Money objects.
      *
-     * Next we'll look at comparing monies, in Java the approach is to implement
-     * comparable.
      */
     @Override
     public int compareTo(final Money arg) {
         Preconditions.areEqual(currency, arg.currency, "Cannot add different currencies");
 
+        /*
+         * Next we'll look at comparing monies, in Java the approach is to
+         * implement comparable.
+         */
         return amount.compareTo(arg.amount);
     }
 
     /**
-     * Compares two Money objects.
+     * Compares two Money objects checking if this money's amount is greater
+     * than the other
      *
-     * It's also useful to provide some better named operations such as: That
-     * makes methods that need the comparison much easier to read.
+     * @param arg
+     * @return true if this money's amount is greater than the other
      */
-    public boolean greaterThan(final Money arg) {
+    public boolean isGreaterThan(final Money arg) {
+        /*
+         * It's also useful to provide some better named operations such as
+         * greaterThan. That makes methods that need the comparison much easier
+         * to read.
+         */
         return compareTo(arg) > 0;
     }
 
     /**
-     * Compares two Money objects.
+     * Compares two Money objects checking if this money's amount is less than
+     * the other
+     *
+     * @param arg
+     * @return true if this money's amount is less than the other
      */
-    public boolean lessThan(final Money arg) {
+    public boolean isLessThan(final Money arg) {
+        /*
+         * It's also useful to provide some better named operations such as
+         * greaterThan. That makes methods that need the comparison much easier
+         * to read.
+         */
         return compareTo(arg) < 0;
     }
 
     /**
-     * Compares two Money objects.
+     * Compares two Money objects cheking if this money's amount is greater than
+     * or equal to the other.
+     *
+     * @author sou03408
+     * @param arg
+     * @return if this money's amount is greater than or equal to the other
      */
-    public boolean greaterThanOrEqual(final Money arg) {
+    public boolean isGreaterThanOrEqual(final Money arg) {
         return compareTo(arg) >= 0;
     }
 
     /**
-     * Compares two Money objects.
+     * Compares two Money objects checking if this money's amount is less than
+     * or equal to the other.
+     *
+     * @author sou03408
+     * @param arg
+     * @return if this money's amount is less than or equal to the other
      */
-    public boolean lessThanOrEqual(final Money arg) {
+    public boolean isLessThanOrEqual(final Money arg) {
         return compareTo(arg) <= 0;
     }
 
@@ -335,5 +463,20 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     @Override
     public String toString() {
         return BigDecimal.valueOf(amount()) + " " + currency();
+    }
+
+    /**
+     * scraped from
+     * http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html
+     *
+     * @return a formatted representation of this Money value based on the rules
+     *         defined by the currency Locale
+     */
+    public String formatted() {
+        final NumberFormat nf = NumberFormat.getCurrencyInstance();
+        nf.setCurrency(currency);
+        nf.setGroupingUsed(true);
+        nf.setMaximumFractionDigits(currency.getDefaultFractionDigits());
+        return nf.format(amount.doubleValue());
     }
 }

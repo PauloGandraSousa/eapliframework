@@ -90,8 +90,8 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
     }
 
     /**
-     * creates a new domain consisting of the intersection of elements between this
-     * domain and another domain.
+     * creates a new domain consisting of the intersection of elements between
+     * this domain and another domain.
      *
      * for instance, <br/>
      * D1 = [1, 2 , 3, 4] <br/>
@@ -106,7 +106,7 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * R14 = D1.intersection(D4) = []
      *
      * @param other
-     * @return
+     * @return a new domain instance corresponding to the intersection
      */
     public DiscreteDomain<T> intersection(final DiscreteDomain<T> other) {
         final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
@@ -119,8 +119,8 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
     }
 
     /**
-     * creates a new domain consisting of the union of elements between this domain
-     * and another domain
+     * creates a new domain consisting of the union of elements between this
+     * domain and another domain
      *
      * for instance, <br/>
      * D1 = [1, 2 , 3, 4] <br/>
@@ -135,7 +135,7 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * R14 = D1.union(D4) = [1, 2 , 3, 4]
      *
      * @param other
-     * @return
+     * @return a new domain instance corresponding to the union
      */
     public DiscreteDomain<T> union(final DiscreteDomain<T> other) {
         final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
@@ -145,9 +145,10 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
     }
 
     /**
-     * creates a new domain consisting of the complement of elements between this
-     * domain and another domain, that is, a domain with the elements of this domain
-     * if and only if those elements do not exist in the other domain
+     * Creates a new domain consisting of the complement of elements between
+     * this domain and another domain, that is, a domain with the elements of
+     * this domain if and only if those elements do not exist in the other
+     * domain
      *
      * for instance, <br/>
      * D1 = [1, 2 , 3, 4] <br/>
@@ -162,7 +163,7 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * R14 = D1.complement(D4) = [1, 2, 3, 4]
      *
      * @param other
-     * @return
+     * @return a new domain corresponding to the complement
      */
     public DiscreteDomain<T> without(final DiscreteDomain<T> other) {
         final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
@@ -177,10 +178,10 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
     }
 
     /**
-     * creates a new domain without the desired elements
+     * Creates a new domain without the desired elements
      *
      * @param someElements
-     * @return
+     * @return a new domain corresponding to the complement
      */
     public DiscreteDomain<T> without(final T... someElements) {
         final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
@@ -196,7 +197,9 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
     }
 
     /**
-     * returns an iterator over the domain guaranteeing its immutability
+     * Returns an iterator over the domain guaranteeing its immutability
+     *
+     * @return an iterator over the domain
      */
     @Override
     public Iterator<T> iterator() {

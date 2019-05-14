@@ -68,9 +68,8 @@ public class Designation implements ValueObject, Serializable, StringMixin {
     /**
      * factory method for obtaining Designation value objects.
      *
-     *
      * @param name
-     * @return
+     * @return a new object corresponding to the value
      */
     public static Designation valueOf(final String name) {
         return new Designation(name);

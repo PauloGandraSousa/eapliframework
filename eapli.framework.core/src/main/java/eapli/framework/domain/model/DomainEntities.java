@@ -45,7 +45,8 @@ public final class DomainEntities {
      *
      * @param one
      * @param other
-     * @return
+     * @return true if the two objects refer to the same real world entity, that
+     *         is, they have the same identity
      */
     public static boolean areEqual(final DomainEntity<?> one, final Object other) {
         if (other == null || one == null) {
@@ -63,13 +64,13 @@ public final class DomainEntities {
     }
 
     /**
-     * creates an hash code of the domain entity passed as argument, based on
+     * Creates an hash code of the domain entity passed as argument, based on
      * its identity
      *
-     * @param one
-     * @return
+     * @param aDomainEntity
+     * @return the hashcode of the domain entity
      */
-    public static int hashCode(final DomainEntity<?> one) {
-        return new HashCoder().of(one.identity()).code();
+    public static int hashCode(final DomainEntity<?> aDomainEntity) {
+        return new HashCoder().of(aDomainEntity.identity()).code();
     }
 }

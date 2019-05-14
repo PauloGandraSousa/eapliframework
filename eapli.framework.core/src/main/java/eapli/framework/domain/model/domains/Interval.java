@@ -128,7 +128,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @param end
      *            anchor end of the interval or null to represent infinity
      * @param startBoundary
-     *            indicates if the interval is open or closed at the start anchor
+     *            indicates if the interval is open or closed at the start
+     *            anchor
      * @param endBoundary
      *            indicates if the interval is open or closed at the end anchor
      */
@@ -163,8 +164,10 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * A factory method for closed intervals that start at a specific anchor point
+     * A factory method for closed intervals that start at a specific anchor
+     * point
      *
+     * @param start
      * @return a builder
      */
     public static <T extends Comparable<T> & Serializable> IntervalBuilder<T> closedFrom(final T start) {
@@ -174,6 +177,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     /**
      * A factory method for open intervals that start at a specific anchor point
      *
+     * @param start
      * @return a builder
      */
     public static <T extends Comparable<T> & Serializable> IntervalBuilder<T> openFrom(final T start) {
@@ -184,9 +188,9 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     private static final Interval EMPTY = new Interval(true);
 
     /**
-     * returns an empty interval
+     * Returns an empty interval
      *
-     * @return
+     * @return an empty interval
      */
     @SuppressWarnings("unchecked")
     public static <T extends Comparable<T> & Serializable> Interval<T> empty() {
@@ -205,7 +209,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * checks if a value belongs in this interval
      *
      * @param target
-     * @return
+     * @return {@code true} if the value is part of this interval
      */
     public boolean includes(final T target) {
         if (isEmpty()) {
@@ -268,7 +272,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * checks if this interval intersects another interval
      *
      * @param other
-     * @return
+     * @return {@code true} if this interval intersects another interval
      */
     public boolean intersects(final Interval<T> other) {
         return !this.intersection(other).equals(empty());
@@ -279,39 +283,39 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * another one
      *
      * @param other
-     * @return
+     * @return a new interval corresponding to the intersection
      */
     public Interval<T> intersection(final Interval<T> other) {
         throw new UnsupportedOperationException("Not yet developed");
     }
 
     /**
-     * returns a new interval by extending the start of this one. the
-     * openness/closeness of the start boundary as well as the end will be the same
-     * of the original interval
+     * returns a new interval by extending/contracting the start of this one.
+     * the openness/closeness of the start boundary as well as the end will be
+     * the same of the original interval
      *
-     * @param other
-     * @return
+     * @param newStart
+     * @return a new interval corresponding to the expansion/contraction
      */
     public Interval<T> withStart(final T newStart) {
         return new Interval<>(newStart, this.startBoundary, this.end, this.endBoundary);
     }
 
     /**
-     * returns a new interval by extending the end of this one. the
-     * openness/closeness of the end boundary as well as the start will be the same
-     * of the original interval
+     * returns a new interval by extending/contracting the end of this one. the
+     * openness/closeness of the end boundary as well as the start will be the
+     * same of the original interval
      *
-     * @param other
-     * @return
+     * @param newEnd
+     * @return a new interval corresponding to the extension/contraction
      */
     public Interval<T> withEnd(final T newEnd) {
         return new Interval<>(this.start, this.startBoundary, newEnd, this.endBoundary);
     }
 
     /**
-     * checks if this interval overlaps another one, that is, if this interval fully
-     * contains the other one.
+     * checks if this interval overlaps another one, that is, if this interval
+     * fully contains the other one.
      *
      * for instance
      *
@@ -336,7 +340,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * B.overlaps(D) == true
      *
      * @param other
-     * @return
+     * @return {@code true} if this intervals overlaps the other
      */
     public boolean overlaps(final Interval<T> other) {
         throw new UnsupportedOperationException("Not yet developed");

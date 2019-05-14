@@ -70,21 +70,26 @@ public class ChainedAction implements Action {
     }
 
     /**
-     * Builder method. Creates a chained action
+     * Creates a chained action that will execute the {@code firstAction}
+     * action.
      *
-     * @param first
-     * @return
+     * Builder method useful in conjunction with @link #then(Action)}
+     *
+     * @param firstAction
+     * @return the new object
      */
-    public static ChainedAction first(final Action first) {
-        return new ChainedAction(Actions.SUCCESS, first);
+    public static ChainedAction first(final Action firstAction) {
+        return new ChainedAction(Actions.SUCCESS, firstAction);
     }
 
     /**
-     * Builder method. Creates a new ChainedAction where the {@code next} action
-     * is appended to the end of the current chain
+     * Creates a new ChainedAction where the {@code next} action is appended to
+     * the end of the current chain.
+     *
+     * Builder method useful in conjunction with {@link #first(Action)}
      *
      * @param next
-     * @return
+     * @return the new object
      */
     public ChainedAction then(final Action next) {
         return new ChainedAction(this, next);
