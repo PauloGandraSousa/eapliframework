@@ -69,7 +69,6 @@ public class Description implements ValueObject, Serializable, StringMixin {
     /**
      * factory method for obtaining Designation value objects.
      *
-     *
      * @param name
      * @return
      */

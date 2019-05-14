@@ -41,14 +41,14 @@ public interface DomainEvent extends ValueObject, Serializable {
     /**
      * returns the date and time when the event occurred in the domain
      *
-     * @return
+     * @return the date and time when the event occurred in the domain
      */
     Calendar occurredAt();
 
     /**
      * returns the date and time when the event was recorded in the system
      *
-     * @return
+     * @return the date and time when the event was recorded in the system
      */
     Calendar registeredAt();
 }

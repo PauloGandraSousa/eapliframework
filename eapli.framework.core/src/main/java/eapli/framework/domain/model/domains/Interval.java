@@ -128,7 +128,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @param end
      *            anchor end of the interval or null to represent infinity
      * @param startBoundary
-     *            indicates if the interval is open or closed at the start anchor
+     *            indicates if the interval is open or closed at the start
+     *            anchor
      * @param endBoundary
      *            indicates if the interval is open or closed at the end anchor
      */
@@ -163,7 +164,10 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * A factory method for closed intervals that start at a specific anchor point
+     * A factory method for closed intervals that start at a specific anchor
+     * point
+     * 
+     * @param start
      *
      * @return a builder
      */
@@ -173,6 +177,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
 
     /**
      * A factory method for open intervals that start at a specific anchor point
+     * 
+     * @param start
      *
      * @return a builder
      */
@@ -287,8 +293,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
 
     /**
      * returns a new interval by extending the start of this one. the
-     * openness/closeness of the start boundary as well as the end will be the same
-     * of the original interval
+     * openness/closeness of the start boundary as well as the end will be the
+     * same of the original interval
      *
      * @param other
      * @return
@@ -299,8 +305,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
 
     /**
      * returns a new interval by extending the end of this one. the
-     * openness/closeness of the end boundary as well as the start will be the same
-     * of the original interval
+     * openness/closeness of the end boundary as well as the start will be the
+     * same of the original interval
      *
      * @param other
      * @return
@@ -310,8 +316,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * checks if this interval overlaps another one, that is, if this interval fully
-     * contains the other one.
+     * checks if this interval overlaps another one, that is, if this interval
+     * fully contains the other one.
      *
      * for instance
      *
