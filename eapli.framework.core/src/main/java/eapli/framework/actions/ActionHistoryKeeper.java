@@ -66,8 +66,8 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * undoes the last action. the action is removed from history and placed in the
-     * redo list
+     * undoes the last action. the action is removed from history and placed in
+     * the redo list
      */
     public void undo() {
         Invariants.ensure(this::canUndo);
@@ -80,7 +80,7 @@ public class ActionHistoryKeeper {
     /**
      * checks if there are any actions in the history
      *
-     * @return
+     * @return true if there are any actions in the history
      */
     public boolean canUndo() {
         return !history.isEmpty();

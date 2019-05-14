@@ -26,11 +26,10 @@ package eapli.framework.domain.model;
 import java.io.Serializable;
 
 /**
- * a simple base class for domain entities providing for equality test thru
- * business identity
+ * A simple base class for domain entities providing for equality test thru
+ * business identity.
  *
- * @todo need to check the implications in terms of JPA inheritance if we use
- *       this base class
+ * make sure you set the proper JPA inheritance mapping if using this base class
  *
  * @author Paulo Gandra de Sousa
  *
