@@ -45,9 +45,10 @@ public class ActionHistoryKeeper {
     private final Deque<UndoableAction> forward = new ArrayDeque<>();
 
     /**
-     * executes the action and saves it in the history
+     * Executes the action and saves it in the history
      *
      * @param action
+     *            the action to execute and save
      */
     public void execute(final UndoableAction action) {
         action.execute();
@@ -55,10 +56,11 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * saves an action in the history. assumes, the caller already executed the
+     * Saves an action in the history. Assumes, the caller already executed the
      * action
      *
      * @param action
+     *            the action to save
      */
     public void save(final UndoableAction action) {
         history.push(action);
@@ -66,8 +68,8 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * undoes the last action. the action is removed from history and placed in the
-     * redo list
+     * Undo the last action in the history. The action is removed from history
+     * and placed in the redo list
      */
     public void undo() {
         Invariants.ensure(this::canUndo);
@@ -78,16 +80,16 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * checks if there are any actions in the history
+     * Checks if there are any actions in the history
      *
-     * @return
+     * @return true if the history is not empty
      */
     public boolean canUndo() {
         return !history.isEmpty();
     }
 
     /**
-     * redoes the last undone action
+     * Redo the last undone action
      */
     public void redo() {
         Invariants.ensure(this::canRedo);
@@ -97,9 +99,9 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * checks if there are any actions to redo
+     * Checks if there are any actions to redo
      *
-     * @return
+     * @return true if there are actions in the redo history
      */
     public boolean canRedo() {
         return !forward.isEmpty();

@@ -70,13 +70,13 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
      * instances of the same application and want to dispatch events to all of
      * them
      */
-    @Value("${instanceKey}")
+    @Value("${eapli.framework.pubsub.instanceKey}")
     private String instanceKey;
 
     /**
      * interval (in milliseconds) between poolings to the event store
      */
-    @Value("${poolInterval}")
+    @Value("${eapli.framework.pubsub.poolInterval}")
     private int poolInterval;
 
     private volatile boolean timerInitialized;

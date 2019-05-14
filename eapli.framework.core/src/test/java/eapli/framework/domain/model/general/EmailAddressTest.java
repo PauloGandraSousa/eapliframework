@@ -32,10 +32,6 @@ import org.junit.Test;
  */
 public class EmailAddressTest {
 
-    /**
-     * Test method for
-     * {@link eapli.framework.domain.model.general.EmailAddress#EmailAddress(java.lang.String)}.
-     */
     @Test
     public void testEmailAddress() {
         Assert.assertNotNull(new EmailAddress("geral@acme.com"));

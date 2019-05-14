@@ -39,18 +39,17 @@ public abstract class AbstractUI {
     public static final String BORDER = "+==============================================================================+";
 
     /**
-     * derived classes should override this method to perform the actual rendering
-     * of the UI. follows the Template Method pattern
+     * derived classes should override this method to perform the actual
+     * rendering of the UI. follows the Template Method pattern
      *
      * @return true if the user wants to leave this UI
      */
     protected abstract boolean doShow();
 
     /**
-     * derived classes should override this method to provide the title of the
-     * "window"
+     * The title of the "window"
      *
-     * @return
+     * @return the title of the window
      */
     public abstract String headline();
 
