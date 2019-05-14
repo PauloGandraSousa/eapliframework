@@ -32,8 +32,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domain.model.domains.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -48,7 +46,7 @@ public class ExtendedStartIntervalTest extends AbstractIntervalTest {
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Extended Start/End Range");
-        instance = Interval.closedFrom(START).closedTo(END).build().withStart(NEW_START);
+        instance = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
     }
 
     @AfterClass

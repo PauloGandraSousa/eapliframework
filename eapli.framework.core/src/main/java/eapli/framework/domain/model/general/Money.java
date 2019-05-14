@@ -85,6 +85,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * published" interface
      *
      * @TODO check other ways to avoid having this special constructor
+     * @author Paulo Gandra de Sousa
      * @param amount
      * @param currency
      */

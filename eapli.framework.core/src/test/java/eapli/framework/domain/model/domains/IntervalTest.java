@@ -29,8 +29,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domain.model.domains.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -40,13 +38,13 @@ public class IntervalTest extends AbstractIntervalTest {
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Range");
-        instance = Interval.openFrom(START).openTo(END).build();
+        instance = Interval.openFrom(START).openTo(END);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureStartBiggerThanEndIsNotAllowed() {
         System.out.println("ensureStartBiggerThanEndIsNotAllowed");
-        Interval.openFrom(END).openTo(START).build();
+        Interval.openFrom(END).openTo(START);
     }
 
     @Test
@@ -76,7 +74,7 @@ public class IntervalTest extends AbstractIntervalTest {
     @Test(expected = IllegalArgumentException.class)
     public void ensureEmptyRangeIsNotAllowed() {
         System.out.println("ensureEmptyRangeIsNotAllowed");
-        Interval.openFrom(START).openTo(START).build();
+        Interval.openFrom(START).openTo(START);
     }
 
     @Test

@@ -30,8 +30,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domain.model.domains.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -42,7 +40,7 @@ public class FromInfinityOpenIntervalTest extends AbstractIntervalTest {
     public static void setUpClass() {
         System.out.println("FromInfinityOpenRangeTest");
         final Interval.IntervalBuilder<Long> b = Interval.fromInfinity();
-        instance = b.openTo(END).build();
+        instance = b.openTo(END);
     }
 
     @Test
