@@ -26,7 +26,7 @@ package eapli.framework.representations;
 /**
  * A business object that can guide the generation of a representation of itself
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 @FunctionalInterface

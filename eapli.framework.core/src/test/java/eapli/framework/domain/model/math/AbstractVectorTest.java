@@ -35,7 +35,7 @@ import eapli.framework.validations.NumberPredicates;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public abstract class AbstractVectorTest {

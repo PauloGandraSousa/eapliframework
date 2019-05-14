@@ -44,7 +44,7 @@ import javax.persistence.TypedQuery;
  * <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
  * implementation patterns</a>
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public abstract class JpaAbstractRepository {

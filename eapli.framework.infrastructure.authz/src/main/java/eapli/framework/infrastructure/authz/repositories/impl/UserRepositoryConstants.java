@@ -25,7 +25,7 @@ package eapli.framework.infrastructure.authz.repositories.impl;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 final class UserRepositoryConstants {

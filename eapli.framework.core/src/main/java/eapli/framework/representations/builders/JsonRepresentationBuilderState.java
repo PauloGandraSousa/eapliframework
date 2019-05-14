@@ -31,7 +31,7 @@ import eapli.framework.validations.Invariants;
 /**
  * Internal state management for the JSON representation builder
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 /* package */ class JsonRepresentationBuilderState {
@@ -39,7 +39,7 @@ import eapli.framework.validations.Invariants;
     /**
      * type of JSON document we are building, either a collection or an object.
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      *
      */
     private enum JsonDocumentType {
@@ -52,7 +52,7 @@ import eapli.framework.validations.Invariants;
      * indicates whether the builder is currently building an object or a
      * collection
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      *
      */
     private static final class StateContext {

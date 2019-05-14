@@ -38,7 +38,7 @@ import eapli.framework.validations.Invariants;
  * library for marshaling and unmarshaling like
  * <a href="https://github.com/FasterXML/jackson">Jackson</a>
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class JsonRepresentationBuilder implements RepresentationBuilder<String> {

@@ -13,7 +13,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
  * the JPA implementation for scenarios where the application is not running in
  * a container
  *
- * @author sou03408.
+ * @author Paulo Gandra de Sousa.
  */
 public class JpaAutoTxUserRepository extends JpaAutoTxRepository<SystemUser, Username, Username>
         implements UserRepository {

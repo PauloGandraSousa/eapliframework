@@ -28,7 +28,7 @@ import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Target;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 @Target(FIELD)

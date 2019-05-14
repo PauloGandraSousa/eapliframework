@@ -332,6 +332,36 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
         return amount.signum();
     }
 
+    /**
+     * Checks if this amount is negative
+     *
+     * @author Paulo Gandra de Sousa
+     * @return true if this amount is negative
+     */
+    public boolean isNegative() {
+        return signum() == -1;
+    }
+
+    /**
+     * checks if this amount is positive
+     *
+     * @author Paulo Gandra de Sousa
+     * @return true if this amount is positive
+     */
+    public boolean isPositive() {
+        return signum() == 1;
+    }
+
+    /**
+     * Checks if this amount is zero
+     *
+     * @author Paulo Gandra de Sousa
+     * @return true if this amount is zero
+     */
+    public boolean isZero() {
+        return signum() == 0;
+    }
+
     @Override
     public String toString() {
         return BigDecimal.valueOf(amount()) + " " + currency();
