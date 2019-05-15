@@ -149,10 +149,22 @@ public class IntervalCompareTest {
 
     // TODO other comparison scenarios
     // ]-I, x[
-    // E
-    // U
-    // IOX;
-    // ICX;
+
+    @Test
+    public void ensureIOXIsAfterEmpty() {
+        assertEquals(1, IOX.compareTo(E));
+    }
+
+    @Test
+    public void ensureIOXIsBeforeUniversal() {
+        assertEquals(-1, IOX.compareTo(U));
+    }
+
+    @Test
+    public void ensureIOXIsSame() {
+        assertEquals(0, IOX.compareTo(IOX));
+    }
+
     // CXCY;
     // CXOY;
     // OXCY;

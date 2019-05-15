@@ -137,8 +137,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @param end
      *                      anchor end of the interval or null to represent infinity
      * @param startBoundary
-     *            indicates if the interval is open or closed at the start
-     *            anchor
+     *                      indicates if the interval is open or closed at the start anchor
      * @param endBoundary
      *                      indicates if the interval is open or closed at the end anchor
      */
@@ -173,8 +172,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * A factory method for closed intervals that start at a specific anchor
-     * point
+     * A factory method for closed intervals that start at a specific anchor point
      *
      * @param start
      *
@@ -468,7 +466,11 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
             } else {
                 // we don't end at infinity, let's check if we end first
                 // than the other
-                return end.compareTo(other.end);
+                if (other.isToInfinity()) {
+                    return -1;
+                } else {
+                    return end.compareTo(other.end);
+                }
             }
         }
     }
