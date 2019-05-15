@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,7 +66,7 @@ public class GeneralDTO implements DTO, Map<String, Object> {
      * Builds a DTO from an object using reflection.
      *
      * @param subject
-     * @return
+     * @return a GeneralDTO that represents the content of {@code subject}
      */
     public static GeneralDTO of(final Object subject) {
         final GeneralDTO dto = new GeneralDTO(subject.getClass().getName());
@@ -79,7 +81,7 @@ public class GeneralDTO implements DTO, Map<String, Object> {
      * We are ignoring the security issue S3011 since control the execution and
      * know the use we are giving to the reflected fields, eventough care must
      * be taken when using reflection
-     * 
+     *
      * @param subject
      * @param aField
      * @param dto
@@ -156,20 +158,26 @@ public class GeneralDTO implements DTO, Map<String, Object> {
     }
 
     /**
-     * Gets the list of all fields from the inheritance structure
+     * Gets the list of all non-synthetic fields from the inheritance structure.
+     * Synthetic fields are ignored mostly due to JacoCo instrumentation which
+     * adds a synthetic field {@code $jacocoData}.
      *
-     * We are ignoring the security issue S1523 since control the execution and
-     * know the use we are giving to the reflected fields, eventough care must
-     * be taken when using reflection
+     * <p/>
+     * We are ignoring the security issue S1523 we since control the execution
+     * and know the use we are giving to the reflected fields, eventough care
+     * must be taken when using reflection
      *
      * @param type
-     * @return
+     * @return the list of all non-synthetic fields from the inheritance
+     *         structure
      */
     @SuppressWarnings("squid:S1523")
     private static List<Field> getInheritedFields(final Class<?> type) {
         final List<Field> fields = new ArrayList<>();
         for (Class<?> c = type; c != null; c = c.getSuperclass()) {
-            fields.addAll(Arrays.asList(c.getDeclaredFields()));
+            final List<Field> one = Stream.of(c.getDeclaredFields()).filter(f -> !f.isSynthetic())
+                    .collect(Collectors.toList());
+            fields.addAll(one);
         }
         return fields;
     }
@@ -178,7 +186,7 @@ public class GeneralDTO implements DTO, Map<String, Object> {
      * Returns the name of the type contained in this DTO. Might be helpful for
      * client code to parse the DTO.
      *
-     * @return
+     * @return the name of the type contained in this DTO
      */
     public String type() {
         return type;

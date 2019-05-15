@@ -38,10 +38,10 @@ package eapli.framework.representations.dto;
 public interface DTOParser<R, T extends DTOable<R>> {
 
     /**
-     * parses the DTO and builds a new T based on the content of the DTO
+     * Parses the DTO and builds a new object based on the content of the DTO.
      *
      * @param dto
-     * @return
+     * @return an object
      */
     T valueOf(R dto);
 }

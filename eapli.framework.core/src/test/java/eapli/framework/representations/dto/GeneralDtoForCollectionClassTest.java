@@ -33,8 +33,6 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.representations.dto.GeneralDTO;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -63,8 +61,7 @@ public class GeneralDtoForCollectionClassTest extends GeneralDtoBaseTest {
         subject = GeneralDTO.of(BIZ_OBJ);
 
         System.out.println("===========");
-        System.out.println(subject);
-        System.out.println(subject.type());
+        System.out.println("type:" + subject.type());
         for (final Map.Entry<String, Object> e : subject.entrySet()) {
             System.out.println("[" + e.getKey() + "] => [" + e.getValue() + "]");
         }
@@ -81,8 +78,9 @@ public class GeneralDtoForCollectionClassTest extends GeneralDtoBaseTest {
     @Test
     public void ensureDTOHas2Fields() {
         System.out.println("ensureDTOHas2Fields");
+        System.out.println(subject.keySet());
 
-        assertEquals("Name of type is incorrect", 2, subject.size());
+        assertEquals(2, subject.size());
     }
 
     @Test
@@ -108,7 +106,6 @@ public class GeneralDtoForCollectionClassTest extends GeneralDtoBaseTest {
             assertEquals("'intField' is incorrect", INT_FIELD_VALUE_1, e.get("intField"));
             assertEquals("'stringField' is incorrect", STRING_FIELD_VALUE_1, e.get("stringField"));
         }
-        assertTrue(true);
     }
 
     @Test

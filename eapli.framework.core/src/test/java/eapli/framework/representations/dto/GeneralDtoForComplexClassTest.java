@@ -31,8 +31,6 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.representations.dto.GeneralDTO;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -66,8 +64,8 @@ public class GeneralDtoForComplexClassTest extends GeneralDtoBaseTest {
     @Test
     public void ensureDTOHas4Fields() {
         System.out.println("ensureDTOHas2Fields");
-
-        assertEquals("Name of type is incorrect", 4, subject.size());
+        System.out.println(subject.keySet());
+        assertEquals(4, subject.size());
     }
 
     @Test
