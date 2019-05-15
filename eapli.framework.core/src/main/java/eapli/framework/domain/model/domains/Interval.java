@@ -409,26 +409,30 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     public int compareTo(final Interval<T> other) {
         // if we are empty, we are either the first or the same if the other is empty
         if (isEmpty()) {
-            if (other.isEmpty()) {
-                return 0;
-            } else {
-                return -1;
-            }
+            return compareEmptyToX(other);
         }
         // we are not empty, but if the other is, then we are after
-        if (other.isEmpty()) {
+        else if (other.isEmpty()) {
             return 1;
         }
 
         // neither of us is empty
         if (isFromInfinity()) {
-            return compareToWhenStartsAtInfinity(other);
+            return compareStartAtInfinityToX(other);
         } else {
-            return compareToWhenDoesntStartAtInfinity(other);
+            return compareStartAtXToY(other);
         }
     }
 
-    private int compareToWhenDoesntStartAtInfinity(final Interval<T> other) {
+    private int compareEmptyToX(final Interval<T> other) {
+        if (other.isEmpty()) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    private int compareStartAtXToY(final Interval<T> other) {
         // we don't start at infinity, does the other one start at infinity?
         if (other.isFromInfinity()) {
             // we are after
@@ -447,7 +451,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
     }
 
-    private int compareToWhenStartsAtInfinity(final Interval<T> other) {
+    private int compareStartAtInfinityToX(final Interval<T> other) {
         // we start at infinity
         // if the other does not start at infinity
         if (!other.isFromInfinity()) {
@@ -456,13 +460,30 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         } else {
             // we both start at infinity, so it is up to the end of each
             if (isToInfinity()) {
-                if (other.isToInfinity()) {
-                    // we both start and end at infinity
+                return compareUniversalToStartAtInfinity(other);
+            } else {
+                // we don't end at infinity
+                return compareInfinityToXToY(other);
+            }
+        }
+    }
+
+    private int compareInfinityToXToY(final Interval<T> other) {
+        if (other.isToInfinity()) {
+            return -1;
+        }
+        // let's check if we end first than the other
+        final int order = end.compareTo(other.end);
+        if (order == 0) {
+            // let's check openess/closeness
+            if (endBoundary == BoundaryLimitType.OPEN) {
+                if (other.endBoundary == BoundaryLimitType.OPEN) {
                     return 0;
                 } else {
-                    // we end at infinity but the other does not. the other comes first
-                    return 1;
+                    return -1;
                 }
+            } else if (other.endBoundary == BoundaryLimitType.OPEN) {
+                return 1;
             } else {
                 // we don't end at infinity, let's check if we end first
                 // than the other
@@ -472,6 +493,18 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
                     return end.compareTo(other.end);
                 }
             }
+        } else {
+            return order;
+        }
+    }
+
+    private int compareUniversalToStartAtInfinity(final Interval<T> other) {
+        if (other.isToInfinity()) {
+            // we both start and end at infinity
+            return 0;
+        } else {
+            // we end at infinity but the other does not. the other comes first
+            return 1;
         }
     }
 

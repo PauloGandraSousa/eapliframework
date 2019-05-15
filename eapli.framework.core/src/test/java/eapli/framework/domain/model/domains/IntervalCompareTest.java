@@ -165,6 +165,11 @@ public class IntervalCompareTest {
         assertEquals(0, IOX.compareTo(IOX));
     }
 
+    @Test
+    public void ensureIOXIsBeforeICX() {
+        assertEquals(-1, IOX.compareTo(ICX));
+    }
+
     // CXCY;
     // CXOY;
     // OXCY;
