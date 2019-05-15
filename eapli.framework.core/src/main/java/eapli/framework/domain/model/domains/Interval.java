@@ -33,8 +33,8 @@ import eapli.framework.validations.Invariants;
  * A generic immutable interval class, i.e., a continuous domain.
  *
  * <p/>
- * See <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's
- * Range pattern</a> for a general discussion
+ * See <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's Range pattern</a> for a
+ * general discussion
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -122,8 +122,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * special private constructor for empty intervals.
      *
      * @param b
-     *            marker parameter to enable the compiler to distinguish the
-     *            constructors
+     *          marker parameter to enable the compiler to distinguish the constructors
      */
     @SuppressWarnings("squid:S1172")
     private Interval(final boolean b) {
@@ -135,14 +134,13 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * constructs an interval.
      *
      * @param start
-     *            anchor start of the interval or null to represent infinity
+     *                      anchor start of the interval or null to represent infinity
      * @param end
-     *            anchor end of the interval or null to represent infinity
+     *                      anchor end of the interval or null to represent infinity
      * @param startBoundary
-     *            indicates if the interval is open or closed at the start
-     *            anchor
+     *                      indicates if the interval is open or closed at the start anchor
      * @param endBoundary
-     *            indicates if the interval is open or closed at the end anchor
+     *                      indicates if the interval is open or closed at the end anchor
      */
     protected Interval(final T start, final BoundaryLimitType startBoundary, final T end,
             final BoundaryLimitType endBoundary) {
@@ -175,8 +173,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * A factory method for closed intervals that start at a specific anchor
-     * point.
+     * A factory method for closed intervals that start at a specific anchor point.
      *
      * @param start
      * @return a builder
@@ -186,8 +183,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * A factory method for open intervals that start at a specific anchor
-     * point.
+     * A factory method for open intervals that start at a specific anchor point.
      *
      * @param start
      *
@@ -302,8 +298,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * Returns the interval consisting of the intersection of this interval and
-     * another one.
+     * Returns the interval consisting of the intersection of this interval and another one.
      *
      * @param other
      * @return a new interval corresponding to the intersection
@@ -313,9 +308,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * Returns a new interval by extending/contracting the start of this one.
-     * The openness/closeness of the start boundary as well as the end will be
-     * the same of the original interval
+     * Returns a new interval by extending/contracting the start of this one. The openness/closeness of
+     * the start boundary as well as the end will be the same of the original interval
      *
      * @param newStart
      * @return a new interval corresponding to the expansion/contraction
@@ -325,9 +319,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * Returns a new interval by extending/contracting the end of this one. The
-     * openness/closeness of the end boundary as well as the start will be the
-     * same of the original interval
+     * Returns a new interval by extending/contracting the end of this one. The openness/closeness of
+     * the end boundary as well as the start will be the same of the original interval
      *
      * @param newEnd
      * @return a new interval corresponding to the extension/contraction
@@ -337,8 +330,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * Checks if this interval overlaps another one, that is, if this interval
-     * fully contains the other one.
+     * Checks if this interval overlaps another one, that is, if this interval fully contains the other
+     * one.
      *
      * <p/>
      * For instance:
@@ -378,12 +371,10 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * find out what the gap between two ranges.
      *
      * <p/>
-     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin
-     * Fowler's Range</a>
+     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's Range</a>
      *
      * @param arg
-     * @return a new interval representing the gap between this and another
-     *         range
+     * @return a new interval representing the gap between this and another range
      */
     @SuppressWarnings("unchecked")
     public Interval<T> gap(final Interval<T> arg) {
@@ -403,26 +394,21 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * Compares two intervals to determine the natural order. Assumes an
-     * interval is "before" another if it starts at a point which is before than
-     * the start of the other interval.
+     * Compares two intervals to determine the natural order. Assumes an interval is "before" another if
+     * it starts at a point which is before than the start of the other interval.
      *
      * <p/>
-     * The empty interval cannot be represented on a line and as such it doesn't
-     * make much sense to order it, however, we need to handle that special case
-     * and throwing an exception does not solve the problem if we happen to have
-     * an empty interval as part of a collection and we want to sort those
-     * intervals. we assume the empty interval, i.e., [], is always first to any
-     * other interval.
+     * The empty interval cannot be represented on a line and as such it doesn't make much sense to
+     * order it, however, we need to handle that special case and throwing an exception does not solve
+     * the problem if we happen to have an empty interval as part of a collection and we want to sort
+     * those intervals. we assume the empty interval, i.e., [], is always first to any other interval.
      *
      * <p/>
-     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin
-     * Fowler's Range</a>
+     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's Range</a>
      *
      * @TODO take into account the open/close of each end of the interval
-     * @return -1 if this object is naturally before the other, 1 if this object
-     *         is naturally after the other, 0 if they are naturally ordered the
-     *         same
+     * @return -1 if this object is naturally before the other, 1 if this object is naturally after the
+     *         other, 0 if they are naturally ordered the same
      */
     @Override
     public int compareTo(final Interval<T> other) {
@@ -463,7 +449,17 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
             if (orderStart == 0) {
                 // we start at the same "point", so it is up to the end
                 // boundary
-                return end.compareTo(other.end);
+
+                // let's see if any of us ends at infinity
+                if (isToInfinity()) {
+                    if (other.isToInfinity()) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                } else {
+                    return end.compareTo(other.end);
+                }
             } else {
                 // whoever starts first, is the first
                 return orderStart;
@@ -587,8 +583,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * based on https://martinfowler.com/eaaDev/Range.html
      *
      * @param args
-     * @return {@code true} if the group of ranges completely partitions this
-     *         range
+     * @return {@code true} if the group of ranges completely partitions this range
      */
     public boolean partitionedBy(final Interval<T>[] args) {
         if (!areContiguous(args)) {
@@ -619,8 +614,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * based on https://martinfowler.com/eaaDev/Range.html
      *
-     * @TODO need to take into account the boundary limits to see if the
-     *       intervals are really contiguous
+     * @TODO need to take into account the boundary limits to see if the intervals are really contiguous
      *
      * @param args
      * @return {@code true} if a group of intervals forms a contiguous interval

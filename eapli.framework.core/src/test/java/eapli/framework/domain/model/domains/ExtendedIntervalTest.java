@@ -29,7 +29,7 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class ExtendedIntervalTest extends AbstractIntervalTest {
+public class ExtendedIntervalTest extends IntervalTestBase {
 
     private static final Long NEW_START = END + 2;
     private static final Long NEW_END = START - 2;
@@ -39,11 +39,11 @@ public class ExtendedIntervalTest extends AbstractIntervalTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureNewStartCannotBeAfterEnd() {
-        instance = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
+        subject = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureNewEndCannotBeBeforeStart() {
-        instance = Interval.closedFrom(START).closedTo(END).withEnd(NEW_END);
+        subject = Interval.closedFrom(START).closedTo(END).withEnd(NEW_END);
     }
 }

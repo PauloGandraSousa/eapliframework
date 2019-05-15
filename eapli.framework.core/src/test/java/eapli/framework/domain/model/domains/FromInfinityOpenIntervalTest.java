@@ -34,20 +34,20 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class FromInfinityOpenIntervalTest extends AbstractIntervalTest {
+public class FromInfinityOpenIntervalTest extends IntervalTestBase {
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("FromInfinityOpenRangeTest");
         final Interval.IntervalBuilder<Long> b = Interval.fromInfinity();
-        instance = b.openTo(END);
+        subject = b.openTo(END);
     }
 
     @Test
     public void ensureEndIsNotInRange() {
         System.out.println("ensureEndIsNotInRange");
         final Long target = new Long(END_VALUE);
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertFalse("end cannot be part of an open range", result);
     }
 
@@ -55,21 +55,21 @@ public class FromInfinityOpenIntervalTest extends AbstractIntervalTest {
     public void ensureSmallValueIsIncluded() {
         System.out.println("ensureSmallValueIsIncluded");
         final Long target = Long.MIN_VALUE;
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertTrue("From infinity range must include any value smaller than end", result);
     }
 
     @Test
     public void ensureIsFromInfinity() {
         System.out.println("ensureIsFromInfinity");
-        final boolean result = instance.isFromInfinity();
+        final boolean result = subject.isFromInfinity();
         assertTrue("from infinity ranges must be from infinity", result);
     }
 
     @Test
     public void ensureStringRepresentationIsOk() {
         final String expected = "]oo, " + END + "[";
-        final String actual = instance.toString();
+        final String actual = subject.toString();
         assertEquals(expected, actual);
     }
 }

@@ -33,19 +33,19 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class ClosedIntervalTest extends AbstractIntervalTest {
+public class ClosedIntervalTest extends IntervalTestBase {
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("closedRange");
-        instance = Interval.closedFrom(START).closedTo(END);
+        subject = Interval.closedFrom(START).closedTo(END);
     }
 
     @Test
     public void ensureStartIsInRange() {
         System.out.println("ensureStartIsInRange");
         final Long target = new Long(START_VALUE);
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertTrue("start must be part of a closed range", result);
     }
 
@@ -53,14 +53,14 @@ public class ClosedIntervalTest extends AbstractIntervalTest {
     public void ensureEndIsInRange() {
         System.out.println("ensureEndIsInRange");
         final Long target = new Long(END_VALUE);
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertTrue("end must be part of a closed range", result);
     }
 
     @Test
     public void ensureStringRepresentationIsOk() {
         final String expected = "[" + START + ", " + END + "]";
-        final String actual = instance.toString();
+        final String actual = subject.toString();
         assertEquals(expected, actual);
     }
 }

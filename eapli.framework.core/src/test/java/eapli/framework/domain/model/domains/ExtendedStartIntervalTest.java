@@ -36,7 +36,7 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class ExtendedStartIntervalTest extends AbstractIntervalTest {
+public class ExtendedStartIntervalTest extends IntervalTestBase {
 
     private static final Long NEW_START = START - 2;
 
@@ -46,7 +46,7 @@ public class ExtendedStartIntervalTest extends AbstractIntervalTest {
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Extended Start/End Range");
-        instance = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
+        subject = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
     }
 
     @AfterClass
@@ -63,21 +63,21 @@ public class ExtendedStartIntervalTest extends AbstractIntervalTest {
 
     @Test
     public void ensureNewStart() {
-        assertEquals(NEW_START, instance.start());
+        assertEquals(NEW_START, subject.start());
     }
 
     @Test
     public void ensureClosedStart() {
-        assertFalse(instance.hasOpenStart());
+        assertFalse(subject.hasOpenStart());
     }
 
     @Test
     public void ensureEnd() {
-        assertEquals(END, instance.end());
+        assertEquals(END, subject.end());
     }
 
     @Test
     public void ensureClosedend() {
-        assertFalse(instance.hasOpenEnd());
+        assertFalse(subject.hasOpenEnd());
     }
 }

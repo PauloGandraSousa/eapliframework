@@ -34,19 +34,19 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class ToInfinityOpenIntervalTest extends AbstractIntervalTest {
+public class ToInfinityOpenIntervalTest extends IntervalTestBase {
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("ToInfinityOpenRange");
-        instance = Interval.openFrom(START).toInfinity();
+        subject = Interval.openFrom(START).toInfinity();
     }
 
     @Test
     public void ensureStartIsNotInRange() {
         System.out.println("ensureStartIsNotInRange");
         final Long target = new Long(START_VALUE);
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertFalse("start cannot be part of an open range", result);
     }
 
@@ -54,21 +54,21 @@ public class ToInfinityOpenIntervalTest extends AbstractIntervalTest {
     public void ensureBigValueIsIncluded() {
         System.out.println("ensureBigValueIsIncluded");
         final Long target = Long.MAX_VALUE;
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertTrue("to infinity range must include any value bigger than start", result);
     }
 
     @Test
     public void ensureIsToInfinity() {
         System.out.println("ensureIsToInfinity");
-        final boolean result = instance.isToInfinity();
+        final boolean result = subject.isToInfinity();
         assertTrue("to inifinity ranges must be to infinity", result);
     }
 
     @Test
     public void ensureStringRepresentationIsOk() {
         final String expected = "]" + START + ", oo[";
-        final String actual = instance.toString();
+        final String actual = subject.toString();
         assertEquals(expected, actual);
     }
 }

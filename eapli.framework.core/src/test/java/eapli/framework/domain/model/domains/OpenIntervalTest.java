@@ -33,19 +33,19 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class OpenIntervalTest extends AbstractIntervalTest {
+public class OpenIntervalTest extends IntervalTestBase {
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("openRange");
-        instance = Interval.openFrom(START).openTo(END);
+        subject = Interval.openFrom(START).openTo(END);
     }
 
     @Test
     public void ensureStartIsNotInRange() {
         System.out.println("ensureStartIsNotInRange");
         final Long target = new Long(START_VALUE);
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertFalse("start cannot be part of an open range", result);
     }
 
@@ -53,14 +53,14 @@ public class OpenIntervalTest extends AbstractIntervalTest {
     public void ensureEndIsNotInRange() {
         System.out.println("ensureEndIsNotInRange");
         final Long target = new Long(END_VALUE);
-        final boolean result = instance.includes(target);
+        final boolean result = subject.includes(target);
         assertFalse("end cannot be part of an open range", result);
     }
 
     @Test
     public void ensureStringRepresentationIsOk() {
         final String expected = "]" + START + ", " + END + "[";
-        final String actual = instance.toString();
+        final String actual = subject.toString();
         assertEquals(expected, actual);
     }
 }

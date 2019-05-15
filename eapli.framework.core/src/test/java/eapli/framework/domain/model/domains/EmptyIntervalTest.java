@@ -38,50 +38,50 @@ import eapli.framework.domain.model.domains.Interval;
  *
  * @author Paulo Gandra Sousa
  */
-public class EmptyIntervalTest extends AbstractIntervalTest {
+public class EmptyIntervalTest extends IntervalTestBase {
 
     @BeforeClass
     public static void setUpClass() {
         System.out.println("EmptyRange");
-        instance = Interval.empty();
+        subject = Interval.empty();
     }
 
     @Test
     public void ensureIsEmpty() {
-        assertTrue(instance.isEmpty());
+        assertTrue(subject.isEmpty());
     }
 
     @Test
     public void ensureDoesNotInclude() {
         final boolean result = LongStream.range(START_VALUE * -2L, END_VALUE * -2L)
-                .noneMatch(x -> instance.includes(x));
+                .noneMatch(x -> subject.includes(x));
         assertTrue(result);
     }
 
     @Test
     public void ensureNotFromInfinity() {
-        assertFalse(instance.isFromInfinity());
+        assertFalse(subject.isFromInfinity());
     }
 
     @Test
     public void ensureNotToInfinity() {
-        assertFalse(instance.isToInfinity());
+        assertFalse(subject.isToInfinity());
     }
 
     @Test(expected = IllegalStateException.class)
     public void ensureStart() {
-        instance.start();
+        subject.start();
     }
 
     @Test(expected = IllegalStateException.class)
     public void ensureEnd() {
-        instance.end();
+        subject.end();
     }
 
     @Test
     public void ensureStringRepresentationIsOk() {
         final String expected = "[]";
-        final String actual = instance.toString();
+        final String actual = subject.toString();
         assertEquals(expected, actual);
     }
 }
