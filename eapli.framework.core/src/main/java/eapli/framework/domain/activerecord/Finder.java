@@ -33,10 +33,10 @@ import java.util.List;
  *            the type of business entity to find
  * @param <K>
  *            the type of the business identity
- * 
+ *
  * @author Paulo Gandra Sousa
  */
-public interface Finder<T extends ActiveRecord<T>, K> {
+public interface Finder<T extends ActiveRecord<K>, K extends Comparable<K>> {
 
     T findById(K id);
 

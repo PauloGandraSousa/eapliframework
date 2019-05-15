@@ -24,43 +24,46 @@
 package eapli.framework.domain.model;
 
 import eapli.framework.domain.model.identities.Identifiable;
-import eapli.framework.domain.model.identities.IdentityComparable;
 
 /**
  * An entity is a Domain-Driven Design pattern for concepts in the domain which
  * have a thread of continuity which needs to be tracked.
  *
+ * <p/>
  * These concepts matter by their identity and we need to track them
  * continuously. Instance equality must be done thru the identity of the objects
  * and we cannot loose track or allow duplication of an entity. By definition a
  * domain entity always has a business identity, so it should be impossible to
  * create new instances without identity.
  *
+ * <p/>
  * Typical examples are:
- * <ol>
+ * <ul>
  * <li>Product
  * <li>Person
  * <li>Account
- * </ol>
+ * </ul>
  *
  * @param <I>
  *            the type of the primary <b>business</b> id of the entity
  * @author Paulo Gandra Sousa
  */
-public interface DomainEntity<I /* extends ValueObject */> extends Identifiable<I>, IdentityComparable<I> {
+public interface DomainEntity<I extends Comparable<I> /* & ValueObject */> extends Identifiable<I>, Comparable<I> {
 
     /**
-     * Entities are compared by identity only. no need to compare all fields of
+     * Entities are compared by identity only. No need to compare all fields of
      * the object. you can use the
      * {@link DomainEntities#areEqual(DomainEntity, Object)} method as default
      * implementation
      *
+     * <p/>
      * be careful that if your entities are using the ORM generated primary key
-     * as their business identity, you properly implement equals() and
-     * hashcode(). see <a href=
+     * as their business identity, you MUST properly implement equals() and
+     * hashcode(). See <a href=
      * "https://thoughts-on-java.org/ultimate-guide-to-implementing-equals-and-hashcode-with-hibernate/">Toughts
      * on java</a>
      *
+     * <p/>
      * see {@link #sameAs(Object)}.
      *
      * @param other
@@ -71,22 +74,23 @@ public interface DomainEntity<I /* extends ValueObject */> extends Identifiable<
     boolean equals(Object other);
 
     /**
-     * hash code of this object according to java rules. i.e., the same fields
+     * Hash code of this object. According to java rules. i.e., the same fields
      * used in equals() should be used in hashCode(). you can use
      * {@link DomainEntities#hashCode(DomainEntity)} as default implementation
      *
+     * <p/>
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()
      *
-     * @return the hascode
+     * @return the hash code
      */
     @Override
     int hashCode();
 
     /**
      * Entities are compared by identity only, so equals() must only compares
-     * identities. in some situations however we might want to compare the
+     * identities. In some situations however we might want to compare the
      * content of the object by value.
      *
      * @param other
@@ -94,4 +98,12 @@ public interface DomainEntity<I /* extends ValueObject */> extends Identifiable<
      *         {@code other}
      */
     boolean sameAs(Object other);
+
+    /**
+     * Domain entities are naturally ordered by their identity.
+     */
+    @Override
+    default int compareTo(final I other) {
+        return identity().compareTo(other);
+    }
 }

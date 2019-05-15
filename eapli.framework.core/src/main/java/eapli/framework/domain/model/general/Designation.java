@@ -23,8 +23,6 @@
  */
 package eapli.framework.domain.model.general;
 
-import java.io.Serializable;
-
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
@@ -42,7 +40,7 @@ import eapli.framework.validations.StringPredicates;
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
-public class Designation implements ValueObject, Serializable, StringMixin {
+public class Designation implements ValueObject, Comparable<Designation>, StringMixin {
 
     private static final long serialVersionUID = 1L;
     private final String name;
@@ -96,5 +94,10 @@ public class Designation implements ValueObject, Serializable, StringMixin {
     @Override
     public int hashCode() {
         return new HashCoder().of(name).code();
+    }
+
+    @Override
+    public int compareTo(final Designation o) {
+        return name.compareTo(o.name);
     }
 }

@@ -40,7 +40,7 @@ import eapli.framework.domain.model.ValueObject;
  *
  * @author Paulo Gandra Sousa
  */
-public interface IterableDomainRepository<I extends ValueObject, T extends AggregateRoot<I>>
+public interface IterableDomainRepository<I extends Comparable<I> & ValueObject, T extends AggregateRoot<I>>
         extends DomainRepository<I, T>, Iterable<T> {
 
     /**

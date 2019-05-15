@@ -47,6 +47,6 @@ package eapli.framework.domain.model;
  *
  * @author Paulo Gandra Sousa
  */
-public interface AggregateRoot<I /* extends ValueObject */> extends DomainEntity<I> {
+public interface AggregateRoot<I extends Comparable<I> /* & ValueObject */> extends DomainEntity<I> {
 
 }

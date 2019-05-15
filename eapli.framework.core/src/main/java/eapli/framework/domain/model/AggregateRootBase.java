@@ -31,11 +31,9 @@ package eapli.framework.domain.model;
  * @author Paulo Gandra de Sousa
  *
  */
-public abstract class AggregateRootBase<I extends ValueObject> extends DomainEntityBase<I> implements AggregateRoot<I> {
+public abstract class AggregateRootBase<I extends ValueObject & Comparable<I>> extends DomainEntityBase<I>
+        implements AggregateRoot<I> {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
 }

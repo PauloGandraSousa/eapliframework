@@ -40,7 +40,7 @@ import eapli.framework.domain.repositories.DomainRepository;
  * @param <T>
  * @param <K>
  */
-public class InMemoryDomainRepository<I /* extends ValueObject */, T extends AggregateRoot<I>>
+public class InMemoryDomainRepository<I extends Comparable<I>/* & ValueObject */, T extends AggregateRoot<I>>
         extends InMemoryRepository<T, I> implements DomainRepository<I, T> {
 
     public InMemoryDomainRepository() {

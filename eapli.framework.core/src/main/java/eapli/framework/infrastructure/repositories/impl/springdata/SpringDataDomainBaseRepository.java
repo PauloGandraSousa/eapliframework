@@ -52,7 +52,7 @@ import eapli.framework.domain.model.AggregateRoot;
  *
  */
 @NoRepositoryBean
-public interface SpringDataDomainBaseRepository<K, I /* extends ValueObject */, T extends AggregateRoot<I>>
+public interface SpringDataDomainBaseRepository<K, I extends Comparable<I>, T extends AggregateRoot<I>>
         extends Repository<T, K> {
 
     long count();

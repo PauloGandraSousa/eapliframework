@@ -40,7 +40,7 @@ import eapli.framework.validations.StringPredicates;
  * @author Paulo Gandra Sousa
  */
 @Embeddable
-public class Username implements ValueObject, Serializable {
+public class Username implements ValueObject, Serializable, Comparable<Username> {
 
     private static final long serialVersionUID = 1L;
     private final String theUsername;
@@ -83,5 +83,10 @@ public class Username implements ValueObject, Serializable {
     @Override
     public int hashCode() {
         return new HashCoder().of(theUsername).code();
+    }
+
+    @Override
+    public int compareTo(final Username o) {
+        return theUsername.compareTo(o.theUsername);
     }
 }

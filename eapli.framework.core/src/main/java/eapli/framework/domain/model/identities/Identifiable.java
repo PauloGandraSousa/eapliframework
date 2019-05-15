@@ -24,7 +24,7 @@
 package eapli.framework.domain.model.identities;
 
 /**
- * A generic interface identities of objects
+ * An object that has an identity.
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -35,9 +35,20 @@ package eapli.framework.domain.model.identities;
 public interface Identifiable<T> {
 
     /**
-     * returns the primary <b>business</b> id of the entity
+     * Returns the primary <b>business</b> id of the entity.
      *
      * @return the primary <b>business</b> id of the entity
      */
     T identity();
+
+    /**
+     * checks if the object has a certain business identity
+     *
+     * @param otherId
+     *            the identity to compare
+     * @return true if the object has that identity
+     */
+    default boolean hasIdentity(final T otherId) {
+        return identity().equals(otherId);
+    }
 }

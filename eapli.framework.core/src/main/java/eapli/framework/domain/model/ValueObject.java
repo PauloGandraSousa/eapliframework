@@ -31,26 +31,27 @@ import java.io.Serializable;
  * but for the value of its attributes. These are <b>immutable</b> objects which
  * can be freely shared and discarded and replaced by another instance. Equality
  * is done thru comparison of the attributes values.
+ * <p/>
  *
  * Typical examples are:
- * <p>
- * - Address (in most scenarios)
- * <p>
- * - Color
- * <p>
- * - CustomerNumber
- * <p>
- * - Money
+ * <ul>
+ * <li>Address (in most scenarios)
+ * <li>Color
+ * <li>CustomerNumber
+ * <li>Money
+ * </ul>
  *
+ * <p/>
  * Make sure you don't provide mutator methods, always construct the object in a
  * valid state and all your private fields are marked final (If you are using
  * ORM tools you might need a default constructor in which case you won't be
  * able to make the fields final)
  *
- * check the Java Time API naming conventions for an excellent example on how to
- * name methods of a Value Object
- * https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html
- *
+ * <p/>
+ * Check the <a href=
+ * "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java
+ * Time API naming conventions</a> for an excellent example on how to name
+ * methods of a Value Object
  *
  * @author Paulo Gandra Sousa
  */
@@ -67,7 +68,8 @@ public interface ValueObject extends Serializable {
     /**
      * Value objects are compared by the values of its properties.
      *
-     * see, for instance, <a href=
+     * <p/>
+     * See, for instance, <a href=
      * "https://www.sitepoint.com/implement-javas-equals-method-correctly/">https://www.sitepoint.com/implement-javas-equals-method-correctly/</a>
      *
      * @param other
@@ -81,6 +83,7 @@ public interface ValueObject extends Serializable {
      * hash code of this object according to java rules. i.e., the same fields
      * used in equals() should be used in hashCode().
      *
+     * <p/>
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()

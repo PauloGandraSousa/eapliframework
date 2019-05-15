@@ -32,7 +32,7 @@ package eapli.framework.domain.activerecord;
  *
  * @author Paulo Gandra Sousa
  */
-public interface DeleteableActiveRecord<I> extends ActiveRecord<I> {
+public interface DeleteableActiveRecord<I extends Comparable<I>> extends ActiveRecord<I> {
 
     /**
      * deletes the current object from the persistence store. the object in

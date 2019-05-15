@@ -36,7 +36,7 @@ import eapli.framework.domain.model.identities.Identifiable;
  *            the type of the business identity
  * @author Paulo Gandra Sousa
  */
-public interface ActiveRecord<I> extends Identifiable<I> {
+public interface ActiveRecord<I extends Comparable<I>> extends Identifiable<I> {
 
     /*
      * save the current object to the persistence store either by creating it or

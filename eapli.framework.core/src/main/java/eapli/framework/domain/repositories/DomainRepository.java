@@ -43,7 +43,7 @@ import eapli.framework.domain.model.AggregateRoot;
  *
  * @author Paulo Gandra Sousa
  */
-public interface DomainRepository<I /* extends ValueObject */, T extends AggregateRoot<I>> {
+public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T extends AggregateRoot<I>> {
 
     /**
      * Saves an entity either by creating it or updating it in the persistence

@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @author Paulo Gandra de Sousa
  *
  */
-public abstract class DomainEntityBase<I> implements DomainEntity<I>, Serializable {
+public abstract class DomainEntityBase<I extends Comparable<I>> implements DomainEntity<I>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
