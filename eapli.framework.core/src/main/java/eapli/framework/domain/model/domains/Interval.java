@@ -137,7 +137,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @param end
      *                      anchor end of the interval or null to represent infinity
      * @param startBoundary
-     *                      indicates if the interval is open or closed at the start anchor
+     *            indicates if the interval is open or closed at the start
+     *            anchor
      * @param endBoundary
      *                      indicates if the interval is open or closed at the end anchor
      */
@@ -172,9 +173,11 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * A factory method for closed intervals that start at a specific anchor point
+     * A factory method for closed intervals that start at a specific anchor
+     * point
      *
      * @param start
+     *
      * @return a builder
      */
     public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> closedFrom(final U start) {
@@ -185,6 +188,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * A factory method for open intervals that start at a specific anchor point
      *
      * @param start
+     *
      * @return a builder
      */
     public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> openFrom(final U start) {
