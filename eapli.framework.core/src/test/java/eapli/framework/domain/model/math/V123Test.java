@@ -27,7 +27,7 @@ import eapli.framework.domain.model.math.Vector.VectorType;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class V123Test extends AbstractVectorTest {

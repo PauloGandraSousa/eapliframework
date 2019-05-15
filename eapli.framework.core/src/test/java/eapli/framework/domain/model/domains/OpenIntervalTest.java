@@ -29,8 +29,6 @@ import static org.junit.Assert.assertFalse;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domain.model.domains.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -40,7 +38,7 @@ public class OpenIntervalTest extends AbstractIntervalTest {
     @BeforeClass
     public static void setUpClass() {
         System.out.println("openRange");
-        instance = Interval.openFrom(START).openTo(END).build();
+        instance = Interval.openFrom(START).openTo(END);
     }
 
     @Test

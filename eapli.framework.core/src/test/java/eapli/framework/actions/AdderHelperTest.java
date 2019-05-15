@@ -29,7 +29,7 @@ import org.junit.Test;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class AdderHelperTest {

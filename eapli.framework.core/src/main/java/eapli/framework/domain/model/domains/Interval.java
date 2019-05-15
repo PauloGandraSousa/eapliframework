@@ -3,47 +3,58 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.domain.model.domains;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.Factory;
+import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Invariants;
 
 /**
- * a generic immutable interval class, i.e., a continuous domain.
+ * A generic immutable interval class, i.e., a continuous domain.
+ *
+ * See <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's
+ * Range pattern</a> for a general discussion
  *
  * @author Paulo Gandra Sousa
  * @param <T>
  */
 @Embeddable
-public class Interval<T extends Serializable & Comparable<T>> implements ValueObject {
+public class Interval<T extends Serializable & Comparable<T>> implements ValueObject, Comparable<Interval<T>> {
 
     private static final long serialVersionUID = 1L;
 
     protected enum BoundaryLimitType {
-        INFINITY, OPEN, CLOSED
+        INFINITY, OPEN, CLOSED;
+
+        protected BoundaryLimitType negate() {
+            if (this.equals(OPEN)) {
+                return CLOSED;
+            } else if (this.equals(CLOSED)) {
+                return OPEN;
+            } else {
+                return INFINITY;
+            }
+        }
     }
 
     private final T start;
@@ -58,7 +69,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * @param <R>
      */
-    public static class IntervalBuilder<R extends Comparable<R> & Serializable> implements Factory<Interval<R>> {
+    public static class IntervalBuilder<R extends Comparable<R> & Serializable> {
         private final R start;
         private R end;
         private final BoundaryLimitType startBoundary;
@@ -77,26 +88,25 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
             this.startBoundary = startBoundary;
         }
 
-        public IntervalBuilder<R> closedTo(final R anchor) {
+        public Interval<R> closedTo(final R anchor) {
             this.end = anchor;
             this.endBoundary = BoundaryLimitType.CLOSED;
-            return this;
+            return build();
         }
 
-        public IntervalBuilder<R> openTo(final R anchor) {
+        public Interval<R> openTo(final R anchor) {
             this.end = anchor;
             this.endBoundary = BoundaryLimitType.OPEN;
-            return this;
+            return build();
         }
 
-        public IntervalBuilder<R> toInfinity() {
+        public Interval<R> toInfinity() {
             this.end = null;
             this.endBoundary = BoundaryLimitType.INFINITY;
-            return this;
+            return build();
         }
 
-        @Override
-        public Interval<R> build() {
+        private Interval<R> build() {
             return new Interval<>(this.start, this.startBoundary, this.end, this.endBoundary);
         }
     }
@@ -159,7 +169,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * @return a builder
      */
-    public static <T extends Comparable<T> & Serializable> IntervalBuilder<T> fromInfinity() {
+    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> fromInfinity() {
         return new IntervalBuilder<>(null, BoundaryLimitType.INFINITY);
     }
 
@@ -170,7 +180,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @param start
      * @return a builder
      */
-    public static <T extends Comparable<T> & Serializable> IntervalBuilder<T> closedFrom(final T start) {
+    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> closedFrom(final U start) {
         return new IntervalBuilder<>(start, BoundaryLimitType.CLOSED);
     }
 
@@ -178,9 +188,10 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * A factory method for open intervals that start at a specific anchor point
      *
      * @param start
+     *
      * @return a builder
      */
-    public static <T extends Comparable<T> & Serializable> IntervalBuilder<T> openFrom(final T start) {
+    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> openFrom(final U start) {
         return new IntervalBuilder<>(start, BoundaryLimitType.OPEN);
     }
 
@@ -188,7 +199,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     private static final Interval EMPTY = new Interval(true);
 
     /**
-     * Returns an empty interval
+     * returns an empty interval, i.e., []
      *
      * @return an empty interval
      */
@@ -201,8 +212,19 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return start == end && start == null && endBoundary == startBoundary && endBoundary == null;
     }
 
-    private boolean notEmpty() {
-        return !isEmpty();
+    /**
+     * returns an universal interval, i.e., ]-oo, +oo[
+     *
+     * @return an universal interval
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends Comparable<T> & Serializable> Interval<T> universal() {
+        final Interval.IntervalBuilder<T> builder = fromInfinity();
+        return builder.toInfinity();
+    }
+
+    public boolean isUniversal() {
+        return endBoundary == startBoundary && endBoundary == BoundaryLimitType.INFINITY;
     }
 
     /**
@@ -257,13 +279,13 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     public T start() {
-        Invariants.ensure(this::notEmpty);
+        Invariants.ensure(!isEmpty());
 
         return this.start;
     }
 
     public T end() {
-        Invariants.ensure(this::notEmpty);
+        Invariants.ensure(!isEmpty());
 
         return this.end;
     }
@@ -319,25 +341,19 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * for instance
      *
+     * <code>
      * A = [2..5]
-     *
      * B = [0..10]
-     *
      * C = ]2..4]
-     *
      * D = [8..10]
      *
      * A.overlaps(C) == true
-     *
      * A.overlaps(B) == false
-     *
      * B.overlaps(A) == true
-     *
      * C.overlaps(D) == false
-     *
      * D.overlaps(C) == false
-     *
      * B.overlaps(D) == true
+     * </code>
      *
      * @param other
      * @return {@code true} if this intervals overlaps the other
@@ -354,6 +370,260 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return this.startBoundary == BoundaryLimitType.OPEN || startBoundary == BoundaryLimitType.INFINITY;
     }
 
+    /**
+     * find out what the gap between two ranges
+     *
+     * based on https://martinfowler.com/eaaDev/Range.html
+     *
+     * @param arg
+     * @return a new interval representing the gap between this and another
+     *         range
+     */
+    @SuppressWarnings("unchecked")
+    public Interval<T> gap(final Interval<T> arg) {
+        if (this.overlaps(arg)) {
+            return Interval.EMPTY;
+        }
+        Interval<T> lower;
+        Interval<T> higher;
+        if (this.compareTo(arg) < 0) {
+            lower = this;
+            higher = arg;
+        } else {
+            lower = arg;
+            higher = this;
+        }
+        return new Interval<>(lower.end, lower.endBoundary.negate(), higher.start, higher.startBoundary.negate());
+    }
+
+    /**
+     * Compares to intervals to determine the natural order. Assumes an interval
+     * is "first" than another if it starts at a point which is "first" than the
+     * start of the other interval.
+     *
+     * the empty interval cannot be represented on a line and as such it doesn't
+     * make much sense to order it, however, we need to handle that special case
+     * and throwing an exception does not solve the problem if we happen to have
+     * an empty interval as part of a collection and we want to sort those
+     * intervals. we assume the empty interval, i.e., [], is always first to any
+     * other interval
+     *
+     * based on https://martinfowler.com/eaaDev/Range.html
+     *
+     * @TODO take into account the open/close of each end of the interval
+     * @return
+     */
+    @Override
+    public int compareTo(final Interval<T> other) {
+        // if we are empty, we are either the first or the same if the other is
+        // empty
+        if (isEmpty()) {
+            return compareEmptyToX(other);
+        }
+        // we are not empty, but if the other is, then we are after
+        else if (other.isEmpty()) {
+            return 1;
+        }
+
+        // neither of us is empty
+        if (isFromInfinity()) {
+            return compareStartAtInfinityToX(other);
+        } else {
+            return compareStartAtXToY(other);
+        }
+    }
+
+    private int compareEmptyToX(final Interval<T> other) {
+        if (other.isEmpty()) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    private int compareStartAtXToY(final Interval<T> other) {
+        // we don't start at infinity, does the other one start at infinity?
+        if (other.isFromInfinity()) {
+            // we are after
+            return 1;
+        } else {
+            // neither starts at infinity, so let's check who starts first
+            final int orderStart = start.compareTo(other.start);
+            if (orderStart == 0) {
+                // we start at the same "point", so it is up to the end
+                // boundary
+                return end.compareTo(other.end);
+            } else {
+                // whoever starts first, is the first
+                return orderStart;
+            }
+        }
+    }
+
+    private int compareStartAtInfinityToX(final Interval<T> other) {
+        // we start at infinity
+        // if the other does not start at infinity
+        if (!other.isFromInfinity()) {
+            // we are first
+            return -1;
+        } else {
+            // we both start at infinity, so it is up to the end of each
+            if (isToInfinity()) {
+                return compareUniversalToStartAtInfinity(other);
+            } else {
+                // we don't end at infinity
+                return compareInfinityToXToY(other);
+            }
+        }
+    }
+
+    private int compareInfinityToXToY(final Interval<T> other) {
+        if (other.isToInfinity()) {
+            return -1;
+        }
+        // let's check if we end first than the other
+        final int order = end.compareTo(other.end);
+        if (order == 0) {
+            // let's check openess/closeness
+            if (endBoundary == BoundaryLimitType.OPEN) {
+                if (other.endBoundary == BoundaryLimitType.OPEN) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            } else if (other.endBoundary == BoundaryLimitType.OPEN) {
+                return 1;
+            } else {
+                // we don't end at infinity, let's check if we end first
+                // than the other
+                if (other.isToInfinity()) {
+                    return -1;
+                } else {
+                    return end.compareTo(other.end);
+                }
+            }
+        } else {
+            return order;
+        }
+    }
+
+    private int compareUniversalToStartAtInfinity(final Interval<T> other) {
+        if (other.isToInfinity()) {
+            // we both start and end at infinity
+            return 0;
+        } else {
+            // we end at infinity but the other does not. the other comes first
+            return 1;
+        }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof Interval<?>)) {
+            return false;
+        }
+
+        @SuppressWarnings("unchecked")
+        final Interval<T> other = (Interval<T>) o;
+        if (isEmpty()) {
+            return other.isEmpty();
+        } else {
+            return startIsTheSame(other) && endIsTheSame(other);
+        }
+    }
+
+    private boolean startIsTheSame(final Interval<T> other) {
+        // both are infinity
+        final boolean bothInfinity = this.startBoundary.equals(BoundaryLimitType.INFINITY)
+                && this.startBoundary.equals(other.startBoundary);
+        // our start is not infinity and the other start is the same as ours
+        final boolean sameStart = !this.startBoundary.equals(BoundaryLimitType.INFINITY)
+                && this.start.equals(other.start);
+
+        return bothInfinity || sameStart;
+    }
+
+    private boolean endIsTheSame(final Interval<T> other) {
+        // both are infinity
+        final boolean bothInfinity = this.endBoundary.equals(BoundaryLimitType.INFINITY)
+                && this.endBoundary.equals(other.endBoundary);
+        // our end is not infinity and the other end is the same as ours
+        final boolean sameEnd = !this.endBoundary.equals(BoundaryLimitType.INFINITY) && this.end.equals(other.end);
+
+        return bothInfinity || sameEnd;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCoder().of(startBoundary).of(start).of(endBoundary).of(end).code();
+    }
+
+    /**
+     * to detect whether two ranges abut each other.
+     *
+     * based on https://martinfowler.com/eaaDev/Range.html
+     *
+     * @param arg
+     * @return {@code true} if this interval abuts the other
+     */
+    public boolean abuts(final Interval<T> arg) {
+        return !this.overlaps(arg) && this.gap(arg).isEmpty();
+    }
+
+    /**
+     * see if a group of ranges completely partitions this range.
+     *
+     * based on https://martinfowler.com/eaaDev/Range.html
+     *
+     * @param args
+     * @return {@code true} if the group of ranges completely partitions this
+     *         range
+     */
+    public boolean partitionedBy(final Interval<T>[] args) {
+        if (!areContiguous(args)) {
+            return false;
+        }
+        return this.equals(combination(args));
+    }
+
+    /**
+     * Combines a group of contiguous intervals into a single interval
+     *
+     * based on https://martinfowler.com/eaaDev/Range.html
+     *
+     * @param args
+     * @return a new Interval spanning the the contiguous group of intervals
+     */
+    public static <T extends Serializable & Comparable<T>> Interval<T> combination(final Interval<T>[] args) {
+        Arrays.sort(args);
+        if (!areContiguous(args)) {
+            throw new IllegalArgumentException("Unable to combine date ranges");
+        }
+        return new Interval<>(args[0].start, args[0].startBoundary, args[args.length - 1].end,
+                args[args.length - 1].endBoundary);
+    }
+
+    /**
+     * Checks if a group of intervals forms a contiguous interval
+     *
+     * based on https://martinfowler.com/eaaDev/Range.html
+     *
+     * @TODO need to take into account the boundary limits to see if the
+     *       intervals are really contiguous
+     *
+     * @param args
+     * @return {@code true} if a group of intervals forms a contiguous interval
+     */
+    public static <T extends Serializable & Comparable<T>> boolean areContiguous(final Interval<T>[] args) {
+        Arrays.sort(args);
+        for (int i = 0; i < args.length - 1; i++) {
+            if (!args[i].abuts(args[i + 1])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         if (isEmpty()) {
@@ -361,9 +631,9 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
         final StringBuilder sb = new StringBuilder();
         sb.append(startBracket(hasOpenStart()));
-        sb.append(rangeValue(this.isFromInfinity(), this.start));
+        sb.append(rangeValue(this.isFromInfinity(), start));
         sb.append(", ");
-        sb.append(rangeValue(this.isToInfinity(), this.end));
+        sb.append(rangeValue(this.isToInfinity(), end));
         sb.append(endBracket(hasOpenEnd()));
         return sb.toString();
     }

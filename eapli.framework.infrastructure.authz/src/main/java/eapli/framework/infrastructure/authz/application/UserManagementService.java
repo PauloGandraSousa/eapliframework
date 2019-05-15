@@ -43,7 +43,7 @@ import eapli.framework.util.Calendars;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  */
 @Component
 public class UserManagementService {

@@ -48,7 +48,7 @@ import eapli.framework.util.Factory;
  * @param <T>
  *            the type of Representation that will be generated, e.g., a DTO
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public interface RepresentationBuilder<T> extends Factory<T> {

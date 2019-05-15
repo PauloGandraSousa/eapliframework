@@ -85,16 +85,18 @@ public final class AuthorizationService {
     }
 
     /**
-     * verifies if there is an authenticated user session
+     * checks if there is an authenticated user session
      *
-     * @return
+     * @return {@code true} if there is an authenticated user session
      */
     public boolean hasSession() {
         return theSession.isPresent();
     }
 
     /**
-     * @return
+     * Returns the current session or an empty optional if there is no session
+     *
+     * @return the current session or an empty optional if there is no session
      */
     public Optional<UserSession> session() {
         return theSession;
@@ -102,6 +104,10 @@ public final class AuthorizationService {
 
     /**
      * helper method to check the permission of a user
+     *
+     * @param user
+     * @param actions
+     * @return {@code true} if the user has at least one of the desired roles
      */
     public boolean isAuthorizedTo(final SystemUser user, final Role... actions) {
         return user.hasAny(actions);
@@ -109,9 +115,13 @@ public final class AuthorizationService {
 
     /**
      * helper method to check the permission of the currently logged in user
+     *
+     * @param actions
+     * @return {@code true} if the authenticated user has at least one of the
+     *         desired roles
      */
     public boolean isAuthenticatedUserAuthorizedTo(final Role... actions) {
-        return session().map(u -> hasAny(u, actions)).orElse(false);
+        return session().map(us -> us.authenticatedUser().hasAny(actions)).orElse(false);
     }
 
     /**
@@ -120,34 +130,31 @@ public final class AuthorizationService {
      * consider using {@link #loggedinUserWithPermissions(Role...)} to perform
      * this check without throwing exceptions, as these scenarios are not really
      * exceptions but accounted for
-     * 
-     * @throws UserSessionNotInitiated
+     *
+     * @param actions
+     * @throws UserSessionNotInitiatedException
      * @throws UnauthorizedException
      *
      */
     @SuppressWarnings("squid:S3655")
     public void ensurePermissionOfAuthenticatedUser(final Role... actions) {
         final UserSession us = session().orElseThrow(UserSessionNotInitiatedException::new);
-        if (!hasAny(us, actions)) {
+        if (!us.authenticatedUser().hasAny(actions)) {
             throw new UnauthorizedException(session().get().authenticatedUser(), actions);
         }
     }
 
     /**
-     * returns the user session of the logged in user if there is a session and
-     * the authenticated user has the desired permissions. otherwise returns an
+     * returns the authenticated user if there is a session and the
+     * authenticated user has the desired permissions. otherwise returns an
      * empty optional.
      *
-     * @todo should return an optional SystemUser
-     *
      * @param actions
-     * @return
+     * @return the authenticated user if there is a session and the
+     *         authenticated user has the desired permissions. otherwise returns
+     *         an empty optional
      */
-    public Optional<UserSession> loggedinUserWithPermissions(final Role... actions) {
-        return session().filter(u -> hasAny(u, actions));
-    }
-
-    private boolean hasAny(final UserSession u, final Role... actions) {
-        return u.authenticatedUser().hasAny(actions);
+    public Optional<SystemUser> loggedinUserWithPermissions(final Role... actions) {
+        return session().filter(us -> us.authenticatedUser().hasAny(actions)).map(UserSession::authenticatedUser);
     }
 }

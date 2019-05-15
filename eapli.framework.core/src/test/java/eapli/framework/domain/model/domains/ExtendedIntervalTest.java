@@ -25,8 +25,6 @@ package eapli.framework.domain.model.domains;
 
 import org.junit.Test;
 
-import eapli.framework.domain.model.domains.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -41,11 +39,11 @@ public class ExtendedIntervalTest extends AbstractIntervalTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureNewStartCannotBeAfterEnd() {
-        instance = Interval.closedFrom(START).closedTo(END).build().withStart(NEW_START);
+        instance = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureNewEndCannotBeBeforeStart() {
-        instance = Interval.closedFrom(START).closedTo(END).build().withEnd(NEW_END);
+        instance = Interval.closedFrom(START).closedTo(END).withEnd(NEW_END);
     }
 }

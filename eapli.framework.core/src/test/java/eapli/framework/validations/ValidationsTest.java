@@ -35,7 +35,7 @@ import eapli.framework.actions.Actions;
 
 /**
  *
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class ValidationsTest {

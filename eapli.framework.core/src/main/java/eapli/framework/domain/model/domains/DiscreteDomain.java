@@ -93,17 +93,18 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * creates a new domain consisting of the intersection of elements between
      * this domain and another domain.
      *
-     * for instance, <br/>
-     * D1 = [1, 2 , 3, 4] <br/>
-     * D2 = [3, 4, 5] <br/>
-     * D3 = [6, 5, 7, 8] <br/>
+     * for instance,
+     *
+     * <code>
+     * D1 = [1, 2 , 3, 4]
+     * D2 = [3, 4, 5]
+     * D3 = [6, 5, 7, 8]
      * D4 = []
      *
      * R12 = D1.intersection(D2) = [3, 4]
-     *
      * R13 = D1.intersection(D3) = []
-     *
      * R14 = D1.intersection(D4) = []
+     *</code>
      *
      * @param other
      * @return a new domain instance corresponding to the intersection
@@ -122,17 +123,18 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * creates a new domain consisting of the union of elements between this
      * domain and another domain
      *
-     * for instance, <br/>
-     * D1 = [1, 2 , 3, 4] <br/>
-     * D2 = [3, 4, 5] <br/>
-     * D3 = [6, 5, 7, 8] <br/>
+     * for instance,
+     *
+     * <code>
+     * D1 = [1, 2 , 3, 4]
+     * D2 = [3, 4, 5]
+     * D3 = [6, 5, 7, 8]
      * D4 = []
      *
      * R12 = D1.union(D2) = [1, 2, 3, 4, 5]
-     *
      * R13 = D1.union(D3) = [1, 2, 3, 4, 6, 5, 7, 8]
-     *
      * R14 = D1.union(D4) = [1, 2 , 3, 4]
+     *</code>
      *
      * @param other
      * @return a new domain instance corresponding to the union
@@ -150,17 +152,18 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * this domain if and only if those elements do not exist in the other
      * domain
      *
-     * for instance, <br/>
-     * D1 = [1, 2 , 3, 4] <br/>
-     * D2 = [3, 4, 5] <br/>
-     * D3 = [6, 5, 7, 8] <br/>
+     * for instance,
+     *
+     * <code>
+     * D1 = [1, 2 , 3, 4]
+     * D2 = [3, 4, 5]
+     * D3 = [6, 5, 7, 8]
      * D4 = []
      *
      * R12 = D1.complement(D2) = [1, 2]
-     *
      * R13 = D1.complement(D3) = [1, 2, 3, 4]
-     *
      * R14 = D1.complement(D4) = [1, 2, 3, 4]
+     * </code>
      *
      * @param other
      * @return a new domain corresponding to the complement

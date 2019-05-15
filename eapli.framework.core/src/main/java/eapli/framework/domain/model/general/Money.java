@@ -131,7 +131,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * published" interface
      *
      * @TODO check other ways to avoid having this special constructor
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      * @param amount
      * @param currency
      */
@@ -320,8 +320,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     /**
      * Multiplies this Money object by a scalar and returns the result as a new
-     * Money. Business-wise it doesn't make sense to perform 5â‚¬ * 7â‚¬ but it
-     * makes sense to perform 12 * 5â‚¬, e.g., to get the total annual sum of a
+     * Money. Business-wise it doesn't make sense to perform 5€ * 7€ but it
+     * makes sense to perform 12 * 5€, e.g., to get the total annual sum of a
      * monthly payment
      *
      * @param arg
@@ -458,6 +458,36 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     public int signum() {
         return amount.signum();
+    }
+
+    /**
+     * Checks if this amount is negative
+     *
+     * @author Paulo Gandra de Sousa
+     * @return true if this amount is negative
+     */
+    public boolean isNegative() {
+        return signum() == -1;
+    }
+
+    /**
+     * checks if this amount is positive
+     *
+     * @author Paulo Gandra de Sousa
+     * @return true if this amount is positive
+     */
+    public boolean isPositive() {
+        return signum() == 1;
+    }
+
+    /**
+     * Checks if this amount is zero
+     *
+     * @author Paulo Gandra de Sousa
+     * @return true if this amount is zero
+     */
+    public boolean isZero() {
+        return signum() == 0;
     }
 
     @Override

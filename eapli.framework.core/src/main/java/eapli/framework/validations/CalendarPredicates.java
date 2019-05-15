@@ -31,7 +31,7 @@ import eapli.framework.util.Utilitarian;
 /**
  * Utility predicates handling dates
  * 
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class CalendarPredicates implements Utilitarian {

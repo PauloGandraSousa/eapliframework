@@ -309,8 +309,14 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         return true;
     }
 
+    /**
+     * Returns the date this user account was created
+     *
+     * @return the date this user account was created
+     */
     public Calendar createdOn() {
-        // TODO return an immutable copy
-        return createdOn;
+        // returning a copy as the Calendar class is mutable and we don't want
+        // to allow external access to chnage this value without us knowing it
+        return (Calendar) createdOn.clone();
     }
 }

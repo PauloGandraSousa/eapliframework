@@ -35,7 +35,7 @@ import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.dto.GeneralDTO;
 
 /**
- * @author sou03408
+ * @author Paulo Gandra de Sousa
  *
  */
 public class GeneralDTORepresentationBuilder implements RepresentationBuilder<GeneralDTO> {
