@@ -219,7 +219,6 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * @return an universal interval
      */
-    @SuppressWarnings("unchecked")
     public static <T extends Comparable<T> & Serializable> Interval<T> universal() {
         final Interval.IntervalBuilder<T> builder = fromInfinity();
         return builder.toInfinity();

@@ -34,12 +34,12 @@ package eapli.framework.util;
 @FunctionalInterface
 public interface Factory<T> {
     /**
-     * Constructs a new instance . most likely this method is the last step in the
-     * building process (following the Builder GoF pattern) where a series of steps
-     * to provide the necessary information to the object constructor is previously
-     * loaded into the builder.
+     * Constructs a new instance. Most likely this method is the last step in
+     * the building process (following the Builder GoF pattern) where a series
+     * of steps to provide the necessary information to the object constructor
+     * is previously loaded into the builder.
      *
-     * @return
+     * @return the newly created instance
      */
     T build();
 }

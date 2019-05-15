@@ -57,10 +57,12 @@ public final class Files implements Utilitarian {
     }
 
     /**
+     * Creates a filename based on {@code filename} and adding the extension
+     * {@code extension} if not present.
      *
      * @param filename
      * @param extension
-     * @return
+     * @return the filename with extension
      */
     public static String ensureExtension(final String filename, final String extension) {
         if (!filename.endsWith(extension)) {

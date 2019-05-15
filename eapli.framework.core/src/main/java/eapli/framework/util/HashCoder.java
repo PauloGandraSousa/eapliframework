@@ -90,12 +90,12 @@ public final class HashCoder {
     }
 
     /**
-     * computes the hash based on the current hash and the hash of a part
+     * Computes the hash based on the current hash and the hash of a part
      * (field)
      *
      * @param currentHash
      * @param partHash
-     * @return
+     * @return the hash code
      */
     public static int compute(final int currentHash, final int partHash) {
         return 37 * currentHash + partHash;
@@ -105,7 +105,7 @@ public final class HashCoder {
      * utility method to generate the hash of an object
      *
      * @param f
-     * @return
+     * @return the hash code
      */
     public static int hash(final Object f) {
         return Objects.hash(f);
@@ -206,9 +206,10 @@ public final class HashCoder {
     }
 
     /**
-     * the actual hash code resulting from this builder
+     * Returns the actual hash code based on the different parts added to this
+     * builder
      *
-     * @return
+     * @return the hash code
      */
     public int code() {
         return result;

@@ -36,9 +36,8 @@ import eapli.framework.domain.repositories.DomainRepository;
  * passing it to the repository
  *
  * @author Paulo Gandra de Sousa
- *
+ * @param <I>
  * @param <T>
- * @param <K>
  */
 public class InMemoryDomainRepository<I extends Comparable<I>/* & ValueObject */, T extends AggregateRoot<I>>
         extends InMemoryRepository<T, I> implements DomainRepository<I, T> {

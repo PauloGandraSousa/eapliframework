@@ -33,22 +33,33 @@ package eapli.framework.util;
  */
 public interface StringMixin {
 
+    /**
+     * @return the length of this string
+     * @see java.lang.String#length()
+     */
     default int length() {
         return toString().length();
     }
 
+    /**
+     * @return true if this string has {@link #length()} 0
+     * @see java.lang.String#isEmpty()
+     */
     default boolean isEmpty() {
         return toString().isEmpty();
     }
 
     /**
-     * See {@link java.lang.String#matches(String)}
+     * Checks if this string matches the regular expression {@code regex}
      *
+     * <p/>
      * Note that regular expression might cause security issues. see <a href=
      * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4784&rule_key=squid%3AS4784">squid:S4784</a>
      *
+     * @see java.lang.String#matches(String)
+     *
      * @param regex
-     * @return
+     * @return true if this string matches the regular expression {@code regex}
      */
     @SuppressWarnings("squid:S4784")
     default boolean matches(final String regex) {

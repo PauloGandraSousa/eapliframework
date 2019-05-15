@@ -36,7 +36,8 @@ import org.apache.logging.log4j.Logger;
  *
  * see <a href=
  * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4829&rule_key=squid%3AS4829">squid:S24829</a>
- * regarding potential security pitfalls when reading input from the outside of the application
+ * regarding potential security pitfalls when reading input from the outside of
+ * the application
  *
  * based on code from Nuno Silva
  *
@@ -55,7 +56,7 @@ public final class Console implements Utilitarian {
      * reads input from the console as a string.
      *
      * @param prompt
-     * @return
+     * @return the input read from the console
      */
     public static String readLine(final String prompt) {
         try {

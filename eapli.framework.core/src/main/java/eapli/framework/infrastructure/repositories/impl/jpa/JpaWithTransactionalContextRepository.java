@@ -46,22 +46,22 @@ import eapli.framework.domain.repositories.TransactionalContext;
  *
  * @author Paulo Gandra Sousa
  */
-/* package */ class JpaWithTransactionalContextRepository<T, K, I>
-        extends JpaBaseRepository<T, K, I> {
+/* package */ class JpaWithTransactionalContextRepository<T, K, I> extends JpaBaseRepository<T, K, I> {
 
     private JpaTransactionalContext txContext;
 
     /**
+     * @param txCtx
+     * @param identityFieldName
      *
      */
-    public JpaWithTransactionalContextRepository(final TransactionalContext txCtx,
-            String identityFieldName) {
+    public JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final String identityFieldName) {
         super(identityFieldName);
         setTxCtx(txCtx);
     }
 
-    /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx,
-            final Class<T> classz, String identityFieldName) {
+    /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final Class<T> classz,
+            final String identityFieldName) {
         super(classz, identityFieldName);
         setTxCtx(txCtx);
     }

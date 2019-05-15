@@ -160,7 +160,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      *
      * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     public void deleteOfIdentity(final I entityId) {
@@ -210,7 +210,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      *
      * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     @Override

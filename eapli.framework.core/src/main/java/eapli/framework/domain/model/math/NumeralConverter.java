@@ -40,8 +40,8 @@ class NumeralConverter implements Utilitarian {
     /**
      * Algorithm
      *
-     * Let n be the number of digits in the number. For example, 104 has 3 digits,
-     * so n=3.
+     * Let n be the number of digits in the number. For example, 104 has 3
+     * digits, so n=3.
      *
      * Let b be the base of the number. For example, 104 is decimal so b = 10.
      *
@@ -55,10 +55,11 @@ class NumeralConverter implements Utilitarian {
      *
      * end for
      *
-     * When your done with all the digits in the number, its decimal value will be s
+     * When your done with all the digits in the number, its decimal value will
+     * be s
      *
      * @param value
-     * @param base
+     * @param system
      * @return
      */
     public static long decimalValue(final String value, final NumeralSystem system) {
@@ -93,7 +94,7 @@ class NumeralConverter implements Utilitarian {
      * end repeat
      *
      * @param value
-     * @param fromBase
+     * @param system
      * @return
      */
     public static String representationOf(final long value, final NumeralSystem system) {

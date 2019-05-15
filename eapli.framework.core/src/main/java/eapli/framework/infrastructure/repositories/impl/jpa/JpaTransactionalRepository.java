@@ -52,28 +52,25 @@ import eapli.framework.validations.Preconditions;
  *
  * @author Paulo Gandra Sousa
  */
-public class JpaTransactionalRepository<T, K, I>
-        extends JpaWithTransactionalContextRepository<T, K, I> {
+public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalContextRepository<T, K, I> {
 
-    public JpaTransactionalRepository(final String persistenceUnitName, String identityFieldName) {
+    public JpaTransactionalRepository(final String persistenceUnitName, final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName), identityFieldName);
     }
 
-    /* package */ JpaTransactionalRepository(final String persistenceUnitName,
-            final Class<T> classz, String identityFieldName) {
+    /* package */ JpaTransactionalRepository(final String persistenceUnitName, final Class<T> classz,
+            final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName), classz, identityFieldName);
     }
 
     public JpaTransactionalRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties, String identityFieldName) {
+            @SuppressWarnings("rawtypes") final Map properties, final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName, properties), identityFieldName);
     }
 
     /* package */ JpaTransactionalRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties, final Class<T> classz,
-            String identityFieldName) {
-        super(new JpaTransactionalContext(persistenceUnitName, properties), classz,
-                identityFieldName);
+            @SuppressWarnings("rawtypes") final Map properties, final Class<T> classz, final String identityFieldName) {
+        super(new JpaTransactionalContext(persistenceUnitName, properties), classz, identityFieldName);
     }
 
     /**
@@ -95,7 +92,7 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     @Override
-    public void deleteOfIdentity(I entityId) {
+    public void deleteOfIdentity(final I entityId) {
         try {
             context().beginTransaction();
             super.deleteOfIdentity(entityId);
@@ -106,7 +103,7 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     @Override
-    public T update(T entity) {
+    public T update(final T entity) {
         try {
             context().beginTransaction();
             final T r = super.update(entity);
@@ -122,7 +119,7 @@ public class JpaTransactionalRepository<T, K, I>
      *
      * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     @Override

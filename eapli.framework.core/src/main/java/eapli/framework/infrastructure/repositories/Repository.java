@@ -33,9 +33,9 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
  * the DDD interfaces from the framework use
  * {@link eapli.framework.domain.repositories.DomainRepository} instead.
  *
- * @param T
+ * @param <T>
  *            the class we want to manage in the repository
- * @param K
+ * @param <K>
  *            the class denoting the primary key of the entity in the database
  *
  * @author Paulo Gandra Sousa
@@ -73,7 +73,7 @@ public interface Repository<T, K> {
      *
      * @param entity
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     void delete(T entity);
@@ -81,9 +81,9 @@ public interface Repository<T, K> {
     /**
      * Removes the entity with the specified primary key from the repository.
      *
-     * @param entity
+     * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     void deleteById(K entityId);

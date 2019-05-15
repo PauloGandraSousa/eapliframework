@@ -86,12 +86,12 @@ public final class Math implements Utilitarian {
     }
 
     /**
-     * calculates base to the power of exp as a long value instead of double
-     * from the standard Java Library
+     * Calculates {@code base} to the power of {@code exp} as a long value
+     * instead of double from the standard Java Library
      *
      * @param base
      * @param exp
-     * @return
+     * @return base to the power of exp
      */
     public static long pow(final int base, final int exp) {
         long s = 1;

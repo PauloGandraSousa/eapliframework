@@ -29,11 +29,12 @@ import java.util.function.UnaryOperator;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A simple approach to the functional Monad Either
+ * A simple approach to the functional Monad Either.
  *
- * objects of this class can represent one value or either T or U, useful for
- * error handling where, by convention, the left type is the correct response
- * and the right type is the error response
+ * <p/>
+ * Objects of this class can represent one (1) value of either T or U. Useful
+ * for error handling where, by convention, the left type is the correct
+ * response and the right type is the error response
  *
  * @author Paulo Gandra de Sousa
  *
@@ -51,26 +52,27 @@ public final class Either<T, U> {
     private U right;
 
     /**
-     * factory method to create a left value Either
+     * Factory method to create a left value Either.
      *
      * @param left
-     * @return
+     * @return a new Either
      */
     public static <T, U> Either<T, U> ofLeft(final T left) {
         return new Either<>(left, true);
     }
 
     /**
-     * factory method to create a right value Either
+     * Factory method to create a right value Either.
      *
-     * @param left
-     * @return
+     * @param right
+     * @return a new Either
      */
     public static <T, U> Either<T, U> ofRight(final U right) {
         return new Either<>(right);
     }
 
     /**
+     * Constructs a left Either.
      *
      * @param left
      * @param marker
@@ -85,6 +87,11 @@ public final class Either<T, U> {
         this.left = left;
     }
 
+    /**
+     * Constructs a right Either.
+     *
+     * @param right
+     */
     private Either(final U right) {
         Preconditions.nonNull(right);
 
@@ -93,9 +100,10 @@ public final class Either<T, U> {
     }
 
     /**
-     * applies the "normal" function to the left value if this Either instance holds
-     * a left value, otherwise applies the "error" function to the right value.
-     * since this method returns a new Either it is suitable for composition.
+     * applies the "normal" function to the left value if this Either instance
+     * holds a left value, otherwise applies the "error" function to the right
+     * value. since this method returns a new Either it is suitable for
+     * composition.
      *
      * @param normal
      * @param error
@@ -108,9 +116,9 @@ public final class Either<T, U> {
     }
 
     /**
-     * acts on the value of this Either instance, executing the "normal" function
-     * with the left value if this Either instance holds a left value, otherwise
-     * executes the "error" function with the right value
+     * acts on the value of this Either instance, executing the "normal"
+     * function with the left value if this Either instance holds a left value,
+     * otherwise executes the "error" function with the right value
      *
      * @param normal
      * @param error

@@ -109,6 +109,10 @@ public class Vector implements ValueObject {
 
     /**
      * creates a vector with all elements with the value 0.0
+     * 
+     * @param n
+     * @param type
+     * @return
      */
     public static Vector zero(final int n, final VectorType type) {
         return zero(n, type, 0.0);
@@ -116,6 +120,11 @@ public class Vector implements ValueObject {
 
     /**
      * creates a "zero" vector with the same given value
+     * 
+     * @param n
+     * @param type
+     * @param zero
+     * @return
      */
     public static Vector zero(final int n, final VectorType type, final double zero) {
         return new Vector(type, n, () -> zero);

@@ -58,7 +58,6 @@ public class TimeInterval extends Interval<Calendar> {
      * creates a time interval from begin until "infinity"
      *
      * @param begin
-     * @param end
      */
     public TimeInterval(final Calendar begin) {
         super(begin, BoundaryLimitType.CLOSED, null, BoundaryLimitType.INFINITY);

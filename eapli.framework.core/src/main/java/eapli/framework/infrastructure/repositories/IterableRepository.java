@@ -29,10 +29,10 @@ import java.util.Optional;
 /**
  * A generic interface for iterable repositories.
  *
- * @param T
+ * @param <T>
  *            the class we want to manage in the repository (a table in the
  *            database)
- * @param K
+ * @param <K>
  *            the class denoting the primary key of the table
  * @author Paulo Gandra Sousa
  */

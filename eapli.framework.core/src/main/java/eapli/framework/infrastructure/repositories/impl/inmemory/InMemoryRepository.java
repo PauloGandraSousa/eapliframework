@@ -44,9 +44,9 @@ import eapli.framework.validations.Invariants;
  * class is parameterized with an identity generation mapping function in the
  * constructor
  *
- * @param T
+ * @param <T>
  *            the type to be used of the objects stored in the repository
- * @param K
+ * @param <K>
  *            the type to be used as key of an object
  */
 public class InMemoryRepository<T, K> implements IterableRepository<T, K> {

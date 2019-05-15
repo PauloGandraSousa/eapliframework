@@ -56,7 +56,7 @@ public final class NumberGenerator implements Utilitarian {
     /**
      * fifty/fifty chance
      *
-     * @return
+     * @return true or false in what tends to be a 50/50 distribution
      */
     public static boolean heads() {
         return anInt() % 2 == 0;

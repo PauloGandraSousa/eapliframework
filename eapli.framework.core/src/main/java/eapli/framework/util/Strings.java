@@ -40,23 +40,29 @@ public final class Strings implements Utilitarian {
     }
 
     /**
-     * returns a random string with a specified length consisting only of
-     * letters (capitals and lower) and digits
+     * Returns a random string with a specified length consisting only of
+     * letters (capitals and lower) and digits.
      *
      * @param len
-     * @return
+     *            the desired length of the string to generate
+     * @return a random string with a specified length consisting only of
+     *         letters (capitals and lower) and digits
      */
     public static String randomString(final int len) {
         return randomString(len, CHARSET);
     }
 
     /**
-     * returns a random string with a specified length based on characters in a
-     * specified char set
+     * Returns a random string with a specified length based on characters in a
+     * specified char set.
      *
      * @param len
+     *            the desired length
      * @param charSet
-     * @return
+     *            the set of allowable characters to include in the random
+     *            string
+     * @return a random string with a specified length based on characters in a
+     *         specified char set
      */
     public static String randomString(final int len, final String charSet) {
         final StringBuilder sb = new StringBuilder();
@@ -83,11 +89,13 @@ public final class Strings implements Utilitarian {
     }
 
     /**
-     * returns the first n chars of a string
+     * Returns the first n chars of a string.
      *
      * @param org
+     *            the string to extract the characters from
      * @param len
-     * @return
+     *            the desired number of characters to extract
+     * @return the first n chars of a string
      */
     public static String left(final String org, final int len) {
         if (len <= 0) {
@@ -100,11 +108,13 @@ public final class Strings implements Utilitarian {
     }
 
     /**
-     * returns the last n chars of a string
+     * returns the last n chars of a string.
      *
      * @param org
+     *            the string to extract characters from
      * @param len
-     * @return
+     *            the desired number of characters to extract
+     * @return the last n chars of a string
      */
     public static String right(final String org, final int len) {
         if (len < 0) {

@@ -84,7 +84,7 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
     /**
      * checks for the existence of the entity
      *
-     * @param id
+     * @param entity
      * @return
      */
     default boolean contains(final T entity) {
@@ -96,7 +96,7 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
      *
      * @param entity
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     void delete(final T entity);
@@ -106,7 +106,7 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
      *
      * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     void deleteOfIdentity(final I entityId);
@@ -134,7 +134,7 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
      *
      * @param entity
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     default void remove(final T entity) {
@@ -146,7 +146,7 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
      *
      * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsuportedOperationException
+     * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     default void removeOfIdentity(final I entityId) {

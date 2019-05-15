@@ -50,14 +50,14 @@ public class RomanNumeral implements ValueObject {
     private final int num; // The number represented by this Roman numeral.
 
     /**
-     * Constructor. Creates the Roman number with the int value specified by the
+     * Creates the Roman number with the integer value specified by the
      * parameter.
-     *
-     * @throws NumberFormatException
-     *             if arabic is not in the range 1 to 3999 inclusive.
      *
      * @param arabic
      *            the number we want to express as a Roman literal
+     * @throws NumberFormatException
+     *             if arabic is not in the range 1 to 3999 inclusive.
+     *
      */
     public RomanNumeral(final int arabic) {
         if (arabic < 1) {

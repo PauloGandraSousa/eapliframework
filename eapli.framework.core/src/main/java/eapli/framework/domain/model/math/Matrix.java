@@ -67,10 +67,10 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * creates a square identity matrix
+     * Creates a square identity matrix.
      *
      * @param n
-     * @return
+     * @return a new identity matrix
      */
     public static Matrix identity(final int n) {
         final Matrix id = zero(n, n);
@@ -81,33 +81,39 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * creates a square zero matrix
+     * Creates a square zero matrix.
      *
      * @param n
-     * @return
+     * @return a square zero matrix
      */
     public static Matrix zero(final int n) {
         return zero(n, n);
     }
 
     /**
-     * creates a zero matrix
+     * Creates a zero matrix with the specified number of rows and columns.
      *
      * @param r
+     *            the desired number of rows
      * @param c
-     * @return
+     *            the desired number of columns
+     * @return a zero matrix with the specified number of rows and columns
      */
     public static Matrix zero(final int r, final int c) {
         return new Matrix(r, c);
     }
 
     /**
-     * creates a "zero" matrix with the same given value
+     * Creates a "zero" matrix with all cells of the matrix having the same
+     * given value.
      *
      * @param r
+     *            the desired number of rows
      * @param c
+     *            the desired number of columns
      * @param zero
-     * @return
+     *            the value to set to all cells of the matrix
+     * @return a "zero" matrix
      */
     public static Matrix zero(final int r, final int c, final double zero) {
         final Matrix z = new Matrix(r, c);
