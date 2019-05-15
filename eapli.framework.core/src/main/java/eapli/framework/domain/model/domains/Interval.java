@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.domain.model.domains;
 
@@ -35,8 +32,8 @@ import eapli.framework.validations.Invariants;
 /**
  * A generic immutable interval class, i.e., a continuous domain.
  *
- * See <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's
- * Range pattern</a> for a general discussion
+ * See <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's Range pattern</a> for a
+ * general discussion
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -124,8 +121,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * special private constructor for empty intervals
      *
      * @param b
-     *            marker parameter to enable the compiler to distinguish the
-     *            constructors
+     *          marker parameter to enable the compiler to distinguish the constructors
      */
     @SuppressWarnings("squid:S1172")
     private Interval(final boolean b) {
@@ -137,14 +133,13 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * constructs an interval.
      *
      * @param start
-     *            anchor start of the interval or null to represent infinity
+     *                      anchor start of the interval or null to represent infinity
      * @param end
-     *            anchor end of the interval or null to represent infinity
+     *                      anchor end of the interval or null to represent infinity
      * @param startBoundary
-     *            indicates if the interval is open or closed at the start
-     *            anchor
+     *                      indicates if the interval is open or closed at the start anchor
      * @param endBoundary
-     *            indicates if the interval is open or closed at the end anchor
+     *                      indicates if the interval is open or closed at the end anchor
      */
     protected Interval(final T start, final BoundaryLimitType startBoundary, final T end,
             final BoundaryLimitType endBoundary) {
@@ -177,8 +172,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * A factory method for closed intervals that start at a specific anchor
-     * point
+     * A factory method for closed intervals that start at a specific anchor point
      *
      * @param start
      * @return a builder
@@ -201,7 +195,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     private static final Interval EMPTY = new Interval(true);
 
     /**
-     * returns an empty interval
+     * returns an empty interval, i.e., []
      *
      * @return an empty interval
      */
@@ -214,8 +208,19 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return start == end && start == null && endBoundary == startBoundary && endBoundary == null;
     }
 
-    private boolean notEmpty() {
-        return !isEmpty();
+    /**
+     * returns an universal interval, i.e., ]-oo, +oo[
+     *
+     * @return an universal interval
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends Comparable<T> & Serializable> Interval<T> universal() {
+        final Interval.IntervalBuilder<T> builder = fromInfinity();
+        return builder.toInfinity();
+    }
+
+    public boolean isUniversal() {
+        return endBoundary == startBoundary && endBoundary == BoundaryLimitType.INFINITY;
     }
 
     /**
@@ -270,13 +275,13 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     public T start() {
-        Invariants.ensure(this::notEmpty);
+        Invariants.ensure(!isEmpty());
 
         return this.start;
     }
 
     public T end() {
-        Invariants.ensure(this::notEmpty);
+        Invariants.ensure(!isEmpty());
 
         return this.end;
     }
@@ -292,21 +297,18 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * returns the interval consisting of the intersection of this interval and
-     * another one
+     * returns the interval consisting of the intersection of this interval and another one
      *
      * @param other
-     * @return the interval consisting of the intersection of this interval and
-     *         another one
+     * @return the interval consisting of the intersection of this interval and another one
      */
     public Interval<T> intersection(final Interval<T> other) {
         throw new UnsupportedOperationException("Not yet developed");
     }
 
     /**
-     * returns a new interval by extending the start of this one. the
-     * openness/closeness of the start boundary as well as the end will be the
-     * same of the original interval
+     * returns a new interval by extending the start of this one. the openness/closeness of the start
+     * boundary as well as the end will be the same of the original interval
      *
      * @param newStart
      * @return a new interval by extending the start of this one
@@ -316,9 +318,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * returns a new interval by extending the end of this one. the
-     * openness/closeness of the end boundary as well as the start will be the
-     * same of the original interval
+     * returns a new interval by extending the end of this one. the openness/closeness of the end
+     * boundary as well as the start will be the same of the original interval
      *
      * @param newEnd
      * @return a new interval by extending the end of this one
@@ -328,8 +329,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * checks if this interval overlaps another one, that is, if this interval
-     * fully contains the other one.
+     * checks if this interval overlaps another one, that is, if this interval fully contains the other
+     * one.
      *
      * for instance
      *
@@ -368,8 +369,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * based on https://martinfowler.com/eaaDev/Range.html
      *
      * @param arg
-     * @return a new interval representing the gap between this and another
-     *         range
+     * @return a new interval representing the gap between this and another range
      */
     @SuppressWarnings("unchecked")
     public Interval<T> gap(final Interval<T> arg) {
@@ -389,16 +389,13 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * Compares to intervals to determine the natural order. Assumes an interval
-     * is "first" than another if it starts at a point which is "first" than the
-     * start of the other interval.
+     * Compares to intervals to determine the natural order. Assumes an interval is "first" than another
+     * if it starts at a point which is "first" than the start of the other interval.
      *
-     * the empty interval cannot be represented on a line and as such it doesn't
-     * make much sense to order it, however, we need to handle that special case
-     * and throwing an exception does not solve the problem if we happen to have
-     * an empty interval as part of a collection and we want to sort those
-     * intervals. we assume the empty interval, i.e., [], is always first to any
-     * other interval
+     * the empty interval cannot be represented on a line and as such it doesn't make much sense to
+     * order it, however, we need to handle that special case and throwing an exception does not solve
+     * the problem if we happen to have an empty interval as part of a collection and we want to sort
+     * those intervals. we assume the empty interval, i.e., [], is always first to any other interval
      *
      * based on https://martinfowler.com/eaaDev/Range.html
      *
@@ -408,6 +405,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      */
     @Override
     public int compareTo(final Interval<T> other) {
+        // if we are empty, we are either the first or the same if the other is empty
         if (isEmpty()) {
             if (other.isEmpty()) {
                 return 0;
@@ -415,7 +413,12 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
                 return -1;
             }
         }
+        // we are not empty, but if the other is, then we are after
+        if (other.isEmpty()) {
+            return 1;
+        }
 
+        // neither of us is empty
         if (isFromInfinity()) {
             return compareToWhenStartsAtInfinity(other);
         } else {
@@ -455,9 +458,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
                     // we both start and end at infinity
                     return 0;
                 } else {
-                    // we end at infinity but the other does not. we still
-                    // come first
-                    return -1;
+                    // we end at infinity but the other does not. the other comes first
+                    return 1;
                 }
             } else {
                 // we don't end at infinity, let's check if we end first
@@ -526,8 +528,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * based on https://martinfowler.com/eaaDev/Range.html
      *
      * @param args
-     * @return {@code true} if the group of ranges completely partitions this
-     *         range
+     * @return {@code true} if the group of ranges completely partitions this range
      */
     public boolean partitionedBy(final Interval<T>[] args) {
         if (!areContiguous(args)) {
@@ -558,8 +559,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * based on https://martinfowler.com/eaaDev/Range.html
      *
-     * @TODO need to take into account the boundary limits to see if the
-     *       intervals are really contiguous
+     * @TODO need to take into account the boundary limits to see if the intervals are really contiguous
      *
      * @param args
      * @return {@code true} if a group of intervals forms a contiguous interval
