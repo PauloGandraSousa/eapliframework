@@ -417,7 +417,11 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * <pre>
      * [4, 7] < [5, 7]
+     * [4, 7] < ]5, 7]
+     * ]4, 7] < [5, 7]
+     * ]4, 7] < ]5, 7]
      * ]-oo, 5] < [-100, 5[
+     * ]-oo, 5] < ]-100, 5[
      * ]-oo, +oo[ < [3, +oo[
      * </pre>
      *
@@ -437,6 +441,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * <pre>
      * [4, 7] < [4, 10]
+     * ]4, 7] < ]4, 10]
      * ]-oo, 1] < ]-oo, 4[
      * ]-oo, 5] < ]-oo, +oo[
      *
@@ -454,7 +459,6 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * [] < X, for any X != []
      * </pre>
      *
-     * @TODO take into account the open/close of each end of the interval
      * @return -1 if this object is naturally before the other, 1 if this object is naturally after the
      *         other, 0 if they are naturally ordered the same
      */
