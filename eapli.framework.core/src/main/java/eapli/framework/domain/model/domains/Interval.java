@@ -267,11 +267,11 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return !(hasOpenEnd() && target.compareTo(this.end) == 0);
     }
 
-    public boolean isToInfinity() {
+    public boolean endsAtInfinity() {
         return this.endBoundary == BoundaryLimitType.INFINITY;
     }
 
-    public boolean isFromInfinity() {
+    public boolean startsAtInfinity() {
         return this.startBoundary == BoundaryLimitType.INFINITY;
     }
 
@@ -394,17 +394,65 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * Compares two intervals to determine the natural order. Assumes an interval is "before" another if
-     * it starts at a point which is before than the start of the other interval.
+     * Compares two intervals to determine the natural order. Two intervals will be the same (the method
+     * will return 0) if and only if they have the same start and end, and the same openness/closeness
+     * at each side.
+     *
+     * <pre>
+     * [4, 7] = [4, 7]
+     * ]4, 7] = ]4, 7]
+     * [4, 7[ = [4, 7[
+     * ]4, 7[ = ]4, 7[
+     * ]-oo, 5] = ]-oo, 5]
+     * ]-oo, 5[ = ]-oo, 5[
+     * [5, +oo[ = [5, +oo[
+     * ]5, +oo[ = ]5, +oo[
+     * ]-oo, +oo[ = ]-oo, +oo[
+     * [] = []
+     * </pre>
+     *
+     * <p/>
+     * An interval is "before" another if it starts at a point which is before the start of the other
+     * interval.
+     *
+     * <pre>
+     * [4, 7] < [5, 7]
+     * ]-oo, 5] < [-100, 5[
+     * ]-oo, +oo[ < [3, +oo[
+     * </pre>
+     *
+     * <p/>
+     * If two intervals start at the same point, closed intervals will be before closed ones.
+     *
+     * <pre>
+     * [4, 10] < ]4, 7]
+     * [4, 10] < ]4, 10]
+     * [4, 10] < ]4, 50]
+     * </pre>
+     *
+     * <p/>
+     * If two intervals start at the same point (including infinity) and have the same
+     * openness/closeness, then the end point will determine the order. if the endpoint is the same,
+     * open intervals will be before closed ones.
+     *
+     * <pre>
+     * [4, 7] < [4, 10]
+     * ]-oo, 1] < ]-oo, 4[
+     * ]-oo, 5] < ]-oo, +oo[
+     *
+     * ]-oo, 4[ < ]-oo, 4]
+     * [4, 10[ < [4, 10]
+     * </pre>
      *
      * <p/>
      * The empty interval cannot be represented on a line and as such it doesn't make much sense to
      * order it, however, we need to handle that special case and throwing an exception does not solve
      * the problem if we happen to have an empty interval as part of a collection and we want to sort
-     * those intervals. we assume the empty interval, i.e., [], is always first to any other interval.
+     * those intervals. The empty interval, i.e., [], is always first to any other interval.
      *
-     * <p/>
-     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's Range</a>
+     * <pre>
+     * [] < X, for any X != []
+     * </pre>
      *
      * @TODO take into account the open/close of each end of the interval
      * @return -1 if this object is naturally before the other, 1 if this object is naturally after the
@@ -412,115 +460,74 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      */
     @Override
     public int compareTo(final Interval<T> other) {
-        // if we are empty, we are either the first or the same if the other is
-        // empty
+        // if we are empty, we are either the first or the same
         if (isEmpty()) {
-            return compareEmptyToX(other);
+            return other.isEmpty() ? 0 : -1;
         }
         // we are not empty, but if the other is, then we are after
-        else if (other.isEmpty()) {
-            return 1;
-        }
-
-        // neither of us is empty
-        if (isFromInfinity()) {
-            return compareStartAtInfinityToX(other);
-        } else {
-            return compareStartAtXToY(other);
-        }
-    }
-
-    private int compareEmptyToX(final Interval<T> other) {
         if (other.isEmpty()) {
-            return 0;
-        } else {
-            return -1;
-        }
-    }
-
-    private int compareStartAtXToY(final Interval<T> other) {
-        // we don't start at infinity, does the other one start at infinity?
-        if (other.isFromInfinity()) {
-            // we are after
             return 1;
-        } else {
-            // neither starts at infinity, so let's check who starts first
-            final int orderStart = start.compareTo(other.start);
-            if (orderStart == 0) {
-                // we start at the same "point", so it is up to the end
-                // boundary
-
-                // let's see if any of us ends at infinity
-                if (isToInfinity()) {
-                    if (other.isToInfinity()) {
-                        return 0;
-                    } else {
-                        return -1;
-                    }
-                } else {
-                    return end.compareTo(other.end);
-                }
-            } else {
-                // whoever starts first, is the first
-                return orderStart;
-            }
         }
-    }
 
-    private int compareStartAtInfinityToX(final Interval<T> other) {
-        // we start at infinity
-        // if the other does not start at infinity
-        if (!other.isFromInfinity()) {
-            // we are first
-            return -1;
-        } else {
-            // we both start at infinity, so it is up to the end of each
-            if (isToInfinity()) {
-                return compareUniversalToStartAtInfinity(other);
-            } else {
-                // we don't end at infinity
-                return compareInfinityToXToY(other);
-            }
-        }
-    }
-
-    private int compareInfinityToXToY(final Interval<T> other) {
-        if (other.isToInfinity()) {
-            return -1;
-        }
-        // let's check if we end first than the other
-        final int order = end.compareTo(other.end);
-        if (order == 0) {
-            // let's check openess/closeness
-            if (endBoundary == BoundaryLimitType.OPEN) {
-                if (other.endBoundary == BoundaryLimitType.OPEN) {
-                    return 0;
-                } else {
-                    return -1;
-                }
-            } else if (other.endBoundary == BoundaryLimitType.OPEN) {
-                return 1;
-            } else {
-                // we don't end at infinity, let's check if we end first
-                // than the other
-                if (other.isToInfinity()) {
-                    return -1;
-                } else {
-                    return end.compareTo(other.end);
-                }
-            }
-        } else {
-            return order;
-        }
-    }
-
-    private int compareUniversalToStartAtInfinity(final Interval<T> other) {
-        if (other.isToInfinity()) {
-            // we both start and end at infinity
+        // neither of us is empty, let's check if we are the same
+        if (startIsTheSameAs(other) && endIsTheSameAs(other)) {
             return 0;
-        } else {
-            // we end at infinity but the other does not. the other comes first
+        }
+
+        // any of us start first?
+        if (this.startsBeforeThan(other)) {
+            return -1;
+        }
+        if (other.startsBeforeThan(this)) {
             return 1;
+        }
+
+        // we have the same start, so let's check the end
+        if (this.endsAfterThan(other)) {
+            return 1;
+        }
+        if (other.endsAfterThan(this)) {
+            return -1;
+        }
+
+        return 0;
+    }
+
+    private boolean endsAfterThan(final Interval<T> other) {
+        if (this.endsAtInfinity()) {
+            return !other.endsAtInfinity();
+        } else {
+            if (other.endsAtInfinity()) {
+                return false;
+            } else {
+                final int order = end.compareTo(other.end);
+                if (order < 0) {
+                    return false;
+                } else if (order == 0) {
+                    return (endBoundary == BoundaryLimitType.CLOSED && other.endBoundary == BoundaryLimitType.OPEN);
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+
+    private boolean startsBeforeThan(final Interval<T> other) {
+        if (this.startsAtInfinity()) {
+            return !other.startsAtInfinity();
+        } else {
+            if (other.startsAtInfinity()) {
+                return false;
+            } else {
+                final int order = start.compareTo(other.start);
+                if (order < 0) {
+                    return true;
+                } else if (order == 0) {
+                    return (startBoundary == BoundaryLimitType.CLOSED && other.startBoundary == BoundaryLimitType.OPEN);
+                } else {
+                    return false;
+                }
+            }
         }
     }
 
@@ -532,32 +539,15 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
 
         @SuppressWarnings("unchecked")
         final Interval<T> other = (Interval<T>) o;
-        if (isEmpty()) {
-            return other.isEmpty();
-        } else {
-            return startIsTheSame(other) && endIsTheSame(other);
-        }
+        return startIsTheSameAs(other) && endIsTheSameAs(other);
     }
 
-    private boolean startIsTheSame(final Interval<T> other) {
-        // both are infinity
-        final boolean bothInfinity = this.startBoundary.equals(BoundaryLimitType.INFINITY)
-                && this.startBoundary.equals(other.startBoundary);
-        // our start is not infinity and the other start is the same as ours
-        final boolean sameStart = !this.startBoundary.equals(BoundaryLimitType.INFINITY)
-                && this.start.equals(other.start);
-
-        return bothInfinity || sameStart;
+    private boolean startIsTheSameAs(final Interval<T> other) {
+        return this.startBoundary == other.startBoundary && this.start == other.start;
     }
 
-    private boolean endIsTheSame(final Interval<T> other) {
-        // both are infinity
-        final boolean bothInfinity = this.endBoundary.equals(BoundaryLimitType.INFINITY)
-                && this.endBoundary.equals(other.endBoundary);
-        // our end is not infinity and the other end is the same as ours
-        final boolean sameEnd = !this.endBoundary.equals(BoundaryLimitType.INFINITY) && this.end.equals(other.end);
-
-        return bothInfinity || sameEnd;
+    private boolean endIsTheSameAs(final Interval<T> other) {
+        return this.endBoundary == other.endBoundary && this.end == other.end;
     }
 
     @Override
@@ -636,9 +626,9 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
         final StringBuilder sb = new StringBuilder();
         sb.append(startBracket(hasOpenStart()));
-        sb.append(rangeValue(this.isFromInfinity(), start));
+        sb.append(rangeValue(this.startsAtInfinity(), start));
         sb.append(", ");
-        sb.append(rangeValue(this.isToInfinity(), end));
+        sb.append(rangeValue(this.endsAtInfinity(), end));
         sb.append(endBracket(hasOpenEnd()));
         return sb.toString();
     }

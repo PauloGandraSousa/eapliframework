@@ -60,12 +60,12 @@ public class EmptyIntervalTest extends IntervalTestBase {
 
     @Test
     public void ensureNotFromInfinity() {
-        assertFalse(subject.isFromInfinity());
+        assertFalse(subject.startsAtInfinity());
     }
 
     @Test
     public void ensureNotToInfinity() {
-        assertFalse(subject.isToInfinity());
+        assertFalse(subject.endsAtInfinity());
     }
 
     @Test(expected = IllegalStateException.class)

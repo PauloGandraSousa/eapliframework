@@ -61,7 +61,7 @@ public class ToInfinityOpenIntervalTest extends IntervalTestBase {
     @Test
     public void ensureIsToInfinity() {
         System.out.println("ensureIsToInfinity");
-        final boolean result = subject.isToInfinity();
+        final boolean result = subject.endsAtInfinity();
         assertTrue("to inifinity ranges must be to infinity", result);
     }
 

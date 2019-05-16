@@ -62,7 +62,7 @@ public class FromInfinityOpenIntervalTest extends IntervalTestBase {
     @Test
     public void ensureIsFromInfinity() {
         System.out.println("ensureIsFromInfinity");
-        final boolean result = subject.isFromInfinity();
+        final boolean result = subject.startsAtInfinity();
         assertTrue("from infinity ranges must be from infinity", result);
     }
 

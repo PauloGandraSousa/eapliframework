@@ -26,13 +26,24 @@ public class OXIIntervalCompareTest extends IntervalCompareTestBase {
         assertEquals(0, subject.compareTo(subject));
     }
 
+    @Test
+    public void ensureIsAfterICX() {
+        assertEquals(1, subject.compareTo(ICX));
+    }
+
+    @Test
+    public void ensureIsAfterIOX() {
+        assertEquals(1, subject.compareTo(IOX));
+    }
+
     // TODO other comparison scenarios
-    // IOX;
-    // ICX;
     // CXCY;
     // CXOY;
     // OXCY;
     // OXOY;
-    // CXI;
-    // OXI;
+
+    @Test
+    public void ensureIsAfterCXI() {
+        assertEquals(1, subject.compareTo(CXI));
+    }
 }
