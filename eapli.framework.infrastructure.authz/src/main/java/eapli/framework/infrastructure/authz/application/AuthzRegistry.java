@@ -30,7 +30,7 @@ import eapli.framework.validations.Invariants;
 /**
  * helper class for scenarios without spring Dependency Injection
  *
- * @author pgsou_000
+ * @author Paulo Gandra de Sousa
  *
  */
 public final class AuthzRegistry implements Singleton {

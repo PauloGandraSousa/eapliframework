@@ -49,112 +49,101 @@ import eapli.framework.validations.Preconditions;
 @Component
 public final class AuthorizationService {
 
-    /**
-     * the current logged in user session
-     */
-    private Optional<UserSession> theSession = Optional.empty();
+	/**
+	 * the current logged in user session
+	 */
+	private Optional<UserSession> theSession = Optional.empty();
 
-    /**
-     * default constructor for Spring dependency injection
-     */
-    protected AuthorizationService() {
-        // empty
-    }
+	/**
+	 * hiding the constructor so that this class is used either by spring or thru
+	 * {@link AuthzRegistry#authorizationService()}
+	 */
+	protected AuthorizationService() {
+		// empty
+	}
 
-    /**
-     * internal method to set the session after authentication has been
-     * performed
-     *
-     * @param session
-     */
-    /* package */ void setSession(final Optional<UserSession> session) {
-        Preconditions.nonNull(session);
+	/**
+	 * internal method to set the session after authentication has been performed
+	 *
+	 * @param session
+	 */
+	/* package */ void setSession(final Optional<UserSession> session) {
+		Preconditions.nonNull(session);
 
-        if (session.isPresent()) {
-            theSession = session;
-        } else {
-            clearSession();
-        }
-    }
+		if (session.isPresent()) {
+			theSession = session;
+		} else {
+			clearSession();
+		}
+	}
 
-    /**
-     * clear the session
-     */
-    public void clearSession() {
-        theSession = Optional.empty();
-    }
+	/**
+	 * clear the session
+	 */
+	public void clearSession() {
+		theSession = Optional.empty();
+	}
 
-    /**
-     * checks if there is an authenticated user session
-     *
-     * @return {@code true} if there is an authenticated user session
-     */
-    public boolean hasSession() {
-        return theSession.isPresent();
-    }
+	/**
+	 * checks if there is an authenticated user session
+	 *
+	 * @return {@code true} if there is an authenticated user session
+	 */
+	public boolean hasSession() {
+		return theSession.isPresent();
+	}
 
-    /**
-     * Returns the current session or an empty optional if there is no session
-     *
-     * @return the current session or an empty optional if there is no session
-     */
-    public Optional<UserSession> session() {
-        return theSession;
-    }
+	/**
+	 * Returns the current session or an empty optional if there is no session
+	 *
+	 * @return the current session or an empty optional if there is no session
+	 */
+	public Optional<UserSession> session() {
+		return theSession;
+	}
 
-    /**
-     * helper method to check the permission of a user
-     *
-     * @param user
-     * @param actions
-     * @return {@code true} if the user has at least one of the desired roles
-     */
-    public boolean isAuthorizedTo(final SystemUser user, final Role... actions) {
-        return user.hasAny(actions);
-    }
+	/**
+	 * Checks if the currently logged in user has the specified roles.
+	 *
+	 * @param actions
+	 * @return {@code true} if the authenticated user has at least one of the
+	 *         desired roles
+	 */
+	public boolean isAuthenticatedUserAuthorizedTo(final Role... actions) {
+		return session().map(us -> us.authenticatedUser().hasAny(actions)).orElse(false);
+	}
 
-    /**
-     * helper method to check the permission of the currently logged in user
-     *
-     * @param actions
-     * @return {@code true} if the authenticated user has at least one of the
-     *         desired roles
-     */
-    public boolean isAuthenticatedUserAuthorizedTo(final Role... actions) {
-        return session().map(us -> us.authenticatedUser().hasAny(actions)).orElse(false);
-    }
+	/**
+	 * Checks the permission of the currently logged in user and throws an exception
+	 * if there is no session or the currently logged in user does not have the
+	 * requested permissions.
+	 *
+	 * <p/>
+	 * consider using {@link #loggedinUserWithPermissions(Role...)} to perform this
+	 * check without throwing exceptions, as these scenarios are not really
+	 * exceptions but accounted for
+	 *
+	 * @param actions
+	 * @throws UserSessionNotInitiatedException
+	 * @throws UnauthorizedException
+	 *
+	 */
+	public void ensurePermissionOfAuthenticatedUser(final Role... actions) {
+		final UserSession us = session().orElseThrow(UserSessionNotInitiatedException::new);
+		if (!us.authenticatedUser().hasAny(actions)) {
+			throw new UnauthorizedException(us.authenticatedUser(), actions);
+		}
+	}
 
-    /**
-     * helper method to check the permission of the currently logged in user
-     *
-     * consider using {@link #loggedinUserWithPermissions(Role...)} to perform
-     * this check without throwing exceptions, as these scenarios are not really
-     * exceptions but accounted for
-     *
-     * @param actions
-     * @throws UserSessionNotInitiatedException
-     * @throws UnauthorizedException
-     *
-     */
-    @SuppressWarnings("squid:S3655")
-    public void ensurePermissionOfAuthenticatedUser(final Role... actions) {
-        final UserSession us = session().orElseThrow(UserSessionNotInitiatedException::new);
-        if (!us.authenticatedUser().hasAny(actions)) {
-            throw new UnauthorizedException(session().get().authenticatedUser(), actions);
-        }
-    }
-
-    /**
-     * returns the authenticated user if there is a session and the
-     * authenticated user has the desired permissions. otherwise returns an
-     * empty optional.
-     *
-     * @param actions
-     * @return the authenticated user if there is a session and the
-     *         authenticated user has the desired permissions. otherwise returns
-     *         an empty optional
-     */
-    public Optional<SystemUser> loggedinUserWithPermissions(final Role... actions) {
-        return session().filter(us -> us.authenticatedUser().hasAny(actions)).map(UserSession::authenticatedUser);
-    }
+	/**
+	 * returns the authenticated user if there is a session and the authenticated
+	 * user has the desired permissions. otherwise returns an empty optional.
+	 *
+	 * @param actions
+	 * @return the authenticated user if there is a session and the authenticated
+	 *         user has the desired permissions. otherwise returns an empty optional
+	 */
+	public Optional<SystemUser> loggedinUserWithPermissions(final Role... actions) {
+		return session().filter(us -> us.authenticatedUser().hasAny(actions)).map(UserSession::authenticatedUser);
+	}
 }

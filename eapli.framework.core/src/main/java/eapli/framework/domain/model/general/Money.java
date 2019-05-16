@@ -95,7 +95,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * For ORM tool only
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      */
     protected Money() {
         amount = null;
@@ -172,7 +172,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * Factory method to construct a Money object of {@code amount} USD.
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      * @param amount
      * @return a Money object of {@code amount} USD
      */
@@ -183,7 +183,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     /**
      * parses a string representation of a money, e.g., "123.50 EUR"
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      * @param value
      * @return a new object corresponding to the value
      */
@@ -202,7 +202,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * collecting Money objects from streams have the implication of creating a
      * new Money object for each collect step which might impact performance.
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      * @param zero
      * @return a collector instance
      */
@@ -221,7 +221,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     /**
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      *
      */
     private static class MoneyCollector {
@@ -412,7 +412,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Compares two Money objects cheking if this money's amount is greater than
      * or equal to the other.
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      * @param arg
      * @return if this money's amount is greater than or equal to the other
      */
@@ -424,7 +424,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Compares two Money objects checking if this money's amount is less than
      * or equal to the other.
      *
-     * @author sou03408
+     * @author Paulo Gandra de Sousa
      * @param arg
      * @return if this money's amount is less than or equal to the other
      */
