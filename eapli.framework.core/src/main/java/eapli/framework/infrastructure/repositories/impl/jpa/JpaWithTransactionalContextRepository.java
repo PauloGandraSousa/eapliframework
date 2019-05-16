@@ -37,54 +37,50 @@ import eapli.framework.domain.repositories.TransactionalContext;
  * responsibility of the controller by calling the methods of the
  * TransactionalContext interface.
  *
- * @param <T>
- *            the entity type that we want to build a repository for
- * @param <K>
- *            the primary key type of the table
- * @param <I>
- *            the type of the <b>business identity</b> of the entity
+ * @param <T> the entity type that we want to build a repository for
+ * @param <K> the primary key type of the table
+ * @param <I> the type of the <b>business identity</b> of the entity
  *
  * @author Paulo Gandra Sousa
  */
 /* package */ class JpaWithTransactionalContextRepository<T, K, I> extends JpaBaseRepository<T, K, I> {
 
-    private JpaTransactionalContext txContext;
+	private JpaTransactionalContext txContext;
 
-    /**
-     * @param txCtx
-     * @param identityFieldName
-     *
-     */
-    public JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final String identityFieldName) {
-        super(identityFieldName);
-        setTxCtx(txCtx);
-    }
+	/**
+	 * @param txCtx
+	 * @param identityFieldName
+	 *
+	 */
+	public JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final String identityFieldName) {
+		super(identityFieldName);
+		setTxCtx(txCtx);
+	}
 
-    /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final Class<T> classz,
-            final String identityFieldName) {
-        super(classz, identityFieldName);
-        setTxCtx(txCtx);
-    }
+	/* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final Class<T> classz,
+			final String identityFieldName) {
+		super(classz, identityFieldName);
+		setTxCtx(txCtx);
+	}
 
-    private void setTxCtx(final TransactionalContext txCtx) {
-        if (!(txCtx instanceof JpaTransactionalContext)) {
-            throw new IllegalArgumentException();
-        }
-        this.txContext = (JpaTransactionalContext) txCtx;
-    }
+	private void setTxCtx(final TransactionalContext txCtx) {
+		if (!(txCtx instanceof JpaTransactionalContext)) {
+			throw new IllegalArgumentException();
+		}
+		this.txContext = (JpaTransactionalContext) txCtx;
+	}
 
-    @Override
-    @SuppressWarnings("squid:S3346")
-    protected EntityManagerFactory entityManagerFactory() {
-        return this.txContext.entityManagerFactory();
-    }
+	@Override
+	protected EntityManagerFactory entityManagerFactory() {
+		return this.txContext.entityManagerFactory();
+	}
 
-    @Override
-    protected EntityManager entityManager() {
-        return this.txContext.entityManager();
-    }
+	@Override
+	protected EntityManager entityManager() {
+		return this.txContext.entityManager();
+	}
 
-    protected TransactionalContext context() {
-        return txContext;
-    }
+	protected TransactionalContext context() {
+		return txContext;
+	}
 }

@@ -36,7 +36,6 @@ import org.apache.logging.log4j.Logger;
 
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.validations.Preconditions;
-import eapli.framework.validations.StringPredicates;
 
 /**
  * An utility class for providing transactional context to JPA repositories not
@@ -46,72 +45,68 @@ import eapli.framework.validations.StringPredicates;
  * @author Paulo Gandra Sousa
  */
 public class JpaTransactionalContext implements TransactionalContext {
-    private static final Logger LOGGER = LogManager.getLogger(JpaTransactionalContext.class);
+	private static final Logger LOGGER = LogManager.getLogger(JpaTransactionalContext.class);
 
-    private final String persistenceUnitName;
-    private static EntityManagerFactory singletonEMF;
-    private EntityManager entityManager;
-    @SuppressWarnings("rawtypes")
-    private final Map properties = new HashMap();
+	private final String persistenceUnitName;
+	private static EntityManagerFactory singletonEMF;
+	private EntityManager entityManager;
+	@SuppressWarnings("rawtypes")
+	private final Map properties = new HashMap();
 
-    /**
-     *
-     * @param persistenceUnitName
-     *            the name of the persistence unit to use
-     * @param properties
-     *            extend properties to override the persistence.xml file
-     */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public JpaTransactionalContext(final String persistenceUnitName, final Map properties) {
-        Preconditions.nonEmpty(persistenceUnitName);
+	/**
+	 *
+	 * @param persistenceUnitName the name of the persistence unit to use
+	 * @param properties          extend properties to override the persistence.xml
+	 *                            file
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public JpaTransactionalContext(final String persistenceUnitName, final Map properties) {
+		Preconditions.nonEmpty(persistenceUnitName);
 
-        this.persistenceUnitName = persistenceUnitName;
-        this.properties.putAll(properties);
-        entityManagerFactory();
-    }
+		this.persistenceUnitName = persistenceUnitName;
+		this.properties.putAll(properties);
+		entityManagerFactory();
+	}
 
-    @SuppressWarnings("rawtypes")
-    public JpaTransactionalContext(final String persistenceUnitName) {
-        this(persistenceUnitName, new HashMap());
-    }
+	@SuppressWarnings("rawtypes")
+	public JpaTransactionalContext(final String persistenceUnitName) {
+		this(persistenceUnitName, new HashMap());
+	}
 
-    @SuppressWarnings({ "squid:S3346", "squid:S2696" })
-    public final EntityManagerFactory entityManagerFactory() {
-        if (singletonEMF == null) {
-            assert !StringPredicates.isNullOrEmpty(
-                    persistenceUnitName) : "the persistence unit name must be provided";
-            LOGGER.info("Not runing in container mode.");
-            singletonEMF = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
-        }
-        return singletonEMF;
-    }
+	public final synchronized EntityManagerFactory entityManagerFactory() {
+		if (singletonEMF == null) {
+			LOGGER.info("Not runing in container mode.");
+			singletonEMF = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
+		}
+		return singletonEMF;
+	}
 
-    public EntityManager entityManager() {
-        if (entityManager == null || !entityManager.isOpen()) {
-            LOGGER.trace("Creating a new entity manager");
-            entityManager = entityManagerFactory().createEntityManager();
-        }
-        return entityManager;
-    }
+	public EntityManager entityManager() {
+		if (entityManager == null || !entityManager.isOpen()) {
+			LOGGER.trace("Creating a new entity manager");
+			entityManager = entityManagerFactory().createEntityManager();
+		}
+		return entityManager;
+	}
 
-    @Override
-    public void beginTransaction() {
-        final EntityTransaction tx = entityManager().getTransaction();
-        tx.begin();
-    }
+	@Override
+	public void beginTransaction() {
+		final EntityTransaction tx = entityManager().getTransaction();
+		tx.begin();
+	}
 
-    @Override
-    public void commit() {
-        entityManager().getTransaction().commit();
-    }
+	@Override
+	public void commit() {
+		entityManager().getTransaction().commit();
+	}
 
-    @Override
-    public void rollback() {
-        entityManager().getTransaction().rollback();
-    }
+	@Override
+	public void rollback() {
+		entityManager().getTransaction().rollback();
+	}
 
-    @Override
-    public void close() {
-        entityManager().close();
-    }
+	@Override
+	public void close() {
+		entityManager().close();
+	}
 }
