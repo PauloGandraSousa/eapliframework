@@ -39,9 +39,11 @@ import javax.persistence.Version;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.general.EmailAddress;
+import eapli.framework.domain.model.identities.impl.UUIDGenerator;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.representations.dto.GeneralDTO;
 import eapli.framework.util.Calendars;
+import eapli.framework.validations.Invariants;
 import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitable;
 import eapli.framework.visitor.Visitor;
@@ -80,6 +82,9 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     private boolean active;
     @Temporal(TemporalType.DATE)
     private Calendar deactivatedOn;
+
+    // the password reset token
+    private String resetToken;
 
     /**
      * Convenience constructor for today's date of creation
@@ -151,7 +156,11 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         this.email = email;
         this.roles = roles;
 
+        // accounts are already active upon creation
         active = true;
+
+        // the user has not requested to reset the password of a new accounts
+        invalidateResetToken();
     }
 
     protected SystemUser() {
@@ -169,10 +178,10 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
             return true;
         }
         if (!username.equals(that.username) || !password.equals(that.password) || !name.equals(that.name)
-                || !email.equals(that.email)) {
+                || !email.equals(that.email) || roles.equals(that.roles)) {
             return false;
         }
-        return roles.equals(that.roles);
+        return resetToken == null ? that.resetToken == null : resetToken.equals(that.resetToken);
     }
 
     @Override
@@ -259,10 +268,18 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         return username;
     }
 
+    /**
+     *
+     * @return
+     */
     public Name name() {
         return name;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isActive() {
         return active;
     }
@@ -283,6 +300,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         }
         active = false;
         this.deactivatedOn = deactivatedOn;
+        invalidateResetToken();
     }
 
     @Override
@@ -303,31 +321,45 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     public boolean changePassword(final Password oldPassword, final Password newPassword) {
         if (password.equals(oldPassword)) {
             password = newPassword;
+            invalidateResetToken();
             return true;
         }
         return false;
     }
 
+    private void invalidateResetToken() {
+        resetToken = null;
+    }
+
     /**
-     * initiates the process to reset a password by generating a validation token
+     * initiates the process to reset a password by generating a validation token.
      *
      * @return the validation token to use to complete the password reset
      */
     public String resetPassword() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        resetToken = new UUIDGenerator().newId().toString();
+        return resetToken;
     }
 
     /**
-     * resets the password of the user
-     * 
+     * resets the password of the user.
+     *
      * @param token
      * @param newPass
      * @return
      */
     public boolean confirmResetPassword(final String token, final Password newPass) {
+        Invariants.nonNull(resetToken);
         Preconditions.nonEmpty(token);
+        Preconditions.nonNull(newPass);
 
-        throw new UnsupportedOperationException("Not implemented yet");
+        invalidateResetToken();
+        if (token.equals(this.resetToken)) {
+            password = newPass;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
