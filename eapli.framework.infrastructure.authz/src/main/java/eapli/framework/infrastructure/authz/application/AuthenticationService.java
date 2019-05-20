@@ -160,6 +160,10 @@ public class AuthenticationService {
     }
 
     /**
+     * initiates a password reset request.
+     *
+     * <p/>
+     * the object {@code user} should not be referenced after calling this method.
      *
      * @param user
      * @return
@@ -171,9 +175,13 @@ public class AuthenticationService {
     }
 
     /**
-     *
+     * resets the password of the user
+     * <p/>
+     * the object {@code user} should not be referenced after calling this method.
+     * 
      * @param user
      * @param token
+     * @param newPass
      * @return
      */
     public boolean confirmResetPassword(final SystemUser user, final String token, final Password newPass) {
