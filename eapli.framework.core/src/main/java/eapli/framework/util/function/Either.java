@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.util.function;
 
@@ -32,9 +29,9 @@ import eapli.framework.validations.Preconditions;
  * A simple approach to the functional Monad Either.
  *
  * <p/>
- * Objects of this class can represent one (1) value of either T or U. Useful
- * for error handling where, by convention, the left type is the correct
- * response and the right type is the error response
+ * Objects of this class can represent one (1) value of either T or U. Useful for error handling
+ * where, by convention, the left type is the correct response and the right type is the error
+ * response
  *
  * @author Paulo Gandra de Sousa
  *
@@ -76,8 +73,7 @@ public final class Either<T, U> {
      *
      * @param left
      * @param marker
-     *            just to make the compiler happy due to the erasure of both
-     *            constructors
+     *               just to make the compiler happy due to the erasure of both constructors
      */
     @SuppressWarnings("squid:S1172")
     private Either(final T left, final boolean marker) {
@@ -100,13 +96,13 @@ public final class Either<T, U> {
     }
 
     /**
-     * applies the "normal" function to the left value if this Either instance
-     * holds a left value, otherwise applies the "error" function to the right
-     * value. since this method returns a new Either it is suitable for
-     * composition.
+     * Applies the "normal" function to the left value if this Either instance holds a left value,
+     * otherwise applies the "error" function to the right value. since this method returns a new Either
+     * it is suitable for composition.
      *
      * @param normal
      * @param error
+     * @return
      */
     public Either<T, U> project(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
         if (type == SideType.LEFT) {
@@ -116,9 +112,9 @@ public final class Either<T, U> {
     }
 
     /**
-     * acts on the value of this Either instance, executing the "normal"
-     * function with the left value if this Either instance holds a left value,
-     * otherwise executes the "error" function with the right value
+     * acts on the value of this Either instance, executing the "normal" function with the left value if
+     * this Either instance holds a left value, otherwise executes the "error" function with the right
+     * value
      *
      * @param normal
      * @param error

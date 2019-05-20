@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
@@ -53,14 +50,12 @@ import eapli.framework.visitor.Visitor;
  * An application user.
  *
  * <p/>
- * This class represents application users. It follows a DDD approach where User
- * is the root entity of the User Aggregate and all of its properties are
- * instances of value objects.
+ * This class represents application users. It follows a DDD approach where User is the root entity
+ * of the User Aggregate and all of its properties are instances of value objects.
  *
  * <p/>
- * This approach may seem a little more complex than just having String or
- * native type attributes but provides for real semantic of the domain and
- * follows the Single Responsibility Pattern (SRP).
+ * This approach may seem a little more complex than just having String or native type attributes
+ * but provides for real semantic of the domain and follows the Single Responsibility Pattern (SRP).
  *
  * @author Paulo Gandra Sousa
  *
@@ -68,254 +63,301 @@ import eapli.framework.visitor.Visitor;
 @Entity
 public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>, Visitable<GeneralDTO>, Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Version
-	private Long version;
+    @Version
+    private Long version;
 
-	@EmbeddedId
-	private Username username;
-	private Password password;
-	private Name name;
-	private EmailAddress email;
-	@OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
-	private RoleSet roles;
-	@Temporal(TemporalType.DATE)
-	private Calendar createdOn;
-	private boolean active;
-	@Temporal(TemporalType.DATE)
-	private Calendar deactivatedOn;
+    @EmbeddedId
+    private Username username;
+    private Password password;
+    private Name name;
+    private EmailAddress email;
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
+    private RoleSet roles;
+    @Temporal(TemporalType.DATE)
+    private Calendar createdOn;
+    private boolean active;
+    @Temporal(TemporalType.DATE)
+    private Calendar deactivatedOn;
 
-	/**
-	 * Convenience constructor for today's date of creation
-	 *
-	 * @param username
-	 * @param password
-	 * @param firstName
-	 * @param lastName
-	 * @param email
-	 * @param roles
-	 */
-	public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-			final Set<Role> roles) {
-		this(username, password, name, email, roles, Calendars.now());
-	}
+    /**
+     * Convenience constructor for today's date of creation
+     *
+     * @param username
+     * @param password
+     * @param name
+     * @param email
+     * @param roles
+     */
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final Set<Role> roles) {
+        this(username, password, name, email, roles, Calendars.now());
+    }
 
-	public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-			final Set<Role> roles, final Calendar createdOn) {
-		Preconditions.nonNull(roles, "roles cannot be null");
+    /**
+     *
+     * @param username
+     * @param password
+     * @param name
+     * @param email
+     * @param roles
+     * @param createdOn
+     */
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final Set<Role> roles, final Calendar createdOn) {
+        Preconditions.nonNull(roles, "roles cannot be null");
 
-		final RoleSet roleset = new RoleSet();
-		roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, createdOn)).collect(Collectors.toList()));
-		init(username, password, name, email, roleset, createdOn);
-	}
+        final RoleSet roleset = new RoleSet();
+        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, createdOn)).collect(Collectors.toList()));
+        init(username, password, name, email, roleset, createdOn);
+    }
 
-	public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-			final RoleSet roles) {
-		this(username, password, name, email, roles, Calendars.now());
-	}
+    /**
+     *
+     * @param username
+     * @param password
+     * @param name
+     * @param email
+     * @param roles
+     */
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles) {
+        this(username, password, name, email, roles, Calendars.now());
+    }
 
-	public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
-			final RoleSet roles, final Calendar createdOn) {
-		init(username, password, name, email, roles, createdOn);
-	}
+    /**
+     *
+     * @param username
+     * @param password
+     * @param name
+     * @param email
+     * @param roles
+     * @param createdOn
+     */
+    public SystemUser(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles, final Calendar createdOn) {
+        init(username, password, name, email, roles, createdOn);
+    }
 
-	private void init(final Username username, final Password password, final Name name, final EmailAddress email,
-			final RoleSet roles, final Calendar createdOn) {
-		Preconditions.nonNull(roles, username, password, name, email, createdOn);
+    private void init(final Username username, final Password password, final Name name, final EmailAddress email,
+            final RoleSet roles, final Calendar createdOn) {
+        Preconditions.nonNull(roles, username, password, name, email, createdOn);
 
-		this.createdOn = createdOn;
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.roles = roles;
+        this.createdOn = createdOn;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.roles = roles;
 
-		active = true;
-	}
+        active = true;
+    }
 
-	protected SystemUser() {
-		// for ORM
-	}
+    protected SystemUser() {
+        // for ORM
+    }
 
-	@Override
-	public boolean sameAs(final Object other) {
-		if (!(other instanceof SystemUser)) {
-			return false;
-		}
+    @Override
+    public boolean sameAs(final Object other) {
+        if (!(other instanceof SystemUser)) {
+            return false;
+        }
 
-		final SystemUser that = (SystemUser) other;
-		if (this == that) {
-			return true;
-		}
-		if (!username.equals(that.username) || !password.equals(that.password) || !name.equals(that.name)
-				|| !email.equals(that.email)) {
-			return false;
-		}
-		return roles.equals(that.roles);
-	}
+        final SystemUser that = (SystemUser) other;
+        if (this == that) {
+            return true;
+        }
+        if (!username.equals(that.username) || !password.equals(that.password) || !name.equals(that.name)
+                || !email.equals(that.email)) {
+            return false;
+        }
+        return roles.equals(that.roles);
+    }
 
-	@Override
-	public Username identity() {
-		return username;
-	}
+    @Override
+    public Username identity() {
+        return username;
+    }
 
-	public EmailAddress email() {
-		return email;
-	}
+    public EmailAddress email() {
+        return email;
+    }
 
-	/**
-	 * Add role to user.
-	 *
-	 * @param role Role to assign to SystemUser.
-	 */
-	public void assignToRole(final RoleAssignment role) {
-		roles.add(role);
-	}
+    /**
+     * Add role to user.
+     *
+     * @param role
+     *             Role to assign to SystemUser.
+     */
+    public void assignToRole(final RoleAssignment role) {
+        roles.add(role);
+    }
 
-	/**
-	 * Add role to user.
-	 *
-	 * @param role Role to assign to SystemUser.
-	 */
-	public void assignToRole(final Role role) {
-		Preconditions.nonNull(role);
-		roles.add(new RoleAssignment(role));
-	}
+    /**
+     * Add role to user.
+     *
+     * @param role
+     *             Role to assign to SystemUser.
+     */
+    public void assignToRole(final Role role) {
+        Preconditions.nonNull(role);
+        roles.add(new RoleAssignment(role));
+    }
 
-	/**
-	 * unassigns a role from user, marking the assignment as expired. the role
-	 * assignment is kept in the roles of the user.
-	 *
-	 * @param role Role to remove from SystemUser.
-	 */
-	public boolean unassignRole(final Role role) {
-		Preconditions.nonNull(role);
-		final Optional<RoleAssignment> ra = roles.getAssignment(role);
-		ra.ifPresent(RoleAssignment::unassign);
-		return ra.isPresent();
-	}
+    /**
+     * Unassigns a role from user, marking the assignment as expired. The role assignment is kept in the
+     * roles of the user. if the user is not assigned to the role, this method does nothing.
+     *
+     * @param role
+     *             Role to remove from SystemUser.
+     * @return true if the user had the role and it was unassigned. false otherwise.
+     */
+    public boolean unassignRole(final Role role) {
+        Preconditions.nonNull(role);
+        final Optional<RoleAssignment> ra = roles.getAssignment(role);
+        ra.ifPresent(RoleAssignment::unassign);
+        return ra.isPresent();
+    }
 
-	public Collection<Role> roleTypes() {
-		return roles.roleTypes();
-	}
+    /**
+     * @return
+     */
+    public Collection<Role> roleTypes() {
+        return roles.roleTypes();
+    }
 
-	@Override
-	public GeneralDTO toDTO() {
-		final GeneralDTO ret = new GeneralDTO("user");
-		ret.put("username", username.toString());
-		ret.put("password", password.toString());
-		ret.put("name", name.toString());
-		ret.put("email", email.toString());
-		ret.put("roles", roles.roleTypes().toString());
+    @Override
+    public GeneralDTO toDTO() {
+        final GeneralDTO ret = new GeneralDTO("user");
+        ret.put("username", username.toString());
+        ret.put("password", password.toString());
+        ret.put("name", name.toString());
+        ret.put("email", email.toString());
+        ret.put("roles", roles.roleTypes().toString());
 
-		return ret;
-	}
+        return ret;
+    }
 
-	public boolean passwordMatches(final Password password) {
-		return this.password.equals(password);
-	}
+    /**
+     * @param password
+     * @return
+     */
+    public boolean passwordMatches(final Password password) {
+        return this.password.equals(password);
+    }
 
-	@Override
-	public void accept(final Visitor<GeneralDTO> visitor) {
-		visitor.visit(toDTO());
-	}
+    @Override
+    public void accept(final Visitor<GeneralDTO> visitor) {
+        visitor.visit(toDTO());
+    }
 
-	public Username username() {
-		return username;
-	}
+    /**
+     * @return
+     */
+    public Username username() {
+        return username;
+    }
 
-	public Name name() {
-		return name;
-	}
+    public Name name() {
+        return name;
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	public void deactivate(final Calendar deactivatedOn) {
-		// cannot deactivate a user before it was registered in the system
-		if (deactivatedOn == null || deactivatedOn.before(createdOn)) {
-			throw new IllegalArgumentException();
-		}
-		// cannot deactivate an inactive user
-		if (!active) {
-			// we could simply do nothing instead of taking a harsh approach of
-			// throwing an exception
-			throw new IllegalStateException();
-		}
-		active = false;
-		this.deactivatedOn = deactivatedOn;
-	}
+    /**
+     * @param deactivatedOn
+     */
+    public void deactivate(final Calendar deactivatedOn) {
+        // cannot deactivate a user before it was registered in the system
+        if (deactivatedOn == null || deactivatedOn.before(createdOn)) {
+            throw new IllegalArgumentException();
+        }
+        // cannot deactivate an inactive user
+        if (!active) {
+            // we could simply do nothing instead of taking a harsh approach of
+            // throwing an exception
+            throw new IllegalStateException();
+        }
+        active = false;
+        this.deactivatedOn = deactivatedOn;
+    }
 
-	@Override
-	public int hashCode() {
-		return DomainEntities.hashCode(this);
-	}
+    @Override
+    public int hashCode() {
+        return DomainEntities.hashCode(this);
+    }
 
-	@Override
-	public boolean equals(final Object other) {
-		return DomainEntities.areEqual(this, other);
-	}
+    @Override
+    public boolean equals(final Object other) {
+        return DomainEntities.areEqual(this, other);
+    }
 
-	public boolean changePassword(final Password oldPassword, final Password newPassword) {
-		if (password.equals(oldPassword)) {
-			password = newPassword;
-			return true;
-		}
-		return false;
-	}
+    /**
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    public boolean changePassword(final Password oldPassword, final Password newPassword) {
+        if (password.equals(oldPassword)) {
+            password = newPassword;
+            return true;
+        }
+        return false;
+    }
 
-	public String resetPassword() {
-		throw new UnsupportedOperationException("Not implemented yet");
-	}
+    public String resetPassword() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
 
-	public boolean resetPassword(final String token) {
-		Preconditions.nonEmpty(token);
+    public boolean resetPassword(final String token) {
+        Preconditions.nonEmpty(token);
 
-		throw new UnsupportedOperationException("Not implemented yet");
-	}
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
 
-	/**
-	 * Checks if this user has any of a set of roles.
-	 *
-	 * @param roles
-	 * @return true if the user has at least one of the roles
-	 */
-	public boolean hasAny(final Role... roles) {
-		for (final Role r : roles) {
-			if (this.roles.hasAssignment(r)) {
-				return true;
-			}
-		}
+    /**
+     * Checks if this user has any of a set of roles.
+     *
+     * @param roles
+     * @return true if the user has at least one of the roles
+     */
+    public boolean hasAny(final Role... roles) {
+        for (final Role r : roles) {
+            if (this.roles.hasAssignment(r)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Checks if this user has all of a set of roles.
-	 *
-	 * @param roles
-	 * @return true if the user has all the roles
-	 */
-	public boolean hasAll(final Role... roles) {
-		for (final Role r : roles) {
-			if (!(this.roles.hasAssignment(r))) {
-				return false;
-			}
-		}
+    /**
+     * Checks if this user has all of a set of roles.
+     *
+     * @param roles
+     * @return true if the user has all the roles
+     */
+    public boolean hasAll(final Role... roles) {
+        for (final Role r : roles) {
+            if (!(this.roles.hasAssignment(r))) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Returns the date this user account was created.
-	 *
-	 * @return the date this user account was created
-	 */
-	public Calendar createdOn() {
-		// returning a copy as the Calendar class is mutable and we don't want
-		// to allow external access to chnage this value without us knowing it
-		return (Calendar) createdOn.clone();
-	}
+    /**
+     * Returns the date this user account was created.
+     *
+     * @return the date this user account was created
+     */
+    public Calendar createdOn() {
+        // returning a copy as the Calendar class is mutable and we don't want
+        // to allow external access to chnage this value without us knowing it
+        return (Calendar) createdOn.clone();
+    }
 }

@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.authz.application;
 
@@ -58,10 +55,13 @@ public class AuthenticationService {
     }
 
     /**
-     * in scenarios where there is no dependency injector, this constructor
-     * allows the object to be be built and manually inject the dependency.
+     * in scenarios where there is no dependency injector, this constructor allows the object to be be
+     * built and manually inject the dependency.
      *
-     * @param authenticationService
+     * @param repo
+     *              a user repository
+     * @param authz
+     *              an authentication service
      */
     public AuthenticationService(final UserRepository repo, final AuthorizationService authz) {
         Preconditions.nonNull(repo, authz);
@@ -79,11 +79,12 @@ public class AuthenticationService {
     }
 
     /**
-     * Checks if a user can be authenticated with the username/password pair and
-     * if so creates a user session for it.
+     * Checks if a user can be authenticated with the username/password pair and if so creates a user
+     * session for it.
      *
      * @param username
      * @param pass
+     * @param onlyWithThis
      * @return the authenticated user session or an empty optional otherwise
      */
     public Optional<UserSession> authenticate(final Username username, final Password pass,
@@ -105,13 +106,15 @@ public class AuthenticationService {
      *
      * @param userName
      * @param password
+     * @param onlyWithThis
+     * @return true if the user has the right credentials and permissions
      * @throws IllegalArgumentException
-     *             if the username or password cannot be constructed from the
-     *             passed string arguments
+     *                                  if the username or password cannot be constructed from the
+     *                                  passed string arguments
      */
     public boolean login(final String userName, final String password, final Role... onlyWithThis) {
-        final Optional<UserSession> newSession = authenticate(Username.valueOf(userName),
-                Password.valueOf(password), onlyWithThis);
+        final Optional<UserSession> newSession = authenticate(Username.valueOf(userName), Password.valueOf(password),
+                onlyWithThis);
         return newSession.isPresent();
     }
 
@@ -128,15 +131,14 @@ public class AuthenticationService {
     }
 
     /**
-     * change the password of a certain user
+     * Change the password of a certain user.
      *
      * @param user
      * @param oldPassword
      * @param newPassword
-     * @return
+     * @return true if the password could be changed
      */
-    public boolean changePassword(final SystemUser user, final Password oldPassword,
-            final Password newPassword) {
+    public boolean changePassword(final SystemUser user, final Password oldPassword, final Password newPassword) {
         final boolean sucess = user.changePassword(oldPassword, newPassword);
         if (sucess) {
             repo.save(user);
@@ -145,11 +147,11 @@ public class AuthenticationService {
     }
 
     /**
-     * change the password of the currently logged in user
+     * Change the password of the currently logged in user
      *
      * @param oldPassword
      * @param newPassword
-     * @return
+     * @return true if the password could be changed
      */
     public boolean changePassword(final String oldPassword, final String newPassword) {
         final Optional<UserSession> s = authz.session();
@@ -157,12 +159,23 @@ public class AuthenticationService {
                 Password.valueOf(newPassword))).orElseThrow(UserSessionNotInitiatedException::new);
     }
 
+    /**
+     *
+     * @param user
+     * @return
+     */
     public String resetPassword(final SystemUser user) {
         final String token = user.resetPassword();
         repo.save(user);
         return token;
     }
 
+    /**
+     *
+     * @param user
+     * @param token
+     * @return
+     */
     public boolean resetPassword(final SystemUser user, final String token) {
         if (user.resetPassword(token)) {
             repo.save(user);

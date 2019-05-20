@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.util;
 
@@ -41,15 +38,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Utility class for Calendar manipulation and several date and time related
- * functions.
+ * Utility class for Calendar manipulation and several date and time related functions.
  *
  * If you are using Java 8+, you should use the Time API:
- * <li><a href=
- * "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8
- * Date Time Tutorial</a>
- * <li><a href=
- * "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
+ * <li><a href= "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8 Date
+ * Time Tutorial</a>
+ * <li><a href= "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
  * Java 8 Documentation</a>
  *
  * @author Paulo Gandra Sousa
@@ -133,7 +127,7 @@ public final class Calendars implements Utilitarian {
      * returns the date of the last day of a certain month
      *
      * @param reference
-     *            a date to be used as reference month
+     *                  a date to be used as reference month
      * @return
      */
     public static Calendar endOfMonth(final Calendar reference) {
@@ -145,11 +139,12 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns the date of the last day of a certain month
+     * returns the date of the last day of a certain month.
      *
      * @param year
      * @param month
-     *            month number (1 - 12)
+     *              month number (1 - 12)
+     * @return the date of the last day of a certain month
      */
     public static Calendar endOfMonth(final int year, final int month) {
         final Calendar date = of(year, month, year);
@@ -157,9 +152,9 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns the current year
+     * returns the current year.
      *
-     * @return
+     * @return the current year
      */
     public static int currentYear() {
         return now().get(Calendar.YEAR);
@@ -178,12 +173,12 @@ public final class Calendars implements Utilitarian {
      * Creates a new Calendar object set to a specific date
      *
      * @param year
-     *            the year
+     *              the year
      * @param month
-     *            the month (1 - 12). note that the Calendar class uses months
-     *            from 0 to 11, not 1 to 12
+     *              the month (1 - 12). note that the Calendar class uses months from 0 to 11, not 1 to
+     *              12
      * @param day
-     *            the day of the month
+     *              the day of the month
      * @return a newly create Calendar object
      */
     public static Calendar of(final int year, final int month, final int day) {
@@ -191,8 +186,7 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * creates a new Calendar instance with the date part set (year, month,
-     * date) from the source object
+     * creates a new Calendar instance with the date part set (year, month, date) from the source object
      *
      * @param source
      * @return
@@ -206,8 +200,7 @@ public final class Calendars implements Utilitarian {
      *
      * @param aDateString
      * @param format
-     * @return a Calendar object or null if there was an error parsing the
-     *         string
+     * @return a Calendar object or null if there was an error parsing the string
      */
     public static Calendar parse(final String aDateString, final String format) {
         try {
@@ -244,8 +237,7 @@ public final class Calendars implements Utilitarian {
     /**
      * Converts a Calendar object to Java 8 LocalDateTime
      *
-     * Taken from
-     * https://www.logicbig.com/how-to/java-8-date-time-api/calender-to-localdatetime.html
+     * Taken from https://www.logicbig.com/how-to/java-8-date-time-api/calender-to-localdatetime.html
      *
      * and https://www.baeldung.com/java-date-to-localdate-and-localdatetime
      *
@@ -262,13 +254,13 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns the current time according to ISO8601.
+     * Returns the current time according in ISO 8601 format.
      *
+     * <p/>
      * based on
      * https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute/33532945
      *
-     * @param when
-     * @return
+     * @return the current time in ISO 8601 format
      */
     public static String iso8601() {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC).format(Instant.now());
@@ -279,13 +271,12 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * Creates and returns a {@link String} instance by parsing a given Calendar
-     * base on a data format.
+     * Creates and returns a {@link String} instance by parsing a given Calendar base on a data format.
      *
      * @param calendar
-     *            the Calendar object to parse
+     *                   the Calendar object to parse
      * @param dateFormat
-     *            the format to use when parsing the Calendar object
+     *                   the format to use when parsing the Calendar object
      *
      * @return the generated {@link String} instance.
      */
@@ -321,13 +312,12 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * Creates and returns a {@link Calendar} instance by parsing a given string
-     * base on a data format.
+     * Creates and returns a {@link Calendar} instance by parsing a given string base on a data format.
      *
      * @param value
-     *            the date in string format
+     *                   the date in string format
      * @param dateFormat
-     *            the format to use when parsing the dateString
+     *                   the format to use when parsing the dateString
      *
      * @return the generated {@link Calendar} instance.
      * @throws ParseException
