@@ -176,8 +176,8 @@ public class AuthenticationService {
      * @param token
      * @return
      */
-    public boolean resetPassword(final SystemUser user, final String token) {
-        if (user.resetPassword(token)) {
+    public boolean confirmResetPassword(final SystemUser user, final String token, final Password newPass) {
+        if (user.confirmResetPassword(token, newPass)) {
             repo.save(user);
             return true;
         }

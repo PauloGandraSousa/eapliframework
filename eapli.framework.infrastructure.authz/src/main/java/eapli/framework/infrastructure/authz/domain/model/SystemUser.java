@@ -308,11 +308,23 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         return false;
     }
 
+    /**
+     * initiates the process to reset a password by generating a validation token
+     *
+     * @return the validation token to use to complete the password reset
+     */
     public String resetPassword() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    public boolean resetPassword(final String token) {
+    /**
+     * resets the password of the user
+     * 
+     * @param token
+     * @param newPass
+     * @return
+     */
+    public boolean confirmResetPassword(final String token, final Password newPass) {
         Preconditions.nonEmpty(token);
 
         throw new UnsupportedOperationException("Not implemented yet");
