@@ -25,7 +25,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
 import eapli.framework.infrastructure.authz.domain.model.Password;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -131,42 +130,44 @@ public class AuthenticationService {
     }
 
     /**
-     * Change the password of a certain user.
+     * Change the password of a certain user. If the operation succeeds, the {@code user} object
+     * reference is no longer valid and subsequent code should use the value of the returned
+     * {@code Optional} to work with the user.
      *
      * @param user
      * @param oldPassword
      * @param newPassword
-     * @return true if the password could be changed
+     * @return An optional which value is the changed SystemUser object or an empty Optional if the
+     *         password could not be changed
      */
-    public boolean changePassword(final SystemUser user, final Password oldPassword, final Password newPassword) {
-        final boolean sucess = user.changePassword(oldPassword, newPassword);
-        if (sucess) {
-            repo.save(user);
+    public Optional<SystemUser> changePassword(final SystemUser user, final Password oldPassword,
+            final Password newPassword) {
+        if (user.changePassword(oldPassword, newPassword)) {
+            return Optional.of(repo.save(user));
         }
-        return sucess;
+        return Optional.empty();
     }
 
     /**
-     * Change the password of the currently logged in user
+     * Change the password of the currently logged in user.
      *
      * @param oldPassword
      * @param newPassword
-     * @return true if the password could be changed
+     * @return true if the password could be changed. false if there is no user session or the password
+     *         could not be changed
      */
     public boolean changePassword(final String oldPassword, final String newPassword) {
         final Optional<UserSession> s = authz.session();
         return s.map(u -> changePassword(u.authenticatedUser(), Password.valueOf(oldPassword),
-                Password.valueOf(newPassword))).orElseThrow(UserSessionNotInitiatedException::new);
+                Password.valueOf(newPassword))).map(u -> true).orElse(false);
     }
 
     /**
-     * initiates a password reset request.
-     *
-     * <p/>
-     * the object {@code user} should not be referenced after calling this method.
+     * Initiates a password reset request. If the operation succeeds, the {@code user} object reference
+     * is no longer valid and subsequent code should NOT use it.
      *
      * @param user
-     * @return
+     * @return the reset token to be provided back in order to reset the password
      */
     public String resetPassword(final SystemUser user) {
         final String token = user.resetPassword();
@@ -175,20 +176,20 @@ public class AuthenticationService {
     }
 
     /**
-     * resets the password of the user
-     * <p/>
-     * the object {@code user} should not be referenced after calling this method.
-     * 
+     * Resets the password of the user. If the operation succeeds, the {@code user} object reference is
+     * no longer valid and subsequent code should use the value of the returned {@code Optional} to work
+     * with the user.
+     *
      * @param user
      * @param token
      * @param newPass
-     * @return
+     * @return an Optional which value is the changed SystemUser or an empty optional otherwise
      */
-    public boolean confirmResetPassword(final SystemUser user, final String token, final Password newPass) {
+    public Optional<SystemUser> confirmResetPassword(final SystemUser user, final String token,
+            final Password newPass) {
         if (user.confirmResetPassword(token, newPass)) {
-            repo.save(user);
-            return true;
+            return Optional.of(repo.save(user));
         }
-        return false;
+        return Optional.empty();
     }
 }
