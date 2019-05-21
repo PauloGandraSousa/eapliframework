@@ -33,6 +33,7 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.validations.Preconditions;
 
 /**
+ * Authentication-related service. Handles login and password change/reset.
  *
  * @author Paulo Gandra Sousa
  *
@@ -54,13 +55,13 @@ public class AuthenticationService {
     }
 
     /**
-     * in scenarios where there is no dependency injector, this constructor allows the object to be be
-     * built and manually inject the dependency.
+     * in scenarios where there is no dependency injector, this constructor
+     * allows the object to be be built and manually inject the dependency.
      *
      * @param repo
-     *              a user repository
+     *            a user repository
      * @param authz
-     *              an authentication service
+     *            an authentication service
      */
     public AuthenticationService(final UserRepository repo, final AuthorizationService authz) {
         Preconditions.nonNull(repo, authz);
@@ -78,8 +79,8 @@ public class AuthenticationService {
     }
 
     /**
-     * Checks if a user can be authenticated with the username/password pair and if so creates a user
-     * session for it.
+     * Checks if a user can be authenticated with the username/password pair and
+     * if so creates a user session for it.
      *
      * @param username
      * @param pass
@@ -108,8 +109,8 @@ public class AuthenticationService {
      * @param onlyWithThis
      * @return true if the user has the right credentials and permissions
      * @throws IllegalArgumentException
-     *                                  if the username or password cannot be constructed from the
-     *                                  passed string arguments
+     *             if the username or password cannot be constructed from the
+     *             passed string arguments
      */
     public boolean login(final String userName, final String password, final Role... onlyWithThis) {
         final Optional<UserSession> newSession = authenticate(Username.valueOf(userName), Password.valueOf(password),
@@ -130,15 +131,16 @@ public class AuthenticationService {
     }
 
     /**
-     * Change the password of a certain user. If the operation succeeds, the {@code user} object
-     * reference is no longer valid and subsequent code should use the value of the returned
-     * {@code Optional} to work with the user.
+     * Change the password of a certain user. If the operation succeeds, the
+     * {@code user} object reference is no longer valid and subsequent code
+     * should use the value of the returned {@code Optional} to work with the
+     * user.
      *
      * @param user
      * @param oldPassword
      * @param newPassword
-     * @return An optional which value is the changed SystemUser object or an empty Optional if the
-     *         password could not be changed
+     * @return An optional which value is the changed SystemUser object or an
+     *         empty Optional if the password could not be changed
      */
     public Optional<SystemUser> changePassword(final SystemUser user, final Password oldPassword,
             final Password newPassword) {
@@ -153,8 +155,8 @@ public class AuthenticationService {
      *
      * @param oldPassword
      * @param newPassword
-     * @return true if the password could be changed. false if there is no user session or the password
-     *         could not be changed
+     * @return true if the password could be changed. false if there is no user
+     *         session or the password could not be changed
      */
     public boolean changePassword(final String oldPassword, final String newPassword) {
         final Optional<UserSession> s = authz.session();
@@ -163,11 +165,13 @@ public class AuthenticationService {
     }
 
     /**
-     * Initiates a password reset request. If the operation succeeds, the {@code user} object reference
-     * is no longer valid and subsequent code should NOT use it.
+     * Initiates a password reset request. If the operation succeeds, the
+     * {@code user} object reference is no longer valid and subsequent code
+     * should NOT use it.
      *
      * @param user
-     * @return the reset token to be provided back in order to reset the password
+     * @return the reset token to be provided back in order to reset the
+     *         password
      */
     public String resetPassword(final SystemUser user) {
         final String token = user.resetPassword();
@@ -176,14 +180,16 @@ public class AuthenticationService {
     }
 
     /**
-     * Resets the password of the user. If the operation succeeds, the {@code user} object reference is
-     * no longer valid and subsequent code should use the value of the returned {@code Optional} to work
-     * with the user.
+     * Resets the password of the user. If the operation succeeds, the
+     * {@code user} object reference is no longer valid and subsequent code
+     * should use the value of the returned {@code Optional} to work with the
+     * user.
      *
      * @param user
      * @param token
      * @param newPass
-     * @return an Optional which value is the changed SystemUser or an empty optional otherwise
+     * @return an Optional which value is the changed SystemUser or an empty
+     *         optional otherwise
      */
     public Optional<SystemUser> confirmResetPassword(final SystemUser user, final String token,
             final Password newPass) {

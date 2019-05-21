@@ -30,7 +30,7 @@ import eapli.framework.util.Utilitarian;
 
 /**
  * Utility predicates handling dates
- * 
+ *
  * @author Paulo Gandra de Sousa
  *
  */
@@ -53,47 +53,50 @@ public final class CalendarPredicates implements Utilitarian {
     }
 
     /**
-     * checks if the two calendar instances represent dates of the same year.
+     * Checks if the two calendar instances represent dates of the same year.
      *
      * @param a
      * @param b
-     * @return
+     * @return true if the two calendar instances represent dates of the same
+     *         year.
      */
     public static boolean areSameYear(final Calendar a, final Calendar b) {
         return a.get(Calendar.YEAR) == b.get(Calendar.YEAR);
     }
 
     /**
-     * checks if the two calendar instances represent dates of the same month
+     * Checks if the two calendar instances represent dates of the same month
      * (regardless of the year).
      *
      * @param a
      * @param b
-     * @return
+     * @return true if the two calendar instances represent dates of the same
+     *         month.
      */
     public static boolean areSameMonth(final Calendar a, final Calendar b) {
         return a.get(Calendar.MONTH) == b.get(Calendar.MONTH);
     }
 
     /**
-     * checks if the two calendar instances represent dates of the same day
+     * Checks if the two calendar instances represent dates of the same day
      * (regardless of the year and the month).
      *
      * @param a
      * @param b
-     * @return
+     * @return true if the two calendar instances represent dates of the same
+     *         day.
      */
     public static boolean areSameDay(final Calendar a, final Calendar b) {
         return a.get(Calendar.DAY_OF_MONTH) == b.get(Calendar.DAY_OF_MONTH);
     }
 
     /**
-     * checks if the two calendar instances represent the same dates, i.e. if
+     * Checks if the two calendar instances represent the same dates, i.e. if
      * both have the same year, month and day.
      *
      * @param a
      * @param b
-     * @return
+     * @return true if the two calendar instances represent the same dates
      */
     public static boolean areSameDate(final Calendar a, final Calendar b) {
         return areSameYear(a, b) && areSameMonth(a, b) && areSameDay(a, b);

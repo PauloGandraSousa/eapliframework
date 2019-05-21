@@ -35,8 +35,9 @@ import eapli.framework.validations.StringPredicates;
 /**
  * A factory for User entities.
  *
+ * <p/>
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
- * interface. it acts as a Builder (GoF).
+ * interface; it acts as a Builder (GoF).
  */
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
@@ -53,15 +54,24 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         roles = new RoleSet();
     }
 
-    public SystemUserBuilder(final String userName2, final String password2, final String firstName,
-            final String lastName, final String email2, final Set<Role> roles2) {
-        withUsername(userName2);
-        withPassword(password2);
+    /**
+     * Helper constructor for the most common and mandatory properties of a
+     * SystemUser
+     * 
+     * @param userName
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @param email
+     */
+    public SystemUserBuilder(final String userName, final String password, final String firstName,
+            final String lastName, final String email) {
+        this();
+        withUsername(userName);
+        withPassword(password);
         withFirstName(firstName);
         withLastName(lastName);
-        withEmail(email2);
-        roles = new RoleSet();
-        withRoles(roles2);
+        withEmail(email);
     }
 
     public SystemUserBuilder withUsername(final String username) {
@@ -122,8 +132,10 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         return this;
     }
 
-    public SystemUserBuilder withRole(final Role role) {
-        roles.add(new RoleAssignment(role));
+    public SystemUserBuilder withRoles(final Role... onlyWithThis) {
+        for (final Role each : onlyWithThis) {
+            roles.add(new RoleAssignment(each));
+        }
         return this;
     }
 

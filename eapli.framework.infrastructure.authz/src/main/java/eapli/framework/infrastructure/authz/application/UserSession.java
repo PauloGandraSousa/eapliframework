@@ -32,8 +32,8 @@ import eapli.framework.util.Calendars;
 import eapli.framework.validations.Preconditions;
 
 /**
- * the session of an authenticated user
- * 
+ * The session of an authenticated user.
+ *
  * @author Paulo Gandra Sousa
  *
  */
