@@ -29,6 +29,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
+import javax.persistence.Embeddable;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.Factory;
 import eapli.framework.util.HashCoder;
@@ -37,20 +41,27 @@ import eapli.framework.util.StringMixin;
 /**
  * A Text composed of lines. lines are separated by the \n character; words are
  * separated by any white space character. end of sentence punctuation is the
- * period, the exclamation and the question mark.
+ * period, the exclamation and the question mark. A Text object will always have
+ * content, even if it is an empty string
  *
- * a Text object will always have content, even if it is an empty string
- *
+ * <p>
  * if the last character of the text is a new line, the line count will take
  * that into consideration. example, the text "the red fox" has one line while
  * the text "the red fox\n" has two lines
  *
+ * <p>
+ * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
+ * to find the private field as there are no setters and getters.
+ *
  * @author Paulo Gandra de Sousa
  *
  */
+@Embeddable
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Text implements ValueObject, StringMixin {
 
     private static final long serialVersionUID = 1L;
+
     private final String theText;
 
     public static class TextBuilder implements Factory<Text> {

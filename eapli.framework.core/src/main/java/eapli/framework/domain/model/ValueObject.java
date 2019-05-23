@@ -31,7 +31,7 @@ import java.io.Serializable;
  * but for the value of its attributes. These are <b>immutable</b> objects which
  * can be freely shared and discarded and replaced by another instance. Equality
  * is done thru comparison of the attributes values.
- * <p/>
+ * <p>
  *
  * Typical examples are:
  * <ul>
@@ -41,13 +41,13 @@ import java.io.Serializable;
  * <li>Money
  * </ul>
  *
- * <p/>
+ * <p>
  * Make sure you don't provide mutator methods, always construct the object in a
  * valid state and all your private fields are marked final (If you are using
  * ORM tools you might need a default constructor in which case you won't be
  * able to make the fields final)
  *
- * <p/>
+ * <p>
  * Check the <a href=
  * "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java
  * Time API naming conventions</a> for an excellent example on how to name
@@ -68,7 +68,7 @@ public interface ValueObject extends Serializable {
     /**
      * Value objects are compared by the values of its properties.
      *
-     * <p/>
+     * <p>
      * See, for instance, <a href=
      * "https://www.sitepoint.com/implement-javas-equals-method-correctly/">https://www.sitepoint.com/implement-javas-equals-method-correctly/</a>
      *
@@ -83,7 +83,7 @@ public interface ValueObject extends Serializable {
      * hash code of this object according to java rules. i.e., the same fields
      * used in equals() should be used in hashCode().
      *
-     * <p/>
+     * <p>
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()

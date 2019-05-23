@@ -162,7 +162,7 @@ public class GeneralDTO implements DTO, Map<String, Object> {
      * Synthetic fields are ignored mostly due to JacoCo instrumentation which
      * adds a synthetic field {@code $jacocoData}.
      *
-     * <p/>
+     * <p>
      * We are ignoring the security issue S1523 we since control the execution
      * and know the use we are giving to the reflected fields, eventough care
      * must be taken when using reflection

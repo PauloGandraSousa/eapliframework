@@ -256,7 +256,7 @@ public final class Calendars implements Utilitarian {
     /**
      * Returns the current time according in ISO 8601 format.
      *
-     * <p/>
+     * <p>
      * based on
      * https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute/33532945
      *

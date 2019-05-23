@@ -53,7 +53,7 @@ public final class StringFormater implements Utilitarian {
     /**
      * Returns a pretty formatted JSON object.
      *
-     * <p/>
+     * <p>
      * From <a href=
      * "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
      *

@@ -29,7 +29,7 @@ import eapli.framework.util.Utilitarian;
  * String predicates. Predicates are functions that test a condition and return a boolean value. in
  * this case the test is done over a String argument.
  *
- * <p/>
+ * <p>
  * For most of the functions, the signature is:
  *
  * <pre>
@@ -58,7 +58,7 @@ public final class StringPredicates implements Utilitarian {
     /**
      * checks if a string is a valid email address.
      *
-     * <p/>
+     * <p>
      * see also (and favor the use of) {@code org.apache.commons.validator.routines.EmailValidator}
      *
      * @param text

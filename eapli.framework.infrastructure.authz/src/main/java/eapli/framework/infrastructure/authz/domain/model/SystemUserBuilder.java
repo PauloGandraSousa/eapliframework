@@ -35,7 +35,7 @@ import eapli.framework.validations.StringPredicates;
 /**
  * A factory for User entities.
  *
- * <p/>
+ * <p>
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
  * interface; it acts as a Builder (GoF).
  */

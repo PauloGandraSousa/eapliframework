@@ -23,6 +23,8 @@
  */
 package eapli.framework.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A Mixin for adding common functionality to objects that can be thought of as
  * Strings, e.g., the name concept Designation.
@@ -45,6 +47,7 @@ public interface StringMixin {
      * @return true if this string has {@link #length()} 0
      * @see java.lang.String#isEmpty()
      */
+    @JsonIgnore
     default boolean isEmpty() {
         return toString().isEmpty();
     }
@@ -52,7 +55,7 @@ public interface StringMixin {
     /**
      * Checks if this string matches the regular expression {@code regex}
      *
-     * <p/>
+     * <p>
      * Note that regular expression might cause security issues. see <a href=
      * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4784&rule_key=squid%3AS4784">squid:S4784</a>
      *

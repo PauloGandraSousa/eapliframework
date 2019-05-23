@@ -40,7 +40,7 @@ public final class MathFunctions implements Utilitarian {
     /**
      * counts the number of primes up to a certain number.
      *
-     * <p/>
+     * <p>
      * scraped from <a href=
      * "http://www.oreilly.com/programming/free/files/object-oriented-vs-functional-programming.pdf">Using
      * Java Lambdas</a>
@@ -55,12 +55,12 @@ public final class MathFunctions implements Utilitarian {
     /**
      * checks whether a number is prime or not.
      *
-     * <p/>
+     * <p>
      * scraped from <a href=
      * "http://www.oreilly.com/programming/free/files/object-oriented-vs-functional-programming.pdf">Using
      * Java Lambdas</a>
      *
-     * <p/>
+     * <p>
      * see also {@code org.apache.commons.math4.primes.Primes}
      *
      * @param number

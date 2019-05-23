@@ -49,7 +49,7 @@ class NumeralConverter implements Utilitarian {
      * </li> end for
      * </ol>
      *
-     * <p/>
+     * <p>
      * When your done with all the digits in the number, its decimal value will be {@code s}
      *
      * @param value

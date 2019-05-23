@@ -26,7 +26,7 @@ import eapli.framework.validations.Preconditions;
  * A chained action allowing to compose sequences (chains) of actions. The execution of the chain
  * stops when the first action on the chain fails.
  *
- * <p/>
+ * <p>
  * It implements the Composite (GoF) pattern. Subclasses that override execute() MUST call next().
  *
  * @author Paulo Gandra Sousa

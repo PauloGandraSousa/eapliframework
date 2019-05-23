@@ -25,6 +25,8 @@ package eapli.framework.domain.model.general;
 
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.util.StringMixin;
@@ -34,20 +36,26 @@ import eapli.framework.validations.StringPredicates;
 /**
  * Generic designation concept, e.g., name, short name, nickname. A designation
  * consists of some character string without heading and trailing white spaces
- * (but spaces in between are allowed)
+ * (but spaces in between are allowed).
+ *
+ * <p>
+ * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
+ * to find the private field as there are no setters and getters.
  *
  * @author Jorge Santos ajs@isep.ipp.pt
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Designation implements ValueObject, Comparable<Designation>, StringMixin {
 
     private static final long serialVersionUID = 1L;
+
     private final String name;
 
     /**
-     * protected constructor. to construct a new Designation instance use the
-     * valueOf() method
+     * Protected constructor. To construct a new Designation instance use the
+     * {@link #valueOf(String)} method.
      *
      * @param name
      */

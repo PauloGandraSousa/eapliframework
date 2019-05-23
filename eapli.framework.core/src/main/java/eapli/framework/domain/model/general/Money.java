@@ -32,20 +32,25 @@ import java.util.stream.Collector;
 
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 /**
  * Represents money values.
  *
+ * <p>
  * For a full description see the book Patterns of Enterprise Application
  * Architecture (Martin Fowler) page 488 or
  * <a href="https://www.martinfowler.com/eaaCatalog/money.html">PoEAA Money</a>
  *
+ * <p>
  * See also a <a href=
  * "https://deque.blog/2017/08/17/a-study-of-4-money-class-designs-featuring-martin-fowler-kent-beck-and-ward-cunningham-implementations/">good
  * discussion</a> about pros and cons and different approaches
  *
+ * <p>
  * A large proportion of the computers in this world manipulate money, so it's
  * always puzzled me that money isn't actually a first class data type in any
  * mainstream programming language. The lack of a type causes problems, the most
@@ -57,14 +62,16 @@ import eapli.framework.validations.Preconditions;
  * unit. When you do this it's easy to lose pennies (or your local equivalent)
  * because of rounding errors.
  *
+ * <p>
  * The good thing about object-oriented programming is that you can fix these
  * problems by creating a Money class that handles them. Of course, it's still
  * surprising that none of the mainstream base class libraries actually do this.
- *
+ * <p>
  * - Martin Fowler
- *
+ * <p>
  * Example Usage:
  *
+ * <pre>
  * <code>
  * Money a = Money.dollars(12.98);
  * Money b = Money.dollars(-11.98);
@@ -72,17 +79,25 @@ import eapli.framework.validations.Preconditions;
  * Money result = a.add(b);
  * assert expected.equals(result);
  * </code>
+ * </pre>
  *
+ * <p>
  * You'll notice there are no setters. Money is a Value Object and is thus
  * immutable. It helps to have a variety of constructors to make it easy to make
  * monies. Constructors that convert from basic numeric types are always useful.
  *
+ * <p>
  * <strong>NOTE:</strong> The original source code was available at
  * <a href="http://martinfowler.com/eaaDev/quantity.html">MF bliki</a>, however
  * that link is now broken
  *
+ * <p>
+ * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
+ * to find the private field as there are no setters and getters.
+ *
  */
 @Embeddable
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Money implements Comparable<Money>, Serializable, ValueObject {
 
     private static final long serialVersionUID = 1L;
@@ -131,6 +146,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * published" interface
      *
      * @TODO check other ways to avoid having this special constructor
+     *
      * @author Paulo Gandra de Sousa
      * @param amount
      * @param currency
@@ -155,17 +171,15 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Factory method to construct a Money object of {@code amount} EUR.
+     * Factory method to construct a Money object of {@code amount} EUR. If you
+     * use one currency a lot, you may want a special constructor for that
+     * currency.
      *
      * @param amount
      * @return a Money object of {@code amount} EUR
      *
      */
     public static Money dollars(final double amount) {
-        /*
-         * If you use one currency a lot, you may want a special constructor for
-         * that currency.
-         */
         return new Money(amount, Currency.getInstance("USD"));
     }
 
@@ -248,13 +262,13 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      */
     public double amount() {
         /*
-         * Notice that I use a BigInteger. In Java I could equally well use a
-         * BigDecimal, but in many languages an integer is the only decent
-         * option, so using an integer seems the best for explanation. Don't be
-         * afraid to choose your representation of the amount part of a quantity
-         * based on performance factors. The beauty of objects is that you can
-         * choose any data structure you like on the inside, providing you hide
-         * it on the outside.
+         * Notice that I [Martin Fowler] use a BigInteger. In Java I could
+         * equally well use a BigDecimal, but in many languages an integer is
+         * the only decent option, so using an integer seems the best for
+         * explanation. Don't be afraid to choose your representation of the
+         * amount part of a quantity based on performance factors. The beauty of
+         * objects is that you can choose any data structure you like on the
+         * inside, providing you hide it on the outside.
          */
         return amount.doubleValue() / HUNDRED;
     }
@@ -282,9 +296,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      */
     public Money add(final Money arg) {
         /*
-         * For addition and subtraction I'm not trying to do any fancy
-         * conversion. Notice that I'm using a special constructor with a marker
-         * argument.
+         * For addition and subtraction I'm [Martin Fowler] not trying to do any
+         * fancy conversion. Notice that I'm using a special constructor with a
+         * marker argument.
          */
         Preconditions.ensure(() -> currency.equals(arg.currency), "Cannot add different currencies");
 
@@ -307,9 +321,13 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Returns a new object which amount's sign is swapped, i.e., -this.amount.
      * E.g.
      *
+     * <p>
+     *
      * <pre>
+     * <code>
      * Money m1 = Money.euros(100);
      * Money m2 = m1.negate(); // -100 EUR
+     * </code>
      * </pre>
      *
      * @return a new object which amount's sign is swapped
@@ -336,6 +354,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Divides this Money object by a certain integer denominator doing the
      * right allocation of cents.
      *
+     * <p>
      * Multiplication is very straightforward. But division is not, as we have
      * to take care of errant pennies. We'll do that by returning an array of
      * monies, such that the sum of the array is equal to the original amount,
@@ -409,8 +428,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Compares two Money objects cheking if this money's amount is greater than
-     * or equal to the other.
+     * Compares two Money objects checking if this money's amount is greater
+     * than or equal to the other.
      *
      * @author Paulo Gandra de Sousa
      * @param arg

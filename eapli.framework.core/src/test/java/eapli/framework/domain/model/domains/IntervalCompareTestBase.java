@@ -23,7 +23,7 @@ package eapli.framework.domain.model.domains;
 /**
  * Test cases for compare described in the documentation of {@link Interval#compareTo(Interval)}
  *
- * <p/>
+ * <p>
  * The same interval
  *
  * <pre>
@@ -58,7 +58,7 @@ package eapli.framework.domain.model.domains;
  * {@link EmptyIntervalCompareTest#ensureIsSame()}
  * </pre>
  *
- * <p/>
+ * <p>
  * Start is before the other start
  *
  * <pre>
@@ -87,7 +87,7 @@ package eapli.framework.domain.model.domains;
  * {@link UniversalIntervalCompareTest#ensureUniversalIsBeforeCXI()}
  * </pre>
  *
- * <p/>
+ * <p>
  * Same start but different openness
  *
  * <pre>
@@ -102,7 +102,7 @@ package eapli.framework.domain.model.domains;
  *
  * </pre>
  *
- * <p/>
+ * <p>
  * Same start and same openness
  *
  * <pre>
@@ -125,7 +125,7 @@ package eapli.framework.domain.model.domains;
  * {@link C5_O10_IntervalCompareTest#ensureIsBeforeCXCY()}
  * </pre>
  *
- * <p/>
+ * <p>
  * Empty interval special case
  *
  * <pre>

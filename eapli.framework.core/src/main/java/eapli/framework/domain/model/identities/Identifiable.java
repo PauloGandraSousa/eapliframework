@@ -23,6 +23,8 @@
  */
 package eapli.framework.domain.model.identities;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 /**
  * An object that has an identity.
  *
@@ -37,8 +39,12 @@ public interface Identifiable<T> {
     /**
      * Returns the primary <b>business</b> id of the entity.
      *
+     * <p>
+     * This method is marked as a getter for Jackson serialization
+     * 
      * @return the primary <b>business</b> id of the entity
      */
+    @JsonGetter
     T identity();
 
     /**

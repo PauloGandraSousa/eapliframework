@@ -38,7 +38,7 @@ import eapli.framework.validations.Preconditions;
  * not check the permissions against any type of database but relies on the
  * roles assigned to a user.
  *
- * <p/>
+ * <p>
  * note that this class is conceptually a singleton as it holds the Session
  * object. ensure that you set up spring correctly and if you create the
  * instances yourself, make sure you handle the singletonness nature of the
@@ -120,7 +120,7 @@ public final class AuthorizationService {
      * exception if there is no session or the currently logged in user does not
      * have the requested permissions.
      *
-     * <p/>
+     * <p>
      * consider using {@link #loggedinUserWithPermissions(Role...)} to perform
      * this check without throwing exceptions, as these scenarios are not really
      * exceptions but accounted for

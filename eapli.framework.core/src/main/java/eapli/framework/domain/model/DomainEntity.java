@@ -29,14 +29,14 @@ import eapli.framework.domain.model.identities.Identifiable;
  * An entity is a Domain-Driven Design pattern for concepts in the domain which
  * have a thread of continuity which needs to be tracked.
  *
- * <p/>
+ * <p>
  * These concepts matter by their identity and we need to track them
  * continuously. Instance equality must be done thru the identity of the objects
  * and we cannot loose track or allow duplication of an entity. By definition a
  * domain entity always has a business identity, so it should be impossible to
  * create new instances without identity.
  *
- * <p/>
+ * <p>
  * Typical examples are:
  * <ul>
  * <li>Product
@@ -56,14 +56,14 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */> exten
      * {@link DomainEntities#areEqual(DomainEntity, Object)} method as default
      * implementation
      *
-     * <p/>
+     * <p>
      * be careful that if your entities are using the ORM generated primary key
      * as their business identity, you MUST properly implement equals() and
      * hashcode(). See <a href=
      * "https://thoughts-on-java.org/ultimate-guide-to-implementing-equals-and-hashcode-with-hibernate/">Toughts
      * on java</a>
      *
-     * <p/>
+     * <p>
      * see {@link #sameAs(Object)}.
      *
      * @param other
@@ -78,7 +78,7 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */> exten
      * used in equals() should be used in hashCode(). you can use
      * {@link DomainEntities#hashCode(DomainEntity)} as default implementation
      *
-     * <p/>
+     * <p>
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()

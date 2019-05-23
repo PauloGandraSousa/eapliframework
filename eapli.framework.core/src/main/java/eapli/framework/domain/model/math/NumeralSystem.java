@@ -34,10 +34,10 @@ public interface NumeralSystem extends ValueObject {
      * returns the symbols to be used as representation of the number. the length of this string of
      * symbols determines the base of the numeral system. e.g.,
      *
-     * <p/>
+     * <p>
      * symbols = "01234567" ==> base = 8
      *
-     * <p/>
+     * <p>
      * be careful not to use unicode symbols which actually occupy two bytes and will make the base
      * calculation wrong. the string of symbols is handled as an ordered string, however,
      * implementations are free to define which symbols to use. e.g., a base 2 numeral system may define

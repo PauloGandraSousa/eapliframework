@@ -28,7 +28,7 @@ import eapli.framework.validations.Preconditions;
 /**
  * A simple approach to the functional Monad Either.
  *
- * <p/>
+ * <p>
  * Objects of this class can represent one (1) value of either T or U. Useful for error handling
  * where, by convention, the left type is the correct response and the right type is the error
  * response
