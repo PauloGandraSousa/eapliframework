@@ -21,7 +21,6 @@
 package eapli.framework.functional;
 
 import java.util.Optional;
-import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -30,7 +29,7 @@ import eapli.framework.actions.TimedActions;
 import eapli.framework.util.Utilitarian;
 
 /**
- * A utility class with some handy functions.
+ * A utility class to build and work with Functions.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -38,22 +37,6 @@ import eapli.framework.util.Utilitarian;
 public final class Functions implements Utilitarian {
     private Functions() {
         // ensure utility
-    }
-
-    /**
-     * Identity function.
-     *
-     * <pre>
-     * <code>
-     * T -> T : x -> x
-     * </code>
-     * </pre>
-     *
-     * @param x
-     * @return the same object passed as input parameter
-     */
-    public static <T> T identity(final T x) {
-        return x;
     }
 
     /**
@@ -87,31 +70,8 @@ public final class Functions implements Utilitarian {
     }
 
     /**
-     * Nil Operation.
-     */
-    public static void nop() {
-        // do noting
-    }
-
-    /**
-     * Nil operation, i.e., do nothing on the parameter of the function.
-     *
-     * <pre>
-     * <code>
-     * T -> void : x -> void
-     * </code>
-     * </pre>
-     *
-     * @param x
-     * @param <T>
-     */
-    @SuppressWarnings("squid:S1172")
-    public static <T> void ignore(final T x) {
-        // do noting
-    }
-
-    /**
-     * Gets a value from one of two suppliers based on a predicate.
+     * Builds a function that gets a value from one of two suppliers based on a
+     * predicate.
      *
      * @param arg
      *            the argument to test against the predicate
@@ -123,35 +83,15 @@ public final class Functions implements Utilitarian {
      *            the supplier in case of insuccess of the predicate
      * @return the value supplied by either {@code success} or {@code failure}
      */
-    public static <T, R> R conditionalGet(final T arg, final Predicate<T> condition, final Supplier<R> success,
+    public static <T, R> Function<T, R> conditionalGet(final Predicate<T> condition, final Supplier<R> success,
             final Supplier<R> failure) {
-        if (condition.test(arg)) {
-            return success.get();
-        } else {
-            return failure.get();
-        }
-    }
-
-    /**
-     * Gets a value from one of two suppliers based on a predicate.
-     *
-     * @param <R>
-     *            the type of value to return
-     * @param condition
-     *            the predicate to test
-     * @param success
-     *            the supplier to use in case the predicate test succeeds
-     * @param failure
-     *            the supplier to use in case the predicate test fails
-     * @return the value supplied by either {@code success} or {@code failure}
-     */
-    public static <R> R conditionalGet(final BooleanSupplier condition, final Supplier<R> success,
-            final Supplier<R> failure) {
-        if (condition.getAsBoolean()) {
-            return success.get();
-        } else {
-            return failure.get();
-        }
+        return arg -> {
+            if (condition.test(arg)) {
+                return success.get();
+            } else {
+                return failure.get();
+            }
+        };
     }
 
     //
@@ -160,7 +100,7 @@ public final class Functions implements Utilitarian {
 
     /**
      * Retries an operation with a given interval time between invocations up to
-     * a certain number of attempts. the retry stops if the operation returned
+     * a certain number of attempts. The retry stops if the operation returned
      * optional contains a value or the maximum number of attempts is reached.
      *
      * @param operation
@@ -170,7 +110,8 @@ public final class Functions implements Utilitarian {
      *            to true
      * @param maxAttempts
      * @param progressive
-     * @return
+     * @return an optional with a value, an empty optional if the maximum number
+     *         of attempts has been reached
      */
     public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep, final int maxAttempts,
             final boolean progressive) {
@@ -188,6 +129,20 @@ public final class Functions implements Utilitarian {
         return u;
     }
 
+    /**
+     * Retries an operation with a given interval time between invocations up to
+     * a certain number of attempts. The retry stops if the operation returned
+     * optional contains a value or the maximum number of attempts is reached.
+     *
+     * @param operation
+     * @param sleep
+     *            seed time in milliseconds to wait for retrying. it will
+     *            progressively increase between attempts if progressive is set
+     *            to true
+     * @param maxAttempts
+     * @return an optional with a value, an empty optional if the maximum number
+     *         of attempts has been reached
+     */
     public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep, final int maxAttempts) {
         return retry(operation, sleep, maxAttempts, true);
     }
