@@ -33,7 +33,8 @@ import eapli.framework.util.Utilitarian;
 /**
  * A utility class for handling Java 8 Streams
  *
- * @author Paulo Gandra de Sousa 24/05/2019
+ * @author Paulo Gandra de Sousa
+ *
  */
 public final class Streams implements Utilitarian {
     private Streams() {

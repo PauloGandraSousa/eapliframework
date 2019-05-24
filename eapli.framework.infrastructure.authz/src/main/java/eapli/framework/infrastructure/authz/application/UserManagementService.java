@@ -31,6 +31,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import eapli.framework.domain.model.general.EmailAddress;
+import eapli.framework.infrastructure.authz.domain.model.Name;
+import eapli.framework.infrastructure.authz.domain.model.Password;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
@@ -46,8 +49,6 @@ import eapli.framework.util.Calendars;
 public class UserManagementService {
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private SystemUserBuilder userBuilder;
 
     public UserManagementService() {
         // default for Spring dependency injection
@@ -64,9 +65,11 @@ public class UserManagementService {
 
     @Transactional
     public SystemUser addUser(final String username, final String password, final String firstName,
-            final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
-        userBuilder.withUsername(username).withPassword(password).withName(firstName, lastName).withEmail(email)
-                .createdOn(createdOn).withRoles(roles);
+            final String lastName, final String email, final Set<Role> roles,
+            final Calendar createdOn) {
+        final SystemUserBuilder userBuilder = new SystemUserBuilder();
+        userBuilder.withUsername(username).withPassword(password).withFirstName(firstName)
+                .withLastName(lastName).withEmail(email).createdOn(createdOn).withRoles(roles);
         final SystemUser newUser = userBuilder.build();
         return userRepository.save(newUser);
     }
@@ -75,6 +78,13 @@ public class UserManagementService {
     public SystemUser addUser(final String username, final String password, final String firstName,
             final String lastName, final String email, final Set<Role> roles) {
         return addUser(username, password, firstName, lastName, email, roles, Calendars.now());
+    }
+
+    @Transactional
+    public SystemUser addUser(Username username, Password password, Name name, EmailAddress email,
+            final Set<Role> roles) {
+        final SystemUser newUser = new SystemUser(username, password, name, email, roles);
+        return userRepository.save(newUser);
     }
 
     public Iterable<SystemUser> activeUsers() {

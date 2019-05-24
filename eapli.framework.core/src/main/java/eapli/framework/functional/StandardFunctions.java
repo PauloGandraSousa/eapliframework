@@ -25,7 +25,8 @@ import eapli.framework.util.Utilitarian;
 /**
  * A utility class with some handy functions.
  *
- * @author Paulo Gandra de Sousa 24/05/2019
+ * @author Paulo Gandra de Sousa
+ *
  */
 public final class StandardFunctions implements Utilitarian {
     private StandardFunctions() {

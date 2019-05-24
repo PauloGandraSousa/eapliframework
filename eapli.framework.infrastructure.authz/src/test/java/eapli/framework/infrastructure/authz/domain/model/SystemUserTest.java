@@ -51,8 +51,8 @@ public class SystemUserTest {
     @Before
     public void setUp() throws Exception {
         dateOfCreation = Calendars.now();
-        instance = new SystemUser(Username.valueOf("abc"), Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Boocam"),
-                EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
+        instance = new SystemUserBuilder().withUsername("abc").withPassword(PASSWORD1).withFirstName("Ant")
+                .withLastName("Boocam").withEmail("a@b.com").createdOn(dateOfCreation).build();
     }
 
     @Test(expected = IllegalArgumentException.class)

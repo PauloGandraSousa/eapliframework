@@ -19,11 +19,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>eapli</groupId>
 			<artifactId>eapli.framework.core</artifactId>
 			<version>${project.parent.version}</version>
