@@ -29,11 +29,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import eapli.framework.actions.Actions;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.domain.model.general.EmailAddress;
+import eapli.framework.functional.Either;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A factory for User entities. It helps construct the object and enforces the
@@ -46,9 +48,6 @@ import eapli.framework.domain.model.general.EmailAddress;
 @Component
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
-    private final PasswordPolicy policy;
-    private final PasswordEncoder encoder;
-
     private Username username;
     private Password password;
     private Name name;
@@ -56,10 +55,11 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
     private final RoleSet roles;
     private Calendar createdOn;
 
+    private final PasswordEnforcer passwordEnforcer;
+
     @Autowired
-    public SystemUserBuilder(final PasswordPolicy policy, final PasswordEncoder encoder) {
-        this.policy = policy;
-        this.encoder = encoder;
+    public SystemUserBuilder(final PasswordEnforcer enforcer) {
+        passwordEnforcer = enforcer;
         roles = new RoleSet();
     }
 
@@ -71,14 +71,34 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
      * @param firstName
      * @param lastName
      * @param email
+     * @return this builder
      */
-    public SystemUserBuilder withData(final String userName, final String password, final String firstName,
+    public SystemUserBuilder with(final String userName, final String password, final String firstName,
             final String lastName, final String email) {
         withUsername(userName);
         withPassword(password);
         withName(firstName, lastName);
         withEmail(email);
         return this;
+    }
+
+    /**
+     * Helper for the most common and mandatory properties of a SystemUser. Note
+     * that {@code password} is assumed to be already validated and encoded.
+     *
+     * @param username
+     * @param password
+     * @param name
+     * @param email
+     * @return this builder
+     */
+    public SystemUserBuilder with(final Username username, final Password password, final Name name,
+            final EmailAddress email) {
+        withUsername(username);
+        withPassword(password);
+        withName(name);
+        withEmail(email);
+        return null;
     }
 
     public SystemUserBuilder withUsername(final String username) {
@@ -91,12 +111,33 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         return this;
     }
 
+    /**
+     * Sets the password of the user <strong>performing</strong> policy
+     * enforcement and encoding. if the password does not meet the requirements
+     * of the policy, an {@code IllegalArgumentException} is thrown.
+     *
+     * @param rawPassword
+     * @throws IllegalArgumentException
+     * @return this builder
+     */
     public SystemUserBuilder withPassword(final String rawPassword) {
-        if (policy.meetsRequeriments(rawPassword)) {
-            password = Password.valueOf(encoder.encode(rawPassword));
-        } else {
-            throw new IllegalArgumentException("Password does not meets the requirments of the policy");
-        }
+        final Either<Password, String> checkPass = passwordEnforcer.validAndEncodedPassword(rawPassword);
+        checkPass.accept(p -> password = p, Actions::throwArgument);
+        return this;
+    }
+
+    /**
+     * Sets the password of the user <strong>assuming</strong> that password
+     * policy enforcement and encoding have already been performed. This method
+     * is mostly to be used to support the registration process where a password
+     * has already been validated and encoded.
+     *
+     * @param password
+     * @return this builder
+     */
+    public SystemUserBuilder withPassword(final Password password) {
+        Preconditions.nonNull(password);
+        this.password = password;
         return this;
     }
 

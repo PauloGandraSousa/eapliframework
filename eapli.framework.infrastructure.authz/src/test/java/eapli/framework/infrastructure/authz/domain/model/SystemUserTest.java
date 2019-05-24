@@ -34,6 +34,7 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import eapli.framework.domain.model.general.EmailAddress;
 import eapli.framework.util.Calendars;
@@ -107,11 +108,11 @@ public class SystemUserTest {
 
     @Test
     public void ensurePasswordMatches() {
-        assertTrue(instance.passwordMatches(Password.valueOf(PASSWORD1)));
+        assertTrue(instance.passwordMatches(PASSWORD1, NoOpPasswordEncoder.getInstance()));
     }
 
     @Test
     public void ensurePasswordDoesntMatch() {
-        assertFalse(instance.passwordMatches(Password.valueOf(PASSWORD1 + "xpto")));
+        assertFalse(instance.passwordMatches(PASSWORD1 + "xpto", NoOpPasswordEncoder.getInstance()));
     }
 }

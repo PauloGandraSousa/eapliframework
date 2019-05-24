@@ -124,7 +124,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b) {
-        ensure(b);
+        ensure(b, "");
     }
 
     /**

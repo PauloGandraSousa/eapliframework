@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.domain.model.Password;
+import eapli.framework.infrastructure.authz.domain.model.PasswordEnforcer;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
@@ -41,18 +42,9 @@ import eapli.framework.validations.Preconditions;
 @Component
 public class AuthenticationService {
 
-    @Autowired
     private UserRepository repo;
-
-    @Autowired
-    private AuthorizationService authz;
-
-    /**
-     * default constructor for Spring dependency injection
-     */
-    protected AuthenticationService() {
-        // empty
-    }
+    private final AuthorizationService authz;
+    private final PasswordEnforcer passwordEnforcer;
 
     /**
      * in scenarios where there is no dependency injector, this constructor
@@ -62,11 +54,15 @@ public class AuthenticationService {
      *            a user repository
      * @param authz
      *            an authentication service
+     * @param encoder
      */
-    public AuthenticationService(final UserRepository repo, final AuthorizationService authz) {
-        Preconditions.nonNull(repo, authz);
+    @Autowired
+    public AuthenticationService(final UserRepository repo, final AuthorizationService authz,
+            final PasswordEnforcer encoder) {
+        Preconditions.nonNull(repo, authz, encoder);
         this.repo = repo;
         this.authz = authz;
+        passwordEnforcer = encoder;
     }
 
     /**
@@ -83,17 +79,17 @@ public class AuthenticationService {
      * if so creates a user session for it.
      *
      * @param username
-     * @param pass
+     * @param rawPassword
      * @param onlyWithThis
      * @return the authenticated user session or an empty optional otherwise
      */
-    public Optional<UserSession> authenticate(final Username username, final Password pass,
+    public Optional<UserSession> authenticate(final String username, final String rawPassword,
             final Role... onlyWithThis) {
-        Preconditions.nonNull(username, "a username must be provided");
-        Preconditions.nonNull(pass, "a password must be provided");
+        Preconditions.nonEmpty(username, "a username must be provided");
+        Preconditions.nonEmpty(rawPassword, "a password must be provided");
 
         final Optional<UserSession> newSession = retrieveUser(username)
-                .filter(u -> u.passwordMatches(pass) && u.isActive()
+                .filter(u -> u.passwordMatches(rawPassword, passwordEnforcer.encoder()) && u.isActive()
                         && (noActionRightsToValidate(onlyWithThis) || u.hasAny(onlyWithThis)))
                 .map(this::createSessionForUser);
 
@@ -105,16 +101,15 @@ public class AuthenticationService {
      * allows a user to perform login and creates the session.
      *
      * @param userName
-     * @param password
+     * @param rawPassword
      * @param onlyWithThis
      * @return true if the user has the right credentials and permissions
      * @throws IllegalArgumentException
      *             if the username or password cannot be constructed from the
      *             passed string arguments
      */
-    public boolean login(final String userName, final String password, final Role... onlyWithThis) {
-        final Optional<UserSession> newSession = authenticate(Username.valueOf(userName), Password.valueOf(password),
-                onlyWithThis);
+    public boolean login(final String userName, final String rawPassword, final Role... onlyWithThis) {
+        final Optional<UserSession> newSession = authenticate(userName, rawPassword, onlyWithThis);
         return newSession.isPresent();
     }
 
@@ -126,8 +121,8 @@ public class AuthenticationService {
         return new UserSession(user);
     }
 
-    private Optional<SystemUser> retrieveUser(final Username userName) {
-        return repo.ofIdentity(userName);
+    private Optional<SystemUser> retrieveUser(final String username) {
+        return repo.ofIdentity(Username.valueOf(username));
     }
 
     /**
@@ -142,9 +137,10 @@ public class AuthenticationService {
      * @return An optional which value is the changed SystemUser object or an
      *         empty Optional if the password could not be changed
      */
-    public Optional<SystemUser> changePassword(final SystemUser user, final Password oldPassword,
-            final Password newPassword) {
-        if (user.changePassword(oldPassword, newPassword)) {
+    public Optional<SystemUser> changePassword(final SystemUser user, final String oldPassword,
+            final String newPassword) {
+        if (user.passwordMatches(oldPassword, passwordEnforcer.encoder())) {
+            user.changePassword(passwordEnforcer.validAndEncodedPassword(newPassword).orElseThrow());
             return Optional.of(repo.save(user));
         }
         return Optional.empty();
@@ -160,8 +156,7 @@ public class AuthenticationService {
      */
     public boolean changePassword(final String oldPassword, final String newPassword) {
         final Optional<UserSession> s = authz.session();
-        return s.map(u -> changePassword(u.authenticatedUser(), Password.valueOf(oldPassword),
-                Password.valueOf(newPassword))).map(u -> true).orElse(false);
+        return s.map(u -> changePassword(u.authenticatedUser(), oldPassword, newPassword)).map(u -> true).orElse(false);
     }
 
     /**

@@ -34,7 +34,7 @@ import eapli.framework.validations.Preconditions;
 
 /**
  * A password of a user. Password policy and encoding is done outside of this
- * class
+ * class by {@link SystemUserBuilder}.
  *
  * <p>
  * IMPORTANT: passwords should never be stored in plain format
@@ -53,12 +53,12 @@ public class Password implements ValueObject, Serializable {
         thePassword = null;
     }
 
-    protected Password(final String password) {
+    /* package */ Password(final String password) {
         Preconditions.nonNull(password);
         thePassword = password;
     }
 
-    public static Password valueOf(final String password) {
+    /* package */ static Password valueOf(final String password) {
         return new Password(password);
     }
 

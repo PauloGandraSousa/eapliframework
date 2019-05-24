@@ -29,9 +29,9 @@ import eapli.framework.validations.Preconditions;
  * A simple approach to the functional Monad Either.
  *
  * <p>
- * Objects of this class can represent one (1) value of either T or U. Useful for error handling
- * where, by convention, the left type is the correct response and the right type is the error
- * response
+ * Objects of this class can represent one (1) value of either T or U. Useful
+ * for error handling where, by convention, the left type is the correct
+ * response and the right type is the error response.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -73,7 +73,8 @@ public final class Either<T, U> {
      *
      * @param left
      * @param marker
-     *               just to make the compiler happy due to the erasure of both constructors
+     *            just to make the compiler happy due to the erasure of both
+     *            constructors
      */
     @SuppressWarnings("squid:S1172")
     private Either(final T left, final boolean marker) {
@@ -96,13 +97,14 @@ public final class Either<T, U> {
     }
 
     /**
-     * Applies the "normal" function to the left value if this Either instance holds a left value,
-     * otherwise applies the "error" function to the right value. since this method returns a new Either
-     * it is suitable for composition.
+     * Applies the "normal" function to the left value if this Either instance
+     * holds a left value, otherwise applies the "error" function to the right
+     * value. since this method returns a new Either it is suitable for
+     * composition.
      *
      * @param normal
      * @param error
-     * @return
+     * @return a new either resulting from the projection
      */
     public Either<T, U> project(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
         if (type == SideType.LEFT) {
@@ -112,18 +114,36 @@ public final class Either<T, U> {
     }
 
     /**
-     * acts on the value of this Either instance, executing the "normal" function with the left value if
-     * this Either instance holds a left value, otherwise executes the "error" function with the right
-     * value
+     * acts on the value of this Either instance, executing the "normal"
+     * function with the left value if this Either instance holds a left value,
+     * otherwise executes the "error" function with the right value
      *
-     * @param normal
+     * @param doer
      * @param error
      */
-    public void accept(final Consumer<T> normal, final Consumer<U> error) {
+    public void accept(final Consumer<T> doer, final Consumer<U> error) {
         if (type == SideType.LEFT) {
-            normal.accept(left);
+            doer.accept(left);
         } else {
             error.accept(right);
+        }
+    }
+
+    /**
+     * Returns the value hold on the left of the either or throws an
+     * IllegalArgumentException if there is no value on the left side. If the
+     * right side is a String it will use that value as the message of the
+     * exception.
+     *
+     * @return the value hold on the left of the either if there is a left value
+     * @throws IllegalArgumentException
+     */
+    public T orElseThrow() {
+        if (type == SideType.LEFT) {
+            return left;
+        } else {
+            final String message = right instanceof String ? (String) right : "";
+            throw new IllegalArgumentException(message);
         }
     }
 }

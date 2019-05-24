@@ -36,6 +36,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.general.EmailAddress;
@@ -256,11 +258,12 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      * pass the responsibility of performing the validation to inside the
      * object.
      *
-     * @param password
-     * @return
+     * @param rawPassword
+     * @param encoder
+     * @return true if the password matches
      */
-    public boolean passwordMatches(final Password password) {
-        return this.password.equals(password);
+    public boolean passwordMatches(final String rawPassword, final PasswordEncoder encoder) {
+        return encoder.matches(rawPassword, password.value());
     }
 
     /**
@@ -330,17 +333,13 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * @param oldPassword
+     * Sets a new password for this user. Make user the password
+     *
      * @param newPassword
-     * @return
      */
-    public boolean changePassword(final Password oldPassword, final Password newPassword) {
-        if (password.equals(oldPassword)) {
-            password = newPassword;
-            invalidateResetToken();
-            return true;
-        }
-        return false;
+    public void changePassword(final Password newPassword) {
+        password = newPassword;
+        invalidateResetToken();
     }
 
     private void invalidateResetToken() {
