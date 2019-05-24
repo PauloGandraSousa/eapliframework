@@ -36,7 +36,12 @@ import eapli.framework.validations.Invariants;
  *
  * <p>
  * See <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's
- * Range pattern</a> for a general discussion
+ * Range pattern</a> for a general discussion.
+ *
+ * <p>
+ * Also interesting read, the Google's Guava discussion on their
+ * <a href="https://github.com/google/guava/wiki/RangesExplained">Range
+ * class</a>.
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -134,7 +139,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * constructs an interval.
+     * Constructs an interval.
      *
      * @param start
      *            anchor start of the interval or null to represent infinity
