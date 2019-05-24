@@ -27,8 +27,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Calendar;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,13 +40,10 @@ import eapli.framework.util.Calendars;
 public class SystemUserActivateDeactivateTest {
     private static final String PASSWORD1 = "Password1";
     private SystemUser instance;
-    private Calendar createdOn;
 
     @Before
     public void setUp() throws Exception {
-        createdOn = Calendars.now();
-        instance = new SystemUserBuilder().withUsername("abc").withPassword(PASSWORD1).withFirstName("Ant")
-                .withLastName("Boocam").withEmail("a@b.com").createdOn(createdOn).build();
+        instance = SystemUserTestHelper.dummyUser("abc");
     }
 
     @Test

@@ -28,50 +28,57 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.domain.model.general.EmailAddress;
-import eapli.framework.validations.StringPredicates;
 
 /**
- * A factory for User entities.
+ * A factory for User entities. It helps construct the object and enforces the
+ * password policies and encoding.
  *
  * <p>
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
  * interface; it acts as a Builder (GoF).
  */
+@Component
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
+
+    private final PasswordPolicy policy;
+    private final PasswordEncoder encoder;
 
     private Username username;
     private Password password;
-    private String firstName;
-    private String lastName;
     private Name name;
     private EmailAddress email;
     private final RoleSet roles;
     private Calendar createdOn;
 
-    public SystemUserBuilder() {
+    @Autowired
+    public SystemUserBuilder(final PasswordPolicy policy, final PasswordEncoder encoder) {
+        this.policy = policy;
+        this.encoder = encoder;
         roles = new RoleSet();
     }
 
     /**
-     * Helper constructor for the most common and mandatory properties of a
-     * SystemUser
-     * 
+     * Helper for the most common and mandatory properties of a SystemUser
+     *
      * @param userName
      * @param password
      * @param firstName
      * @param lastName
      * @param email
      */
-    public SystemUserBuilder(final String userName, final String password, final String firstName,
+    public SystemUserBuilder withData(final String userName, final String password, final String firstName,
             final String lastName, final String email) {
-        this();
         withUsername(userName);
         withPassword(password);
-        withFirstName(firstName);
-        withLastName(lastName);
+        withName(firstName, lastName);
         withEmail(email);
+        return this;
     }
 
     public SystemUserBuilder withUsername(final String username) {
@@ -84,36 +91,17 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         return this;
     }
 
-    public SystemUserBuilder withPassword(final String password) {
-        this.password = Password.valueOf(password);
-        return this;
-    }
-
-    public SystemUserBuilder withPassword(final Password password) {
-        this.password = password;
-        return this;
-    }
-
-    public SystemUserBuilder withFirstName(final String firstName) {
-        this.firstName = firstName;
-        if (!StringPredicates.isNullOrEmpty(lastName)) {
-            name = new Name(this.firstName, lastName);
-        }
-        return this;
-    }
-
-    public SystemUserBuilder withLastName(final String lastName) {
-        this.lastName = lastName;
-        if (!StringPredicates.isNullOrEmpty(firstName)) {
-            name = new Name(firstName, this.lastName);
+    public SystemUserBuilder withPassword(final String rawPassword) {
+        if (policy.meetsRequeriments(rawPassword)) {
+            password = Password.valueOf(encoder.encode(rawPassword));
+        } else {
+            throw new IllegalArgumentException("Password does not meets the requirments of the policy");
         }
         return this;
     }
 
     public SystemUserBuilder withName(final String firstName, final String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        name = new Name(firstName, this.lastName);
+        name = new Name(firstName, lastName);
         return this;
     }
 

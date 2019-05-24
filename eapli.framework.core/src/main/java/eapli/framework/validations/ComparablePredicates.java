@@ -26,7 +26,7 @@ package eapli.framework.validations;
 import eapli.framework.util.Utilitarian;
 
 /**
- * Predicates handling Comparables
+ * Predicates handling Comparables.
  *
  * @author Paulo Gandra Sousa
  */
@@ -37,26 +37,44 @@ public final class ComparablePredicates implements Utilitarian {
     }
 
     /**
-     * checks if a value is between (inclusive) a range
+     * Checks if a value is between (inclusive) a range.
      *
      * @param e
      * @param begin
      * @param end
-     * @return
+     * @return true if the value {@code e} is between (inclusive) the range
+     *         {@code [begin, end]}
      */
     public static boolean isBetween(final long e, final long begin, final long end) {
         return e >= begin && e <= end;
     }
 
     /**
-     * checks if a value is between (inclusive) a range
+     * Checks if a value is between (inclusive) a range.
      *
      * @param e
      * @param begin
      * @param end
-     * @return
+     * @return true if the value {@code e} is between (inclusive) the range
+     *         {@code [begin, end]}
      */
     public static <T extends Comparable<T>> boolean isBetween(final T e, final T begin, final T end) {
         return e.compareTo(begin) >= 0 && e.compareTo(end) <= 0;
+    }
+
+    public static <T extends Comparable<T>> boolean isGreaterThan(final T a, final T b) {
+        return a.compareTo(b) > 0;
+    }
+
+    public static <T extends Comparable<T>> boolean isAtLeast(final T a, final T b) {
+        return a.compareTo(b) >= 0;
+    }
+
+    public static <T extends Comparable<T>> boolean isLessThan(final T a, final T b) {
+        return a.compareTo(b) < 0;
+    }
+
+    public static <T extends Comparable<T>> boolean isAtMost(final T a, final T b) {
+        return a.compareTo(b) <= 0;
     }
 }
