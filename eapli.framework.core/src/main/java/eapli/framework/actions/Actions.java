@@ -21,7 +21,6 @@
 package eapli.framework.actions;
 
 import java.util.function.BooleanSupplier;
-import java.util.function.Predicate;
 
 import eapli.framework.util.Utilitarian;
 import eapli.framework.validations.Preconditions;
@@ -89,7 +88,8 @@ public final class Actions implements Utilitarian {
      * A default action to throw IllegalStateException binded to a message
      *
      * @param m
-     *          the message to set as the description of the exception to be thrown
+     *            the message to set as the description of the exception to be
+     *            thrown
      * @return a new Action object that will throw an IllegalStateException
      */
     public static Action throwState(final String m) {
@@ -100,7 +100,8 @@ public final class Actions implements Utilitarian {
      * A default action to throw IllegalArgumentException binded to a message
      *
      * @param m
-     *          the message to set as the description of the exception to be thrown
+     *            the message to set as the description of the exception to be
+     *            thrown
      * @return a new Action object that will throw an IllegalArgumentException
      */
     public static Action throwArgument(final String m) {
@@ -124,8 +125,8 @@ public final class Actions implements Utilitarian {
      *
      * @param consequence
      * @param condition
-     * @return {@code false} if the condition is not met. otherwise, the result of the
-     *         {@code consequence} action
+     * @return {@code false} if the condition is met. otherwise, the result of
+     *         the {@code consequence} action
      */
     public static boolean doIfNot(final Action consequence, final BooleanSupplier condition) {
         if (!condition.getAsBoolean()) {
@@ -135,31 +136,45 @@ public final class Actions implements Utilitarian {
     }
 
     /**
-     * Executes a function if a predicate is not met
+     * Executes a function conditionally.
      *
      * @param consequence
      * @param condition
-     * @param arg
-     * @return {@code false} if the condition is not met. otherwise, the result of the
-     *         {@code consequence} action
+     * @return {@code false} if {@code condition} is {@code true}. otherwise,
+     *         the result of the {@code consequence} action
      */
-    public static <T> boolean doIfNot(final Action consequence, final Predicate<T> condition, final T arg) {
-        if (!condition.test(arg)) {
+    public static boolean doIfNot(final Action consequence, final boolean condition) {
+        if (!condition) {
             return consequence.execute();
         }
         return false;
     }
 
     /**
-     * Executes a function if a predicate is met
+     * Executes a function if a predicate is met.
      *
      * @param consequence
      * @param condition
-     * @return {@code false} if the condition is not met. otherwise, the result of the
-     *         {@code consequence} action
+     * @return {@code false} if the condition is not met. otherwise, the result
+     *         of the {@code consequence} action
      */
     public static boolean doIf(final Action consequence, final BooleanSupplier condition) {
         if (condition.getAsBoolean()) {
+            return consequence.execute();
+        }
+        return false;
+    }
+
+    /**
+     * Executes a function conditionally.
+     *
+     * @param consequence
+     * @param condition
+     * @return {@code false} if {@code condition} is {@code false}. otherwise,
+     *         the result of the {@code consequence} action
+     */
+    public static boolean doIf(final Action consequence, final boolean condition) {
+        if (condition) {
             return consequence.execute();
         }
         return false;
@@ -180,16 +195,16 @@ public final class Actions implements Utilitarian {
     }
 
     /**
-     * Retries an action with a given interval time between invocations up to a certain number of
-     * attempts. The retry stops if the action is successful (returns true) or the maximum number of
-     * attempts is reached.
+     * Retries an action with a given interval time between invocations up to a
+     * certain number of attempts. The retry stops if the action is successful
+     * (returns true) or the maximum number of attempts is reached.
      *
      * @param op
      * @param sleep
      * @param maxAttempts
      * @param progressive
-     * @return true if the action is successful or false if the maximum number of retries has been
-     *         reached
+     * @return true if the action is successful or false if the maximum number
+     *         of retries has been reached
      */
     public static boolean retry(final Action op, final int sleep, final int maxAttempts, final boolean progressive) {
         int atempts = 1;
@@ -207,15 +222,15 @@ public final class Actions implements Utilitarian {
     }
 
     /**
-     * Retries an action with a given interval time between invocations up to a certain number of
-     * attempts. The retry stops if the action is successful (returns true) or the maximum number of
-     * attempts is reached.
+     * Retries an action with a given interval time between invocations up to a
+     * certain number of attempts. The retry stops if the action is successful
+     * (returns true) or the maximum number of attempts is reached.
      *
      * @param op
      * @param sleep
      * @param maxAttempts
-     * @return true if the action is successful or false if the maximum number of retries has been
-     *         reached
+     * @return true if the action is successful or false if the maximum number
+     *         of retries has been reached
      */
     public static boolean retry(final Action op, final int sleep, final int maxAttempts) {
         return retry(op, sleep, maxAttempts, true);

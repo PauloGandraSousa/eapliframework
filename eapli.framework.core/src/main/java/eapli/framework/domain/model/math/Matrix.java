@@ -179,7 +179,7 @@ public class Matrix implements ValueObject {
      * @return
      */
     public Matrix add(final Matrix other) {
-        Preconditions.ensure(() -> rows == other.rows && cols == other.cols, "matrices must be same dimension");
+        Preconditions.ensure(rows == other.rows && cols == other.cols, "matrices must be same dimension");
 
         final Matrix dest = new Matrix(rows, cols);
 
@@ -198,7 +198,7 @@ public class Matrix implements ValueObject {
      * @return
      */
     public Matrix subtract(final Matrix other) {
-        Preconditions.ensure(() -> rows == other.rows && cols == other.cols, "matrices must be same dimension");
+        Preconditions.ensure(rows == other.rows && cols == other.cols, "matrices must be same dimension");
 
         final Matrix dest = new Matrix(rows, cols);
 
@@ -217,7 +217,7 @@ public class Matrix implements ValueObject {
      * @return
      */
     public Matrix multiply(final Matrix other) {
-        Preconditions.ensure(() -> cols == other.rows, "matrix 1 cols must = matrix 2 rows");
+        Preconditions.ensure(cols == other.rows, "matrix 1 cols must = matrix 2 rows");
 
         final Matrix dest = new Matrix(rows, other.cols);
 
@@ -239,7 +239,7 @@ public class Matrix implements ValueObject {
      * @return
      */
     public double trace() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         double trace = 0;
         for (int i = 0; i < rows; i++) {
@@ -276,7 +276,7 @@ public class Matrix implements ValueObject {
      *         diagonal
      */
     public Matrix diagonal() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         final Matrix diag = zero(rows, cols);
         for (int i = 0; i < rows; i++) {
@@ -410,7 +410,7 @@ public class Matrix implements ValueObject {
     }
 
     public Matrix inverse2() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         // Formula used to Calculate Inverse:
         // inv(A) = 1/det(A) * adj(A)
@@ -423,7 +423,7 @@ public class Matrix implements ValueObject {
     }
 
     public Matrix adjoint() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         final Matrix adj = new Matrix(rows, cols);
 
@@ -460,7 +460,7 @@ public class Matrix implements ValueObject {
     }
 
     public Matrix upperTriangle() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         final int tms = rows; // get This Matrix Size
 
@@ -548,7 +548,7 @@ public class Matrix implements ValueObject {
     }
 
     public boolean isDiagonallyDominant() {
-        Invariants.ensure(this::isSquare);
+        Invariants.ensure(isSquare());
 
         boolean flagIneq = false;
         for (int i = 0; i < rows; i++) {
@@ -577,7 +577,7 @@ public class Matrix implements ValueObject {
      */
     @SuppressWarnings("squid:S2234")
     public boolean isSymmetric() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -596,7 +596,7 @@ public class Matrix implements ValueObject {
      */
     @SuppressWarnings("squid:S2234")
     public boolean isSkewSymmetric() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -634,7 +634,7 @@ public class Matrix implements ValueObject {
     }
 
     public double determinant1() {
-        Invariants.ensure(this::isSquare, MATRIX_MUST_BE_SQUARE);
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         double d = 0;
         for (int i = 0; i < cols; i++) {
@@ -655,7 +655,7 @@ public class Matrix implements ValueObject {
 
     /* ??? */
     public Matrix inverse1() {
-        Invariants.ensure(this::isSingular, "matrix is singular");
+        Invariants.ensure(isSingular(), "matrix is singular");
 
         final Matrix dest = new Matrix(rows, cols);
         final double[][] d = new double[rows][cols + 1];

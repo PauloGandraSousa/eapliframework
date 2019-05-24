@@ -66,7 +66,7 @@ public class Numeral implements ValueObject {
     private Numeral(final String value, final NumeralSystem system) {
         Preconditions.nonEmpty(value, "value must have content");
         Preconditions.nonNull(system, "You need to specify a numeral system");
-        Preconditions.ensure(() -> system.isValidNumeral(value), "value '" + value + "' (base " + system.base()
+        Preconditions.ensure(system.isValidNumeral(value), "value '" + value + "' (base " + system.base()
                 + ") has invalid symbol(s). Allowed symbols are: " + system.symbols());
 
         this.system = system;
@@ -75,8 +75,8 @@ public class Numeral implements ValueObject {
     }
 
     /**
-     * factory method to construct a new numeral from a string representation in a
-     * certain numeral system
+     * factory method to construct a new numeral from a string representation in
+     * a certain numeral system
      *
      * @param value
      *            the representation of the number

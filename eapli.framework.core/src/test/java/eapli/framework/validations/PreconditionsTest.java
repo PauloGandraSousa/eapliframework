@@ -96,28 +96,6 @@ public class PreconditionsTest {
     }
 
     @Test
-    public void testEnsureBooleanSupplier() {
-        Preconditions.ensure(() -> true);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testEnsureBooleanSupplierFail() {
-        Preconditions.ensure(() -> false);
-    }
-
-    @Test
-    public void testEnsureBooleanSupplierString() {
-        Preconditions.ensure(() -> true, MESSAGE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testEnsureBooleanSupplierStringFail() {
-        Preconditions.ensure(() -> false, MESSAGE);
-    }
-
-    @Test
     public void testEnsureBooleanString() {
         Preconditions.ensure(true, MESSAGE);
         assertTrue(true);

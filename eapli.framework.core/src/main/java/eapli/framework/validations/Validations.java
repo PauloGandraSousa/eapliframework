@@ -22,7 +22,6 @@ package eapli.framework.validations;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
 
 import eapli.framework.actions.Action;
@@ -46,10 +45,10 @@ import eapli.framework.util.Utilitarian;
      * @param a
      * @param b
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void areEqual(final long a, final long b, final Action consequence) {
-        ensure(() -> a == b, consequence);
+        ensure(a == b, consequence);
     }
 
     /**
@@ -58,10 +57,10 @@ import eapli.framework.util.Utilitarian;
      * @param a
      * @param b
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void areEqual(final Object a, final Object b, final Action consequence) {
-        ensure(() -> Objects.equals(a, b), consequence);
+        ensure(Objects.equals(a, b), consequence);
     }
 
     /**
@@ -70,59 +69,59 @@ import eapli.framework.util.Utilitarian;
      * @param regex
      * @param arg
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void matches(final Pattern regex, final String arg, final Action consequence) {
-        ensure(() -> regex.matcher(arg).find(), consequence);
+        ensure(regex.matcher(arg).find(), consequence);
     }
 
     /**
-     * asserts the "trueness" of a function's result. if the function result is not true then the
-     * specified action is performed
+     * Asserts the "trueness" of a function's result. if the function result is
+     * not true then the specified action is performed
      *
      * @param test
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
-    public static void ensure(final BooleanSupplier test, final Action consequence) {
+    public static void ensure(final Boolean test, final Action consequence) {
         Actions.doIfNot(consequence, test);
     }
 
     /**
-     * checks if all object references are not null
+     * Checks if all object references are not null.
      *
      * @param objects
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void nonNull(final Action consequence, final Object... objects) {
         for (final Object each : objects) {
-            Actions.doIfNot(consequence, Objects::nonNull, each);
+            Actions.doIfNot(consequence, Objects.nonNull(each));
         }
     }
 
     /**
-     * checks if a Collection is non null and contains at least an element.
+     * Checks if a Collection is non null and contains at least an element.
      *
      * @param arg
-     *                    the collection to test
+     *            the collection to test
      * @param consequence
-     *                    the action to execute of the collection is null or empty
+     *            the action to execute of the collection is null or empty
      */
     public static void nonEmpty(final Collection<?> arg, final Action consequence) {
-        ensure(() -> arg != null && !arg.isEmpty(), consequence);
+        ensure(arg != null && !arg.isEmpty(), consequence);
     }
 
     /**
      * checks if a string is neither null nor empty nor just white space.
      *
      * @param arg
-     *                    the string to test
+     *            the string to test
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void nonEmpty(final String arg, final Action consequence) {
-        Actions.doIfNot(consequence, x -> !StringPredicates.isNullOrWhiteSpace(x), arg);
+        Actions.doIfNot(consequence, !StringPredicates.isNullOrWhiteSpace(arg));
     }
 
     /**
@@ -130,10 +129,10 @@ import eapli.framework.util.Utilitarian;
      *
      * @param arg
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void isPositive(final long arg, final Action consequence) {
-        Actions.doIfNot(consequence, NumberPredicates::isPositive, arg);
+        Actions.doIfNot(consequence, NumberPredicates.isPositive(arg));
     }
 
     /**
@@ -141,9 +140,9 @@ import eapli.framework.util.Utilitarian;
      *
      * @param arg
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void nonNegative(final long arg, final Action consequence) {
-        Actions.doIfNot(consequence, NumberPredicates::isNonNegative, arg);
+        Actions.doIfNot(consequence, NumberPredicates.isNonNegative(arg));
     }
 }

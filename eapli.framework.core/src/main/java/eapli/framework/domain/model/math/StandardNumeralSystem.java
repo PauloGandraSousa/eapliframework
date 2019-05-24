@@ -25,8 +25,8 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A standard numeral system using digits and the letters of the Roman alphabet as symbols in their
- * natural order.
+ * A standard numeral system using digits and the letters of the Roman alphabet
+ * as symbols in their natural order.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -62,11 +62,10 @@ public class StandardNumeralSystem implements ValueObject, NumeralSystem {
      * constructs a numeral system.
      *
      * @param base
-     *             the base of representation
+     *            the base of representation
      */
     public StandardNumeralSystem(final int base) {
-        Preconditions.ensure(() -> base >= 2 && base <= SYMBOLS.length(),
-                "base must be between 2 and " + SYMBOLS.length());
+        Preconditions.ensure(base >= 2 && base <= SYMBOLS.length(), "base must be between 2 and " + SYMBOLS.length());
 
         this.base = base;
     }

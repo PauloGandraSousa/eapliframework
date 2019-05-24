@@ -96,28 +96,6 @@ public class InvariantsTest {
     }
 
     @Test
-    public void testEnsureBooleanSupplier() {
-        Invariants.ensure(() -> true);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testEnsureBooleanSupplierFail() {
-        Invariants.ensure(() -> false);
-    }
-
-    @Test
-    public void testEnsureBooleanSupplierString() {
-        Invariants.ensure(() -> true, MESSAGE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testEnsureBooleanSupplierStringFail() {
-        Invariants.ensure(() -> false, MESSAGE);
-    }
-
-    @Test
     public void testEnsureBooleanString() {
         Invariants.ensure(true, MESSAGE);
         assertTrue(true);

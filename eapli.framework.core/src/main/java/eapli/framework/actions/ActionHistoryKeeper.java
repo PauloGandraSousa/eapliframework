@@ -72,7 +72,7 @@ public class ActionHistoryKeeper {
      * the redo list
      */
     public void undo() {
-        Invariants.ensure(this::canUndo);
+        Invariants.ensure(canUndo());
 
         final UndoableAction action = history.poll();
         action.undo();
@@ -92,7 +92,7 @@ public class ActionHistoryKeeper {
      * Redo the last undone action
      */
     public void redo() {
-        Invariants.ensure(this::canRedo);
+        Invariants.ensure(canRedo());
 
         final UndoableAction action = forward.poll();
         execute(action);

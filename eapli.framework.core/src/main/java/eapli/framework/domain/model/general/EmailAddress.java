@@ -54,7 +54,7 @@ public class EmailAddress implements ValueObject, Serializable, StringMixin {
 
     protected EmailAddress(final String address) {
         Preconditions.nonEmpty(address, "email address  should neither be null nor empty");
-        Preconditions.ensure(() -> StringPredicates.isEmail(address), "Invalid E-mail format");
+        Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
 
         email = address;
     }

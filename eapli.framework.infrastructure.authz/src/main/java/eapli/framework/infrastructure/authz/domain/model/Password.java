@@ -51,91 +51,91 @@ import eapli.framework.validations.StringPredicates;
 @Embeddable
 public class Password implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@Column(name = "pass")
-	private final String thePassword;
+    private static final long serialVersionUID = 1L;
+    @Column(name = "pass")
+    private final String thePassword;
 
-	protected Password() {
-		// for ORM only
-		thePassword = null;
-	}
+    protected Password() {
+        // for ORM only
+        thePassword = null;
+    }
 
-	protected Password(final String password) {
-		Preconditions.ensure(() -> meetsMinimumRequirements(password));
-		thePassword = password;
-	}
+    protected Password(final String password) {
+        Preconditions.ensure(meetsMinimumRequirements(password));
+        thePassword = password;
+    }
 
-	public static Password valueOf(final String password) {
-		return new Password(password);
-	}
+    public static Password valueOf(final String password) {
+        return new Password(password);
+    }
 
-	private boolean meetsMinimumRequirements(final String password) {
-		// sanity check
-		if (StringPredicates.isNullOrEmpty(password)) {
-			return false;
-		}
+    private boolean meetsMinimumRequirements(final String password) {
+        // sanity check
+        if (StringPredicates.isNullOrEmpty(password)) {
+            return false;
+        }
 
-		// at least 6 characters long
-		if (password.length() < 6) {
-			return false;
-		}
+        // at least 6 characters long
+        if (password.length() < 6) {
+            return false;
+        }
 
-		// at least one digit
-		if (!StringPredicates.containsDigit(password)) {
-			return false;
-		}
+        // at least one digit
+        if (!StringPredicates.containsDigit(password)) {
+            return false;
+        }
 
-		// at least one capital letter
-		return StringPredicates.containsCapital(password);
-	}
+        // at least one capital letter
+        return StringPredicates.containsCapital(password);
+    }
 
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof Password)) {
-			return false;
-		}
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Password)) {
+            return false;
+        }
 
-		final Password password1 = (Password) o;
+        final Password password1 = (Password) o;
 
-		return thePassword.equals(password1.thePassword);
-	}
+        return thePassword.equals(password1.thePassword);
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCoder().of(thePassword).code();
-	}
+    @Override
+    public int hashCode() {
+        return new HashCoder().of(thePassword).code();
+    }
 
-	/**
-	 * Check how strong a password is
-	 *
-	 * look into
-	 * https://documentation.cpanel.net/display/CKB/How+to+Determine+Password+Strength
-	 * for example rules of password strength
-	 *
-	 * @return how strong a password is
-	 */
-	public PasswordStrength strength() {
-		PasswordStrength passwordStrength = PasswordStrength.WEAK;
-		if (thePassword.length() >= 12
-				|| (thePassword.length() >= 8 && StringPredicates.containsAny(thePassword, "$#!%&?"))) {
-			passwordStrength = PasswordStrength.EXCELENT;
-		} else if (thePassword.length() >= 8) {
-			passwordStrength = PasswordStrength.GOOD;
-		} else if (thePassword.length() >= 6) {
-			passwordStrength = PasswordStrength.WEAK;
-		}
-		return passwordStrength;
-	}
+    /**
+     * Check how strong a password is
+     *
+     * look into
+     * https://documentation.cpanel.net/display/CKB/How+to+Determine+Password+Strength
+     * for example rules of password strength
+     *
+     * @return how strong a password is
+     */
+    public PasswordStrength strength() {
+        PasswordStrength passwordStrength = PasswordStrength.WEAK;
+        if (thePassword.length() >= 12
+                || (thePassword.length() >= 8 && StringPredicates.containsAny(thePassword, "$#!%&?"))) {
+            passwordStrength = PasswordStrength.EXCELENT;
+        } else if (thePassword.length() >= 8) {
+            passwordStrength = PasswordStrength.GOOD;
+        } else if (thePassword.length() >= 6) {
+            passwordStrength = PasswordStrength.WEAK;
+        }
+        return passwordStrength;
+    }
 
-	@Override
-	public String toString() {
-		return thePassword;
-	}
+    @Override
+    public String toString() {
+        return thePassword;
+    }
 
-	public enum PasswordStrength {
-		WEAK, GOOD, EXCELENT,
-	}
+    public enum PasswordStrength {
+        WEAK, GOOD, EXCELENT,
+    }
 }

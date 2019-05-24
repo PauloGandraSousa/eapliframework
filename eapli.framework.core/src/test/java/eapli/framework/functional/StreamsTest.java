@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util.function;
+package eapli.framework.functional;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -33,11 +33,11 @@ import org.junit.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class FunctionsTest {
+public class StreamsTest {
 
     /**
      * Test method for
-     * {@link eapli.framework.util.function.Functions#zip(java.util.stream.Stream, java.util.stream.Stream, java.util.function.BiFunction)}.
+     * {@link eapli.framework.functional.Functions#zip(java.util.stream.Stream, java.util.stream.Stream, java.util.function.BiFunction)}.
      */
     @Test
     public void testZipIntArrays() {
@@ -45,7 +45,7 @@ public class FunctionsTest {
         final Integer[] b = new Integer[] { 2, 4, 6 };
 
         final Integer[] expected = new Integer[] { 4, 8, 12 };
-        final Integer[] result = Functions.zip(Arrays.stream(a), Arrays.stream(b), (x, y) -> x + y)
+        final Integer[] result = Streams.zip(Arrays.stream(a), Arrays.stream(b), (x, y) -> x + y)
                 .toArray(Integer[]::new);
         assertArrayEquals(expected, result);
     }

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util.function;
+package eapli.framework.functional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,6 +30,8 @@ import java.util.function.UnaryOperator;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import eapli.framework.functional.Either;
 
 /**
  *

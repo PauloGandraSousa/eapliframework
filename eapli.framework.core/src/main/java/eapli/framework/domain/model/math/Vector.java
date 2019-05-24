@@ -32,8 +32,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.functional.ArrayOfDoubleCollector;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.function.ArrayOfDoubleCollector;
 import eapli.framework.validations.NumberPredicates;
 import eapli.framework.validations.Preconditions;
 

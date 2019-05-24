@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util.function;
+package eapli.framework.functional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -32,6 +32,7 @@ import java.util.stream.IntStream;
 
 import org.junit.Test;
 
+import eapli.framework.functional.MathFunctions;
 import eapli.framework.util.Collections;
 
 /**
@@ -42,7 +43,7 @@ public class MathFunctionsTest {
 
     /**
      * Test method for
-     * {@link eapli.framework.util.function.MathFunctions#isPrime(int)}.
+     * {@link eapli.framework.functional.MathFunctions#isPrime(int)}.
      */
     @Test
     public void ensure1IsPrime() {

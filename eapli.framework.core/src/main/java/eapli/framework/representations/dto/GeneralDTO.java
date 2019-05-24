@@ -57,7 +57,7 @@ public class GeneralDTO implements DTO, Map<String, Object> {
     private final String type;
 
     public GeneralDTO(final String type) {
-        Preconditions.ensure(() -> !StringPredicates.isNullOrWhiteSpace(type));
+        Preconditions.ensure(!StringPredicates.isNullOrWhiteSpace(type));
 
         this.type = type;
     }

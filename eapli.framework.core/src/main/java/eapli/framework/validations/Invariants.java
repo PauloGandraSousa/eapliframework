@@ -24,7 +24,6 @@
 package eapli.framework.validations;
 
 import java.util.Collection;
-import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
 
 import eapli.framework.actions.Actions;
@@ -90,31 +89,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b) {
-        ensure(() -> b, Actions.THROW_STATE);
-    }
-
-    /**
-     * asserts true
-     *
-     * @param test
-     * @throws IllegalStateException
-     *             if the assertion is unfulfilled
-     */
-    public static void ensure(final BooleanSupplier test) {
-        ensure(test, Actions.THROW_STATE);
-    }
-
-    /**
-     * asserts true
-     *
-     * @param test
-     * @param msg
-     *            the message text to include in the throw exception
-     * @throws IllegalStateException
-     *             if the assertion is unfulfilled
-     */
-    public static void ensure(final BooleanSupplier test, final String msg) {
-        ensure(test, Actions.throwState(msg));
+        ensure(b, Actions.THROW_STATE);
     }
 
     /**
@@ -127,7 +102,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b, final String msg) {
-        ensure(() -> b, Actions.throwState(msg));
+        ensure(b, Actions.throwState(msg));
     }
 
     /**

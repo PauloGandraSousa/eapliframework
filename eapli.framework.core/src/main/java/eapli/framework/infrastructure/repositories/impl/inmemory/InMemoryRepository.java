@@ -170,7 +170,7 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
         if (all.isEmpty()) {
             return Optional.empty();
         }
-        Invariants.ensure(() -> all.size() == 1, "More than result was returned");
+        Invariants.ensure(all.size() == 1, "More than result was returned");
         final T ret = all.get(0);
         return Optional.of(ret);
     }

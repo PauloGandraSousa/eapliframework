@@ -60,7 +60,7 @@ public class Designation implements ValueObject, Comparable<Designation>, String
      * @param name
      */
     protected Designation(final String name) {
-        Preconditions.ensure(() -> StringPredicates.isPhrase(name),
+        Preconditions.ensure(StringPredicates.isPhrase(name),
                 "Name should neither be null nor empty nor have starting blank spaces");
 
         this.name = name;

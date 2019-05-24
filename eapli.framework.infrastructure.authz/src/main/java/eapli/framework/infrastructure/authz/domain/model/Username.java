@@ -51,8 +51,7 @@ public class Username implements ValueObject, Serializable, Comparable<Username>
     }
 
     protected Username(final String username) {
-        Preconditions.ensure(() -> StringPredicates.isSingleWord(username),
-                "username should neither be null nor empty");
+        Preconditions.ensure(StringPredicates.isSingleWord(username), "username should neither be null nor empty");
         theUsername = username;
     }
 

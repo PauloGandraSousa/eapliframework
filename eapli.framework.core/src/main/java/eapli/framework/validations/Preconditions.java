@@ -24,7 +24,6 @@
 package eapli.framework.validations;
 
 import java.util.Collection;
-import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
 
 import eapli.framework.actions.Actions;
@@ -125,7 +124,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b) {
-        ensure(() -> b);
+        ensure(b);
     }
 
     /**
@@ -138,31 +137,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b, final String msg) {
-        ensure(() -> b, Actions.throwArgument(msg));
-    }
-
-    /**
-     * asserts true
-     *
-     * @param test
-     * @throws IllegalArgumentException
-     *             if the assertion is unfulfilled
-     */
-    public static void ensure(final BooleanSupplier test) {
-        ensure(test, Actions.THROW_ARGUMENT);
-    }
-
-    /**
-     * asserts true
-     *
-     * @param test
-     * @param msg
-     *            the message text to include in the throw exception
-     * @throws IllegalArgumentException
-     *             if the assertion is unfulfilled
-     */
-    public static void ensure(final BooleanSupplier test, final String msg) {
-        ensure(test, Actions.throwArgument(msg));
+        ensure(b, Actions.throwArgument(msg));
     }
 
     /**

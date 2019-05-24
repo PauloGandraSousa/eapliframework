@@ -300,7 +300,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
          * fancy conversion. Notice that I'm using a special constructor with a
          * marker argument.
          */
-        Preconditions.ensure(() -> currency.equals(arg.currency), "Cannot add different currencies");
+        Preconditions.ensure(currency.equals(arg.currency), "Cannot add different currencies");
 
         return new Money(amount.add(arg.amount), currency);
     }
