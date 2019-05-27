@@ -32,6 +32,7 @@ import eapli.framework.util.Singleton;
 /**
  * A simple global event publisher to be used for in-process event dispatching.
  *
+ * <p>
  * publishing an event is performed in a separate thread of execution from the
  * calling thread
  *
@@ -53,10 +54,10 @@ public final class InProcessEventPublisher implements Singleton, EventPublisher 
     }
 
     /**
-     * provides access to the component if you are not using dependency injection,
-     * e.g, Spring
+     * provides access to the component if you are not using dependency
+     * injection, e.g, Spring
      *
-     * @return
+     * @return the publisher
      */
     public static EventPublisher instance() {
         return LazyHolder.INSTANCE;
@@ -65,7 +66,8 @@ public final class InProcessEventPublisher implements Singleton, EventPublisher 
     /*
      * (non-Javadoc)
      *
-     * @see eapli.framework.domain.events.EventDispatcher#publish(eapli.framework.
+     * @see
+     * eapli.framework.domain.events.EventDispatcher#publish(eapli.framework.
      * domain. events.DomainEvent)
      */
     @Override

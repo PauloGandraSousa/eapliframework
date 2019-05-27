@@ -47,45 +47,60 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
 
     /**
      * Saves an entity either by creating it or updating it in the persistence
-     * store.
+     * store. Client code must assume the passed {@code entity} reference is no
+     * longer valid and use the returned object instead. e.g.,
+     *
+     * <pre>
+     * <code>
+     * X myEntity = ...
+     * ...
+     * myEntity = repo.save(myEntity);
+     * ...
+     * </code>
+     * </pre>
      *
      * @param entity
-     * @return
+     * @return the object reference to the persisted object.
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
      */
     <S extends T> S save(final S entity);
 
     /**
-     * gets all entities from the repository.
+     * Gets all entities from the repository. If the repository is empty and
+     * empty collection is returned.
      *
-     * @return
+     * @return all entities from the repository.
      */
     Iterable<T> findAll();
 
     /**
-     * gets the entity with the specified identity.
+     * Gets the entity with the specified identity.
      *
      * @param id
-     * @return
+     * @return an Optional which value is the entity with the specified
+     *         identity. An Empty Optional if there is no entity with such
+     *         identity in the repository.
      */
     Optional<T> ofIdentity(final I id);
 
     /**
-     * checks for the existence of the entity identified by id
+     * Checks for the existence of the entity identified by {@code id}
      *
      * @param id
-     * @return
+     * @return true if the repository contains an entity with the specified
+     *         identity.
      */
     default boolean containsOfIdentity(final I id) {
         return ofIdentity(id).isPresent();
     }
 
     /**
-     * checks for the existence of the entity
+     * Checks for the existence of the entity in the repository.
      *
      * @param entity
-     * @return
+     * @return true if the object reference is of an object managed by the
+     *         repository
      */
     default boolean contains(final T entity) {
         return containsOfIdentity(entity.identity());
@@ -114,23 +129,25 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
     /**
      * Returns the number of entities in the repository.
      *
-     * @return
+     * @return the number of entities in the repository.
      */
     long count();
 
     // ALIAS
 
     /**
-     * Returns the number of entities in the repository.
+     * Returns the number of entities in the repository. An alias to
+     * {@link #count()} to follow the {@code List} interface.
      *
-     * @return
+     * @return the number of entities in the repository.
      */
     default long size() {
         return count();
     }
 
     /**
-     * removes the specified entity from the repository.
+     * Removes the specified entity from the repository. An alias to
+     * {@link #remove(AggregateRoot)} to follow the {@code List} interface.
      *
      * @param entity
      * @throws IntegrityViolationException
@@ -142,7 +159,8 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
     }
 
     /**
-     * Removes the entity with the specified identity from the repository.
+     * Removes the entity with the specified identity from the repository. An
+     * alias to {@link #removeOfIdentity(Comparable)}
      *
      * @param entityId
      * @throws IntegrityViolationException

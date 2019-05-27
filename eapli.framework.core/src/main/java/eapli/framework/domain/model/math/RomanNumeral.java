@@ -133,11 +133,11 @@ public class RomanNumeral implements ValueObject {
     }
 
     /**
-     * returns a representation of a number as Roman numeral.
+     * Returns a representation of a number as Roman numeral.
      *
      * @param number
      * @author Paulo Gandra de Sousa
-     * @return
+     * @return a representation of a number as Roman numeral
      */
     public static String toString(final int number) {
         final RomanNumeral roman = new RomanNumeral(number);

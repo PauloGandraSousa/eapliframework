@@ -44,32 +44,42 @@ public interface Repository<T, K> {
 
     /**
      * Saves an entity either by creating it or updating it in the persistence
-     * store.
+     * store.Client code must assume the passed {@code entity} reference is no
+     * longer valid and use the returned object instead. e.g.,
+     *
+     * <pre>
+     * <code>
+     * X myEntity = ...
+     * ...
+     * myEntity = repo.save(myEntity);
+     * ...
+     * </code>
+     * </pre>
      *
      * @param entity
-     * @return
+     * @return the object reference to the persisted object.
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
      */
     <S extends T> S save(S entity);
 
     /**
-     * gets all entities from the repository.
+     * Gets all entities from the repository.
      *
-     * @return
+     * @return all entities from the repository
      */
     Iterable<T> findAll();
 
     /**
-     * gets the entity with the specified primary key
+     * Gets the entity with the specified primary key.
      *
      * @param id
-     * @return
+     * @return the entity with the specified primary key
      */
     Optional<T> findById(K id);
 
     /**
-     * removes the specified entity from the repository.
+     * Removes the specified entity from the repository.
      *
      * @param entity
      * @throws IntegrityViolationException
@@ -91,7 +101,7 @@ public interface Repository<T, K> {
     /**
      * returns the number of entities in the repository.
      *
-     * @return
+     * @return the number of entities in the repository
      */
     long count();
 }

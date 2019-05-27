@@ -51,14 +51,14 @@ public class SystemUserRolesTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = SystemUserTestHelper.dummyUser("abc", ROLE_R1);
+        subject = TestSystemUserFactory.dummyUser("abc", ROLE_R1);
         System.out.println("setup " + subject);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureMustHaveRoles() {
         final Role roles = null;
-        SystemUserTestHelper.dummyUser("abc", roles);
+        TestSystemUserFactory.dummyUser("abc", roles);
     }
 
     @Test

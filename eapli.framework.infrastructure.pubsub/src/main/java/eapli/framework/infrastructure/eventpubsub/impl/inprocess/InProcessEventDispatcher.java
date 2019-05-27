@@ -33,6 +33,7 @@ import eapli.framework.util.Singleton;
 /**
  * A simple global event dispatcher to be used for in-process event dispatching.
  *
+ * <p>
  * Note that event dispatcher will keep a reference to the event handler unless
  * it is unsubscribed, potentially causing a "memory leak" if you forget to
  * unsubscribe as the garbage collector won't be able to reclaim the used
@@ -56,10 +57,10 @@ public final class InProcessEventDispatcher implements Singleton, EventDispatche
     }
 
     /**
-     * provides access to the component if you are not using dependency injection,
-     * e.g, Spring
+     * Provides access to the component if you are not using dependency
+     * injection, e.g, Spring
      *
-     * @return
+     * @return the dispatcher
      */
     public static EventDispatcher instance() {
         return LazyHolder.INSTANCE;
@@ -68,7 +69,8 @@ public final class InProcessEventDispatcher implements Singleton, EventDispatche
     /*
      * (non-Javadoc)
      *
-     * @see eapli.framework.domain.events.EventDispatcher#subscribe(eapli.framework.
+     * @see
+     * eapli.framework.domain.events.EventDispatcher#subscribe(eapli.framework.
      * domain.events.EventHandler, java.lang.Class)
      */
     @Override

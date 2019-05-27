@@ -50,17 +50,17 @@ public interface IterableRepository<T, K> extends Repository<T, K>, Iterable<T> 
     Iterator<T> iterator(int pagesize);
 
     /**
-     * returns the first entity according to its "natural" order
+     * Returns the first entity according to its "natural" order.
      *
-     * @return
+     * @return the first entity according to its "natural" order.
      */
     Optional<T> first();
 
     /**
-     * returns the first n entities according to its "natural" order
+     * Returns the first n entities according to its "natural" order.
      *
      * @param n
-     * @return
+     * @return the first n entities according to its "natural" order.
      */
     Iterable<T> first(int n);
 }

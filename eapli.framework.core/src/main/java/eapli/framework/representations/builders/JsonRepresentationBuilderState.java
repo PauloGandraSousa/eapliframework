@@ -113,10 +113,10 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * returns true if the current document was signaled as an object, i.e., {
+     * Returns true if the current document was signaled as an object, i.e., {
      * ... }
      *
-     * @return
+     * @return true if the current document was signaled as an object
      */
     public boolean isRootObject() {
         return type == JsonDocumentType.ROOT_OBJECT;
@@ -126,16 +126,16 @@ import eapli.framework.validations.Invariants;
      * returns true if the current document was signaled as a collection, i.e.,
      * [ ... ]
      *
-     * @return
+     * @return true if the current document was signaled as a collection
      */
     public boolean isRootCollection() {
         return type == JsonDocumentType.ROOT_COLLECTION;
     }
 
     /**
-     * returns if the builder has been initialized for a document type
+     * Returns if the builder has been initialized.
      *
-     * @return
+     * @return if the builder has been initialized.
      */
     public boolean hasStarted() {
         return type != JsonDocumentType.NOT_YET_DEFINED;
@@ -156,9 +156,9 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * returns if the current state is a collection
+     * Returns if the current state is a collection.
      *
-     * @return
+     * @return if the current state is a collection.
      */
     public boolean isInCollection() {
         if (state.isEmpty()) {
@@ -169,9 +169,9 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * returns if the current state is an object
+     * Returns if the current state is an object.
      *
-     * @return
+     * @return if the current state is an object.
      */
     public boolean isInObject() {
         if (state.isEmpty()) {
@@ -190,29 +190,29 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * checks if the current state allows to end the creation of the root
-     * document
+     * Checks if the current state allows to end the creation of the root
+     * document.
      *
-     * @return
+     * @return true if it is possible to build a json object
      */
     public boolean canFinish() {
         return state.size() <= 1;
     }
 
     /**
-     * checks if there is the need to close the root document
+     * Checks if there is the need to close the root document.
      *
-     * @return
+     * @return true if there is the need to close the root document
      */
     public boolean needsClosing() {
         return state.size() == 1;
     }
 
     /**
-     * checks if the builder has properly closed (left) all the
-     * objects/collections
+     * Checks if the builder has properly closed (left) all the
+     * objects/collections.
      *
-     * @return
+     * @return true if the builder has been properly closed
      */
     public boolean hasEnded() {
         return state.isEmpty();

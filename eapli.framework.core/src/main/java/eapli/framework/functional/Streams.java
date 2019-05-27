@@ -41,7 +41,8 @@ public final class Streams implements Utilitarian {
     }
 
     /**
-     * zips two streams.
+     * zips two streams. Applies a zipping function taking each element of each
+     * input stream in order and saving the result in the output stream.
      *
      * <p>
      * Extracted from <a href=
@@ -51,7 +52,7 @@ public final class Streams implements Utilitarian {
      * @param a
      * @param b
      * @param zipper
-     * @return
+     * @return a stream with the zipped content of both input streams
      */
     public static <A, B, C> Stream<C> zip(final Stream<? extends A> a, final Stream<? extends B> b,
             final BiFunction<? super A, ? super B, ? extends C> zipper) {

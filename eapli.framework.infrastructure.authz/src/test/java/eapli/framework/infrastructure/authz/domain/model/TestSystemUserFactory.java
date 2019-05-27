@@ -26,7 +26,7 @@ package eapli.framework.infrastructure.authz.domain.model;
 /**
  * @author Paulo Gandra de Sousa
  */
-public final class SystemUserTestHelper {
+public final class TestSystemUserFactory {
 
     public static Password dummyPass(final String pass) {
         return Password.valueOf(pass, new NilPasswordPolicy(), new PlainTextEncoder())

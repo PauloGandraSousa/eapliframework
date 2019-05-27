@@ -23,8 +23,8 @@ package eapli.framework.domain.model.math;
 import eapli.framework.util.Utilitarian;
 
 /**
- * utility class (private to the package) to extract the conversion logic from the Numeral class and
- * enforce the Single Responsibility Principle.
+ * utility class (private to the package) to extract the conversion logic from
+ * the Numeral class and enforce the Single Responsibility Principle.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -35,11 +35,16 @@ class NumeralConverter implements Utilitarian {
     }
 
     /**
+     * Converts a value from a given base to decimal.
+     *
+     * <p>
      * Algorithm:
      *
      * <ol>
-     * <li>Let {@code n} be the number of digits in the number. For example, 104 has 3 digits, so n=3.
-     * <li>Let {@code b} be the base of the number. For example, 104 is decimal so b = 10.
+     * <li>Let {@code n} be the number of digits in the number. For example, 104
+     * has 3 digits, so n=3.
+     * <li>Let {@code b} be the base of the number. For example, 104 decimal is
+     * base 10, so b = 10.
      * <li>Let {@code s} be a running total, initially 0.
      * <li>For each {@code digit} in the number, working left to right do:
      * <ol>
@@ -50,11 +55,12 @@ class NumeralConverter implements Utilitarian {
      * </ol>
      *
      * <p>
-     * When your done with all the digits in the number, its decimal value will be {@code s}
+     * When your done with all the digits in the number, its decimal value will
+     * be {@code s}
      *
      * @param value
      * @param system
-     * @return
+     * @return the decimal value
      */
     public static long decimalValue(final String value, final NumeralSystem system) {
         final int base = system.base();
@@ -68,17 +74,20 @@ class NumeralConverter implements Utilitarian {
     }
 
     /**
+     * Converts a number from base 10 to a given base.
+     *
+     * <p>
      * Algorithm:
      *
      * <ol>
      * <li>Let {@code n} be the decimal number.
-     * <li>Let {@code m} be the number, initially empty, that we are converting to. We'll be composing
-     * it right to left.
+     * <li>Let {@code m} be the number, initially empty, that we are converting
+     * to. We'll be composing it right to left.
      * <li>Let {@code b} be the base of the number we are converting to.
      * <li>Repeat until {@code n} becomes 0
      * <ol>
-     * <li>Divide {@code n} by {@code b}, letting the result be {@code d} and the remainder be
-     * {@code r}.
+     * <li>Divide {@code n} by {@code b}, letting the result be {@code d} and
+     * the remainder be {@code r}.
      * <li>Write the remainder, {@code r}, as the leftmost digit of {@code b}.
      * <li>Let {@code d} be the new value of {@code n}.
      * </ol>
@@ -87,7 +96,7 @@ class NumeralConverter implements Utilitarian {
      *
      * @param value
      * @param system
-     * @return
+     * @return the representation of the decimal value in the specified base
      */
     public static String representationOf(final long value, final NumeralSystem system) {
         if (value == 0) {

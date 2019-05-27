@@ -38,7 +38,7 @@ public final class MathFunctions implements Utilitarian {
     }
 
     /**
-     * counts the number of primes up to a certain number.
+     * Counts the number of primes up to a certain number.
      *
      * <p>
      * scraped from <a href=
@@ -46,14 +46,14 @@ public final class MathFunctions implements Utilitarian {
      * Java Lambdas</a>
      *
      * @param upTo
-     * @return
+     * @return the number of primes up to a certain number.
      */
     public static long countPrimes(final int upTo) {
         return IntStream.range(2, upTo).filter(MathFunctions::isPrime).count();
     }
 
     /**
-     * checks whether a number is prime or not.
+     * Checks whether a number is prime or not.
      *
      * <p>
      * scraped from <a href=
@@ -64,7 +64,7 @@ public final class MathFunctions implements Utilitarian {
      * see also {@code org.apache.commons.math4.primes.Primes}
      *
      * @param number
-     * @return
+     * @return whether a number is prime or not.
      */
     public static boolean isPrime(final int number) {
         Preconditions.isPositive(number);

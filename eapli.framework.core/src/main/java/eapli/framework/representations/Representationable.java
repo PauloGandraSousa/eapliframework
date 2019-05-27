@@ -24,7 +24,8 @@
 package eapli.framework.representations;
 
 /**
- * A business object that can guide the generation of a representation of itself
+ * A business object that can guide the generation of a representation of
+ * itself.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -33,12 +34,12 @@ package eapli.framework.representations;
 public interface Representationable {
     /**
      * Guides the construction of a representation of this business object's
-     * current status
+     * current status.
      *
      * @param builder
      * @param <R>
      *            the type of representation that will be created, e.g., a DTO
-     * @return
+     * @return the object constructed by the builder
      */
     <R> R buildRepresentation(RepresentationBuilder<R> builder);
 }

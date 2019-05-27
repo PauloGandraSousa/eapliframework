@@ -45,13 +45,17 @@ public final class NumberPredicates implements Utilitarian {
     }
 
     /**
-     * checks whether an int is prime or not.
-     * http://www.mkyong.com/java/how-to-determine-a-prime-number-in-java/
+     * Checks whether a number is prime or not.
      *
-     * see also {@link org.apache.commons.math4.primes.Primes}
+     * <p>
+     * Scrapped from <a href
+     * ="http://www.mkyong.com/java/how-to-determine-a-prime-number-in-java/">mkyong</a>
+     *
+     * <p>
+     * See also {@code org.apache.commons.math4.primes.Primes}
      *
      * @param number
-     * @return
+     * @return whether a number is prime or not
      */
     public static boolean isPrime(final long number) {
         if (isEven(number)) {
@@ -100,44 +104,44 @@ public final class NumberPredicates implements Utilitarian {
     }
 
     /**
-     * checks if a number is zero or negative
+     * Checks if a number is zero or negative.
      *
      * @param number
-     * @return
+     * @return true if a number is zero or negative
      */
     public static boolean isNonPositive(final long number) {
         return number <= 0;
     }
 
     /**
-     * determines if a number is odd.
+     * Checks if a number is odd.
      *
      * @param number
      *            the number to be tested
-     * @return
+     * @return wether a number is odd or not
      */
     public static boolean isOdd(final long number) {
         return number % 2 != 0;
     }
 
     /**
-     * determines if a number is even.
+     * checks if a number is even.
      *
      * @param number
      *            the number to be tested
-     * @return
+     * @return true if a number is even.
      */
     public static boolean isEven(final long number) {
         return number % 2 == 0;
     }
 
     /**
-     * checks whether a number is within a certain margin of another
+     * Checks whether a number is within a certain margin of another
      *
      * @param x
      * @param axis
      * @param epsilon
-     * @return
+     * @return whether a number is within a certain margin of another
      */
     public static boolean isWithinMargin(final double x, final double axis, final double epsilon) {
         return x >= axis - epsilon && x <= axis + epsilon;

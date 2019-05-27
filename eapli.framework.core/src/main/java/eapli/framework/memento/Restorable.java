@@ -31,14 +31,14 @@ package eapli.framework.memento;
  */
 public interface Restorable {
     /**
-     * generates a memento capturing the current state of the object
+     * Generates a memento capturing the current state of the object.
      *
-     * @return
+     * @return a memento capturing the current state of the object
      */
     Memento snapshot();
 
     /**
-     * returns the object to a previous valid state
+     * Returns the object to a previous valid state.
      *
      * @param previousState
      */

@@ -46,14 +46,16 @@ import eapli.framework.validations.StringPredicates;
  * initiate an explicit transaction relying on an outside Transaction-enabled
  * container.
  *
- * check JpaAutoTxRepository if you want to have transaction control inside the
- * base class.
+ * <p>
+ * Check {@link JpaAutoTxRepository} if you want to have transaction control
+ * inside the base class.
  *
  * <p>
  * based on <a href=
  * "http://stackoverflow.com/questions/3888575/single-dao-generic-crud-methods-jpa-hibernate-spring"
  * > stackoverflow</a> and on
  * <a href="https://burtbeckwith.com/blog/?p=40">burtbeckwith</a>.
+ *
  * <p>
  * also have a look at
  * <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
@@ -129,10 +131,11 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * reads an entity given its primary key
+     * Reads an entity given its primary key.
      *
      * @param id
-     * @return
+     * @return an Optional which value is the entity with the requested primary
+     *         key. An empty Optional if there is no such entity.
      */
     @Override
     public Optional<T> findById(final K id) {
@@ -146,10 +149,10 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * gets the entity with the specified identity
+     * Gets the entity with the specified identity.
      *
      * @param id
-     * @return
+     * @return the entity with the specified identity.
      */
     public Optional<T> ofIdentity(final I id) {
         return matchOne("e." + identityFieldName() + " = :id", "id", id);
@@ -172,17 +175,17 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * updates an entity to the persistence store
+     * Updates an entity to the persistence store.
      *
      * @param entity
-     * @return
+     * @return the managed entity reference.
      */
     public T update(final T entity) {
         return save(entity);
     }
 
     /**
-     * removes the object from the persistence storage. the object reference is
+     * Removes the object from the persistence storage. the object reference is
      * still valid but the persisted entity is marked as deleted in the entity
      * manager
      *
@@ -224,10 +227,10 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * checks for the existence of an entity with the provided key.
+     * Checks for the existence of an entity with the provided key.
      *
      * @param key
-     * @return
+     * @return true if there is an entity with the provided key.
      */
     public boolean containsKey(final K key) {
         return findById(key).isPresent();
@@ -334,10 +337,10 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * returns the first n entities according to its "natural" order
+     * Returns the first n entities according to its "natural" order.
      *
      * @param n
-     * @return
+     * @return the first n entities according to its "natural" order
      */
     @Override
     public List<T> first(final int n) {
@@ -349,9 +352,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * returns the first entity according to its "natural" order
+     * Returns the first entity according to its "natural" order.
      *
-     * @return
+     * @return the first entity according to its "natural" order.
      */
     @Override
     public Optional<T> first() {
@@ -371,9 +374,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * returns a paged iterator
+     * returns a paged iterator.
      *
-     * @return
+     * @return a paged iterator
      */
     @Override
     public Iterator<T> iterator(final int pagesize) {

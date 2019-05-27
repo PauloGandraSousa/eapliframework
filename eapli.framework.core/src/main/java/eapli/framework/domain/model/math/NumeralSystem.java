@@ -31,61 +31,85 @@ import eapli.framework.domain.model.ValueObject;
 @FunctionalInterface
 public interface NumeralSystem extends ValueObject {
     /**
-     * returns the symbols to be used as representation of the number. the length of this string of
-     * symbols determines the base of the numeral system. e.g.,
+     * Returns the symbols to be used as representation of the number. the
+     * length of this string of symbols determines the base of the numeral
+     * system. e.g.,
      *
      * <p>
      * symbols = "01234567" ==> base = 8
      *
      * <p>
-     * be careful not to use unicode symbols which actually occupy two bytes and will make the base
-     * calculation wrong. the string of symbols is handled as an ordered string, however,
-     * implementations are free to define which symbols to use. e.g., a base 2 numeral system may define
-     * that its symbols are "TF" and not "01"
+     * be careful not to use unicode symbols which actually occupy two bytes and
+     * will make the base calculation wrong. the string of symbols is handled as
+     * an ordered string, however, implementations are free to define which
+     * symbols to use. e.g., a base 2 numeral system may define that its symbols
+     * are "TF" and not "01"
      *
-     * @return
+     * @return the symbols to be used as representation of the number
      */
     String symbols();
 
     /**
+     * Returns the symbol to be used for the nth digit. Ordering starts at 0.
+     * For example, if the symbol set is {'A', 'B', 'C', 'D'}:
+     *
+     * <pre>
+     * <code>
+     * symbol(0) == 'A'
+     * symbol(1) == 'B'
+     * </code>
+     * </pre>
      *
      * @param digit
-     * @return
+     * @return the symbol to be used for the nth digit.
      */
     default char symbol(final int digit) {
         return symbols().charAt(digit);
     }
 
     /**
+     * Returns the order-index of a symbol. Ordering starts at 0. For example,
+     * if the symbol set is {'A', 'B', 'C', 'D'}:
+     *
+     * <pre>
+     * <code>
+     * digit('A') == 0
+     * symbol('B') == 1
+     * </code>
+     * </pre>
      *
      * @param symbol
-     * @return
+     * @return the order-index of a symbol.
      */
     default int digit(final char symbol) {
         return symbols().indexOf(symbol);
     }
 
     /**
+     * Returns the base of the numeral system. For instance, the decimal system
+     * has base 10.
      *
-     * @return
+     * @return the base of the numeral system
      */
     default int base() {
         return symbols().length();
     }
 
     /**
+     * Returns the numeral of 0.
      *
-     * @return
+     * @return the numeral of 0.
      */
     default String zero() {
         return String.valueOf(symbol(0));
     }
 
     /**
-     * checks if a string representation is a valid numeral in the current numeral system
+     * Checks if a string representation is a valid numeral in the current
+     * numeral system.
      *
      * @param numeralToTest
-     * @return
+     * @return true if a string representation is a valid numeral
      */
     default boolean isValidNumeral(final String numeralToTest) {
         return numeralToTest.chars().allMatch(c -> digit((char) c) != -1);

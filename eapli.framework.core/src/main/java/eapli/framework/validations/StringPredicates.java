@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 import eapli.framework.util.Utilitarian;
 
 /**
- * String predicates. Predicates are functions that test a condition and return a boolean value. in
- * this case the test is done over a String argument.
+ * String predicates. Predicates are functions that test a condition and return
+ * a boolean value. in this case the test is done over a String argument.
  *
  * <p>
  * For most of the functions, the signature is:
@@ -59,10 +59,11 @@ public final class StringPredicates implements Utilitarian {
      * checks if a string is a valid email address.
      *
      * <p>
-     * see also (and favor the use of) {@code org.apache.commons.validator.routines.EmailValidator}
+     * see also (and favor the use of)
+     * {@code org.apache.commons.validator.routines.EmailValidator}
      *
      * @param text
-     * @return
+     * @return wether a string is a valid email address or not
      */
     public static boolean isEmail(final String text) {
         final Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(text);
@@ -70,11 +71,11 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks if a string is a "phrase". phrases are not empty and do not have heading or trailing
-     * spaces
+     * Checks if a string is a "phrase". phrases are not empty and do not have
+     * heading or trailing spaces
      *
      * @param text
-     * @return
+     * @return wether a string is a "phrase" or not
      */
     @SuppressWarnings("squid:S4784")
     public static boolean isPhrase(final String text) {
@@ -83,40 +84,41 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks if a string is composed of a single "word", i.e., does not contain separating spaces
+     * Checks if a string is composed of a single "word", i.e., does not contain
+     * separating spaces.
      *
      * @param text
-     * @return
+     * @return true if a string is composed of a single "word"
      */
     public static boolean isSingleWord(final String text) {
         return !isNullOrEmpty(text) && text.indexOf(' ') == -1;
     }
 
     /**
-     * checks whether a String is empty (zero length or all spaces) or null
+     * Checks whether a String is empty (zero length) or null.
      *
      * @param text
-     * @return
+     * @return whether a String is empty (zero length) or null, or not
      */
     public static boolean isNullOrEmpty(final String text) {
         return text == null || text.isEmpty();
     }
 
     /**
-     * checks whether a String is empty (zero length or all spaces) or null
+     * Checks whether a String is empty (zero length or all spaces) or null.
      *
      * @param text
-     * @return
+     * @return whether a String is empty (zero length or all spaces) or null
      */
     public static boolean isNullOrWhiteSpace(final String text) {
         return isNullOrEmpty(text) || text.trim().isEmpty();
     }
 
     /**
-     * checks if a string contains at least one digit character
+     * Checks if a string contains at least one digit character.
      *
      * @param text
-     * @return
+     * @return true if a string contains at least one digit character
      */
     @SuppressWarnings("squid:S4784")
     public static boolean containsDigit(final String text) {
@@ -124,10 +126,11 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks if a string contains at least one alphabetic character (regular Latin alphabet)
+     * Checks if a string contains at least one alphabetic character (regular
+     * Latin alphabet).
      *
      * @param text
-     * @return
+     * @return true if a string contains at least one alphabetic character
      */
     @SuppressWarnings("squid:S4784")
     public static boolean containsAlpha(final String text) {
@@ -135,10 +138,11 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * checks whether a string contains at least one capital letter (regular Latin alphabet)
+     * Checks whether a string contains at least one capital letter (regular
+     * Latin alphabet).
      *
      * @param text
-     * @return
+     * @return whether a string contains at least one capital letter
      */
     @SuppressWarnings("squid:S4784")
     public static boolean containsCapital(final String text) {
@@ -146,13 +150,14 @@ public final class StringPredicates implements Utilitarian {
     }
 
     /**
-     * Checks whether a string contains any of the characters of the second string, without using
-     * regular expressions to avoid potential security threats at the expense of performance. The
-     * complexity of this method O(n^2)
+     * Checks whether a string contains any of the characters of the second
+     * string, without using regular expressions to avoid potential security
+     * threats at the expense of performance. The complexity of this method
+     * O(n^2)
      *
      * @param subject
      * @param chars
-     * @return
+     * @return whether a string contains any of the characters of the second
      */
     public static boolean containsAny(final String subject, final String chars) {
         if (StringPredicates.isNullOrEmpty(chars) || StringPredicates.isNullOrEmpty(subject)) {

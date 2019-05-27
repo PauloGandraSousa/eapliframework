@@ -75,34 +75,35 @@ public class Numeral implements ValueObject {
     }
 
     /**
-     * factory method to construct a new numeral from a string representation in
-     * a certain numeral system
+     * Factory method to construct a new numeral from a string representation in
+     * a certain numeral system.
      *
      * @param value
      *            the representation of the number
      * @param system
      *            the numeral system used in the representation
-     * @return
+     * @return the new Numeral
      */
     public static Numeral valueOf(final String value, final NumeralSystem system) {
         return new Numeral(value, system);
     }
 
     /**
-     * utility factory method that uses the StandardNumeralSystem
+     * Utility factory method that uses the {@link StandardNumeralSystem}.
      *
      * @param value
      * @param base
-     * @return
+     * @return the new Numeral
      */
     public static Numeral valueOf(final String value, final int base) {
         return new Numeral(value, new StandardNumeralSystem(base));
     }
 
     /**
+     * Factory method for decimals.
      *
      * @param decimal
-     * @return
+     * @return the new Numeral
      */
     public static Numeral valueOf(final long decimal) {
         return new Numeral(decimal, StandardNumeralSystem.DECIMAL);
@@ -155,9 +156,9 @@ public class Numeral implements ValueObject {
     }
 
     /**
-     * returns the decimal value of this number
+     * returns the decimal value of this number.
      *
-     * @return
+     * @return the decimal value of this number.
      */
     public long decimalValue() {
         return value;

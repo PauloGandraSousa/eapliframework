@@ -42,6 +42,7 @@ import eapli.framework.util.Factory;
  * (defined by {@link #withProperty}. A collection is a collection of elements
  * {@link #withElement} or objects}
  *
+ * <p>
  * Implementations are free to handle duplicate properties in whatever form
  * suits it best, either by ignoring, adding duplicates or launching exceptions.
  *

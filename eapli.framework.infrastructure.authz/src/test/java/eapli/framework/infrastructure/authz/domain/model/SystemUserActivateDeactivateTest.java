@@ -43,7 +43,7 @@ public class SystemUserActivateDeactivateTest {
 
     @Before
     public void setUp() throws Exception {
-        instance = SystemUserTestHelper.dummyUser("abc");
+        instance = TestSystemUserFactory.dummyUser("abc");
     }
 
     @Test

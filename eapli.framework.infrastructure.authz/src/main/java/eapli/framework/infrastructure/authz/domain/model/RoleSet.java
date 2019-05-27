@@ -71,10 +71,10 @@ import eapli.framework.validations.Preconditions;
     }
 
     /**
-     * checks if a user currently has an assignment of a certain role
+     * Checks if a user currently has an assignment of a certain role.
      *
      * @param r
-     * @return
+     * @return true if a user currently has an assignment of a certain role
      */
     public boolean hasAssignment(final Role r) {
         for (final RoleAssignment assignment : data) {
@@ -86,10 +86,12 @@ import eapli.framework.validations.Preconditions;
     }
 
     /**
-     * Checks if a usar has or had in the past an assignment to a certain role
-     * 
+     * Checks if the user has or had in the past an assignment to a certain
+     * role.
+     *
      * @param r
-     * @return
+     * @return true if the user has or had in the past an assignment to a
+     *         certain role
      */
     public boolean hasOrHadAssignment(final Role r) {
         for (final RoleAssignment assignment : data) {
@@ -107,27 +109,29 @@ import eapli.framework.validations.Preconditions;
     }
 
     /**
-     * returns the first assignment to a role or an empty optional if no
-     * assignment to that role exists
+     * Returns the first non-expired assignment to a role or an empty optional
+     * if no assignment to that role exists.
      *
-     * the following implementation uses the java Stream API, but is
-     * conceptually equivalent to the following more traditional java code:
+     * <p>
+     * The implementation uses the java Stream API, but is conceptually
+     * equivalent to the following more traditional java code:
      *
      * <pre>
+     * <code>
      * for (final RoleAssignment assignment : data) {
      *     if (assignment.isOf(role)) {
      *         return Optional.of(assignment);
      *     }
      * }
      * return Optional.empty();
-     *
+     * </code>
      * </pre>
      *
      * @param role
-     * @return
+     * @return the first non-expired assignment to a role or an empty optional
      */
     public Optional<RoleAssignment> getAssignment(final Role role) {
-        return data.stream().filter(e -> e.isOf(role)).limit(1).max((a, b) -> 1);
+        return data.stream().filter(e -> !e.isExpired() && e.isOf(role)).findFirst();
     }
 
     @Override

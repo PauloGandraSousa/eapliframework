@@ -52,7 +52,7 @@ public class SystemUserTest {
     @Before
     public void setUp() throws Exception {
         dateOfCreation = Calendars.now();
-        instance = new SystemUser(Username.valueOf("abc"), SystemUserTestHelper.dummyPass(PASSWORD1),
+        instance = new SystemUser(Username.valueOf("abc"), TestSystemUserFactory.dummyPass(PASSWORD1),
                 Name.valueOf("Ant", "Boocam"), EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
     }
 
@@ -60,7 +60,7 @@ public class SystemUserTest {
     public void ensureMustHaveUsername() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(null, SystemUserTestHelper.dummyPass(PASSWORD1), Name.valueOf("Ant", "Silva"),
+        new SystemUser(null, TestSystemUserFactory.dummyPass(PASSWORD1), Name.valueOf("Ant", "Silva"),
                 EmailAddress.valueOf("a@b.co"), roles);
     }
 
@@ -76,7 +76,7 @@ public class SystemUserTest {
     public void ensureMustHaveName() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), SystemUserTestHelper.dummyPass(PASSWORD1), null,
+        new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1), null,
                 EmailAddress.valueOf("a@b.co"), roles);
     }
 
@@ -84,7 +84,7 @@ public class SystemUserTest {
     public void ensureMustHaveEmail() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), SystemUserTestHelper.dummyPass(PASSWORD1),
+        new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1),
                 Name.valueOf("Ant", "Silva"), null, roles);
     }
 
@@ -92,7 +92,7 @@ public class SystemUserTest {
     public void ensureMustHaveDateOfCreation() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), SystemUserTestHelper.dummyPass(PASSWORD1),
+        new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1),
                 Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, null);
     }
 

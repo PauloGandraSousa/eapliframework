@@ -30,7 +30,7 @@ import java.util.List;
  * Utility functions to handle Collections.
  *
  * see also Apache Common Iterable Utils
- * 
+ *
  * @author Paulo Gandra Sousa
  *
  */
@@ -41,12 +41,12 @@ public final class Collections implements Utilitarian {
     }
 
     /**
-     * returns the number of elements in an iterable. performance-wise this
+     * Returns the number of elements in an iterable. performance-wise this
      * method is of complexity O(n) as it needs to traverse the full iterator to
      * determine its size
      *
      * @param col
-     * @return
+     * @return the number of elements in an iterable.
      */
     public static int sizeOf(final Iterable<?> col) {
         int i = 0;
@@ -58,10 +58,10 @@ public final class Collections implements Utilitarian {
     }
 
     /**
-     * creates a List with all the elements of an enum
+     * Creates a List with all the elements of an enum.
      *
      * @param e
-     * @return
+     * @return a List with all the elements of an enum
      */
     public static <T extends Enum<T>> List<T> listFromEnum(final Class<T> e) {
         final List<T> res = new ArrayList<>();
@@ -72,12 +72,12 @@ public final class Collections implements Utilitarian {
     }
 
     /**
-     * checks if a value exists in an array. performance-wise the complexity of
+     * Checks if a value exists in an array. performance-wise the complexity of
      * this method is O(n)
      *
      * @param elements
      * @param x
-     * @return
+     * @return true if the value exists in the array.
      */
     public static <T> boolean contains(final T[] elements, final T x) {
         for (final T e : elements) {
