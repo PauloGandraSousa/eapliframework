@@ -47,22 +47,18 @@ import eapli.framework.util.Calendars;
  */
 @Component
 public class UserManagementService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private SystemUserBuilder userBuilder;
-
-    public UserManagementService() {
-        // default for Spring dependency injection
-    }
+    private final UserRepository userRepository;
+    private final SystemUserBuilder userBuilder;
 
     /**
      * For scenarios without Spring dependency injection.
      *
      * @param userRepo
      */
-    public UserManagementService(final UserRepository userRepo) {
+    @Autowired
+    public UserManagementService(final UserRepository userRepo, SystemUserBuilder userBuilder) {
         userRepository = userRepo;
+        this.userBuilder = userBuilder;
     }
 
     /**
@@ -78,9 +74,11 @@ public class UserManagementService {
      * @return the new user
      */
     @Transactional
-    public SystemUser registerNewUser(final String username, final String rawPassword, final String firstName,
-            final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
-        userBuilder.with(username, rawPassword, firstName, lastName, email).createdOn(createdOn).withRoles(roles);
+    public SystemUser registerNewUser(final String username, final String rawPassword,
+            final String firstName, final String lastName, final String email,
+            final Set<Role> roles, final Calendar createdOn) {
+        userBuilder.with(username, rawPassword, firstName, lastName, email).createdOn(createdOn)
+                .withRoles(roles);
         final SystemUser newUser = userBuilder.build();
         return userRepository.save(newUser);
     }
@@ -97,9 +95,11 @@ public class UserManagementService {
      * @return the new user
      */
     @Transactional
-    public SystemUser registerNewUser(final String username, final String rawPassword, final String firstName,
-            final String lastName, final String email, final Set<Role> roles) {
-        return registerNewUser(username, rawPassword, firstName, lastName, email, roles, Calendars.now());
+    public SystemUser registerNewUser(final String username, final String rawPassword,
+            final String firstName, final String lastName, final String email,
+            final Set<Role> roles) {
+        return registerNewUser(username, rawPassword, firstName, lastName, email, roles,
+                Calendars.now());
     }
 
     /**
@@ -114,8 +114,8 @@ public class UserManagementService {
      * @param roles
      * @return the enw user
      */
-    public SystemUser registerUser(final Username username, final Password password, final Name name,
-            final EmailAddress email, final Set<Role> roles) {
+    public SystemUser registerUser(final Username username, final Password password,
+            final Name name, final EmailAddress email, final Set<Role> roles) {
         userBuilder.with(username, password, name, email).withRoles(roles);
         final SystemUser newUser = userBuilder.build();
         return userRepository.save(newUser);
