@@ -28,7 +28,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import eapli.framework.actions.Actions;
@@ -46,14 +49,17 @@ import eapli.framework.validations.Preconditions;
  * interface; it acts as a Builder (GoF).
  */
 @Component
+@Scope("prototype")
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
+
+    private static final Logger LOGGER = LogManager.getLogger(SystemUserBuilder.class);
 
     private Username username;
     private Password password;
     private Name name;
     private EmailAddress email;
-    private final RoleSet roles;
     private Calendar createdOn;
+    private final RoleSet roles;
 
     private final PasswordEnforcer passwordEnforcer;
 
@@ -198,10 +204,16 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
     public SystemUser build() {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
+        SystemUser user;
         if (createdOn != null) {
-            return new SystemUser(username, password, name, email, roles, createdOn);
+            user = new SystemUser(username, password, name, email, roles, createdOn);
         } else {
-            return new SystemUser(username, password, name, email, roles);
+            user = new SystemUser(username, password, name, email, roles);
         }
+        if (LOGGER.isDebugEnabled()) {
+            final String roleLog = roles.roleTypes().toString();
+            LOGGER.debug("Creating new user [{}] {} ({} {}) with roles {}", user, username, name, email, roleLog);
+        }
+        return user;
     }
 }

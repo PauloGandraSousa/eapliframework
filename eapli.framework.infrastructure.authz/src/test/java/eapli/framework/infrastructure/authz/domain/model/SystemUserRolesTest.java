@@ -28,7 +28,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,15 +43,16 @@ import eapli.framework.util.Calendars;
  *
  */
 public class SystemUserRolesTest {
+    private static final Role ROLE_R1 = Role.valueOf("R1");
     private static final Role ROLE_R2 = Role.valueOf("R2");
     private static final String PASSWORD1 = "Password1";
-    private SystemUser instance;
-    private Calendar createdOn;
+
+    private SystemUser subject;
 
     @Before
     public void setUp() throws Exception {
-        createdOn = Calendars.now();
-        instance = SystemUserTestHelper.dummyUser("abc", ROLE_R2);
+        subject = SystemUserTestHelper.dummyUser("abc", ROLE_R1);
+        System.out.println("setup " + subject);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -72,60 +72,60 @@ public class SystemUserRolesTest {
     @Test(expected = IllegalArgumentException.class)
     public void ensureCannotAssignNullRole() {
         final Role x = null;
-        instance.assignToRole(x);
+        subject.assignToRole(x);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureCannotAssignNullRoleAssignemt() {
         final RoleAssignment x = null;
-        instance.assignToRole(x);
+        subject.assignToRole(x);
     }
 
     @Test
     public void ensureAssignRoleAddsRole() {
-        final int nRoles = instance.roleTypes().size();
-        instance.assignToRole(ROLE_R2);
-        assertEquals(nRoles + 1, instance.roleTypes().size());
+        final int nRoles = subject.roleTypes().size();
+        subject.assignToRole(ROLE_R2);
+        assertEquals(nRoles + 1, subject.roleTypes().size());
     }
 
     @Test
     public void ensureAssignRole() {
-        instance.assignToRole(ROLE_R2);
-        assertTrue(instance.hasAll(ROLE_R2));
+        subject.assignToRole(ROLE_R2);
+        assertTrue(subject.hasAll(ROLE_R2));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureCannotUnassignNullRole() {
         final Role x = null;
-        instance.unassignRole(x);
+        subject.unassignRole(x);
     }
 
     @Test
     public void ensureUnassignUnexistingRoleInformsFalse() {
-        assertFalse(instance.unassignRole(Role.valueOf("R3")));
+        assertFalse(subject.unassignRole(Role.valueOf("R3")));
     }
 
     @Test
     public void ensureUnassignRole() {
-        instance.assignToRole(ROLE_R2);
-        instance.unassignRole(ROLE_R2);
-        assertFalse(instance.hasAll(ROLE_R2));
+        subject.assignToRole(ROLE_R2);
+        subject.unassignRole(ROLE_R2);
+        assertFalse(subject.hasAll(ROLE_R2));
     }
 
     @Test
     public void ensureHasRole() {
-        instance.assignToRole(ROLE_R2);
-        assertTrue(instance.hasAll(ROLE_R2));
+        subject.assignToRole(ROLE_R2);
+        assertTrue(subject.hasAll(ROLE_R2));
     }
 
     @Test
     public void ensureHasRoleFailsForUnexistingRole() {
-        assertFalse(instance.hasAll(ROLE_R2));
+        assertFalse(subject.hasAll(ROLE_R2));
     }
 
     @Test
     public void ensureUnassignExistingRoleInformsTrue() {
-        instance.assignToRole(ROLE_R2);
-        assertTrue(instance.unassignRole(ROLE_R2));
+        subject.assignToRole(ROLE_R2);
+        assertTrue(subject.unassignRole(ROLE_R2));
     }
 }

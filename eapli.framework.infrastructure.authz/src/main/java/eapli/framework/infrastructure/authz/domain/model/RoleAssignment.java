@@ -93,8 +93,13 @@ public class RoleAssignment implements ValueObject, Serializable {
         }
 
         final RoleAssignment other = (RoleAssignment) o;
-        return type == other.type && assignedOn.equals(other.assignedOn) && expired == other.expired
-                && unassignedOn.equals(other.unassignedOn);
+        final boolean b = type == other.type && assignedOn.equals(other.assignedOn) && expired == other.expired;
+        if (!b) {
+            return false;
+        }
+
+        return ((unassignedOn != null && unassignedOn.equals(other.unassignedOn))
+                || unassignedOn == null && other.unassignedOn == null);
     }
 
     @Override

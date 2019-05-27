@@ -395,7 +395,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * Checks if this user has all of a set of roles.
+     * Checks if this user's non-expired roles comply with all of a set of
+     * roles.
      *
      * @param roles
      * @return true if the user has all the roles
