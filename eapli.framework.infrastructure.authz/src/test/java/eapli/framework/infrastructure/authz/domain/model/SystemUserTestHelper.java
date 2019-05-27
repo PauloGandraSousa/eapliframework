@@ -28,10 +28,14 @@ package eapli.framework.infrastructure.authz.domain.model;
  */
 public final class SystemUserTestHelper {
 
+    public static Password dummyPass(final String pass) {
+        return Password.valueOf(pass, new NilPasswordPolicy(), new PlainTextEncoder())
+                .orElseThrow(IllegalStateException::new);
+    }
+
     public static SystemUser dummyUser(final String username, final Role... roles) {
-        // FIXME load from spring context
-        final SystemUserBuilder userBuilder = new SystemUserBuilder(
-                new PasswordEnforcer(new NilPasswordPolicy(), new PlainTextEncoder()));
+        // should we load from spring context?
+        final SystemUserBuilder userBuilder = new SystemUserBuilder(new NilPasswordPolicy(), new PlainTextEncoder());
         return userBuilder.with(username, "duMMy1", "dummy", "dummy", "a@b.ro").withRoles(roles).build();
     }
 }

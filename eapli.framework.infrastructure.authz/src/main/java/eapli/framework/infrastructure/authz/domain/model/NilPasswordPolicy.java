@@ -23,6 +23,8 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
+import eapli.framework.infrastructure.authz.application.PasswordPolicy;
+
 /**
  * @author Paulo Gandra de Sousa 24/05/2019
  *
@@ -36,7 +38,7 @@ public class NilPasswordPolicy implements PasswordPolicy {
      * meetsRequeriments(java.lang.String)
      */
     @Override
-    public boolean meetsRequeriments(final String rawPassword) {
+    public boolean isSatisfiedBy(final String rawPassword) {
         return true;
     }
 }

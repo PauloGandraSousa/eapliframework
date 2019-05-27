@@ -52,16 +52,16 @@ public class SystemUserTest {
     @Before
     public void setUp() throws Exception {
         dateOfCreation = Calendars.now();
-        instance = new SystemUser(Username.valueOf("abc"), Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Boocam"),
-                EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
+        instance = new SystemUser(Username.valueOf("abc"), SystemUserTestHelper.dummyPass(PASSWORD1),
+                Name.valueOf("Ant", "Boocam"), EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureMustHaveUsername() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(null, Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"),
-                roles);
+        new SystemUser(null, SystemUserTestHelper.dummyPass(PASSWORD1), Name.valueOf("Ant", "Silva"),
+                EmailAddress.valueOf("a@b.co"), roles);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -76,24 +76,24 @@ public class SystemUserTest {
     public void ensureMustHaveName() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), Password.valueOf(PASSWORD1), null, EmailAddress.valueOf("a@b.co"),
-                roles);
+        new SystemUser(Username.valueOf("username"), SystemUserTestHelper.dummyPass(PASSWORD1), null,
+                EmailAddress.valueOf("a@b.co"), roles);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureMustHaveEmail() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Silva"), null,
-                roles);
+        new SystemUser(Username.valueOf("username"), SystemUserTestHelper.dummyPass(PASSWORD1),
+                Name.valueOf("Ant", "Silva"), null, roles);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureMustHaveDateOfCreation() {
         final Set<Role> roles = new HashSet<>();
         roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), Password.valueOf(PASSWORD1), Name.valueOf("Ant", "Silva"),
-                EmailAddress.valueOf("a@b.co"), roles, null);
+        new SystemUser(Username.valueOf("username"), SystemUserTestHelper.dummyPass(PASSWORD1),
+                Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, null);
     }
 
     @Test

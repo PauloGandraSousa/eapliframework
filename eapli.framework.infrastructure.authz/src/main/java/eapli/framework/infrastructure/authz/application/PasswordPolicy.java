@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.authz.domain.model;
+package eapli.framework.infrastructure.authz.application;
 
 /**
  * Defines a password policy, e.g., at least 8 characters, one capital, one
@@ -30,13 +30,15 @@ package eapli.framework.infrastructure.authz.domain.model;
  * @author Paulo Gandra de Sousa 24/05/2019
  *
  */
+@FunctionalInterface
 public interface PasswordPolicy {
 
     /**
-     * Checks if a string meets the requirements of the policy to be a password
+     * Checks if a string meets the requirements of the policy to be used as a
+     * password.
      *
      * @param rawPassword
      * @return true if the string meets the requirements of the policy
      */
-    boolean meetsRequeriments(String rawPassword);
+    boolean isSatisfiedBy(String rawPassword);
 }

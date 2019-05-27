@@ -23,8 +23,8 @@
  */
 package eapli.framework.infrastructure.authz.application;
 
-import eapli.framework.infrastructure.authz.domain.model.PasswordEnforcer;
-import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.util.Singleton;
 import eapli.framework.validations.Invariants;
@@ -46,14 +46,18 @@ public final class AuthzRegistry implements Singleton {
     }
 
     /**
-     * helper method to initialize the registry. This method should be called
-     * only once if you are <strong>not</strong> using spring.
+     * Helper method to initialize the registry in case you are not using Spring
+     * Dependency Injection. This method should be called <strong>only
+     * once</strong> on application startup.
      *
      * @param userRepo
+     * @param policy
+     * @param encoder
      */
-    public static void configure(final UserRepository userRepo, final PasswordEnforcer enforcer) {
-        authenticationService = new AuthenticationService(userRepo, authorizationSvc, enforcer);
-        userService = new UserManagementService(userRepo, new SystemUserBuilder(enforcer));
+    public static void configure(final UserRepository userRepo, final PasswordPolicy policy,
+            final PasswordEncoder encoder) {
+        authenticationService = new AuthenticationService(userRepo, authorizationSvc, policy, encoder);
+        userService = new UserManagementService(userRepo, policy, encoder);
     }
 
     /**

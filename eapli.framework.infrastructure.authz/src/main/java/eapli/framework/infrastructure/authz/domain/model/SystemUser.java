@@ -333,7 +333,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * Sets a new password for this user. Make user the password
+     * Sets a new password for this user.
      *
      * @param newPassword
      */

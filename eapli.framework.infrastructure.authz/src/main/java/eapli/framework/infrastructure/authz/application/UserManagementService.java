@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,17 +49,21 @@ import eapli.framework.util.Calendars;
 @Component
 public class UserManagementService {
     private final UserRepository userRepository;
-    private final SystemUserBuilder userBuilder;
+    private final PasswordEncoder encoder;
+    private final PasswordPolicy policy;
 
     /**
-     * For scenarios without Spring dependency injection.
      *
      * @param userRepo
+     * @param encoder
+     * @param policy
      */
     @Autowired
-    public UserManagementService(final UserRepository userRepo, SystemUserBuilder userBuilder) {
+    public UserManagementService(final UserRepository userRepo, final PasswordPolicy policy,
+            final PasswordEncoder encoder) {
         userRepository = userRepo;
-        this.userBuilder = userBuilder;
+        this.policy = policy;
+        this.encoder = encoder;
     }
 
     /**
@@ -74,11 +79,10 @@ public class UserManagementService {
      * @return the new user
      */
     @Transactional
-    public SystemUser registerNewUser(final String username, final String rawPassword,
-            final String firstName, final String lastName, final String email,
-            final Set<Role> roles, final Calendar createdOn) {
-        userBuilder.with(username, rawPassword, firstName, lastName, email).createdOn(createdOn)
-                .withRoles(roles);
+    public SystemUser registerNewUser(final String username, final String rawPassword, final String firstName,
+            final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
+        final SystemUserBuilder userBuilder = new SystemUserBuilder(policy, encoder);
+        userBuilder.with(username, rawPassword, firstName, lastName, email).createdOn(createdOn).withRoles(roles);
         final SystemUser newUser = userBuilder.build();
         return userRepository.save(newUser);
     }
@@ -95,11 +99,9 @@ public class UserManagementService {
      * @return the new user
      */
     @Transactional
-    public SystemUser registerNewUser(final String username, final String rawPassword,
-            final String firstName, final String lastName, final String email,
-            final Set<Role> roles) {
-        return registerNewUser(username, rawPassword, firstName, lastName, email, roles,
-                Calendars.now());
+    public SystemUser registerNewUser(final String username, final String rawPassword, final String firstName,
+            final String lastName, final String email, final Set<Role> roles) {
+        return registerNewUser(username, rawPassword, firstName, lastName, email, roles, Calendars.now());
     }
 
     /**
@@ -114,8 +116,9 @@ public class UserManagementService {
      * @param roles
      * @return the enw user
      */
-    public SystemUser registerUser(final Username username, final Password password,
-            final Name name, final EmailAddress email, final Set<Role> roles) {
+    public SystemUser registerUser(final Username username, final Password password, final Name name,
+            final EmailAddress email, final Set<Role> roles) {
+        final SystemUserBuilder userBuilder = new SystemUserBuilder(policy, encoder);
         userBuilder.with(username, password, name, email).withRoles(roles);
         final SystemUser newUser = userBuilder.build();
         return userRepository.save(newUser);

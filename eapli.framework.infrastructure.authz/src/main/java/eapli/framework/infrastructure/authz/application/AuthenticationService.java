@@ -23,10 +23,10 @@ package eapli.framework.infrastructure.authz.application;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.domain.model.Password;
-import eapli.framework.infrastructure.authz.domain.model.PasswordEnforcer;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
@@ -42,36 +42,28 @@ import eapli.framework.validations.Preconditions;
 @Component
 public class AuthenticationService {
 
-    private UserRepository repo;
+    private final UserRepository repo;
     private final AuthorizationService authz;
-    private final PasswordEnforcer passwordEnforcer;
+    private final PasswordPolicy policy;
+    private final PasswordEncoder encoder;
 
     /**
-     * in scenarios where there is no dependency injector, this constructor
-     * allows the object to be be built and manually inject the dependency.
      *
      * @param repo
      *            a user repository
      * @param authz
      *            an authentication service
+     * @param policy
      * @param encoder
      */
     @Autowired
     public AuthenticationService(final UserRepository repo, final AuthorizationService authz,
-            final PasswordEnforcer encoder) {
+            final PasswordPolicy policy, final PasswordEncoder encoder) {
         Preconditions.nonNull(repo, authz, encoder);
         this.repo = repo;
         this.authz = authz;
-        passwordEnforcer = encoder;
-    }
-
-    /**
-     * for helper AuthzHolder class
-     *
-     * @param session
-     */
-    /* package */ void setRepository(final UserRepository repo) {
-        this.repo = repo;
+        this.policy = policy;
+        this.encoder = encoder;
     }
 
     /**
@@ -89,7 +81,7 @@ public class AuthenticationService {
         Preconditions.nonEmpty(rawPassword, "a password must be provided");
 
         final Optional<UserSession> newSession = retrieveUser(username)
-                .filter(u -> u.passwordMatches(rawPassword, passwordEnforcer.encoder()) && u.isActive()
+                .filter(u -> u.passwordMatches(rawPassword, encoder) && u.isActive()
                         && (noActionRightsToValidate(onlyWithThis) || u.hasAny(onlyWithThis)))
                 .map(this::createSessionForUser);
 
@@ -139,8 +131,9 @@ public class AuthenticationService {
      */
     public Optional<SystemUser> changePassword(final SystemUser user, final String oldPassword,
             final String newPassword) {
-        if (user.passwordMatches(oldPassword, passwordEnforcer.encoder())) {
-            user.changePassword(passwordEnforcer.validAndEncodedPassword(newPassword).orElseThrow());
+        final Optional<Password> checkPass = Password.valueOf(newPassword, policy, encoder);
+        if (checkPass.isPresent() && user.passwordMatches(oldPassword, encoder)) {
+            user.changePassword(checkPass.get());
             return Optional.of(repo.save(user));
         }
         return Optional.empty();

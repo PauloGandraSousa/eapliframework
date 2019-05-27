@@ -30,14 +30,11 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import eapli.framework.actions.Actions;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.domain.model.general.EmailAddress;
-import eapli.framework.functional.Either;
+import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -48,8 +45,6 @@ import eapli.framework.validations.Preconditions;
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
  * interface; it acts as a Builder (GoF).
  */
-@Component
-@Scope("prototype")
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
     private static final Logger LOGGER = LogManager.getLogger(SystemUserBuilder.class);
@@ -61,11 +56,12 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
     private Calendar createdOn;
     private final RoleSet roles;
 
-    private final PasswordEnforcer passwordEnforcer;
+    private final PasswordPolicy policy;
+    private final PasswordEncoder encoder;
 
-    @Autowired
-    public SystemUserBuilder(final PasswordEnforcer enforcer) {
-        passwordEnforcer = enforcer;
+    public SystemUserBuilder(final PasswordPolicy policy, final PasswordEncoder encoder) {
+        this.policy = policy;
+        this.encoder = encoder;
         roles = new RoleSet();
     }
 
@@ -127,8 +123,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
      * @return this builder
      */
     public SystemUserBuilder withPassword(final String rawPassword) {
-        final Either<Password, String> checkPass = passwordEnforcer.validAndEncodedPassword(rawPassword);
-        checkPass.accept(p -> password = p, Actions::throwArgument);
+        password = Password.valueOf(rawPassword, policy, encoder).orElseThrow(IllegalArgumentException::new);
         return this;
     }
 

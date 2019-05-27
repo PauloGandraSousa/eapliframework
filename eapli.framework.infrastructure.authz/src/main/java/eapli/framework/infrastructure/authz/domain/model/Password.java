@@ -24,17 +24,21 @@
 package eapli.framework.infrastructure.authz.domain.model;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
  * A password of a user. Password policy and encoding is done outside of this
- * class by {@link SystemUserBuilder}.
+ * class by {@link SystemUserBuilder} and {@link PasswordEnforcer}.
  *
  * <p>
  * IMPORTANT: passwords should never be stored in plain format
@@ -58,8 +62,13 @@ public class Password implements ValueObject, Serializable {
         thePassword = password;
     }
 
-    /* package */ static Password valueOf(final String password) {
-        return new Password(password);
+    public static Optional<Password> valueOf(final String rawPassword, final PasswordPolicy policy,
+            final PasswordEncoder encoder) {
+        if (policy.isSatisfiedBy(rawPassword)) {
+            return Optional.of(new Password(encoder.encode(rawPassword)));
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -71,9 +80,8 @@ public class Password implements ValueObject, Serializable {
             return false;
         }
 
-        final Password password1 = (Password) o;
-
-        return thePassword.equals(password1.thePassword);
+        final Password other = (Password) o;
+        return thePassword.equals(other.thePassword);
     }
 
     @Override
