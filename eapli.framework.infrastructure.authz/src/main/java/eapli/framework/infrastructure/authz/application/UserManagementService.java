@@ -136,7 +136,7 @@ public class UserManagementService {
         return userRepository.findAll();
     }
 
-    public Optional<SystemUser> find(final Username id) {
+    public Optional<SystemUser> userOfIdentity(final Username id) {
         return userRepository.ofIdentity(id);
     }
 
