@@ -244,7 +244,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     public GeneralDTO toDTO() {
         final GeneralDTO ret = new GeneralDTO("user");
         ret.put("username", username.toString());
-        ret.put("password", password.toString());
+        // ret.put("password", password.toString());
         ret.put("name", name.toString());
         ret.put("email", email.toString());
         ret.put("roles", roles.roleTypes().toString());
@@ -267,11 +267,11 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * for supporting Spring Security UserDetails
+     * For supporting Spring Security UserDetails.
      *
      * @return the password
      */
-    /* package */String password() {
+    /* package */String encodedPassword() {
         return password.value();
     }
 

@@ -38,12 +38,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Utility class for Calendar manipulation and several date and time related functions.
+ * Utility class for Calendar manipulation and several date and time related
+ * functions.
  *
  * If you are using Java 8+, you should use the Time API:
- * <li><a href= "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8 Date
- * Time Tutorial</a>
- * <li><a href= "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
+ * <li><a href=
+ * "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8
+ * Date Time Tutorial</a>
+ * <li><a href=
+ * "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
  * Java 8 Documentation</a>
  *
  * @author Paulo Gandra Sousa
@@ -58,19 +61,19 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns the current date of the system
+     * Returns the current date of the system.
      *
-     * @return
+     * @return the current date of the system.
      */
     public static Calendar now() {
         return new GregorianCalendar();
     }
 
     /**
-     * returns the number of the week in the year given a certain date
+     * Returns the number of the week in the year given a certain date.
      *
      * @param date
-     * @return
+     * @return the number of the week in the year given a certain date.
      */
     public static int weekNumber(final Calendar date) {
         return date.get(Calendar.WEEK_OF_YEAR);
@@ -87,11 +90,11 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns the date of the first day of a week
+     * returns the date of the first day of a week.
      *
      * @param year
      * @param week
-     * @return
+     * @return the date of the first day of a week.
      */
     public static Calendar beginningOfWeek(final int year, final int week) {
         final Calendar date = new GregorianCalendar();
@@ -102,11 +105,11 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns the date of the last day of a week
+     * Returns the date of the last day of a week.
      *
      * @param year
      * @param week
-     * @return
+     * @return the date of the last day of a week.
      */
     public static Calendar endOfWeek(final int year, final int week) {
         final Calendar date = beginningOfWeek(year, week);
@@ -115,20 +118,20 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns the date of the last day of the current month
+     * Returns the date of the last day of the current month.
      *
-     * @return
+     * @return the date of the last day of the current month.
      */
     public static Calendar endOfCurrentMonth() {
         return endOfMonth(now());
     }
 
     /**
-     * returns the date of the last day of a certain month
+     * Returns the date of the last day of a certain month.
      *
      * @param reference
-     *                  a date to be used as reference month
-     * @return
+     *            a date to be used as reference month
+     * @return the date of the last day of a certain month.
      */
     public static Calendar endOfMonth(final Calendar reference) {
         final Calendar lastDay = new GregorianCalendar();
@@ -143,7 +146,7 @@ public final class Calendars implements Utilitarian {
      *
      * @param year
      * @param month
-     *              month number (1 - 12)
+     *            month number (1 - 12)
      * @return the date of the last day of a certain month
      */
     public static Calendar endOfMonth(final int year, final int month) {
@@ -173,12 +176,12 @@ public final class Calendars implements Utilitarian {
      * Creates a new Calendar object set to a specific date
      *
      * @param year
-     *              the year
+     *            the year
      * @param month
-     *              the month (1 - 12). note that the Calendar class uses months from 0 to 11, not 1 to
-     *              12
+     *            the month (1 - 12). note that the Calendar class uses months
+     *            from 0 to 11, not 1 to 12
      * @param day
-     *              the day of the month
+     *            the day of the month
      * @return a newly create Calendar object
      */
     public static Calendar of(final int year, final int month, final int day) {
@@ -186,21 +189,23 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * creates a new Calendar instance with the date part set (year, month, date) from the source object
+     * Creates a new Calendar instance with the date part set (year, month,
+     * date) from the source object.
      *
      * @param source
-     * @return
+     * @return a new Calendar instance
      */
-    public static Calendar datePart(final Calendar source) {
+    public static Calendar dateOf(final Calendar source) {
         return of(source.get(Calendar.YEAR), source.get(Calendar.MONTH) + 1, source.get(Calendar.DATE));
     }
 
     /**
-     * parses a string that contains a date in a certain format
+     * Parses a string that contains a date in a certain format.
      *
      * @param aDateString
      * @param format
-     * @return a Calendar object or null if there was an error parsing the string
+     * @return a Calendar object or null if there was an error parsing the
+     *         string
      */
     public static Calendar parse(final String aDateString, final String format) {
         try {
@@ -223,12 +228,13 @@ public final class Calendars implements Utilitarian {
 
     /**
      * Formats a date according to ISO8601.
-     *
-     * based on
-     * https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute/33532945
+     * <p>
+     * based on <a href=
+     * "https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute/33532945">Stack
+     * Overflow</a>
      *
      * @param when
-     * @return
+     * @return the date formatted according to ISO8601.
      */
     public static String iso8601(final Calendar when) {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC).format(when.toInstant());
@@ -236,13 +242,14 @@ public final class Calendars implements Utilitarian {
 
     /**
      * Converts a Calendar object to Java 8 LocalDateTime
-     *
-     * Taken from https://www.logicbig.com/how-to/java-8-date-time-api/calender-to-localdatetime.html
-     *
-     * and https://www.baeldung.com/java-date-to-localdate-and-localdatetime
+     * <p>
+     * Taken from <a href=
+     * "https://www.logicbig.com/how-to/java-8-date-time-api/calender-to-localdatetime.html">logicbig</a>
+     * and <a href=
+     * "https://www.baeldung.com/java-date-to-localdate-and-localdatetime">Baeldung</a>
      *
      * @param calendar
-     * @return
+     * @return the date as a LocalDateTime object
      */
     public static LocalDateTime toLocalDateTime(final Calendar calendar) {
         if (calendar == null) {
@@ -271,12 +278,13 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * Creates and returns a {@link String} instance by parsing a given Calendar base on a data format.
+     * Creates and returns a {@link String} instance by parsing a given Calendar
+     * base on a data format.
      *
      * @param calendar
-     *                   the Calendar object to parse
+     *            the Calendar object to parse
      * @param dateFormat
-     *                   the format to use when parsing the Calendar object
+     *            the format to use when parsing the Calendar object
      *
      * @return the generated {@link String} instance.
      */
@@ -290,9 +298,9 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns yesterday's date
+     * Returns yesterday's date.
      *
-     * @return
+     * @return yesterday's date.
      */
     public static Calendar yesterday() {
         final Calendar yesterday = now();
@@ -301,9 +309,9 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * returns tomorrow's date
+     * Returns tomorrow's date.
      *
-     * @return
+     * @return tomorrow's date
      */
     public static Calendar tomorrow() {
         final Calendar yesterday = now();
@@ -312,12 +320,13 @@ public final class Calendars implements Utilitarian {
     }
 
     /**
-     * Creates and returns a {@link Calendar} instance by parsing a given string base on a data format.
+     * Creates and returns a {@link Calendar} instance by parsing a given string
+     * base on a data format.
      *
      * @param value
-     *                   the date in string format
+     *            the date in string format
      * @param dateFormat
-     *                   the format to use when parsing the dateString
+     *            the format to use when parsing the dateString
      *
      * @return the generated {@link Calendar} instance.
      * @throws ParseException

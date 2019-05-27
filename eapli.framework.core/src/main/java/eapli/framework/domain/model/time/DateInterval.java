@@ -65,8 +65,8 @@ public class DateInterval implements ValueObject {
         Preconditions.nonNull(start);
         Preconditions.nonNull(end);
 
-        this.start = Calendars.datePart(start);
-        this.end = Calendars.datePart(end);
+        this.start = Calendars.dateOf(start);
+        this.end = Calendars.dateOf(end);
         period = new TimeInterval(this.start, this.end);
     }
 
@@ -78,7 +78,7 @@ public class DateInterval implements ValueObject {
     public DateInterval(final Calendar start) {
         Preconditions.nonNull(start);
 
-        this.start = Calendars.datePart(start);
+        this.start = Calendars.dateOf(start);
         end = null;
         period = new TimeInterval(this.start);
     }

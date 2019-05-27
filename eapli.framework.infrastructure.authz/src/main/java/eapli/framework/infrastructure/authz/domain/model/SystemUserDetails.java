@@ -44,7 +44,7 @@ public class SystemUserDetails implements UserDetails {
     private final List<GrantedAuthority> authorities;
 
     public SystemUserDetails(final SystemUser user) {
-        password = user.password();
+        password = user.encodedPassword();
         username = user.username().toString();
         isActive = user.isActive();
 
