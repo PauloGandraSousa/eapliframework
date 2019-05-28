@@ -60,10 +60,18 @@ public class UnauthorizedException extends RuntimeException {
                 + original;
     }
 
+    /**
+     *
+     * @return the user trying to access the resource
+     */
     public SystemUser user() {
         return user;
     }
 
+    /**
+     *
+     * @return the roles that are needed to perform the action
+     */
     public Role[] intendedRoles() {
         return roles;
     }

@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.authz.application;
 
@@ -43,6 +40,7 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.util.Calendars;
 
 /**
+ * User Management Service.
  *
  * @author Paulo Gandra de Sousa
  */
@@ -105,9 +103,8 @@ public class UserManagementService {
     }
 
     /**
-     * Creates a user <strong>assuming</strong> the password policy and encoding
-     * have already been enforced. Mostly useful for two-step
-     * signup/registration process.
+     * Creates a user <strong>assuming</strong> the password policy and encoding have already been
+     * enforced. Mostly useful for two-step signup/registration process.
      *
      * @param username
      * @param password
@@ -124,22 +121,48 @@ public class UserManagementService {
         return userRepository.save(newUser);
     }
 
+    /**
+     *
+     * @return all active users
+     */
     public Iterable<SystemUser> activeUsers() {
         return userRepository.findByActive(true);
     }
 
+    /**
+     *
+     * @return all deactivated users
+     */
     public Iterable<SystemUser> deactivatedUsers() {
         return userRepository.findByActive(false);
     }
 
+    /**
+     *
+     * @return all users no matter their status
+     */
     public Iterable<SystemUser> allUsers() {
         return userRepository.findAll();
     }
 
+    /**
+     * Looks up a user by its username.
+     *
+     * @param id
+     * @return an Optional which value is the user with the desired identify. an empty Optional if there
+     *         is no user with that username
+     */
     public Optional<SystemUser> userOfIdentity(final Username id) {
         return userRepository.ofIdentity(id);
     }
 
+    /**
+     * Deactivates a user. Client code must not reference the input parameter after calling this method
+     * and must use the return object instead.
+     *
+     * @param user
+     * @return the updated user.
+     */
     @Transactional
     public SystemUser deactivateUser(final SystemUser user) {
         user.deactivate(Calendars.now());
