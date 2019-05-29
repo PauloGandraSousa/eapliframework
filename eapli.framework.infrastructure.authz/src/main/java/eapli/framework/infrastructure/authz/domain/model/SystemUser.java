@@ -51,15 +51,14 @@ import eapli.framework.visitor.Visitable;
 import eapli.framework.visitor.Visitor;
 
 /**
- * An application user. Objects are constructed thru {@link SystemUserBuilder}
- * to enforce password policy and encoding.
+ * An application user. Objects are constructed thru {@link SystemUserBuilder} to enforce password
+ * policy and encoding.
  *
  * <p>
- * This class follows a DDD approach where User is the root entity of the User
- * Aggregate and all of its properties are instances of value objects. This
- * approach may seem a little more complex than just having String or native
- * type attributes but provides for real semantic of the domain and follows the
- * Single Responsibility Pattern (SRP).
+ * This class follows a DDD approach where User is the root entity of the User Aggregate and all of
+ * its properties are instances of value objects. This approach may seem a little more complex than
+ * just having String or native type attributes but provides for real semantic of the domain and
+ * follows the Single Responsibility Pattern (SRP).
  *
  * @author Paulo Gandra Sousa
  *
@@ -149,7 +148,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     private void init(final Username username, final Password password, final Name name, final EmailAddress email,
             final RoleSet roles, final Calendar createdOn) {
-        Preconditions.nonNull(roles, username, password, name, email, createdOn);
+        Preconditions.noneNull(roles, username, password, name, email, createdOn);
 
         this.createdOn = createdOn;
         this.username = username;
@@ -199,7 +198,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      * Add role to user.
      *
      * @param role
-     *            Role to assign to SystemUser.
+     *             Role to assign to SystemUser.
      */
     public void assignToRole(final RoleAssignment role) {
         roles.add(role);
@@ -209,7 +208,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      * Add role to user.
      *
      * @param role
-     *            Role to assign to SystemUser.
+     *             Role to assign to SystemUser.
      */
     public void assignToRole(final Role role) {
         Preconditions.nonNull(role);
@@ -217,14 +216,12 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * Unassigns a role from user, marking the assignment as expired. The role
-     * assignment is kept in the roles of the user. if the user is not assigned
-     * to the role, this method does nothing.
+     * Unassigns a role from user, marking the assignment as expired. The role assignment is kept in the
+     * roles of the user. if the user is not assigned to the role, this method does nothing.
      *
      * @param role
-     *            Role to remove from SystemUser.
-     * @return true if the user had the role and it was unassigned. false
-     *         otherwise.
+     *             Role to remove from SystemUser.
+     * @return true if the user had the role and it was unassigned. false otherwise.
      */
     public boolean unassignRole(final Role role) {
         Preconditions.nonNull(role);
@@ -253,10 +250,9 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * Checks if this user's password matches a password. We don't want the
-     * password to move outside of the object, so instead of returning it we
-     * pass the responsibility of performing the validation to inside the
-     * object.
+     * Checks if this user's password matches a password. We don't want the password to move outside of
+     * the object, so instead of returning it we pass the responsibility of performing the validation to
+     * inside the object.
      *
      * @param rawPassword
      * @param encoder
@@ -347,8 +343,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * initiates the process to reset a password by generating a validation
-     * token.
+     * initiates the process to reset a password by generating a validation token.
      *
      * @return the validation token to use to complete the password reset
      */
@@ -395,8 +390,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * Checks if this user's non-expired roles comply with all of a set of
-     * roles.
+     * Checks if this user's non-expired roles comply with all of a set of roles.
      *
      * @param roles
      * @return true if the user has all the roles

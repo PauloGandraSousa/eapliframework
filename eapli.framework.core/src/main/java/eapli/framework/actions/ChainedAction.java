@@ -47,7 +47,7 @@ public class ChainedAction implements Action {
     public ChainedAction(final Action current, final Action next) {
         // the cast to Object is needed to force the compiler to fetch the right
         // override {@link Preconditions#nonNull(Object...)}
-        Preconditions.nonNull((Object) current, next);
+        Preconditions.noneNull(current, next);
 
         this.current = current;
         this.next = next;

@@ -23,7 +23,7 @@ package eapli.framework.infrastructure.authz.application.exceptions;
 /**
  * Signals a non existing user session.
  *
- * Created by nuno on 22/03/16.
+ * @author nuno on 22/03/16.
  */
 public class UnauthenticatedException extends RuntimeException {
 

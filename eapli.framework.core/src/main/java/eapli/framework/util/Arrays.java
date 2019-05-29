@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.util;
 
@@ -32,7 +29,7 @@ import java.util.function.UnaryOperator;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Utility class to handle Arrays
+ * Utility class to handle Arrays.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -44,8 +41,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * zips two double arrays in to one. That is, uses the {@code op} operator
-     * to combine the contents of both source arrays z(i) = op(a(i), b(i))
+     * zips two double arrays in to one. That is, uses the {@code op} operator to combine the contents
+     * of both source arrays z(i) = op(a(i), b(i))
      *
      * @param a
      * @param b
@@ -53,7 +50,7 @@ public final class Arrays implements Utilitarian {
      * @return a new array with the zipped contents
      */
     public static double[] zip(final double[] a, final double[] b, final DoubleBinaryOperator op) {
-        Preconditions.nonNull(a, b, op);
+        Preconditions.noneNull(a, b, op);
         final int size = java.lang.Math.min(a.length, b.length);
 
         final double[] res = new double[size];
@@ -65,8 +62,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * creates a new double array picking up the elements of the source array
-     * and applying a mapping function to each element
+     * creates a new double array picking up the elements of the source array and applying a mapping
+     * function to each element
      *
      * @param src
      * @param map
@@ -81,20 +78,20 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * creates a new array picking up the elements of the source array and
-     * applying a mapping function to each element
+     * creates a new array picking up the elements of the source array and applying a mapping function
+     * to each element
      *
      * @param <T>
-     *            the type of the source elements
+     *                the type of the source elements
      * @param <U>
-     *            the type of the mapped elements
+     *                the type of the mapped elements
      * @param src
-     *            the source elements
+     *                the source elements
      * @param creator
-     *            a constructor to create the destination array with the
-     *            expected number of positions
+     *                a constructor to create the destination array with the expected number of
+     *                positions
      * @param map
-     *            the mapping function from source to destination, T -> U
+     *                the mapping function from source to destination, T -> U
      * @return a new array with the mapped contents
      */
     public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator, final Function<T, U> map) {
@@ -106,8 +103,7 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * applies a transformation to each element of an array, mutating the
-     * original array
+     * applies a transformation to each element of an array, mutating the original array
      *
      * @param dest
      * @param map
@@ -119,8 +115,7 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * applies a transformation to each element of an array, mutating the
-     * original array
+     * applies a transformation to each element of an array, mutating the original array
      *
      * @param dest
      * @param map
@@ -132,8 +127,7 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * checks whether an element is present in the array or not. this methods
-     * has O(n) complexity
+     * checks whether an element is present in the array or not. this methods has O(n) complexity
      *
      * @param src
      * @param elem
@@ -144,13 +138,12 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * returns the index of an element is present in the array or -1 otherwise.
-     * this methods has O(n) complexity
+     * returns the index of an element is present in the array or -1 otherwise. this methods has O(n)
+     * complexity
      *
      * @param src
      * @param elem
-     * @return the zero-based index where the element is found in the array. -1
-     *         otherwise
+     * @return the zero-based index where the element is found in the array. -1 otherwise
      */
     public static <T> int indexOf(final T[] src, final T elem) {
         for (int i = 0; i < src.length; i++) {

@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2013-2019 Paulo Gandra de Sousa
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.validations;
 
@@ -30,8 +27,8 @@ import eapli.framework.actions.Actions;
 import eapli.framework.util.Utilitarian;
 
 /**
- * Utility class for expressing and ensuring class/method's invariants. If the
- * invariant does not hold, an IllegalStateException is thrown
+ * Utility class for expressing and ensuring class/method's invariants. If the invariant does not
+ * hold, an IllegalStateException is thrown.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -47,7 +44,7 @@ public final class Invariants extends Validations implements Utilitarian {
      * @param a
      * @param b
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void areEqual(final long a, final long b) {
         areEqual(a, b, Actions.THROW_STATE);
@@ -61,7 +58,7 @@ public final class Invariants extends Validations implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void areEqual(final Object a, final Object b, final String msg) {
         areEqual(a, b, Actions.throwState(msg));
@@ -73,9 +70,9 @@ public final class Invariants extends Validations implements Utilitarian {
      * @param regex
      * @param arg
      * @param msg
-     *            the message text to include in the throw exception
+     *              the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void matches(final Pattern regex, final String arg, final String msg) {
         matches(regex, arg, Actions.throwState(msg));
@@ -86,7 +83,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *
      * @param b
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void ensure(final boolean b) {
         ensure(b, Actions.THROW_STATE);
@@ -99,45 +96,45 @@ public final class Invariants extends Validations implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void ensure(final boolean b, final String msg) {
         ensure(b, Actions.throwState(msg));
     }
 
     /**
-     * ensures an object reference is not null
+     * Ensures an object reference is not null.
      *
      * @param arg
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg) {
-        nonNull(arg, Actions.THROW_STATE);
+        actIfAnyNull(Actions.THROW_STATE, arg);
     }
 
     /**
-     * ensures an object reference is not null
+     * Ensures an object reference is not null.
      *
      * @param arg
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg, final String msg) {
-        nonNull(arg, Actions.throwState(msg));
+        actIfAnyNull(Actions.throwState(msg), arg);
     }
 
     /**
-     * ensures all object references are not null
+     * Ensures all object references are not null.
      *
      * @param arg
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
-    public static void nonNull(final Object... arg) {
-        nonNull(Actions.THROW_STATE, arg);
+    public static void noneNull(final Object... arg) {
+        actIfAnyNull(Actions.THROW_STATE, arg);
     }
 
     /**
@@ -145,7 +142,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *
      * @param items
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items) {
         nonEmpty(items, Actions.THROW_STATE);
@@ -156,9 +153,9 @@ public final class Invariants extends Validations implements Utilitarian {
      *
      * @param items
      * @param msg
-     *            the message text to include in the throw exception
+     *              the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items, final String msg) {
         nonEmpty(items, Actions.throwState(msg));
@@ -169,7 +166,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg) {
         nonEmpty(arg, Actions.THROW_STATE);
@@ -182,7 +179,7 @@ public final class Invariants extends Validations implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg, final String msg) {
         nonEmpty(arg, Actions.throwState(msg));
@@ -193,7 +190,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void isPositive(final long arg) {
         isPositive(arg, Actions.THROW_STATE);
@@ -206,7 +203,7 @@ public final class Invariants extends Validations implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void isPositive(final long arg, final String msg) {
         isPositive(arg, Actions.throwState(msg));
@@ -217,7 +214,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg) {
         nonNegative(arg, Actions.THROW_STATE);
@@ -230,7 +227,7 @@ public final class Invariants extends Validations implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *             if the assertion is unfulfilled
+     *                               if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg, final String msg) {
         nonNegative(arg, Actions.throwState(msg));
