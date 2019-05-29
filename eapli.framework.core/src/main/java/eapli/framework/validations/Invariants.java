@@ -33,13 +33,13 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Invariants extends Validations implements Utilitarian {
+public final class Invariants implements Utilitarian {
     private Invariants() {
         // ensure utility
     }
 
     /**
-     * ensures two values are equal
+     * Ensures two values are equal.
      *
      * @param a
      * @param b
@@ -47,11 +47,11 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void areEqual(final long a, final long b) {
-        areEqual(a, b, Actions.THROW_STATE);
+        Validations.ensureAreEqual(a, b, Actions.THROW_STATE);
     }
 
     /**
-     * ensures two objects are equal
+     * Ensures two objects are equal.
      *
      * @param a
      * @param b
@@ -61,11 +61,11 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void areEqual(final Object a, final Object b, final String msg) {
-        areEqual(a, b, Actions.throwState(msg));
+        Validations.ensureAreEqual(a, b, Actions.throwState(msg));
     }
 
     /**
-     * ensures a string matches a regular expression
+     * Ensures a string matches a regular expression.
      *
      * @param regex
      * @param arg
@@ -75,22 +75,22 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void matches(final Pattern regex, final String arg, final String msg) {
-        matches(regex, arg, Actions.throwState(msg));
+        Validations.ensureMatches(regex, arg, Actions.throwState(msg));
     }
 
     /**
-     * asserts true
+     * Asserts the trueness.
      *
      * @param b
      * @throws IllegalStateException
      *                               if the assertion is unfulfilled
      */
     public static void ensure(final boolean b) {
-        ensure(b, Actions.THROW_STATE);
+        Validations.ensure(b, Actions.THROW_STATE);
     }
 
     /**
-     * asserts true
+     * Asserts the trueness.
      *
      * @param b
      * @param msg
@@ -99,7 +99,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void ensure(final boolean b, final String msg) {
-        ensure(b, Actions.throwState(msg));
+        Validations.ensure(b, Actions.throwState(msg));
     }
 
     /**
@@ -110,7 +110,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg) {
-        actIfAnyNull(Actions.THROW_STATE, arg);
+        Validations.ensureNoneNull(Actions.THROW_STATE, arg);
     }
 
     /**
@@ -123,7 +123,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg, final String msg) {
-        actIfAnyNull(Actions.throwState(msg), arg);
+        Validations.ensureNoneNull(Actions.throwState(msg), arg);
     }
 
     /**
@@ -134,22 +134,22 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void noneNull(final Object... arg) {
-        actIfAnyNull(Actions.THROW_STATE, arg);
+        Validations.ensureNoneNull(Actions.THROW_STATE, arg);
     }
 
     /**
-     * checks if a collection is non null and contains at least an element
+     * Checks if a collection is non null and contains at least an element.
      *
      * @param items
      * @throws IllegalStateException
      *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items) {
-        nonEmpty(items, Actions.THROW_STATE);
+        Validations.ensureNonEmpty(items, Actions.THROW_STATE);
     }
 
     /**
-     * ensures a collection is non null and contains at least an element
+     * Ensures a collection is non null and contains at least an element.
      *
      * @param items
      * @param msg
@@ -158,7 +158,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items, final String msg) {
-        nonEmpty(items, Actions.throwState(msg));
+        Validations.ensureNonEmpty(items, Actions.throwState(msg));
     }
 
     /**
@@ -169,7 +169,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg) {
-        nonEmpty(arg, Actions.THROW_STATE);
+        Validations.ensureNonEmpty(arg, Actions.THROW_STATE);
     }
 
     /**
@@ -182,7 +182,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg, final String msg) {
-        nonEmpty(arg, Actions.throwState(msg));
+        Validations.ensureNonEmpty(arg, Actions.throwState(msg));
     }
 
     /**
@@ -193,7 +193,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void isPositive(final long arg) {
-        isPositive(arg, Actions.THROW_STATE);
+        Validations.ensureIsPositive(arg, Actions.THROW_STATE);
     }
 
     /**
@@ -206,7 +206,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void isPositive(final long arg, final String msg) {
-        isPositive(arg, Actions.throwState(msg));
+        Validations.ensureIsPositive(arg, Actions.throwState(msg));
     }
 
     /**
@@ -217,7 +217,7 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg) {
-        nonNegative(arg, Actions.THROW_STATE);
+        Validations.ensureNonNegative(arg, Actions.THROW_STATE);
     }
 
     /**
@@ -230,6 +230,6 @@ public final class Invariants extends Validations implements Utilitarian {
      *                               if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg, final String msg) {
-        nonNegative(arg, Actions.throwState(msg));
+        Validations.ensureNonNegative(arg, Actions.throwState(msg));
     }
 }

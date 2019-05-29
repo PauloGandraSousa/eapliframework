@@ -20,6 +20,8 @@
  */
 package eapli.framework.validations;
 
+import static eapli.framework.validations.Validations.ensureAreEqual;
+
 import java.util.Collection;
 import java.util.regex.Pattern;
 
@@ -33,20 +35,20 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Preconditions extends Validations implements Utilitarian {
+public final class Preconditions implements Utilitarian {
     private Preconditions() {
         // ensure utility
     }
 
     /**
-     * ensures all object references are not null
+     * Ensures all object references are not null.
      *
      * @param arg
      * @throws IllegalArgumentException
      *                                  if the assertion is unfulfilled
      */
     public static void noneNull(final Object... arg) {
-        actIfAnyNull(Actions.THROW_ARGUMENT, arg);
+        Validations.ensureNoneNull(Actions.THROW_ARGUMENT, arg);
     }
 
     /**
@@ -57,7 +59,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg) {
-        nonNegative(arg, Actions.THROW_ARGUMENT);
+        Validations.ensureNonNegative(arg, Actions.THROW_ARGUMENT);
     }
 
     /**
@@ -70,7 +72,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg, final String msg) {
-        nonNegative(arg, Actions.throwArgument(msg));
+        Validations.ensureNonNegative(arg, Actions.throwArgument(msg));
     }
 
     /**
@@ -82,7 +84,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void areEqual(final long a, final long b) {
-        areEqual(a, b, Actions.THROW_ARGUMENT);
+        ensureAreEqual(a, b, Actions.THROW_ARGUMENT);
     }
 
     /**
@@ -96,7 +98,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void areEqual(final Object a, final Object b, final String msg) {
-        areEqual(a, b, Actions.throwArgument(msg));
+        Validations.ensureAreEqual(a, b, Actions.throwArgument(msg));
     }
 
     /**
@@ -110,7 +112,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void matches(final Pattern regex, final String arg, final String msg) {
-        matches(regex, arg, Actions.throwArgument(msg));
+        Validations.ensureMatches(regex, arg, Actions.throwArgument(msg));
     }
 
     /**
@@ -134,7 +136,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void ensure(final boolean b, final String msg) {
-        ensure(b, Actions.throwArgument(msg));
+        Validations.ensure(b, Actions.throwArgument(msg));
     }
 
     /**
@@ -145,7 +147,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void isPositive(final long arg) {
-        isPositive(arg, Actions.THROW_ARGUMENT);
+        Validations.ensureIsPositive(arg, Actions.THROW_ARGUMENT);
     }
 
     /**
@@ -158,7 +160,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void isPositive(final long arg, final String msg) {
-        isPositive(arg, Actions.throwArgument(msg));
+        Validations.ensureIsPositive(arg, Actions.throwArgument(msg));
     }
 
     /**
@@ -169,7 +171,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg) {
-        actIfAnyNull(Actions.THROW_ARGUMENT, arg);
+        Validations.ensureNoneNull(Actions.THROW_ARGUMENT, arg);
     }
 
     /**
@@ -182,7 +184,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg, final String msg) {
-        actIfAnyNull(Actions.throwArgument(msg), arg);
+        Validations.ensureNoneNull(Actions.throwArgument(msg), arg);
     }
 
     /**
@@ -193,7 +195,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items) {
-        nonEmpty(items, Actions.THROW_ARGUMENT);
+        Validations.ensureNonEmpty(items, Actions.THROW_ARGUMENT);
     }
 
     /**
@@ -206,7 +208,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items, final String msg) {
-        nonEmpty(items, Actions.throwArgument(msg));
+        Validations.ensureNonEmpty(items, Actions.throwArgument(msg));
     }
 
     /**
@@ -217,7 +219,7 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg) {
-        nonEmpty(arg, Actions.THROW_ARGUMENT);
+        Validations.ensureNonEmpty(arg, Actions.THROW_ARGUMENT);
     }
 
     /**
@@ -230,6 +232,6 @@ public final class Preconditions extends Validations implements Utilitarian {
      *                                  if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg, final String msg) {
-        nonEmpty(arg, Actions.throwArgument(msg));
+        Validations.ensureNonEmpty(arg, Actions.throwArgument(msg));
     }
 }

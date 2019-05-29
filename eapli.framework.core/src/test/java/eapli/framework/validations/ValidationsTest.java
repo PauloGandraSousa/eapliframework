@@ -39,46 +39,46 @@ public class ValidationsTest {
 
     @Test
     public void testAreEqualLongDoesNothingIfTrue() {
-        Validations.areEqual(42, 42, Actions.THROW_STATE);
+        Validations.ensureAreEqual(42, 42, Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testAreEqualLongFail() {
-        Validations.areEqual(42, 24, Actions.THROW_STATE);
+        Validations.ensureAreEqual(42, 24, Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test
     public void testAreEqualObjectDoesNothingIfTrue() {
-        Validations.areEqual("abc", "abc", Actions.THROW_STATE);
+        Validations.ensureAreEqual("abc", "abc", Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testAreEqualObjectFail() {
-        Validations.areEqual("abc", "xpto", Actions.THROW_STATE);
+        Validations.ensureAreEqual("abc", "xpto", Actions.THROW_STATE);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testAreEqualObjectFailOn1Null() {
-        Validations.areEqual(null, "xpto", Actions.THROW_STATE);
+        Validations.ensureAreEqual(null, "xpto", Actions.THROW_STATE);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testAreEqualObjectFailOn2Null() {
-        Validations.areEqual("abc", null, Actions.THROW_STATE);
+        Validations.ensureAreEqual("abc", null, Actions.THROW_STATE);
     }
 
     @Test
     public void testMatchesDoNothingIfTrue() {
-        Validations.matches(Pattern.compile("A"), "bcdA234", Actions.THROW_STATE);
+        Validations.ensureMatches(Pattern.compile("A"), "bcdA234", Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testMatchesDoesSomethingIfFalse() {
-        Validations.matches(Pattern.compile("x"), "bcdA234", Actions.THROW_STATE);
+        Validations.ensureMatches(Pattern.compile("x"), "bcdA234", Actions.THROW_STATE);
     }
 
     @Test
@@ -94,100 +94,100 @@ public class ValidationsTest {
 
     @Test
     public void testNonNullDoesNothingIfTrue() {
-        Validations.actIfAnyNull(Actions.THROW_STATE, "abc");
+        Validations.ensureNoneNull(Actions.THROW_STATE, "abc");
         assertTrue(true);
     }
 
     @Test
     public void testNonNullDoesNothingIfTrueForMoreThanOneObject() {
-        Validations.actIfAnyNull(Actions.THROW_STATE, new String(), Double.valueOf(1), "abc");
+        Validations.ensureNoneNull(Actions.THROW_STATE, new String(), Double.valueOf(1), "abc");
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonNullDoesSomethingIfFalse() {
         final Object x = null;
-        Validations.actIfAnyNull(Actions.THROW_STATE, x);
+        Validations.ensureNoneNull(Actions.THROW_STATE, x);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonNullDoesSomethingIfFalseForAtLeastOneObject() {
         final Object x = null;
-        Validations.actIfAnyNull(Actions.THROW_STATE, "abc", x, Integer.valueOf(1));
+        Validations.ensureNoneNull(Actions.THROW_STATE, "abc", x, Integer.valueOf(1));
     }
 
     @Test
     public void testNonEmptyCollectionDoesNothingIfTrue() {
         final Collection<String> col = new ArrayList<>();
         col.add("abc");
-        Validations.nonEmpty(col, Actions.THROW_STATE);
+        Validations.ensureNonEmpty(col, Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonEmptyCollectionDoesSomethingIfNull() {
         final Collection<String> col = null;
-        Validations.nonEmpty(col, Actions.THROW_STATE);
+        Validations.ensureNonEmpty(col, Actions.THROW_STATE);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonEmptyCollectionDoesSomethingIfEmpty() {
         final Collection<String> col = new ArrayList<>();
-        Validations.nonEmpty(col, Actions.THROW_STATE);
+        Validations.ensureNonEmpty(col, Actions.THROW_STATE);
     }
 
     @Test
     public void testNonEmptyStringDoesNothingIfTrue() {
-        Validations.nonEmpty("abc", Actions.THROW_STATE);
+        Validations.ensureNonEmpty("abc", Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonEmptyStringDoesSomethingIfNull() {
         final String x = null;
-        Validations.nonEmpty(x, Actions.THROW_STATE);
+        Validations.ensureNonEmpty(x, Actions.THROW_STATE);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonEmptyStringDoesSomethingIfEmpty() {
-        Validations.nonEmpty("", Actions.THROW_STATE);
+        Validations.ensureNonEmpty("", Actions.THROW_STATE);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonEmptyStringDoesSomethingIfEmpty2() {
-        Validations.nonEmpty("  ", Actions.THROW_STATE);
+        Validations.ensureNonEmpty("  ", Actions.THROW_STATE);
     }
 
     @Test
     public void testIsPositiveDoesNothingIfTrue() {
-        Validations.isPositive(42, Actions.THROW_STATE);
+        Validations.ensureIsPositive(42, Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testIsPositiveDoesSomethingIfZero() {
-        Validations.isPositive(0, Actions.THROW_STATE);
+        Validations.ensureIsPositive(0, Actions.THROW_STATE);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testIsPositiveDoesSomethingIfNegative() {
-        Validations.isPositive(-10, Actions.THROW_STATE);
+        Validations.ensureIsPositive(-10, Actions.THROW_STATE);
     }
 
     @Test
     public void testNonNegativeDoesNothingIfPositive() {
-        Validations.nonNegative(42, Actions.THROW_STATE);
+        Validations.ensureNonNegative(42, Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test
     public void testNonNegativeDoesNothingIfZero() {
-        Validations.nonNegative(0, Actions.THROW_STATE);
+        Validations.ensureNonNegative(0, Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testNonNegativeDoesSomethingIfNegative() {
-        Validations.nonNegative(-10, Actions.THROW_STATE);
+        Validations.ensureNonNegative(-10, Actions.THROW_STATE);
     }
 }
