@@ -241,6 +241,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     public GeneralDTO toDTO() {
         final GeneralDTO ret = new GeneralDTO("user");
         ret.put("username", username.toString());
+        // the password should not leave this object...
         // ret.put("password", password.toString());
         ret.put("name", name.toString());
         ret.put("email", email.toString());
