@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -37,7 +37,8 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
 /**
- * Implementation of Spring Security UserDetailsService to glue with EAPLI Framework Authz.
+ * Implementation of Spring Security UserDetailsService to glue with EAPLI
+ * Framework Authz.
  *
  * @author Paulo Gandra de Sousa 24/05/2019
  *

@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,8 @@ import eapli.framework.util.Utilitarian;
  * Number Predicates. Predicates are functions that test a condition and return
  * a boolean value. in this case the test is done over numeric (long) arguments.
  *
- * the function signature is
+ * <p>
+ * The function signature is
  *
  * <pre>
  * Long -> Boolean

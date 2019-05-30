@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -38,7 +38,7 @@ import eapli.framework.util.Utilitarian;
  * </code>
  * </pre>
  *
- * see also {@link org.apache.commons.lang3.StringUtils}
+ * See also {@link org.apache.commons.lang3.StringUtils}
  *
  * @author Paulo Gandra Sousa
  *
