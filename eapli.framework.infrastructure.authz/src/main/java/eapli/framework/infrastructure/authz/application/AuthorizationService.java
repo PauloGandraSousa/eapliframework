@@ -28,7 +28,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedException;
-import eapli.framework.infrastructure.authz.application.exceptions.UserSessionNotInitiatedException;
+import eapli.framework.infrastructure.authz.application.exceptions.UnauthenticatedException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
@@ -126,12 +126,12 @@ public final class AuthorizationService {
      * exceptions but accounted for
      *
      * @param actions
-     * @throws UserSessionNotInitiatedException
+     * @throws UnauthenticatedException
      * @throws UnauthorizedException
      *
      */
     public void ensureAuthenticatedUserHasAnyOf(final Role... actions) {
-        final UserSession us = session().orElseThrow(UserSessionNotInitiatedException::new);
+        final UserSession us = session().orElseThrow(UnauthenticatedException::new);
         if (!us.authenticatedUser().hasAny(actions)) {
             throw new UnauthorizedException(us.authenticatedUser(), actions);
         }

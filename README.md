@@ -1,35 +1,41 @@
-# README #
+# EAPLI Framework
 
+Version: **8.0.0**
 
-## What is this repository for? ##
+## What is this repository for?
 
-*Quick summary*
+### Quick summary
 
 Sample Application Framework for teaching Domain Driven Design and JPA Persistence in the course unit "Engenharia de Aplica��es" of the course "Licenciatura em Engenharia Inform�tica" of the [Instituto Superior de Engenharia do Porto](http://www.isep.ipp.pt).
 
 Feel free to fork and pull-request.
 
-Version: 7.0.0
+Have a look at the companion applications eCafeteria for examples on how to use the framework.
 
-## How do I get set up? ##
+- [eCafeteria Spring](https://bitbucket.org/pag_isep/ecafeteria-spring) - spring boot based command line applications and REST services
+- [eCafeteria Base](https://bitbucket.org/pag_isep/ecafeteria-base) - a "traditional" command line application without dependency injection
 
-*Summary of set up*
+## How do I get set up?
+
+### Summary of set up
 
 Start by reading the technical description available in the [documentation folder](/documentation).
 
-Most top level packages have UML diagrams to provide more context of classes in that package. diagrams were created using [PlantUML](http://plantuml.com/).  
+Most top level packages have UML diagrams to provide more context of classes in that package. diagrams were created using [PlantUML](http://plantuml.com/).
 
 To update images from the PantUML files use the following instruction:
 
-	java -jar plantuml.jar -tpng *.puml
+```
+java -jar plantuml.jar -tpng *.puml
+```
 
 Check the sample configuration provided in the [documentation folder](/documentation) on how to use this framework inside your projects.
 
-For a sample project using this framework, go to https://bitbucket.org/pag_isep/ecafeteria-spring
+For a sample project using this framework, go to <https://bitbucket.org/pag_isep/ecafeteria-spring>
 
-*Configuration*
+### Configuration
 
-*Dependencies*
+### Dependencies
 
 All compile, test and runtime dependencies are managed thru maven. Main dependencies include:
 
@@ -39,11 +45,11 @@ All compile, test and runtime dependencies are managed thru maven. Main dependen
 - Spring Framework
 - Spring Data JPA
 
-*Database configuration*
+### Database configuration
 
-*How to run tests*
+### How to run tests
 
-*Deployment instructions*
+### Deployment instructions
 
 use maven on the top level project to compile the three components:
 
@@ -51,14 +57,14 @@ use maven on the top level project to compile the three components:
 - infrastructure authz
 - infrastructure pub/sub
 
-### Contribution guidelines ###
+### Contribution guidelines
 
-*Writing tests*
+### Writing tests
 
-*Code review*
+### Code review
 
-*Other guidelines*
+### Other guidelines
 
-## Who do I talk to? ##
+## Who do I talk to?
 
 Paulo Gandra de Sousa [pag@isep.ipp.pt](emailto:pag@isep.ipp.pt) / [pagsousa@gmail.com](emailto:pagsousa@gmail.com)
