@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.authz.springsecurity;
+package eapli.framework.infrastructure.authz.application;
 
 import java.util.Optional;
 
@@ -47,15 +47,23 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger LOGGER = LogManager.getLogger(UserDetailsServiceImpl.class);
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final AuthorizationService authz;
 
-    @Transactional(readOnly = true)
+    @Autowired
+    public UserDetailsServiceImpl(final UserRepository userRepository, final AuthorizationService authz) {
+        this.userRepository = userRepository;
+        this.authz = authz;
+    }
+
     @Override
+    @Transactional(readOnly = true)
     @SuppressWarnings("squid:RedundantThrowsDeclarationCheck")
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         LOGGER.debug("Trying to loadUserByUsername() : {}", username);
         final Optional<SystemUser> user = userRepository.ofIdentity(Username.valueOf(username));
+
+        authz.setSession(user.map(UserSession::new));
         return user.map(SystemUserDetails::new).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

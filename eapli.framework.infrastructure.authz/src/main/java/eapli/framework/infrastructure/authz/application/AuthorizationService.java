@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,12 @@ package eapli.framework.infrastructure.authz.application;
 
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedException;
 import eapli.framework.infrastructure.authz.application.exceptions.UnauthenticatedException;
+import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
@@ -39,25 +41,23 @@ import eapli.framework.validations.Preconditions;
  * roles assigned to a user.
  *
  * <p>
- * note that this class is conceptually a singleton as it holds the Session
- * object. ensure that you set up spring correctly and if you create the
- * instances yourself, make sure you handle the singletonness nature of the
- * object.
+ * To use this class either have it injected by spring or get an instance thru
+ * {@link AuthzRegistry#authorizationService()}
  *
  * @author Paulo Gandra de Sousa
  *
  */
 @Component
 public final class AuthorizationService {
+    private static final Logger LOGGER = LogManager.getLogger(AuthorizationService.class);
 
     /**
-     * the current logged in user session
+     * the current logged in user session.
      */
     private Optional<UserSession> theSession = Optional.empty();
 
     /**
-     * hiding the constructor so that this class is used either by spring or
-     * thru {@link AuthzRegistry#authorizationService()}
+     * Hiding the constructor.
      */
     protected AuthorizationService() {
         // empty
@@ -65,7 +65,7 @@ public final class AuthorizationService {
 
     /**
      * internal method to set the session after authentication has been
-     * performed
+     * performed.
      *
      * @param session
      */
@@ -96,9 +96,9 @@ public final class AuthorizationService {
     }
 
     /**
-     * Returns the current session or an empty optional if there is no session
+     * Returns the current session or an empty optional if there is no session.
      *
-     * @return the current session or an empty optional if there is no session
+     * @return the current session or an empty optional if there is no session.
      */
     public Optional<UserSession> session() {
         return theSession;
@@ -131,8 +131,12 @@ public final class AuthorizationService {
      *
      */
     public void ensureAuthenticatedUserHasAnyOf(final Role... actions) {
-        final UserSession us = session().orElseThrow(UnauthenticatedException::new);
+        final UserSession us = session().orElseThrow(() -> {
+            LOGGER.info("Unauthenticated access attempt");
+            return new UnauthenticatedException();
+        });
         if (!us.authenticatedUser().hasAny(actions)) {
+            LOGGER.info("Unauthorized access attempt by user {}", us.authenticatedUser().username());
             throw new UnauthorizedException(us.authenticatedUser(), actions);
         }
     }
