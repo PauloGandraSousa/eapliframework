@@ -41,6 +41,11 @@ import eapli.framework.validations.Preconditions;
  * roles assigned to a user.
  *
  * <p>
+ * The session is set by
+ * {@link AuthenticationService#authenticate(String, String, Role...)} or
+ * {@link UserDetailsServiceImpl#loadUserByUsername(String)}.
+ *
+ * <p>
  * To use this class either have it injected by spring or get an instance thru
  * {@link AuthzRegistry#authorizationService()}
  *
@@ -57,15 +62,15 @@ public final class AuthorizationService {
     private Optional<UserSession> theSession = Optional.empty();
 
     /**
-     * Hiding the constructor.
+     * Hiding the constructor so no direct creation of objects is possible.
      */
     protected AuthorizationService() {
         // empty
     }
 
     /**
-     * internal method to set the session after authentication has been
-     * performed.
+     * Sets the session after authentication has been performed (package
+     * method).
      *
      * @param session
      */

@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -103,8 +103,9 @@ public class UserManagementService {
     }
 
     /**
-     * Creates a user <strong>assuming</strong> the password policy and encoding have already been
-     * enforced. Mostly useful for two-step signup/registration process.
+     * Creates a user <strong>assuming</strong> the password policy and encoding
+     * have already been enforced. Mostly useful for two-step
+     * signup/registration process.
      *
      * @param username
      * @param password
@@ -149,16 +150,16 @@ public class UserManagementService {
      * Looks up a user by its username.
      *
      * @param id
-     * @return an Optional which value is the user with the desired identify. an empty Optional if there
-     *         is no user with that username
+     * @return an Optional which value is the user with the desired identify. an
+     *         empty Optional if there is no user with that username
      */
     public Optional<SystemUser> userOfIdentity(final Username id) {
         return userRepository.ofIdentity(id);
     }
 
     /**
-     * Deactivates a user. Client code must not reference the input parameter after calling this method
-     * and must use the return object instead.
+     * Deactivates a user. Client code must not reference the input parameter
+     * after calling this method and must use the return object instead.
      *
      * @param user
      * @return the updated user.
