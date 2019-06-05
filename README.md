@@ -21,9 +21,9 @@ Paulo Gandra de Sousa [pag@isep.ipp.pt](emailto:pag@isep.ipp.pt) / [pagsousa@gma
 
 There are three main components to the framework:
 
-- core: the core classes
-- authz: simple authentication and authorization
-- pub/sub: simple event dispatcher
+- **core** (v8.0.0): the core classes
+- **authz** (v8.0.0): simple authentication and authorization
+- **pub/sub** (v1.0.0): simple event dispatcher
 
 ### Core library
 
@@ -47,11 +47,13 @@ Most top level packages have UML diagrams to provide more context of classes in 
 
 To update images from the PantUML files use the following instruction:
 
-```
+```cmd
 java -jar plantuml.jar -tpng *.puml
 ```
 
 ### Configuration
+
+t.b.d.
 
 ### Dependencies
 
@@ -65,11 +67,15 @@ All compile, test and runtime dependencies are managed thru maven. Main dependen
 
 ### Database configuration
 
+t.b.d.
+
 ### How to run tests
+
+Building with maven will automatically run all unit tests in the projects.
 
 ### Deployment instructions
 
-use maven on the top level project to compile the three components:
+Use maven on the top level project to compile the three components:
 
 - core
 - infrastructure authz
@@ -77,8 +83,16 @@ use maven on the top level project to compile the three components:
 
 ### Contribution guidelines
 
+Feel free to fork the repo, commit, push and create pull-requests. Please follow the same approach as the existing code, add the necessary and meaningfull unit tests.
+
 ### Writing tests
+
+Unit tests should focus on the domain invariants.
 
 ### Code review
 
+t.b.d.
+
 ### Other guidelines
+
+t.b.d.
