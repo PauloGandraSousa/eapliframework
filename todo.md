@@ -11,15 +11,19 @@ Ideas about improvements
 - Java 8 time
 
   - [toughts on java](https://thoughts-on-java.org/persist-localdate-localdatetime-jpa/)
+  - [baeldung](https://www.baeldung.com/spring-data-java-8)
 
 - POST the build result to the download page in bitbucket
 
   - [deploying to bitbucket](https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html)
   - [bitbucket api](https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Busername%7D/%7Brepo_slug%7D/downloads)
 
-- Google [Guava](https://github.com/google/guava)
+- Functional
 
-- Tuples
+  - [Atalasian fugue](https://bitbucket.org/atlassian/fugue/src/master/)
+  - Google [Guava](https://github.com/google/guava)
+  - [vavr](https://www.vavr.io/)
+  - Tuples
 
-  - [Apache Commons Tuple](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/tuple/package-summary.html)
-  - [javatuple](https://www.javatuples.org/) and [Baeldung on javatuples](https://www.baeldung.com/java-tuples)
+    - [Apache Commons Tuple](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/tuple/package-summary.html)
+    - [javatuple](https://www.javatuples.org/) and [Baeldung on javatuples](https://www.baeldung.com/java-tuples)
