@@ -36,18 +36,16 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Very simple session holder and permission checking helper. Note that it does
- * not check the permissions against any type of database but relies on the
+ * Very simple session holder and permission checking helper. To obtain a valid
+ * session, use either Spring Security and the
+ * {@link UserDetailsServiceImpl#loadUserByUsername(String) UserDetailService}
+ * implementation or
+ * {@link AuthenticationService#authenticate(String, String, Role...)} - you can
+ * obtain an instance thru {@link AuthzRegistry#authorizationService()}.
+ *
+ * <p>
+ * Permissions are not checked dynamically against a database but against the
  * roles assigned to a user.
- *
- * <p>
- * The session is set by
- * {@link AuthenticationService#authenticate(String, String, Role...)} or
- * {@link UserDetailsServiceImpl#loadUserByUsername(String)}.
- *
- * <p>
- * To use this class either have it injected by spring or get an instance thru
- * {@link AuthzRegistry#authorizationService()}
  *
  * @author Paulo Gandra de Sousa
  *

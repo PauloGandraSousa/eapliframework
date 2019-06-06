@@ -24,8 +24,8 @@
 package eapli.framework.util;
 
 /**
- * Marker interface for utilitarian classes. Typically it will be a final class
- * with just static methods
+ * Marker interface for utilitarian classes, i.e., a final class with all static
+ * methods.
  *
  * @author Paulo Gandra de Sousa
  *

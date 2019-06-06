@@ -38,7 +38,7 @@ import eapli.framework.validations.Preconditions;
 
 /**
  * A password of a user. Password policy and encoding is done outside of this
- * class by {@link SystemUserBuilder} and {@link PasswordEnforcer}.
+ * class by {@link SystemUserBuilder} and {@link PasswordEncoder}.
  *
  * <p>
  * IMPORTANT: passwords should never be stored in plain format

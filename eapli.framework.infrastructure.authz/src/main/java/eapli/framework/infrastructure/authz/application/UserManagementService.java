@@ -40,7 +40,8 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.util.Calendars;
 
 /**
- * User Management Service.
+ * User Management Service. Provides the typical application use cases for
+ * managing {@link SystemUser}, e.g., adding, deactivating, listing, searching.
  *
  * @author Paulo Gandra de Sousa
  */
@@ -65,7 +66,8 @@ public class UserManagementService {
     }
 
     /**
-     * Registers a new user in the system.
+     * Registers a new user in the system allowing to specify when the user
+     * account was created.
      *
      * @param username
      * @param rawPassword
@@ -103,9 +105,9 @@ public class UserManagementService {
     }
 
     /**
-     * Creates a user <strong>assuming</strong> the password policy and encoding
-     * have already been enforced. Mostly useful for two-step
-     * signup/registration process.
+     * Registers a new user in the system. Mostly useful for two-step
+     * signup/registration process where the domain objects were already created
+     * by another process, e.g., signup.
      *
      * @param username
      * @param password

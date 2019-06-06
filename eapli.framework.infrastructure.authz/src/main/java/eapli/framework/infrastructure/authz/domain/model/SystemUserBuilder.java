@@ -128,10 +128,9 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
     }
 
     /**
-     * Sets the password of the user <strong>assuming</strong> that password
-     * policy enforcement and encoding have already been performed. This method
-     * is mostly to be used to support the registration process where a password
-     * has already been validated and encoded.
+     * Sets the password of the user. This method is mostly to be used to
+     * support the registration process where a password has already been
+     * validated and encoded.
      *
      * @param password
      * @return this builder
