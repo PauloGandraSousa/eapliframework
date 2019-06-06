@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -31,7 +31,8 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A persistent time period. Both the date and the time part of calendar are relevant
+ * A persistent time period. Both the date and the time part of calendar are
+ * relevant
  *
  * @author Paulo Gandra Sousa
  *
@@ -91,7 +92,7 @@ public class TimestampInterval implements ValueObject {
 
     /**
      * Checks if the given date is within this interval.
-     * 
+     *
      * @param target
      * @return true if the given date is within this interval
      */

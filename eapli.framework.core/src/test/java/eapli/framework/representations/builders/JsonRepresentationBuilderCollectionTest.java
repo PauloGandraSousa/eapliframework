@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -225,8 +225,8 @@ public class JsonRepresentationBuilderCollectionTest {
     @Ignore // due to differences in time zones with bitbucket pipeline
     public void ensureArrayWithDateElement() {
         final String expected = "{\"name\":[\"2019-04-22T23:00Z\"]}";
-        final String actual = subject.startObject("Test").startCollection("name")
-                .withElement(Calendars.of(2019, 4, 23)).endCollection().build();
+        final String actual = subject.startObject("Test").startCollection("name").withElement(Calendars.of(2019, 4, 23))
+                .endCollection().build();
 
         System.out.println("ensureArrayWithDateElement");
         System.out.println("Expected: " + expected);

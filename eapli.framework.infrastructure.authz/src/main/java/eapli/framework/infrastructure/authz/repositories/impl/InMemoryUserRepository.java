@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,11 +32,10 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
  *
  * Created by nuno on 20/03/16.
  */
-public class InMemoryUserRepository extends InMemoryDomainRepository<Username, SystemUser>
-        implements UserRepository {
+public class InMemoryUserRepository extends InMemoryDomainRepository<Username, SystemUser> implements UserRepository {
 
     @Override
-    public Iterable<SystemUser> findByActive(boolean active) {
+    public Iterable<SystemUser> findByActive(final boolean active) {
         return match(e -> e.isActive() == active);
     }
 }

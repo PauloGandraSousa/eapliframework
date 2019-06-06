@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ public class GeneralDtoForCollectionClassTest extends GeneralDtoBaseTest {
 
     protected static class WithListClass {
         protected final int intField;
-        protected final List<SimpleClass> data = new ArrayList<SimpleClass>();
+        protected final List<SimpleClass> data = new ArrayList<>();
 
         public WithListClass(final int n, final SimpleClass c) {
             intField = n;

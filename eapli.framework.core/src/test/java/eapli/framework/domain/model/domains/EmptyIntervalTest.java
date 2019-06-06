@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,6 @@ import java.util.stream.LongStream;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domain.model.domains.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -53,8 +51,7 @@ public class EmptyIntervalTest extends IntervalTestBase {
 
     @Test
     public void ensureDoesNotInclude() {
-        final boolean result = LongStream.range(START_VALUE * -2L, END_VALUE * -2L)
-                .noneMatch(x -> subject.includes(x));
+        final boolean result = LongStream.range(START_VALUE * -2L, END_VALUE * -2L).noneMatch(x -> subject.includes(x));
         assertTrue(result);
     }
 

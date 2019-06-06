@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -29,8 +29,8 @@ import eapli.framework.actions.Actions;
 import eapli.framework.util.Utilitarian;
 
 /**
- * Utility class for validating preconditions, usually on function parameters. if the precondition
- * is not met, an IllegalArgumentException is thrown.
+ * Utility class for validating preconditions, usually on function parameters.
+ * if the precondition is not met, an IllegalArgumentException is thrown.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -45,7 +45,7 @@ public final class Preconditions implements Utilitarian {
      *
      * @param arg
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void noneNull(final Object... arg) {
         Validations.ensureNoneNull(Actions.THROW_ARGUMENT, arg);
@@ -56,7 +56,7 @@ public final class Preconditions implements Utilitarian {
      *
      * @param arg
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg) {
         Validations.ensureNonNegative(arg, Actions.THROW_ARGUMENT);
@@ -69,7 +69,7 @@ public final class Preconditions implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg, final String msg) {
         Validations.ensureNonNegative(arg, Actions.throwArgument(msg));
@@ -81,7 +81,7 @@ public final class Preconditions implements Utilitarian {
      * @param a
      * @param b
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void areEqual(final long a, final long b) {
         ensureAreEqual(a, b, Actions.THROW_ARGUMENT);
@@ -95,7 +95,7 @@ public final class Preconditions implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void areEqual(final Object a, final Object b, final String msg) {
         Validations.ensureAreEqual(a, b, Actions.throwArgument(msg));
@@ -107,9 +107,9 @@ public final class Preconditions implements Utilitarian {
      * @param regex
      * @param arg
      * @param msg
-     *              the message text to include in the throw exception
+     *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void matches(final Pattern regex, final String arg, final String msg) {
         Validations.ensureMatches(regex, arg, Actions.throwArgument(msg));
@@ -120,7 +120,7 @@ public final class Preconditions implements Utilitarian {
      *
      * @param b
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b) {
         ensure(b, "");
@@ -133,7 +133,7 @@ public final class Preconditions implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b, final String msg) {
         Validations.ensure(b, Actions.throwArgument(msg));
@@ -144,7 +144,7 @@ public final class Preconditions implements Utilitarian {
      *
      * @param arg
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void isPositive(final long arg) {
         Validations.ensureIsPositive(arg, Actions.THROW_ARGUMENT);
@@ -157,7 +157,7 @@ public final class Preconditions implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void isPositive(final long arg, final String msg) {
         Validations.ensureIsPositive(arg, Actions.throwArgument(msg));
@@ -168,7 +168,7 @@ public final class Preconditions implements Utilitarian {
      *
      * @param arg
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg) {
         Validations.ensureNoneNull(Actions.THROW_ARGUMENT, arg);
@@ -181,7 +181,7 @@ public final class Preconditions implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg, final String msg) {
         Validations.ensureNoneNull(Actions.throwArgument(msg), arg);
@@ -192,7 +192,7 @@ public final class Preconditions implements Utilitarian {
      *
      * @param items
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items) {
         Validations.ensureNonEmpty(items, Actions.THROW_ARGUMENT);
@@ -203,9 +203,9 @@ public final class Preconditions implements Utilitarian {
      *
      * @param items
      * @param msg
-     *              the message text to include in the throw exception
+     *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items, final String msg) {
         Validations.ensureNonEmpty(items, Actions.throwArgument(msg));
@@ -216,7 +216,7 @@ public final class Preconditions implements Utilitarian {
      *
      * @param arg
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg) {
         Validations.ensureNonEmpty(arg, Actions.THROW_ARGUMENT);
@@ -229,7 +229,7 @@ public final class Preconditions implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalArgumentException
-     *                                  if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg, final String msg) {
         Validations.ensureNonEmpty(arg, Actions.throwArgument(msg));

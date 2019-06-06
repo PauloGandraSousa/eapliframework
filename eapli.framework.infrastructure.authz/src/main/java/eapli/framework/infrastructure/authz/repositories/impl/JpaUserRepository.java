@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,15 +38,14 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
  * Created by nuno on 20/03/16.
  */
 @Component
-class JpaUserRepository extends JpaBaseRepository<SystemUser, Username, Username>
-        implements UserRepository {
+class JpaUserRepository extends JpaBaseRepository<SystemUser, Username, Username> implements UserRepository {
 
     public JpaUserRepository() {
         super("username");
     }
 
     @Override
-    public Iterable<SystemUser> findByActive(boolean active) {
+    public Iterable<SystemUser> findByActive(final boolean active) {
         return match(UserRepositoryConstants.FIND_BY_ACTIVE, "active", active);
     }
 

@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -28,7 +28,8 @@ import java.util.Random;
  * <p>
  * make sure you check
  * https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS2245&rule_key=squid%3AS2245
- * in order to understand the security issues that rise from using pseudorandon number generators
+ * in order to understand the security issues that rise from using pseudorandon
+ * number generators
  */
 public final class NumberGenerator implements Utilitarian {
     @SuppressWarnings("squid:S2245")
@@ -49,7 +50,8 @@ public final class NumberGenerator implements Utilitarian {
     /**
      *
      * @param bound
-     * @return a pseudo random integer between 0 (inclusive) and {@code bound} (exclusive)
+     * @return a pseudo random integer between 0 (inclusive) and {@code bound}
+     *         (exclusive)
      */
     public static int anInt(final int bound) {
         return RANDOM_GEN.nextInt(bound);

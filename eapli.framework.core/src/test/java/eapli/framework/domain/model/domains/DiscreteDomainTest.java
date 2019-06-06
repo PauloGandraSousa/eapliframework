@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,6 @@ import java.util.Iterator;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import eapli.framework.domain.model.domains.DiscreteDomain;
-import eapli.framework.domain.model.domains.DiscreteDomainBuilder;
 
 /**
  * @author Paulo Gandra Sousa
@@ -72,7 +69,7 @@ public class DiscreteDomainTest {
     }
 
     private static DiscreteDomainBuilder<Long> builder(final long begin, final long end) {
-        final DiscreteDomainBuilder<Long> builder = new DiscreteDomainBuilder<Long>();
+        final DiscreteDomainBuilder<Long> builder = new DiscreteDomainBuilder<>();
         for (long i = begin; i <= end; i++) {
             builder.add(i);
         }

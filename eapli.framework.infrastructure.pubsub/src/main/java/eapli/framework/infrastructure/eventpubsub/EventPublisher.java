@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +34,10 @@ import eapli.framework.domain.events.DomainEvent;
  */
 public interface EventPublisher {
     /**
-     * publishes an event in the system, triggering notification of all interested
-     * parties. each implementation may deal differently with asynchronicity of this
-     * operation; for instance, by executing the notification in a separate thread
-     * or in a parallel way
+     * publishes an event in the system, triggering notification of all
+     * interested parties. each implementation may deal differently with
+     * asynchronicity of this operation; for instance, by executing the
+     * notification in a separate thread or in a parallel way
      *
      * @param event
      */

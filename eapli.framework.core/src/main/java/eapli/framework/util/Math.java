@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -39,15 +39,15 @@ public final class Math implements Utilitarian {
      *
      * @author NMB
      * @param oldMin
-     *                 - exemplo 0
+     *            - exemplo 0
      * @param oldMax
-     *                 - exemplo 100
+     *            - exemplo 100
      * @param newMin
-     *                 - exemplo 0
+     *            - exemplo 0
      * @param newMax
-     *                 - exemplo 10
+     *            - exemplo 10
      * @param oldValue
-     *                 - exemplo 50
+     *            - exemplo 50
      * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
      */
     public static float simpleLinearConversion(final float oldMin, final float oldMax, final float newMin,
@@ -60,15 +60,15 @@ public final class Math implements Utilitarian {
      *
      * @author NMB
      * @param oldMin
-     *                 - exemplo 0
+     *            - exemplo 0
      * @param oldMax
-     *                 - exemplo 100
+     *            - exemplo 100
      * @param newMin
-     *                 - exemplo 0
+     *            - exemplo 0
      * @param newMax
-     *                 - exemplo 10
+     *            - exemplo 10
      * @param oldValue
-     *                 - exemplo 50
+     *            - exemplo 50
      * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
      */
     public static BigDecimal simpleLinearConversion(final BigDecimal oldMin, final BigDecimal oldMax,
@@ -81,8 +81,8 @@ public final class Math implements Utilitarian {
     }
 
     /**
-     * Calculates {@code base} to the power of {@code exp} as a long value instead of double from the
-     * standard Java Library
+     * Calculates {@code base} to the power of {@code exp} as a long value
+     * instead of double from the standard Java Library
      *
      * @param base
      * @param exp

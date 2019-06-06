@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -35,7 +35,7 @@ public interface UserRepository extends DomainRepository<Username, SystemUser> {
      * returns the currently active/inactive users
      *
      * @param active
-     *               the status we want to look for
+     *            the status we want to look for
      *
      * @return the currently active/inactive users
      */

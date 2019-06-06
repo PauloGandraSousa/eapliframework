@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -37,7 +37,8 @@ import eapli.framework.validations.Preconditions;
 /**
  * An immutable vector.
  * <p>
- * Vector indexes are 1-based, so a Vector with length 4 will have indexes 1, 2, 3 and 4
+ * Vector indexes are 1-based, so a Vector with length 4 will have indexes 1, 2,
+ * 3 and 4
  *
  * @author Paulo Gandra Sousa
  *
@@ -156,7 +157,7 @@ public class Vector implements ValueObject {
      * Creates a vector with all elements with the value 0.0
      *
      * @param n
-     *             size of the vector to create
+     *            size of the vector to create
      * @param type
      * @return a vector with all elements with value 0
      */
@@ -186,7 +187,8 @@ public class Vector implements ValueObject {
     }
 
     /**
-     * Returns the element at a certain index in the vector. Indexes are 1-based.
+     * Returns the element at a certain index in the vector. Indexes are
+     * 1-based.
      *
      * @param i
      * @return the element at a certain index in the vector
@@ -315,8 +317,8 @@ public class Vector implements ValueObject {
     }
 
     /**
-     * Checks if this is a unit vector. Comparison is performed with a error margin since we are dealing
-     * with double values.
+     * Checks if this is a unit vector. Comparison is performed with a error
+     * margin since we are dealing with double values.
      *
      * @return true if this is a unit vector
      */
@@ -335,8 +337,8 @@ public class Vector implements ValueObject {
     }
 
     /**
-     * Checks if all elements of the vector are zero. Comparison is performed with a error margin since
-     * we are dealing with double values.
+     * Checks if all elements of the vector are zero. Comparison is performed
+     * with a error margin since we are dealing with double values.
      *
      * @return true if all elements of the vector are zero
      */

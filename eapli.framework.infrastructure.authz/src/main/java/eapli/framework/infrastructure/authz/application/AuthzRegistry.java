@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -27,8 +27,8 @@ import eapli.framework.util.Singleton;
 import eapli.framework.validations.Invariants;
 
 /**
- * Registry of all authz service objects. Helper class for scenarios without spring Dependency
- * Injection.
+ * Registry of all authz service objects. Helper class for scenarios without
+ * spring Dependency Injection.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -44,8 +44,9 @@ public final class AuthzRegistry implements Singleton {
     }
 
     /**
-     * Helper method to initialize the registry in case you are not using Spring Dependency Injection.
-     * This method should be called <strong>only once</strong> on application startup.
+     * Helper method to initialize the registry in case you are not using Spring
+     * Dependency Injection. This method should be called <strong>only
+     * once</strong> on application startup.
      *
      * @param userRepo
      * @param policy
