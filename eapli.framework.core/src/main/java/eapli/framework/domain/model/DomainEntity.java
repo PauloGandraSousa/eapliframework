@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -25,14 +25,15 @@ import java.io.Serializable;
 import eapli.framework.domain.model.identities.Identifiable;
 
 /**
- * An entity is a Domain-Driven Design pattern for concepts in the domain which have a thread of
- * continuity which needs to be tracked.
+ * An entity is a Domain-Driven Design pattern for concepts in the domain which
+ * have a thread of continuity which needs to be tracked.
  *
  * <p>
- * These concepts matter by their identity and we need to track them continuously. Instance equality
- * must be done thru the identity of the objects and we cannot loose track or allow duplication of
- * an entity. By definition a domain entity always has a business identity, so it should be
- * impossible to create new instances without identity.
+ * These concepts matter by their identity and we need to track them
+ * continuously. Instance equality must be done thru the identity of the objects
+ * and we cannot loose track or allow duplication of an entity. By definition a
+ * domain entity always has a business identity, so it should be impossible to
+ * create new instances without identity.
  *
  * <p>
  * Typical examples are:
@@ -43,8 +44,8 @@ import eapli.framework.domain.model.identities.Identifiable;
  * </ul>
  *
  * <p>
- * Since we will provably persist entities using JPA we are also forcing the implementation of
- * {@code Serializable}.
+ * Since we will provably persist entities using JPA we are also forcing the
+ * implementation of {@code Serializable}.
  *
  * @param <I>
  *            the type of the primary <b>business</b> id of the entity
@@ -54,12 +55,15 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
         extends Identifiable<I>, Comparable<I>, Serializable {
 
     /**
-     * Entities are compared by identity only. No need to compare all fields of the object. you can use
-     * the {@link DomainEntities#areEqual(DomainEntity, Object)} method as default implementation
+     * Entities are compared by identity only. No need to compare all fields of
+     * the object. you can use the
+     * {@link DomainEntities#areEqual(DomainEntity, Object)} method as default
+     * implementation
      *
      * <p>
-     * be careful that if your entities are using the ORM generated primary key as their business
-     * identity, you MUST properly implement equals() and hashcode(). See <a href=
+     * be careful that if your entities are using the ORM generated primary key
+     * as their business identity, you MUST properly implement equals() and
+     * hashcode(). See <a href=
      * "https://thoughts-on-java.org/ultimate-guide-to-implementing-equals-and-hashcode-with-hibernate/">Toughts
      * on java</a>
      *
@@ -67,18 +71,20 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
      * see {@link #sameAs(Object)}.
      *
      * @param other
-     * @return true if this domain entity refers to the same real-world entity as the {@code other}
+     * @return true if this domain entity refers to the same real-world entity
+     *         as the {@code other}
      */
     @Override
     boolean equals(Object other);
 
     /**
-     * Hash code of this object. According to java rules. i.e., the same fields used in equals() should
-     * be used in hashCode(). you can use {@link DomainEntities#hashCode(DomainEntity)} as default
-     * implementation
+     * Hash code of this object. According to java rules. i.e., the same fields
+     * used in equals() should be used in hashCode(). you can use
+     * {@link DomainEntities#hashCode(DomainEntity)} as default implementation
      *
      * <p>
-     * see <a href= "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
+     * see <a href=
+     * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()
      *
      * @return the hash code
@@ -87,11 +93,13 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
     int hashCode();
 
     /**
-     * Entities are compared by identity only, so equals() must only compares identities. In some
-     * situations however we might want to compare the content of the object by value.
+     * Entities are compared by identity only, so equals() must only compares
+     * identities. In some situations however we might want to compare the
+     * content of the object by value.
      *
      * @param other
-     * @return true if this domain entity have the "same content" as the {@code other}
+     * @return true if this domain entity have the "same content" as the
+     *         {@code other}
      */
     boolean sameAs(Object other);
 

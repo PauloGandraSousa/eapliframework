@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,9 +67,9 @@ public class SelectWidget<T> extends ListWidget<T> {
 
     /**
      *
-     * @return -1 if the user has not yet made a selection 0 if the user selected
-     *         "exit" a positive number corresponding to the list index of source if
-     *         the user selected an item
+     * @return -1 if the user has not yet made a selection 0 if the user
+     *         selected "exit" a positive number corresponding to the list index
+     *         of source if the user selected an item
      */
     public int selectedOption() {
         return this.option;

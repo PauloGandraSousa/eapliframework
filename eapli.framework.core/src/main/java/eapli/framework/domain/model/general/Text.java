@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -36,18 +36,19 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.util.StringMixin;
 
 /**
- * A Text composed of lines. lines are separated by the \n character; words are separated by any
- * white space character. end of sentence punctuation is the period, the exclamation and the
- * question mark. A Text object will always have content, even if it is an empty string
+ * A Text composed of lines. lines are separated by the \n character; words are
+ * separated by any white space character. end of sentence punctuation is the
+ * period, the exclamation and the question mark. A Text object will always have
+ * content, even if it is an empty string
  *
  * <p>
- * if the last character of the text is a new line, the line count will take that into
- * consideration. example, the text "the red fox" has one line while the text "the red fox\n" has
- * two lines
+ * if the last character of the text is a new line, the line count will take
+ * that into consideration. example, the text "the red fox" has one line while
+ * the text "the red fox\n" has two lines
  *
  * <p>
- * For Marshaling purposes we are setting the visibility to ANY to allow Jackson to find the private
- * field as there are no setters and getters.
+ * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
+ * to find the private field as there are no setters and getters.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -150,7 +151,8 @@ public class Text implements ValueObject, StringMixin {
     }
 
     /**
-     * Returns the frequency, that is, the number of occurrences, of each word in the text.
+     * Returns the frequency, that is, the number of occurrences, of each word
+     * in the text.
      *
      * @return the frequency of each word in the text
      */
@@ -160,8 +162,8 @@ public class Text implements ValueObject, StringMixin {
     }
 
     /**
-     * Returns the number of lines in the text. Lines are counted based on the presence of the newline
-     * character "\n".
+     * Returns the number of lines in the text. Lines are counted based on the
+     * presence of the newline character "\n".
      *
      * @return the number of lines in the text
      */
@@ -216,8 +218,8 @@ public class Text implements ValueObject, StringMixin {
     }
 
     /**
-     * Sentence capitalize, i.e., first word of each sentence is capital letter. a sentence is defined
-     * by the punctuation signals ".", "!" and "?"
+     * Sentence capitalize, i.e., first word of each sentence is capital letter.
+     * a sentence is defined by the punctuation signals ".", "!" and "?"
      *
      * @return a new object which content is this' capitalized
      */
@@ -226,7 +228,8 @@ public class Text implements ValueObject, StringMixin {
     }
 
     /**
-     * Creates a new Text with the same content as this one but with all text as capital letters.
+     * Creates a new Text with the same content as this one but with all text as
+     * capital letters.
      *
      * @return a new object
      */

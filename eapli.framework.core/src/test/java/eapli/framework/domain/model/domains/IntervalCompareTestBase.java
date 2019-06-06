@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,8 @@
 package eapli.framework.domain.model.domains;
 
 /**
- * Test cases for compare described in the documentation of {@link Interval#compareTo(Interval)}
+ * Test cases for compare described in the documentation of
+ * {@link Interval#compareTo(Interval)}
  *
  * <p>
  * The same interval

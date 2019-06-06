@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,9 +23,9 @@ package eapli.framework.domain.activerecord;
 import eapli.framework.domain.model.identities.Identifiable;
 
 /**
- * An Active Record is a design pattern where an object both holds behaviour (business logic) and
- * knows how to handle its own persistence. Active Records might have static finder methods or use a
- * separated Finder class.
+ * An Active Record is a design pattern where an object both holds behaviour
+ * (business logic) and knows how to handle its own persistence. Active Records
+ * might have static finder methods or use a separated Finder class.
  *
  * @param <I>
  *            the type of the business identity
@@ -34,7 +34,8 @@ import eapli.framework.domain.model.identities.Identifiable;
 public interface ActiveRecord<I extends Comparable<I>> extends Identifiable<I> {
 
     /**
-     * save the current object to the persistence store either by creating it or updating it
+     * save the current object to the persistence store either by creating it or
+     * updating it
      */
     void save();
 }

@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ import eapli.framework.validations.Preconditions;
 
 /**
  * A password of a user. Password policy and encoding is done outside of this
- * class by {@link SystemUserBuilder} and {@link PasswordEnforcer}.
+ * class by {@link SystemUserBuilder} and {@link PasswordEncoder}.
  *
  * <p>
  * IMPORTANT: passwords should never be stored in plain format

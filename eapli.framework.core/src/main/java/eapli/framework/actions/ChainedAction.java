@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,11 +23,12 @@ package eapli.framework.actions;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A chained action allowing to compose sequences (chains) of actions. The execution of the chain
- * stops when the first action on the chain fails.
+ * A chained action allowing to compose sequences (chains) of actions. The
+ * execution of the chain stops when the first action on the chain fails.
  *
  * <p>
- * It implements the Composite (GoF) pattern. Subclasses that override execute() MUST call next().
+ * It implements the Composite (GoF) pattern. Subclasses that override execute()
+ * MUST call next().
  *
  * @author Paulo Gandra Sousa
  *
@@ -39,10 +40,11 @@ public class ChainedAction implements Action {
 
     /**
      * @param current
-     *                the action to wrap
+     *            the action to wrap
      * @param next
-     *                the next action to execute. since this can in turn be another ChainedAction it
-     *                allows to build an arbitrarily long chain of actions
+     *            the next action to execute. since this can in turn be another
+     *            ChainedAction it allows to build an arbitrarily long chain of
+     *            actions
      */
     public ChainedAction(final Action current, final Action next) {
         // the cast to Object is needed to force the compiler to fetch the right
@@ -66,7 +68,8 @@ public class ChainedAction implements Action {
     }
 
     /**
-     * Creates a chained action that will execute the {@code firstAction} action.
+     * Creates a chained action that will execute the {@code firstAction}
+     * action.
      *
      * Builder method useful in conjunction with @link #then(Action)}
      *
@@ -78,8 +81,8 @@ public class ChainedAction implements Action {
     }
 
     /**
-     * Creates a new ChainedAction where the {@code next} action is appended to the end of the current
-     * chain.
+     * Creates a new ChainedAction where the {@code next} action is appended to
+     * the end of the current chain.
      *
      * Builder method useful in conjunction with {@link #first(Action)}
      *

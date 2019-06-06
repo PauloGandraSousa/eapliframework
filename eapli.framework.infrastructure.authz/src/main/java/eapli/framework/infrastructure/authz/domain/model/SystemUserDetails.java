@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
+ * Copyright (c) 2013-2019 the original author or authors.
  *
  * MIT License
  *

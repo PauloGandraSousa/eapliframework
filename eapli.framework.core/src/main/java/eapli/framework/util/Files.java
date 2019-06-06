@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,67 +39,68 @@ import java.nio.file.Paths;
  */
 public final class Files implements Utilitarian {
 
-	private Files() {
-		// to make sure this is a utility class
-	}
+    private Files() {
+        // to make sure this is a utility class
+    }
 
-	/**
-	 * returns the current working directory of the application.
-	 *
-	 * <p>
-	 * Be careful not to expose this information to the outside as it may expose
-	 * security risks - see
-	 * https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4797&rule_key=squid%3AS4797
-	 *
-	 * @return the current working directory of the application
-	 */
-	@SuppressWarnings("squid:S4797")
-	public static String currentDirectory() {
-		return Paths.get(".").toAbsolutePath().toString();
-	}
+    /**
+     * returns the current working directory of the application.
+     *
+     * <p>
+     * Be careful not to expose this information to the outside as it may expose
+     * security risks - see
+     * https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4797&rule_key=squid%3AS4797
+     *
+     * @return the current working directory of the application
+     */
+    @SuppressWarnings("squid:S4797")
+    public static String currentDirectory() {
+        return Paths.get(".").toAbsolutePath().toString();
+    }
 
-	/**
-	 * Creates a filename based on {@code filename} and adding the extension
-	 * {@code extension} if not present.
-	 *
-	 * @param filename
-	 * @param extension
-	 * @return the filename with extension
-	 */
-	public static String ensureExtension(final String filename, final String extension) {
-		if (!filename.endsWith(extension)) {
-			if (extension.startsWith(".")) {
-				return filename + extension;
-			} else {
-				return filename + "." + extension;
-			}
-		} else {
-			return filename;
-		}
-	}
+    /**
+     * Creates a filename based on {@code filename} and adding the extension
+     * {@code extension} if not present.
+     *
+     * @param filename
+     * @param extension
+     * @return the filename with extension
+     */
+    public static String ensureExtension(final String filename, final String extension) {
+        if (!filename.endsWith(extension)) {
+            if (extension.startsWith(".")) {
+                return filename + extension;
+            } else {
+                return filename + "." + extension;
+            }
+        } else {
+            return filename;
+        }
+    }
 
-	/**
-	 * gets the full content of an input string as a single String. the input stream
-	 * is still active and open after calling this method
-	 *
-	 * @param is the input stream
-	 * @return the correspondent UTF-8 String
-	 * @throws IOException
-	 * @throws UnsupportedEncodingException
-	 */
-	public static String contentOf(final InputStream is, final String encoding) throws IOException {
-		final StringBuilder result = new StringBuilder();
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding))) {
-			String line;
-			while ((line = reader.readLine()) != null) {
-				result.append(line);
-			}
-		}
+    /**
+     * gets the full content of an input string as a single String. the input
+     * stream is still active and open after calling this method
+     *
+     * @param is
+     *            the input stream
+     * @return the correspondent UTF-8 String
+     * @throws IOException
+     * @throws UnsupportedEncodingException
+     */
+    public static String contentOf(final InputStream is, final String encoding) throws IOException {
+        final StringBuilder result = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
-	public static String contentOf(final InputStream is) throws IOException {
-		return contentOf(is, "UTF-8");
-	}
+    public static String contentOf(final InputStream is) throws IOException {
+        return contentOf(is, "UTF-8");
+    }
 }

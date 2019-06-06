@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
+ * Copyright (c) 2013-2019 the original author or authors.
  *
  * MIT License
  *
@@ -34,7 +34,7 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Authentication-related service. Handles login and password change/reset.
+ * Authentication service to handle login and password change/reset.
  *
  * @author Paulo Gandra Sousa
  *

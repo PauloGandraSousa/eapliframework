@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,8 +67,8 @@ public class MenuItem {
 
         this.text = text;
 
-        this.option = Optional.empty();
-        this.action = Actions.FAIL;
+        option = Optional.empty();
+        action = Actions.FAIL;
     }
 
     public static MenuItem separator() {
@@ -93,8 +93,8 @@ public class MenuItem {
      * executes the action associated with this item. note that if this a
      * non-actionable item this method do nothing but return false
      *
-     * @return true in case of success. false if the action failed or if this is a
-     *         non-actionable item
+     * @return true in case of success. false if the action failed or if this is
+     *         a non-actionable item
      */
     public boolean select() {
         return action.execute();

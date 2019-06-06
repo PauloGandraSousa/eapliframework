@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,8 @@ final class InProcessPubSub implements Singleton, EventDispatcher, EventPublishe
     /*
      * (non-Javadoc)
      *
-     * @see eapli.framework.domain.events.EventDispatcher#subscribe(eapli.framework.
+     * @see
+     * eapli.framework.domain.events.EventDispatcher#subscribe(eapli.framework.
      * domain.events.EventHandler, java.lang.Class)
      */
     @Override
@@ -132,7 +133,8 @@ final class InProcessPubSub implements Singleton, EventDispatcher, EventPublishe
     /*
      * (non-Javadoc)
      *
-     * @see eapli.framework.domain.events.EventDispatcher#publish(eapli.framework.
+     * @see
+     * eapli.framework.domain.events.EventDispatcher#publish(eapli.framework.
      * domain. events.DomainEvent)
      */
     @Override

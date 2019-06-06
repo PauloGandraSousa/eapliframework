@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -38,26 +38,29 @@ import eapli.framework.validations.Preconditions;
  * Represents money values.
  *
  * <p>
- * For a full description see the book Patterns of Enterprise Application Architecture (Martin
- * Fowler) page 488 or <a href="https://www.martinfowler.com/eaaCatalog/money.html">PoEAA Money</a>.
+ * For a full description see the book Patterns of Enterprise Application
+ * Architecture (Martin Fowler) page 488 or
+ * <a href="https://www.martinfowler.com/eaaCatalog/money.html">PoEAA Money</a>.
  * See also a <a href=
  * "https://deque.blog/2017/08/17/a-study-of-4-money-class-designs-featuring-martin-fowler-kent-beck-and-ward-cunningham-implementations/">good
  * discussion</a> about pros and cons and different approaches.
  *
  * <p>
- * <blockquote> A large proportion of the computers in this world manipulate money, so it's always
- * puzzled me that money isn't actually a first class data type in any mainstream programming
- * language. The lack of a type causes problems, the most obvious surrounding currencies. If all
- * your calculations are done in a single m_currency, this isn't a huge problem, but once you
- * involve multiple currencies you want to avoid adding your dollars to your yen without taking the
- * m_currency differences into account. The more subtle problem is with rounding. Monetary
- * calculations are often rounded to the smallest m_currency unit. When you do this it's easy to
- * lose pennies (or your local equivalent) because of rounding errors.
+ * <blockquote> A large proportion of the computers in this world manipulate
+ * money, so it's always puzzled me that money isn't actually a first class data
+ * type in any mainstream programming language. The lack of a type causes
+ * problems, the most obvious surrounding currencies. If all your calculations
+ * are done in a single m_currency, this isn't a huge problem, but once you
+ * involve multiple currencies you want to avoid adding your dollars to your yen
+ * without taking the m_currency differences into account. The more subtle
+ * problem is with rounding. Monetary calculations are often rounded to the
+ * smallest m_currency unit. When you do this it's easy to lose pennies (or your
+ * local equivalent) because of rounding errors.
  *
  * <p>
- * The good thing about object-oriented programming is that you can fix these problems by creating a
- * Money class that handles them. Of course, it's still surprising that none of the mainstream base
- * class libraries actually do this.
+ * The good thing about object-oriented programming is that you can fix these
+ * problems by creating a Money class that handles them. Of course, it's still
+ * surprising that none of the mainstream base class libraries actually do this.
  * <p>
  * - Martin Fowler </blockquote>
  * <p>
@@ -74,18 +77,18 @@ import eapli.framework.validations.Preconditions;
  * </pre>
  *
  * <p>
- * You'll notice there are no setters. Money is a Value Object and is thus immutable. It helps to
- * have a variety of constructors to make it easy to make monies. Constructors that convert from
- * basic numeric types are always useful.
+ * You'll notice there are no setters. Money is a Value Object and is thus
+ * immutable. It helps to have a variety of constructors to make it easy to make
+ * monies. Constructors that convert from basic numeric types are always useful.
  *
  * <p>
  * <strong>NOTE:</strong> The original source code was available at
- * <a href="http://martinfowler.com/eaaDev/quantity.html">MF bliki</a>, however that link is now
- * broken
+ * <a href="http://martinfowler.com/eaaDev/quantity.html">MF bliki</a>, however
+ * that link is now broken
  *
  * <p>
- * For Marshaling purposes we are setting the visibility to ANY to allow Jackson to find the private
- * field as there are no setters and getters.
+ * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
+ * to find the private field as there are no setters and getters.
  *
  */
 @Embeddable
@@ -113,7 +116,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Constructs a new Money object.
      *
      * @param amount
-     *                 the amount in the units of currency, e.g., 100.50 EUR
+     *            the amount in the units of currency, e.g., 100.50 EUR
      * @param currency
      */
     public Money(final double amount, final Currency currency) {
@@ -133,8 +136,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * special constructor to reconstruct objects from the database - to be used in SELECT NEW JPQL
-     * queries. this is an example of a "public but not published" interface
+     * special constructor to reconstruct objects from the database - to be used
+     * in SELECT NEW JPQL queries. this is an example of a "public but not
+     * published" interface
      *
      * @TODO check other ways to avoid having this special constructor
      *
@@ -162,8 +166,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Factory method to construct a Money object of {@code amount} EUR. If you use one currency a lot,
-     * you may want a special constructor for that currency.
+     * Factory method to construct a Money object of {@code amount} EUR. If you
+     * use one currency a lot, you may want a special constructor for that
+     * currency.
      *
      * @param amount
      * @return a Money object of {@code amount} EUR
@@ -201,9 +206,10 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * creates a collector that can be used to sum up a stream of Money objects in a reduction style.
-     * that is, since Money is an immutable object, collecting Money objects from streams have the
-     * implication of creating a new Money object for each collect step which might impact performance.
+     * creates a collector that can be used to sum up a stream of Money objects
+     * in a reduction style. that is, since Money is an immutable object,
+     * collecting Money objects from streams have the implication of creating a
+     * new Money object for each collect step which might impact performance.
      *
      * @author Paulo Gandra de Sousa
      * @param zero
@@ -211,8 +217,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      */
     public static Collector<Money, MoneyCollector, Money> collector(final Money zero) {
         /*
-         * alternatively the collector returned could use an internal mutable representation of Money and
-         * just create an instance when combining streams
+         * alternatively the collector returned could use an internal mutable
+         * representation of Money and just create an instance when combining
+         * streams
          *
          */
         Preconditions.nonNull(zero);
@@ -250,11 +257,13 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      */
     public double amount() {
         /*
-         * Notice that I [Martin Fowler] use a BigInteger. In Java I could equally well use a BigDecimal,
-         * but in many languages an integer is the only decent option, so using an integer seems the best
-         * for explanation. Don't be afraid to choose your representation of the amount part of a quantity
-         * based on performance factors. The beauty of objects is that you can choose any data structure you
-         * like on the inside, providing you hide it on the outside.
+         * Notice that I [Martin Fowler] use a BigInteger. In Java I could
+         * equally well use a BigDecimal, but in many languages an integer is
+         * the only decent option, so using an integer seems the best for
+         * explanation. Don't be afraid to choose your representation of the
+         * amount part of a quantity based on performance factors. The beauty of
+         * objects is that you can choose any data structure you like on the
+         * inside, providing you hide it on the outside.
          */
         return amount.doubleValue() / HUNDRED;
     }
@@ -278,12 +287,13 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * @param arg
      * @return a new Money with the value of the addition
      * @throws IllegalArgumentException
-     *                                  if the currencies are not the same
+     *             if the currencies are not the same
      */
     public Money add(final Money arg) {
         /*
-         * For addition and subtraction I'm [Martin Fowler] not trying to do any fancy conversion. Notice
-         * that I'm using a special constructor with a marker argument.
+         * For addition and subtraction I'm [Martin Fowler] not trying to do any
+         * fancy conversion. Notice that I'm using a special constructor with a
+         * marker argument.
          */
         Preconditions.ensure(currency.equals(arg.currency), "Cannot add different currencies");
 
@@ -296,14 +306,15 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * @param arg
      * @return a new value corresponding to the subtraction
      * @throws IllegalArgumentException
-     *                                  if the currencies are not the same
+     *             if the currencies are not the same
      */
     public Money subtract(final Money arg) {
         return add(arg.negate());
     }
 
     /**
-     * Returns a new object which amount's sign is swapped, i.e., -this.amount. E.g.
+     * Returns a new object which amount's sign is swapped, i.e., -this.amount.
+     * E.g.
      *
      * <p>
      *
@@ -321,9 +332,10 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Multiplies this Money object by a scalar and returns the result as a new Money. Business-wise it
-     * doesn't make sense to perform 5 EUR * 3 EUR but it makes sense to perform 12 * 5 EUR, e.g., to
-     * get the total annual sum of a monthly payment
+     * Multiplies this Money object by a scalar and returns the result as a new
+     * Money. Business-wise it doesn't make sense to perform 5 EUR * 3 EUR but
+     * it makes sense to perform 12 * 5 EUR, e.g., to get the total annual sum
+     * of a monthly payment
      *
      * @param arg
      * @return a new Money with the value of the multiplication
@@ -334,16 +346,20 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Divides this Money object by a certain integer denominator doing the right allocation of cents.
+     * Divides this Money object by a certain integer denominator doing the
+     * right allocation of cents.
      *
      * <p>
-     * Multiplication is very straightforward. But division is not, as we have to take care of errant
-     * pennies. We'll do that by returning an array of monies, such that the sum of the array is equal
-     * to the original amount, and the original amount is distributed fairly between the elements of the
-     * array. Fairly in this sense means those at the beginning get the extra pennies.
+     * Multiplication is very straightforward. But division is not, as we have
+     * to take care of errant pennies. We'll do that by returning an array of
+     * monies, such that the sum of the array is equal to the original amount,
+     * and the original amount is distributed fairly between the elements of the
+     * array. Fairly in this sense means those at the beginning get the extra
+     * pennies.
      *
      * @param denominator
-     * @return an array of Money objects corresponding to the allocation of each denominator
+     * @return an array of Money objects corresponding to the allocation of each
+     *         denominator
      */
     public Money[] divide(final int denominator) {
         final BigInteger bigDenominator = BigInteger.valueOf(denominator);
@@ -368,41 +384,47 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
         Preconditions.areEqual(currency, arg.currency, "Cannot add different currencies");
 
         /*
-         * Next we'll look at comparing monies, in Java the approach is to implement comparable.
+         * Next we'll look at comparing monies, in Java the approach is to
+         * implement comparable.
          */
         return amount.compareTo(arg.amount);
     }
 
     /**
-     * Compares two Money objects checking if this money's amount is greater than the other
+     * Compares two Money objects checking if this money's amount is greater
+     * than the other
      *
      * @param arg
      * @return true if this money's amount is greater than the other
      */
     public boolean isGreaterThan(final Money arg) {
         /*
-         * It's also useful to provide some better named operations such as greaterThan. That makes methods
-         * that need the comparison much easier to read.
+         * It's also useful to provide some better named operations such as
+         * greaterThan. That makes methods that need the comparison much easier
+         * to read.
          */
         return compareTo(arg) > 0;
     }
 
     /**
-     * Compares two Money objects checking if this money's amount is less than the other
+     * Compares two Money objects checking if this money's amount is less than
+     * the other
      *
      * @param arg
      * @return true if this money's amount is less than the other
      */
     public boolean isLessThan(final Money arg) {
         /*
-         * It's also useful to provide some better named operations such as greaterThan. That makes methods
-         * that need the comparison much easier to read.
+         * It's also useful to provide some better named operations such as
+         * greaterThan. That makes methods that need the comparison much easier
+         * to read.
          */
         return compareTo(arg) < 0;
     }
 
     /**
-     * Compares two Money objects checking if this money's amount is greater than or equal to the other.
+     * Compares two Money objects checking if this money's amount is greater
+     * than or equal to the other.
      *
      * @author Paulo Gandra de Sousa
      * @param arg
@@ -413,7 +435,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Compares two Money objects checking if this money's amount is less than or equal to the other.
+     * Compares two Money objects checking if this money's amount is less than
+     * or equal to the other.
      *
      * @author Paulo Gandra de Sousa
      * @param arg
@@ -436,8 +459,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Since you override equals, don't forget to also override hash (here's a simple suggestion for
-     * that).
+     * Since you override equals, don't forget to also override hash (here's a
+     * simple suggestion for that).
      */
     @Override
     public int hashCode() {
@@ -487,10 +510,11 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * scraped from http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html
+     * scraped from
+     * http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html
      *
-     * @return a formatted representation of this Money value based on the rules defined by the currency
-     *         Locale
+     * @return a formatted representation of this Money value based on the rules
+     *         defined by the currency Locale
      */
     public String formatted() {
         final NumberFormat nf = NumberFormat.getCurrencyInstance();

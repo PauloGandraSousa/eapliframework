@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -45,7 +45,7 @@ import eapli.framework.util.Utilitarian;
      * @param a
      * @param b
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensureAreEqual(final long a, final long b, final Action consequence) {
         ensure(a == b, consequence);
@@ -57,7 +57,7 @@ import eapli.framework.util.Utilitarian;
      * @param a
      * @param b
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensureAreEqual(final Object a, final Object b, final Action consequence) {
         ensure(Objects.equals(a, b), consequence);
@@ -69,19 +69,19 @@ import eapli.framework.util.Utilitarian;
      * @param regex
      * @param arg
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensureMatches(final Pattern regex, final String arg, final Action consequence) {
         ensure(regex.matcher(arg).find(), consequence);
     }
 
     /**
-     * Asserts the "trueness" of a function's result. if the function result is not true then the
-     * specified action is performed
+     * Asserts the "trueness" of a function's result. if the function result is
+     * not true then the specified action is performed
      *
      * @param test
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensure(final Boolean test, final Action consequence) {
         Actions.doIfNot(consequence, test);
@@ -92,7 +92,7 @@ import eapli.framework.util.Utilitarian;
      *
      * @param objects
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensureNoneNull(final Action consequence, final Object... objects) {
         for (final Object each : objects) {
@@ -104,9 +104,9 @@ import eapli.framework.util.Utilitarian;
      * Checks if a Collection is non null and contains at least an element.
      *
      * @param arg
-     *                    the collection to test
+     *            the collection to test
      * @param consequence
-     *                    the action to execute of the collection is null or empty
+     *            the action to execute of the collection is null or empty
      */
     public static void ensureNonEmpty(final Collection<?> arg, final Action consequence) {
         ensure(arg != null && !arg.isEmpty(), consequence);
@@ -116,9 +116,9 @@ import eapli.framework.util.Utilitarian;
      * checks if a string is neither null nor empty nor just white space.
      *
      * @param arg
-     *                    the string to test
+     *            the string to test
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensureNonEmpty(final String arg, final Action consequence) {
         Actions.doIfNot(consequence, !StringPredicates.isNullOrWhiteSpace(arg));
@@ -129,7 +129,7 @@ import eapli.framework.util.Utilitarian;
      *
      * @param arg
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensureIsPositive(final long arg, final Action consequence) {
         Actions.doIfNot(consequence, NumberPredicates.isPositive(arg));
@@ -140,7 +140,7 @@ import eapli.framework.util.Utilitarian;
      *
      * @param arg
      * @param consequence
-     *                    the action to execute of the test fails
+     *            the action to execute of the test fails
      */
     public static void ensureNonNegative(final long arg, final Action consequence) {
         Actions.doIfNot(consequence, NumberPredicates.isNonNegative(arg));

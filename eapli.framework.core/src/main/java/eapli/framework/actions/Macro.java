@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A collection of actions that can be executed as one single action. Execution stops on the first
- * action that returns false.
+ * A collection of actions that can be executed as one single action. Execution
+ * stops on the first action that returns false.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -60,8 +60,8 @@ public class Macro implements Action {
     }
 
     /**
-     * execute all the actions in the Macro stopping on the first action that fails (i.e., returns
-     * false)
+     * execute all the actions in the Macro stopping on the first action that
+     * fails (i.e., returns false)
      *
      * @see eapli.framework.actions.Action#execute()
      */

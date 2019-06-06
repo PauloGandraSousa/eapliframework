@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -27,8 +27,49 @@ import eapli.framework.util.Singleton;
 import eapli.framework.validations.Invariants;
 
 /**
- * Registry of all authz service objects. Helper class for scenarios without spring Dependency
- * Injection.
+ * Registry of all authz service objects. Helper class for scenarios without
+ * spring Dependency Injection. In order to properly use the registry it is
+ * necessary to call its
+ * {@link AuthzRegistry#configure(eapli.framework.infrastructure.authz.domain.repositories.UserRepository, eapli.framework.infrastructure.authz.application.PasswordPolicy, org.springframework.security.crypto.password.PasswordEncoder)
+ * configure} method in the start of the application to inject the proper
+ * {@link eapli.framework.infrastructure.authz.domain.repositories.UserRepository
+ * UserRepository} implementation.
+ *
+ * <p>
+ * For instance,
+ *
+ * <pre>
+ * <code>
+ *    public static void main(final String[] args) {
+ *       AuthzRegistry.configure(PersistenceContext.repositories().users(),
+ *               new CafeteriaPasswordPolicy(), new PlainTextEncoder());
+ *
+ *       new ECafeteriaBackoffice().run(args);
+ *   }
+ * </code>
+ * </pre>
+ *
+ * Afterwards, in order to use these objects, you just need to grab the
+ * singleton from the registry, e.g.
+ *
+ * <pre>
+ * <code>
+ * public class RegisterDishTypeController implements Controller {
+ *
+ *   private final AuthorizationService authz = AuthzRegistry.authorizationService();
+ *   private final DishTypeRepository repository = PersistenceContext.repositories().dishTypes();
+ *
+ *   public DishType registerDishType(final String acronym, final String description) {
+ *       authz.ensureAuthenticatedUserHasAnyOf(CafeteriaRoles.POWER_USER,
+ *               CafeteriaRoles.MENU_MANAGER);
+ *
+ *       final DishType newDishType = new DishType(acronym, description);
+ *       return this.repository.save(newDishType);
+ *   }
+ * }
+ *
+ * </code>
+ * </pre>
  *
  * @author Paulo Gandra de Sousa
  *
@@ -44,8 +85,9 @@ public final class AuthzRegistry implements Singleton {
     }
 
     /**
-     * Helper method to initialize the registry in case you are not using Spring Dependency Injection.
-     * This method should be called <strong>only once</strong> on application startup.
+     * Helper method to initialize the registry in case you are not using Spring
+     * Dependency Injection. This method should be called <strong>only
+     * once</strong> on application startup.
      *
      * @param userRepo
      * @param policy

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa.
+ * Copyright (c) 2013-2019 the original author or authors.
  *
  * MIT License
  *
@@ -27,7 +27,7 @@ import eapli.framework.util.Utilitarian;
 /**
  * Helper class to handle some common REST API situations, e.g., returning 404
  * on empty Optionals.
- * 
+ *
  * @author Paulo Gandra de Sousa 23/05/2019
  *
  */

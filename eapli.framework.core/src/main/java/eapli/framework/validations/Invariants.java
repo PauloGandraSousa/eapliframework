@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -27,8 +27,8 @@ import eapli.framework.actions.Actions;
 import eapli.framework.util.Utilitarian;
 
 /**
- * Utility class for expressing and ensuring class/method's invariants. If the invariant does not
- * hold, an IllegalStateException is thrown.
+ * Utility class for expressing and ensuring class/method's invariants. If the
+ * invariant does not hold, an IllegalStateException is thrown.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -44,7 +44,7 @@ public final class Invariants implements Utilitarian {
      * @param a
      * @param b
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void areEqual(final long a, final long b) {
         Validations.ensureAreEqual(a, b, Actions.THROW_STATE);
@@ -58,7 +58,7 @@ public final class Invariants implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void areEqual(final Object a, final Object b, final String msg) {
         Validations.ensureAreEqual(a, b, Actions.throwState(msg));
@@ -70,9 +70,9 @@ public final class Invariants implements Utilitarian {
      * @param regex
      * @param arg
      * @param msg
-     *              the message text to include in the throw exception
+     *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void matches(final Pattern regex, final String arg, final String msg) {
         Validations.ensureMatches(regex, arg, Actions.throwState(msg));
@@ -83,7 +83,7 @@ public final class Invariants implements Utilitarian {
      *
      * @param b
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b) {
         Validations.ensure(b, Actions.THROW_STATE);
@@ -96,7 +96,7 @@ public final class Invariants implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void ensure(final boolean b, final String msg) {
         Validations.ensure(b, Actions.throwState(msg));
@@ -107,7 +107,7 @@ public final class Invariants implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg) {
         Validations.ensureNoneNull(Actions.THROW_STATE, arg);
@@ -120,7 +120,7 @@ public final class Invariants implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNull(final Object arg, final String msg) {
         Validations.ensureNoneNull(Actions.throwState(msg), arg);
@@ -131,7 +131,7 @@ public final class Invariants implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void noneNull(final Object... arg) {
         Validations.ensureNoneNull(Actions.THROW_STATE, arg);
@@ -142,7 +142,7 @@ public final class Invariants implements Utilitarian {
      *
      * @param items
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items) {
         Validations.ensureNonEmpty(items, Actions.THROW_STATE);
@@ -153,9 +153,9 @@ public final class Invariants implements Utilitarian {
      *
      * @param items
      * @param msg
-     *              the message text to include in the throw exception
+     *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final Collection<?> items, final String msg) {
         Validations.ensureNonEmpty(items, Actions.throwState(msg));
@@ -166,7 +166,7 @@ public final class Invariants implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg) {
         Validations.ensureNonEmpty(arg, Actions.THROW_STATE);
@@ -179,7 +179,7 @@ public final class Invariants implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonEmpty(final String arg, final String msg) {
         Validations.ensureNonEmpty(arg, Actions.throwState(msg));
@@ -190,7 +190,7 @@ public final class Invariants implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void isPositive(final long arg) {
         Validations.ensureIsPositive(arg, Actions.THROW_STATE);
@@ -203,7 +203,7 @@ public final class Invariants implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void isPositive(final long arg, final String msg) {
         Validations.ensureIsPositive(arg, Actions.throwState(msg));
@@ -214,7 +214,7 @@ public final class Invariants implements Utilitarian {
      *
      * @param arg
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg) {
         Validations.ensureNonNegative(arg, Actions.THROW_STATE);
@@ -227,7 +227,7 @@ public final class Invariants implements Utilitarian {
      * @param msg
      *            the message text to include in the throw exception
      * @throws IllegalStateException
-     *                               if the assertion is unfulfilled
+     *             if the assertion is unfulfilled
      */
     public static void nonNegative(final long arg, final String msg) {
         Validations.ensureNonNegative(arg, Actions.throwState(msg));

@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,11 +23,11 @@ package eapli.framework.presentation.console;
 import eapli.framework.visitor.Visitor;
 
 /**
- * an abstract generic List UI to avoid code duplication since most of the List UIs are quite
- * similar.
+ * an abstract generic List UI to avoid code duplication since most of the List
+ * UIs are quite similar.
  *
  * Created by Paulo Gandra Sousa
- * 
+ *
  * @param <T>
  *            the type of element this user interface will list
  */

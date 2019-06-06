@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -41,8 +41,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * zips two double arrays in to one. That is, uses the {@code op} operator to combine the contents
-     * of both source arrays z(i) = op(a(i), b(i))
+     * zips two double arrays in to one. That is, uses the {@code op} operator
+     * to combine the contents of both source arrays z(i) = op(a(i), b(i))
      *
      * @param a
      * @param b
@@ -62,8 +62,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * creates a new double array picking up the elements of the source array and applying a mapping
-     * function to each element
+     * creates a new double array picking up the elements of the source array
+     * and applying a mapping function to each element
      *
      * @param src
      * @param map
@@ -78,20 +78,20 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * creates a new array picking up the elements of the source array and applying a mapping function
-     * to each element
+     * creates a new array picking up the elements of the source array and
+     * applying a mapping function to each element
      *
      * @param <T>
-     *                the type of the source elements
+     *            the type of the source elements
      * @param <U>
-     *                the type of the mapped elements
+     *            the type of the mapped elements
      * @param src
-     *                the source elements
+     *            the source elements
      * @param creator
-     *                a constructor to create the destination array with the expected number of
-     *                positions
+     *            a constructor to create the destination array with the
+     *            expected number of positions
      * @param map
-     *                the mapping function from source to destination, T -> U
+     *            the mapping function from source to destination, T -> U
      * @return a new array with the mapped contents
      */
     public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator, final Function<T, U> map) {
@@ -103,7 +103,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * applies a transformation to each element of an array, mutating the original array
+     * applies a transformation to each element of an array, mutating the
+     * original array
      *
      * @param dest
      * @param map
@@ -115,7 +116,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * applies a transformation to each element of an array, mutating the original array
+     * applies a transformation to each element of an array, mutating the
+     * original array
      *
      * @param dest
      * @param map
@@ -127,7 +129,8 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * checks whether an element is present in the array or not. this methods has O(n) complexity
+     * checks whether an element is present in the array or not. this methods
+     * has O(n) complexity
      *
      * @param src
      * @param elem
@@ -138,12 +141,13 @@ public final class Arrays implements Utilitarian {
     }
 
     /**
-     * returns the index of an element is present in the array or -1 otherwise. this methods has O(n)
-     * complexity
+     * returns the index of an element is present in the array or -1 otherwise.
+     * this methods has O(n) complexity
      *
      * @param src
      * @param elem
-     * @return the zero-based index where the element is found in the array. -1 otherwise
+     * @return the zero-based index where the element is found in the array. -1
+     *         otherwise
      */
     public static <T> int indexOf(final T[] src, final T elem) {
         for (int i = 0; i < src.length; i++) {

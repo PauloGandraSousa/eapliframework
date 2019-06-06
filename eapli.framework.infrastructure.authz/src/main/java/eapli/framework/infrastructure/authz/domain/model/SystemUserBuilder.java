@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -128,10 +128,9 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
     }
 
     /**
-     * Sets the password of the user <strong>assuming</strong> that password
-     * policy enforcement and encoding have already been performed. This method
-     * is mostly to be used to support the registration process where a password
-     * has already been validated and encoded.
+     * Sets the password of the user. This method is mostly to be used to
+     * support the registration process where a password has already been
+     * validated and encoded.
      *
      * @param password
      * @return this builder

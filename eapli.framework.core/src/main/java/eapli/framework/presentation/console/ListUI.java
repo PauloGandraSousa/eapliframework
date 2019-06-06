@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -24,9 +24,10 @@ import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitor;
 
 /**
- * a generic List UI to avoid code duplication since most of the List UIs are quite similar. while
- * AbstractListUI allows the client code to create its own derived classes, ListUI allows the client
- * code to work only with objects, instances, of this class without the need to define new classes.
+ * a generic List UI to avoid code duplication since most of the List UIs are
+ * quite similar. while AbstractListUI allows the client code to create its own
+ * derived classes, ListUI allows the client code to work only with objects,
+ * instances, of this class without the need to define new classes.
  *
  * @author Paulo Gandra Sousa
  * @param <T>

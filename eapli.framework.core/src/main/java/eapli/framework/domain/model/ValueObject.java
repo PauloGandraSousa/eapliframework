@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,10 +23,11 @@ package eapli.framework.domain.model;
 import java.io.Serializable;
 
 /**
- * A value object is a Domain-Driven Design pattern for domain concepts which do not have a thread
- * of continuity neither need to be tracked by their identity but for the value of its attributes.
- * These are <b>immutable</b> objects which can be freely shared and discarded and replaced by
- * another instance. Equality is done thru comparison of the attributes values.
+ * A value object is a Domain-Driven Design pattern for domain concepts which do
+ * not have a thread of continuity neither need to be tracked by their identity
+ * but for the value of its attributes. These are <b>immutable</b> objects which
+ * can be freely shared and discarded and replaced by another instance. Equality
+ * is done thru comparison of the attributes values.
  * <p>
  *
  * Typical examples are:
@@ -38,18 +39,20 @@ import java.io.Serializable;
  * </ul>
  *
  * <p>
- * Make sure you don't provide mutator methods, always construct the object in a valid state and all
- * your private fields are marked final (If you are using ORM tools you might need a default
- * constructor in which case you won't be able to make the fields final)
+ * Make sure you don't provide mutator methods, always construct the object in a
+ * valid state and all your private fields are marked final (If you are using
+ * ORM tools you might need a default constructor in which case you won't be
+ * able to make the fields final)
  *
  * <p>
- * Check the <a href= "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java
- * Time API naming conventions</a> for an excellent example on how to name methods of a Value
- * Object.
+ * Check the <a href=
+ * "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java
+ * Time API naming conventions</a> for an excellent example on how to name
+ * methods of a Value Object.
  *
  * <p>
- * Since we will provably persist entities using JPA we are also forcing the implementation of
- * {@code Serializable}.
+ * Since we will provably persist entities using JPA we are also forcing the
+ * implementation of {@code Serializable}.
  *
  * @author Paulo Gandra Sousa
  */
@@ -71,17 +74,19 @@ public interface ValueObject extends Serializable {
      * "https://www.sitepoint.com/implement-javas-equals-method-correctly/">https://www.sitepoint.com/implement-javas-equals-method-correctly/</a>
      *
      * @param other
-     * @return true if this value object has the same content as the {@code other}
+     * @return true if this value object has the same content as the
+     *         {@code other}
      */
     @Override
     boolean equals(Object other);
 
     /**
-     * hash code of this object according to java rules. i.e., the same fields used in equals() should
-     * be used in hashCode().
+     * hash code of this object according to java rules. i.e., the same fields
+     * used in equals() should be used in hashCode().
      *
      * <p>
-     * see <a href= "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
+     * see <a href=
+     * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()
      *
      * @return the hascode

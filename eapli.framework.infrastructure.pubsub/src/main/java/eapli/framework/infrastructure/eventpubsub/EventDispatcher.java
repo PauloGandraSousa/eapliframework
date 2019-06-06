@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,9 @@ import eapli.framework.domain.events.DomainEvent;
 public interface EventDispatcher {
 
     /**
-     * subscribe interest to certain events in the domain. when those events happen
-     * in the system the observer will be notified via the EventHandler onEvent()
-     * method
+     * subscribe interest to certain events in the domain. when those events
+     * happen in the system the observer will be notified via the EventHandler
+     * onEvent() method
      *
      * @param observer
      *            the interested party
@@ -67,9 +67,9 @@ public interface EventDispatcher {
     void unsubscribe(EventHandler observer);
 
     /**
-     * Signals the event dispatcher that the application no longer wants to process
-     * any event (typically because it is closing) and that any pending thread
-     * should stop execution as soon as possible
+     * Signals the event dispatcher that the application no longer wants to
+     * process any event (typically because it is closing) and that any pending
+     * thread should stop execution as soon as possible
      */
     void shutdown();
 }

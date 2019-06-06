@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,9 +21,10 @@
 package eapli.framework.presentation.console;
 
 /**
- * simple user interface abstract base class for Console I/O. derived classes should implement the
- * purely abstract methods and client code should call the final methods {@link #mainLoop} or
- * {@link #show} - Template Method GoF pattern
+ * simple user interface abstract base class for Console I/O. derived classes
+ * should implement the purely abstract methods and client code should call the
+ * final methods {@link #mainLoop} or {@link #show} - Template Method GoF
+ * pattern
  *
  * @author Paulo Gandra Sousa
  */
@@ -34,8 +35,8 @@ public abstract class AbstractUI {
     protected static final String BORDER = "+==============================================================================+";
 
     /**
-     * derived classes should override this method to perform the actual rendering of the UI. follows
-     * the Template Method pattern
+     * derived classes should override this method to perform the actual
+     * rendering of the UI. follows the Template Method pattern
      *
      * @return true if the user wants to leave this UI
      */

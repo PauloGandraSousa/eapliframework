@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * Copyright (c) 2013-2019 the original author or authors.
  *
- * Copyright (c) 2013-2019 Paulo Gandra de Sousa
+ * MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,8 +23,8 @@ package eapli.framework.infrastructure.authz.domain.model;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * A plain text password encoder. Of course this is just for demonstration purposes and should
- * <strong>never</strong> be used.
+ * A plain text password encoder. Of course this is just for demonstration
+ * purposes and should <strong>never</strong> be used.
  *
  * @author Paulo Gandra de Sousa 27/05/2019
  *
@@ -34,7 +34,9 @@ public class PlainTextEncoder implements PasswordEncoder {
     /*
      * (non-Javadoc)
      *
-     * @see org.springframework.security.crypto.password.PasswordEncoder#encode(java. lang.CharSequence)
+     * @see
+     * org.springframework.security.crypto.password.PasswordEncoder#encode(java.
+     * lang.CharSequence)
      */
     @Override
     public String encode(final CharSequence rawPassword) {
@@ -44,7 +46,8 @@ public class PlainTextEncoder implements PasswordEncoder {
     /*
      * (non-Javadoc)
      *
-     * @see org.springframework.security.crypto.password.PasswordEncoder#matches(java
+     * @see
+     * org.springframework.security.crypto.password.PasswordEncoder#matches(java
      * .lang.CharSequence, java.lang.String)
      */
     @Override
