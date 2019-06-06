@@ -19,7 +19,7 @@ Ideas about improvements
   - [bitbucket api](https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Busername%7D/%7Brepo_slug%7D/downloads)
 
 - Functional
-
+  - discredomain first, rest, map
   - [Atalasian fugue](https://bitbucket.org/atlassian/fugue/src/master/)
   - Google [Guava](https://github.com/google/guava)
   - [vavr](https://www.vavr.io/)
