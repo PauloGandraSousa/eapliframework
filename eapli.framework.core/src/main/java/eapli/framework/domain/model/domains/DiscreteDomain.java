@@ -24,19 +24,23 @@
 package eapli.framework.domain.model.domains;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Stream;
+
+import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
- * An immutable discrete domain, that is, a set of possible known values. allows
- * for empty domains
+ * An immutable discrete domain, that is, a set of possible known values. Allows
+ * for empty domains. This is a monadic type.
  *
  * @param <T>
  *            the type of values of the domain. T should extend ValueObject,
@@ -46,19 +50,66 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  *
  */
-public class DiscreteDomain<T extends Serializable> implements Iterable<T>, ValueObject {
+@Embeddable
+public final class DiscreteDomain<T extends Serializable> implements Iterable<T>, ValueObject {
 
     private static final long serialVersionUID = 1626025693468901924L;
+
     private final Set<T> elements = new HashSet<>();
 
+    @SuppressWarnings("rawtypes")
+    private static final DiscreteDomain EMPTY = new DiscreteDomain<>(Stream.empty());
+
+    /**
+     * The empty domain.
+     *
+     * @return the empty domain
+     */
+    @SuppressWarnings("unchecked")
     public static <T extends Serializable> DiscreteDomain<T> empty() {
-        return new DiscreteDomainBuilder<T>().build();
+        return EMPTY;
     }
 
-    protected DiscreteDomain(final Iterable<T> from) {
+    /**
+     * Constructs a domain.
+     *
+     * @param from
+     */
+    /* package */ DiscreteDomain(final Iterable<T> from) {
         Preconditions.nonNull(from);
 
         from.forEach(elements::add);
+    }
+
+    /**
+     * Constructs a domain.
+     *
+     * @param from
+     */
+    /* package */ DiscreteDomain(final Stream<T> from) {
+        Preconditions.nonNull(from);
+
+        from.forEach(elements::add);
+    }
+
+    /**
+     * Factory method.
+     *
+     * @param data
+     * @return a discrete domain based on the elements of the stream
+     */
+    public static <R extends Serializable> DiscreteDomain<R> from(final Stream<R> data) {
+        return new DiscreteDomainBuilder<R>().with(data).build();
+    }
+
+    /**
+     * Factory method.
+     *
+     * @param elements
+     * @return a discrete domain
+     */
+    public static <R extends Serializable> DiscreteDomain<R> of(@SuppressWarnings("unchecked") final R... elements) {
+        return new DiscreteDomain<>(Arrays.stream(elements));
     }
 
     @Override
@@ -116,7 +167,7 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
         final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
         for (final T each : elements) {
             if (other.contains(each)) {
-                builder.add(each);
+                builder.with(each);
             }
         }
         return builder.build();
@@ -147,8 +198,8 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      */
     public DiscreteDomain<T> union(final DiscreteDomain<T> other) {
         final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
-        elements.forEach(builder::add);
-        other.forEach(builder::add);
+        elements.forEach(builder::with);
+        other.forEach(builder::with);
         return builder.build();
     }
 
@@ -168,9 +219,9 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * D3 = [6, 5, 7, 8]
      * D4 = []
      *
-     * R12 = D1.complement(D2) = [1, 2]
-     * R13 = D1.complement(D3) = [1, 2, 3, 4]
-     * R14 = D1.complement(D4) = [1, 2, 3, 4]
+     * R12 = D1.without(D2) = [1, 2]
+     * R13 = D1.without(D3) = [1, 2, 3, 4]
+     * R14 = D1.without(D4) = [1, 2, 3, 4]
      * </code>
      * </pre>
      *
@@ -178,34 +229,17 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
      * @return a new domain corresponding to the complement
      */
     public DiscreteDomain<T> without(final DiscreteDomain<T> other) {
-        final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
-
-        elements.forEach(e -> {
-            if (!other.contains(e)) {
-                builder.add(e);
-            }
-        });
-
-        return builder.build();
+        return from(stream().filter(e -> !other.contains(e)));
     }
 
     /**
-     * Creates a new domain without the desired elements
+     * Creates a new domain without the desired element.
      *
-     * @param someElements
+     * @param someElement
      * @return a new domain corresponding to the complement
      */
-    public DiscreteDomain<T> without(final T... someElements) {
-        final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
-
-        // highly inefficient!
-        elements.forEach(e -> {
-            if (eapli.framework.util.Collections.contains(someElements, e)) {
-                builder.add(e);
-            }
-        });
-
-        return builder.build();
+    public DiscreteDomain<T> without(final T someElement) {
+        return from(stream().filter(e -> !e.equals(someElement)));
     }
 
     /**
@@ -219,7 +253,7 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
     }
 
     /**
-     * adds support for Java 8 Streams
+     * Returns the elements of the domain as a stream.
      *
      * @return the elements in the domain as a stream
      */
@@ -228,11 +262,32 @@ public class DiscreteDomain<T extends Serializable> implements Iterable<T>, Valu
     }
 
     /**
-     * adds support for Java 8 Streams
+     * Returns the elements of the domain as a stream.
      *
      * @return the elements in the domain as a stream
      */
     public Stream<T> parallelStream() {
         return elements.parallelStream();
+    }
+
+    /**
+     * Creates a new discrete domain by mapping each element of this domain.
+     *
+     * @param mapper
+     * @return a new discrete domain
+     */
+    public <R extends Serializable> DiscreteDomain<R> map(final Function<T, R> mapper) {
+        return new DiscreteDomainBuilder<R>().with(stream().map(mapper)).build();
+    }
+
+    /**
+     * Creates a new discrete domain by mapping each element of this domain.
+     *
+     * @param mapper
+     * @return a new discrete domain
+     */
+    public <R extends Serializable> DiscreteDomain<R> flatMap(
+            final Function<? super T, ? extends Stream<? extends R>> mapper) {
+        return new DiscreteDomainBuilder<R>().with(stream().flatMap(mapper)).build();
     }
 }

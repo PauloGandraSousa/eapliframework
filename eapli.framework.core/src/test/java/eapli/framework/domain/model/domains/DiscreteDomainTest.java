@@ -59,8 +59,8 @@ public class DiscreteDomainTest {
         ONE_TO_TEN = build(1, 10);
         FIVE_TO_SEVEN = build(5, 7);
         TEN_TO_FIFTHTEEN = build(10, 15);
-        FIVE_TO_SEVEN_TEN_TO_FIFHTEEN = builder(10, 15).add(5L).add(6L).add(7L).build();
-        ONE_TO_FOUR_EIGTH_TO_TEN = builder(1, 4).add(8L, 9L, 10L).build();
+        FIVE_TO_SEVEN_TEN_TO_FIFHTEEN = builder(10, 15).with(5L).with(6L).with(7L).build();
+        ONE_TO_FOUR_EIGTH_TO_TEN = builder(1, 4).with(8L, 9L, 10L).build();
         ONE_TO_NINE = build(1, 9);
     }
 
@@ -71,7 +71,7 @@ public class DiscreteDomainTest {
     private static DiscreteDomainBuilder<Long> builder(final long begin, final long end) {
         final DiscreteDomainBuilder<Long> builder = new DiscreteDomainBuilder<>();
         for (long i = begin; i <= end; i++) {
-            builder.add(i);
+            builder.with(i);
         }
         return builder;
     }

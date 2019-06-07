@@ -26,11 +26,13 @@ package eapli.framework.domain.model.domains;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import eapli.framework.util.Factory;
 import eapli.framework.validations.Preconditions;
 
 /**
+ * A {@link DiscreteDomain} builder.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -39,21 +41,27 @@ import eapli.framework.validations.Preconditions;
 public class DiscreteDomainBuilder<T extends Serializable> implements Factory<DiscreteDomain<T>> {
     private final Set<T> from = new HashSet<>();
 
-    public DiscreteDomainBuilder<T> add(final T e) {
+    public DiscreteDomainBuilder<T> with(final T e) {
         Preconditions.nonNull(e);
 
         from.add(e);
         return this;
     }
 
-    public DiscreteDomainBuilder<T> add(final T... elements) {
+    public DiscreteDomainBuilder<T> with(@SuppressWarnings("unchecked") final T... elements) {
         for (final T e : elements) {
             from.add(e);
         }
         return this;
     }
 
-    public DiscreteDomainBuilder<T> forget(final T e) {
+    public DiscreteDomainBuilder<T> with(final Stream<T> stream) {
+        Preconditions.nonNull(stream);
+        stream.forEach(from::add);
+        return this;
+    }
+
+    public DiscreteDomainBuilder<T> without(final T e) {
         Preconditions.nonNull(e);
 
         from.remove(e);
