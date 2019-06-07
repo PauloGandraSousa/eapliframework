@@ -54,7 +54,7 @@ public final class Either<T, U> {
      * @param left
      * @return a new Either
      */
-    public static <T, U> Either<T, U> ofLeft(final T left) {
+    public static <T, U> Either<T, U> left(final T left) {
         return new Either<>(left, true);
     }
 
@@ -64,7 +64,7 @@ public final class Either<T, U> {
      * @param right
      * @return a new Either
      */
-    public static <T, U> Either<T, U> ofRight(final U right) {
+    public static <T, U> Either<T, U> right(final U right) {
         return new Either<>(right);
     }
 
@@ -106,22 +106,22 @@ public final class Either<T, U> {
      * @param error
      * @return a new either resulting from the projection
      */
-    public Either<T, U> project(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
+    public Either<T, U> map(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
         if (type == SideType.LEFT) {
-            return ofLeft(normal.apply(left));
+            return left(normal.apply(left));
         }
-        return ofRight(error.apply(right));
+        return right(error.apply(right));
     }
 
     /**
-     * acts on the value of this Either instance, executing the "normal"
+     * Acts on the value of this Either instance, executing the "normal"
      * function with the left value if this Either instance holds a left value,
      * otherwise executes the "error" function with the right value
      *
      * @param doer
      * @param error
      */
-    public void accept(final Consumer<T> doer, final Consumer<U> error) {
+    public void consume(final Consumer<T> doer, final Consumer<U> error) {
         if (type == SideType.LEFT) {
             doer.accept(left);
         } else {

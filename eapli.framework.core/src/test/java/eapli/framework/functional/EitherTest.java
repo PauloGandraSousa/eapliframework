@@ -67,30 +67,30 @@ public class EitherTest {
     }
 
     private Either<String, Integer> leftSubject() {
-        final Either<String, Integer> subject = Either.ofLeft(TESTING);
+        final Either<String, Integer> subject = Either.left(TESTING);
         return subject;
     }
 
     private Either<String, Integer> rightSubject() {
-        final Either<String, Integer> subject = Either.ofRight(TESTING_INT);
+        final Either<String, Integer> subject = Either.right(TESTING_INT);
         return subject;
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureCannotCreateLeftFromNull() {
-        Either.ofLeft(null);
+        Either.left(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureCannotCreateRightFromNull() {
-        Either.ofRight(null);
+        Either.right(null);
     }
 
     @Test
     public void ensureLeftHoldsValue() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.project(stringLengthOp, intValueOp);
+        subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -98,7 +98,7 @@ public class EitherTest {
     public void ensureRightHoldsValue() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.project(stringLengthOp, intValueOp);
+        subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 
@@ -106,7 +106,7 @@ public class EitherTest {
     public void ensureAcceptOnLeft() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.accept(stringLength, intValue);
+        subject.consume(stringLength, intValue);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -114,7 +114,7 @@ public class EitherTest {
     public void ensureAcceptOnRight() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.accept(stringLength, intValue);
+        subject.consume(stringLength, intValue);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 
@@ -122,7 +122,7 @@ public class EitherTest {
     public void ensureProjectToLeft() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.project(stringLengthOp, intValueOp);
+        subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -130,7 +130,7 @@ public class EitherTest {
     public void ensureProjectToRight() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.project(stringLengthOp, intValueOp);
+        subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 }
