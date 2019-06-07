@@ -19,10 +19,14 @@ Ideas about improvements
   - [bitbucket api](https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Busername%7D/%7Brepo_slug%7D/downloads)
 
 - Functional
-
+  - discredomain first, rest, map
   - [Atalasian fugue](https://bitbucket.org/atlassian/fugue/src/master/)
   - Google [Guava](https://github.com/google/guava)
   - [vavr](https://www.vavr.io/)
+  - Try Monad
+    - https://dzone.com/articles/whats-wrong-java-8-part-iv 
+    - https://dzone.com/articles/why-try-better-exception-handling-in-java-with-try
+    - https://github.com/jasongoodwin/better-java-monads
   - Tuples
 
     - [Apache Commons Tuple](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/tuple/package-summary.html)
