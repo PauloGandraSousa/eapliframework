@@ -74,7 +74,8 @@ import eapli.framework.validations.Invariants;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class AuthzRegistry implements Singleton {
+@Singleton
+public final class AuthzRegistry {
 
     private static AuthorizationService authorizationSvc;
     private static AuthenticationService authenticationService;

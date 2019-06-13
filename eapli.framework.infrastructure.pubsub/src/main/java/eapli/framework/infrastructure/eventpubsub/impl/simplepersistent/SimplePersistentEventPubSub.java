@@ -36,24 +36,22 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.EventHandler;
 import eapli.framework.infrastructure.eventpubsub.EventPublisher;
-import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessEventDispatcher;
-import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessEventPublisher;
-import eapli.framework.util.Singleton;
+import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 
 /**
  * A simple event dispatcher using database tables to persist events and allow
  * for out of process publish-subscribe.
- *
+ * <p>
  * This class is just for demonstration purposes. you should consider using a
  * true pub/sub mechanism such as message queueing instead of this class.
- *
+ * <p>
  * This class is only prepared to be used by Spring Dependency Injection
  *
  * @author Paulo Gandra de Sousa
  *
  */
 @Component
-public class SimplePersistentEventPubSub implements EventDispatcher, EventPublisher, Singleton {
+public class SimplePersistentEventPubSub implements EventDispatcher, EventPublisher {
 
     private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventPubSub.class);
 
@@ -62,8 +60,8 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     @Autowired
     private EventConsumptionRepository consumptionRepo;
 
-    private final EventDispatcher inprocDispatcher = InProcessEventDispatcher.instance();
-    private final EventPublisher inprocPublisher = InProcessEventPublisher.instance();
+    private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
+    private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
 
     /**
      * identify the consumer application instance. useful if you have multiple

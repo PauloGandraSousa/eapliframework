@@ -32,7 +32,8 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  *
  */
-public class IdentityGenerators implements Singleton {
+@Singleton
+public class IdentityGenerators {
 
     private static class LazyHolder {
         private static final IdentityGenerators INSTANCE = new IdentityGenerators();

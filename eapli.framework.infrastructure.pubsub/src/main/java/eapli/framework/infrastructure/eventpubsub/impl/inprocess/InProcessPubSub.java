@@ -23,133 +23,44 @@
  */
 package eapli.framework.infrastructure.eventpubsub.impl.inprocess;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
-import eapli.framework.infrastructure.eventpubsub.EventHandler;
 import eapli.framework.infrastructure.eventpubsub.EventPublisher;
-import eapli.framework.util.Singleton;
-import eapli.framework.validations.Preconditions;
+import eapli.framework.util.Utility;
 
 /**
- * A simple global event dispatcher to be used for in-process event dispatching.
+ * Provides access to the in process event publisher and dispatcher for
+ * scenarios without spring dependency injection.
  *
- * Note that event dispatcher will keep a reference to the event handler unless
- * it is unsubscribed, potentially causing a "memory leak" if you forget to
- * unsubscribe as the garbage collector won't be able to reclaim the used
- * memory.
- *
- * publishing an event is performed in a separate thread of execution from the
- * calling thread
- *
- * @author Paulo Gandra de Sousa
+ * @author Paulo Gandra de Sousa 13/06/2019
  *
  */
-final class InProcessPubSub implements Singleton, EventDispatcher, EventPublisher {
-
-    private static final Logger LOGGER = LogManager.getLogger(InProcessPubSub.class);
-
-    private final Map<Class<? extends DomainEvent>, List<EventHandler>> handlers = new ConcurrentHashMap<>();
-
+@Utility
+public final class InProcessPubSub {
+    // make sure that there is only one instance of the Pub/sub
     private static class LazyHolder {
-        private static final InProcessPubSub INSTANCE = new InProcessPubSub();
+        private static final InProcessPublisherDispatcher INSTANCE = new InProcessPublisherDispatcher();
 
         private LazyHolder() {
         }
     }
 
-    private InProcessPubSub() {
-        // ensure global "singleton"
-    }
-
+    /**
+     * Provides access to the component if you are not using dependency
+     * injection, e.g, Spring
+     *
+     * @return the dispatcher
+     */
     public static EventDispatcher dispatcher() {
         return LazyHolder.INSTANCE;
     }
 
+    /**
+     * provides access to the component if you are not using dependency
+     * injection, e.g, Spring
+     *
+     * @return the publisher
+     */
     public static EventPublisher publisher() {
         return LazyHolder.INSTANCE;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * eapli.framework.domain.events.EventDispatcher#subscribe(eapli.framework.
-     * domain.events.EventHandler, java.lang.Class)
-     */
-    @Override
-    public synchronized void subscribe(final EventHandler observer, final Class<? extends DomainEvent>... events) {
-        Preconditions.nonNull(observer);
-
-        for (final Class<? extends DomainEvent> classz : events) {
-            final List<EventHandler> observers = new ArrayList<>();
-            observers.add(observer);
-            handlers.merge(classz, observers, (o, n) -> {
-                o.add(n.get(0));
-                return o;
-            });
-        }
-        LOGGER.debug("{} subscribed to events {}", observer.getClass().getSimpleName(), events);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see eapli.framework.domain.events.EventDispatcher#unsubscribe(eapli.
-     * framework. domain.events.EventHandler, java.lang.Class)
-     */
-    @Override
-    public void unsubscribe(final EventHandler observer, final Class<? extends DomainEvent>... events) {
-        Preconditions.nonNull(observer);
-
-        for (final Class<? extends DomainEvent> classz : events) {
-            final List<EventHandler> observers = handlers.get(classz);
-            if (observers != null) {
-                observers.remove(observer);
-            }
-        }
-        LOGGER.debug("{} unsubscribed to events {}", observer.getClass().getSimpleName(), events);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see eapli.framework.domain.events.EventDispatcher#unsubscribe(eapli.
-     * framework. domain.events.EventHandler)
-     */
-    @Override
-    public void unsubscribe(final EventHandler observer) {
-        handlers.values().forEach(l -> l.remove(observer));
-        LOGGER.debug("{} subscribed to all events", observer.getClass().getSimpleName());
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * eapli.framework.domain.events.EventDispatcher#publish(eapli.framework.
-     * domain. events.DomainEvent)
-     */
-    @Override
-    public void publish(final DomainEvent event) {
-        Preconditions.nonNull(event, "cannot publish null");
-
-        final List<EventHandler> observers = handlers.get(event.getClass());
-        if (observers != null) {
-            new Thread(() -> observers.forEach(observer -> observer.onEvent(event))).start();
-        }
-        LOGGER.debug("Publishing event {} to subscribed observers", event);
-    }
-
-    @Override
-    public void shutdown() {
-        // nothing to do
     }
 }
