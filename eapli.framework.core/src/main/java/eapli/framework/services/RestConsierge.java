@@ -38,14 +38,65 @@ public final class RestConsierge {
         // ensure utility
     }
 
-    public static <T> T checkFound(final T resource) {
+    /**
+     * Treats a null value as a 404 by throwing
+     * {@link ResourceNotFoundException}.
+     *
+     * @param resource
+     * @return the value if it is not null.
+     * @throws ResourceNotFoundException
+     *             if the value is null
+     */
+    public static <T> T getOrElse404(final T resource) {
         if (resource == null) {
             throw new ResourceNotFoundException();
         }
         return resource;
     }
 
+    /**
+     * Treats a null value as a 404 by throwing
+     * {@link ResourceNotFoundException}.
+     *
+     * @param resource
+     * @param message
+     *            the error message to send to the client
+     * @return the value if it is not null.
+     * @throws ResourceNotFoundException
+     *             if the value is null
+     */
+    public static <T> T getOrElse404(final T resource, final String message) {
+        if (resource == null) {
+            throw new ResourceNotFoundException(message);
+        }
+        return resource;
+    }
+
+    /**
+     * Properly handle Optional results from an API to either returns the value
+     * of the optional or generate a 404 response.
+     *
+     * @param resource
+     * @return the value of the optional if the optional is not empty
+     * @throws ResourceNotFoundException
+     *             if the optional is empty. to generate a 404 response
+     */
     public static <T> T getOrElse404(final Optional<T> resource) {
         return resource.orElseThrow(ResourceNotFoundException::new);
+    }
+
+    /**
+     * Properly handle Optional results from an API to either returns the value
+     * of the optional or generate a 404 response.
+     *
+     * @param resource
+     * @param message
+     *            the error message to send to the client
+     * @return the value of the optional if the optional is not empty
+     * @throws ResourceNotFoundException
+     *             if the optional is empty. to generate a 404 response
+     */
+    public static <T> T getOrElse404(final Optional<T> resource, final String message) {
+        return resource.orElseThrow(() -> new ResourceNotFoundException(message));
     }
 }
