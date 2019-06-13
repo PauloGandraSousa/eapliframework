@@ -23,18 +23,57 @@
  */
 package eapli.framework.util;
 
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * a marker interface for Singletons. classes implementing this interface must
- * not allow to create more than one instance. usually this is done by making
- * the class final, making the constructors private and providing a static
- * method to access the only instance of the class.
+ * A class that only has one object instance, i.e., Singleton.
  *
- * see the lazy holder pattern for thread safety:
- * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+ * <p>
+ * Singleton classes implementing must not allow to create more than one
+ * instance. Usually this is done by making the class final, making the
+ * constructors private and providing a static method to access the only
+ * instance of the class. For example:
+ *
+ * <pre>
+ * <code>
+ * &#64;Singleton
+ * public final NumberFive {
+ *      private NumberFive() {
+ *              // avoid instantiation
+ *      }
+ *
+ *      // singleton instance holder
+ *      private static final class LazyHolder{
+ *              static final NumberFive INSTANCE = new NumberFive();
+ *      }
+ *
+ *      // factory method
+ *      public static NumberFive instance(){
+ *              return LazyHolder.INSTANCE;
+ *      }
+ *
+ *      public int value() {
+ *              return 5;
+ *      }
+ * }
+ * </code>
+ * </pre>
+ * <p>
+ * See the <a href=
+ * "https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom">initialization
+ * on demand</a> pattern for thread safety.
  *
  * @author Paulo Gandra Sousa
  *
  */
-public interface Singleton {
+@Documented
+@Retention(SOURCE)
+@Target({ TYPE })
+public @interface Singleton {
 
 }

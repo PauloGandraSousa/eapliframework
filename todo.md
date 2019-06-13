@@ -4,6 +4,8 @@ Ideas about improvements
 
 - use annotations, e.g., Utilitarian
 
+  - create a processor for @Utility that will force the class to be final and has no public constructors and will check that all methods are static
+  - create a processor for @Singleton ? force the class to be final and has no public constructors
   - [annotation processing 101](http://hannesdorfmann.com/annotation-processing/annotationprocessing101)
   - [Baeldung](https://www.baeldung.com/java-annotation-processing-builder)
   - [jintin](https://medium.com/@jintin/annotation-processing-in-java-3621cb05343a)
