@@ -28,13 +28,14 @@ import java.util.List;
 
 /**
  * Utility functions to handle Collections.
- *
- * see also Apache Common Iterable Utils
+ * <p>
+ * See also Apache Common Iterable Utils.
  *
  * @author Paulo Gandra Sousa
  *
  */
-public final class Collections implements Utilitarian {
+@Utility
+public final class Collections {
 
     private Collections() {
         // to make sure this is an utility class

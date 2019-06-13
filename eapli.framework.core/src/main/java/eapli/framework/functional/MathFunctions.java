@@ -22,7 +22,7 @@ package eapli.framework.functional;
 
 import java.util.stream.IntStream;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -31,7 +31,8 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class MathFunctions implements Utilitarian {
+@Utility
+public final class MathFunctions {
 
     private MathFunctions() {
         // ensure utility

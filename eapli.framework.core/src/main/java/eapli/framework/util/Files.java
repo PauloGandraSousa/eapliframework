@@ -37,7 +37,8 @@ import java.nio.file.Paths;
  *
  * @author Paulo Gandra Sousa
  */
-public final class Files implements Utilitarian {
+@Utility
+public final class Files {
 
     private Files() {
         // to make sure this is a utility class

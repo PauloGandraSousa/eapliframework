@@ -28,8 +28,9 @@ package eapli.framework.util;
  * methods.
  *
  * @author Paulo Gandra de Sousa
- *
+ * @deprecated use the annotation {@link Utility}
  */
+@Deprecated
 public interface Utilitarian {
 
 }

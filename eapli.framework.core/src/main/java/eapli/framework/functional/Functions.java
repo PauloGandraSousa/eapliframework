@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import eapli.framework.actions.TimedActions;
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * A utility class to build and work with Functions.
@@ -34,7 +34,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Functions implements Utilitarian {
+@Utility
+public final class Functions {
     private Functions() {
         // ensure utility
     }

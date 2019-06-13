@@ -22,7 +22,7 @@ package eapli.framework.actions;
 
 import java.util.function.BooleanSupplier;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -31,7 +31,8 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Actions implements Utilitarian {
+@Utility
+public final class Actions {
 
     private abstract static class ThrowAction implements Action {
 

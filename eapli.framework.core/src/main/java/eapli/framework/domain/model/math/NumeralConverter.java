@@ -20,7 +20,7 @@
  */
 package eapli.framework.domain.model.math;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * utility class (private to the package) to extract the conversion logic from
@@ -29,7 +29,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-class NumeralConverter implements Utilitarian {
+@Utility
+class NumeralConverter {
     private NumeralConverter() {
         // ensure utility
     }

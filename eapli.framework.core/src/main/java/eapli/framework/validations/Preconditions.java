@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 
 import eapli.framework.actions.Actions;
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * Utility class for validating preconditions, usually on function parameters.
@@ -35,7 +35,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Preconditions implements Utilitarian {
+@Utility
+public final class Preconditions {
     private Preconditions() {
         // ensure utility
     }

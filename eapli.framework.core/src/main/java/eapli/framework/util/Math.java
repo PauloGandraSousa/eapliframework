@@ -28,7 +28,8 @@ import java.math.RoundingMode;
  *
  * @author Paulo Gandra Sousa
  */
-public final class Math implements Utilitarian {
+@Utility
+public final class Math {
 
     private Math() {
         // to make sure this is an utility class

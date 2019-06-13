@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 
 import eapli.framework.actions.Actions;
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * Utility class for expressing and ensuring class/method's invariants. If the
@@ -33,7 +33,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Invariants implements Utilitarian {
+@Utility
+public final class Invariants {
     private Invariants() {
         // ensure utility
     }

@@ -31,7 +31,8 @@ import java.util.Random;
  * in order to understand the security issues that rise from using pseudorandon
  * number generators
  */
-public final class NumberGenerator implements Utilitarian {
+@Utility
+public final class NumberGenerator {
     @SuppressWarnings("squid:S2245")
     private static final Random RANDOM_GEN = new Random(Calendars.now().getTimeInMillis());
 

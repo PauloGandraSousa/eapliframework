@@ -29,7 +29,8 @@ import java.math.BigDecimal;
  *
  * @author Paulo Gandra Sousa
  */
-public final class NumberFormater implements Utilitarian {
+@Utility
+public final class NumberFormater {
 
     private NumberFormater() {
         // to make sure this is an utility class

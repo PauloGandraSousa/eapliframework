@@ -26,7 +26,7 @@ package eapli.framework.validations;
 import java.util.Calendar;
 
 import eapli.framework.util.Calendars;
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * Utility predicates handling dates
@@ -34,7 +34,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class CalendarPredicates implements Utilitarian {
+@Utility
+public final class CalendarPredicates {
 
     /**
      * checks if the calendar time (Hour, Minute, Second and Millisecond) is

@@ -51,7 +51,8 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Paulo Gandra Sousa
  */
-public final class Calendars implements Utilitarian {
+@Utility
+public final class Calendars {
     private static final Logger LOGGER = LogManager.getLogger(Calendars.class);
 
     private static final int DAYS_TILL_END_OF_WEEK = 6;

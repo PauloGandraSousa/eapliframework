@@ -23,14 +23,15 @@
  */
 package eapli.framework.validations;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * Predicates handling Comparables.
  *
  * @author Paulo Gandra Sousa
  */
-public final class ComparablePredicates implements Utilitarian {
+@Utility
+public final class ComparablePredicates {
 
     private ComparablePredicates() {
         // to make sure this is an utility class

@@ -34,7 +34,8 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class Arrays implements Utilitarian {
+@Utility
+public final class Arrays {
 
     private Arrays() {
         // ensure utility

@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 import eapli.framework.actions.Action;
 import eapli.framework.actions.Actions;
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * Utility class for executing actions based on validations.
@@ -34,7 +34,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa
  *
  */
-/* package */ class Validations implements Utilitarian {
+@Utility
+/* package */ class Validations {
     protected Validations() {
         // ensure utility
     }

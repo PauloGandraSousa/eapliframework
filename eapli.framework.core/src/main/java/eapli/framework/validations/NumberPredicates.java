@@ -23,7 +23,7 @@
  */
 package eapli.framework.validations;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * Number Predicates. Predicates are functions that test a condition and return
@@ -39,7 +39,8 @@ import eapli.framework.util.Utilitarian;
  *
  * @author Paulo Gandra Sousa
  */
-public final class NumberPredicates implements Utilitarian {
+@Utility
+public final class NumberPredicates {
 
     private NumberPredicates() {
         // to make sure this is an utility class

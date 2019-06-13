@@ -20,14 +20,15 @@
  */
 package eapli.framework.functional;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * A utility class with some handy functions.
  *
  * @author Paulo Gandra de Sousa 24/05/2019
  */
-public final class StandardFunctions implements Utilitarian {
+@Utility
+public final class StandardFunctions {
     private StandardFunctions() {
         // ensure utility
     }

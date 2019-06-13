@@ -43,8 +43,9 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Paulo Gandra Sousa
  */
+@Utility
 @SuppressWarnings({ "squid:S106", "squid:S4829" })
-public final class Console implements Utilitarian {
+public final class Console {
 
     private static final Logger LOGGER = LogManager.getLogger(Console.class);
 

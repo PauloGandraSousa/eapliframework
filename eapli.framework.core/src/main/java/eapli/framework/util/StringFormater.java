@@ -44,7 +44,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Paulo Gandra Sousa
  *
  */
-public final class StringFormater implements Utilitarian {
+@Utility
+public final class StringFormater {
 
     private StringFormater() {
         // ensure utility

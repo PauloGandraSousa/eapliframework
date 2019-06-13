@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -41,7 +41,8 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  *
  */
-public final class TimedActions implements Utilitarian {
+@Utility
+public final class TimedActions {
 
     private static final Logger LOGGER = LogManager.getLogger(TimedActions.class);
 

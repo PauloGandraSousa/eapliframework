@@ -31,7 +31,8 @@ package eapli.framework.util;
  * @author Paulo Gandra Sousa
  *
  */
-public final class Strings implements Utilitarian {
+@Utility
+public final class Strings {
 
     private static final String CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 

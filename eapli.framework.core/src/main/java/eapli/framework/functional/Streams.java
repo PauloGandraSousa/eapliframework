@@ -28,14 +28,15 @@ import java.util.function.BiFunction;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * A utility class for handling Java 8 Streams
  *
  * @author Paulo Gandra de Sousa 24/05/2019
  */
-public final class Streams implements Utilitarian {
+@Utility
+public final class Streams {
     private Streams() {
         // ensure utility
     }

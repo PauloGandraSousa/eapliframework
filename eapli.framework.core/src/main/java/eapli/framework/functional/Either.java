@@ -34,10 +34,11 @@ import eapli.framework.validations.Preconditions;
  * response and the right type is the error response.
  *
  * @author Paulo Gandra de Sousa
- *
+ * @deprecated use a java functional library instead, e.g., vavr
  * @param <T>
  * @param <U>
  */
+@Deprecated
 public final class Either<T, U> {
 
     private enum SideType {
@@ -144,6 +145,19 @@ public final class Either<T, U> {
         } else {
             final String message = right instanceof String ? (String) right : "";
             throw new IllegalArgumentException(message);
+        }
+    }
+
+    /**
+     * Returns a new Either with the values (and types) swapped.
+     *
+     * @return a new Either with the values (and types) swapped
+     */
+    public Either<U, T> swap() {
+        if (type == SideType.LEFT) {
+            return right(left);
+        } else {
+            return left(right);
         }
     }
 }

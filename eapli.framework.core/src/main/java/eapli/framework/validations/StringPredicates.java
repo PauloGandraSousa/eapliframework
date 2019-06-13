@@ -23,7 +23,7 @@ package eapli.framework.validations;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * String predicates. Predicates are functions that test a condition and return
@@ -43,7 +43,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra Sousa
  *
  */
-public final class StringPredicates implements Utilitarian {
+@Utility
+public final class StringPredicates {
 
     @SuppressWarnings("squid:S4784")
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern

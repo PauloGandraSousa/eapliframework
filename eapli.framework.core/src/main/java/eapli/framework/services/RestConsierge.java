@@ -22,7 +22,7 @@ package eapli.framework.services;
 
 import java.util.Optional;
 
-import eapli.framework.util.Utilitarian;
+import eapli.framework.util.Utility;
 
 /**
  * Helper class to handle some common REST API situations, e.g., returning 404
@@ -31,7 +31,8 @@ import eapli.framework.util.Utilitarian;
  * @author Paulo Gandra de Sousa 23/05/2019
  *
  */
-public final class RestConsierge implements Utilitarian {
+@Utility
+public final class RestConsierge {
 
     private RestConsierge() {
         // ensure utility
