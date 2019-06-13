@@ -83,7 +83,7 @@ public class EmailAddress implements ValueObject, Serializable, StringMixin {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(email).code();
+        return new HashCoder().with(email).code();
     }
 
     @Override

@@ -233,7 +233,7 @@ public class Vector implements ValueObject {
 
     @Override
     public int hashCode() {
-        final HashCoder coder = new HashCoder().of(type).of(data);
+        final HashCoder coder = new HashCoder().with(type).with(data);
         return coder.code();
     }
 

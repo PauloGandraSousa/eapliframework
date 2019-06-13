@@ -214,7 +214,7 @@ public class Text implements ValueObject, StringMixin {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(theText).code();
+        return new HashCoder().with(theText).code();
     }
 
     /**

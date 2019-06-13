@@ -101,7 +101,7 @@ public class Designation implements ValueObject, Comparable<Designation>, String
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(name).code();
+        return new HashCoder().with(name).code();
     }
 
     @Override

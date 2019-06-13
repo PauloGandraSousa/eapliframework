@@ -98,6 +98,6 @@ public class StandardNumeralSystem implements ValueObject, NumeralSystem {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(base).code();
+        return new HashCoder().with(base).code();
     }
 }

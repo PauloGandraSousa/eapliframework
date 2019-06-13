@@ -842,7 +842,7 @@ public class Matrix implements ValueObject {
 
     @Override
     public int hashCode() {
-        final HashCoder coder = new HashCoder().of(rows).of(cols).of(data);
+        final HashCoder coder = new HashCoder().with(rows).with(cols).with(data);
         return coder.code();
     }
 }

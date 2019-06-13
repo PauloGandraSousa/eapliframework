@@ -101,7 +101,7 @@ public class RoleAssignment implements ValueObject, Serializable {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(type).of(assignedOn).of(expired).of(unassignedOn).code();
+        return new HashCoder().with(type).with(assignedOn).with(expired).with(unassignedOn).code();
     }
 
     @Override

@@ -578,7 +578,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(startBoundary).of(start).of(endBoundary).of(end).code();
+        return new HashCoder().with(startBoundary).with(start).with(endBoundary).with(end).code();
     }
 
     /**

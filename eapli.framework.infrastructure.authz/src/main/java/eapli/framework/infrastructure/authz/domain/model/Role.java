@@ -76,6 +76,6 @@ public class Role implements ValueObject, Serializable {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(roleName).code();
+        return new HashCoder().with(roleName).code();
     }
 }

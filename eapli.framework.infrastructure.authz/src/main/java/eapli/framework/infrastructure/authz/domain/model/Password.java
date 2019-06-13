@@ -86,7 +86,7 @@ public class Password implements ValueObject, Serializable {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(thePassword).code();
+        return new HashCoder().with(thePassword).code();
     }
 
     /**

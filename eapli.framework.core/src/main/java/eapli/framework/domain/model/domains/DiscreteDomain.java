@@ -125,7 +125,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(elements).code();
+        return new HashCoder().with(elements).code();
     }
 
     public boolean contains(final T e) {

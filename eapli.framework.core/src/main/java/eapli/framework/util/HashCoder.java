@@ -27,12 +27,45 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * helper class for hashCode() methods implementations.
+ * Helper class for hashCode() method implementation.
  *
- * check:
- * https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method
+ * <p>
+ * Example usage:
  *
- * see also {@link org.apache.commons.lang3.builder.HashCodeBuilder}
+ * <pre>
+ * <code>
+ * public class Example {
+ *      private int fi;
+ *      private float ff;
+ *      private AnotherClass fo;
+ *
+ *      ...
+ *
+ *      &#64;Override
+ *      public int hashCode(){
+ *              return new HashCoder().with(fi).with(ff).with(fo).code();
+ *      }
+ * }
+ * </code>
+ * </pre>
+ *
+ * If you want to include the super class in the hash code you need to
+ * explicitly add it as a part of the hash code. For instance:
+ *
+ * <pre>
+ * <code>
+ *      &#64;Override
+ *      public int hashCode(){
+ *              return new HashCoder().with(super.hashcode()).with(oneField).with(anotherField).code();
+ *      }
+ * </code>
+ * </pre>
+ * <p>
+ * Check this <a href=
+ * "https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">stackoverflow</a>
+ * thread for insights on how to properly calculate an hash code.
+ * <p>
+ * See also {@link org.apache.commons.lang3.builder.HashCodeBuilder}
  *
  * @author Paulo Gandra Sousa
  *
@@ -115,92 +148,92 @@ public final class HashCoder {
     // builder parts
     //
 
-    public HashCoder of(final boolean f) {
+    public HashCoder with(final boolean f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final boolean[] f) {
+    public HashCoder with(final boolean[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final byte f) {
+    public HashCoder with(final byte f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final byte[] f) {
+    public HashCoder with(final byte[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final char f) {
+    public HashCoder with(final char f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final char[] f) {
+    public HashCoder with(final char[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final short f) {
+    public HashCoder with(final short f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final short[] f) {
+    public HashCoder with(final short[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final int f) {
+    public HashCoder with(final int f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final int[] f) {
+    public HashCoder with(final int[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final long f) {
+    public HashCoder with(final long f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final long[] f) {
+    public HashCoder with(final long[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final float f) {
+    public HashCoder with(final float f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final float[] f) {
+    public HashCoder with(final float[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final double f) {
+    public HashCoder with(final double f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final double[] f) {
+    public HashCoder with(final double[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }
 
-    public HashCoder of(final Object f) {
+    public HashCoder with(final Object f) {
         result = compute(result, part(f));
         return this;
     }
 
-    public HashCoder of(final Object[] f) {
+    public HashCoder with(final Object[] f) {
         result = compute(result, Arrays.hashCode(f));
         return this;
     }

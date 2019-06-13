@@ -91,7 +91,7 @@ public class Name implements ValueObject, Serializable {
 
     @Override
     public int hashCode() {
-        final HashCoder coder = new HashCoder().of(firstName).of(lastName);
+        final HashCoder coder = new HashCoder().with(firstName).with(lastName);
         return coder.code();
     }
 

@@ -82,7 +82,7 @@ public class Username implements ValueObject, Serializable, Comparable<Username>
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(theUsername).code();
+        return new HashCoder().with(theUsername).code();
     }
 
     @Override

@@ -147,7 +147,7 @@ public class Numeral implements ValueObject {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(system).of(value).code();
+        return new HashCoder().with(system).with(value).code();
     }
 
     @Override

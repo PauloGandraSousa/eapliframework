@@ -225,6 +225,6 @@ import eapli.framework.validations.Preconditions;
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(data).code();
+        return new HashCoder().with(data).code();
     }
 }

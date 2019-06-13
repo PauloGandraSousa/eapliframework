@@ -71,6 +71,6 @@ public final class DomainEntities {
      * @return the hashcode of the domain entity
      */
     public static int hashCode(final DomainEntity<?> aDomainEntity) {
-        return new HashCoder().of(aDomainEntity.identity()).code();
+        return new HashCoder().with(aDomainEntity.identity()).code();
     }
 }

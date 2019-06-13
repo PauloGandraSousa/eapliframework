@@ -104,6 +104,6 @@ public class Description implements ValueObject, Serializable, StringMixin {
 
     @Override
     public int hashCode() {
-        return new HashCoder().of(theDescription).code();
+        return new HashCoder().with(theDescription).code();
     }
 }
