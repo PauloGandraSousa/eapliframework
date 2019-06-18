@@ -3,23 +3,20 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
 
@@ -39,11 +36,11 @@ import eapli.framework.infrastructure.eventpubsub.EventPublisher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 
 /**
- * A simple event dispatcher using database tables to persist events and allow
- * for out of process publish-subscribe.
+ * A simple event dispatcher using database tables to persist events and allow for out of process
+ * publish-subscribe.
  * <p>
- * This class is just for demonstration purposes. you should consider using a
- * true pub/sub mechanism such as message queueing instead of this class.
+ * This class is just for demonstration purposes. you should consider using a true pub/sub mechanism
+ * such as message queueing instead of this class.
  * <p>
  * This class is only prepared to be used by Spring Dependency Injection
  *
@@ -64,9 +61,8 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
 
     /**
-     * identify the consumer application instance. useful if you have multiple
-     * instances of the same application and want to dispatch events to all of
-     * them
+     * identify the consumer application instance. useful if you have multiple instances of the same
+     * application and want to dispatch events to all of them
      */
     @Value("${eapli.framework.pubsub.instanceKey}")
     private String instanceKey;
@@ -129,14 +125,16 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     }
 
     @Override
-    public void subscribe(final EventHandler observer, final Class<? extends DomainEvent>... events) {
+    public void subscribe(final EventHandler observer,
+            @SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
         initTimersIfNeeded();
 
         inprocDispatcher.subscribe(observer, events);
     }
 
     @Override
-    public void unsubscribe(final EventHandler observer, final Class<? extends DomainEvent>... events) {
+    public void unsubscribe(final EventHandler observer,
+            @SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
         inprocDispatcher.unsubscribe(observer, events);
     }
 
