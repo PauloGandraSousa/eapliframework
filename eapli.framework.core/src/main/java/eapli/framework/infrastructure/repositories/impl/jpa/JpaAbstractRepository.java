@@ -3,23 +3,20 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
@@ -29,19 +26,18 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
 /**
- * An utility class for implementing simple agnostic JPA repositories, that is,
- * not tied to any particular managed entity. Can be usefull if you want to have
- * a Reporting repository that returns different types of DTOs. If you want a
- * repository for a JPA Entity use the typed {@link JpaBaseRepository}
+ * An utility class for implementing simple agnostic JPA repositories, that is, not tied to any
+ * particular managed entity. Can be useful if you want to have a Reporting repository that returns
+ * different types of DTOs. If you want a repository for a JPA Entity use the typed
+ * {@link JpaBaseRepository}
  *
  * <p>
- * based on <a href=
+ * Based on <a href=
  * "http://stackoverflow.com/questions/3888575/single-dao-generic-crud-methods-jpa-hibernate-spring"
- * > stackoverflow</a> and on
- * <a href="https://burtbeckwith.com/blog/?p=40">burtbeckwith</a>.
+ * > stackoverflow</a> and on <a href="https://burtbeckwith.com/blog/?p=40">burtbeckwith</a>.
+ *
  * <p>
- * also have a look at
- * <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
+ * Also have a look at <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
  * implementation patterns</a>
  *
  * @author Paulo Gandra de Sousa
