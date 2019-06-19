@@ -27,19 +27,22 @@ import eapli.framework.validations.Invariants;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A history keeper that keeps track of {@link Memento} and allows to easily
- * restore back to a previous state.
+ * A history keeper that keeps track of {@link Memento} and allows to easily restore back to a
+ * previous state in a LIFO manner.
+ *
+ * @param <T>
+ *            the type of object to track history
  *
  * @author Paulo Gandra Sousa
  *
  */
-public class RestorableHistoryKeeper<T extends Restorable> {
+public class RestorableHistoryKeeper<T extends Mementoable> {
     private final Deque<Memento> history = new ArrayDeque<>();
     private final T subject;
 
     /**
      * @param subject
-     *            the object to track
+     *                the object to track
      */
     public RestorableHistoryKeeper(final T subject) {
         Preconditions.nonNull(subject);
@@ -48,14 +51,14 @@ public class RestorableHistoryKeeper<T extends Restorable> {
     }
 
     /**
-     * saves the current state of the subject.
+     * Saves the current state of the subject.
      */
     public void savepoint() {
         history.push(subject.snapshot());
     }
 
     /**
-     * returns the subject to the previous state.
+     * Returns the subject to the previous state.
      */
     public void restore() {
         Invariants.ensure(canRestore());
@@ -66,8 +69,7 @@ public class RestorableHistoryKeeper<T extends Restorable> {
     /**
      * Checks if it is possible for the subject to return to a previous state.
      *
-     * @return true if it is possible for the subject to return to a previous
-     *         state.
+     * @return true if it is possible for the subject to return to a previous state.
      */
     public boolean canRestore() {
         return !history.isEmpty();
