@@ -23,6 +23,7 @@ Ideas about improvements
 
 - Functional
 
+  - [memoization](https://dzone.com/articles/java-8-automatic-memoization)
   - discretedomain first?, rest/tail?
   - [Atalasian fugue](https://bitbucket.org/atlassian/fugue/src/master/)
   - Google [Guava](https://github.com/google/guava)
@@ -32,6 +33,7 @@ Ideas about improvements
     - https://dzone.com/articles/whats-wrong-java-8-part-iv 
     - https://dzone.com/articles/why-try-better-exception-handling-in-java-with-try
     - https://github.com/jasongoodwin/better-java-monads
+    
   - Tuples
 
     - [Apache Commons Tuple](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/tuple/package-summary.html)

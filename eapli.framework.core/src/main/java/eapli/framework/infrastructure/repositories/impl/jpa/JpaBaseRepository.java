@@ -3,23 +3,20 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
@@ -42,23 +39,19 @@ import eapli.framework.validations.Preconditions;
 import eapli.framework.validations.StringPredicates;
 
 /**
- * An utility class for implementing JPA repositories. This class' methods don't
- * initiate an explicit transaction relying on an outside Transaction-enabled
- * container.
+ * An utility class for implementing JPA repositories. This class' methods don't initiate an
+ * explicit transaction relying on an outside Transaction-enabled container.
  *
  * <p>
- * Check {@link JpaAutoTxRepository} if you want to have transaction control
- * inside the base class.
+ * Check {@link JpaAutoTxRepository} if you want to have transaction control inside the base class.
  *
  * <p>
- * based on <a href=
+ * Based on <a href=
  * "http://stackoverflow.com/questions/3888575/single-dao-generic-crud-methods-jpa-hibernate-spring"
- * > stackoverflow</a> and on
- * <a href="https://burtbeckwith.com/blog/?p=40">burtbeckwith</a>.
+ * > stackoverflow</a> and on <a href="https://burtbeckwith.com/blog/?p=40">burtbeckwith</a>.
  *
  * <p>
- * also have a look at
- * <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
+ * Also have a look at <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
  * implementation patterns</a>
  *
  * @param <T>
@@ -105,9 +98,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * @param entity
      * @return the newly created persistent object
      * @throws IntegrityViolationException
-     *             in case there is an underlying persistence store exception.
-     *             usually this is caused by a constraint violation (e.g., sql
-     *             state 23505) but it will wrap any persistence exception
+     *                                     in case there is an underlying persistence store exception.
+     *                                     usually this is caused by a constraint violation (e.g., sql
+     *                                     state 23505) but it will wrap any persistence exception
      */
     public T create(final T entity) {
         Preconditions.nonNull(entity);
@@ -134,8 +127,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * Reads an entity given its primary key.
      *
      * @param id
-     * @return an Optional which value is the entity with the requested primary
-     *         key. An empty Optional if there is no such entity.
+     * @return an Optional which value is the entity with the requested primary key. An empty Optional
+     *         if there is no such entity.
      */
     @Override
     public Optional<T> findById(final K id) {
@@ -164,7 +157,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * @param entityId
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
-     *             if the delete operation makes no sense for this repository
+     *                                       if the delete operation makes no sense for this repository
      */
     public void deleteOfIdentity(final I entityId) {
         final String className = this.entityClass.getSimpleName();
@@ -185,15 +178,14 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * Removes the object from the persistence storage. the object reference is
-     * still valid but the persisted entity is marked as deleted in the entity
-     * manager
+     * Removes the object from the persistence storage. the object reference is still valid but the
+     * persisted entity is marked as deleted in the entity manager
      *
      * @param entity
      * @throws IntegrityViolationException
-     *             in case there is an underlying persistence store exception.
-     *             usually this is caused by a constraint violation (e.g., sql
-     *             state 23505) but it will wrap any persistence exception
+     *                                     in case there is an underlying persistence store exception.
+     *                                     usually this is caused by a constraint violation (e.g., sql
+     *                                     state 23505) but it will wrap any persistence exception
      */
     @Override
     @SuppressWarnings("squid:S1226")
@@ -214,7 +206,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * @param entityId
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
-     *             if the delete operation makes no sense for this repository
+     *                                       if the delete operation makes no sense for this repository
      */
     @Override
     public void deleteById(final K entityId) {
@@ -239,18 +231,15 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     /**
      * Inserts or updates an entity <b>and commits</b>.
      *
-     * note that you should reference the return value to use the persisted
-     * entity, as the original object passed as argument might be copied to a
-     * new object
+     * note that you should reference the return value to use the persisted entity, as the original
+     * object passed as argument might be copied to a new object
      *
-     * check <a href=
-     * "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
-     * > JPA implementation patterns</a> for a discussion on saveOrUpdate()
-     * behavior and merge()
+     * check
+     * <a href= "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
+     * > JPA implementation patterns</a> for a discussion on saveOrUpdate() behavior and merge()
      *
      * @param entity
-     * @return the persisted entity - might be a different object than the
-     *         parameter
+     * @return the persisted entity - might be a different object than the parameter
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
      */
@@ -277,9 +266,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * helper method to create a typed query. since this method concatenates the
-     * where clause, be careful if this results from external input, e.g., user
-     * entered data, to avoid SQL injection exploits
+     * helper method to create a typed query. since this method concatenates the where clause, be
+     * careful if this results from external input, e.g., user entered data, to avoid SQL injection
+     * exploits
      *
      * @param where
      * @return
@@ -394,12 +383,11 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for objects that match the given criteria. be careful if the
-     * content of the where parameter is coming from external input, e.g., user
-     * entered data, to avoid SQL injection exploits
+     * searches for objects that match the given criteria. be careful if the content of the where
+     * parameter is coming from external input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param where
-     *            the where clause should use "e" as the query object
+     *              the where clause should use "e" as the query object
      *
      * @return
      */
@@ -412,9 +400,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for objects that match the given criteria. be careful if the
-     * content of the where parameter is coming from external input, e.g., user
-     * entered data, to avoid SQL injection exploits
+     * searches for objects that match the given criteria. be careful if the content of the where
+     * parameter is coming from external input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param whereWithParameters
      * @param params
@@ -430,12 +417,11 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for one object that matches the given criteria be careful if the
-     * content of the where parameter is coming from external input, e.g., user
-     * entered data, to avoid SQL injection exploits
+     * searches for one object that matches the given criteria be careful if the content of the where
+     * parameter is coming from external input, e.g., user entered data, to avoid SQL injection exploits
      *
      * @param where
-     *            the where clause should use "e" as the query object
+     *              the where clause should use "e" as the query object
      * @return
      */
     protected Optional<T> matchOne(final String where) {
@@ -444,14 +430,14 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for one object that matches the given criteria with parameters
-     * be careful if the content of the where parameter is coming from external
-     * input, e.g., user entered data, to avoid SQL injection exploits
+     * searches for one object that matches the given criteria with parameters be careful if the content
+     * of the where parameter is coming from external input, e.g., user entered data, to avoid SQL
+     * injection exploits
      *
      * @param whereWithParameters
-     *            the where clause should use "e" as the query object
+     *                            the where clause should use "e" as the query object
      * @param params
-     *            a map of the parameter name and its value to use in the query
+     *                            a map of the parameter name and its value to use in the query
      * @return
      */
     protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
@@ -460,17 +446,16 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for one object that matches the given criteria with parameters
-     * be careful if the content of the where parameter is coming from external
-     * input, e.g., user entered data, to avoid SQL injection exploits
+     * searches for one object that matches the given criteria with parameters be careful if the content
+     * of the where parameter is coming from external input, e.g., user entered data, to avoid SQL
+     * injection exploits
      *
      * @param where
-     *            the where clause should use "e" as the query object
+     *              the where clause should use "e" as the query object
      * @param args
-     *            a list of parameters to be used in the query. each odd
-     *            parameter is assumed to be the name of the parameter; each
-     *            even parameter is assumed to be the value of the preceeding
-     *            parameter
+     *              a list of parameters to be used in the query. each odd parameter is assumed to be
+     *              the name of the parameter; each even parameter is assumed to be the value of the
+     *              preceeding parameter
      * @return
      */
     protected Optional<T> matchOne(final String where, final Object... args) {
@@ -479,17 +464,16 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for objects that matches the given criteria with parameters be
-     * careful if the content of the where parameter is coming from external
-     * input, e.g., user entered data, to avoid SQL injection exploits
+     * searches for objects that matches the given criteria with parameters be careful if the content of
+     * the where parameter is coming from external input, e.g., user entered data, to avoid SQL
+     * injection exploits
      *
      * @param where
-     *            the where clause should use "e" as the query object
+     *              the where clause should use "e" as the query object
      * @param args
-     *            a list of parameters to be used in the query. each odd
-     *            parameter is assumed to be the name of the parameter; each
-     *            even parameter is assumed to be the value of the preceeding
-     *            parameter
+     *              a list of parameters to be used in the query. each odd parameter is assumed to be
+     *              the name of the parameter; each even parameter is assumed to be the value of the
+     *              preceeding parameter
      * @return
      */
     protected List<T> match(final String where, final Object... args) {
