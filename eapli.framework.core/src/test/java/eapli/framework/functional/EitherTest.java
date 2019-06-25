@@ -24,6 +24,8 @@
 package eapli.framework.functional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
@@ -90,47 +92,128 @@ public class EitherTest {
     public void ensureLeftHoldsValue() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.bimap(stringLengthOp, intValueOp);
-        assertEquals(TESTING.length(), helper.i);
+        assertEquals(TESTING, subject.leftValueOrElseThrow(IllegalArgumentException::new));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureLeftValueOfRightEitherThrowsException() {
+        final Either<String, Integer> subject = rightSubject();
+
+        subject.leftValueOrElseThrow(IllegalArgumentException::new);
     }
 
     @Test
     public void ensureRightHoldsValue() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.bimap(stringLengthOp, intValueOp);
-        assertEquals(TESTING_INT, new Integer(helper.i));
+        assertEquals(TESTING_INT, subject.rightValueOrElseThrow(IllegalArgumentException::new));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureRightValueOfLeftEitherThrowsException() {
+        final Either<String, Integer> subject = leftSubject();
+
+        subject.rightValueOrElseThrow(IllegalArgumentException::new);
     }
 
     @Test
-    public void ensureAcceptOnLeft() {
+    public void ensureConsumeOnLeft() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.biconsume(stringLength, intValue);
+        subject.consume(stringLength, intValue);
         assertEquals(TESTING.length(), helper.i);
     }
 
     @Test
-    public void ensureAcceptOnRight() {
+    public void ensureConsumeOnRight() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.biconsume(stringLength, intValue);
+        subject.consume(stringLength, intValue);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 
     @Test
-    public void ensureProjectToLeft() {
+    public void ensureMapToLeft() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.bimap(stringLengthOp, intValueOp);
+        subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING.length(), helper.i);
     }
 
     @Test
-    public void ensureProjectToRight() {
+    public void ensureMapToRight() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.bimap(stringLengthOp, intValueOp);
+        subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
+
+    @Test
+    public void ensureFilterLeftIsEmpty() {
+        final Either<String, Integer> subject = leftSubject();
+
+        assertTrue(subject.filter(x -> x.equals(TESTING.concat("ABC")), y -> y == TESTING_INT + 1000).isEmpty());
+    }
+
+    @Test
+    public void ensureFilterLeftIsNotEmpty() {
+        final Either<String, Integer> subject = leftSubject();
+
+        assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT).isEmpty());
+    }
+
+    @Test
+    public void ensureFilterRightIsEmpty() {
+        final Either<String, Integer> subject = rightSubject();
+
+        assertTrue(subject.filter(x -> x.equals(TESTING.concat("ABC")), y -> y == TESTING_INT + 1000).isEmpty());
+    }
+
+    @Test
+    public void ensureFilterRightIsNotEmpty() {
+        final Either<String, Integer> subject = rightSubject();
+
+        assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT).isEmpty());
+    }
+
+    @Test
+    public void ensureFoldingRight() {
+        final Either<String, Integer> subject = rightSubject();
+
+        final int actual = subject.fold((x, y) -> x + y.length(), (x, y) -> x + y, 0);
+        assertEquals(TESTING_INT.intValue(), actual);
+    }
+
+    @Test
+    public void ensureFoldingLeft() {
+        final Either<String, Integer> subject = leftSubject();
+
+        final int actual = subject.fold((x, y) -> x + y.length(), (x, y) -> x + y, 0);
+        assertEquals(TESTING.length(), actual);
+    }
+
+    @Test
+    public void ensureFoldingOnEmptyEitherReturnsDefault() {
+        final Either<String, Integer> subject = Either.empty();
+
+        final int DEFAULT = 1234;
+        final int actual = subject.fold((x, y) -> x + y.length(), (x, y) -> x + y, DEFAULT);
+        assertEquals(DEFAULT, actual);
+    }
+
+    /*
+     * TODO other tests
+     *
+     * mapping an empty Either
+     *
+     * filtering an empty Either
+     *
+     * consuming an empty Either
+     *
+     * swap
+     *
+     * swapping an empty Either
+     *
+     * folding an empty either
+     */
 }
