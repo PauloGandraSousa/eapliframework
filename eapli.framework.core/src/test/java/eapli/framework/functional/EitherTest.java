@@ -119,6 +119,22 @@ public class EitherTest {
     }
 
     @Test
+    public void ensureRightValueOfLeftEitherReturnsDefault() {
+        final Either<String, Integer> subject = leftSubject();
+
+        final Integer DEFAULT = 1000;
+        assertEquals(DEFAULT, subject.rightValueOrElse(DEFAULT));
+    }
+
+    @Test
+    public void ensureLeftValueOfRightEitherReturnsDefault() {
+        final Either<String, Integer> subject = rightSubject();
+
+        final String DEFAULT = "ABC";
+        assertEquals(DEFAULT, subject.leftValueOrElse(DEFAULT));
+    }
+
+    @Test
     public void ensureConsumeOnLeft() {
         final Either<String, Integer> subject = leftSubject();
 

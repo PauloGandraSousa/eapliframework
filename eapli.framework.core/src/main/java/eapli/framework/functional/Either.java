@@ -213,6 +213,22 @@ public final class Either<L, R> {
     }
 
     /**
+     * Returns the value hold on the left of the either or the default value, if
+     * there is no value on the left side.
+     *
+     * @param def
+     *
+     * @return the value hold on the left of the either if there is a left value
+     */
+    public L leftValueOrElse(final L def) {
+        if (type == SideType.LEFT) {
+            return left;
+        } else {
+            return def;
+        }
+    }
+
+    /**
      * Returns the value hold on the right of the either or throws a
      * {@code RuntimeException}, e.g., IllegalArgumentException, if there is no
      * value on the right side.
@@ -226,6 +242,22 @@ public final class Either<L, R> {
             return right;
         } else {
             throw exceptionBuilder.get();
+        }
+    }
+
+    /**
+     * Returns the value hold on the right of the either or the default value,
+     * if there is no value on the right side.
+     *
+     * @param def
+     *
+     * @return the value hold on the left of the either if there is a left value
+     */
+    public R rightValueOrElse(final R def) {
+        if (type == SideType.RIGHT) {
+            return right;
+        } else {
+            return def;
         }
     }
 
