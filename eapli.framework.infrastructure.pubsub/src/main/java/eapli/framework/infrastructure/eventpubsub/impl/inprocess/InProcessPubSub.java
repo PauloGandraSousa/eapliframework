@@ -44,6 +44,10 @@ public final class InProcessPubSub {
         }
     }
 
+    private InProcessPubSub() {
+        // avoid instantiation
+    }
+
     /**
      * Provides access to the component if you are not using dependency
      * injection, e.g, Spring
