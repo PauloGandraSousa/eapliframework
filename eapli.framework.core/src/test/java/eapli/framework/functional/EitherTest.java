@@ -90,7 +90,7 @@ public class EitherTest {
     public void ensureLeftHoldsValue() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.map(stringLengthOp, intValueOp);
+        subject.bimap(stringLengthOp, intValueOp);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -98,7 +98,7 @@ public class EitherTest {
     public void ensureRightHoldsValue() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.map(stringLengthOp, intValueOp);
+        subject.bimap(stringLengthOp, intValueOp);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 
@@ -106,7 +106,7 @@ public class EitherTest {
     public void ensureAcceptOnLeft() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.consume(stringLength, intValue);
+        subject.biconsume(stringLength, intValue);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -114,7 +114,7 @@ public class EitherTest {
     public void ensureAcceptOnRight() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.consume(stringLength, intValue);
+        subject.biconsume(stringLength, intValue);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 
@@ -122,7 +122,7 @@ public class EitherTest {
     public void ensureProjectToLeft() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.map(stringLengthOp, intValueOp);
+        subject.bimap(stringLengthOp, intValueOp);
         assertEquals(TESTING.length(), helper.i);
     }
 
@@ -130,7 +130,7 @@ public class EitherTest {
     public void ensureProjectToRight() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.map(stringLengthOp, intValueOp);
+        subject.bimap(stringLengthOp, intValueOp);
         assertEquals(TESTING_INT, new Integer(helper.i));
     }
 }

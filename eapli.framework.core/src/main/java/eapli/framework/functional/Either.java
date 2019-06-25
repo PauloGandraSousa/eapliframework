@@ -29,11 +29,12 @@ import eapli.framework.validations.Preconditions;
  * A simple approach to the functional Monad Either.
  *
  * <p>
- * Objects of this class can represent one (1) value of either T or U. Useful for error handling
- * where, by convention, the left type is the correct response and the right type is the error
- * response.
+ * Objects of this class can represent one (1) value of either {@code T} or
+ * {@code U}. Useful for error handling where, by convention, the left type is
+ * the correct response and the right type is the error response.
  * <p>
- * Consider using a java functional library instead, e.g., vavr
+ * Consider using a java functional library instead, e.g.,
+ * <a href="https://www.vavr.io/">vavr</a>
  *
  * @author Paulo Gandra de Sousa
  * @param <T>
@@ -74,7 +75,8 @@ public final class Either<T, U> {
      *
      * @param left
      * @param marker
-     *               just to make the compiler happy due to the erasure of both constructors
+     *            just to make the compiler happy due to the erasure of both
+     *            constructors
      */
     @SuppressWarnings("squid:S1172")
     private Either(final T left, final boolean marker) {
@@ -97,15 +99,16 @@ public final class Either<T, U> {
     }
 
     /**
-     * Applies the "normal" function to the left value if this Either instance holds a left value,
-     * otherwise applies the "error" function to the right value. since this method returns a new Either
-     * it is suitable for composition.
+     * Applies the "normal" function to the left value if this Either instance
+     * holds a left value, otherwise applies the "error" function to the right
+     * value. Since this method returns a new Either it is suitable for
+     * composition.
      *
      * @param normal
      * @param error
      * @return a new either resulting from the projection
      */
-    public Either<T, U> map(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
+    public Either<T, U> bimap(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
         if (type == SideType.LEFT) {
             return left(normal.apply(left));
         }
@@ -113,14 +116,14 @@ public final class Either<T, U> {
     }
 
     /**
-     * Acts on the value of this Either instance, executing the "normal" function with the left value if
-     * this Either instance holds a left value, otherwise executes the "error" function with the right
-     * value
+     * Acts on the value of this Either instance, executing the "normal"
+     * function with the left value if this Either instance holds a left value,
+     * otherwise executes the "error" function with the right value
      *
      * @param doer
      * @param error
      */
-    public void consume(final Consumer<T> doer, final Consumer<U> error) {
+    public void biconsume(final Consumer<T> doer, final Consumer<U> error) {
         if (type == SideType.LEFT) {
             doer.accept(left);
         } else {
@@ -129,9 +132,10 @@ public final class Either<T, U> {
     }
 
     /**
-     * Returns the value hold on the left of the either or throws an IllegalArgumentException if there
-     * is no value on the left side. If the right side is a String it will use that value as the message
-     * of the exception.
+     * Returns the value hold on the left of the either or throws an
+     * IllegalArgumentException if there is no value on the left side. If the
+     * right side is a String it will use that value as the message of the
+     * exception.
      *
      * @return the value hold on the left of the either if there is a left value
      * @throws IllegalArgumentException
