@@ -33,6 +33,8 @@ import java.util.function.UnaryOperator;
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.actions.Actions;
+
 /**
  *
  * @author Paulo Gandra de Sousa
@@ -133,6 +135,17 @@ public class EitherTest {
     }
 
     @Test
+    public void ensureConsumeEmptyDoesNothing() {
+        Either.empty().consume(x -> Actions.throwState("This should never happen"),
+                y -> Actions.throwState("This should never happen"));
+    }
+
+    @Test
+    public void ensureMappingAnEmptyEitherReturnsEmpty() {
+        assertTrue(Either.empty().map(x -> x, y -> y).isEmpty());
+    }
+
+    @Test
     public void ensureMapToLeft() {
         final Either<String, Integer> subject = leftSubject();
 
@@ -177,6 +190,11 @@ public class EitherTest {
     }
 
     @Test
+    public void ensureFilteringEmptyIsEmpty() {
+        assertTrue(Either.empty().filter(x -> true, y -> true).isEmpty());
+    }
+
+    @Test
     public void ensureFoldingRight() {
         final Either<String, Integer> subject = rightSubject();
 
@@ -201,19 +219,22 @@ public class EitherTest {
         assertEquals(DEFAULT, actual);
     }
 
-    /*
-     * TODO other tests
-     *
-     * mapping an empty Either
-     *
-     * filtering an empty Either
-     *
-     * consuming an empty Either
-     *
-     * swap
-     *
-     * swapping an empty Either
-     *
-     * folding an empty either
-     */
+    @Test
+    public void ensureSwapLeft() {
+        final Either<String, Integer> subject = leftSubject();
+
+        assertEquals(TESTING, subject.swap().rightValueOrElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    public void ensureSwapRight() {
+        final Either<String, Integer> subject = rightSubject();
+
+        assertEquals(TESTING_INT, subject.swap().leftValueOrElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    public void ensureSwapingAnEmptyReturnsAnEmpty() {
+        assertTrue(Either.empty().swap().isEmpty());
+    }
 }

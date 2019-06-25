@@ -162,18 +162,18 @@ public final class Either<L, R> {
      * Folds the current value (either right or left) using {@code def} as the
      * initial folding value.
      *
-     * @param leftFolder
-     * @param rightFolder
+     * @param leftAccum
+     * @param rightAccum
      * @param def
      *            default/initial value
      * @return the folded value
      */
-    public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftFolder,
-            final BiFunction<T, ? super R, ? extends T> rightFolder, final T def) {
+    public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
+            final BiFunction<T, ? super R, ? extends T> rightAccum, final T def) {
         if (type == SideType.LEFT) {
-            return leftFolder.apply(def, left);
+            return leftAccum.apply(def, left);
         } else if (type == SideType.RIGHT) {
-            return rightFolder.apply(def, right);
+            return rightAccum.apply(def, right);
         } else {
             return def;
         }
@@ -213,9 +213,9 @@ public final class Either<L, R> {
     }
 
     /**
-     * Returns the value hold on the left of the either or throws a
+     * Returns the value hold on the right of the either or throws a
      * {@code RuntimeException}, e.g., IllegalArgumentException, if there is no
-     * value on the left side.
+     * value on the right side.
      *
      * @param exceptionBuilder
      *
