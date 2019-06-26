@@ -36,7 +36,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  *
  */
-public class RestorableHistoryKeeper<T extends Mementoable> {
+public class RestorableHistoryKeeper<T extends Restorable> {
     private final Deque<Memento> history = new ArrayDeque<>();
     private final T subject;
 

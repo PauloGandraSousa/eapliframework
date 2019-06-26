@@ -29,34 +29,60 @@ import java.util.function.UnaryOperator;
 import eapli.framework.validations.Invariants;
 
 /**
- * A history Monad that keeps track of the history changes to a value. Since
- * each entry is immutable it is possible to have branches in the history.
- *
- * <p>
- * Example usage:
+ * A history Monad that keeps track of the history changes to a value. Example usage:
  *
  * <pre>
  * <code>
- * HistoryLog<Integer> h = HistoryLog.of(5)
- *                                   .map(x -> x*2)   // 10
- *                                   .map(x -> x+1)   // 11
- *                                   .map(x -> x * x) // 121
- *                                   .value();        // 121
+ * ValueHistory&lt;Integer&gt; c = ValueHistory.of(5)
+ *                                       .map(x -> x*2)   // 10
+ *                                       .map(x -> x+1)   // 11
+ *                                       .map(x -> x * x) // 121
+ *                                       .value();        // 121
  * </code>
  * </pre>
  *
- * It is possible to traverse the history using the provided iterator
+ * It is possible to traverse the history using the provided iterator. The history will contain the
+ * current value as well as all the previous values in reverse chronological order.
  *
  * <pre>
  * <code>
- * for(ValueHistory<Integer> each: h.history()) {
+ * for(ValueHistory&lt;Integer&gt; each: c.history()) {
  *      System.out.println(each);
  * }
  * </code>
  * </pre>
  *
- * @author Paulo Gandra de Sousa 25/06/2019
+ * Will output (date and time varying of course)
+ *
+ * <pre>
+ * <code>
+ * 121, [] @ 2019-06-25T18:44:50+0
+ * 11, [] @ 2019-06-25T18:44:40+0
+ * 10, [] @ 2019-06-25T18:44:30+0
+ * 5, [] @ 2019-06-25T18:44:20+0
+ * </code>
+ * </pre>
+ *
+ * It is possible to have branches in the history, which is ok since each entry is immutable and the
+ * value is supposed to be exactly that, a value, i.e., an immutable object.
+ *
+ * <pre>
+ * <code>
+ * ValueHistory&lt;Integer&gt; c = ValueHistory.of(5)
+ *                                       .map(x -> x*2)   // 10
+ *                                       .map(x -> x+1);  // 11
+ * ValueHistory&lt;Integer&gt; d = c;
+ *
+ *                       c.map(x -> x * x) // 121
+ *                        .value();
+ *
+ *                       d.map(x -> x + 31) // 42
+ *                        .value();
+ * </code>
+ * </pre>
+ *
  * @param <T>
+ * @author Paulo Gandra de Sousa 25/06/2019
  *
  */
 public class ValueHistory<T> {
@@ -234,16 +260,16 @@ public class ValueHistory<T> {
      *
      * @return the previous history value
      */
-    public ValueHistory<T> undo() {
+    public ValueHistory<T> previous() {
         return previous.orElseThrow(IllegalStateException::new);
     }
 
     /**
      * Checks if there is a previous history value.
-     * 
+     *
      * @return true if there is a previous history value
      */
-    public boolean canUndo() {
+    public boolean hasPrevious() {
         return previous.isPresent();
     }
 }

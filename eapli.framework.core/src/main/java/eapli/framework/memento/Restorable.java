@@ -26,7 +26,7 @@ package eapli.framework.memento;
  * @author Paulo Gandra Sousa
  *
  */
-public interface Mementoable {
+public interface Restorable {
     /**
      * Generates a {@link Memento} capturing the current state of the object.
      *

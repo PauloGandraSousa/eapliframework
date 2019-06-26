@@ -29,7 +29,7 @@ package eapli.framework.memento;
  * @author Paulo Gandra de Sousa
  *
  */
-class SampleAdder implements Mementoable {
+class SampleAdder implements Restorable {
 
     private int current;
 
