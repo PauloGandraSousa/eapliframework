@@ -228,4 +228,22 @@ public class ValueHistory<T> {
     public Iterable<ValueHistory<T>> history() {
         return () -> new HistoryIterator<>(this);
     }
+
+    /**
+     * Returns the previous history value.
+     *
+     * @return the previous history value
+     */
+    public ValueHistory<T> undo() {
+        return previous.orElseThrow(IllegalStateException::new);
+    }
+
+    /**
+     * Checks if there is a previous history value.
+     * 
+     * @return true if there is a previous history value
+     */
+    public boolean canUndo() {
+        return previous.isPresent();
+    }
 }
