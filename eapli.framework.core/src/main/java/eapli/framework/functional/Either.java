@@ -20,8 +20,11 @@
  */
 package eapli.framework.functional;
 
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import eapli.framework.validations.Preconditions;
 
@@ -29,25 +32,34 @@ import eapli.framework.validations.Preconditions;
  * A simple approach to the functional Monad Either.
  *
  * <p>
- * Objects of this class can represent one (1) value of either T or U. Useful for error handling
- * where, by convention, the left type is the correct response and the right type is the error
- * response.
+ * Objects of this class can represent one (1) value of either {@code L} or
+ * {@code R}. Useful for error handling where, by convention, the left type is
+ * the correct response and the right type is the error response.
  * <p>
- * Consider using a java functional library instead, e.g., vavr
+ * Consider using a java functional library instead, e.g.,
+ * <a href="https://www.vavr.io/">vavr</a>
  *
  * @author Paulo Gandra de Sousa
- * @param <T>
- * @param <U>
+ * @param <L>
+ * @param <R>
  */
-public final class Either<T, U> {
+public final class Either<L, R> {
 
     private enum SideType {
-        LEFT, RIGHT
+        LEFT, RIGHT, EMPTY
     }
 
-    private T left;
+    @SuppressWarnings({ "rawtypes" })
+    private static final Either EMPTY = new Either();
+
     private final SideType type;
-    private U right;
+    private L left;
+    private R right;
+
+    @SuppressWarnings({ "unchecked" })
+    /* package */static <T, U> Either<T, U> empty() {
+        return EMPTY;
+    }
 
     /**
      * Factory method to create a left value Either.
@@ -74,10 +86,11 @@ public final class Either<T, U> {
      *
      * @param left
      * @param marker
-     *               just to make the compiler happy due to the erasure of both constructors
+     *            just to make the compiler happy due to the erasure of both
+     *            constructors
      */
     @SuppressWarnings("squid:S1172")
-    private Either(final T left, final boolean marker) {
+    private Either(final L left, final boolean marker) {
         Preconditions.nonNull(left);
 
         type = SideType.LEFT;
@@ -89,7 +102,7 @@ public final class Either<T, U> {
      *
      * @param right
      */
-    private Either(final U right) {
+    private Either(final R right) {
         Preconditions.nonNull(right);
 
         type = SideType.RIGHT;
@@ -97,51 +110,154 @@ public final class Either<T, U> {
     }
 
     /**
-     * Applies the "normal" function to the left value if this Either instance holds a left value,
-     * otherwise applies the "error" function to the right value. since this method returns a new Either
-     * it is suitable for composition.
+     * Constructs an empty Either.
+     */
+    private Either() {
+        type = SideType.EMPTY;
+    }
+
+    /* package */ boolean isEmpty() {
+        return type == SideType.EMPTY;
+    }
+
+    /**
+     * Applies the "normal" function to the left value if this Either instance
+     * holds a left value, otherwise applies the "error" function to the right
+     * value. Since this method returns a new {@code Either} it is suitable for
+     * composition.
      *
-     * @param normal
-     * @param error
+     * @param leftMapper
+     * @param rightMapper
      * @return a new either resulting from the projection
      */
-    public Either<T, U> map(final UnaryOperator<T> normal, final UnaryOperator<U> error) {
+    public <T, U> Either<T, U> map(final Function<? super L, ? extends T> leftMapper,
+            final Function<? super R, ? extends U> rightMapper) {
         if (type == SideType.LEFT) {
-            return left(normal.apply(left));
-        }
-        return right(error.apply(right));
-    }
-
-    /**
-     * Acts on the value of this Either instance, executing the "normal" function with the left value if
-     * this Either instance holds a left value, otherwise executes the "error" function with the right
-     * value
-     *
-     * @param doer
-     * @param error
-     */
-    public void consume(final Consumer<T> doer, final Consumer<U> error) {
-        if (type == SideType.LEFT) {
-            doer.accept(left);
+            return left(leftMapper.apply(left));
+        } else if (type == SideType.RIGHT) {
+            return right(rightMapper.apply(right));
         } else {
-            error.accept(right);
+            return empty();
         }
     }
 
     /**
-     * Returns the value hold on the left of the either or throws an IllegalArgumentException if there
-     * is no value on the left side. If the right side is a String it will use that value as the message
-     * of the exception.
+     * Creates a new Either by filtering the current value. Since this method
+     * returns a new {@code Either} it is suitable for composition.
+     *
+     * @param leftPredicate
+     * @param rightPredicate
+     * @return a new either resulting from the projection
+     */
+    public Either<L, R> filter(final Predicate<? super L> leftPredicate, final Predicate<? super R> rightPredicate) {
+        if (type == SideType.LEFT && leftPredicate.test(left)) {
+            return left(left);
+        } else if (type == SideType.RIGHT && rightPredicate.test(right)) {
+            return right(right);
+        }
+        return empty();
+    }
+
+    /**
+     * Folds the current value (either right or left) using {@code def} as the
+     * initial folding value.
+     *
+     * @param leftAccum
+     * @param rightAccum
+     * @param def
+     *            default/initial value
+     * @return the folded value
+     */
+    public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
+            final BiFunction<T, ? super R, ? extends T> rightAccum, final T def) {
+        if (type == SideType.LEFT) {
+            return leftAccum.apply(def, left);
+        } else if (type == SideType.RIGHT) {
+            return rightAccum.apply(def, right);
+        } else {
+            return def;
+        }
+    }
+
+    /**
+     * Acts on the value of this Either instance, executing the "normal"
+     * function with the left value if this Either instance holds a left value,
+     * otherwise executes the "error" function with the right value
+     *
+     * @param leftConsumer
+     * @param rightConsumer
+     */
+    public void consume(final Consumer<? super L> leftConsumer, final Consumer<? super R> rightConsumer) {
+        if (type == SideType.LEFT) {
+            leftConsumer.accept(left);
+        } else {
+            rightConsumer.accept(right);
+        }
+    }
+
+    /**
+     * Returns the value hold on the left of the either or throws a
+     * {@code RuntimeException}, e.g., IllegalArgumentException, if there is no
+     * value on the left side.
+     *
+     * @param exceptionBuilder
      *
      * @return the value hold on the left of the either if there is a left value
-     * @throws IllegalArgumentException
      */
-    public T orElseThrow() {
+    public L leftValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
         if (type == SideType.LEFT) {
             return left;
         } else {
-            final String message = right instanceof String ? (String) right : "";
-            throw new IllegalArgumentException(message);
+            throw exceptionBuilder.get();
+        }
+    }
+
+    /**
+     * Returns the value hold on the left of the either or the default value, if
+     * there is no value on the left side.
+     *
+     * @param def
+     *
+     * @return the value hold on the left of the either if there is a left value
+     */
+    public L leftValueOrElse(final L def) {
+        if (type == SideType.LEFT) {
+            return left;
+        } else {
+            return def;
+        }
+    }
+
+    /**
+     * Returns the value hold on the right of the either or throws a
+     * {@code RuntimeException}, e.g., IllegalArgumentException, if there is no
+     * value on the right side.
+     *
+     * @param exceptionBuilder
+     *
+     * @return the value hold on the left of the either if there is a left value
+     */
+    public R rightValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
+        if (type == SideType.RIGHT) {
+            return right;
+        } else {
+            throw exceptionBuilder.get();
+        }
+    }
+
+    /**
+     * Returns the value hold on the right of the either or the default value,
+     * if there is no value on the right side.
+     *
+     * @param def
+     *
+     * @return the value hold on the left of the either if there is a left value
+     */
+    public R rightValueOrElse(final R def) {
+        if (type == SideType.RIGHT) {
+            return right;
+        } else {
+            return def;
         }
     }
 
@@ -150,11 +266,13 @@ public final class Either<T, U> {
      *
      * @return a new Either with the values (and types) swapped
      */
-    public Either<U, T> swap() {
+    public Either<R, L> swap() {
         if (type == SideType.LEFT) {
             return right(left);
-        } else {
+        } else if (type == SideType.RIGHT) {
             return left(right);
+        } else {
+            return empty();
         }
     }
 }
