@@ -20,6 +20,7 @@
  */
 package eapli.framework.functional;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -87,7 +88,7 @@ import eapli.framework.validations.Invariants;
  */
 public class ValueHistory<T> {
 
-    private final ZonedDateTime when;
+    private final Instant when;
     private final T value;
     private final Optional<String> message;
     private final Optional<ValueHistory<T>> previous;
@@ -96,14 +97,14 @@ public class ValueHistory<T> {
      * @param value
      */
     private ValueHistory(final T value) {
-        when = ZonedDateTime.now();
+        when = Instant.now();
         this.value = value;
         message = Optional.empty();
         previous = Optional.empty();
     }
 
     private ValueHistory(final T value, final String message) {
-        when = ZonedDateTime.now();
+        when = Instant.now();
         this.value = value;
         this.message = Optional.of(message);
         previous = Optional.empty();
@@ -111,7 +112,7 @@ public class ValueHistory<T> {
 
     private ValueHistory(final ValueHistory<T> previous, final T value) {
         Invariants.nonNull(previous);
-        when = ZonedDateTime.now();
+        when = Instant.now();
         this.value = value;
         message = Optional.empty();
         this.previous = Optional.of(previous);
@@ -119,7 +120,7 @@ public class ValueHistory<T> {
 
     private ValueHistory(final ValueHistory<T> previous, final T value, final String message) {
         Invariants.nonNull(previous);
-        when = ZonedDateTime.now();
+        when = Instant.now();
         this.value = value;
         this.message = Optional.of(message);
         this.previous = Optional.of(previous);
@@ -146,7 +147,7 @@ public class ValueHistory<T> {
         return new ValueHistory<>(startValue, message);
     }
 
-    public ZonedDateTime when() {
+    public Instant when() {
         return when;
     }
 
@@ -202,7 +203,7 @@ public class ValueHistory<T> {
 
     @Override
     public String toString() {
-        return value.toString() + " [" + message.orElse("") + "] @ " + when;
+        return value.toString() + " [" + message.orElse("") + "] @ " + ZonedDateTime.from(when);
     }
 
     /**

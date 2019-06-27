@@ -26,16 +26,14 @@ import java.util.regex.Pattern;
 import eapli.framework.util.Utility;
 
 /**
- * String predicates. Predicates are functions that test a condition and return
- * a boolean value. in this case the test is done over a String argument.
+ * String predicates. Predicates are functions that test a condition and return a boolean value; in
+ * this case the test is done over a String argument.
  *
  * <p>
  * For most of the functions, the signature is:
  *
  * <pre>
- * <code>
  * String -> Boolean
- * </code>
  * </pre>
  *
  * See also {@link org.apache.commons.lang3.StringUtils}
@@ -60,8 +58,7 @@ public final class StringPredicates {
      * checks if a string is a valid email address.
      *
      * <p>
-     * see also (and favor the use of)
-     * {@code org.apache.commons.validator.routines.EmailValidator}
+     * see also (and favor the use of) {@code org.apache.commons.validator.routines.EmailValidator}
      *
      * @param text
      * @return wether a string is a valid email address or not
@@ -72,8 +69,8 @@ public final class StringPredicates {
     }
 
     /**
-     * Checks if a string is a "phrase". phrases are not empty and do not have
-     * heading or trailing spaces
+     * Checks if a string is a "phrase". phrases are not empty and do not have heading or trailing
+     * spaces
      *
      * @param text
      * @return wether a string is a "phrase" or not
@@ -85,8 +82,7 @@ public final class StringPredicates {
     }
 
     /**
-     * Checks if a string is composed of a single "word", i.e., does not contain
-     * separating spaces.
+     * Checks if a string is composed of a single "word", i.e., does not contain separating spaces.
      *
      * @param text
      * @return true if a string is composed of a single "word"
@@ -127,8 +123,7 @@ public final class StringPredicates {
     }
 
     /**
-     * Checks if a string contains at least one alphabetic character (regular
-     * Latin alphabet).
+     * Checks if a string contains at least one alphabetic character (regular Latin alphabet).
      *
      * @param text
      * @return true if a string contains at least one alphabetic character
@@ -139,8 +134,7 @@ public final class StringPredicates {
     }
 
     /**
-     * Checks whether a string contains at least one capital letter (regular
-     * Latin alphabet).
+     * Checks whether a string contains at least one capital letter (regular Latin alphabet).
      *
      * @param text
      * @return whether a string contains at least one capital letter
@@ -151,10 +145,9 @@ public final class StringPredicates {
     }
 
     /**
-     * Checks whether a string contains any of the characters of the second
-     * string, without using regular expressions to avoid potential security
-     * threats at the expense of performance. The complexity of this method
-     * O(n^2)
+     * Checks whether a string contains any of the characters of the second string, without using
+     * regular expressions to avoid potential security threats at the expense of performance. The
+     * complexity of this method O(n^2)
      *
      * @param subject
      * @param chars

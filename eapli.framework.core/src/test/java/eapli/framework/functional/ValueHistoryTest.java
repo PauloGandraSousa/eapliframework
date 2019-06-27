@@ -5,6 +5,10 @@ package eapli.framework.functional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.time.Duration;
+import java.time.Instant;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,6 +37,14 @@ public class ValueHistoryTest {
     }
 
     @Test
+    public void ensureSingleHasRightDateTime() {
+        final ValueHistory<Integer> subject = singleSubject();
+        final Instant i = Instant.now();
+
+        assertTrue(Duration.between(i, subject.when()).toMillis() < 100);
+    }
+
+    @Test
     public void ensureSingleHasSingleHistory() {
         final ValueHistory<Integer> subject = singleSubject();
 
@@ -55,6 +67,29 @@ public class ValueHistoryTest {
     public void ensureDoubleHasMessage() {
         final String MESSAGE = "second";
         final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).map(x -> x + 1, MESSAGE);
+        assertEquals(MESSAGE, subject.message().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    public void ensureOneAndThenHasValue() {
+        final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).andThen(1000);
+
+        assertEquals(Integer.valueOf(1000), subject.value());
+    }
+
+    @Test
+    public void ensureOneAndThenWithMessageHasValue() {
+        final String MESSAGE = "just because";
+        final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).andThen(1000, MESSAGE);
+
+        assertEquals(Integer.valueOf(1000), subject.value());
+    }
+
+    @Test
+    public void ensureOneAndThenWithMessageHasMessage() {
+        final String MESSAGE = "just because";
+        final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).andThen(1000, MESSAGE);
+
         assertEquals(MESSAGE, subject.message().orElseThrow(IllegalStateException::new));
     }
 

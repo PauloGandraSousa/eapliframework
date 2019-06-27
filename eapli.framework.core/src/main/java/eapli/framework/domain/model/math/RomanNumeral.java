@@ -3,46 +3,43 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.domain.model.math;
 
 import eapli.framework.domain.model.ValueObject;
 
 /**
- * This code is based on
- * http://math.hws.edu/eck/cs124/javanotes6/c8/ex3-ans.html
+ * A Roman numeral representation of an integer number. An object of type RomanNumeral is an integer
+ * between 1 and 3999. It can be constructed either from an integer or from a string that represents
+ * a Roman numeral in this range. The function toString() will return a standardized Roman numeral
+ * representation of the number. The function toInt() will return the number as a value of type int.
  *
- * An object of type RomanNumeral is an integer between 1 and 3999. It can be
- * constructed either from an integer or from a string that represents a Roman
- * numeral in this range. The function toString() will return a standardized
- * Roman numeral representation of the number. The function toInt() will return
- * the number as a value of type int.
+ * <p>
+ * This code is based on <a href=
+ * "http://math.hws.edu/eck/cs124/javanotes6/c8/ex3-ans.html">http://math.hws.edu/eck/cs124/javanotes6/c8/ex3-ans.html</a>
  */
 public class RomanNumeral implements ValueObject {
 
     private static final long serialVersionUID = 1L;
 
     /*
-     * The following arrays are used by the toString() function to construct the
-     * standard Roman numeral representation of the number. For each i, the
-     * number numbers[i] is represented by the corresponding string, letters[i].
+     * The following arrays are used by the toString() function to construct the standard Roman numeral
+     * representation of the number. For each i, the number numbers[i] is represented by the
+     * corresponding string, letters[i].
      */
     private static int[] numbers = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 
@@ -50,13 +47,12 @@ public class RomanNumeral implements ValueObject {
     private final int num; // The number represented by this Roman numeral.
 
     /**
-     * Creates the Roman number with the integer value specified by the
-     * parameter.
+     * Creates the Roman number with the integer value specified by the parameter.
      *
      * @param arabic
-     *            the number we want to express as a Roman literal
+     *               the number we want to express as a Roman literal
      * @throws NumberFormatException
-     *             if arabic is not in the range 1 to 3999 inclusive.
+     *                               if arabic is not in the range 1 to 3999 inclusive.
      *
      */
     public RomanNumeral(final int arabic) {
@@ -70,10 +66,9 @@ public class RomanNumeral implements ValueObject {
     }
 
     /*
-     * Constructor. Creates the Roman number with the given representation. For
-     * example, RomanNumeral("xvii") is 17. If the parameter is not a legal
-     * Roman numeral, a NumberFormatException is thrown. Both upper and lower
-     * case letters are allowed.
+     * Constructor. Creates the Roman number with the given representation. For example,
+     * RomanNumeral("xvii") is 17. If the parameter is not a legal Roman numeral, a
+     * NumberFormatException is thrown. Both upper and lower case letters are allowed.
      */
     public RomanNumeral(String roman) {
         if (roman.length() == 0) {
@@ -148,8 +143,8 @@ public class RomanNumeral implements ValueObject {
      * Find the integer value of letter considered as a Roman numeral.
      *
      * @throws NumberFormatException
-     *             if letter is not a legal Roman numeral. The letter must be
-     *             upper case.
+     *                               if letter is not a legal Roman numeral. The letter must be upper
+     *                               case.
      */
     private int letterToNumber(final char letter) {
         switch (letter) {
