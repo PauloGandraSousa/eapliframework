@@ -130,20 +130,63 @@ public class ValueHistoryTest {
     public void ensureCannotUndoTheInitialValue() {
         final ValueHistory<Integer> subject = singleSubject();
 
-        assertFalse(subject.hasPrevious());
+        assertFalse(subject.previous().isPresent());
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void ensureUndoingTheInitialValueThrows() {
+    @Test
+    public void ensureUndoingTheInitialValueHasEmptyHistory() {
         final ValueHistory<Integer> subject = singleSubject();
 
-        subject.previous();
+        assertFalse(subject.previous().isPresent());
     }
 
     @Test
     public void ensureUndoingTripleMapGetsTheSecondLastEntry() {
         final ValueHistory<Integer> subject = tripleMapSubject();
-        final ValueHistory<Integer> second = subject.previous();
+        final ValueHistory<Integer> second = subject.previous().orElseThrow(IllegalStateException::new);
         assertEquals(Integer.valueOf(44), second.value());
+    }
+
+    private ValueHistory<Integer> wrapper1(final Integer v) {
+        return ValueHistory.of(v + 1);
+    }
+
+    private ValueHistory<Integer> wrapper2(final Integer v) {
+        return ValueHistory.of(v + 1).andThen(v + 2);
+    }
+
+    @Test
+    public void ensureFlatMap1HasValue() {
+        final ValueHistory<Integer> subject = singleSubject();
+
+        assertEquals(Integer.valueOf(FORTY_TWO + 1), subject.flatMap(this::wrapper1).value());
+    }
+
+    @Test
+    public void ensureFlatMap1HasRightHistory() {
+        final ValueHistory<Integer> subject = singleSubject().flatMap(this::wrapper1);
+
+        final int[] actual = new int[2];
+        int i = 0;
+        for (final ValueHistory<Integer> each : subject.history()) {
+            actual[i++] = each.value();
+        }
+
+        final int[] expected = new int[] { 43, 42 };
+        Assert.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ensureFlatMap2HasRightHistory() {
+        final ValueHistory<Integer> subject = singleSubject().flatMap(this::wrapper2);
+
+        final int[] actual = new int[3];
+        int i = 0;
+        for (final ValueHistory<Integer> each : subject.history()) {
+            actual[i++] = each.value();
+        }
+
+        final int[] expected = new int[] { 44, 43, 42 };
+        Assert.assertArrayEquals(expected, actual);
     }
 }

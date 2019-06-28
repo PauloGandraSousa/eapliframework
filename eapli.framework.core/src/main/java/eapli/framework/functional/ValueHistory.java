@@ -22,9 +22,12 @@ package eapli.framework.functional;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import eapli.framework.validations.Invariants;
@@ -97,35 +100,46 @@ public class ValueHistory<T> {
     private final Optional<ValueHistory<T>> previous;
 
     /**
+     * Constructs an initial (i.e., first) value history.
+     *
      * @param value
+     * @param message
      */
-    private ValueHistory(final T value) {
-        when = Instant.now();
-        this.value = value;
-        message = Optional.empty();
-        previous = Optional.empty();
-    }
-
     private ValueHistory(final T value, final String message) {
         when = Instant.now();
         this.value = value;
-        this.message = Optional.of(message);
+        this.message = Optional.ofNullable(message);
         previous = Optional.empty();
     }
 
-    private ValueHistory(final ValueHistory<T> previous, final T value) {
-        Invariants.nonNull(previous);
-        when = Instant.now();
-        this.value = value;
-        message = Optional.empty();
-        this.previous = Optional.of(previous);
-    }
-
+    /**
+     * Constructs a new value history attaching it to an existing history.
+     *
+     * @param previous
+     * @param value
+     * @param message
+     */
     private ValueHistory(final ValueHistory<T> previous, final T value, final String message) {
         Invariants.nonNull(previous);
         when = Instant.now();
         this.value = value;
-        this.message = Optional.of(message);
+        this.message = Optional.ofNullable(message);
+        this.previous = Optional.of(previous);
+    }
+
+    /**
+     * Constructs a new value history by merging two histories. mainly for
+     * supporting {@link #flatMap(Function)}
+     *
+     * @param previous
+     * @param next
+     */
+    private ValueHistory(final ValueHistory<T> previous, final T value, final Optional<String> message,
+            final Instant when) {
+        Invariants.nonNull(previous);
+        this.when = when;
+        this.value = value;
+        this.message = message;
         this.previous = Optional.of(previous);
     }
 
@@ -136,7 +150,7 @@ public class ValueHistory<T> {
      * @return the new value history
      */
     public static <T> ValueHistory<T> of(final T startValue) {
-        return new ValueHistory<>(startValue);
+        return new ValueHistory<>(startValue, null);
     }
 
     /**
@@ -190,7 +204,7 @@ public class ValueHistory<T> {
      * @return a new History
      */
     public ValueHistory<T> map(final UnaryOperator<T> mapper) {
-        return new ValueHistory<>(this, mapper.apply(value()));
+        return new ValueHistory<>(this, mapper.apply(value()), null);
     }
 
     /**
@@ -202,6 +216,22 @@ public class ValueHistory<T> {
      */
     public ValueHistory<T> map(final UnaryOperator<T> mapper, final String message) {
         return new ValueHistory<>(this, mapper.apply(value()), message);
+    }
+
+    public ValueHistory<T> flatMap(final Function<T, ValueHistory<T>> mapper) {
+        final ValueHistory<T> mapped = mapper.apply(value());
+
+        final Deque<ValueHistory<T>> reverseHistory = new ArrayDeque<>();
+        for (final ValueHistory<T> each : mapped.history()) {
+            reverseHistory.push(each);
+        }
+
+        ValueHistory<T> head = this;
+        for (final ValueHistory<T> each : reverseHistory) {
+            head = new ValueHistory<>(head, each.value(), each.message(), each.when());
+        }
+
+        return head;
     }
 
     @Override
@@ -251,12 +281,23 @@ public class ValueHistory<T> {
     }
 
     /**
-     * Returns the history of this value.
+     * Returns the full history of this value including the current history
+     * entry.
      *
      * @return the history.
      */
     public Iterable<ValueHistory<T>> history() {
         return () -> new HistoryIterator<>(this);
+    }
+
+    /**
+     * Returns the past history of this value, i.e., everything before the
+     * current history entry.
+     *
+     * @return the history.
+     */
+    public Iterable<ValueHistory<T>> pastHistory() {
+        return () -> new HistoryIterator<>(this.previous.orElse(null));
     }
 
     /**
