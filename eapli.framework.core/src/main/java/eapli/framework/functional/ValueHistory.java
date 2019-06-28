@@ -30,7 +30,8 @@ import java.util.function.UnaryOperator;
 import eapli.framework.validations.Invariants;
 
 /**
- * A history Monad that keeps track of the history changes to a value. Example usage:
+ * A history Monad that keeps track of the history changes to a value. Example
+ * usage:
  *
  * <pre>
  * <code>
@@ -42,8 +43,9 @@ import eapli.framework.validations.Invariants;
  * </code>
  * </pre>
  *
- * It is possible to traverse the history using the provided iterator. The history will contain the
- * current value as well as all the previous values in reverse chronological order.
+ * It is possible to traverse the history using the provided iterator. The
+ * history will contain the current value as well as all the previous values in
+ * reverse chronological order.
  *
  * <pre>
  * <code>
@@ -64,8 +66,9 @@ import eapli.framework.validations.Invariants;
  * </code>
  * </pre>
  *
- * It is possible to have branches in the history, which is ok since each entry is immutable and the
- * value is supposed to be exactly that, a value, i.e., an immutable object.
+ * It is possible to have branches in the history, which is ok since each entry
+ * is immutable and the value is supposed to be exactly that, a value, i.e., an
+ * immutable object.
  *
  * <pre>
  * <code>
@@ -261,16 +264,7 @@ public class ValueHistory<T> {
      *
      * @return the previous history value
      */
-    public ValueHistory<T> previous() {
-        return previous.orElseThrow(IllegalStateException::new);
-    }
-
-    /**
-     * Checks if there is a previous history value.
-     *
-     * @return true if there is a previous history value
-     */
-    public boolean hasPrevious() {
-        return previous.isPresent();
+    public Optional<ValueHistory<T>> previous() {
+        return previous;
     }
 }
