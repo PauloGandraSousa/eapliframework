@@ -20,14 +20,14 @@
  */
 package eapli.framework.presentation.console;
 
+import java.util.function.Supplier;
+
 import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitor;
 
 /**
- * a generic List UI to avoid code duplication since most of the List UIs are
- * quite similar. while AbstractListUI allows the client code to create its own
- * derived classes, ListUI allows the client code to work only with objects,
- * instances, of this class without the need to define new classes.
+ * A generic List UI to avoid code duplication since most of the List UIs are
+ * quite similar.
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -36,11 +36,15 @@ import eapli.framework.visitor.Visitor;
 public class ListUI<T> extends AbstractListUI<T> {
 
     protected final Iterable<T> source;
+    protected final Supplier<Iterable<T>> elementSupplier;
+
     protected final Visitor<T> printer;
     protected final String theElementName;
     protected final String theHeader;
 
     /**
+     * Eagerly Constructs the UI.
+     *
      * @param source
      * @param printer
      * @param elementName
@@ -53,19 +57,48 @@ public class ListUI<T> extends AbstractListUI<T> {
         Preconditions.nonNull(header);
 
         this.source = source;
+        elementSupplier = null;
         this.printer = printer;
         this.theElementName = elementName;
         this.theHeader = header;
     }
 
     /**
-     * the source to list
+     * Lazily constructs the UI.
+     *
+     * @param elementSupplier
+     * @param printer
+     * @param elementName
+     * @param header
+     */
+    public ListUI(final Supplier<Iterable<T>> elementSupplier, final Visitor<T> printer, final String elementName,
+            final String header) {
+        Preconditions.nonNull(elementSupplier);
+        Preconditions.nonNull(printer);
+        Preconditions.nonNull(elementName);
+        Preconditions.nonNull(header);
+
+        this.elementSupplier = elementSupplier;
+        this.source = null;
+        this.printer = printer;
+        this.theElementName = elementName;
+        this.theHeader = header;
+    }
+
+    /**
+     * The source to list.
      *
      * @return
      */
     @Override
     protected Iterable<T> elements() {
-        return this.source;
+        Iterable<T> elems;
+        if (source == null) {
+            elems = elementSupplier.get();
+        } else {
+            elems = source;
+        }
+        return elems;
     }
 
     /**
