@@ -43,7 +43,11 @@ public class ListUI<T> extends AbstractListUI<T> {
     protected final String theHeader;
 
     /**
-     * Eagerly Constructs the UI.
+     * Eagerly Constructs the UI. This constructor should be avoided if the
+     * underlying data is fetched from an external database or file as you will
+     * need to provide the actual data in the moment of construction and not
+     * only when it is needed. See
+     * {@link #ListUI(Supplier, Visitor, String, String)} for lazy construction.
      *
      * @param source
      * @param printer
