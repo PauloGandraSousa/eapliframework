@@ -26,8 +26,7 @@ import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitor;
 
 /**
- * A generic List UI to avoid code duplication since most of the List UIs are
- * quite similar.
+ * A generic List UI to avoid code duplication since most of the List UIs are quite similar.
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -43,10 +42,11 @@ public class ListUI<T> extends AbstractListUI<T> {
     protected final String theHeader;
 
     /**
-     * Eagerly Constructs the UI. This constructor should be avoided if the
-     * underlying data is fetched from an external database or file as you will
-     * need to provide the actual data in the moment of construction and not
-     * only when it is needed. See
+     * Eagerly Constructs the UI. This constructor should be avoided if the underlying data is fetched
+     * from an external database or file as the actual data needs to be evaluated by the compiler in the
+     * moment of construction and not only when it is needed. That is, even if the {@link #show()}
+     * method is never called, the call to the underlying database would have been issued anyway when
+     * the compiler passes the argument to the constructor. See
      * {@link #ListUI(Supplier, Visitor, String, String)} for lazy construction.
      *
      * @param source
@@ -68,7 +68,9 @@ public class ListUI<T> extends AbstractListUI<T> {
     }
 
     /**
-     * Lazily constructs the UI.
+     * Lazily constructs the UI. Since this constructor uses a {@link Supplier} object, the fetching of
+     * data only occurs when the data is really needed and not at the moment of construction of the
+     * {@code ListUI} object.
      *
      * @param elementSupplier
      * @param printer
