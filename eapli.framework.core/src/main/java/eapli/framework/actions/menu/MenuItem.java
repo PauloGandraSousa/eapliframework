@@ -150,7 +150,7 @@ public abstract class MenuItem {
 
     /**
      * Executes the action associated with this item. Non-actionable items like the ones created with
-     * {@link #separator(String)} will return false.
+     * {@link #separator(String)} will simply return false.
      *
      * @return true in case of success. false if the action failed.
      */
