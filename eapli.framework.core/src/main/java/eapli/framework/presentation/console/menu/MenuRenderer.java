@@ -20,6 +20,8 @@
  */
 package eapli.framework.presentation.console.menu;
 
+import java.util.Optional;
+
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.util.Console;
@@ -44,29 +46,51 @@ public abstract class MenuRenderer {
     }
 
     /**
-     * Renders the menu on the screen and asks the user for an option. when the user selects an option,
-     * the corresponding action is executed
+     * Renders the menu on the screen and asks the user for an option; when the user selects an option,
+     * the corresponding action is executed.
      *
      * @return the success or insuccess of the action's execution
      */
     public boolean render() {
-        doShow();
+        doRender();
 
         final MenuItem item = readOption();
-        return item.select();
+        if (item.isSubmenu()) {
+            return item.submenu().map(this::doRenderSubmenu).orElseThrow(IllegalStateException::new);
+        } else {
+            return item.select();
+        }
     }
 
-    protected abstract void doShow();
+    /**
+     * Actually renders the sub menu and executes the selection. Usually this is a "recursive"
+     * MenuRenderer.
+     *
+     * @param submenu
+     * @return
+     */
+    @SuppressWarnings("squid:S106")
+    protected boolean doRenderSubmenu(final Menu submenu) {
+        final MenuRenderer renderer = new VerticalMenuRenderer(submenu, itemRenderer);
+        System.out.println("\n>> " + submenu.title());
+        renderer.render();
+        return false;
+    }
+
+    /**
+     * Actually renders the itens of this menu level.
+     */
+    protected abstract void doRender();
 
     /**
      * @return
      */
     protected MenuItem readOption() {
-        MenuItem item;
+        Optional<MenuItem> item;
         do {
             final int option = Console.readInteger("\nPlease choose an option");
             item = menu.item(option);
-        } while (item == null);
-        return item;
+        } while (!item.isPresent());
+        return item.get();
     }
 }

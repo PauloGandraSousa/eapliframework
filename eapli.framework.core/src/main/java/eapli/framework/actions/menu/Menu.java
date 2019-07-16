@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import eapli.framework.actions.Action;
 import eapli.framework.validations.Preconditions;
@@ -77,7 +78,7 @@ public class Menu {
     }
 
     /**
-     * helper method.
+     * Helper method.
      *
      * @param option
      * @param text
@@ -91,13 +92,10 @@ public class Menu {
      * Allows for hierarchical composition of menus (composite pattern).
      *
      * @param option
-     * @param menu
-     * @param action
-     *            the action to execute when the user selects (opens) this
-     *            submenu. usually it's a renderer
+     * @param submenu
      */
-    public void addSubMenu(final int option, final Menu menu, final Action action) {
-        addItem(MenuItem.of(option, menu.title(), action));
+    public void addSubMenu(final int option, final Menu submenu) {
+        addItem(MenuItem.submenu(option, submenu));
     }
 
     /**
@@ -109,9 +107,8 @@ public class Menu {
     }
 
     /**
-     * Returns the collection of items in this menu. This collection can be
-     * directly manipulated by the caller, that is, it is mutable, which allow
-     * for dynamic menus.
+     * Returns the collection of items in this menu. This collection can be directly manipulated by the
+     * caller, that is, it is mutable, which allow for dynamic menus.
      *
      * @return the collection of items in this menu.
      */
@@ -120,13 +117,12 @@ public class Menu {
     }
 
     /**
-     * Returns the MenuItem associated with an option in the menu
+     * Returns the MenuItem associated with an option in the menu.
      *
      * @param option
-     * @return the MenuItem associated with an option in the menu or
-     *         {@code null} if the option does not exist.
+     * @return the MenuItem associated with an option in the menu.
      */
-    public MenuItem item(final int option) {
-        return itemByOption.get(option);
+    public Optional<MenuItem> item(final int option) {
+        return Optional.ofNullable(itemByOption.get(option));
     }
 }

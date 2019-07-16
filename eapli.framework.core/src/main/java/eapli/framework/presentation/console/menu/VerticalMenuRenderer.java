@@ -42,7 +42,7 @@ public class VerticalMenuRenderer extends MenuRenderer {
     }
 
     @Override
-    protected void doShow() {
+    protected void doRender() {
         for (final MenuItem item : menu.itens()) {
             itemRenderer.render(item);
             System.out.println();

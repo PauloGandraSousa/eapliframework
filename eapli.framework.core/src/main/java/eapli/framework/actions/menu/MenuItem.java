@@ -64,6 +64,16 @@ public abstract class MenuItem {
         public Optional<Integer> option() {
             return Optional.of(option);
         }
+
+        @Override
+        public boolean isSubmenu() {
+            return false;
+        }
+
+        @Override
+        public Optional<Menu> submenu() {
+            return Optional.empty();
+        }
     }
 
     private static class NonActionableMenuItem extends MenuItem {
@@ -81,10 +91,51 @@ public abstract class MenuItem {
         public Optional<Integer> option() {
             return Optional.empty();
         }
+
+        @Override
+        public boolean isSubmenu() {
+            return false;
+        }
+
+        @Override
+        public Optional<Menu> submenu() {
+            return Optional.empty();
+        }
+    }
+
+    private static class SubMenuItem extends MenuItem {
+        private final int option;
+        private final Menu sub;
+
+        protected SubMenuItem(final int option, final Menu sub) {
+            super(sub.title());
+            this.option = option;
+            this.sub = sub;
+        }
+
+        @Override
+        public boolean select() {
+            return false;
+        }
+
+        @Override
+        public Optional<Integer> option() {
+            return Optional.of(option);
+        }
+
+        @Override
+        public boolean isSubmenu() {
+            return true;
+        }
+
+        @Override
+        public Optional<Menu> submenu() {
+            return Optional.of(sub);
+        }
     }
 
     /**
-     * constructs a non-actionable menu item with just a plain label
+     * Constructs a non-actionable menu item with just a plain label.
      *
      * @param text
      */
@@ -133,6 +184,17 @@ public abstract class MenuItem {
     }
 
     /**
+     * Factory method to create a submenu.
+     *
+     * @param option
+     * @param sub
+     * @return
+     */
+    public static MenuItem submenu(final int option, final Menu sub) {
+        return new SubMenuItem(option, sub);
+    }
+
+    /**
      * @return the text
      */
     public String text() {
@@ -155,4 +217,16 @@ public abstract class MenuItem {
      * @return true in case of success. false if the action failed.
      */
     public abstract boolean select();
+
+    /**
+     *
+     * @return true if the item is a submenu.
+     */
+    public abstract boolean isSubmenu();
+
+    /**
+     *
+     * @return
+     */
+    public abstract Optional<Menu> submenu();
 }
