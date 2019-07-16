@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import eapli.framework.actions.Action;
 import eapli.framework.validations.Preconditions;
@@ -69,8 +68,7 @@ public class Menu {
 
         itens.add(item);
 
-        final Optional<Integer> op = item.option();
-        op.ifPresent(i -> {
+        item.option().ifPresent(i -> {
             if (itemByOption.containsKey(i)) {
                 throw new IllegalStateException("Cannot add an item with an already existing option id");
             }
@@ -95,8 +93,8 @@ public class Menu {
      * @param option
      * @param menu
      * @param action
-     *               the action to execute when the user selects (opens) this submenu. usually it's a
-     *               renderer
+     *            the action to execute when the user selects (opens) this
+     *            submenu. usually it's a renderer
      */
     public void addSubMenu(final int option, final Menu menu, final Action action) {
         addItem(MenuItem.of(option, menu.title(), action));
@@ -111,8 +109,9 @@ public class Menu {
     }
 
     /**
-     * Returns the collection of items in this menu. This collection can be directly manipulated by the
-     * caller, that is, it is mutable, which allow for dynamic menus.
+     * Returns the collection of items in this menu. This collection can be
+     * directly manipulated by the caller, that is, it is mutable, which allow
+     * for dynamic menus.
      *
      * @return the collection of items in this menu.
      */
@@ -124,8 +123,8 @@ public class Menu {
      * Returns the MenuItem associated with an option in the menu
      *
      * @param option
-     * @return the MenuItem associated with an option in the menu or {@code null} if the option does not
-     *         exist.
+     * @return the MenuItem associated with an option in the menu or
+     *         {@code null} if the option does not exist.
      */
     public MenuItem item(final int option) {
         return itemByOption.get(option);

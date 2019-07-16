@@ -96,8 +96,8 @@ public class ValueHistory<T> {
 
     private final Instant when;
     private final T value;
-    private final Optional<String> message;
-    private final Optional<ValueHistory<T>> previous;
+    private final String message;
+    private final ValueHistory<T> previous;
 
     /**
      * Constructs an initial (i.e., first) value history.
@@ -108,8 +108,8 @@ public class ValueHistory<T> {
     private ValueHistory(final T value, final String message) {
         when = Instant.now();
         this.value = value;
-        this.message = Optional.ofNullable(message);
-        previous = Optional.empty();
+        this.message = message;
+        previous = null;
     }
 
     /**
@@ -120,11 +120,8 @@ public class ValueHistory<T> {
      * @param message
      */
     private ValueHistory(final ValueHistory<T> previous, final T value, final String message) {
-        Invariants.nonNull(previous);
-        when = Instant.now();
-        this.value = value;
-        this.message = Optional.ofNullable(message);
-        this.previous = Optional.of(previous);
+        // TODO dependency to PC clock - hard to test
+        this(previous, value, message, Instant.now());
     }
 
     /**
@@ -134,13 +131,12 @@ public class ValueHistory<T> {
      * @param previous
      * @param next
      */
-    private ValueHistory(final ValueHistory<T> previous, final T value, final Optional<String> message,
-            final Instant when) {
+    private ValueHistory(final ValueHistory<T> previous, final T value, final String message, final Instant when) {
         Invariants.nonNull(previous);
         this.when = when;
         this.value = value;
         this.message = message;
-        this.previous = Optional.of(previous);
+        this.previous = previous;
     }
 
     /**
@@ -173,7 +169,7 @@ public class ValueHistory<T> {
     }
 
     public Optional<String> message() {
-        return message;
+        return Optional.ofNullable(message);
     }
 
     /**
@@ -228,7 +224,7 @@ public class ValueHistory<T> {
 
         ValueHistory<T> head = this;
         for (final ValueHistory<T> each : reverseHistory) {
-            head = new ValueHistory<>(head, each.value(), each.message(), each.when());
+            head = new ValueHistory<>(head, each.value(), each.message().orElse(null), each.when());
         }
 
         return head;
@@ -236,7 +232,7 @@ public class ValueHistory<T> {
 
     @Override
     public String toString() {
-        return value.toString() + " [" + message.orElse("") + "] @ " + ZonedDateTime.from(when);
+        return value.toString() + " [" + (message != null ? message : "") + "] @ " + ZonedDateTime.from(when);
     }
 
     /**
@@ -275,7 +271,7 @@ public class ValueHistory<T> {
             }
 
             final ValueHistory<U> entry = where;
-            where = entry.previous.orElse(null);
+            where = entry.previous;
             return entry;
         }
     }
@@ -297,7 +293,7 @@ public class ValueHistory<T> {
      * @return the history.
      */
     public Iterable<ValueHistory<T>> pastHistory() {
-        return () -> new HistoryIterator<>(this.previous.orElse(null));
+        return () -> new HistoryIterator<>(this.previous);
     }
 
     /**
@@ -306,6 +302,6 @@ public class ValueHistory<T> {
      * @return the previous history value
      */
     public Optional<ValueHistory<T>> previous() {
-        return previous;
+        return Optional.ofNullable(previous);
     }
 }

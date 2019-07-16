@@ -62,6 +62,8 @@ public class Password implements ValueObject, Serializable {
         thePassword = password;
     }
 
+    // FIXME the return method should be a Either/Try or explicitly throw an
+    // exception but it is definitely not Optional
     public static Optional<Password> valueOf(final String rawPassword, final PasswordPolicy policy,
             final PasswordEncoder encoder) {
         if (policy.isSatisfiedBy(rawPassword)) {
