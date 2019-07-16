@@ -33,7 +33,6 @@ import eapli.framework.infrastructure.authz.application.exceptions.Unauthenticat
 import eapli.framework.infrastructure.authz.application.exceptions.UnauthorizedException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.validations.Preconditions;
 
 /**
  * Very simple session holder and permission checking helper. To obtain a valid
@@ -55,9 +54,9 @@ public final class AuthorizationService {
     private static final Logger LOGGER = LogManager.getLogger(AuthorizationService.class);
 
     /**
-     * the current logged in user session.
+     * the current logged in user session. null if there is no session.
      */
-    private Optional<UserSession> theSession = Optional.empty();
+    private UserSession theSession = null;
 
     /**
      * Hiding the constructor so no direct creation of objects is possible.
@@ -67,26 +66,27 @@ public final class AuthorizationService {
     }
 
     /**
-     * Sets the session after authentication has been performed (package
-     * method).
+     * creates a session for a user. if the user is null, it deletes the current
+     * session.
      *
-     * @param session
+     * @param user
+     * @return
      */
-    /* package */ void setSession(final Optional<UserSession> session) {
-        Preconditions.nonNull(session);
-
-        if (session.isPresent()) {
-            theSession = session;
+    /* package */ Optional<UserSession> createSessionForUser(final SystemUser user) {
+        if (user != null) {
+            theSession = new UserSession(user);
         } else {
             clearSession();
         }
+        return session();
     }
 
     /**
      * clear the session
      */
-    public void clearSession() {
-        theSession = Optional.empty();
+    public Optional<UserSession> clearSession() {
+        theSession = null;
+        return session();
     }
 
     /**
@@ -95,7 +95,7 @@ public final class AuthorizationService {
      * @return {@code true} if there is an authenticated user session
      */
     public boolean hasSession() {
-        return theSession.isPresent();
+        return theSession != null;
     }
 
     /**
@@ -104,7 +104,7 @@ public final class AuthorizationService {
      * @return the current session or an empty optional if there is no session.
      */
     public Optional<UserSession> session() {
-        return theSession;
+        return Optional.ofNullable(theSession);
     }
 
     /**

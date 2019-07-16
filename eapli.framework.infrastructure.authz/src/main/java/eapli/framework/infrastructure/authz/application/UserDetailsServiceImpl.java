@@ -63,7 +63,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         LOGGER.debug("Loading User By Username: {}", username);
         final Optional<SystemUser> user = userRepository.ofIdentity(Username.valueOf(username));
 
-        authz.setSession(user.map(UserSession::new));
+        authz.createSessionForUser(user.orElse(null));
 
         return user.map(SystemUserDetails::new).orElseThrow(() -> new UsernameNotFoundException(username));
     }

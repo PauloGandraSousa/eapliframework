@@ -83,21 +83,14 @@ public class AuthenticationService {
         Preconditions.nonEmpty(username, "a username must be provided");
         Preconditions.nonEmpty(rawPassword, "a password must be provided");
 
-        final Optional<UserSession> newSession = retrieveUser(username)
-                .filter(u -> u.passwordMatches(rawPassword, encoder) && u.isActive()
-                        && (noActionRightsToValidate(requiredRoles) || u.hasAny(requiredRoles)))
-                .map(this::createSessionForUser);
+        final SystemUser newSession = retrieveUser(username).filter(u -> u.passwordMatches(rawPassword, encoder)
+                && u.isActive() && (noActionRightsToValidate(requiredRoles) || u.hasAny(requiredRoles))).orElse(null);
 
-        authz.setSession(newSession);
-        return newSession;
+        return authz.createSessionForUser(newSession);
     }
 
     private boolean noActionRightsToValidate(final Role... onlyWithThis) {
         return onlyWithThis.length == 0 || (onlyWithThis.length == 1 && onlyWithThis[0] == null);
-    }
-
-    private UserSession createSessionForUser(final SystemUser user) {
-        return new UserSession(user);
     }
 
     private Optional<SystemUser> retrieveUser(final String username) {
@@ -135,8 +128,8 @@ public class AuthenticationService {
      *         session or the password could not be changed
      */
     public boolean changePassword(final String oldPassword, final String newPassword) {
-        final Optional<UserSession> s = authz.session();
-        return s.map(u -> changePassword(u.authenticatedUser(), oldPassword, newPassword)).map(u -> true).orElse(false);
+        return authz.session().map(u -> changePassword(u.authenticatedUser(), oldPassword, newPassword)).map(u -> true)
+                .orElse(false);
     }
 
     /**
