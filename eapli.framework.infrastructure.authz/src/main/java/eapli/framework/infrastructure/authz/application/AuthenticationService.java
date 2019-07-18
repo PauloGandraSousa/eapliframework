@@ -50,9 +50,9 @@ public class AuthenticationService {
     /**
      *
      * @param repo
-     *            a user repository
+     *                a user repository
      * @param authz
-     *            an authentication service
+     *                an authentication service
      * @param policy
      * @param encoder
      */
@@ -67,16 +67,16 @@ public class AuthenticationService {
     }
 
     /**
-     * Allows a user to perform login. Checks if a user can be authenticated
-     * with the username/password pair and if so creates a user session for it.
+     * Allows a user to perform login. Checks if a user can be authenticated with the username/password
+     * pair and if so creates a user session for it.
      *
      * @param username
      * @param rawPassword
      * @param requiredRoles
      * @return the authenticated user session or an empty optional otherwise
      * @throws IllegalArgumentException
-     *             if the username or password cannot be constructed from the
-     *             passed string arguments
+     *                                  if the username or password cannot be constructed from the
+     *                                  passed string arguments
      */
     public Optional<UserSession> authenticate(final String username, final String rawPassword,
             final Role... requiredRoles) {
@@ -98,16 +98,15 @@ public class AuthenticationService {
     }
 
     /**
-     * Change the password of a certain user. If the operation succeeds, the
-     * {@code user} object reference is no longer valid and subsequent code
-     * should use the value of the returned {@code Optional} to work with the
-     * user.
+     * Change the password of a certain user. If the operation succeeds, the {@code user} object
+     * reference is no longer valid and subsequent code should use the value of the returned
+     * {@code Optional} to work with the user.
      *
      * @param user
      * @param oldPassword
      * @param newPassword
-     * @return An optional which value is the changed SystemUser object or an
-     *         empty Optional if the password could not be changed
+     * @return An optional which value is the changed SystemUser object or an empty Optional if the
+     *         password could not be changed
      */
     public Optional<SystemUser> changePassword(final SystemUser user, final String oldPassword,
             final String newPassword) {
@@ -124,8 +123,8 @@ public class AuthenticationService {
      *
      * @param oldPassword
      * @param newPassword
-     * @return true if the password could be changed. false if there is no user
-     *         session or the password could not be changed
+     * @return true if the password could be changed. false if there is no user session or the password
+     *         could not be changed
      */
     public boolean changePassword(final String oldPassword, final String newPassword) {
         return authz.session().map(u -> changePassword(u.authenticatedUser(), oldPassword, newPassword)).map(u -> true)
@@ -133,13 +132,11 @@ public class AuthenticationService {
     }
 
     /**
-     * Initiates a password reset request. If the operation succeeds, the
-     * {@code user} object reference is no longer valid and subsequent code
-     * should NOT use it.
+     * Initiates a password reset request. If the operation succeeds, the {@code user} object reference
+     * is no longer valid and subsequent code should NOT use it.
      *
      * @param user
-     * @return the reset token to be provided back in order to reset the
-     *         password
+     * @return the reset token to be provided back in order to reset the password
      */
     public String resetPassword(final SystemUser user) {
         final String token = user.resetPassword();
@@ -148,16 +145,14 @@ public class AuthenticationService {
     }
 
     /**
-     * Resets the password of the user. If the operation succeeds, the
-     * {@code user} object reference is no longer valid and subsequent code
-     * should use the value of the returned {@code Optional} to work with the
-     * user.
+     * Resets the password of the user. If the operation succeeds, the {@code user} object reference is
+     * no longer valid and subsequent code should use the value of the returned {@code Optional} to work
+     * with the user.
      *
      * @param user
      * @param token
      * @param newPass
-     * @return an Optional which value is the changed SystemUser or an empty
-     *         optional otherwise
+     * @return an Optional which value is the changed SystemUser or an empty optional otherwise
      */
     public Optional<SystemUser> confirmResetPassword(final SystemUser user, final String token,
             final Password newPass) {
