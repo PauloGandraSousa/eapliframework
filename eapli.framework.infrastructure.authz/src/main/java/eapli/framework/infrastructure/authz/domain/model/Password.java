@@ -3,23 +3,20 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
@@ -37,8 +34,8 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A password of a user. Password policy and encoding is done outside of this
- * class by {@link SystemUserBuilder} and {@link PasswordEncoder}.
+ * A password of a user. Password policy and encoding is done outside of this class by
+ * {@link SystemUserBuilder} and {@link PasswordEncoder}.
  *
  * <p>
  * IMPORTANT: passwords should never be stored in plain format
@@ -62,10 +59,19 @@ public class Password implements ValueObject, Serializable {
         thePassword = password;
     }
 
-    // FIXME the return method should be a Either/Try or explicitly throw an
-    // exception but it is definitely not Optional
+    /**
+     * Constructs an encoded password ensuring the raw password adheres to the password policy.
+     *
+     * @param rawPassword
+     * @param policy
+     * @param encoder
+     * @return the new Password or an empty Optional if the passwords does not satisfies the password
+     *         policy
+     */
     public static Optional<Password> valueOf(final String rawPassword, final PasswordPolicy policy,
             final PasswordEncoder encoder) {
+        // TODO the return method should be a Either/Try or explicitly throw an
+        // exception but it is questionable if it is an Optional
         if (policy.isSatisfiedBy(rawPassword)) {
             return Optional.of(new Password(encoder.encode(rawPassword)));
         } else {

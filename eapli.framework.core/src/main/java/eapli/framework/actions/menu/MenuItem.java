@@ -226,7 +226,7 @@ public abstract class MenuItem {
 
     /**
      *
-     * @return
+     * @return the submenu or an empty optional if this item is not a submenu
      */
     public abstract Optional<Menu> submenu();
 }
