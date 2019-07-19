@@ -57,7 +57,7 @@ class EventRecord implements AggregateRoot<Long> {
     private final String eventName;
     private final String publisherName;
     @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar when;
+    private final Calendar occurredAt;
 
     @Lob
     private final byte[] event;
@@ -68,7 +68,7 @@ class EventRecord implements AggregateRoot<Long> {
         this.publisherName = publisherName;
         eventName = event.getClass().getName();
         this.event = SerializationUtils.serialize(event);
-        when = Calendars.now();
+        occurredAt = Calendars.now();
     }
 
     protected EventRecord() {
@@ -76,7 +76,7 @@ class EventRecord implements AggregateRoot<Long> {
         eventName = null;
         event = null;
         publisherName = null;
-        when = null;
+        occurredAt = null;
     }
 
     public DomainEvent event() {

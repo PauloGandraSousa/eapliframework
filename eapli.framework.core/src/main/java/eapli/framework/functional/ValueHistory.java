@@ -94,7 +94,7 @@ import eapli.framework.validations.Invariants;
  */
 public class ValueHistory<T> {
 
-    private final Instant when;
+    private final Instant occurredAt;
     private final T value;
     private final String message;
     private final ValueHistory<T> previous;
@@ -106,7 +106,7 @@ public class ValueHistory<T> {
      * @param message
      */
     private ValueHistory(final T value, final String message) {
-        when = Instant.now();
+        occurredAt = Instant.now();
         this.value = value;
         this.message = message;
         previous = null;
@@ -133,7 +133,7 @@ public class ValueHistory<T> {
      */
     private ValueHistory(final ValueHistory<T> previous, final T value, final String message, final Instant when) {
         Invariants.nonNull(previous);
-        this.when = when;
+        this.occurredAt = when;
         this.value = value;
         this.message = message;
         this.previous = previous;
@@ -161,7 +161,7 @@ public class ValueHistory<T> {
     }
 
     public Instant when() {
-        return when;
+        return occurredAt;
     }
 
     public T value() {
@@ -232,7 +232,7 @@ public class ValueHistory<T> {
 
     @Override
     public String toString() {
-        return value.toString() + " [" + (message != null ? message : "") + "] @ " + ZonedDateTime.from(when);
+        return value.toString() + " [" + (message != null ? message : "") + "] @ " + ZonedDateTime.from(occurredAt);
     }
 
     /**

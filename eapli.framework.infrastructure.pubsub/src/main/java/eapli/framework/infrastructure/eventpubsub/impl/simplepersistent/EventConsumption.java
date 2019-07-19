@@ -55,7 +55,7 @@ class EventConsumption implements AggregateRoot<Long> {
     private final EventRecord event;
     private final String consumerName;
     @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar when;
+    private final Calendar occurredAt;
 
     public EventConsumption(final String consumerName, final EventRecord event) {
         Preconditions.nonNull(event);
@@ -63,14 +63,14 @@ class EventConsumption implements AggregateRoot<Long> {
 
         this.consumerName = consumerName;
         this.event = event;
-        when = Calendars.now();
+        occurredAt = Calendars.now();
     }
 
     protected EventConsumption() {
         // for ORM
         consumerName = null;
         event = null;
-        when = null;
+        occurredAt = null;
     }
 
     @Override
