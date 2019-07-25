@@ -49,7 +49,8 @@ public final class Preconditions {
      *             if the assertion is unfulfilled
      */
     public static void noneNull(final Object... arg) {
-        Validations.ensureNoneNull(Actions.THROW_ARGUMENT, arg);
+        Validations.ensureNoneNull(Actions.throwArgument("At least one of the required method parameters is null"),
+                arg);
     }
 
     /**

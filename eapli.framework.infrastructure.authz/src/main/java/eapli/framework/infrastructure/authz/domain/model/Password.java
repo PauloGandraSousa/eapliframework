@@ -34,8 +34,8 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A password of a user. Password policy and encoding is done outside of this class by
- * {@link SystemUserBuilder} and {@link PasswordEncoder}.
+ * A password of a user. Password policy and encoding is done outside of this
+ * class by {@link SystemUserBuilder} and {@link PasswordEncoder}.
  *
  * <p>
  * IMPORTANT: passwords should never be stored in plain format
@@ -60,18 +60,19 @@ public class Password implements ValueObject, Serializable {
     }
 
     /**
-     * Constructs an encoded password ensuring the raw password adheres to the password policy.
+     * Constructs an encoded password ensuring the raw password adheres to the
+     * password policy.
      *
      * @param rawPassword
      * @param policy
      * @param encoder
-     * @return the new Password or an empty Optional if the passwords does not satisfies the password
-     *         policy
+     * @return the new Password or an empty Optional if the passwords does not
+     *         satisfies the password policy
      */
     public static Optional<Password> encodedAndValid(final String rawPassword, final PasswordPolicy policy,
             final PasswordEncoder encoder) {
-        // TODO the return method should be a Either/Try or explicitly throw an
-        // exception but it is questionable if it is an Optional
+        Preconditions.noneNull(rawPassword, policy, encoder);
+
         if (policy.isSatisfiedBy(rawPassword)) {
             return Optional.of(new Password(encoder.encode(rawPassword)));
         } else {
