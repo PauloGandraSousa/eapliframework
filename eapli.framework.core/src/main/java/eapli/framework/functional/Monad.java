@@ -20,6 +20,7 @@
  */
 package eapli.framework.functional;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -48,7 +49,7 @@ public interface Monad<T> {
      * @param mapper
      * @return a new Monad wrapping the result of the mapping
      */
-    <R> Monad<R> flatMap(final Function<? super T, Monad<R>> mapper);
+    <R> Monad<R> flatMap(final Function<? super T, ? extends Monad<R>> mapper);
 
     /**
      * Filters the value(s) of the Monad based on a condition.
@@ -72,4 +73,22 @@ public interface Monad<T> {
      *         if this Monad is empty
      */
     T orElseGet(Supplier<? super T> defFunc);
+
+    /**
+     * (Left) Folds the contents of the Monad using the provided initial value.
+     *
+     * @param initial
+     * @param folder
+     * @return
+     */
+    <R> R fold(R initial, BiFunction<R, T, R> folder);
+
+    /**
+     * Right Folds the contents of the Monad using the provided initial value.
+     *
+     * @param initial
+     * @param folder
+     * @return
+     */
+    <R> R foldr(R initial, BiFunction<R, T, R> folder);
 }

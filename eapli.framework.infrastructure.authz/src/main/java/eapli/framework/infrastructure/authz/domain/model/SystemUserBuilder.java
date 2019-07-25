@@ -123,7 +123,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
      * @return this builder
      */
     public SystemUserBuilder withPassword(final String rawPassword) {
-        password = Password.valueOf(rawPassword, policy, encoder).orElseThrow(IllegalArgumentException::new);
+        password = Password.encodedAndValid(rawPassword, policy, encoder).orElseThrow(IllegalArgumentException::new);
         return this;
     }
 

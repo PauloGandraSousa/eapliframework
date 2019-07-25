@@ -68,7 +68,7 @@ public class Password implements ValueObject, Serializable {
      * @return the new Password or an empty Optional if the passwords does not satisfies the password
      *         policy
      */
-    public static Optional<Password> valueOf(final String rawPassword, final PasswordPolicy policy,
+    public static Optional<Password> encodedAndValid(final String rawPassword, final PasswordPolicy policy,
             final PasswordEncoder encoder) {
         // TODO the return method should be a Either/Try or explicitly throw an
         // exception but it is questionable if it is an Optional

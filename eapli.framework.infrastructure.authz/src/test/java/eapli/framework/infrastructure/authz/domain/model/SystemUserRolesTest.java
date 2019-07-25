@@ -65,7 +65,7 @@ public class SystemUserRolesTest {
     public void ensureCanHaveNoRole() {
         final Set<Role> roles = new HashSet<>();
         final SystemUser newUser = new SystemUser(Username.valueOf("username"),
-                Password.valueOf(PASSWORD1, new NilPasswordPolicy(), new PlainTextEncoder())
+                Password.encodedAndValid(PASSWORD1, new NilPasswordPolicy(), new PlainTextEncoder())
                         .orElseThrow(IllegalStateException::new),
                 Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, Calendars.now());
         assertNotNull(newUser);
