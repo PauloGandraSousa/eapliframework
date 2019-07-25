@@ -23,7 +23,6 @@ package eapli.framework.infrastructure.authz.domain.model;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -228,9 +227,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      */
     public boolean unassignRole(final Role role) {
         Preconditions.nonNull(role);
-        final Optional<RoleAssignment> ra = roles.getAssignment(role);
-        ra.ifPresent(RoleAssignment::unassign);
-        return ra.isPresent();
+        return roles.getAssignment(role).map(RoleAssignment::unassign).orElse(false);
     }
 
     /**

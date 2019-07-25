@@ -118,8 +118,18 @@ public class RoleAssignment implements ValueObject, Serializable {
         return type.equals(r);
     }
 
-    public void unassign() {
+    /**
+     * Unassigns this role, marking it as expired.
+     *
+     * @return false if the role was already expired.
+     */
+    public boolean unassign() {
+        if (expired) {
+            return false;
+        }
+
         expired = true;
         unassignedOn = Calendars.now();
+        return true;
     }
 }
