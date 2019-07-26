@@ -42,6 +42,7 @@ import org.apache.logging.log4j.Logger;
  * Utility class for Calendar manipulation and several date and time related
  * functions.
  *
+ * <p>
  * If you are using Java 8+, you should use the Time API:
  * <li><a href=
  * "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8
@@ -61,14 +62,16 @@ public final class Calendars {
     /**
      * mock the system clock for unit testing
      */
+    @SuppressWarnings("squid:S2885") // we are protecting the variable with
+                                     // synchronize
     private static volatile Calendar frozenTime;
+
+    private static synchronized Calendar fakeNow() {
+        return frozenTime;
+    }
 
     private static Calendar realNow() {
         return new GregorianCalendar();
-    }
-
-    private static Calendar fakeNow() {
-        return frozenTime;
     }
 
     private static Supplier<Calendar> nowFunction = Calendars::realNow;
@@ -80,7 +83,8 @@ public final class Calendars {
     /**
      * Overrides the use of the system clock to allow unit testing.
      */
-    /* package */ static void setNow(final Calendar frozenTime) {
+
+    /* package */ static synchronized void setNow(final Calendar frozenTime) {
         Calendars.frozenTime = frozenTime;
         nowFunction = Calendars::fakeNow;
     }

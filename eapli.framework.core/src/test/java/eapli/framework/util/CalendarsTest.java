@@ -44,7 +44,7 @@ public class CalendarsTest {
     }
 
     @Test
-    public void ensureNow() {
+    public void ensureFakeNow() {
         final Calendar expected = new GregorianCalendar(2019, Calendar.JULY, 26);
         assertEquals(expected, Calendars.now());
     }
