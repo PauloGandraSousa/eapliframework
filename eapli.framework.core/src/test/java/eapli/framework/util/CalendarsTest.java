@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.junit.Ignore;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -36,6 +36,18 @@ import org.junit.Test;
  * @author Paulo Gandra Sousa
  */
 public class CalendarsTest {
+    @BeforeClass
+    public static void setup() {
+        // setup test date to be July 26th, 2019
+        Calendars.setNow(new GregorianCalendar(2019, Calendar.JULY, 26));
+    }
+
+    @Test
+    public void ensureNow() {
+        final Calendar expected = new GregorianCalendar(2019, Calendar.JULY, 26);
+        assertEquals(expected, Calendars.now());
+    }
+
     /**
      * Test of weekNumber method, of class DateTime.
      */
@@ -69,8 +81,8 @@ public class CalendarsTest {
      *
      */
     @Test
-    @Ignore // due to differences in time zones with bitbucket pipeline
-    public void ensureFirstDayOfWeek13Of2014Is16() {
+    // @Ignore // due to differences in time zones with bitbucket pipeline
+    public void ensureFirstDayOfWeek13Of2014Is24() {
         System.out.println("beginningOfWeek");
         final int year = 2014;
         final int week = 13;
@@ -78,26 +90,28 @@ public class CalendarsTest {
         System.out.println("beginningOfWeek - expected: " + toString(expResult));
         final Calendar result = Calendars.beginningOfWeek(year, week);
         System.out.println("beginningOfWeek - actual: " + toString(result));
-        assertEquals(expResult, result);
+        assertEquals(expResult.getTimeInMillis(), result.getTimeInMillis());
     }
 
     /**
      * Test of endOfWeek method, of class DateTime.
      *
-     * ignoring since the build is failing on bitbucket pipelines due to
-     * Calendar settings
      */
-    @Ignore
+    // @Ignore //ignoring since the build is failing on bitbucket pipelines due
+    // to Calendar settings
     @Test
-    public void ensureLastDayOfWeek13Of2014Is22() {
+    public void ensureLastDayOfWeek13Of2014Is30() {
         System.out.println("endOfWeek");
         final int year = 2014;
         final int week = 13;
         final Calendar expResult = Calendars.of(2014, 3, 30);
+        // gregorianCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        // gregorianCalendar.setMinimalDaysInFirstWeek(4);
+
         System.out.println("endOfWeek - expected: " + toString(expResult));
         final Calendar result = Calendars.endOfWeek(year, week);
         System.out.println("endOfWeek - actual: " + toString(result));
-        assertEquals(expResult, result);
+        assertEquals(expResult.getTimeInMillis(), result.getTimeInMillis());
     }
 
     /**

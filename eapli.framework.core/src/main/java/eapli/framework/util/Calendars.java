@@ -33,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,8 +58,31 @@ public final class Calendars {
 
     private static final int DAYS_TILL_END_OF_WEEK = 6;
 
+    /**
+     * mock the system clock for unit testing
+     */
+    private static volatile Calendar frozenTime;
+
+    private static Calendar realNow() {
+        return new GregorianCalendar();
+    }
+
+    private static Calendar fakeNow() {
+        return frozenTime;
+    }
+
+    private static Supplier<Calendar> nowFunction = Calendars::realNow;
+
     private Calendars() {
         // to make sure this is an utility class
+    }
+
+    /**
+     * Overrides the use of the system clock to allow unit testing.
+     */
+    /* package */ static void setNow(final Calendar frozenTime) {
+        Calendars.frozenTime = frozenTime;
+        nowFunction = Calendars::fakeNow;
     }
 
     /**
@@ -67,7 +91,7 @@ public final class Calendars {
      * @return the current date of the system.
      */
     public static Calendar now() {
-        return new GregorianCalendar();
+        return nowFunction.get();
     }
 
     /**
@@ -91,7 +115,7 @@ public final class Calendars {
     }
 
     /**
-     * returns the date of the first day of a week.
+     * Returns the date of the first day of a week.
      *
      * @param year
      * @param week
