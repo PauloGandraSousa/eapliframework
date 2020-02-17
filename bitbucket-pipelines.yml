@@ -11,16 +11,8 @@ pipelines:
           - maven
         script: 
           - mvn -B verify # -B batch mode makes Maven less verbose
-          #- mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true
-          #- mvn -B sonar:sonar -Dsonar.projectKey=pag_isep_eapli.framework -Dsonar.organization=pag_isep-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=4bcb7833bc857dc4c3c00859b24c569c46f2f6f6
-          - pipe: atlassian/bitbucket-upload-file:0.1.2
-            variables:
-              BITBUCKET_USERNAME: ${BITBUCKET_USERNAME}
-              BITBUCKET_APP_PASSWORD: ${BITBUCKET_APP_PASSWORD}
-              FILENAME: 'build/eapli.framework.infrastructure.pubsub/target/eapli.framework.infrastructure.pubsub-1.0.0-SNAPSHOT.jar'
-              # ACCOUNT: '<string>' # Optional
-              # REPOSITORY: '<string>' # Optional
-              # DEBUG: '<boolean>' # Optional
-          # - curl -v -X POST --user "${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.pubsub/target/eapli.framework.infrastructure.pubsub-1.0.0-SNAPSHOT.jar"
-          - curl -v -X POST --user "${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.authz/target/eapli.framework.infrastructure.authz-8.1.0-SNAPSHOT.jar"
-          - curl -v -X POST --user "${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.core/target/eapli.framework.core-8.1.0-SNAPSHOT.jar"
+          - mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true
+          - mvn -B sonar:sonar -Dsonar.projectKey=pag_isep_eapli.framework -Dsonar.organization=pag_isep-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_PASS
+          - curl -v -X POST --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.pubsub/target/eapli.framework.infrastructure.pubsub-1.0.0-SNAPSHOT.jar"
+          - curl -v -X POST --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.authz/target/eapli.framework.infrastructure.authz-8.1.0-SNAPSHOT.jar"
+          - curl -v -X POST --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.core/target/eapli.framework.core-8.1.0-SNAPSHOT.jar"
