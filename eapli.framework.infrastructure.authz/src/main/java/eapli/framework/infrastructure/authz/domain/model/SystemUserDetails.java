@@ -43,6 +43,11 @@ public class SystemUserDetails implements UserDetails {
     private final boolean isActive;
     private final List<GrantedAuthority> authorities;
 
+    /**
+     * constructs the spring Security User Details from a SystemUser
+     *
+     * @param user
+     */
     public SystemUserDetails(final SystemUser user) {
         password = user.encodedPassword();
         username = user.username().toString();
@@ -55,9 +60,7 @@ public class SystemUserDetails implements UserDetails {
     /*
      * (non-Javadoc)
      *
-     * @see
-     * org.springframework.security.core.userdetails.UserDetails#getAuthorities(
-     * )
+     * @see org.springframework.security.core.userdetails.UserDetails#getAuthorities( )
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -67,8 +70,7 @@ public class SystemUserDetails implements UserDetails {
     /*
      * (non-Javadoc)
      *
-     * @see
-     * org.springframework.security.core.userdetails.UserDetails#getPassword()
+     * @see org.springframework.security.core.userdetails.UserDetails#getPassword()
      */
     @Override
     public String getPassword() {
@@ -78,8 +80,7 @@ public class SystemUserDetails implements UserDetails {
     /*
      * (non-Javadoc)
      *
-     * @see
-     * org.springframework.security.core.userdetails.UserDetails#getUsername()
+     * @see org.springframework.security.core.userdetails.UserDetails#getUsername()
      */
     @Override
     public String getUsername() {
@@ -89,41 +90,37 @@ public class SystemUserDetails implements UserDetails {
     /*
      * (non-Javadoc)
      *
-     * @see org.springframework.security.core.userdetails.UserDetails#
-     * isAccountNonExpired()
+     * @see org.springframework.security.core.userdetails.UserDetails# isAccountNonExpired()
      */
     @Override
     public boolean isAccountNonExpired() {
-        return isActive;
+        return isEnabled();
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see org.springframework.security.core.userdetails.UserDetails#
-     * isAccountNonLocked()
+     * @see org.springframework.security.core.userdetails.UserDetails# isAccountNonLocked()
      */
     @Override
     public boolean isAccountNonLocked() {
-        return isActive;
+        return isEnabled();
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see org.springframework.security.core.userdetails.UserDetails#
-     * isCredentialsNonExpired()
+     * @see org.springframework.security.core.userdetails.UserDetails# isCredentialsNonExpired()
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        return isActive;
+        return isEnabled();
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see
-     * org.springframework.security.core.userdetails.UserDetails#isEnabled()
+     * @see org.springframework.security.core.userdetails.UserDetails#isEnabled()
      */
     @Override
     public boolean isEnabled() {

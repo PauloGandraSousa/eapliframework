@@ -39,16 +39,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Utility class for Calendar manipulation and several date and time related
- * functions.
+ * Utility class for Calendar manipulation and several date and time related functions.
  *
  * <p>
  * If you are using Java 8+, you should use the Time API:
- * <li><a href=
- * "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8
- * Date Time Tutorial</a>
- * <li><a href=
- * "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
+ * <li><a href= "https://docs.oracle.com/javase/tutorial/datetime/TOC.html">Oracle's Java 8 Date
+ * Time Tutorial</a>
+ * <li><a href= "https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Oracle's
  * Java 8 Documentation</a>
  *
  * @author Paulo Gandra Sousa
@@ -61,10 +58,11 @@ public final class Calendars {
 
     /**
      * mock the system clock for unit testing
+     *
+     * suppress warning - we are protecting the variable with synchronize getter
      */
-    @SuppressWarnings("squid:S2885") // we are protecting the variable with
-                                     // synchronize
-    private static volatile Calendar frozenTime;
+    @SuppressWarnings("squid:S2885") //
+    private static Calendar frozenTime;
 
     private static synchronized Calendar fakeNow() {
         return frozenTime;
@@ -159,7 +157,7 @@ public final class Calendars {
      * Returns the date of the last day of a certain month.
      *
      * @param reference
-     *            a date to be used as reference month
+     *                  a date to be used as reference month
      * @return the date of the last day of a certain month.
      */
     public static Calendar endOfMonth(final Calendar reference) {
@@ -175,7 +173,7 @@ public final class Calendars {
      *
      * @param year
      * @param month
-     *            month number (1 - 12)
+     *              month number (1 - 12)
      * @return the date of the last day of a certain month
      */
     public static Calendar endOfMonth(final int year, final int month) {
@@ -205,12 +203,12 @@ public final class Calendars {
      * Creates a new Calendar object set to a specific date
      *
      * @param year
-     *            the year
+     *              the year
      * @param month
-     *            the month (1 - 12). note that the Calendar class uses months
-     *            from 0 to 11, not 1 to 12
+     *              the month (1 - 12). note that the Calendar class uses months from 0 to 11, not 1 to
+     *              12
      * @param day
-     *            the day of the month
+     *              the day of the month
      * @return a newly create Calendar object
      */
     public static Calendar of(final int year, final int month, final int day) {
@@ -218,8 +216,8 @@ public final class Calendars {
     }
 
     /**
-     * Creates a new Calendar instance with the date part set (year, month,
-     * date) from the source object.
+     * Creates a new Calendar instance with the date part set (year, month, date) from the source
+     * object.
      *
      * @param source
      * @return a new Calendar instance
@@ -233,8 +231,7 @@ public final class Calendars {
      *
      * @param aDateString
      * @param format
-     * @return a Calendar object or null if there was an error parsing the
-     *         string
+     * @return a Calendar object or null if there was an error parsing the string
      */
     public static Calendar parse(final String aDateString, final String format) {
         try {
@@ -274,8 +271,7 @@ public final class Calendars {
      * <p>
      * Taken from <a href=
      * "https://www.logicbig.com/how-to/java-8-date-time-api/calender-to-localdatetime.html">logicbig</a>
-     * and <a href=
-     * "https://www.baeldung.com/java-date-to-localdate-and-localdatetime">Baeldung</a>
+     * and <a href= "https://www.baeldung.com/java-date-to-localdate-and-localdatetime">Baeldung</a>
      *
      * @param calendar
      * @return the date as a LocalDateTime object
@@ -307,13 +303,12 @@ public final class Calendars {
     }
 
     /**
-     * Creates and returns a {@link String} instance by parsing a given Calendar
-     * base on a data format.
+     * Creates and returns a {@link String} instance by parsing a given Calendar base on a data format.
      *
      * @param calendar
-     *            the Calendar object to parse
+     *                   the Calendar object to parse
      * @param dateFormat
-     *            the format to use when parsing the Calendar object
+     *                   the format to use when parsing the Calendar object
      *
      * @return the generated {@link String} instance.
      */
@@ -349,13 +344,12 @@ public final class Calendars {
     }
 
     /**
-     * Creates and returns a {@link Calendar} instance by parsing a given string
-     * base on a data format.
+     * Creates and returns a {@link Calendar} instance by parsing a given string base on a data format.
      *
      * @param value
-     *            the date in string format
+     *                   the date in string format
      * @param dateFormat
-     *            the format to use when parsing the dateString
+     *                   the format to use when parsing the dateString
      *
      * @return the generated {@link Calendar} instance.
      * @throws ParseException
