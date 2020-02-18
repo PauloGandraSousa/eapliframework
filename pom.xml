@@ -5,7 +5,7 @@
 
 	<packaging>pom</packaging>
 	<groupId>eapli</groupId>
-	<version>8.1.0-SNAPSHOT</version>
+	<version>8.1.0</version>
 	<name>eapli.framework</name>
 	<artifactId>eapli.framework</artifactId>
 
@@ -62,7 +62,6 @@
 		</dependency>
 	</dependencies>
 
-
 	<build>
 		<plugins>
 			<plugin>
@@ -101,34 +100,9 @@
 
     <distributionManagement>
         <repository>
-            <url>https://api.bintray.com/maven/pagsousa/eapli/eapli.framework/;publish=1</url>
             <id>bintray-pagsousa-eapli</id>
+            <name>pagsousa-eapli</name>
+            <url>https://api.bintray.com/maven/pagsousa/eapli/eapli.framework/;publish=1</url>
         </repository>
     </distributionManagement>
-
-    <profiles>
-        <profile>
-            <repositories>
-                <repository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>bintray-pagsousa-eapli</id>
-                    <name>bintray</name>
-                    <url>https://dl.bintray.com/pagsousa/eapli</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>bintray-pagsousa-eapli</id>
-                    <name>bintray-plugins</name>
-                    <url>https://dl.bintray.com/pagsousa/eapli</url>
-                </pluginRepository>
-            </pluginRepositories>
-            <id>bintray</id>
-        </profile>
-    </profiles>
 </project>
