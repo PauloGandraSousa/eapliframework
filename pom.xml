@@ -98,4 +98,37 @@
 			</plugin>
 		</plugins>
 	</build>
+
+    <distributionManagement>
+        <repository>
+            <url>https://api.bintray.com/maven/pagsousa/eapli/eapli.framework/;publish=1</url>
+            <id>bintray-pagsousa-eapli</id>
+        </repository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <repositories>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>bintray-pagsousa-eapli</id>
+                    <name>bintray</name>
+                    <url>https://dl.bintray.com/pagsousa/eapli</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>bintray-pagsousa-eapli</id>
+                    <name>bintray-plugins</name>
+                    <url>https://dl.bintray.com/pagsousa/eapli</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <id>bintray</id>
+        </profile>
+    </profiles>
 </project>
