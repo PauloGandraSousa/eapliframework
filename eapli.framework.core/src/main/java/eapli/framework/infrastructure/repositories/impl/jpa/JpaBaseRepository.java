@@ -74,9 +74,16 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     private final Class<T> entityClass;
     private final String identityFieldName;
 
+    /**
+     * constructs a repository
+     *
+     * @param identityFieldName
+     *                          name of the field that serves as the <em>business identity</em> of the
+     *                          managed class
+     */
     @SuppressWarnings("unchecked")
     public JpaBaseRepository(final String identityFieldName) {
-        final Boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
+        final boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
         if (!isGeneric) {
             throw new IllegalStateException("The repository must be parametrized to a specific managed class");
         }
@@ -351,6 +358,13 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
         return r.isEmpty() ? Optional.empty() : Optional.of(r.get(0));
     }
 
+    /**
+     * Fetch results according to result pagination when the results are too much
+     *
+     * @param pageNumber
+     * @param pageSize
+     * @return the results
+     */
     public List<T> page(final int pageNumber, final int pageSize) {
         Preconditions.isPositive(pageNumber);
         Preconditions.isPositive(pageSize);
@@ -502,6 +516,13 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
         return q.getSingleResult();
     }
 
+    /**
+     * returns the number of entities in the persistence store.
+     *
+     * alias to count() but using the List.size terminology
+     *
+     * @return the number of entities in the persistence store
+     */
     public long size() {
         return count();
     }

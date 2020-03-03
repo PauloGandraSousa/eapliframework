@@ -189,6 +189,10 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         return username;
     }
 
+    /**
+     *
+     * @return the user's email address
+     */
     public EmailAddress email() {
         return email;
     }
@@ -228,7 +232,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * @return
+     * @return the user's roles
      */
     public Collection<Role> roleTypes() {
         return roles.roleTypes();
@@ -275,7 +279,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * @return
+     * @return the username
      */
     public Username username() {
         return username;
@@ -283,7 +287,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     /**
      *
-     * @return
+     * @return the name
      */
     public Name name() {
         return name;
@@ -291,7 +295,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     /**
      *
-     * @return
+     * @return <code>true> if the user is active
      */
     public boolean isActive() {
         return active;
@@ -355,7 +359,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      *
      * @param token
      * @param newPass
-     * @return
+     * @return <code>true</code> if the token was valid and the password was reset. <code>false</code>
+     *         otherwise
      */
     public boolean confirmResetPassword(final String token, final Password newPass) {
         Invariants.nonNull(resetToken);

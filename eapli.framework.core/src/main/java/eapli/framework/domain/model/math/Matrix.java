@@ -3,25 +3,24 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.domain.model.math;
+
+import java.util.Arrays;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
@@ -46,21 +45,36 @@ public class Matrix implements ValueObject {
     private final int cols;
     private final double[][] data;
 
+    /**
+     * Constructs a matrix from an array of doubles
+     *
+     * @param elems
+     */
     public Matrix(final double[][] elems) {
-        rows = elems.length + 1;
-        cols = elems[0].length + 1;
-        data = new double[rows][cols];
-        copyData(elems, data);
+        rows = elems.length;
+        Preconditions.isPositive(rows, "Cannot create a Matrix with 0 rows");
+
+        cols = elems[0].length;
+        Preconditions.isPositive(cols, "Cannot create a Matrix with 0 columns");
+
+        data = Arrays.copyOf(elems, rows * cols);
     }
 
+    /**
+     * Copy constructor
+     *
+     * @param other
+     */
     public Matrix(final Matrix other) {
-        rows = other.data.length + 1;
-        cols = other.data[0].length + 1;
-        data = new double[rows][cols];
-        copyData(other.data, data);
+        rows = other.data.length;
+        cols = other.data[0].length;
+        data = Arrays.copyOf(other.data, rows * cols);
     }
 
     private Matrix(final int rows, final int cols) {
+        Preconditions.isPositive(rows);
+        Preconditions.isPositive(cols);
+
         this.rows = rows;
         this.cols = cols;
         data = new double[rows][cols];
@@ -94,9 +108,9 @@ public class Matrix implements ValueObject {
      * Creates a zero matrix with the specified number of rows and columns.
      *
      * @param r
-     *            the desired number of rows
+     *          the desired number of rows
      * @param c
-     *            the desired number of columns
+     *          the desired number of columns
      * @return a zero matrix with the specified number of rows and columns
      */
     public static Matrix zero(final int r, final int c) {
@@ -104,15 +118,14 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * Creates a "zero" matrix with all cells of the matrix having the same
-     * given value.
+     * Creates a "zero" matrix with all cells of the matrix having the same given value.
      *
      * @param r
-     *            the desired number of rows
+     *             the desired number of rows
      * @param c
-     *            the desired number of columns
+     *             the desired number of columns
      * @param zero
-     *            the value to set to all cells of the matrix
+     *             the value to set to all cells of the matrix
      * @return a "zero" matrix
      */
     public static Matrix zero(final int r, final int c, final double zero) {
@@ -125,15 +138,32 @@ public class Matrix implements ValueObject {
         return z;
     }
 
-    // indexes are 1-based
+    /**
+     * returns the element at row <em>i</em> and column <em>j</em>. indexes are 1-based
+     *
+     * @param i
+     *          row number
+     * @param j
+     *          column number
+     * @return the element at row <em>i</em> and column <em>j</em>
+     */
     public double elementAt(final int i, final int j) {
         return getAt(i - 1, j - 1);
     }
 
+    /**
+     *
+     * @return the number of elements in the matrix
+     */
     public int size() {
         return rows * cols;
     }
 
+    /**
+     *
+     * @param index
+     * @return a row Vector representing the values of this matrix's <em>index</em> row
+     */
     public Vector row(final int index) {
         if (index < 0 || index >= rows) {
             throw new IndexOutOfBoundsException();
@@ -145,6 +175,11 @@ public class Matrix implements ValueObject {
         return new Vector(vec, Vector.VectorType.ROW);
     }
 
+    /**
+     *
+     * @param index
+     * @return a column Vector representing the values of this matrix's <em>index</em> column
+     */
     public Vector column(final int index) {
         if (index < 0 || index >= cols) {
             throw new IndexOutOfBoundsException();
@@ -160,7 +195,7 @@ public class Matrix implements ValueObject {
      * return a new matrix obtained by multiplying a matrix by a scalar
      *
      * @param k
-     * @return
+     * @return the matrix resulting from multiplying this matrix by the scalar <code>k</code>
      */
     public Matrix scale(final double k) {
         final Matrix c = new Matrix(rows, cols);
@@ -176,7 +211,7 @@ public class Matrix implements ValueObject {
      * add two matrices giving a third matrix
      *
      * @param other
-     * @return
+     * @return the matrix resulting from adding this matrix to the <code>other</code> one
      */
     public Matrix add(final Matrix other) {
         Preconditions.ensure(rows == other.rows && cols == other.cols, "matrices must be same dimension");
@@ -195,7 +230,7 @@ public class Matrix implements ValueObject {
      * subtract two matrices giving a third matrix
      *
      * @param other
-     * @return
+     * @return a matrix resulting from subtracting <code>other</code> from this
      */
     public Matrix subtract(final Matrix other) {
         Preconditions.ensure(rows == other.rows && cols == other.cols, "matrices must be same dimension");
@@ -272,8 +307,7 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * @return the diagonal matrix with the same elements in this matrix's
-     *         diagonal
+     * @return the diagonal matrix with the same elements in this matrix's diagonal
      */
     public Matrix diagonal() {
         Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
@@ -287,8 +321,7 @@ public class Matrix implements ValueObject {
 
     /**
      *
-     * @return a row vector (a matrix with just one row) with the elements in
-     *         this matrix's diagonal
+     * @return a row vector (a matrix with just one row) with the elements in this matrix's diagonal
      */
     public Matrix diagonalElements() {
         if (!isSquare()) {
@@ -520,14 +553,28 @@ public class Matrix implements ValueObject {
         return det;
     }
 
+    /**
+     * Returns the number of columns
+     *
+     * @return the number of columns
+     */
     public int columnCount() {
         return cols;
     }
 
+    /**
+     *
+     * @return the number of rows
+     */
     public int rowCount() {
         return rows;
     }
 
+    /**
+     * Returns true if this matrix has the same number of rows and columns
+     *
+     * @return true if this matrix has the same number of rows and columns
+     */
     public boolean isSquare() {
         return rows == cols;
     }
@@ -807,14 +854,6 @@ public class Matrix implements ValueObject {
     // indexes are 0-based
     private double getAt(final int i, final int j) {
         return data[i][j];
-    }
-
-    private void copyData(final double[][] source, final double[][] dest) {
-        for (int i = 0; i <= data.length; i++) {
-            for (int j = 0; j <= data[0].length; j++) {
-                dest[i][j] = source[i][j];
-            }
-        }
     }
 
     @Override

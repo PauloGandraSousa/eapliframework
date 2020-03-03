@@ -37,7 +37,7 @@ import eapli.framework.domain.model.math.Vector.VectorType;
 public class VectorTest {
 
     @Test
-    public void ensureIsUnit() {
+    public void testIsUnit() {
         final double[] values = { 1 / Math.sqrt(2), 1 / Math.sqrt(2) };
         final Vector subject = new Vector(values, VectorType.ROW);
         assertTrue(subject.isUnit());
@@ -68,7 +68,7 @@ public class VectorTest {
     }
 
     @Test
-    public void ensureIsNotUnit() {
+    public void testIsNotUnit() {
         final double[] values = { 1, 2, 3 };
         final Vector subject = new Vector(values, VectorType.ROW);
         assertFalse(subject.isUnit());
@@ -81,7 +81,7 @@ public class VectorTest {
     }
 
     @Test
-    public void ensureIsNotZero() {
+    public void testIsNotZero() {
         final double[] values = { 1, 2, 3 };
         final Vector subject = new Vector(values, VectorType.ROW);
         assertFalse(subject.isZero());
