@@ -39,8 +39,6 @@ public class Matrix implements ValueObject {
 
     private static final long serialVersionUID = 3907439424531338640L;
 
-    private transient int iDF = 0; // determinant factor
-
     private final int rows;
     private final int cols;
     private final double[][] data;
@@ -107,10 +105,8 @@ public class Matrix implements ValueObject {
     /**
      * Creates a zero matrix with the specified number of rows and columns.
      *
-     * @param r
-     *          the desired number of rows
-     * @param c
-     *          the desired number of columns
+     * @param r the desired number of rows
+     * @param c the desired number of columns
      * @return a zero matrix with the specified number of rows and columns
      */
     public static Matrix zero(final int r, final int c) {
@@ -118,14 +114,12 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * Creates a "zero" matrix with all cells of the matrix having the same given value.
+     * Creates a "zero" matrix with all cells of the matrix having the same given
+     * value.
      *
-     * @param r
-     *             the desired number of rows
-     * @param c
-     *             the desired number of columns
-     * @param zero
-     *             the value to set to all cells of the matrix
+     * @param r    the desired number of rows
+     * @param c    the desired number of columns
+     * @param zero the value to set to all cells of the matrix
      * @return a "zero" matrix
      */
     public static Matrix zero(final int r, final int c, final double zero) {
@@ -139,12 +133,11 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * returns the element at row <em>i</em> and column <em>j</em>. indexes are 1-based
+     * returns the element at row <em>i</em> and column <em>j</em>. indexes are
+     * 1-based
      *
-     * @param i
-     *          row number
-     * @param j
-     *          column number
+     * @param i row number
+     * @param j column number
      * @return the element at row <em>i</em> and column <em>j</em>
      */
     public double elementAt(final int i, final int j) {
@@ -162,7 +155,8 @@ public class Matrix implements ValueObject {
     /**
      *
      * @param index
-     * @return a row Vector representing the values of this matrix's <em>index</em> row
+     * @return a row Vector representing the values of this matrix's <em>index</em>
+     *         row
      */
     public Vector row(final int index) {
         if (index < 0 || index >= rows) {
@@ -178,7 +172,8 @@ public class Matrix implements ValueObject {
     /**
      *
      * @param index
-     * @return a column Vector representing the values of this matrix's <em>index</em> column
+     * @return a column Vector representing the values of this matrix's
+     *         <em>index</em> column
      */
     public Vector column(final int index) {
         if (index < 0 || index >= cols) {
@@ -195,7 +190,8 @@ public class Matrix implements ValueObject {
      * return a new matrix obtained by multiplying a matrix by a scalar
      *
      * @param k
-     * @return the matrix resulting from multiplying this matrix by the scalar <code>k</code>
+     * @return the matrix resulting from multiplying this matrix by the scalar
+     *         <code>k</code>
      */
     public Matrix scale(final double k) {
         final Matrix c = new Matrix(rows, cols);
@@ -211,7 +207,8 @@ public class Matrix implements ValueObject {
      * add two matrices giving a third matrix
      *
      * @param other
-     * @return the matrix resulting from adding this matrix to the <code>other</code> one
+     * @return the matrix resulting from adding this matrix to the
+     *         <code>other</code> one
      */
     public Matrix add(final Matrix other) {
         Preconditions.ensure(rows == other.rows && cols == other.cols, "matrices must be same dimension");
@@ -283,17 +280,44 @@ public class Matrix implements ValueObject {
         return trace;
     }
 
-    // indexes are 1-based
+    /**
+     * calculates the cofactor as:
+     *
+     * <pre>
+     * <code>
+     *  (-1)^(i+j) * Mij
+     * </code>
+     * </pre>
+     *
+     * where <code>Mij</code> is the minor of this matrix at (i,j)
+     *
+     * indexes are 1-based
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     public double cofactor(final int i, final int j) {
-        // (-1)^(i+j)*Mij
         return java.lang.Math.pow(-1, (double) i + j) * minor(i, j);
     }
 
-    // indexes are 1-based
+    /**
+     * calculates the minor of this matrix at (i,j)
+     *
+     * indexes are 1-based
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     public double minor(final int i, final int j) {
         return this.submatrix(i, j).determinant1();
     }
 
+    /**
+     *
+     * @return this matrix's transpose
+     */
     @SuppressWarnings("squid:S2234")
     public Matrix transpose() {
         final Matrix dest = new Matrix(cols, rows);
@@ -321,7 +345,8 @@ public class Matrix implements ValueObject {
 
     /**
      *
-     * @return a row vector (a matrix with just one row) with the elements in this matrix's diagonal
+     * @return a row vector (a matrix with just one row) with the elements in this
+     *         matrix's diagonal
      */
     public Matrix diagonalElements() {
         if (!isSquare()) {
@@ -355,7 +380,15 @@ public class Matrix implements ValueObject {
         throw new IllegalStateException("should not happen - unknown VectorType");
     }
 
-    // indexes are 1-based
+    /**
+     * creates a new matrix by removing a row and a column from this matrix
+     *
+     * indexes are 1-based
+     *
+     * @param rowToRemove
+     * @param colToRemove
+     * @return
+     */
     public Matrix submatrix(final int rowToRemove, final int colToRemove) {
         if (rowToRemove <= 0 || rowToRemove > rows) {
             throw new IndexOutOfBoundsException("rowToRemove");
@@ -405,6 +438,12 @@ public class Matrix implements ValueObject {
         return vec;
     }
 
+    /**
+     * checks if this matrix is upper diagonal, that is, all elements bellow the
+     * diagonal are 0
+     *
+     * @return
+     */
     public boolean isUpperDiagonal() {
         for (int i = 1; i < rows; i++) {
             for (int j = 0; j < i; j++) {
@@ -416,6 +455,12 @@ public class Matrix implements ValueObject {
         return true;
     }
 
+    /**
+     * checks if this matrix is lower diagonal, that is, all elements above the
+     * diagonal are 0
+     *
+     * @return
+     */
     public boolean isLowerDiagonal() {
         for (int i = 0; i < rows - 1; i++) {
             for (int j = i + 1; j < cols; j++) {
@@ -442,19 +487,11 @@ public class Matrix implements ValueObject {
         return t1.equals(inv.multiply(this)) && t1.isIdentity();
     }
 
-    public Matrix inverse2() {
-        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
-
-        // Formula used to Calculate Inverse:
-        // inv(A) = 1/det(A) * adj(A)
-        final double det = determinant2();
-        if (det == 0) {
-            throw new IllegalStateException("Determinant Equals 0, Not Invertible.");
-        }
-
-        return adjoint().scale(1 / det);
-    }
-
+    /**
+     * calculates the adjoint matrix
+     *
+     * @return the adjoint matrix
+     */
     public Matrix adjoint() {
         Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
@@ -488,69 +525,8 @@ public class Matrix implements ValueObject {
             ja = 0;
         }
 
-        final double det = ap.determinant2();
+        final double det = ap.determinant1();
         adj.putAt(i, j, java.lang.Math.pow(-1, (double) i + j) * det);
-    }
-
-    public Matrix upperTriangle() {
-        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
-
-        final int tms = rows; // get This Matrix Size
-
-        iDF = 1;
-
-        final Matrix m = new Matrix(this);
-
-        for (int col = 0; col < tms - 1; col++) {
-            for (int row = col + 1; row < tms; row++) {
-                switchZeroInDiagonal(tms, m, col);
-
-                if (m.getAt(col, col) != 0) {
-                    final double f1 = (-1.0) * m.getAt(row, col) / m.getAt(col, col);
-                    for (int i = col; i < tms; i++) {
-                        m.putAt(row, i, f1 * m.getAt(col, i) + m.getAt(row, i));
-                    }
-                }
-            }
-        }
-
-        return m;
-    }
-
-    private void switchZeroInDiagonal(final int tms, final Matrix m, final int col) {
-        int v = 1;
-        // check if 0 in diagonal
-        while (m.getAt(col, col) == 0) {
-            // if so switch until not
-            // check if switched all rows
-            if (col + v >= tms) {
-                iDF = 0;
-            } else {
-                for (int c = 0; c < tms; c++) {
-                    // switch rows
-                    final double temp = m.getAt(col, c);
-                    m.putAt(col, c, m.getAt(col + v, c));
-                    m.putAt(col + v, c, temp);
-                }
-                // count row switches
-                v++;
-                // each switch changes determinant factor
-                iDF *= -1;
-            }
-        }
-    }
-
-    public double determinant2() {
-        final Matrix triang = upperTriangle();
-
-        double det = 1;
-        for (int i = 0; i < rows; i++) {
-            det *= triang.getAt(i, i);
-        } // multiply down diagonal
-
-        det *= iDF; // adjust w/ determinant factor
-
-        return det;
     }
 
     /**
@@ -579,10 +555,21 @@ public class Matrix implements ValueObject {
         return rows == cols;
     }
 
+    /**
+     * checks if this is a singular matrix, that is, one which its determinant is 0
+     *
+     * @return true if this is a singular matrix
+     */
     public boolean isSingular() {
         return determinant1() == 0.0;
     }
 
+    /**
+     * checks if this matrix is a diagonal matrix, that is, one that only has values
+     * in the diagonal and all other values are 0.0
+     *
+     * @return true if this is a diagonal matrix
+     */
     public boolean isDiagonal() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -655,6 +642,12 @@ public class Matrix implements ValueObject {
         return true;
     }
 
+    /**
+     * checks if this matrix is an identity matrix, that is, all values are 0 except
+     * the diagonal which are 1
+     *
+     * @return true if this matrix is an identity matrix
+     */
     public boolean isIdentity() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -669,6 +662,10 @@ public class Matrix implements ValueObject {
         return true;
     }
 
+    /**
+     *
+     * @return true if all the values in the matrix are 0.0
+     */
     public boolean isZero() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -680,6 +677,11 @@ public class Matrix implements ValueObject {
         return true;
     }
 
+    /**
+     * calculates this matrix's determinant
+     *
+     * @return this matrix's determinant
+     */
     public double determinant1() {
         Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
@@ -700,12 +702,74 @@ public class Matrix implements ValueObject {
         return d;
     }
 
-    /* ??? */
+    /**
+     * helper for inverse1()
+     *
+     * TODO check better naming based on mathematical algorithm to solve the inverse
+     *
+     * @param nRows
+     * @param theData
+     */
+    private void nSolve(final int nRows, final double[][] theData) {
+        final int columns = nRows + 1;
+        for (int i = 0; i < nRows; i++) {
+            nSolveStep1(nRows, theData, columns, i);
+        }
+        for (int i = nRows - 2; i >= 0; i--) {
+            for (int j = columns - 2; j > i; j--) {
+                theData[i][columns - 1] -= theData[i][j] * theData[j][columns - 1];
+                theData[i][j] = 0;
+            }
+        }
+    }
+
+    /**
+     * helper for inverse1()
+     *
+     * TODO check better naming based on mathematical algorithm to solve the inverse
+     *
+     * @param nRows
+     * @param theData
+     */
+    private void nSolveStep1(final int nRows, final double[][] theData, final int columns, final int i) {
+        int j;
+        for (j = i; j < nRows && theData[j][j] == 0.0; j++) {
+            // do nothing
+        }
+        if (theData[j][j] == 0.0) {
+            throw new IllegalStateException("singular matrix");
+        }
+        if (j != i) {
+            for (int k = 0; k < columns; k++) {
+                final double dtemp = theData[i][k];
+                theData[i][k] = theData[j][k];
+                theData[j][k] = dtemp;
+            }
+        }
+        for (j = columns - 1; j >= 0; j--) {
+            theData[i][j] /= theData[i][i];
+        }
+        for (j = i + 1; j < nRows; j++) {
+            for (int k = columns - 1; k >= i; k--) {
+                theData[j][k] -= theData[j][i] * theData[i][k];
+            }
+        }
+    }
+
+    /**
+     * calculates the inverse of this matrix
+     *
+     * @return
+     */
     public Matrix inverse1() {
         Invariants.ensure(isSingular(), "matrix is singular");
 
+        // TODO check which mathematical method (algorithm) is implemented in this
+        // method
+
         final Matrix dest = new Matrix(rows, cols);
-        final double[][] d = new double[rows][cols + 1];
+
+        final double[][] tempData = new double[rows][cols + 1];
 
         for (int i = 0; i < rows; i++) {
             int nrow = i - 1;
@@ -713,23 +777,47 @@ public class Matrix implements ValueObject {
             for (int j = 0; j < rows; j++) {
                 nrow = (nrow + 1) % rows;
                 if (j == 0) {
-                    d[j * (cols + 1)][cols] = 1;
+                    tempData[j * (cols + 1)][cols] = 1;
                 } else {
-                    d[j * (cols + 1)][cols] = 0;
+                    tempData[j * (cols + 1)][cols] = 0;
                 }
                 for (int k = 0; k < cols; k++) {
                     ncol = (ncol + 1) % cols;
-                    d[j * (cols + 1)][k] = data[nrow * cols][ncol];
+                    tempData[j * (cols + 1)][k] = data[nrow * cols][ncol];
                 }
             }
-            nSolve(rows, d);
+            nSolve(rows, tempData);
             nrow = i - 1;
+
+            // copy values to destination matrix
             for (int j = 0; j < rows; j++) {
                 nrow = (nrow + 1) % rows;
-                dest.putAt(nrow * cols, i, d[j * (cols + 1)][cols]);
+                dest.putAt(nrow * cols, i, tempData[j * (cols + 1)][cols]);
             }
         }
         return dest;
+    }
+
+    /**
+     * calculates the inverse of this matrix as:
+     *
+     * <pre>
+     * <code>
+     *  inv(A) = 1/det(A) * adj(A)
+     * </code>
+     * </pre>
+     *
+     * @return the inverse matrix
+     */
+    public Matrix inverse() {
+        Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
+
+        final double det = determinant1();
+        if (det == 0) {
+            throw new IllegalStateException("Determinant Equals 0, Not Invertible.");
+        }
+
+        return adjoint().scale(1 / det);
     }
 
     /**
@@ -805,45 +893,6 @@ public class Matrix implements ValueObject {
             }
         }
         return sub;
-    }
-
-    /* ??? */
-    private void nSolve(final int rows, final double[][] data) {
-        final int columns = rows + 1;
-        for (int i = 0; i < rows; i++) {
-            nSolveStep1(rows, data, columns, i);
-        }
-        for (int i = rows - 2; i >= 0; i--) {
-            for (int j = columns - 2; j > i; j--) {
-                data[i][columns - 1] -= data[i][j] * data[j][columns - 1];
-                data[i][j] = 0;
-            }
-        }
-    }
-
-    private void nSolveStep1(final int rows, final double[][] data, final int columns, final int i) {
-        int j;
-        for (j = i; j < rows && data[j][j] == 0.0; j++) {
-            // do nothing
-        }
-        if (data[j][j] == 0.0) {
-            throw new IllegalStateException("singular matrix");
-        }
-        if (j != i) {
-            for (int k = 0; k < columns; k++) {
-                final double dtemp = data[i][k];
-                data[i][k] = data[j][k];
-                data[j][k] = dtemp;
-            }
-        }
-        for (j = columns - 1; j >= 0; j--) {
-            data[i][j] /= data[i][i];
-        }
-        for (j = i + 1; j < rows; j++) {
-            for (int k = columns - 1; k >= i; k--) {
-                data[j][k] -= data[j][i] * data[i][k];
-            }
-        }
     }
 
     // indexes are 0-based
