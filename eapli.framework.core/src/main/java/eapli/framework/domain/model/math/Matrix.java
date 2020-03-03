@@ -311,7 +311,7 @@ public class Matrix implements ValueObject {
      * @return
      */
     public double minor(final int i, final int j) {
-        return this.submatrix(i, j).determinant1();
+        return this.submatrix(i, j).determinant();
     }
 
     /**
@@ -482,7 +482,7 @@ public class Matrix implements ValueObject {
             return false;
         }
 
-        final Matrix inv = inverse1();
+        final Matrix inv = inverse();
         final Matrix t1 = multiply(inv);
         return t1.equals(inv.multiply(this)) && t1.isIdentity();
     }
@@ -525,7 +525,7 @@ public class Matrix implements ValueObject {
             ja = 0;
         }
 
-        final double det = ap.determinant1();
+        final double det = ap.determinant();
         adj.putAt(i, j, java.lang.Math.pow(-1, (double) i + j) * det);
     }
 
@@ -561,7 +561,7 @@ public class Matrix implements ValueObject {
      * @return true if this is a singular matrix
      */
     public boolean isSingular() {
-        return determinant1() == 0.0;
+        return determinant() == 0.0;
     }
 
     /**
@@ -682,7 +682,7 @@ public class Matrix implements ValueObject {
      *
      * @return this matrix's determinant
      */
-    public double determinant1() {
+    public double determinant() {
         Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
         double d = 0;
@@ -703,102 +703,6 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * helper for inverse1()
-     *
-     * TODO check better naming based on mathematical algorithm to solve the inverse
-     *
-     * @param nRows
-     * @param theData
-     */
-    private void nSolve(final int nRows, final double[][] theData) {
-        final int columns = nRows + 1;
-        for (int i = 0; i < nRows; i++) {
-            nSolveStep1(nRows, theData, columns, i);
-        }
-        for (int i = nRows - 2; i >= 0; i--) {
-            for (int j = columns - 2; j > i; j--) {
-                theData[i][columns - 1] -= theData[i][j] * theData[j][columns - 1];
-                theData[i][j] = 0;
-            }
-        }
-    }
-
-    /**
-     * helper for inverse1()
-     *
-     * TODO check better naming based on mathematical algorithm to solve the inverse
-     *
-     * @param nRows
-     * @param theData
-     */
-    private void nSolveStep1(final int nRows, final double[][] theData, final int columns, final int i) {
-        int j;
-        for (j = i; j < nRows && theData[j][j] == 0.0; j++) {
-            // do nothing
-        }
-        if (theData[j][j] == 0.0) {
-            throw new IllegalStateException("singular matrix");
-        }
-        if (j != i) {
-            for (int k = 0; k < columns; k++) {
-                final double dtemp = theData[i][k];
-                theData[i][k] = theData[j][k];
-                theData[j][k] = dtemp;
-            }
-        }
-        for (j = columns - 1; j >= 0; j--) {
-            theData[i][j] /= theData[i][i];
-        }
-        for (j = i + 1; j < nRows; j++) {
-            for (int k = columns - 1; k >= i; k--) {
-                theData[j][k] -= theData[j][i] * theData[i][k];
-            }
-        }
-    }
-
-    /**
-     * calculates the inverse of this matrix
-     *
-     * @return
-     */
-    public Matrix inverse1() {
-        Invariants.ensure(isSingular(), "matrix is singular");
-
-        // TODO check which mathematical method (algorithm) is implemented in this
-        // method
-
-        final Matrix dest = new Matrix(rows, cols);
-
-        final double[][] tempData = new double[rows][cols + 1];
-
-        for (int i = 0; i < rows; i++) {
-            int nrow = i - 1;
-            int ncol = i - 1;
-            for (int j = 0; j < rows; j++) {
-                nrow = (nrow + 1) % rows;
-                if (j == 0) {
-                    tempData[j * (cols + 1)][cols] = 1;
-                } else {
-                    tempData[j * (cols + 1)][cols] = 0;
-                }
-                for (int k = 0; k < cols; k++) {
-                    ncol = (ncol + 1) % cols;
-                    tempData[j * (cols + 1)][k] = data[nrow * cols][ncol];
-                }
-            }
-            nSolve(rows, tempData);
-            nrow = i - 1;
-
-            // copy values to destination matrix
-            for (int j = 0; j < rows; j++) {
-                nrow = (nrow + 1) % rows;
-                dest.putAt(nrow * cols, i, tempData[j * (cols + 1)][cols]);
-            }
-        }
-        return dest;
-    }
-
-    /**
      * calculates the inverse of this matrix as:
      *
      * <pre>
@@ -812,7 +716,7 @@ public class Matrix implements ValueObject {
     public Matrix inverse() {
         Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
 
-        final double det = determinant1();
+        final double det = determinant();
         if (det == 0) {
             throw new IllegalStateException("Determinant Equals 0, Not Invertible.");
         }
