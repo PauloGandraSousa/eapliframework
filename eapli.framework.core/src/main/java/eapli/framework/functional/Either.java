@@ -46,7 +46,11 @@ import eapli.framework.validations.Preconditions;
 public final class Either<L, R> {
 
     private enum SideType {
-        LEFT, RIGHT, EMPTY
+        LEFT, RIGHT,
+        /**
+         * marker value for empty objects
+         */
+        EMPTY_MARKER
     }
 
     @SuppressWarnings({ "rawtypes" })
@@ -85,9 +89,8 @@ public final class Either<L, R> {
      * Constructs a left Either.
      *
      * @param left
-     * @param marker
-     *            just to make the compiler happy due to the erasure of both
-     *            constructors
+     * @param marker just to make the compiler happy due to the erasure of both
+     *               constructors
      */
     @SuppressWarnings("squid:S1172")
     private Either(final L left, final boolean marker) {
@@ -113,17 +116,17 @@ public final class Either<L, R> {
      * Constructs an empty Either.
      */
     private Either() {
-        type = SideType.EMPTY;
+        type = SideType.EMPTY_MARKER;
     }
 
     /* package */ boolean isEmpty() {
-        return type == SideType.EMPTY;
+        return type == SideType.EMPTY_MARKER;
     }
 
     /**
-     * Applies the "normal" function to the left value if this Either instance
-     * holds a left value, otherwise applies the "error" function to the right
-     * value. Since this method returns a new {@code Either} it is suitable for
+     * Applies the "normal" function to the left value if this Either instance holds
+     * a left value, otherwise applies the "error" function to the right value.
+     * Since this method returns a new {@code Either} it is suitable for
      * composition.
      *
      * @param leftMapper
@@ -164,8 +167,7 @@ public final class Either<L, R> {
      *
      * @param leftAccum
      * @param rightAccum
-     * @param def
-     *            default/initial value
+     * @param def        default/initial value
      * @return the folded value
      */
     public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
@@ -180,9 +182,9 @@ public final class Either<L, R> {
     }
 
     /**
-     * Acts on the value of this Either instance, executing the "normal"
-     * function with the left value if this Either instance holds a left value,
-     * otherwise executes the "error" function with the right value
+     * Acts on the value of this Either instance, executing the "normal" function
+     * with the left value if this Either instance holds a left value, otherwise
+     * executes the "error" function with the right value
      *
      * @param leftConsumer
      * @param rightConsumer
@@ -207,9 +209,8 @@ public final class Either<L, R> {
     public L leftValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
         if (type == SideType.LEFT) {
             return left;
-        } else {
-            throw exceptionBuilder.get();
         }
+        throw exceptionBuilder.get();
     }
 
     /**
@@ -221,11 +222,7 @@ public final class Either<L, R> {
      * @return the value hold on the left of the either if there is a left value
      */
     public L leftValueOrElse(final L def) {
-        if (type == SideType.LEFT) {
-            return left;
-        } else {
-            return def;
-        }
+        return (type == SideType.LEFT) ? left : def;
     }
 
     /**
@@ -240,25 +237,20 @@ public final class Either<L, R> {
     public R rightValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
         if (type == SideType.RIGHT) {
             return right;
-        } else {
-            throw exceptionBuilder.get();
         }
+        throw exceptionBuilder.get();
     }
 
     /**
-     * Returns the value hold on the right of the either or the default value,
-     * if there is no value on the right side.
+     * Returns the value hold on the right of the either or the default value, if
+     * there is no value on the right side.
      *
      * @param def
      *
      * @return the value hold on the left of the either if there is a left value
      */
     public R rightValueOrElse(final R def) {
-        if (type == SideType.RIGHT) {
-            return right;
-        } else {
-            return def;
-        }
+        return (type == SideType.RIGHT) ? right : def;
     }
 
     /**

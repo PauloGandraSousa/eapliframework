@@ -29,4 +29,5 @@ package eapli.framework.domain.repositories;
  * @author Paulo Gandra Sousa
  */
 public interface ReportingRepository {
+    // empty
 }

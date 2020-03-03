@@ -23,7 +23,6 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
-import java.io.Serializable;
 import java.util.regex.Pattern;
 
 import javax.persistence.Embeddable;
@@ -37,7 +36,7 @@ import eapli.framework.validations.Preconditions;
  *
  */
 @Embeddable
-public class Name implements ValueObject, Serializable {
+public class Name implements ValueObject {
 
     private static final long serialVersionUID = 1L;
     @SuppressWarnings("squid:S4784")

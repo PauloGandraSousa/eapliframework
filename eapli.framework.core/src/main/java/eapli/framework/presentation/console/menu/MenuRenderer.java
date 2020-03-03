@@ -46,8 +46,8 @@ public abstract class MenuRenderer {
     }
 
     /**
-     * Renders the menu on the screen and asks the user for an option; when the user selects an option,
-     * the corresponding action is executed.
+     * Renders the menu on the screen and asks the user for an option; when the user
+     * selects an option, the corresponding action is executed.
      *
      * @return the success or insuccess of the action's execution
      */
@@ -57,14 +57,13 @@ public abstract class MenuRenderer {
         final MenuItem item = readOption();
         if (item.isSubmenu()) {
             return item.submenu().map(this::doRenderSubmenu).orElseThrow(IllegalStateException::new);
-        } else {
-            return item.select();
         }
+        return item.select();
     }
 
     /**
-     * Actually renders the sub menu and executes the selection. Usually this is a "recursive"
-     * MenuRenderer.
+     * Actually renders the sub menu and executes the selection. Usually this is a
+     * "recursive" MenuRenderer.
      *
      * @param submenu
      * @return

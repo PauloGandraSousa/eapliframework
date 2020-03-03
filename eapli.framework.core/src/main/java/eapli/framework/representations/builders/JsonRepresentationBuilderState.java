@@ -49,8 +49,7 @@ import eapli.framework.validations.Invariants;
     private JsonDocumentType type;
 
     /**
-     * indicates whether the builder is currently building an object or a
-     * collection
+     * indicates whether the builder is currently building an object or a collection
      *
      * @author Paulo Gandra de Sousa
      *
@@ -113,8 +112,7 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * Returns true if the current document was signaled as an object, i.e., {
-     * ... }
+     * Returns true if the current document was signaled as an object, i.e., { ... }
      *
      * @return true if the current document was signaled as an object
      */
@@ -123,8 +121,8 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * returns true if the current document was signaled as a collection, i.e.,
-     * [ ... ]
+     * returns true if the current document was signaled as a collection, i.e., [
+     * ... ]
      *
      * @return true if the current document was signaled as a collection
      */
@@ -163,9 +161,8 @@ import eapli.framework.validations.Invariants;
     public boolean isInCollection() {
         if (state.isEmpty()) {
             return false;
-        } else {
-            return state.peek().isInCollection();
         }
+        return state.peek().isInCollection();
     }
 
     /**
@@ -176,9 +173,8 @@ import eapli.framework.validations.Invariants;
     public boolean isInObject() {
         if (state.isEmpty()) {
             return false;
-        } else {
-            return state.peek().isInObject();
         }
+        return state.peek().isInObject();
     }
 
     /**
@@ -190,8 +186,7 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * Checks if the current state allows to end the creation of the root
-     * document.
+     * Checks if the current state allows to end the creation of the root document.
      *
      * @return true if it is possible to build a json object
      */
@@ -209,8 +204,7 @@ import eapli.framework.validations.Invariants;
     }
 
     /**
-     * Checks if the builder has properly closed (left) all the
-     * objects/collections.
+     * Checks if the builder has properly closed (left) all the objects/collections.
      *
      * @return true if the builder has been properly closed
      */

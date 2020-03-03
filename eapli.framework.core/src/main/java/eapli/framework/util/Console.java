@@ -77,7 +77,7 @@ public final class Console {
             try {
                 final String input = readLine(prompt);
                 return Integer.parseInt(input);
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
@@ -88,7 +88,7 @@ public final class Console {
             try {
                 final String input = readLine(prompt);
                 return Long.parseLong(input);
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
@@ -103,7 +103,7 @@ public final class Console {
                 } else if ("n".equals(strBool)) {
                     return false;
                 }
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
@@ -130,7 +130,7 @@ public final class Console {
                 final String strDate = readLine(prompt);
                 final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
                 return df.parse(strDate);
-            } catch (final ParseException ex) {
+            } catch (@SuppressWarnings("unused") final ParseException ex) {
                 // nothing to do
             }
         } while (true);
@@ -146,7 +146,7 @@ public final class Console {
                 final String strDate = readLine(prompt);
                 final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
                 return Calendars.calendarFromDate(df.parse(strDate));
-            } catch (final ParseException ex) {
+            } catch (@SuppressWarnings("unused") final ParseException ex) {
                 // nothing to do
             }
         } while (true);
@@ -157,7 +157,7 @@ public final class Console {
             try {
                 final String input = readLine(prompt);
                 return Double.parseDouble(input);
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
@@ -168,7 +168,7 @@ public final class Console {
         System.out.println(prompt);
         try {
             System.in.read();
-        } catch (final IOException ex) {
+        } catch (@SuppressWarnings("unused") final IOException ex) {
             // nothing to do
         }
     }

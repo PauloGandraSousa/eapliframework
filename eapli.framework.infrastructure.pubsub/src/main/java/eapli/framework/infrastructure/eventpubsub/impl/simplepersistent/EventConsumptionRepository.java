@@ -30,5 +30,5 @@ import eapli.framework.domain.repositories.DomainRepository;
  *
  */
 interface EventConsumptionRepository extends DomainRepository<Long, EventConsumption> {
-
+    // empty
 }

@@ -71,20 +71,17 @@ public final class Files {
         if (!filename.endsWith(extension)) {
             if (extension.startsWith(".")) {
                 return filename + extension;
-            } else {
-                return filename + "." + extension;
             }
-        } else {
-            return filename;
+            return filename + "." + extension;
         }
+        return filename;
     }
 
     /**
-     * gets the full content of an input string as a single String. the input
-     * stream is still active and open after calling this method
+     * gets the full content of an input string as a single String. the input stream
+     * is still active and open after calling this method
      *
-     * @param is
-     *            the input stream
+     * @param is the input stream
      * @return the correspondent UTF-8 String
      * @throws IOException
      * @throws UnsupportedEncodingException

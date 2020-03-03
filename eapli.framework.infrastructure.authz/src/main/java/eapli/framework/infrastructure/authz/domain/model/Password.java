@@ -75,9 +75,8 @@ public class Password implements ValueObject, Serializable {
 
         if (policy.isSatisfiedBy(rawPassword)) {
             return Optional.of(new Password(encoder.encode(rawPassword)));
-        } else {
-            return Optional.empty();
         }
+        return Optional.empty();
     }
 
     @Override
