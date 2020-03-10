@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -258,6 +258,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     public <S extends T> S save(final S entity) {
         try {
             return entityManager().merge(entity);
+        } catch (final OptimisticLockException ex) {
+            throw new ConcurrencyException(ex);
         } catch (final PersistenceException ex) {
             if (ex.getCause() instanceof OptimisticLockException) {
                 throw new ConcurrencyException(ex);
