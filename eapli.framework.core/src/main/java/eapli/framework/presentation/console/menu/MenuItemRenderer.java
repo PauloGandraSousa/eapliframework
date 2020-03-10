@@ -29,6 +29,7 @@ import eapli.framework.actions.menu.MenuItem;
  * @author Paulo Gandra de Sousa
  *
  */
+@SuppressWarnings("java:S106")
 public class MenuItemRenderer {
 
     public static final MenuItemRenderer DEFAULT = new MenuItemRenderer();

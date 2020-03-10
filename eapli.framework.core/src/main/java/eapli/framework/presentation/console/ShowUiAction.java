@@ -31,6 +31,7 @@ import eapli.framework.validations.Preconditions;
  *
  * @author Paulo Gandra Sousa
  */
+@SuppressWarnings("squid:S106")
 public class ShowUiAction implements Action {
 
     private final AbstractUI ui;
