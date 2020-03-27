@@ -32,4 +32,5 @@ package eapli.framework.representations.dto;
  *
  */
 public interface DTO {
+    // empty
 }

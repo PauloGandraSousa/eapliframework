@@ -50,14 +50,15 @@ import eapli.framework.visitor.Visitable;
 import eapli.framework.visitor.Visitor;
 
 /**
- * An application user. Objects are constructed thru {@link SystemUserBuilder} to enforce password
- * policy and encoding.
+ * An application user. Objects are constructed thru {@link SystemUserBuilder}
+ * to enforce password policy and encoding.
  *
  * <p>
- * This class follows a DDD approach where User is the root entity of the User Aggregate and all of
- * its properties are instances of value objects. This approach may seem a little more complex than
- * just having String or native type attributes but provides for real semantic of the domain and
- * follows the Single Responsibility Pattern (SRP).
+ * This class follows a DDD approach where User is the root entity of the User
+ * Aggregate and all of its properties are instances of value objects. This
+ * approach may seem a little more complex than just having String or native
+ * type attributes but provides for real semantic of the domain and follows the
+ * Single Responsibility Pattern (SRP).
  *
  * @author Paulo Gandra Sousa
  *
@@ -189,6 +190,10 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         return username;
     }
 
+    /**
+     *
+     * @return the user's email address
+     */
     public EmailAddress email() {
         return email;
     }
@@ -196,8 +201,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     /**
      * Add role to user.
      *
-     * @param role
-     *             Role to assign to SystemUser.
+     * @param role Role to assign to SystemUser.
      */
     public void assignToRole(final RoleAssignment role) {
         roles.add(role);
@@ -206,8 +210,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     /**
      * Add role to user.
      *
-     * @param role
-     *             Role to assign to SystemUser.
+     * @param role Role to assign to SystemUser.
      */
     public void assignToRole(final Role role) {
         Preconditions.nonNull(role);
@@ -215,11 +218,11 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * Unassigns a role from user, marking the assignment as expired. The role assignment is kept in the
-     * roles of the user. if the user is not assigned to the role, this method does nothing.
+     * Unassigns a role from user, marking the assignment as expired. The role
+     * assignment is kept in the roles of the user. if the user is not assigned to
+     * the role, this method does nothing.
      *
-     * @param role
-     *             Role to remove from SystemUser.
+     * @param role Role to remove from SystemUser.
      * @return true if the user had the role and it was unassigned. false otherwise.
      */
     public boolean unassignRole(final Role role) {
@@ -228,7 +231,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * @return
+     * @return the user's roles
      */
     public Collection<Role> roleTypes() {
         return roles.roleTypes();
@@ -248,9 +251,9 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * Checks if this user's password matches a password. We don't want the password to move outside of
-     * the object, so instead of returning it we pass the responsibility of performing the validation to
-     * inside the object.
+     * Checks if this user's password matches a password. We don't want the password
+     * to move outside of the object, so instead of returning it we pass the
+     * responsibility of performing the validation to inside the object.
      *
      * @param rawPassword
      * @param encoder
@@ -275,7 +278,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     }
 
     /**
-     * @return
+     * @return the username
      */
     public Username username() {
         return username;
@@ -283,7 +286,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     /**
      *
-     * @return
+     * @return the name
      */
     public Name name() {
         return name;
@@ -291,7 +294,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     /**
      *
-     * @return
+     * @return <code>true> if the user is active
      */
     public boolean isActive() {
         return active;
@@ -355,7 +358,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      *
      * @param token
      * @param newPass
-     * @return
+     * @return <code>true</code> if the token was valid and the password was reset.
+     *         <code>false</code> otherwise
      */
     public boolean confirmResetPassword(final String token, final Password newPass) {
         Invariants.nonNull(resetToken);
@@ -366,9 +370,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         if (token.equals(resetToken)) {
             password = newPass;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

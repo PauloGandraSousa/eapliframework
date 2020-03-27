@@ -54,5 +54,5 @@ import java.lang.annotation.Target;
 @Retention(SOURCE)
 @Target({ TYPE })
 public @interface Utility {
-
+    // empty
 }

@@ -83,13 +83,13 @@ public class ValidationsTest {
 
     @Test
     public void testEnsureDoesNothingIfTrue() {
-        Validations.ensure(true, Actions.THROW_STATE);
+        Validations.ensure(Boolean.TRUE, Actions.THROW_STATE);
         assertTrue(true);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testEnsureDoesSomethingIfFalse() {
-        Validations.ensure(false, Actions.THROW_STATE);
+        Validations.ensure(Boolean.FALSE, Actions.THROW_STATE);
     }
 
     @Test

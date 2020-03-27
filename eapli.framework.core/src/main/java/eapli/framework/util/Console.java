@@ -31,6 +31,8 @@ import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import eapli.framework.validations.StringPredicates;
+
 /**
  * Utility class for reading different data types from the Console.
  *
@@ -72,28 +74,74 @@ public final class Console {
         }
     }
 
+    /**
+     * reads input from the console as a string ensuring that the string is not
+     * empty or composed just of whitespace.
+     *
+     * @param prompt  the prompt for the input
+     * @param message the message to show in case of bad input
+     * @return the input read from the console
+     */
+    public static String readNonEmptyLine(final String prompt, final String message) {
+        do {
+            try {
+                System.out.println(prompt);
+                final InputStreamReader converter = new InputStreamReader(System.in);
+                final BufferedReader in = new BufferedReader(converter);
+
+                final String text = in.readLine();
+                if (StringPredicates.isNullOrEmpty(text)) {
+                    System.out.println(message);
+                } else {
+                    return text;
+                }
+            } catch (final IOException ex) {
+                LOGGER.warn("Ignoring but this is really strange that it even happened.", ex);
+                return "";
+            }
+        } while (true);
+    }
+
+    /**
+     * reads input from the console as an integer value
+     *
+     * @param prompt
+     * @return
+     */
     public static int readInteger(final String prompt) {
         do {
             try {
                 final String input = readLine(prompt);
                 return Integer.parseInt(input);
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
     }
 
+    /**
+     * reads input from the console as a long value
+     *
+     * @param prompt
+     * @return
+     */
     public static long readLong(final String prompt) {
         do {
             try {
                 final String input = readLine(prompt);
                 return Long.parseLong(input);
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
     }
 
+    /**
+     * reads input from the console as a boolean (Y, S, N)
+     *
+     * @param prompt
+     * @return
+     */
     public static boolean readBoolean(final String prompt) {
         do {
             try {
@@ -103,12 +151,21 @@ public final class Console {
                 } else if ("n".equals(strBool)) {
                     return false;
                 }
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
     }
 
+    /**
+     * reads input from the console as an integer value between <code>low</code> and
+     * <code>high</code> or <code>exit</code>
+     *
+     * @param low
+     * @param high
+     * @param exit
+     * @return
+     */
     public static int readOption(final int low, final int high, final int exit) {
         int option;
         do {
@@ -120,55 +177,86 @@ public final class Console {
         return option;
     }
 
+    /**
+     *
+     * @param prompt
+     * @return
+     */
     public static Date readDate(final String prompt) {
         return readDate(prompt, "yyyy/MM/dd");
     }
 
+    /**
+     *
+     * @param prompt
+     * @param dateFormat
+     * @return
+     */
     public static Date readDate(final String prompt, final String dateFormat) {
         do {
             try {
                 final String strDate = readLine(prompt);
                 final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
                 return df.parse(strDate);
-            } catch (final ParseException ex) {
+            } catch (@SuppressWarnings("unused") final ParseException ex) {
                 // nothing to do
             }
         } while (true);
     }
 
+    /**
+     *
+     * @param prompt
+     * @return
+     */
     public static Calendar readCalendar(final String prompt) {
         return readCalendar(prompt, "dd-MM-yyyy");
     }
 
+    /**
+     *
+     * @param prompt
+     * @param dateFormat
+     * @return
+     */
     public static Calendar readCalendar(final String prompt, final String dateFormat) {
         do {
             try {
                 final String strDate = readLine(prompt);
                 final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
                 return Calendars.calendarFromDate(df.parse(strDate));
-            } catch (final ParseException ex) {
+            } catch (@SuppressWarnings("unused") final ParseException ex) {
                 // nothing to do
             }
         } while (true);
     }
 
+    /**
+     *
+     * @param prompt
+     * @return
+     */
     public static double readDouble(final String prompt) {
         do {
             try {
                 final String input = readLine(prompt);
                 return Double.parseDouble(input);
-            } catch (final NumberFormatException ex) {
+            } catch (@SuppressWarnings("unused") final NumberFormatException ex) {
                 // nothing to do
             }
         } while (true);
     }
 
+    /**
+     *
+     * @param prompt
+     */
     @SuppressWarnings("squid:S1166")
     public static void waitForKey(final String prompt) {
         System.out.println(prompt);
         try {
             System.in.read();
-        } catch (final IOException ex) {
+        } catch (@SuppressWarnings("unused") final IOException ex) {
             // nothing to do
         }
     }

@@ -42,11 +42,10 @@ package eapli.framework.domain.model;
  * <li>Product
  * </ol>
  *
- * @param <I>
- *            the type of the primary <b>business</b> identity of the entity
+ * @param <I> the type of the primary <b>business</b> identity of the entity
  *
  * @author Paulo Gandra Sousa
  */
 public interface AggregateRoot<I extends Comparable<I> /* & ValueObject */> extends DomainEntity<I> {
-
+    // empty
 }

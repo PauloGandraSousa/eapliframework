@@ -33,6 +33,8 @@ import java.time.Instant;
 import org.junit.Assert;
 import org.junit.Test;
 
+import eapli.framework.util.Collections;
+
 /**
  * @author Paulo Gandra de Sousa 25/06/2019
  *
@@ -68,11 +70,7 @@ public class ValueHistoryTest {
     public void ensureSingleHasSingleHistory() {
         final ValueHistory<Integer> subject = singleSubject();
 
-        int i = 0;
-        for (@SuppressWarnings("unused")
-        final ValueHistory<Integer> each : subject.history()) {
-            i++;
-        }
+        final int i = Collections.sizeOf(subject.history());
         assertEquals(1, i);
     }
 

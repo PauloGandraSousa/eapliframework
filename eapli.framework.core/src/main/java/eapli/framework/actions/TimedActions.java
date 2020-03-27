@@ -53,14 +53,13 @@ public final class TimedActions {
     /**
      * Simple delay mechanism for the current thread of execution.
      *
-     * @param sleep
-     *            the original delay interval
+     * @param sleep the original delay interval
      */
     public static void delay(final int sleep) {
         try {
             LOGGER.trace("Sleeping {} ", sleep);
             Thread.sleep(sleep);
-        } catch (final InterruptedException e) {
+        } catch (@SuppressWarnings("unused") final InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
@@ -70,17 +69,15 @@ public final class TimedActions {
      * Useful in conjunction with retry mechanisms where a progressive delay is
      * expected.
      *
-     * @param sleep
-     *            the original delay interval
-     * @param factor
-     *            the factor of progression to apply
+     * @param sleep  the original delay interval
+     * @param factor the factor of progression to apply
      */
     public static void delay(final int sleep, final int factor) {
         try {
             final int delay = (int) (sleep + sleep * (factor - 1) * 0.5);
             LOGGER.trace("Sleeping {} before retrying for the {} time", delay, factor);
             Thread.sleep(delay);
-        } catch (final InterruptedException e) {
+        } catch (@SuppressWarnings("unused") final InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
@@ -102,13 +99,12 @@ public final class TimedActions {
     private static final Timer timer = new Timer();
 
     /**
-     * runs a periodic task each <em>interval</em> milliseconds. the first
-     * execution will happen as soon as possible. There will be one single
-     * {@link java.util.Timer timer} object for all the requested recurring
-     * tasks.
+     * runs a periodic task each <em>interval</em> milliseconds. the first execution
+     * will happen as soon as possible. There will be one single
+     * {@link java.util.Timer timer} object for all the requested recurring tasks.
      *
-     * consider using the method {@link #atFixedRate(Action, int) atFixedRate}
-     * which makes use of Java 5+ concurrent Thread Pool Executors
+     * consider using the method {@link #atFixedRate(Action, int) atFixedRate} which
+     * makes use of Java 5+ concurrent Thread Pool Executors
      *
      * @param cmd
      * @param interval
@@ -126,13 +122,11 @@ public final class TimedActions {
     /**
      * schedules a periodic action at a specified interval in milliseconds. the
      * first execution will happen as soon as possible. there will be one single
-     * thread pool {@link java.util.concurrent.ScheduledExecutorService
-     * executor} for scheduled recurring tasks.
+     * thread pool {@link java.util.concurrent.ScheduledExecutorService executor}
+     * for scheduled recurring tasks.
      *
-     * @param cmd
-     *            the action to execute
-     * @param period
-     *            the period in milliseconds
+     * @param cmd    the action to execute
+     * @param period the period in milliseconds
      */
     public static void atFixedRate(final Action cmd, final int period) {
         Preconditions.nonNull(cmd);
@@ -146,12 +140,11 @@ public final class TimedActions {
     }
 
     /**
-     * shutdown all running threads created by the recurring task methods.
-     * client code should call this function if it was used any of the
-     * scheduling functions {@link #atFixedRate(Action, int) atFixedRate} or
-     * {@link #periodically(Action, int) periodically}, otherwise the
-     * application may not end normally as the recurring task's threads will
-     * keep executing
+     * shutdown all running threads created by the recurring task methods. client
+     * code should call this function if it was used any of the scheduling functions
+     * {@link #atFixedRate(Action, int) atFixedRate} or
+     * {@link #periodically(Action, int) periodically}, otherwise the application
+     * may not end normally as the recurring task's threads will keep executing
      *
      */
     public static void shutdownRecurringTasks() {

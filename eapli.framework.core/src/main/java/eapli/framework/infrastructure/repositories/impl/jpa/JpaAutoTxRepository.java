@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -43,12 +43,9 @@ import eapli.framework.validations.Preconditions;
  * single immediate mode a transaction is initiated, committed and the
  * connection closed in the scope of each repository method call.
  *
- * @param <T>
- *            the entity type that we want to build a repository for
- * @param <K>
- *            the primary key type of the table
- * @param <I>
- *            the type of the <b>business identity</b> of the entity
+ * @param <T> the entity type that we want to build a repository for
+ * @param <K> the primary key type of the table
+ * @param <I> the type of the <b>business identity</b> of the entity
  *
  * @author Paulo Gandra Sousa
  */
@@ -62,6 +59,13 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
         this(persistenceUnitName, new HashMap(), identityFieldName);
     }
 
+    /**
+     * constructor
+     *
+     * @param persistenceUnitName
+     * @param properties
+     * @param identityFieldName
+     */
     public JpaAutoTxRepository(final String persistenceUnitName, @SuppressWarnings("rawtypes") final Map properties,
             final String identityFieldName) {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
@@ -72,6 +76,12 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
         this.autoTx = null;
     }
 
+    /**
+     * constructor
+     *
+     * @param autoTx
+     * @param identityFieldName
+     */
     public JpaAutoTxRepository(final TransactionalContext autoTx, final String identityFieldName) {
         Preconditions.nonNull(autoTx);
 
@@ -84,10 +94,23 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
         this.autoTx = autoTx;
     }
 
+    /**
+     * factory
+     *
+     * @param persistenceUnitName
+     * @return
+     */
     public static TransactionalContext buildTransactionalContext(final String persistenceUnitName) {
         return new JpaTransactionalContext(persistenceUnitName);
     }
 
+    /**
+     * factory
+     *
+     * @param persistenceUnitName
+     * @param properties
+     * @return
+     */
     public static TransactionalContext buildTransactionalContext(final String persistenceUnitName,
             @SuppressWarnings("rawtypes") final Map properties) {
         return new JpaTransactionalContext(persistenceUnitName, properties);
@@ -98,11 +121,11 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
     }
 
     /**
-     * returns if the repository is running in single transaction mode or within
-     * a TransactionalContext
+     * returns if the repository is running in single transaction mode or within a
+     * TransactionalContext
      *
-     * @return true if the repository is running in single transaction mode
-     *         false if running within a Transactional Context
+     * @return true if the repository is running in single transaction mode false if
+     *         running within a Transactional Context
      */
     public boolean isInTransaction() {
         return context() == null;

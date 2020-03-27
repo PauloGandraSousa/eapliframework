@@ -3,23 +3,20 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.representations.dto;
 
@@ -42,9 +39,8 @@ import eapli.framework.validations.Preconditions;
 import eapli.framework.validations.StringPredicates;
 
 /**
- * A general collection of key-value pairs to work as a DTO avoiding to create
- * your own custom DTO classes. As a convenience, it implements the Map
- * interface.
+ * A general collection of key-value pairs to work as a DTO avoiding to create your own custom DTO
+ * classes. As a convenience, it implements the Map interface.
  *
  * @author Paulo Gandra Sousa
  *
@@ -56,6 +52,11 @@ public class GeneralDTO implements DTO, Map<String, Object> {
     private final Map<String, Object> data = new HashMap<>();
     private final String type;
 
+    /**
+     * Constructs a DTO
+     * 
+     * @param type
+     */
     public GeneralDTO(final String type) {
         Preconditions.ensure(!StringPredicates.isNullOrWhiteSpace(type));
 
@@ -78,9 +79,8 @@ public class GeneralDTO implements DTO, Map<String, Object> {
     }
 
     /**
-     * We are ignoring the security issue S3011 since control the execution and
-     * know the use we are giving to the reflected fields, eventough care must
-     * be taken when using reflection
+     * We are ignoring the security issue S3011 since control the execution and know the use we are
+     * giving to the reflected fields, eventough care must be taken when using reflection
      *
      * @param subject
      * @param aField
@@ -158,18 +158,15 @@ public class GeneralDTO implements DTO, Map<String, Object> {
     }
 
     /**
-     * Gets the list of all non-synthetic fields from the inheritance structure.
-     * Synthetic fields are ignored mostly due to JacoCo instrumentation which
-     * adds a synthetic field {@code $jacocoData}.
+     * Gets the list of all non-synthetic fields from the inheritance structure. Synthetic fields are
+     * ignored mostly due to JacoCo instrumentation which adds a synthetic field {@code $jacocoData}.
      *
      * <p>
-     * We are ignoring the security issue S1523 we since control the execution
-     * and know the use we are giving to the reflected fields, eventough care
-     * must be taken when using reflection
+     * We are ignoring the security issue S1523 we since control the execution and know the use we are
+     * giving to the reflected fields, eventough care must be taken when using reflection
      *
      * @param type
-     * @return the list of all non-synthetic fields from the inheritance
-     *         structure
+     * @return the list of all non-synthetic fields from the inheritance structure
      */
     @SuppressWarnings("squid:S1523")
     private static List<Field> getInheritedFields(final Class<?> type) {
@@ -183,8 +180,8 @@ public class GeneralDTO implements DTO, Map<String, Object> {
     }
 
     /**
-     * Returns the name of the type contained in this DTO. Might be helpful for
-     * client code to parse the DTO.
+     * Returns the name of the type contained in this DTO. Might be helpful for client code to parse the
+     * DTO.
      *
      * @return the name of the type contained in this DTO
      */

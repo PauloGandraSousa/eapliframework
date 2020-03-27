@@ -49,6 +49,9 @@ public abstract class JpaAbstractRepository {
     private EntityManagerFactory emFactory;
     private EntityManager entityManager;
 
+    /**
+     * constructor
+     */
     public JpaAbstractRepository() {
         super();
     }

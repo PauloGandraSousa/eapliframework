@@ -51,7 +51,7 @@ public class SystemUserActivateDeactivateTest {
     public void ensureCannotDeactivateAnInactiveUser() {
         try {
             instance.deactivate(Calendars.now());
-        } catch (final Exception e) {
+        } catch (@SuppressWarnings("unused") final Exception e) {
             fail("something stange just happened. we are only interested in catching the exception on the second call to deactivate");
         }
         instance.deactivate(Calendars.now());
