@@ -1,11 +1,6 @@
 /**
  * Main package for DDD and general domain classes of the framework
  *
- * @author Paulo Gandra Sousa
- *
- */
-package eapli.framework.domain;
-/*
  * @startuml
  *
  * interface DomainEntity
@@ -33,4 +28,7 @@ package eapli.framework.domain;
  *
  * @enduml
  *
+ * @author Paulo Gandra Sousa
+ *
  */
+package eapli.framework.domain;

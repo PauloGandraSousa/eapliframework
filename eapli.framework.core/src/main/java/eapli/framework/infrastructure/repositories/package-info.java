@@ -1,12 +1,9 @@
 /**
  * @author Paulo Gandra de Sousa
  *
- */
-
-/*
  * @startuml
  * skinparam classAttributeIconSize 0
- * 
+ *
  * interface Repository<T, K extends Serializable> {
  * void delete(T entity)
  * void delete(K entityId)
@@ -15,12 +12,12 @@
  * Optional<T> findOne(K id);
  * long count();
  * }
- * 
+ *
  * class JpaAutoTxRepository<T, K extends Serializable> {
- * 
+ *
  * # final JpaBaseRepository<T, K> repo
  * - final TransactionalContext autoTx
- * 
+ *
  * + TransactionalContext buildTransactionalContext(String persistenceUnitName)
  * + TransactionalContext context()
  * + boolean isInTransaction()
@@ -33,18 +30,18 @@
  * # List<T> match(String where)
  * # Optional<T> matchOne(String where)
  * }
- * 
+ *
  * interface IterableRepository<T, K extends Serializable> {
  * Iterator<T> iterator(int pagesize);
  * T first();
  * Iterable<T> first(int n);
  * }
- * 
+ *
  * class JpaBaseRepository<T, K extends Serializable> {
  * # Class<T> entityClass
  * - EntityManagerFactory emFactory
  * - EntityManager entityManager
- * 
+ *
  * # EntityManagerFactory entityManagerFactory()
  * # EntityManager entityManager()
  * + T create(T entity)
@@ -61,27 +58,27 @@
  * # TypedQuery<T> queryAll(String where, Map<String, Object> params)
  * + List<T> first(int n)
  * }
- * 
+ *
  * class JpaWithTransactionalContextRepository<T, K extends Serializable> {
  * # EntityManagerFactory entityManagerFactory()
  * # EntityManager entityManager()
  * # TransactionalContext context()
  * }
- * 
+ *
  * class JpaTransactionalRepository<T, K extends Serializable> {
  * + void delete(final T entity)
  * + void delete(final K entityId)
  * + T create(final T entity)
  * + T save(T entity)
  * }
- * 
+ *
  * interface TransactionalContext {
  * void beginTransaction()
  * void commit()
  * void rollback()
  * void close()
  * }
- * 
+ *
  * class JpaTransactionalContext {
  * - final String persistenceUnitName
  * - static volatile EntityManagerFactory singletonEMF
@@ -91,25 +88,25 @@
  * + void rollback()
  * + void close()
  * }
- * 
+ *
  * Repository <|.. JpaAutoTxRepository
  * Repository <|.. IterableRepository
  * IterableRepository <|.. JpaBaseRepository
  * JpaBaseRepository <|-- JpaWithTransactionalContextRepository
  * JpaWithTransactionalContextRepository <|-- JpaTransactionalRepository
- * 
+ *
  * TransactionalContext <-- "autoTx" JpaAutoTxRepository
  * TransactionalContext <.. JpaWithTransactionalContextRepository
  * JpaBaseRepository <-- "repo" JpaAutoTxRepository
- * 
+ *
  * class JpaTransactionalContext implements TransactionalContext
- * 
+ *
  * class IntegrityViolationException
  * class ConcurrencyException
  * Repository ..> IntegrityViolationException : might throw
  * Repository ..> ConcurrencyException : might throw
- * 
+ *
  * @enduml
- * 
+ *
  */
 package eapli.framework.infrastructure.repositories;
