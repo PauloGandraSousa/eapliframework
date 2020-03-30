@@ -3,23 +3,20 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.util;
 
@@ -55,10 +52,11 @@ public final class StringFormater {
      * Returns a pretty formatted JSON object.
      *
      * <p>
-     * From <a href=
-     * "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
+     * From
+     * <a href= "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
      *
      * @param input
+     *              a JSON string
      * @return a pretty formatted JSON object
      */
     public static String prettyformatJson(final String input) {
@@ -71,6 +69,13 @@ public final class StringFormater {
         }
     }
 
+    /**
+     * returns a pretty formated XML string
+     *
+     * @param input
+     *              an XML string
+     * @return a pretty formated XML string
+     */
     public static String prettyFormatXml(final String input) {
         return prettyFormatXml(input, 2);
     }
@@ -78,9 +83,9 @@ public final class StringFormater {
     /**
      * returns a formated XML output.
      * <p>
-     * Based in code from <a href=
-     * "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java">
-     * stack overflow</a>
+     * Based in code from
+     * <a href= "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java"> stack
+     * overflow</a>
      *
      * @param input
      * @param indent
@@ -92,11 +97,11 @@ public final class StringFormater {
         final StreamResult xmlOutput = new StreamResult(stringWriter);
         final TransformerFactory transformerFactory = TransformerFactory.newInstance();
         try {
+            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
             transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             transformerFactory.setAttribute("indent-number", indent);
             final Transformer transformer = transformerFactory.newTransformer();
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(xmlInput, xmlOutput);
         } catch (final TransformerException e) {
