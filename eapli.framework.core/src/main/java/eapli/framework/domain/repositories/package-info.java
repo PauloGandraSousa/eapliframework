@@ -11,8 +11,15 @@ package eapli.framework.domain.repositories;
 /**
  * @startuml doc-files/overview-repositories.png
  *
- * Repository <|-- IterableRepository
- * Repository <|-- DeleteableRepository
+ * DomainRepository <|-- IterableRepository
+ *
+ * class TransactionalContext
+ * class IntegrityViolationException
+ * class ConcurrencyException
+ *
+ * DomainRepository ..> IntegrityViolationException : might throw
+ * DomainRepository ..> ConcurrencyException : might throw
+ * DomainRepository ..> TransactionalContext : can engage in
  *
  * @enduml
  */
