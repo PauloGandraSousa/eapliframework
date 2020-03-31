@@ -71,7 +71,8 @@ public class Menu {
 
         item.option().ifPresent(i -> {
             if (itemByOption.containsKey(i)) {
-                throw new IllegalStateException("Cannot add an item with an already existing option id");
+                throw new IllegalStateException(
+                        "Cannot add an item with an already existing option id");
             }
             itemByOption.put(i, item);
         });

@@ -3,23 +3,20 @@
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.actions;
 
@@ -53,7 +50,8 @@ public final class TimedActions {
     /**
      * Simple delay mechanism for the current thread of execution.
      *
-     * @param sleep the original delay interval
+     * @param sleep
+     *            the original delay interval
      */
     public static void delay(final int sleep) {
         try {
@@ -69,8 +67,10 @@ public final class TimedActions {
      * Useful in conjunction with retry mechanisms where a progressive delay is
      * expected.
      *
-     * @param sleep  the original delay interval
-     * @param factor the factor of progression to apply
+     * @param sleep
+     *            the original delay interval
+     * @param factor
+     *            the factor of progression to apply
      */
     public static void delay(final int sleep, final int factor) {
         try {
@@ -117,7 +117,8 @@ public final class TimedActions {
         timer.scheduleAtFixedRate(new RecurringTask(cmd), 0, interval);
     }
 
-    private static ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);
+    private static ScheduledExecutorService scheduledThreadPool = Executors
+            .newScheduledThreadPool(5);
 
     /**
      * schedules a periodic action at a specified interval in milliseconds. the
@@ -125,8 +126,10 @@ public final class TimedActions {
      * thread pool {@link java.util.concurrent.ScheduledExecutorService executor}
      * for scheduled recurring tasks.
      *
-     * @param cmd    the action to execute
-     * @param period the period in milliseconds
+     * @param cmd
+     *            the action to execute
+     * @param period
+     *            the period in milliseconds
      */
     public static void atFixedRate(final Action cmd, final int period) {
         Preconditions.nonNull(cmd);
