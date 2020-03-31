@@ -1,25 +1,22 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2019 the original author or authors.
  *
  * MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
@@ -43,9 +40,12 @@ import eapli.framework.validations.Preconditions;
  * single immediate mode a transaction is initiated, committed and the
  * connection closed in the scope of each repository method call.
  *
- * @param <T> the entity type that we want to build a repository for
- * @param <K> the primary key type of the table
- * @param <I> the type of the <b>business identity</b> of the entity
+ * @param <T>
+ *            the entity type that we want to build a repository for
+ * @param <K>
+ *            the primary key type of the table
+ * @param <I>
+ *            the type of the <b>business identity</b> of the entity
  *
  * @author Paulo Gandra Sousa
  */
@@ -66,13 +66,16 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
      * @param properties
      * @param identityFieldName
      */
-    public JpaAutoTxRepository(final String persistenceUnitName, @SuppressWarnings("rawtypes") final Map properties,
+    public JpaAutoTxRepository(final String persistenceUnitName,
+            @SuppressWarnings("rawtypes") final Map properties,
             final String identityFieldName) {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass, identityFieldName);
+        this.repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass,
+                identityFieldName);
         this.autoTx = null;
     }
 
@@ -85,12 +88,14 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
     public JpaAutoTxRepository(final TransactionalContext autoTx, final String identityFieldName) {
         Preconditions.nonNull(autoTx);
 
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
 
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaWithTransactionalContextRepository<>(autoTx, entityClass, identityFieldName);
+        this.repo = new JpaWithTransactionalContextRepository<>(autoTx, entityClass,
+                identityFieldName);
         this.autoTx = autoTx;
     }
 
@@ -193,7 +198,8 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
         return repo.matchOne(where);
     }
 
-    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters,
+            final Map<String, Object> params) {
         return repo.matchOne(whereWithParameters, params);
     }
 
