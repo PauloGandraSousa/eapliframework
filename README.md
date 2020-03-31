@@ -1,6 +1,6 @@
 # EAPLI Framework
 
-Version: **8.2.0**
+Version: **9.2.0**
 
 ## What is this repository for?
 
@@ -48,9 +48,9 @@ SOFTWARE.
 
 There are three main components to the framework:
 
-- **core** (v8.0.0): the core classes
-- **authz** (v8.0.0): simple authentication and authorization
-- **pub/sub** (v1.0.0): simple event dispatcher
+- **core** (v9.2.0): the core classes
+- **authz** (v8.2.0): simple authentication and authorization
+- **pub/sub** (v9.2.0): simple event dispatcher
 
 ### Core library
 
