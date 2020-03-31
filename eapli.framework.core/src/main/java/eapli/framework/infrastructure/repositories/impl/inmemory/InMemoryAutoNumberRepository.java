@@ -26,12 +26,13 @@ package eapli.framework.infrastructure.repositories.impl.inmemory;
 import eapli.framework.domain.model.identities.impl.NumberSequenceGenerator;
 
 /**
- * an in-memory repository implementation that automatically generates a
+ * An in-memory repository implementation that automatically generates a
  * sequence for ID of each object
+ *
+ * @param <T> the entity type that we want to build a repository for
  *
  * @author Paulo Gandra de Sousa
  *
- * @param <T>
  */
 public class InMemoryAutoNumberRepository<T> extends InMemoryRepository<T, Long> {
 

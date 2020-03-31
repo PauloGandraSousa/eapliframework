@@ -40,7 +40,7 @@ import eapli.framework.infrastructure.repositories.IterableRepository;
 import eapli.framework.validations.Invariants;
 
 /**
- * an implementation of repositories in memory. useful for test purposes. this
+ * An implementation of repositories in memory. useful for test purposes. this
  * class is parameterized with an identity generation mapping function in the
  * constructor
  *

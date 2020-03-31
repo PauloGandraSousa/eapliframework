@@ -34,6 +34,7 @@ import java.util.Optional;
  *            database)
  * @param <K>
  *            the class denoting the primary key of the table
+ *
  * @author Paulo Gandra Sousa
  */
 public interface IterableRepository<T, K> extends Repository<T, K>, Iterable<T> {

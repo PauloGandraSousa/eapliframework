@@ -26,8 +26,8 @@ import java.util.Calendar;
 import eapli.framework.domain.model.ValueObject;
 
 /**
- * A Domain event is a domain/driven design pattern to signal significant events that happened in
- * the domain.
+ * A Domain event is a domain/driven design pattern to signal significant events that have happened
+ * in the domain.
  * <p>
  * These are not technical issues/events but meaningful domain concepts.
  *

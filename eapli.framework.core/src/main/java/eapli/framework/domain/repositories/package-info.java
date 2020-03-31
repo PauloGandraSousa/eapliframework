@@ -8,10 +8,10 @@
  *
  */
 package eapli.framework.domain.repositories;
-/**
+/*
  * @startuml doc-files/overview-repositories.png
  *
- * DomainRepository <|-- IterableRepository
+ * DomainRepository <|-- IterableRepository 
  *
  * class TransactionalContext
  * class IntegrityViolationException
