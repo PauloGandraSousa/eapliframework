@@ -13,7 +13,7 @@
 		<groupId>eapli</groupId>
 		<artifactId>eapli.framework</artifactId>
 		<relativePath>../</relativePath>
-		<version>9.2.0</version>
+		<version>10.0.0</version>
 	</parent>
 
 
