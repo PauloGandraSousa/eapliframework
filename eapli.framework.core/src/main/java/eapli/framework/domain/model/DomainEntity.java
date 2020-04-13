@@ -93,9 +93,9 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
     int hashCode();
 
     /**
-     * Entities are compared by identity only, so equals() must only compares
+     * Entities are compared by identity only, so equals() must only compare
      * identities. In some situations however we might want to compare the
-     * content of the object by value.
+     * contents of the object by value.
      *
      * @param other
      * @return true if this domain entity have the "same content" as the
