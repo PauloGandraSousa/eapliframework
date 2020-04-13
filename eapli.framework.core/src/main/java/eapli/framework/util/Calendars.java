@@ -157,7 +157,7 @@ public final class Calendars {
      * Returns the date of the last day of a certain month.
      *
      * @param reference
-     *                  a date to be used as reference month
+     *            a date to be used as reference month
      * @return the date of the last day of a certain month.
      */
     public static Calendar endOfMonth(final Calendar reference) {
@@ -173,7 +173,7 @@ public final class Calendars {
      *
      * @param year
      * @param month
-     *              month number (1 - 12)
+     *            month number (1 - 12)
      * @return the date of the last day of a certain month
      */
     public static Calendar endOfMonth(final int year, final int month) {
@@ -203,12 +203,12 @@ public final class Calendars {
      * Creates a new Calendar object set to a specific date
      *
      * @param year
-     *              the year
+     *            the year
      * @param month
-     *              the month (1 - 12). note that the Calendar class uses months from 0 to 11, not 1 to
-     *              12
+     *            the month (1 - 12). note that the Calendar class uses months from 0 to 11, not 1 to
+     *            12
      * @param day
-     *              the day of the month
+     *            the day of the month
      * @return a newly create Calendar object
      */
     public static Calendar of(final int year, final int month, final int day) {
@@ -223,7 +223,8 @@ public final class Calendars {
      * @return a new Calendar instance
      */
     public static Calendar dateOf(final Calendar source) {
-        return of(source.get(Calendar.YEAR), source.get(Calendar.MONTH) + 1, source.get(Calendar.DATE));
+        return of(source.get(Calendar.YEAR), source.get(Calendar.MONTH) + 1,
+                source.get(Calendar.DATE));
     }
 
     /**
@@ -263,7 +264,8 @@ public final class Calendars {
      * @return the date formatted according to ISO8601.
      */
     public static String iso8601(final Calendar when) {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC).format(when.toInstant());
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC)
+                .format(when.toInstant());
     }
 
     /**
@@ -286,7 +288,7 @@ public final class Calendars {
     }
 
     /**
-     * Returns the current time according in ISO 8601 format.
+     * Returns the current time according to the ISO 8601 format.
      *
      * <p>
      * based on
@@ -295,7 +297,8 @@ public final class Calendars {
      * @return the current time in ISO 8601 format
      */
     public static String iso8601() {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC).format(Instant.now());
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX").withZone(ZoneOffset.UTC)
+                .format(Instant.now());
     }
 
     public static String format(final Calendar ocurrs, final String dateFormat) {
@@ -306,9 +309,9 @@ public final class Calendars {
      * Creates and returns a {@link String} instance by parsing a given Calendar base on a data format.
      *
      * @param calendar
-     *                   the Calendar object to parse
+     *            the Calendar object to parse
      * @param dateFormat
-     *                   the format to use when parsing the Calendar object
+     *            the format to use when parsing the Calendar object
      *
      * @return the generated {@link String} instance.
      */
@@ -347,14 +350,15 @@ public final class Calendars {
      * Creates and returns a {@link Calendar} instance by parsing a given string base on a data format.
      *
      * @param value
-     *                   the date in string format
+     *            the date in string format
      * @param dateFormat
-     *                   the format to use when parsing the dateString
+     *            the format to use when parsing the dateString
      *
      * @return the generated {@link Calendar} instance.
      * @throws ParseException
      */
-    public static Calendar parse(final String value, final DateFormat dateFormat) throws ParseException {
+    public static Calendar parse(final String value, final DateFormat dateFormat)
+            throws ParseException {
         final Calendar calendar = Calendar.getInstance();
         final Date date = dateFormat.parse(value);
         calendar.setTime(date);

@@ -47,7 +47,8 @@ import eapli.framework.validations.Invariants;
  * @param <T>
  */
 @Embeddable
-public class Interval<T extends Serializable & Comparable<T>> implements ValueObject, Comparable<Interval<T>> {
+public class Interval<T extends Serializable & Comparable<T>>
+        implements ValueObject, Comparable<Interval<T>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -128,8 +129,9 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     /**
      * special private constructor for empty intervals.
      *
-     * @param b marker parameter to enable the compiler to distinguish the
-     *          constructors
+     * @param b
+     *            marker parameter to enable the compiler to distinguish the
+     *            constructors
      */
     @SuppressWarnings("squid:S1172")
     private Interval(final boolean b) {
@@ -140,13 +142,17 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     /**
      * Constructs an interval.
      *
-     * @param start         anchor start of the interval or null to represent
-     *                      infinity
-     * @param end           anchor end of the interval or null to represent infinity
-     * @param startBoundary indicates if the interval is open or closed at the start
-     *                      anchor
-     * @param endBoundary   indicates if the interval is open or closed at the end
-     *                      anchor
+     * @param start
+     *            anchor start of the interval or null to represent
+     *            infinity
+     * @param end
+     *            anchor end of the interval or null to represent infinity
+     * @param startBoundary
+     *            indicates if the interval is open or closed at the start
+     *            anchor
+     * @param endBoundary
+     *            indicates if the interval is open or closed at the end
+     *            anchor
      */
     protected Interval(final T start, final BoundaryLimitType startBoundary, final T end,
             final BoundaryLimitType endBoundary) {
@@ -156,10 +162,12 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
 
         if (end != null && start != null && end.compareTo(start) < 0) {
-            throw new IllegalArgumentException("The end value of a range must be bigger than its start");
+            throw new IllegalArgumentException(
+                    "The end value of a range must be bigger than its start");
         }
         if (end != null && start != null && end.compareTo(start) == 0
-                && (startBoundary == BoundaryLimitType.OPEN || endBoundary == BoundaryLimitType.OPEN)) {
+                && (startBoundary == BoundaryLimitType.OPEN
+                        || endBoundary == BoundaryLimitType.OPEN)) {
             throw new IllegalArgumentException("An empty range is not allowed");
         }
 
@@ -184,7 +192,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @param start
      * @return a builder
      */
-    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> closedFrom(final U start) {
+    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> closedFrom(
+            final U start) {
         return new IntervalBuilder<>(start, BoundaryLimitType.CLOSED);
     }
 
@@ -195,7 +204,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * @return a builder
      */
-    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> openFrom(final U start) {
+    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> openFrom(
+            final U start) {
         return new IntervalBuilder<>(start, BoundaryLimitType.OPEN);
     }
 
@@ -239,7 +249,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     public boolean includes(final T target) {
         if (isEmpty()) {
             return false;
-        } else if (this.startBoundary != BoundaryLimitType.INFINITY && this.endBoundary != BoundaryLimitType.INFINITY) {
+        } else if (this.startBoundary != BoundaryLimitType.INFINITY
+                && this.endBoundary != BoundaryLimitType.INFINITY) {
             return includesInFiniteRanges(target);
         } else if (this.endBoundary == BoundaryLimitType.INFINITY) {
             return includesInToInfinityRanges(target);
@@ -371,11 +382,13 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     public boolean hasOpenEnd() {
-        return this.endBoundary == BoundaryLimitType.OPEN || endBoundary == BoundaryLimitType.INFINITY;
+        return this.endBoundary == BoundaryLimitType.OPEN
+                || endBoundary == BoundaryLimitType.INFINITY;
     }
 
     public boolean hasOpenStart() {
-        return this.startBoundary == BoundaryLimitType.OPEN || startBoundary == BoundaryLimitType.INFINITY;
+        return this.startBoundary == BoundaryLimitType.OPEN
+                || startBoundary == BoundaryLimitType.INFINITY;
     }
 
     /**
@@ -402,7 +415,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
             lower = arg;
             higher = this;
         }
-        return new Interval<>(lower.end, lower.endBoundary.negate(), higher.start, higher.startBoundary.negate());
+        return new Interval<>(lower.end, lower.endBoundary.negate(), higher.start,
+                higher.startBoundary.negate());
     }
 
     /**
@@ -449,7 +463,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      *
      * <p>
      * If two intervals start at the same point (including infinity) and have the
-     * same openness/closeness, then the end point will determine the order. if the
+     * same openness/closeness, then the end point will determine the order. If the
      * endpoint is the same, open intervals will be before closed ones.
      *
      * <pre>
@@ -522,7 +536,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         if (order < 0) {
             return false;
         } else if (order == 0) {
-            return (endBoundary == BoundaryLimitType.CLOSED && other.endBoundary == BoundaryLimitType.OPEN);
+            return (endBoundary == BoundaryLimitType.CLOSED
+                    && other.endBoundary == BoundaryLimitType.OPEN);
         } else {
             return true;
         }
@@ -539,7 +554,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         if (order < 0) {
             return true;
         } else if (order == 0) {
-            return (startBoundary == BoundaryLimitType.CLOSED && other.startBoundary == BoundaryLimitType.OPEN);
+            return (startBoundary == BoundaryLimitType.CLOSED
+                    && other.startBoundary == BoundaryLimitType.OPEN);
         } else {
             return false;
         }
@@ -570,9 +586,11 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * to detect whether two ranges abut each other.
+     * Detects whether two ranges abut each other.
      *
-     * based on https://martinfowler.com/eaaDev/Range.html
+     * <p>
+     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin fowler's Range</a>
+     * </p>
      *
      * @param arg
      * @return {@code true} if this interval abuts the other
@@ -582,9 +600,11 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * see if a group of ranges completely partitions this range.
+     * Checks if a group of ranges completely partitions this range.
      *
-     * based on https://martinfowler.com/eaaDev/Range.html
+     * <p>
+     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin fowler's Range</a>
+     * </p>
      *
      * @param args
      * @return {@code true} if the group of ranges completely partitions this range
@@ -599,12 +619,15 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     /**
      * Combines a group of contiguous intervals into a single interval
      *
-     * based on https://martinfowler.com/eaaDev/Range.html
+     * <p>
+     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin fowler's Range</a>
+     * </p>
      *
      * @param args
      * @return a new Interval spanning the the contiguous group of intervals
      */
-    public static <T extends Serializable & Comparable<T>> Interval<T> combination(final Interval<T>[] args) {
+    public static <T extends Serializable & Comparable<T>> Interval<T> combination(
+            final Interval<T>[] args) {
         Arrays.sort(args);
         if (!areContiguous(args)) {
             throw new IllegalArgumentException("Unable to combine date ranges");
@@ -616,7 +639,9 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     /**
      * Checks if a group of intervals forms a contiguous interval
      *
-     * based on https://martinfowler.com/eaaDev/Range.html
+     * <p>
+     * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin fowler's Range</a>
+     * </p>
      *
      * @TODO need to take into account the boundary limits to see if the intervals
      *       are really contiguous
@@ -624,7 +649,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @param args
      * @return {@code true} if a group of intervals forms a contiguous interval
      */
-    public static <T extends Serializable & Comparable<T>> boolean areContiguous(final Interval<T>[] args) {
+    public static <T extends Serializable & Comparable<T>> boolean areContiguous(
+            final Interval<T>[] args) {
         Arrays.sort(args);
         for (int i = 0; i < args.length - 1; i++) {
             if (!args[i].abuts(args[i + 1])) {
