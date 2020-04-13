@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 import eapli.framework.validations.Invariants;
@@ -94,6 +95,9 @@ import eapli.framework.validations.Invariants;
  */
 public class ValueHistory<T> {
 
+    // TODO dependency to PC clock - hard to test
+    private final static Supplier<Instant> clockNow = Instant::now;
+
     private final Instant occurredAt;
     private final T value;
     private final String message;
@@ -106,7 +110,7 @@ public class ValueHistory<T> {
      * @param message
      */
     private ValueHistory(final T value, final String message) {
-        occurredAt = Instant.now();
+        occurredAt = clockNow.get();
         this.value = value;
         this.message = message;
         previous = null;
@@ -120,8 +124,7 @@ public class ValueHistory<T> {
      * @param message
      */
     private ValueHistory(final ValueHistory<T> previous, final T value, final String message) {
-        // TODO dependency to PC clock - hard to test
-        this(previous, value, message, Instant.now());
+        this(previous, value, message, clockNow.get());
     }
 
     /**
@@ -131,7 +134,8 @@ public class ValueHistory<T> {
      * @param previous
      * @param next
      */
-    private ValueHistory(final ValueHistory<T> previous, final T value, final String message, final Instant when) {
+    private ValueHistory(final ValueHistory<T> previous, final T value, final String message,
+            final Instant when) {
         Invariants.nonNull(previous);
         this.occurredAt = when;
         this.value = value;
@@ -232,7 +236,8 @@ public class ValueHistory<T> {
 
     @Override
     public String toString() {
-        return value.toString() + " [" + (message != null ? message : "") + "] @ " + ZonedDateTime.from(occurredAt);
+        return value.toString() + " [" + (message != null ? message : "") + "] @ "
+                + ZonedDateTime.from(occurredAt);
     }
 
     /**
