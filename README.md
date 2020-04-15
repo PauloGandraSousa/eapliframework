@@ -22,7 +22,7 @@ Paulo Gandra de Sousa [pag@isep.ipp.pt](emailto:pag@isep.ipp.pt) / [pagsousa@gma
 
 ## License and copyright
 
-Copyright (c) 2013-2019 the original author or authors.
+Copyright (c) 2013-2020 the original author or authors.
 
 MIT License
 
@@ -48,9 +48,9 @@ SOFTWARE.
 
 There are three main components to the framework:
 
-- **core** (v9.2.0): the core classes
-- **authz** (v8.2.0): simple authentication and authorization
-- **pub/sub** (v9.2.0): simple event dispatcher
+- **core**: the core classes
+- **authz**: simple authentication and authorization
+- **pub/sub**: simple event dispatcher
 
 ### Core library
 
@@ -65,7 +65,7 @@ used for production code.
 
 ### Pub/sub library
 
-This is avery simple event dispatcher for demonstration purposes of DDD Domain Events.
+This is a very simple event dispatcher for demonstration purposes of DDD Domain Events.
 
 ## How do I get set up?
 
@@ -76,7 +76,7 @@ Start by reading the technical description available in the [documentation folde
 Most top level packages have UML diagrams to provide more context of classes 
 in that package. diagrams were created using [PlantUML](http://plantuml.com/).
 
-To update images from the PantUML files use the following instruction:
+To update images from the PlantUML files use the following instruction:
 
 ```cmd
 java -jar plantuml.jar -tpng *.puml
