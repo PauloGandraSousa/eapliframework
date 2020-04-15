@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -26,7 +27,7 @@
 
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
 		<sonar.exclusions>src/main/java/**/*/package-info.java</sonar.exclusions>
-	
+
 		<downloadSources>true</downloadSources>
 		<downloadJavadocs>true</downloadJavadocs>
 	</properties>
@@ -67,10 +68,20 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.2.0</version>
 				<configuration>
+					<doclet>info.leadinglight.umljavadoclet.UmlJavaDoclet</doclet>
+					<docletArtifact>
+						<groupId>com.github.gboersma</groupId>
+						<artifactId>uml-java-doclet</artifactId>
+						<version>1.1</version>
+					</docletArtifact>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
 					<additionalparam>-Xdoclint:none</additionalparam>
-					<additionalOptions>-Xdoclint:none</additionalOptions>
+					<additionalOptions>
+						<additionalOption>-Xdoclint:none</additionalOption>
+						<!-- Specify each diagram option here as an additionOption tag. -->
+					</additionalOptions>
 					<additionalJOption>-Xdoclint:none</additionalJOption>
 				</configuration>
 				<executions>
@@ -98,11 +109,18 @@
 		</plugins>
 	</build>
 
-    <distributionManagement>
-        <repository>
-            <id>bintray-pagsousa-eapli</id>
-            <name>pagsousa-eapli</name>
-            <url>https://api.bintray.com/maven/pagsousa/eapli/eapli.framework/;publish=1</url>
-        </repository>
-    </distributionManagement>
+	<distributionManagement>
+		<repository>
+			<id>bintray-pagsousa-eapli</id>
+			<name>pagsousa-eapli</name>
+			<url>https://api.bintray.com/maven/pagsousa/eapli/eapli.framework/;publish=1</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 </project>
