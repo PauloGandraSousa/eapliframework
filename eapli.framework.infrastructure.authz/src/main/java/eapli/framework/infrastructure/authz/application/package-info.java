@@ -21,44 +21,52 @@
 /**
  * The Authz application layer
  *
+ * <p>
+ * <img src="authz.svg"/>
+ * </p>
+ *
  * @author Paulo Gandra de Sousa
+ *
+ *
+ *         <!--
+ * @startuml authz.svg
+ *
+ *           class AuthenticationService <<service>> {
+ *           +authenticate()
+ *           }
+ *
+ *           class AuthorizationService <<service>>
+ *
+ *           class UserSession
+ *
+ *           class Username <<value>><<id>>
+ *
+ *           class SystemUser <<root>>
+ *
+ *           class Password <<value>>
+ *
+ *           class PasswordPolicy <<service>>
+ *
+ *           class PasswordEncoder <<service>>
+ *
+ *           class Role <<value>>
+ *
+ *           SystemUser -> Username
+ *           SystemUser -> Password
+ *           Password ..> PasswordPolicy
+ *           Password ..> PasswordEncoder
+ *           SystemUser <-- UserSession
+ *           AuthenticationService ..> Username
+ *           AuthenticationService ..> Password
+ *           AuthenticationService ..> Role
+ *           AuthenticationService ..> AuthorizationService
+ *           UserSession <-- AuthorizationService
+ *           AuthenticationService ..> PasswordPolicy
+ *           AuthenticationService ..> PasswordEncoder
+ *
+ * @enduml
+ *         -->
  */
 package eapli.framework.infrastructure.authz.application;
 /*
- * @startuml
- *
- * class AuthenticationService <<service>> {
- * +authenticate()
- * }
- *
- * class AuthorizationService <<service>>
- *
- * class UserSession
- *
- * class Username <<value>><<id>>
- *
- * class SystemUser <<root>>
- *
- * class Password <<value>>
- *
- * class PasswordPolicy <<service>>
- *
- * class PasswordEncoder <<service>>
- *
- * class Role <<value>>
- *
- * SystemUser -> Username
- * SystemUser -> Password
- * Password ..> PasswordPolicy
- * Password ..> PasswordEncoder
- * UserSession --> SystemUser
- * AuthenticationService ..> Username
- * AuthenticationService ..> Password
- * AuthenticationService ..> Role
- * AuthenticationService ..> AuthorizationService
- * AuthorizationService --> UserSession
- * AuthenticationService ..> PasswordPolicy
- * AuthenticationService ..> PasswordEncoder
- *
- * @enduml
  */

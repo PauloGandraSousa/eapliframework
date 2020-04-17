@@ -19,28 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * simple presentation framework using the console
+ * Simple presentation framework using the console.
+ *
+ * <p>
+ * <img src="presentation.svg"/>
+ * </p>
  *
  * @author Paulo Gandra Sousa
  *
- */
-package eapli.framework.presentation.console;
-/*
+ *         <!--
+ * @startuml presentation.svg
  *
- * @startuml
- *
- * interface Controller
- * class AbstractUI
- * Controller <.. AbstractUI
- * class Menu
- * AbstractUI <|-- Menu
- * class MenuItem
- * MenuItem <-- Menu
- * interface Action
- * Action <-- MenuItem
- * class MenuRenderer
- * Menu <.. MenuRenderer
+ *           interface Controller
+ *           class AbstractUI
+ *           Controller <.. AbstractUI
+ *           class Menu
+ *           AbstractUI <|-- Menu
+ *           class MenuItem
+ *           MenuItem <-- Menu
+ *           interface Action
+ *           Action <-- MenuItem
+ *           class MenuRenderer
+ *           Menu <.. MenuRenderer
  *
  * @enduml
- *
+ *         -->
  */
+package eapli.framework.presentation.console;

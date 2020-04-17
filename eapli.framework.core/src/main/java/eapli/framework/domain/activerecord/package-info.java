@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * provides generic interfaces for building a persistence layer following the
+ * Provides generic interfaces for building a persistence layer following the
  * Active Record pattern.
  *
  * @author Paulo Gandra Sousa

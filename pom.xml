@@ -70,6 +70,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.2.0</version>
 				<configuration>
+					<!-- UML DocLet -->
 					<doclet>info.leadinglight.umljavadoclet.UmlJavaDoclet</doclet>
 					<docletArtifact>
 						<groupId>com.github.gboersma</groupId>
@@ -77,6 +78,17 @@
 						<version>1.1</version>
 					</docletArtifact>
 					<useStandardDocletOptions>true</useStandardDocletOptions>
+
+					<!-- UML Taglet -->
+					<taglet>org.jdrupes.taglets.plantUml.Taglet</taglet>
+					<tagletArtifact>
+						<!-- https://mvnrepository.com/artifact/org.jdrupes.taglets/plantuml-taglet -->
+						<groupId>org.jdrupes.taglets</groupId>
+						<artifactId>plantuml-taglet</artifactId>
+						<version>1.0.5</version>
+					</tagletArtifact>
+
+					<!-- params -->
 					<additionalparam>-Xdoclint:none</additionalparam>
 					<additionalOptions>
 						<additionalOption>-Xdoclint:none</additionalOption>

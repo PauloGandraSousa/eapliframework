@@ -19,43 +19,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * Main package for DDD and general domain classes of the framework
+ * Main package for DDD
+ * <p>
+ * <img src="overview-ddd.svg">
+ * </p>
  *
  * @author Paulo Gandra Sousa
  *
- */
-package eapli.framework.domain;
-/*
- * @startuml
+ *         <!--
  *
- * interface DomainEntity
+ * @startuml overview-ddd.svg
  *
- * interface DomainEvent extends ValueObject
+ *           interface DomainEntity
  *
- * interface AggregateRoot
+ *           interface DomainEvent extends ValueObject
  *
- * interface ValueObject
+ *           interface AggregateRoot
  *
- * interface Identifiable
+ *           interface ValueObject
  *
- * interface DomainFactory
+ *           interface Identifiable
  *
- * interface DomainRepository {
- * +save()
- * +find()
- * }
+ *           interface DomainFactory
  *
- * AggregateRoot --|> DomainEntity
+ *           interface DomainRepository {
+ *           +save()
+ *           +find()
+ *           }
  *
- * DomainEntity --|> Identifiable
+ *           AggregateRoot --|> DomainEntity
  *
- * DomainFactory ..> DomainEntity : creates
+ *           DomainEntity --|> Identifiable
  *
- * DomainRepository ..> AggregateRoot
+ *           DomainFactory ..> DomainEntity : creates
  *
- * DomainEntity *-- ValueObject : attributes
+ *           DomainRepository ..> AggregateRoot
  *
- * AggregateRoot ..> DomainEvent: publishes
+ *           DomainEntity *-- ValueObject : attributes
+ *
+ *           AggregateRoot ..> DomainEvent: publishes
  *
  * @enduml
+ *         -->
+ *
  */
+package eapli.framework.domain.model;

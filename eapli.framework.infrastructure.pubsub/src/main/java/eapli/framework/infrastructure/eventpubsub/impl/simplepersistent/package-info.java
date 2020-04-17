@@ -19,114 +19,120 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
+ * Simple Publish/Subscribe implementation with a database.
+ *
+ * <p>
+ * <img src="overview-pubsub.svg"/>
+ * </p>
+ *
  * @author Paulo Gandra de Sousa
  *
- */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
-/*
- * @startuml
+ *         <!--
+ * @startuml overview-pubsub.svg
  *
- * class SimplePersistentEventPubSub {
- * -{static}int POLL_EVENTS_INTERVAL
- * -{static}Logger LOGGER
- * -EventRecordRepository eventRepo
- * -EventConsumptionRepository consumptionRepo
- * -EventDispatcher inprocDispatcher
- * -EventPublisher inprocPublisher
- * -String instanceKey
- * #SimplePersistentEventPubSub(String instanceKey)
- * -void storeConsumptionAndPublish(EventRecord x)
- * -boolean pollEvents()
- * -void init()
- * +void publish(DomainEvent event)
- * -void storeEvent(DomainEvent event)
- * +void subscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
- * +void unsubscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
- * +void unsubscribe(EventHandler observer)
- * +void shutdown()
- * }
+ *           class SimplePersistentEventPubSub {
+ *           -{static}int POLL_EVENTS_INTERVAL
+ *           -{static}Logger LOGGER
+ *           -EventRecordRepository eventRepo
+ *           -EventConsumptionRepository consumptionRepo
+ *           -EventDispatcher inprocDispatcher
+ *           -EventPublisher inprocPublisher
+ *           -String instanceKey
+ *           #SimplePersistentEventPubSub(String instanceKey)
+ *           -void storeConsumptionAndPublish(EventRecord x)
+ *           -boolean pollEvents()
+ *           -void init()
+ *           +void publish(DomainEvent event)
+ *           -void storeEvent(DomainEvent event)
+ *           +void subscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
+ *           +void unsubscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
+ *           +void unsubscribe(EventHandler observer)
+ *           +void shutdown()
+ *           }
  *
- * interface EventDispatcher {
- * }
+ *           interface EventDispatcher {
+ *           }
  *
- * EventDispatcher <|.. SimplePersistentEventPubSub
+ *           EventDispatcher <|.. SimplePersistentEventPubSub
  *
- * interface EventPublisher {
- * }
+ *           interface EventPublisher {
+ *           }
  *
- * EventPublisher <|.. SimplePersistentEventPubSub
+ *           EventPublisher <|.. SimplePersistentEventPubSub
  *
- * interface Singleton [[java:eapli.framework.util.Singleton]] {
- * }
+ *           interface Singleton [[java:eapli.framework.util.Singleton]] {
+ *           }
  *
- * Singleton <|.. SimplePersistentEventPubSub
+ *           Singleton <|.. SimplePersistentEventPubSub
  *
- * interface EventRecordRepository {
- * +Iterable<EventRecord> findNotConsumed(String instanceKey)
- * }
+ *           interface EventRecordRepository {
+ *           +Iterable<EventRecord> findNotConsumed(String instanceKey)
+ *           }
  *
- * interface "DataRepository<EventRecord,Long>" as DataRepository_EventRecord_Long_ {
- * }
+ *           interface "DataRepository<EventRecord,Long>" as DataRepository_EventRecord_Long_ {
+ *           }
  *
- * DataRepository_EventRecord_Long_ <|-- EventRecordRepository
+ *           DataRepository_EventRecord_Long_ <|-- EventRecordRepository
  *
- * EventRecordRepository <-- SimplePersistentEventPubSub
+ *           EventRecordRepository <-- SimplePersistentEventPubSub
  *
- * class EventRecord {
- * -Long pk
- * -String eventName
- * -byte[] event
- * +EventRecord(DomainEvent event)
- * #EventRecord()
- * +DomainEvent event()
- * +boolean sameAs(Object other)
- * +Long id()
- * +String toString()
- * }
+ *           class EventRecord {
+ *           -Long pk
+ *           -String eventName
+ *           -byte[] event
+ *           +EventRecord(DomainEvent event)
+ *           #EventRecord()
+ *           +DomainEvent event()
+ *           +boolean sameAs(Object other)
+ *           +Long id()
+ *           +String toString()
+ *           }
  *
- * interface "AggregateRoot<Long>" as AggregateRoot_Long_ {
- * }
+ *           interface "AggregateRoot<Long>" as AggregateRoot_Long_ {
+ *           }
  *
- * AggregateRoot_Long_ <|.. EventRecord
+ *           AggregateRoot_Long_ <|.. EventRecord
  *
- * EventRecord <.. EventRecordRepository
- * EventRecord <.. SimplePersistentEventPubSub
+ *           EventRecord <.. EventRecordRepository
+ *           EventRecord <.. SimplePersistentEventPubSub
  *
- * interface DomainEvent
+ *           interface DomainEvent
  *
- * DomainEvent <.. EventRecord
+ *           DomainEvent <.. EventRecord
  *
- * interface EventConsumptionRepository {
- * }
+ *           interface EventConsumptionRepository {
+ *           }
  *
- * interface "DataRepository<EventConsumption,Long>" as DataRepository_EventConsumption_Long_ {
- * }
+ *           interface "DataRepository<EventConsumption,Long>" as DataRepository_EventConsumption_Long_ {
+ *           }
  *
- * DataRepository_EventConsumption_Long_ <|-- EventConsumptionRepository
+ *           DataRepository_EventConsumption_Long_ <|-- EventConsumptionRepository
  *
- * class EventConsumption {
- * -Long pk
- * -EventRecord event
- * -String consumerName
- * +EventConsumption(String consumerName, EventRecord event)
- * #EventConsumption()
- * +boolean sameAs(Object other)
- * +Long id()
- * +String toString()
- * }
+ *           class EventConsumption {
+ *           -Long pk
+ *           -EventRecord event
+ *           -String consumerName
+ *           +EventConsumption(String consumerName, EventRecord event)
+ *           #EventConsumption()
+ *           +boolean sameAs(Object other)
+ *           +Long id()
+ *           +String toString()
+ *           }
  *
- * AggregateRoot_Long_ <|.. EventConsumption
+ *           AggregateRoot_Long_ <|.. EventConsumption
  *
- * EventRecord <-- EventConsumption
+ *           EventRecord <-- EventConsumption
  *
- * EventConsumption <.. EventConsumptionRepository
- * EventConsumptionRepository <-- SimplePersistentEventPubSub
+ *           EventConsumption <.. EventConsumptionRepository
+ *           EventConsumptionRepository <-- SimplePersistentEventPubSub
  *
- * class InProcessEventDispatcher
- * InProcessEventDispatcher <-- SimplePersistentEventPubSub
+ *           class InProcessEventDispatcher
+ *           InProcessEventDispatcher <-- SimplePersistentEventPubSub
  *
- * class InProcessEventPublisher
- * InProcessEventPublisher <-- SimplePersistentEventPubSub
+ *           class InProcessEventPublisher
+ *           InProcessEventPublisher <-- SimplePersistentEventPubSub
  *
  * @enduml
+ *         -->
  */
+package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;

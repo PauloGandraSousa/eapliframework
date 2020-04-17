@@ -21,32 +21,37 @@
 /**
  * Repositories and base implementations for JPA, SpringData and In-Memory
  *
+ * <p>
+ * <img src="framework-base-repos.svg"/>
+ * </p>
+ *
  * @author Paulo Gandra de Sousa
  *
- */
-package eapli.framework.infrastructure.repositories;
-/*
- * @startuml
+ *         <!--
  *
- * package repositories {
- * class Repository
- * class IterableRepository
+ * @startuml framework-base-repos.svg
  *
- * Repository --|> IterableRepository
+ *           package repositories {
+ *           class Repository
+ *           class IterableRepository
  *
- * package impl.jpa{
- * }
- * impl.jpa ..|> Repository
+ *           Repository --|> IterableRepository
  *
- * package impl.inmemory{
- * }
- * impl.inmemory ..|> Repository
+ *           package impl.jpa{
+ *           }
+ *           impl.jpa ..|> Repository
  *
- * package impl.springdata{
- * }
- * impl.springdata ..|> Repository
+ *           package impl.inmemory{
+ *           }
+ *           impl.inmemory ..|> Repository
  *
- * }
+ *           package impl.springdata{
+ *           }
+ *           impl.springdata ..|> Repository
+ *
+ *           }
  *
  * @enduml
+ *         -->
  */
+package eapli.framework.infrastructure.repositories;

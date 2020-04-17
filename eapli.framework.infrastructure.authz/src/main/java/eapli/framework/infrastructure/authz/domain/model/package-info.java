@@ -19,47 +19,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * The user domain model
+ * The user domain model.
+ *
+ * <p>
+ * <img src="user-domain-model.svg"/>
+ * </p>
  *
  * @author Paulo Gandra de Sousa
+ *
+ *         <!--
+ * @startuml user-domain-model.svg
+ *
+ *           class Username <<value>><<id>>
+ *
+ *           class SystemUser <<root>>
+ *
+ *           class Password <<value>>
+ *
+ *           class PasswordPolicy <<service>>
+ *
+ *           class PasswordEncoder <<service>>
+ *
+ *           class Name <<value>>
+ *
+ *           class RoleSet
+ *
+ *           class RoleAssignment <<entity>>
+ *
+ *           class Role <<value>>
+ *
+ *           interface Set<RoleAssignment>
+ *
+ *           class SystemUserBuilder
+ *
+ *           SystemUserBuilder ..> SystemUser
+ *
+ *           SystemUser -> Username
+ *           SystemUser -> Password
+ *           SystemUser -> Name
+ *           SystemUser -> RoleSet
+ *           RoleSet ..|> Set
+ *           Set ..> RoleAssignment
+ *           Role <-- RoleAssignment
+ *           Password ..> PasswordPolicy
+ *           Password ..> PasswordEncoder
+ * @enduml
+ *         -->
  */
 package eapli.framework.infrastructure.authz.domain.model;
-/*
- * @startuml
- *
- * class Username <<value>><<id>>
- *
- * class SystemUser <<root>>
- *
- * class Password <<value>>
- *
- * class PasswordPolicy <<service>>
- *
- * class PasswordEncoder <<service>>
- *
- * class Name <<value>>
- *
- * class RoleSet
- *
- * class RoleAssignment <<entity>>
- *
- * class Role <<value>>
- *
- * interface Set<RoleAssignment>
- *
- * class SystemUserBuilder
- *
- * SystemUserBuilder ..> SystemUser
- *
- * SystemUser -> Username
- * SystemUser -> Password
- * SystemUser -> Name
- * SystemUser -> RoleSet
- * RoleSet ..|> Set
- * Set ..> RoleAssignment
- * RoleAssignment --> Role
- * Password ..> PasswordPolicy
- * Password ..> PasswordEncoder
- *
- * @enduml
- */

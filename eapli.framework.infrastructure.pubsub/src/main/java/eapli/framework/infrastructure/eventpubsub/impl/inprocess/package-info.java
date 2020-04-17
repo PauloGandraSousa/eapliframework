@@ -19,62 +19,66 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * in-memory pub/sub implementation
+ * In-memory pub/sub implementation.
+ *
+ * <p>
+ * <img src="pubsub-inmemory.svg"/>
+ * </p>
  *
  * @author Paulo Gandra de Sousa
- */
-package eapli.framework.infrastructure.eventpubsub.impl.inprocess;
-/*
  *
- * @startuml
+ *         <!--
+ * @startuml pubsub-inmemory.svg
  *
- * class InProcessEventDispatcher {
- * -InProcessEventDispatcher()
- * +{static}EventDispatcher instance()
- * }
+ *           class InProcessEventDispatcher {
+ *           -InProcessEventDispatcher()
+ *           +{static}EventDispatcher instance()
+ *           }
  *
- * interface Singleton [[java:eapli.framework.util.Singleton]] {
- * }
+ *           interface Singleton [[java:eapli.framework.util.Singleton]] {
+ *           }
  *
- * Singleton <|.. InProcessEventDispatcher
+ *           Singleton <|.. InProcessEventDispatcher
  *
- * interface EventDispatcher [[java:eapli.framework.infrastructure.eventpubsub.EventDispatcher]] {
- * }
+ *           interface EventDispatcher [[java:eapli.framework.infrastructure.eventpubsub.EventDispatcher]] {
+ *           }
  *
- * EventDispatcher <|.. InProcessEventDispatcher
+ *           EventDispatcher <|.. InProcessEventDispatcher
  *
- * class InProcessEventPublisher{
- * -InProcessEventPublisher()
- * +{static}EventPublisher instance()
- * }
+ *           class InProcessEventPublisher{
+ *           -InProcessEventPublisher()
+ *           +{static}EventPublisher instance()
+ *           }
  *
- * Singleton <|.. InProcessEventPublisher
+ *           Singleton <|.. InProcessEventPublisher
  *
- * interface EventPublisher [[java:eapli.framework.infrastructure.eventpubsub.EventPublisher]] {
- * }
+ *           interface EventPublisher [[java:eapli.framework.infrastructure.eventpubsub.EventPublisher]] {
+ *           }
  *
- * EventPublisher <|.. InProcessEventPublisher
+ *           EventPublisher <|.. InProcessEventPublisher
  *
- * class InProcessPubSub [[java:eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub]] {
- * -{static}Logger LOGGER
- * -Map<Class<? extends DomainEvent>,List<EventHandler>> handlers
- * -InProcessPubSub()
- * +{static}EventDispatcher dispatcher()
- * +{static}EventPublisher publisher()
- * +void subscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
- * +void unsubscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
- * +void unsubscribe(EventHandler observer)
- * +void publish(DomainEvent event)
- * +void shutdown()
- * }
+ *           class InProcessPubSub [[java:eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub]] {
+ *           -{static}Logger LOGGER
+ *           -Map<Class<? extends DomainEvent>,List<EventHandler>> handlers
+ *           -InProcessPubSub()
+ *           +{static}EventDispatcher dispatcher()
+ *           +{static}EventPublisher publisher()
+ *           +void subscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
+ *           +void unsubscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
+ *           +void unsubscribe(EventHandler observer)
+ *           +void publish(DomainEvent event)
+ *           +void shutdown()
+ *           }
  *
- * Singleton <|.. InProcessPubSub
+ *           Singleton <|.. InProcessPubSub
  *
- * EventDispatcher <|.. InProcessPubSub
- * EventPublisher <|.. InProcessPubSub
+ *           EventDispatcher <|.. InProcessPubSub
+ *           EventPublisher <|.. InProcessPubSub
  *
- * InProcessPubSub <.. InProcessEventDispatcher
- * InProcessPubSub <.. InProcessEventPublisher
+ *           InProcessPubSub <.. InProcessEventDispatcher
+ *           InProcessPubSub <.. InProcessEventPublisher
  *
  * @enduml
+ *         -->
  */
+package eapli.framework.infrastructure.eventpubsub.impl.inprocess;
