@@ -105,8 +105,10 @@ public class Matrix implements ValueObject {
     /**
      * Creates a zero matrix with the specified number of rows and columns.
      *
-     * @param r the desired number of rows
-     * @param c the desired number of columns
+     * @param r
+     *            the desired number of rows
+     * @param c
+     *            the desired number of columns
      * @return a zero matrix with the specified number of rows and columns
      */
     public static Matrix zero(final int r, final int c) {
@@ -114,12 +116,15 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * Creates a "zero" matrix with all cells of the matrix having the same given
-     * value.
+     * Creates a "zero" matrix with all cells of the matrix having the same
+     * given value.
      *
-     * @param r    the desired number of rows
-     * @param c    the desired number of columns
-     * @param zero the value to set to all cells of the matrix
+     * @param r
+     *            the desired number of rows
+     * @param c
+     *            the desired number of columns
+     * @param zero
+     *            the value to set to all cells of the matrix
      * @return a "zero" matrix
      */
     public static Matrix zero(final int r, final int c, final double zero) {
@@ -136,8 +141,10 @@ public class Matrix implements ValueObject {
      * returns the element at row <em>i</em> and column <em>j</em>. indexes are
      * 1-based
      *
-     * @param i row number
-     * @param j column number
+     * @param i
+     *            row number
+     * @param j
+     *            column number
      * @return the element at row <em>i</em> and column <em>j</em>
      */
     public double elementAt(final int i, final int j) {
@@ -155,8 +162,8 @@ public class Matrix implements ValueObject {
     /**
      *
      * @param index
-     * @return a row Vector representing the values of this matrix's <em>index</em>
-     *         row
+     * @return a row Vector representing the values of this matrix's
+     *         <em>index</em> row
      */
     public Vector row(final int index) {
         if (index < 0 || index >= rows) {
@@ -243,10 +250,10 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * multiply two matrices giving a third one
+     * Multiply two matrices giving a third one.
      *
      * @param other
-     * @return
+     * @return the result of the multiplication
      */
     public Matrix multiply(final Matrix other) {
         Preconditions.ensure(cols == other.rows, "matrix 1 cols must = matrix 2 rows");
@@ -268,7 +275,7 @@ public class Matrix implements ValueObject {
     /**
      * The trace of a square matrix is the sum of its diagonal elements
      *
-     * @return
+     * @return the trace of a square matrix
      */
     public double trace() {
         Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
@@ -281,7 +288,7 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * calculates the cofactor as:
+     * Calculates the cofactor as:
      *
      * <pre>
      * <code>
@@ -295,20 +302,20 @@ public class Matrix implements ValueObject {
      *
      * @param i
      * @param j
-     * @return
+     * @return the cofactor
      */
     public double cofactor(final int i, final int j) {
         return java.lang.Math.pow(-1, (double) i + j) * minor(i, j);
     }
 
     /**
-     * calculates the minor of this matrix at (i,j)
+     * Calculates the minor of this matrix at (i,j)
      *
      * indexes are 1-based
      *
      * @param i
      * @param j
-     * @return
+     * @return the minor of this matrix at (i,j)
      */
     public double minor(final int i, final int j) {
         return this.submatrix(i, j).determinant();
@@ -331,7 +338,8 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * @return the diagonal matrix with the same elements in this matrix's diagonal
+     * @return the diagonal matrix with the same elements in this matrix's
+     *         diagonal
      */
     public Matrix diagonal() {
         Invariants.ensure(isSquare(), MATRIX_MUST_BE_SQUARE);
@@ -345,8 +353,8 @@ public class Matrix implements ValueObject {
 
     /**
      *
-     * @return a row vector (a matrix with just one row) with the elements in this
-     *         matrix's diagonal
+     * @return a row vector (a matrix with just one row) with the elements in
+     *         this matrix's diagonal
      */
     public Matrix diagonalElements() {
         if (!isSquare()) {
@@ -362,18 +370,19 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * removes a row or column from the matrix.
-     *
+     * Removes a row or column from the matrix.
+     * <p>
      * indexes are 1-based
+     * </p>
      *
      * @param index
-     * @param typ
-     * @return
+     * @param type
+     * @return a copy of this matrix without the requested row or colloumn
      */
-    public Matrix submatrix(final int index, final Vector.VectorType typ) {
-        if (typ == Vector.VectorType.ROW) {
+    public Matrix submatrix(final int index, final Vector.VectorType type) {
+        if (type == Vector.VectorType.ROW) {
             return withoutRow(index);
-        } else if (typ == Vector.VectorType.COLUMN) {
+        } else if (type == Vector.VectorType.COLUMN) {
             return withoutColumn(index);
         }
 
@@ -381,13 +390,14 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * creates a new matrix by removing a row and a column from this matrix
-     *
-     * indexes are 1-based
+     * Creates a new matrix by removing a row and a column from this matrix.
+     * <p>
+     * Indexes are 1-based.
+     * </p>
      *
      * @param rowToRemove
      * @param colToRemove
-     * @return
+     * @return a new matrix without the row and the column
      */
     public Matrix submatrix(final int rowToRemove, final int colToRemove) {
         if (rowToRemove <= 0 || rowToRemove > rows) {
@@ -422,9 +432,9 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * The vector formed by concatenating all the columns of the matrix
+     * The vector formed by concatenating all the columns of the matrix.
      *
-     * @return
+     * @return the vector formed by concatenating all the columns of the matrix
      */
     public Matrix vectorized() {
         final Matrix vec = new Matrix(rows * cols, 1);
@@ -439,10 +449,10 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * checks if this matrix is upper diagonal, that is, all elements bellow the
-     * diagonal are 0
+     * Checks if this matrix is upper diagonal, that is, all elements bellow the
+     * diagonal are 0.
      *
-     * @return
+     * @return {@code true} if this matrix is upper diagonal
      */
     public boolean isUpperDiagonal() {
         for (int i = 1; i < rows; i++) {
@@ -456,10 +466,10 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * checks if this matrix is lower diagonal, that is, all elements above the
-     * diagonal are 0
+     * Checks if this matrix is lower diagonal, that is, all elements above the
+     * diagonal are 0.
      *
-     * @return
+     * @return {@code true} if this matrix is lower diagonal
      */
     public boolean isLowerDiagonal() {
         for (int i = 0; i < rows - 1; i++) {
@@ -473,9 +483,14 @@ public class Matrix implements ValueObject {
     }
 
     /**
+     * Checks if this matrix is inversible or not.
+     * <p>
+     * <code>
      * X*X' = X'*X = I
+     *</code>
+     * </p>
      *
-     * @return
+     * @return {@code true} if this matrix is inversible
      */
     public boolean isInversible() {
         if (!isSquare()) {
@@ -556,7 +571,8 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * checks if this is a singular matrix, that is, one which its determinant is 0
+     * checks if this is a singular matrix, that is, one which its determinant
+     * is 0
      *
      * @return true if this is a singular matrix
      */
@@ -565,8 +581,8 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * checks if this matrix is a diagonal matrix, that is, one that only has values
-     * in the diagonal and all other values are 0.0
+     * checks if this matrix is a diagonal matrix, that is, one that only has
+     * values in the diagonal and all other values are 0.0
      *
      * @return true if this is a diagonal matrix
      */
@@ -603,11 +619,12 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * checks if this matrix is symmetric or not.
+     * Checks if this matrix is symmetric or not.
+     * <p>
+     * Equivalent to {@code this.Equals(this.Transpose());}
+     * </p>
      *
-     * equivalent to this.Equals(this.Transpose())
-     *
-     * @return
+     * @return {@code true} if this matrix is symmetric
      */
     @SuppressWarnings("squid:S2234")
     public boolean isSymmetric() {
@@ -624,9 +641,13 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * equivalent to this.Equals(this.Transpose().Scale(-1))
+     * Checks if this matrix is skew symmetric.
      *
-     * @return
+     * <p>
+     * Equivalent to {@code this.Equals(this.Transpose().Scale(-1));}
+     * </p>
+     *
+     * @return {@code true} if this matrix is skew symmetric
      */
     @SuppressWarnings("squid:S2234")
     public boolean isSkewSymmetric() {
@@ -643,8 +664,8 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * checks if this matrix is an identity matrix, that is, all values are 0 except
-     * the diagonal which are 1
+     * checks if this matrix is an identity matrix, that is, all values are 0
+     * except the diagonal which are 1
      *
      * @return true if this matrix is an identity matrix
      */
@@ -725,12 +746,13 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * removes a row or column from the matrix.
-     *
+     * Removes a row from the matrix.
+     * <p>
      * indexes are 1-based
+     * </p>
      *
      * @param index
-     * @return
+     * @return a copy of this matrix without the requested row
      */
     public Matrix withoutRow(final int index) {
         if (index <= 0 || index > rows) {
@@ -754,12 +776,13 @@ public class Matrix implements ValueObject {
     }
 
     /**
-     * removes a column from the matrix.
-     *
-     * indexes are 1-based
+     * Removes a column from the matrix.
+     * <p>
+     * Indexes are 1-based
+     * </p>
      *
      * @param index
-     * @return
+     * @return a copy of this matrix without the requested collumn
      */
     public Matrix withoutColumn(final int index) {
         if (index <= 0 || index > cols) {

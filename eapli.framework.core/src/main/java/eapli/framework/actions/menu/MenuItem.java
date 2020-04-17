@@ -146,13 +146,13 @@ public abstract class MenuItem {
     }
 
     /**
-     * Factory method constructs a non-actionable menu item to work as a separator among the other menu
-     * Items.
+     * Factory method constructs a non-actionable menu item to work as a
+     * separator among the other menu Items.
      *
      * @param symbol
      * @param size
      *
-     * @return
+     * @return a new Menu Item
      */
     public static MenuItem separator(final char symbol, final int size) {
 
@@ -160,12 +160,12 @@ public abstract class MenuItem {
     }
 
     /**
-     * Factory method constructs a non-actionable menu item to work as a separator among the other menu
-     * Items.
+     * Factory method constructs a non-actionable menu item to work as a
+     * separator among the other menu Items.
      *
      * @param label
      *
-     * @return
+     * @return a separator menu item
      */
     public static MenuItem separator(final String label) {
         return new NonActionableMenuItem(label);
@@ -177,7 +177,7 @@ public abstract class MenuItem {
      * @param option
      * @param text
      * @param action
-     * @return
+     * @return a new menu item
      */
     public static MenuItem of(final int option, final String text, final Action action) {
         return new ActionableMenuItem(option, text, action);
@@ -188,7 +188,7 @@ public abstract class MenuItem {
      *
      * @param option
      * @param sub
-     * @return
+     * @return a sub menu
      */
     public static MenuItem submenu(final int option, final Menu sub) {
         return new SubMenuItem(option, sub);
@@ -202,17 +202,18 @@ public abstract class MenuItem {
     }
 
     /**
-     * Returns the option associated with this menu item or an empty Optional if this is a
-     * non-actionable item.
+     * Returns the option associated with this menu item or an empty Optional if
+     * this is a non-actionable item.
      *
-     * @return the option associated with this menu item or an empty Optional if this is a
-     *         non-actionable item.
+     * @return the option associated with this menu item or an empty Optional if
+     *         this is a non-actionable item.
      */
     public abstract Optional<Integer> option();
 
     /**
-     * Executes the action associated with this item. Non-actionable items like the ones created with
-     * {@link #separator(String)} will simply return false.
+     * Executes the action associated with this item. Non-actionable items like
+     * the ones created with {@link #separator(String)} will simply return
+     * false.
      *
      * @return true in case of success. false if the action failed.
      */

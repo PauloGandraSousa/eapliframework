@@ -78,8 +78,10 @@ public final class Console {
      * reads input from the console as a string ensuring that the string is not
      * empty or composed just of whitespace.
      *
-     * @param prompt  the prompt for the input
-     * @param message the message to show in case of bad input
+     * @param prompt
+     *            the prompt for the input
+     * @param message
+     *            the message to show in case of bad input
      * @return the input read from the console
      */
     public static String readNonEmptyLine(final String prompt, final String message) {
@@ -106,7 +108,7 @@ public final class Console {
      * reads input from the console as an integer value
      *
      * @param prompt
-     * @return
+     * @return the integer that was read
      */
     public static int readInteger(final String prompt) {
         do {
@@ -123,7 +125,7 @@ public final class Console {
      * reads input from the console as a long value
      *
      * @param prompt
-     * @return
+     * @return the long that was read
      */
     public static long readLong(final String prompt) {
         do {
@@ -140,7 +142,7 @@ public final class Console {
      * reads input from the console as a boolean (Y, S, N)
      *
      * @param prompt
-     * @return
+     * @return the boolean that was read
      */
     public static boolean readBoolean(final String prompt) {
         do {
@@ -158,13 +160,13 @@ public final class Console {
     }
 
     /**
-     * reads input from the console as an integer value between <code>low</code> and
-     * <code>high</code> or <code>exit</code>
+     * reads input from the console as an integer value between <code>low</code>
+     * and <code>high</code> or <code>exit</code>
      *
      * @param low
      * @param high
      * @param exit
-     * @return
+     * @return the integer that was read
      */
     public static int readOption(final int low, final int high, final int exit) {
         int option;
@@ -178,19 +180,21 @@ public final class Console {
     }
 
     /**
+     * reads a date from the console
      *
      * @param prompt
-     * @return
+     * @return the date that was read
      */
     public static Date readDate(final String prompt) {
         return readDate(prompt, "yyyy/MM/dd");
     }
 
     /**
+     * reads a date from the console
      *
      * @param prompt
      * @param dateFormat
-     * @return
+     * @return the date that was read
      */
     public static Date readDate(final String prompt, final String dateFormat) {
         do {
@@ -205,19 +209,21 @@ public final class Console {
     }
 
     /**
+     * reads a date from the console
      *
      * @param prompt
-     * @return
+     * @return the date that was read
      */
     public static Calendar readCalendar(final String prompt) {
         return readCalendar(prompt, "dd-MM-yyyy");
     }
 
     /**
+     * reads a date from the console
      *
      * @param prompt
      * @param dateFormat
-     * @return
+     * @return the date that was read
      */
     public static Calendar readCalendar(final String prompt, final String dateFormat) {
         do {
@@ -232,9 +238,10 @@ public final class Console {
     }
 
     /**
-     *
+     * reads a double form the console
+     * 
      * @param prompt
-     * @return
+     * @return the double that was read
      */
     public static double readDouble(final String prompt) {
         do {

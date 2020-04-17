@@ -26,9 +26,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * A Monad is a parametrized Wrapper type that is immutable and does not provide direct access to the value it is
- * wrapping.
- * In order to use the value one must map it or fold it.
+ * A Monad is a parametrized Wrapper type that is immutable and does not provide
+ * direct access to the value it is wrapping. In order to use the value one must
+ * map it or fold it.
  *
  *
  * @param <T>
@@ -38,8 +38,8 @@ import java.util.function.Supplier;
 public interface Monad<T> {
 
     /**
-     * Maps the current value using the provided <code>mapper</code> function and returns the result wrapped in a new
-     * Monad.
+     * Maps the current value using the provided <code>mapper</code> function
+     * and returns the result wrapped in a new Monad.
      *
      * @param mapper
      *            a mapper function from <code>T</code> to <code>R</code>
@@ -48,11 +48,13 @@ public interface Monad<T> {
     <R> Monad<R> map(final Function<? super T, R> mapper);
 
     /**
-     * Maps the current value using the Monad-bearing <code>mapper</code> and returns the result flatten out and wrapped
-     * in a new Monad.
-     * This method avoids wrapping Monads inside other monads in case you are composing multiple mappers.
+     * Maps the current value using the Monad-bearing <code>mapper</code> and
+     * returns the result flatten out and wrapped in a new Monad. This method
+     * avoids wrapping Monads inside other monads in case you are composing
+     * multiple mappers.
      * <p>
-     * If the mapping function does not return a Monad you should use the {@link #map} method instead.
+     * If the mapping function does not return a Monad you should use the
+     * {@link #map} method instead.
      *
      * @param mapper
      *            a mapper function from <code>T</code> to <code>Monad<R></code>
@@ -88,7 +90,7 @@ public interface Monad<T> {
      *
      * @param initial
      * @param folder
-     * @return
+     * @return the value
      */
     <R> R fold(R initial, BiFunction<R, T, R> folder);
 
@@ -97,7 +99,7 @@ public interface Monad<T> {
      *
      * @param initial
      * @param folder
-     * @return
+     * @return the value
      */
     <R> R foldr(R initial, BiFunction<R, T, R> folder);
 }
