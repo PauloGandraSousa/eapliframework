@@ -26,7 +26,7 @@ import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 
 /**
- * A repository is an abstraction to the persistence mechanism. if you are using
+ * A repository is an abstraction to the persistence mechanism. If you are using
  * the DDD interfaces from the framework use
  * {@link eapli.framework.domain.repositories.DomainRepository} instead.
  *

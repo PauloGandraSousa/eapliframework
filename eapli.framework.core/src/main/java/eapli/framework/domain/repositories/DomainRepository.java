@@ -28,10 +28,45 @@ import eapli.framework.domain.model.AggregateRoot;
  * A repository is a domain-driven design pattern to abstract the details of
  * persisting domain objects. It exposes a pure domain based interface without
  * leaking details of the implementation of the actual persistence mechanism.
- * there should be one repository per aggregate root.
  *
- * if you are not using the DDD interfaces of the framework use
+ * <p>
+ * Repository checklist:
+ * <ul>
+ * <li>There should be one repository per aggregate root.</li>
+ * <li>Separate interface from implementation</li>
+ * <li>Do not expose implementation details, e.g., database primary key</li>
+ * <li>Filtering and sorting is done in the implementation (e.g., JPQL)</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Repositories might have (besides the methods in this interface):
+ * <ul>
+ * <li>Specialized finders, e.g.,
+ * <ul>
+ * <li>ProductRepository.findByFamily</li>
+ * <li>ExpenseRepository.findByMonth</li>
+ * </ul>
+ * </li>
+ * <li>Aggregation functions, e.g.,
+ * <ul>
+ * <li>ProductRepository.getAverageRetailPrice</li>
+ * <li>ExpenseRepository.getTotalExpenditure</li>
+ * </ul>
+ * </li>
+ * </ul>
+ * </p>
+ * <p>
+ * If the aggregate is an inheritance hierarchy, the abstract root of the hierarchy should determine the aggregate root,
+ * not the specialized derived classes. Thus, the repository should be based on the abstract root class and provide
+ * specialized finders for the derived classes.
+ * </p>
+ * <p>
+ * <img src="inheritance.svg"/>
+ * </p>
+ * <p>
+ * If you are not using the DDD interfaces of the framework use
  * {@link eapli.framework.infrastructure.repositories.Repository} instead
+ * </p>
  *
  * @param <T>
  *            the type of the entity we want to manage in the repository.
@@ -39,6 +74,62 @@ import eapli.framework.domain.model.AggregateRoot;
  *            the type of the business identity of the entity.
  *
  * @author Paulo Gandra Sousa
+ *
+ *         <!--
+ * @startuml inheritance.svg
+ *
+ *           package domain{
+ *           abstract class Vehicle{
+ *           -vehiclepk
+ *           -licensePlate
+ *           -horsePower
+ *           licensePlate()
+ *           horsePower()
+ *           }
+ *           note right of Vehicle: <i>vehiclepk</i> is an implementation detail\n(primary key)
+ *           class Automobile {
+ *           -numberOfDoors
+ *           }
+ *           class MotorBike{
+ *           -hasSideCar
+ *           }
+ *           Vehicle <|-down- Automobile
+ *           Vehicle <|-down- MotorBike
+ *           }
+ *
+ *           package repositories{
+ *           interface VehicleRepository {
+ *           +save()
+ *           +findAllAutomobiles()
+ *           +findAllMotorBikes()
+ *           +findAutomobilesWith5Doors()
+ *           +countOfMotorbikeswithSidecar()
+ *           +totalHorsePower()
+ *           }
+ *           VehicleRepository ..> Vehicle
+ *           }
+ *
+ *           package repositories.impl.jpa{
+ *           class VehicleRepositoryJpaImpl{
+ *           +save()
+ *           +findAllAutomobiles()
+ *           +findAllMotorBikes()
+ *           +findAutomobilesWith5Doors()
+ *           +countOfMotorbikeswithSidecar()
+ *           +totalHorsePower()
+ *           }
+ *           VehicleRepositoryJpaImpl ..|> VehicleRepository
+ *
+ *           note right of VehicleRepositoryJpaImpl
+ *           findAllAutomobiles: "SELECT e FROM Automobile e ORDER BY e.licensePlate"
+ *           findAllMotorBikes: "SELECT e FROM MotorBike e ORDER BY e.licensePlate"
+ *           findAutomobilesWith5Doors: "SELECT e from Automobile e WHERE e.numberOfDoors=5 ORDER BY e.licensePlate"
+ *           countOfMotorbikeswithSidecar: "SELECT COUNT(e) FROM MotorBike e WHERE e.hasSideCar=true"
+ *           totalHorsePower: "SELECT SUM(e.horsePower) FROM Vehicle e"
+ *           end note
+ *           }
+ * @enduml
+ *         -->
  */
 public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T extends AggregateRoot<I>> {
 
