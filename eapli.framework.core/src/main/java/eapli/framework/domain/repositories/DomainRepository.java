@@ -106,6 +106,7 @@ import eapli.framework.domain.model.AggregateRoot;
  *           +countOfMotorbikeswithSidecar()
  *           +totalHorsePower()
  *           }
+ *           note right of VehicleRepository:the fleet
  *           VehicleRepository ..> Vehicle
  *           }
  *
