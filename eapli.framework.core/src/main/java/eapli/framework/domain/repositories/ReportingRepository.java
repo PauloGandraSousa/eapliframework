@@ -21,9 +21,59 @@
 package eapli.framework.domain.repositories;
 
 /**
- * A marker interface for repositories that only have reporting (query) methods.
+ * A marker interface for repositories that only have reporting (query) methods. Reporting is a different bounded
+ * context than the rest of the application business logic and should be treated as that. {@link DomainRepository} has
+ * finders and save methods to support the application use cases, while a separte ReportingRepository should support the
+ * reporting needs of the application.
+ * <p>
+ * <img src="reporting.svg"/>
+ * </p>
  *
  * @author Paulo Gandra Sousa
+ *
+ *         <!--
+ * @startuml reporting.svg
+ *
+ *           package domain{
+ *           note "the domain is not needed for reporting" as N1
+ * 
+ *           Vehicle <|-down- Automobile
+ *           Vehicle <|-down- MotorBike
+ *           }
+ *
+ *           package dto{
+ *           class AutomobilesGroupedByNumberOfDoors <<DTO>> {
+ *           }
+ *           class VehiclesGroupedByHorsePowerRange <<DTO>>{
+ *           }
+ *           }
+ *
+ *           package repositories{
+ *
+ *           class VehicleReportingRepository{
+ *           +findAllAutomobilesGroupedByNumberOfDoors()
+ *           +findAllVehiclesGroupedByHorsePowerRange()
+ *           }
+ *
+ *           VehicleReportingRepository ..> AutomobilesGroupedByNumberOfDoors
+ *           VehicleReportingRepository ..> VehiclesGroupedByHorsePowerRange
+ *
+ *           note left of VehicleReportingRepository
+ *           finder methods to support
+ *           the reporting features
+ * 
+ *           return of these finders are DTOs
+ *           end note
+ *           }
+ *
+ *
+ *           package repositories.impl.jpa{
+ *           class VehicleReportingRepositoryJpaImpl
+ *           VehicleReportingRepositoryJpaImpl ..|> VehicleReportingRepository
+ *           }
+ * @enduml
+ *         -->
+ *
  */
 public interface ReportingRepository {
     // empty

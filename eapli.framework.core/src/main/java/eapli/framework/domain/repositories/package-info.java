@@ -30,7 +30,7 @@
  *         <!--
  * @startuml overview-repositories.png
  *
- *           DomainRepository <|-- IterableRepository
+ *           DomainRepository <|-up- IterableRepository
  *
  *           class TransactionalContext
  *           class IntegrityViolationException
@@ -38,7 +38,7 @@
  *
  *           DomainRepository ..> IntegrityViolationException : might throw
  *           DomainRepository ..> ConcurrencyException : might throw
- *           DomainRepository ..> TransactionalContext : can engage in
+ *           DomainRepository .right.> TransactionalContext : can engage in
  *
  * @enduml
  *         -->

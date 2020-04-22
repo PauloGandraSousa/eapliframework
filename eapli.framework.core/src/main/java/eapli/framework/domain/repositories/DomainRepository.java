@@ -54,6 +54,10 @@ import eapli.framework.domain.model.AggregateRoot;
  * </ul>
  * </li>
  * </ul>
+ * Note that these methods should only exist in order to support the application use cases. If there are reporting needs
+ * those should not be present in the Domain repository. A specialized {@link ReportingRepository} should be defined for
+ * such
+ * features or a separate reporting tool should be used.
  * </p>
  * <p>
  * If the aggregate is an inheritance hierarchy, the abstract root of the hierarchy should determine the aggregate root,
@@ -61,7 +65,7 @@ import eapli.framework.domain.model.AggregateRoot;
  * specialized finders for the derived classes.
  * </p>
  * <p>
- * <img src="inheritance.svg"/>
+ * <img src="inheritance-plus-reporting.svg"/>
  * </p>
  * <p>
  * If you are not using the DDD interfaces of the framework use
@@ -76,9 +80,10 @@ import eapli.framework.domain.model.AggregateRoot;
  * @author Paulo Gandra Sousa
  *
  *         <!--
- * @startuml inheritance.svg
+ * @startuml inheritance-plus-reporting.svg
  *
  *           package domain{
+ *
  *           abstract class Vehicle{
  *           -vehiclepk
  *           -licensePlate
@@ -86,29 +91,44 @@ import eapli.framework.domain.model.AggregateRoot;
  *           licensePlate()
  *           horsePower()
  *           }
+ *
  *           note right of Vehicle: <i>vehiclepk</i> is an implementation detail\n(primary key)
+ *
  *           class Automobile {
  *           -numberOfDoors
  *           }
+ *
  *           class MotorBike{
  *           -hasSideCar
  *           }
+ *
  *           Vehicle <|-down- Automobile
  *           Vehicle <|-down- MotorBike
  *           }
  *
  *           package repositories{
+ *
  *           interface VehicleRepository {
  *           +save()
+ *           +findByLicensePlate()
  *           +findAllAutomobiles()
  *           +findAllMotorBikes()
  *           +findAutomobilesWith5Doors()
  *           +countOfMotorbikeswithSidecar()
  *           +totalHorsePower()
  *           }
- *           note right of VehicleRepository:the fleet
+ *
+ *           note right of VehicleRepository
+ *           The fleet
+ *
+ *           finder methods to support
+ *           the application use cases
+ *           end note
+ *
  *           VehicleRepository ..> Vehicle
+ *
  *           }
+ *
  *
  *           package repositories.impl.jpa{
  *           class VehicleRepositoryJpaImpl{
@@ -128,6 +148,7 @@ import eapli.framework.domain.model.AggregateRoot;
  *           countOfMotorbikeswithSidecar: "SELECT COUNT(e) FROM MotorBike e WHERE e.hasSideCar=true"
  *           totalHorsePower: "SELECT SUM(e.horsePower) FROM Vehicle e"
  *           end note
+ *
  *           }
  * @enduml
  *         -->

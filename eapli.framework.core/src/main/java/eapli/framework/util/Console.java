@@ -35,13 +35,15 @@ import eapli.framework.validations.StringPredicates;
 
 /**
  * Utility class for reading different data types from the Console.
- *
- * see <a href=
+ * <p>
+ * See <a href=
  * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4829&rule_key=squid%3AS4829">squid:S24829</a>
  * regarding potential security pitfalls when reading input from the outside of
  * the application
- *
- * based on code from Nuno Silva
+ * </p>
+ * <p>
+ * Based on code from Nuno Silva
+ * </p>
  *
  * @author Paulo Gandra Sousa
  */
@@ -56,7 +58,7 @@ public final class Console {
     }
 
     /**
-     * reads input from the console as a string.
+     * Reads input from the console as a string.
      *
      * @param prompt
      * @return the input read from the console
@@ -75,7 +77,7 @@ public final class Console {
     }
 
     /**
-     * reads input from the console as a string ensuring that the string is not
+     * Reads input from the console as a string ensuring that the string is not
      * empty or composed just of whitespace.
      *
      * @param prompt
@@ -105,7 +107,7 @@ public final class Console {
     }
 
     /**
-     * reads input from the console as an integer value
+     * Reads input from the console as an integer value.
      *
      * @param prompt
      * @return the integer that was read
@@ -122,7 +124,7 @@ public final class Console {
     }
 
     /**
-     * reads input from the console as a long value
+     * Reads input from the console as a long value.
      *
      * @param prompt
      * @return the long that was read
@@ -139,7 +141,7 @@ public final class Console {
     }
 
     /**
-     * reads input from the console as a boolean (Y, S, N)
+     * Reads input from the console as a boolean (Y, S, N).
      *
      * @param prompt
      * @return the boolean that was read
@@ -160,8 +162,8 @@ public final class Console {
     }
 
     /**
-     * reads input from the console as an integer value between <code>low</code>
-     * and <code>high</code> or <code>exit</code>
+     * Reads input from the console as an integer value between <code>low</code>
+     * and <code>high</code> or <code>exit</code>.
      *
      * @param low
      * @param high
@@ -180,7 +182,7 @@ public final class Console {
     }
 
     /**
-     * reads a date from the console
+     * Reads a date from the console.
      *
      * @param prompt
      * @return the date that was read
@@ -190,7 +192,7 @@ public final class Console {
     }
 
     /**
-     * reads a date from the console
+     * Reads a date from the console.
      *
      * @param prompt
      * @param dateFormat
@@ -209,7 +211,7 @@ public final class Console {
     }
 
     /**
-     * reads a date from the console
+     * Reads a date from the console.
      *
      * @param prompt
      * @return the date that was read
@@ -219,7 +221,7 @@ public final class Console {
     }
 
     /**
-     * reads a date from the console
+     * Reads a date from the console.
      *
      * @param prompt
      * @param dateFormat
@@ -238,8 +240,8 @@ public final class Console {
     }
 
     /**
-     * reads a double form the console
-     * 
+     * Reads a double form the console.
+     *
      * @param prompt
      * @return the double that was read
      */

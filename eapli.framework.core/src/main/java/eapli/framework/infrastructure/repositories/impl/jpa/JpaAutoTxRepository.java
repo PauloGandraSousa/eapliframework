@@ -46,7 +46,7 @@ import eapli.framework.validations.Preconditions;
 /**
  * A JPA repository implementation to handle transactions, for use with
  * applications <em>not running</em> inside a container. This class can either
- * support working within a TransactionalContext or a single immediate
+ * support working within a {@link TransactionalContext} or a single immediate
  * transaction mode. If running in single immediate mode a transaction is
  * initiated, committed and the connection closed in the scope of each
  * repository method call.
@@ -77,13 +77,16 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
      * @param properties
      * @param identityFieldName
      */
-    public JpaAutoTxRepository(final String persistenceUnitName, @SuppressWarnings("rawtypes") final Map properties,
+    public JpaAutoTxRepository(final String persistenceUnitName,
+            @SuppressWarnings("rawtypes") final Map properties,
             final String identityFieldName) {
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass, identityFieldName);
+        this.repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass,
+                identityFieldName);
         this.autoTx = null;
     }
 
@@ -96,12 +99,14 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
     public JpaAutoTxRepository(final TransactionalContext autoTx, final String identityFieldName) {
         Preconditions.nonNull(autoTx);
 
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
 
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaWithTransactionalContextRepository<>(autoTx, entityClass, identityFieldName);
+        this.repo = new JpaWithTransactionalContextRepository<>(autoTx, entityClass,
+                identityFieldName);
         this.autoTx = autoTx;
     }
 
@@ -204,7 +209,8 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
         return repo.matchOne(where);
     }
 
-    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters,
+            final Map<String, Object> params) {
         return repo.matchOne(whereWithParameters, params);
     }
 
