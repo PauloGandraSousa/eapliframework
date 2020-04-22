@@ -37,7 +37,7 @@ public class StreamsTest {
 
     /**
      * Test method for
-     * {@link eapli.framework.functional.Functions#zip(java.util.stream.Stream, java.util.stream.Stream, java.util.function.BiFunction)}.
+     * {@link eapli.framework.functional.Streams#zip(java.util.stream.Stream, java.util.stream.Stream, java.util.function.BiFunction)}.
      */
     @Test
     public void testZipIntArrays() {

@@ -65,7 +65,8 @@ public final class Functions {
      * @param f
      * @return a function which is the composition of g after f
      */
-    public static <A, B, C> Function<A, C> composition(final Function<B, C> g, final Function<A, B> f) {
+    public static <A, B, C> Function<A, C> composition(final Function<B, C> g,
+            final Function<A, B> f) {
         return x -> g.apply((f.apply(x)));
     }
 
@@ -73,13 +74,16 @@ public final class Functions {
      * Builds a function that gets a value from one of two suppliers based on a
      * predicate.
      *
-     * @param arg       the argument to test against the predicate
-     * @param condition the predicate to meet
-     * @param success   the supplier in case of success of the predicate
-     * @param failure   the supplier in case of insuccess of the predicate
+     * @param condition
+     *            the predicate to meet
+     * @param success
+     *            the supplier in case of success of the predicate
+     * @param failure
+     *            the supplier in case of insuccess of the predicate
      * @return the value supplied by either {@code success} or {@code failure}
      */
-    public static <T, R> Function<T, R> conditionalGet(final Predicate<T> condition, final Supplier<R> success,
+    public static <T, R> Function<T, R> conditionalGet(final Predicate<T> condition,
+            final Supplier<R> success,
             final Supplier<R> failure) {
         return arg -> condition.test(arg) ? success.get() : failure.get();
     }
@@ -94,15 +98,17 @@ public final class Functions {
      * optional contains a value or the maximum number of attempts is reached.
      *
      * @param operation
-     * @param sleep       seed time in milliseconds to wait for retrying. it will
-     *                    progressively increase between attempts if progressive is
-     *                    set to true
+     * @param sleep
+     *            seed time in milliseconds to wait for retrying. it will
+     *            progressively increase between attempts if progressive is
+     *            set to true
      * @param maxAttempts
      * @param progressive
      * @return an optional with a value, an empty optional if the maximum number of
      *         attempts has been reached
      */
-    public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep, final int maxAttempts,
+    public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep,
+            final int maxAttempts,
             final boolean progressive) {
         int atempts = 1;
         Optional<T> u = operation.get();
@@ -124,14 +130,16 @@ public final class Functions {
      * optional contains a value or the maximum number of attempts is reached.
      *
      * @param operation
-     * @param sleep       seed time in milliseconds to wait for retrying. it will
-     *                    progressively increase between attempts if progressive is
-     *                    set to true
+     * @param sleep
+     *            seed time in milliseconds to wait for retrying. it will
+     *            progressively increase between attempts if progressive is
+     *            set to true
      * @param maxAttempts
      * @return an optional with a value, an empty optional if the maximum number of
      *         attempts has been reached
      */
-    public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep, final int maxAttempts) {
+    public static <T> Optional<T> retry(final Supplier<Optional<T>> operation, final int sleep,
+            final int maxAttempts) {
         return retry(operation, sleep, maxAttempts, true);
     }
 }

@@ -82,7 +82,7 @@ package eapli.framework.domain.model.domains;
  * {@link I_C10_IntervalCompareTest#ensureICXIsBeforeOXCY()}
  *
  * ]-oo, 5] < ]-100, +00[
- * {@link I_C10_IntervalCompareTest#ensureICXIsBeforeOXI()
+ * {@link I_C10_IntervalCompareTest#ensureICXIsBeforeOXI()}
  *
  * ]-oo, +oo[ < [3, +oo[
  * {@link UniversalIntervalCompareTest#ensureUniversalIsBeforeCXI()}
@@ -159,13 +159,16 @@ public abstract class IntervalCompareTestBase {
     protected static Interval<Integer> I_C10 = Interval.<Integer>fromInfinity().closedTo(ANCHOR_3);
 
     // [x, y]
-    protected static final Interval<Integer> C5_C10 = Interval.closedFrom(ANCHOR_1).closedTo(ANCHOR_3);
+    protected static final Interval<Integer> C5_C10 = Interval.closedFrom(ANCHOR_1)
+            .closedTo(ANCHOR_3);
 
     // [x, y[
-    protected static final Interval<Integer> C5_O10 = Interval.closedFrom(ANCHOR_1).openTo(ANCHOR_3);
+    protected static final Interval<Integer> C5_O10 = Interval.closedFrom(ANCHOR_1)
+            .openTo(ANCHOR_3);
 
     // ]x, y]
-    protected static final Interval<Integer> O5_C10 = Interval.openFrom(ANCHOR_1).closedTo(ANCHOR_3);
+    protected static final Interval<Integer> O5_C10 = Interval.openFrom(ANCHOR_1)
+            .closedTo(ANCHOR_3);
 
     // ]x, y[
     protected static final Interval<Integer> O5_O10 = Interval.openFrom(ANCHOR_1).openTo(ANCHOR_3);
@@ -177,10 +180,16 @@ public abstract class IntervalCompareTestBase {
     protected static final Interval<Integer> O5_I = Interval.openFrom(ANCHOR_1).toInfinity();
 
     // Additional intervals for comparison cases
-    protected static final Interval<Integer> C10_C50 = Interval.closedFrom(ANCHOR_3).closedTo(ANCHOR_4);
-    protected static final Interval<Integer> O10_C50 = Interval.openFrom(ANCHOR_3).closedTo(ANCHOR_4);
-    protected static final Interval<Integer> C5_C50 = Interval.closedFrom(ANCHOR_1).closedTo(ANCHOR_4);
-    protected static final Interval<Integer> O5_C50 = Interval.openFrom(ANCHOR_1).closedTo(ANCHOR_4);
-    protected static final Interval<Integer> O5_C7 = Interval.closedFrom(ANCHOR_1).closedTo(ANCHOR_2);
-    protected static final Interval<Integer> I_O50 = Interval.<Integer>fromInfinity().openTo(ANCHOR_4);
+    protected static final Interval<Integer> C10_C50 = Interval.closedFrom(ANCHOR_3)
+            .closedTo(ANCHOR_4);
+    protected static final Interval<Integer> O10_C50 = Interval.openFrom(ANCHOR_3)
+            .closedTo(ANCHOR_4);
+    protected static final Interval<Integer> C5_C50 = Interval.closedFrom(ANCHOR_1)
+            .closedTo(ANCHOR_4);
+    protected static final Interval<Integer> O5_C50 = Interval.openFrom(ANCHOR_1)
+            .closedTo(ANCHOR_4);
+    protected static final Interval<Integer> O5_C7 = Interval.closedFrom(ANCHOR_1)
+            .closedTo(ANCHOR_2);
+    protected static final Interval<Integer> I_O50 = Interval.<Integer>fromInfinity()
+            .openTo(ANCHOR_4);
 }
