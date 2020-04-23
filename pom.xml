@@ -74,7 +74,6 @@
 				<configuration>
 					<!-- force use of JDK8 -->
 					<source>1.8</source>
-					<target>1.8</target>
 					<javadocVersion>1.8.0</javadocVersion>
 
 					<!-- Plant UML DocLet JDK 8  -->
