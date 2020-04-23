@@ -25,11 +25,11 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 /**
  * An object that has an identity.
  *
- * @author Paulo Gandra Sousa
  * @param <T>
  *            the type of the entity's identity. e.g., if an object Person is
  *            identified by an IdCardNumber, the class Person should implement
  *            interface Identifiable<IdCardNumber>
+ * @author Paulo Gandra Sousa
  */
 public interface Identifiable<T> {
 
@@ -45,11 +45,11 @@ public interface Identifiable<T> {
     T identity();
 
     /**
-     * checks if the object has a certain business identity
+     * Checks if the object has a certain business identity.
      *
      * @param otherId
      *            the identity to compare
-     * @return true if the object has that identity
+     * @return {@code true} if the object has that identity
      */
     default boolean hasIdentity(final T otherId) {
         return identity().equals(otherId);

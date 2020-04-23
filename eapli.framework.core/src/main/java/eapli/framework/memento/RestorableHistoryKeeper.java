@@ -42,7 +42,7 @@ public class RestorableHistoryKeeper<T extends Restorable> {
 
     /**
      * @param subject
-     *                the object to track
+     *            the object to track
      */
     public RestorableHistoryKeeper(final T subject) {
         Preconditions.nonNull(subject);
@@ -69,7 +69,7 @@ public class RestorableHistoryKeeper<T extends Restorable> {
     /**
      * Checks if it is possible for the subject to return to a previous state.
      *
-     * @return true if it is possible for the subject to return to a previous state.
+     * @return {@code true} if it is possible for the subject to return to a previous state.
      */
     public boolean canRestore() {
         return !history.isEmpty();

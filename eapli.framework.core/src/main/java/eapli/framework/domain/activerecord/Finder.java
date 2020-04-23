@@ -20,11 +20,11 @@
  */
 package eapli.framework.domain.activerecord;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * A Finder provides methods to load (find) ActiveRecord objects in the
- * persistence store and loads then to memory
+ * persistence store and loads then to memory.
  *
  * @param <T>
  *            the type of business entity to find
@@ -35,7 +35,21 @@ import java.util.List;
  */
 public interface Finder<T extends ActiveRecord<K>, K extends Comparable<K>> {
 
-    T findById(K id);
+    /**
+     * Gets all entities from the repository. If the repository is empty and
+     * empty collection is returned.
+     *
+     * @return all entities from the repository.
+     */
+    Iterable<T> findAll();
 
-    List<T> findAll();
+    /**
+     * Gets the entity with the specified identity.
+     *
+     * @param id
+     * @return an Optional which value is the entity with the specified
+     *         identity. An Empty Optional if there is no entity with such
+     *         identity in the repository.
+     */
+    Optional<T> findById(K id);
 }

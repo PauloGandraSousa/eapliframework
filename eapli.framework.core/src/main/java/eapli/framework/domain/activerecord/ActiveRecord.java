@@ -34,8 +34,8 @@ import eapli.framework.domain.model.identities.Identifiable;
 public interface ActiveRecord<I extends Comparable<I>> extends Identifiable<I> {
 
     /**
-     * save the current object to the persistence store either by creating it or
-     * updating it
+     * Save the current object to the persistence store either by creating it or
+     * updating it.
      */
     void save();
 }

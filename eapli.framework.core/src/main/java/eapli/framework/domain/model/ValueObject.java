@@ -75,24 +75,28 @@ public interface ValueObject extends Serializable {
      * <p>
      * See, for instance, <a href=
      * "https://www.sitepoint.com/implement-javas-equals-method-correctly/">https://www.sitepoint.com/implement-javas-equals-method-correctly/</a>
+     * </p>
      *
      * @param other
-     * @return true if this value object has the same content as the
+     *            the other object to compare
+     *
+     * @return {@code true } if this value object has the same content as the
      *         {@code other}
      */
     @Override
     boolean equals(Object other);
 
     /**
-     * hash code of this object according to java rules. i.e., the same fields
+     * Hash code of this object according to java rules. i.e., the same fields
      * used in equals() should be used in hashCode().
      *
      * <p>
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()
+     * </p>
      *
-     * @return the hascode
+     * @return the hash code
      */
     @Override
     int hashCode();

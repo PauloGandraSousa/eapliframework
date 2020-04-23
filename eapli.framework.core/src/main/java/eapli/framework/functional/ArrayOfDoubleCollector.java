@@ -32,7 +32,7 @@ import eapli.framework.validations.Preconditions;
 
 /**
  * A Collector to be used with Stream<Double> objects to collect the elements of
- * the stream into a double array
+ * the stream into a double array.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -43,8 +43,8 @@ public class ArrayOfDoubleCollector {
     private int lastIdx = -1;
 
     /**
-     * you will need to define a Supplier function that initializes the
-     * Collector with the correct destination array
+     * You will need to define a Supplier function that initializes the
+     * Collector with the correct destination array.
      *
      * @param destination
      */
@@ -55,7 +55,7 @@ public class ArrayOfDoubleCollector {
     }
 
     /**
-     * the accumulator function of the collector
+     * The accumulator function of the collector.
      *
      * @param o
      */
@@ -67,7 +67,7 @@ public class ArrayOfDoubleCollector {
 
     /**
      * Combines the current result with a partial result - i.e., the combiner
-     * function of the Collector
+     * function of the Collector.
      *
      * @param o
      * @return the current collector object with an updated status
@@ -86,7 +86,7 @@ public class ArrayOfDoubleCollector {
     }
 
     /**
-     * Factory method to create a new instance of a collector
+     * Factory method to create a new instance of a collector.
      *
      * @param destination
      *            the underlying array where to collect the values

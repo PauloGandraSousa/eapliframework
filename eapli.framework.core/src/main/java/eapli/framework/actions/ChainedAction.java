@@ -29,6 +29,7 @@ import eapli.framework.validations.Preconditions;
  * <p>
  * It implements the Composite (GoF) pattern. Subclasses that override execute()
  * MUST call next().
+ * </p>
  *
  * @author Paulo Gandra Sousa
  *
@@ -39,6 +40,8 @@ public class ChainedAction implements Action {
     private final Action next;
 
     /**
+     * Constructor.
+     *
      * @param current
      *            the action to wrap
      * @param next
@@ -69,9 +72,7 @@ public class ChainedAction implements Action {
 
     /**
      * Creates a chained action that will execute the {@code firstAction}
-     * action.
-     *
-     * Builder method useful in conjunction with @link #then(Action)}
+     * action. Builder method useful in conjunction with {@link #then(Action)}.
      *
      * @param firstAction
      * @return the new object
@@ -82,9 +83,7 @@ public class ChainedAction implements Action {
 
     /**
      * Creates a new ChainedAction where the {@code next} action is appended to
-     * the end of the current chain.
-     *
-     * Builder method useful in conjunction with {@link #first(Action)}
+     * the end of the current chain. Builder method useful in conjunction with {@link #first(Action)}
      *
      * @param next
      * @return the new object

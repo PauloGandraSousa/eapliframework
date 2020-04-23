@@ -32,16 +32,16 @@ package eapli.framework.domain.activerecord;
 public interface DeleteableActiveRecord<I extends Comparable<I>> extends ActiveRecord<I> {
 
     /**
-     * deletes the current object from the persistence store. the object in
-     * memory no longer becomes managed by the repository
+     * Deletes the current object from the persistence store. The object in
+     * memory no longer becomes managed by the repository.
      */
     void delete();
 
     /**
-     * checks if the object in memory is currently disconnected from the
-     * persistence store
+     * Checks if the object in memory is currently disconnected from the
+     * persistence store.
      *
-     * @return true if this instance has been deleted from the persistence store
+     * @return {@code true} if this instance has been deleted from the persistence store
      *         or has been marked as deleted
      */
     boolean isDeleted();

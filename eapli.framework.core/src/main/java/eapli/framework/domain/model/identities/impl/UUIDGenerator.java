@@ -25,6 +25,7 @@ import java.util.UUID;
 import eapli.framework.domain.model.identities.IdentityGenerator;
 
 /**
+ * An identity generator using UUIDs.
  *
  * @author Paulo Gandra de Sousa
  *

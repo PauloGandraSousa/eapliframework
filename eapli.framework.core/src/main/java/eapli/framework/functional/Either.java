@@ -35,9 +35,11 @@ import eapli.framework.validations.Preconditions;
  * Objects of this class can represent one (1) value of either {@code L} or
  * {@code R}. Useful for error handling where, by convention, the left type is
  * the correct response and the right type is the error response.
+ * </p>
  * <p>
  * Consider using a java functional library instead, e.g.,
  * <a href="https://www.vavr.io/">vavr</a>
+ * </p>
  *
  * @author Paulo Gandra de Sousa
  * @param <L>
@@ -89,8 +91,9 @@ public final class Either<L, R> {
      * Constructs a left Either.
      *
      * @param left
-     * @param marker just to make the compiler happy due to the erasure of both
-     *               constructors
+     * @param marker
+     *            just to make the compiler happy due to the erasure of both
+     *            constructors
      */
     @SuppressWarnings("squid:S1172")
     private Either(final L left, final boolean marker) {
@@ -152,7 +155,8 @@ public final class Either<L, R> {
      * @param rightPredicate
      * @return a new either resulting from the projection
      */
-    public Either<L, R> filter(final Predicate<? super L> leftPredicate, final Predicate<? super R> rightPredicate) {
+    public Either<L, R> filter(final Predicate<? super L> leftPredicate,
+            final Predicate<? super R> rightPredicate) {
         if (type == SideType.LEFT && leftPredicate.test(left)) {
             return left(left);
         } else if (type == SideType.RIGHT && rightPredicate.test(right)) {
@@ -167,7 +171,8 @@ public final class Either<L, R> {
      *
      * @param leftAccum
      * @param rightAccum
-     * @param def        default/initial value
+     * @param def
+     *            default/initial value
      * @return the folded value
      */
     public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
@@ -189,7 +194,8 @@ public final class Either<L, R> {
      * @param leftConsumer
      * @param rightConsumer
      */
-    public void consume(final Consumer<? super L> leftConsumer, final Consumer<? super R> rightConsumer) {
+    public void consume(final Consumer<? super L> leftConsumer,
+            final Consumer<? super R> rightConsumer) {
         if (type == SideType.LEFT) {
             leftConsumer.accept(left);
         } else {

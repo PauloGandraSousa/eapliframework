@@ -30,20 +30,21 @@ import eapli.framework.domain.model.ValueObject;
  * in the domain.
  * <p>
  * These are not technical issues/events but meaningful domain concepts.
+ * </p>
  *
  * @author Paulo Gandra Sousa
  */
 public interface DomainEvent extends ValueObject, Serializable {
 
     /**
-     * Returns the date and time when the event occurred in the domain
+     * Returns the date and time when the event occurred in the domain.
      *
      * @return the date and time when the event occurred in the domain
      */
     Calendar occurredAt();
 
     /**
-     * Returns the date and time when the event was recorded in the system
+     * Returns the date and time when the event was recorded in the system.
      *
      * @return the date and time when the event was recorded in the system
      */

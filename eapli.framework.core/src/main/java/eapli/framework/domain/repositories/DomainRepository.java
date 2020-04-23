@@ -56,8 +56,7 @@ import eapli.framework.domain.model.AggregateRoot;
  * </ul>
  * Note that these methods should only exist in order to support the application use cases. If there are reporting needs
  * those should not be present in the Domain repository. A specialized {@link ReportingRepository} should be defined for
- * such
- * features or a separate reporting tool should be used.
+ * such features or a separate reporting tool should be used.
  * </p>
  * <p>
  * If the aggregate is an inheritance hierarchy, the abstract root of the hierarchy should determine the aggregate root,

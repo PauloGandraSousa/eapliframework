@@ -22,7 +22,7 @@ package eapli.framework.domain.repositories;
 
 /**
  * An exception that occurs when data cannot be updated because it has changed
- * or has been deleted since it was last read
+ * or has been deleted since it was last read.
  *
  * @author arocha
  */

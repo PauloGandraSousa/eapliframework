@@ -51,7 +51,7 @@ public class Macro implements Action {
     }
 
     /**
-     * Returns the action that caused macro execution to stop
+     * Returns the action that caused macro execution to stop.
      *
      * @return the action that caused macro execution to stop
      */
@@ -60,8 +60,8 @@ public class Macro implements Action {
     }
 
     /**
-     * execute all the actions in the Macro stopping on the first action that
-     * fails (i.e., returns false)
+     * Execute all the actions in the Macro stopping on the first action that
+     * fails (i.e., returns false).
      *
      * @see eapli.framework.actions.Action#execute()
      */
