@@ -100,7 +100,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         withPassword(password);
         withName(name);
         withEmail(email);
-        return null;
+        return this;
     }
 
     public SystemUserBuilder withUsername(final String username) {
