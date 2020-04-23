@@ -89,7 +89,6 @@
 					</tagletArtifact>
 
 					<!-- params -->
-					<additionalparam>-Xdoclint:none</additionalparam>
 					<additionalOptions>
 						<additionalOption>-Xdoclint:none</additionalOption>
 						<!-- Specify each diagram option here as an additionOption tag. -->
