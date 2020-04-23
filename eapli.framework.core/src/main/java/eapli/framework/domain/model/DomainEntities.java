@@ -25,7 +25,7 @@ import java.util.Objects;
 import eapli.framework.util.HashCoder;
 
 /**
- * helper class for common domain entities operations
+ * Helper class for common domain entities operations.
  *
  * @author Paulo Gandra Sousa
  */

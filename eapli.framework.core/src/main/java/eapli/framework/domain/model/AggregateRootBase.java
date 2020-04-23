@@ -21,10 +21,11 @@
 package eapli.framework.domain.model;
 
 /**
- * A simple base class for aggregate roots
+ * A simple base class for aggregate roots.
  *
  * @param <I>
  *            the type of business identity
+ * 
  * @author Paulo Gandra de Sousa
  *
  */
