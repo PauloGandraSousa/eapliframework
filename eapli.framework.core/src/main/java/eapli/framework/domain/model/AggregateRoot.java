@@ -25,19 +25,21 @@ package eapli.framework.domain.model;
  * change and "whole-objects". some entities cluster other objects (entities and
  * value objects) which don't make sense to exist outside of that entity (e.g.,
  * OrderLine and Order).
- *
+ * <p>
  * the aggregate root is the entity serving as a root for that cluster of
  * objects. these are the only objects that client code can interact directly
  * and that is managed by Repositories. "inside" objects cannot be directly
  * manipulated by client code, instead they need to be manipulated thru the
  * aggregate root.
- *
+ * </p>
+ * <p>
  * Typical examples are:
  * <ol>
  * <li>Order {OrderLine, Billing Address, Shipping Address}
  * <li>Customer {Home Address}
  * <li>Product
  * </ol>
+ * </p>
  *
  * @param <I>
  *            the type of the primary <b>business</b> identity of the entity

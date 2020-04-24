@@ -29,7 +29,6 @@ import java.io.Serializable;
  * can be freely shared and discarded and replaced by another instance. Equality
  * is done thru comparison of the attributes values.
  * <p>
- *
  * Typical examples are:
  * <ul>
  * <li>Address (in most scenarios)
@@ -37,22 +36,26 @@ import java.io.Serializable;
  * <li>CustomerNumber
  * <li>Money
  * </ul>
+ * </p>
  *
  * <p>
  * Make sure you don't provide mutator methods, always construct the object in a
  * valid state and all your private fields are marked final (If you are using
  * ORM tools you might need a default constructor in which case you won't be
  * able to make the fields final)
+ * </p>
  *
  * <p>
  * Check the <a href=
  * "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java
  * Time API naming conventions</a> for an excellent example on how to name
  * methods of a Value Object.
+ * </p>
  *
  * <p>
  * Since we will provably persist entities using JPA we are also forcing the
  * implementation of {@code Serializable}.
+ * </p>
  *
  * @author Paulo Gandra Sousa
  */

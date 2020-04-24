@@ -38,6 +38,7 @@ import eapli.framework.validations.StringPredicates;
  * <p>
  * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
  * to find the private field as there are no setters and getters.
+ * </p>
  *
  * @author Jorge Santos ajs@isep.ipp.pt
  * @author Paulo Gandra de Sousa
@@ -69,7 +70,7 @@ public class Designation implements ValueObject, Comparable<Designation>, String
     }
 
     /**
-     * factory method for obtaining Designation value objects.
+     * Factory method for obtaining Designation value objects.
      *
      * @param name
      * @return a new object corresponding to the value
