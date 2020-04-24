@@ -105,7 +105,6 @@
  -->
  
 					<!-- params -->
-					<show>private</show>
 					<doclint>none</doclint>
 					<additionalOptions>
 						<additionalOption>-Xdoclint:none</additionalOption>
