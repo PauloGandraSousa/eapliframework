@@ -11,7 +11,8 @@ pipelines:
         caches:
           - maven
         script: 
-          - apt-get install graphviz
+          - apt-get update && apt-get install -y graphviz 
+          # - dot -V
           # - mvn -B verify # -B batch mode makes Maven less verbose
           - mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report -Dmaven.test.failure.ignore=true
           - mvn -B sonar:sonar -Dsonar.projectKey=pag_isep_eapli.framework -Dsonar.organization=pag_isep-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_PASS
