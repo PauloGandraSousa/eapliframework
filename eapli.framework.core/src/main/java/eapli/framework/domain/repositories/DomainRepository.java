@@ -64,7 +64,7 @@ import eapli.framework.domain.model.AggregateRoot;
  * specialized finders for the derived classes.
  * </p>
  * <p>
- * <img src="inheritance-plus-reporting.svg"/>
+ * <img src="inheritance.svg"/>
  * </p>
  * <p>
  * If you are not using the DDD interfaces of the framework use
@@ -79,25 +79,29 @@ import eapli.framework.domain.model.AggregateRoot;
  * @author Paulo Gandra Sousa
  *
  *         <!--
- * @startuml inheritance-plus-reporting.svg
+ * @startuml inheritance.svg
  *
  *           package domain{
  *
- *           abstract class Vehicle{
+ *           abstract class Vehicle <<entity>><<root>>{
  *           -vehiclepk
- *           -licensePlate
- *           -horsePower
  *           licensePlate()
  *           horsePower()
  *           }
  *
- *           note right of Vehicle: <i>vehiclepk</i> is an implementation detail\n(primary key)
+ *           class LicensePlate<<value object>>
+ *           Vehicle -> LicensePlate
  *
- *           class Automobile {
+ *           class Power<<value object>>
+ *           Vehicle ->Power:horsePower
+ *
+ *           note left of Vehicle: <i>vehiclepk</i> is an implementation detail\n(primary key)
+ *
+ *           class Automobile <<entity>>{
  *           -numberOfDoors
  *           }
  *
- *           class MotorBike{
+ *           class MotorBike <<entity>> {
  *           -hasSideCar
  *           }
  *

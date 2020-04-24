@@ -40,11 +40,51 @@ package eapli.framework.domain.model;
  * <li>Product
  * </ol>
  * </p>
+ * <p>
+ * In the case there is a specialization of domain concepts it is important to not think about implementation
+ * inheritance but actual domain specialization. The point is not to reuse code but to capture concepts that are indeed
+ * specialization of more abstract concepts.
+ * </p>
+ * <p>
+ * <img src="domain-inheritance.svg"/>
+ * </p>
  *
  * @param <I>
  *            the type of the primary <b>business</b> identity of the entity
  *
  * @author Paulo Gandra Sousa
+ *
+ *         <!--
+ *
+ * @startuml domain-inheritance.svg
+ *
+ *           package domain <<aggregate>>{
+ *
+ *           abstract class Vehicle <<entity>><<root>>{
+ *           licensePlate()
+ *           horsePower()
+ *           }
+ *
+ *           class LicensePlate<<value object>>
+ *           Vehicle -> LicensePlate
+ *
+ *           class Power<<value object>>
+ *           Vehicle ->Power:horsePower
+ *
+ *           class Automobile <<entity>>{
+ *           -numberOfDoors
+ *           }
+ *
+ *           class MotorBike <<entity>> {
+ *           -hasSideCar
+ *           }
+ *
+ *           Vehicle <|-up- Automobile
+ *           Vehicle <|-up- MotorBike
+ *           }
+ * @enduml
+ *         -->
+ *
  */
 public interface AggregateRoot<I extends Comparable<I> /* & ValueObject */>
         extends DomainEntity<I> {
