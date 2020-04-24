@@ -34,18 +34,18 @@ package eapli.framework.application;
  * <li>call a domain logic business method on the aggregate
  * <li>save the modified aggregate back to the repository
  * </ol>
- *
+ * <p>
  * Controllers should be stateless (no properties) except for injected
  * dependencies, e.g., repositories and services. That is, even if the user has
  * to enter name, email, and other "fields", the controller should not have a
  * Person object as its state neither have a setName(), setEmail(), and alike
  * methods.
- *
+ * </p>
  * <p>
  * Another important rule, is that a use case controller should only modify one
  * single object (aggregate root) and transactional controllers that modify more
  * than object should be avoided.
- *
+ * </p>
  * <p>
  * For example, consider the following use case in an hypothetical agenda
  * application:
@@ -93,9 +93,11 @@ package eapli.framework.application;
  * </code>
  * </pre>
  *
+ * <p>
  * Controllers can also perform some infrastructure jobs like ensuring
  * permissions (authentication and authorization) to access the method,
  * eventough that is better delegated to some framework, e.g., spring Security.
+ * </p>
  *
  * @author Paulo Gandra Sousa
  */

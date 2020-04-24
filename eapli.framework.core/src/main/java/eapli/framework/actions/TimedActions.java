@@ -99,12 +99,13 @@ public final class TimedActions {
     private static final Timer timer = new Timer();
 
     /**
-     * runs a periodic task each <em>interval</em> milliseconds. the first execution
+     * Runs a periodic task each <em>interval</em> milliseconds. The first execution
      * will happen as soon as possible. There will be one single
      * {@link java.util.Timer timer} object for all the requested recurring tasks.
-     *
-     * consider using the method {@link #atFixedRate(Action, int) atFixedRate} which
+     * <p>
+     * Consider using the method {@link #atFixedRate(Action, int) atFixedRate} which
      * makes use of Java 5+ concurrent Thread Pool Executors
+     * </p>
      *
      * @param cmd
      * @param interval
@@ -121,8 +122,8 @@ public final class TimedActions {
             .newScheduledThreadPool(5);
 
     /**
-     * schedules a periodic action at a specified interval in milliseconds. the
-     * first execution will happen as soon as possible. there will be one single
+     * Schedules a periodic action at a specified interval in milliseconds. the
+     * first execution will happen as soon as possible. There will be one single
      * thread pool {@link java.util.concurrent.ScheduledExecutorService executor}
      * for scheduled recurring tasks.
      *
@@ -143,7 +144,7 @@ public final class TimedActions {
     }
 
     /**
-     * shutdown all running threads created by the recurring task methods. client
+     * Shutdown all running threads created by the recurring task methods. client
      * code should call this function if it was used any of the scheduling functions
      * {@link #atFixedRate(Action, int) atFixedRate} or
      * {@link #periodically(Action, int) periodically}, otherwise the application

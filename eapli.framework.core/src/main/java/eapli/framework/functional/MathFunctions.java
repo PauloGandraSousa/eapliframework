@@ -26,7 +26,7 @@ import eapli.framework.util.Utility;
 import eapli.framework.validations.Preconditions;
 
 /**
- * just a playground to use the Java 8 Streams and Lambda features
+ * Just a playground to use the Java 8 Streams and Lambda features.
  *
  * @author Paulo Gandra de Sousa
  *

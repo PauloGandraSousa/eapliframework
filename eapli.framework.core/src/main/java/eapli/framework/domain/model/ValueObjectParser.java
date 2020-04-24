@@ -4,8 +4,8 @@
 package eapli.framework.domain.model;
 
 /**
- * A factory of value objects based on String representations
- * 
+ * A factory of value objects based on String representations.
+ *
  * @param <T>
  *
  * @author Paulo Gandra Sousa

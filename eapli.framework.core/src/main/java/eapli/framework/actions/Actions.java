@@ -26,7 +26,7 @@ import eapli.framework.util.Utility;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Utility class for working with {@link Action}
+ * Utility class for working with {@link Action}.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -72,25 +72,26 @@ public final class Actions {
     }
 
     /**
-     * a default action to throw IllegalArgumentException
+     * A default action to throw {@link IllegalArgumentException}.
      */
     public static final Action THROW_ARGUMENT = () -> {
         throw new IllegalArgumentException();
     };
 
     /**
-     * a default action to throw IllegalStateException
+     * A default action to throw {@link IllegalStateException}.
      */
     public static final Action THROW_STATE = () -> {
         throw new IllegalStateException();
     };
 
     /**
-     * A default action to throw IllegalStateException binded to a message
+     * A default action to throw {@link IllegalStateException} binded to a message.
      *
      * @param m
      *            the message to set as the description of the exception to be
      *            thrown
+     *
      * @return a new Action object that will throw an IllegalStateException
      */
     public static Action throwState(final String m) {
@@ -98,11 +99,12 @@ public final class Actions {
     }
 
     /**
-     * A default action to throw IllegalArgumentException binded to a message
+     * A default action to throw {@link IllegalArgumentException} binded to a message.
      *
      * @param m
      *            the message to set as the description of the exception to be
      *            thrown
+     *
      * @return a new Action object that will throw an IllegalArgumentException
      */
     public static Action throwArgument(final String m) {
@@ -110,22 +112,24 @@ public final class Actions {
     }
 
     /**
-     * A generic NO-OP action that will always succeed
+     * A generic NO-OP action that will always succeed.
      *
      */
     public static final Action SUCCESS = () -> true;
 
     /**
-     * A generic NO-OP action that will always fail
+     * A generic NO-OP action that will always fail.
      *
      */
     public static final Action FAIL = () -> false;
 
     /**
-     * Executes a function if a predicate is not met
+     * Executes a function if a predicate is not met.
      *
      * @param consequence
+     *            the action to execute if the condition evaluates to {@code false}
      * @param condition
+     *            the condition to be evaluated
      * @return {@code false} if the condition is met. otherwise, the result of
      *         the {@code consequence} action
      */
@@ -140,22 +144,23 @@ public final class Actions {
      * Executes a function conditionally.
      *
      * @param consequence
+     *            the action to execute if the value evaluates to {@code false}
      * @param condition
+     *            the value to test
      * @return {@code false} if {@code condition} is {@code true}. otherwise,
      *         the result of the {@code consequence} action
      */
     public static boolean doIfNot(final Action consequence, final boolean condition) {
-        if (!condition) {
-            return consequence.execute();
-        }
-        return false;
+        return doIfNot(consequence, () -> condition);
     }
 
     /**
      * Executes a function if a predicate is met.
      *
      * @param consequence
+     *            the action to execute if the condition evaluates to {@code true}
      * @param condition
+     *            the condition to be evaluated
      * @return {@code false} if the condition is not met. otherwise, the result
      *         of the {@code consequence} action
      */
@@ -170,28 +175,29 @@ public final class Actions {
      * Executes a function conditionally.
      *
      * @param consequence
+     *            the action to execute if the value evaluates to {@code true}
      * @param condition
+     *            the value to test
      * @return {@code false} if {@code condition} is {@code false}. otherwise,
      *         the result of the {@code consequence} action
      */
     public static boolean doIf(final Action consequence, final boolean condition) {
-        if (condition) {
-            return consequence.execute();
-        }
-        return false;
+        return doIf(consequence, () -> condition);
     }
 
     /**
      * Executes an action n times.
      *
-     * @param cmd
+     * @param action
+     *            the action to repeat
      * @param n
+     *            the number of time to repeat
      */
-    public static void repeat(final Action cmd, final int n) {
-        Preconditions.nonNull(cmd);
+    public static void repeat(final Action action, final int n) {
+        Preconditions.nonNull(action);
 
         for (int i = n; i > 0; i--) {
-            cmd.execute();
+            action.execute();
         }
     }
 
@@ -200,16 +206,21 @@ public final class Actions {
      * certain number of attempts. The retry stops if the action is successful
      * (returns true) or the maximum number of attempts is reached.
      *
-     * @param op
+     * @param action
+     *            the action to execute
      * @param sleep
+     *            the delay between retries
      * @param maxAttempts
+     *            the maximum number of retries
      * @param progressive
-     * @return true if the action is successful or false if the maximum number
+     *            if {@code true} the delay between retries will progressively increase, otherwise it will be constant
+     * @return {@code true} if the action is successful or {@code false} if the maximum number
      *         of retries has been reached
      */
-    public static boolean retry(final Action op, final int sleep, final int maxAttempts, final boolean progressive) {
+    public static boolean retry(final Action action, final int sleep, final int maxAttempts,
+            final boolean progressive) {
         int atempts = 1;
-        boolean result = op.execute();
+        boolean result = action.execute();
         while (!result && atempts < maxAttempts) {
             atempts++;
             if (progressive) {
@@ -217,7 +228,7 @@ public final class Actions {
             } else {
                 TimedActions.delay(sleep);
             }
-            result = op.execute();
+            result = action.execute();
         }
         return result;
     }
@@ -227,13 +238,16 @@ public final class Actions {
      * certain number of attempts. The retry stops if the action is successful
      * (returns true) or the maximum number of attempts is reached.
      *
-     * @param op
+     * @param action
+     *            the action to execute
      * @param sleep
+     *            the delay between retries
      * @param maxAttempts
-     * @return true if the action is successful or false if the maximum number
+     *            the maximum number of retries
+     * @return {@code true} if the action is successful or {@code false} if the maximum number
      *         of retries has been reached
      */
-    public static boolean retry(final Action op, final int sleep, final int maxAttempts) {
-        return retry(op, sleep, maxAttempts, true);
+    public static boolean retry(final Action action, final int sleep, final int maxAttempts) {
+        return retry(action, sleep, maxAttempts, true);
     }
 }

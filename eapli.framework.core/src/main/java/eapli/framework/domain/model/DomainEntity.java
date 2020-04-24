@@ -34,7 +34,7 @@ import eapli.framework.domain.model.identities.Identifiable;
  * and we cannot loose track or allow duplication of an entity. By definition a
  * domain entity always has a business identity, so it should be impossible to
  * create new instances without identity.
- *
+ * </p>
  * <p>
  * Typical examples are:
  * <ul>
@@ -42,13 +42,16 @@ import eapli.framework.domain.model.identities.Identifiable;
  * <li>Person
  * <li>Account
  * </ul>
+ * </p>
  *
  * <p>
  * Since we will provably persist entities using JPA we are also forcing the
  * implementation of {@code Serializable}.
+ * </p>
  *
  * @param <I>
  *            the type of the primary <b>business</b> id of the entity
+ *
  * @author Paulo Gandra Sousa
  */
 public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
@@ -56,21 +59,26 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
 
     /**
      * Entities are compared by identity only. No need to compare all fields of
-     * the object. you can use the
+     * the object. You can use the
      * {@link DomainEntities#areEqual(DomainEntity, Object)} method as default
-     * implementation
+     * implementation.
+     * </p>
      *
      * <p>
-     * be careful that if your entities are using the ORM generated primary key
+     * Be careful that if your entities are using the ORM generated primary key
      * as their business identity, you MUST properly implement equals() and
      * hashcode(). See <a href=
      * "https://thoughts-on-java.org/ultimate-guide-to-implementing-equals-and-hashcode-with-hibernate/">Toughts
      * on java</a>
+     * </p>
      *
      * <p>
      * see {@link #sameAs(Object)}.
+     * </p>
      *
      * @param other
+     *            the other object to compare
+     *
      * @return true if this domain entity refers to the same real-world entity
      *         as the {@code other}
      */
@@ -79,13 +87,14 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
 
     /**
      * Hash code of this object. According to java rules. i.e., the same fields
-     * used in equals() should be used in hashCode(). you can use
+     * used in equals() should be used in hashCode(). You can use
      * {@link DomainEntities#hashCode(DomainEntity)} as default implementation
      *
      * <p>
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
      * stack overflow</a> for a nice discussion about hashCode() and equals()
+     * </p>
      *
      * @return the hash code
      */
@@ -98,7 +107,8 @@ public interface DomainEntity<I extends Comparable<I> /* & ValueObject */>
      * contents of the object by value.
      *
      * @param other
-     * @return true if this domain entity have the "same content" as the
+     *            the other object to compare
+     * @return {@code true} if this domain entity have the "same content" as the
      *         {@code other}
      */
     boolean sameAs(Object other);

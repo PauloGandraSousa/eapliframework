@@ -37,8 +37,8 @@ import java.util.Optional;
 public interface IterableRepository<T, K> extends Repository<T, K>, Iterable<T> {
 
     /**
-     * returns an iterator over the repository with an hint of pagesize results
-     * for each fetch from the persistence storage
+     * Returns an iterator over the repository with an hint of pagesize results
+     * for each fetch from the persistence storage.
      *
      * @param pagesize
      *            hint about the result size of each fetch to the persistence

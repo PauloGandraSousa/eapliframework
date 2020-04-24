@@ -26,7 +26,7 @@ package eapli.framework.domain.model;
  * value objects) which don't make sense to exist outside of that entity (e.g.,
  * OrderLine and Order).
  * <p>
- * the aggregate root is the entity serving as a root for that cluster of
+ * The aggregate root is the entity serving as a root for that cluster of
  * objects. these are the only objects that client code can interact directly
  * and that is managed by Repositories. "inside" objects cannot be directly
  * manipulated by client code, instead they need to be manipulated thru the

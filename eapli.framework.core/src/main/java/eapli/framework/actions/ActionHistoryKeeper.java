@@ -26,7 +26,7 @@ import java.util.Deque;
 import eapli.framework.validations.Invariants;
 
 /**
- * A helper class to keep a simple history of actions and manage undo/redo
+ * A helper class to keep a simple history of actions and manage undo/redo.
  *
  * @author Paulo Gandra Sousa
  *
@@ -42,7 +42,7 @@ public class ActionHistoryKeeper {
     private final Deque<UndoableAction> forward = new ArrayDeque<>();
 
     /**
-     * Executes the action and saves it in the history
+     * Executes the action and saves it in the history.
      *
      * @param action
      *            the action to execute and save
@@ -54,7 +54,7 @@ public class ActionHistoryKeeper {
 
     /**
      * Saves an action in the history. Assumes, the caller already executed the
-     * action
+     * action.
      *
      * @param action
      *            the action to save
@@ -65,8 +65,8 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * undoes the last action. the action is removed from history and placed in
-     * the redo list
+     * Undoes the last action. The action is removed from history and placed in
+     * the redo list.
      */
     public void undo() {
         Invariants.ensure(canUndo());
@@ -77,16 +77,16 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * Checks if there are any actions in the history
+     * Checks if there are any actions in the history.
      *
-     * @return true if the history is not empty
+     * @return {@code true} if the history is not empty
      */
     public boolean canUndo() {
         return !history.isEmpty();
     }
 
     /**
-     * Redo the last undone action
+     * Redo the last undone action.
      */
     public void redo() {
         Invariants.ensure(canRedo());
@@ -96,9 +96,9 @@ public class ActionHistoryKeeper {
     }
 
     /**
-     * Checks if there are any actions to redo
+     * Checks if there are any actions to redo.
      *
-     * @return true if there are actions in the redo history
+     * @return {@code true} if there are actions in the redo history
      */
     public boolean canRedo() {
         return !forward.isEmpty();

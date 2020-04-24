@@ -28,6 +28,8 @@ import org.apache.logging.log4j.Logger;
 import eapli.framework.domain.model.identities.IdentityGenerator;
 
 /**
+ * An identity generator that follows a sequence of long numbers.
+ *
  * @author Paulo Gandra de Sousa
  *
  */

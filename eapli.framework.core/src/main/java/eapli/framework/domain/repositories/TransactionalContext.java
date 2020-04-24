@@ -21,7 +21,7 @@
 package eapli.framework.domain.repositories;
 
 /**
- * an abstraction to the actual transaction management mechanism.
+ * An abstraction to the actual transaction management mechanism.
  *
  * @author Paulo Gandra Sousa
  *

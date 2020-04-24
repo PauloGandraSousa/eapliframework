@@ -42,7 +42,7 @@ public final class Streams {
     }
 
     /**
-     * zips two streams. Applies a zipping function taking each element of each
+     * Zips two streams. Applies a zipping function taking each element of each
      * input stream in order and saving the result in the output stream.
      *
      * <p>
@@ -66,7 +66,8 @@ public final class Streams {
                 & ~(Spliterator.DISTINCT | Spliterator.SORTED);
 
         final long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown()) : -1;
+                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown())
+                : -1;
 
         final Iterator<A> aIterator = Spliterators.iterator(aSpliterator);
         final Iterator<B> bIterator = Spliterators.iterator(bSpliterator);

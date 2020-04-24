@@ -25,8 +25,9 @@ import java.io.Serializable;
 /**
  * A simple base class for domain entities providing for equality test thru
  * business identity.
- *
- * make sure you set the proper JPA inheritance mapping if using this base class
+ * <p>
+ * Make sure you set the proper JPA inheritance mapping if using this base class.
+ * </p>
  *
  * @param <I>
  *            the type of business identity

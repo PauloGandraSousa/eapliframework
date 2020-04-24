@@ -21,7 +21,7 @@
 package eapli.framework.actions;
 
 /**
- * An Action (the GoF Command pattern)
+ * An Action (the GoF Command pattern).
  *
  * @author Paulo Gandra Sousa
  */

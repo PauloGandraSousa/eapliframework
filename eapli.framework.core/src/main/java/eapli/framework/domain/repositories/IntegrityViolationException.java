@@ -22,7 +22,7 @@ package eapli.framework.domain.repositories;
 
 /**
  * An exception that indicates a violation of a data integrity constraint (e.g.,
- * a duplicate key) has occurred
+ * a duplicate key) has occurred.
  *
  * @author Paulo Gandra Sousa
  *
