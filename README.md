@@ -52,6 +52,12 @@ There are three main components to the framework:
 - **authz**: simple authentication and authorization
 - **pub/sub**: simple event dispatcher
 
+The javadocs are browsable online:
+
+- [Core](https://pagsousa.bitbucket.io/eapli.framework.core/)
+- [Authz](https://pagsousa.bitbucket.io/eapli.framework.authz/)
+- [Pub/Sub](https://pagsousa.bitbucket.io/eapli.framework.pubsub/)
+
 ### Core library
 
 This library contains the core classes, namely for DDD and JPA repositories.
