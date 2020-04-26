@@ -25,8 +25,15 @@ package eapli.framework.domain.model;
  * consistent aggregate, or a large value object, becomes complicated or reveals
  * too much of the internal structure, factories provide encapsulation.
  *
- * @author Paulo Gandra Sousa
+ * <p>
+ * Factories will be very helpful to provide extension and modification in our code as they can hide the actual object
+ * being created.
+ * </p>
+ *
  * @param <T>
+ *            the type of object this factory builds.
+ *
+ * @author Paulo Gandra Sousa
  *
  */
 @FunctionalInterface

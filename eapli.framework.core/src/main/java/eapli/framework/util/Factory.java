@@ -25,10 +25,53 @@ package eapli.framework.util;
  * or a large value object, becomes complicated or reveals too much of the
  * internal structure, factories provide encapsulation.
  *
- * @author Paulo Gandra de Sousa
+ * <p>
+ * Factories will be very helpful to provide extension and modification in our code as they can hide the actual object
+ * being created. Following the Dependency Inversion Principle (DIP), one should program to an abstraction and not to a
+ * realization. Thus a factory is needed to create the actual object while hiding which object is created from the rest
+ * of the code.
+ * </p>
+ *
  * @param <T>
  *            the type of object this factory builds.
  *
+ * @author Paulo Gandra de Sousa
+ *
+ *         <!--
+ * @startuml factories.svg
+ *
+ *           interface X{
+ *           +mxa()
+ *           }
+ *
+ *           class Client{
+ *           +m()
+ *           }
+ *
+ *           note left of Client
+ *           m() {
+ *           X x = factory.build();
+ *           . . .
+ *           x.mxa();
+ *           . . .
+ *           }
+ *           end note
+ *
+ *           class XptoFactory{
+ *           +build()
+ *           }
+ *
+ *           Client .right..> X
+ *           Client .down.> XptoFactory
+ *
+ *           X <|-up- X1
+ *           X <|-up- X2
+ *
+ *           XptoFactory .up.> X
+ *           XptoFactory ..> X1
+ *           XptoFactory ..> X2
+ * @enduml
+ *         -->
  */
 @FunctionalInterface
 public interface Factory<T> {
