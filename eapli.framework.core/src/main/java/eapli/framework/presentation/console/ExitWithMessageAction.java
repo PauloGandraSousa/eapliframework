@@ -28,10 +28,15 @@ import eapli.framework.actions.Action;
  */
 @SuppressWarnings("squid:S106")
 public class ExitWithMessageAction implements Action {
+    private final String message;
+
+    public ExitWithMessageAction(String message) {
+        this.message = message;
+    }
 
     @Override
     public boolean execute() {
-        System.out.println("Bye, bye.");
+        System.out.println(message);
         return true;
     }
 }

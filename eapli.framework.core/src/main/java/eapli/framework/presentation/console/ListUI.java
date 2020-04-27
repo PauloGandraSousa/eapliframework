@@ -39,7 +39,9 @@ public class ListUI<T> extends AbstractListUI<T> {
 
     protected final Visitor<T> printer;
     protected final String theElementName;
-    protected final String theHeader;
+    protected final String header;
+    protected final String headline;
+    protected final String theEmptyMessage;
 
     /**
      * Eagerly Constructs the UI. This constructor should be avoided if the underlying data is fetched
@@ -50,21 +52,34 @@ public class ListUI<T> extends AbstractListUI<T> {
      * {@link #ListUI(Supplier, Visitor, String, String)} for lazy construction.
      *
      * @param source
+     *            the list of elements to show
      * @param printer
+     *            the visitor that knows how to render one element
      * @param elementName
+     *            the name of the element
      * @param header
+     *            the header of the listing
+     * @param headline
+     *            the headline of the "screen"
+     * @param emptyMessage
+     *            the message to show if there no elements
      */
-    public ListUI(final Iterable<T> source, final Visitor<T> printer, final String elementName, final String header) {
+    public ListUI(final Iterable<T> source, final Visitor<T> printer, final String elementName,
+            final String header, String headline, String emptyMessage) {
         Preconditions.nonNull(source);
         Preconditions.nonNull(printer);
         Preconditions.nonNull(elementName);
         Preconditions.nonNull(header);
+        Preconditions.nonNull(headline);
+        Preconditions.nonNull(emptyMessage);
 
         this.source = source;
         elementSupplier = null;
         this.printer = printer;
         this.theElementName = elementName;
-        this.theHeader = header;
+        this.header = header;
+        this.headline = headline;
+        this.theEmptyMessage = emptyMessage;
     }
 
     /**
@@ -73,22 +88,39 @@ public class ListUI<T> extends AbstractListUI<T> {
      * {@code ListUI} object.
      *
      * @param elementSupplier
+     *            the supplier of the elements
      * @param printer
+     *            the visitor that knows how to render one element
      * @param elementName
+     *            the name of the element
      * @param header
+     *            the header of the listing
+     * @param headline
+     *            the headline of the "screen"
+     * @param emptyMessage
+     *            the message to show if there no elements
      */
-    public ListUI(final Supplier<Iterable<T>> elementSupplier, final Visitor<T> printer, final String elementName,
-            final String header) {
+    public ListUI(final Supplier<Iterable<T>> elementSupplier, final Visitor<T> printer,
+            final String elementName, final String header, String headline, String emptyMessage) {
         Preconditions.nonNull(elementSupplier);
         Preconditions.nonNull(printer);
         Preconditions.nonNull(elementName);
         Preconditions.nonNull(header);
+        Preconditions.nonNull(headline);
+        Preconditions.nonNull(emptyMessage);
 
         this.elementSupplier = elementSupplier;
         this.source = null;
         this.printer = printer;
         this.theElementName = elementName;
-        this.theHeader = header;
+        this.header = header;
+        this.headline = headline;
+        this.theEmptyMessage = emptyMessage;
+    }
+
+    @Override
+    public String headline() {
+        return headline;
     }
 
     /**
@@ -119,7 +151,7 @@ public class ListUI<T> extends AbstractListUI<T> {
 
     @Override
     public String listHeader() {
-        return theHeader;
+        return header;
     }
 
     /**
@@ -130,5 +162,11 @@ public class ListUI<T> extends AbstractListUI<T> {
     @Override
     protected String elementName() {
         return this.theElementName;
+    }
+
+    @Override
+    protected String emptyMessage() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
