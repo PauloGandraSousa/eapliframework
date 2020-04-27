@@ -20,8 +20,15 @@
  */
 package eapli.framework.domain.repositories;
 
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * A marker interface for repositories that only have reporting (query) methods. Reporting is a different bounded
+ * A repository that only has reporting (query) methods. Reporting is a different bounded
  * context than the rest of the application business logic and should be treated as that. {@link DomainRepository} has
  * finders and save methods to support the application use cases, while a separte ReportingRepository should support the
  * reporting needs of the application.
@@ -75,6 +82,9 @@ package eapli.framework.domain.repositories;
  *         -->
  *
  */
-public interface ReportingRepository {
+@Documented
+@Retention(SOURCE)
+@Target({ TYPE })
+public @interface ReportingRepository {
     // empty
 }

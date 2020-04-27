@@ -20,8 +20,15 @@
  */
 package eapli.framework.application;
 
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * A marker interface for use case controllers. A Use case controller is the API
+ * A Use case controller is the API
  * to the domain translating from the outside world (e.g., DTO) to the inside
  * world (domain). Use case controllers do not perform any business logic but
  * coordinate/dispatch the execution to the right business object. Usually a
@@ -34,6 +41,7 @@ package eapli.framework.application;
  * <li>call a domain logic business method on the aggregate
  * <li>save the modified aggregate back to the repository
  * </ol>
+ *
  * <p>
  * Controllers should be stateless (no properties) except for injected
  * dependencies, e.g., repositories and services. That is, even if the user has
@@ -61,7 +69,8 @@ package eapli.framework.application;
  *
  * <pre>
  * <code>
- * class AddContactController implements UseCaseController {
+ * &#64;UseCaseController
+ * class AddContactController {
  *      private ContactRepository repoContact;
  *      private CountryRepository repoCountry;
  *
@@ -101,6 +110,9 @@ package eapli.framework.application;
  *
  * @author Paulo Gandra Sousa
  */
-public interface UseCaseController {
+@Documented
+@Retention(SOURCE)
+@Target({ TYPE })
+public @interface UseCaseController {
     // empty
 }

@@ -20,9 +20,16 @@
  */
 package eapli.framework.util;
 
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
  * A Strategy is a GoF behavioral design pattern that allows a client to choose between different implementations of the
- * same algorithm. This is a marker interface.
+ * same algorithm.
  * <p>
  * <img src="strategy.svg">
  * </p>
@@ -53,6 +60,9 @@ package eapli.framework.util;
  * @enduml
  *         -->
  */
-public interface Strategy {
+@Documented
+@Retention(SOURCE)
+@Target({ TYPE })
+public @interface Strategy {
 
 }

@@ -127,7 +127,7 @@ public class Interval<T extends Serializable & Comparable<T>>
     }
 
     /**
-     * special private constructor for empty intervals.
+     * Special private constructor for empty intervals.
      *
      * @param b
      *            marker parameter to enable the compiler to distinguish the

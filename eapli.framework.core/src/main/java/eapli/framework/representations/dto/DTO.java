@@ -20,14 +20,24 @@
  */
 package eapli.framework.representations.dto;
 
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * A marker interface for DTOs. A Data Transfer Object is a "data bag" used for
+ * A Data Transfer Object is a "data bag" used for
  * interfacing between systems such as remote communication and the UI and the
  * domain layer.
  *
  * @author Paulo Gandra Sousa
  *
  */
-public interface DTO {
+@Documented
+@Retention(SOURCE)
+@Target({ TYPE })
+public @interface DTO {
     // empty
 }
