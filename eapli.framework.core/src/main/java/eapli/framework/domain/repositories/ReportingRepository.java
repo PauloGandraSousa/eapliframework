@@ -26,7 +26,7 @@ package eapli.framework.domain.repositories;
  * finders and save methods to support the application use cases, while a separte ReportingRepository should support the
  * reporting needs of the application.
  * <p>
- * <img src="reporting.svg"/>
+ * <img src="reporting.svg">
  * </p>
  *
  * @author Paulo Gandra Sousa
@@ -36,7 +36,7 @@ package eapli.framework.domain.repositories;
  *
  *           package domain{
  *           note "the domain is not needed for reporting" as N1
- * 
+ *
  *           Vehicle <|-down- Automobile
  *           Vehicle <|-down- MotorBike
  *           }
@@ -61,7 +61,7 @@ package eapli.framework.domain.repositories;
  *           note left of VehicleReportingRepository
  *           finder methods to support
  *           the reporting features
- * 
+ *
  *           return of these finders are DTOs
  *           end note
  *           }

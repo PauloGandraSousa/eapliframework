@@ -22,7 +22,7 @@
  * The Authz application layer
  *
  * <p>
- * <img src="authz.svg"/>
+ * <img src="authz.svg">
  * </p>
  *
  * @author Paulo Gandra de Sousa

@@ -46,7 +46,7 @@ package eapli.framework.domain.model;
  * specialization of more abstract concepts.
  * </p>
  * <p>
- * <img src="domain-inheritance.svg"/>
+ * <img src="domain-inheritance.svg">
  * </p>
  *
  * @param <I>

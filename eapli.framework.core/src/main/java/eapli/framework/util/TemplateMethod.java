@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * are customizable.
  *
  * <p>
- * <img src="template-method.svg"/>
+ * <img src="template-method.svg">
  * </p>
  *
  * @author Paulo Gandra Sousa 26/04/2020

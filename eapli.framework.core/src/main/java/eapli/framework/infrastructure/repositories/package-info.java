@@ -22,7 +22,7 @@
  * Repositories and base implementations for JPA, SpringData and In-Memory
  *
  * <p>
- * <img src="framework-base-repos.svg"/>
+ * <img src="framework-base-repos.svg">
  * </p>
  *
  * @author Paulo Gandra de Sousa

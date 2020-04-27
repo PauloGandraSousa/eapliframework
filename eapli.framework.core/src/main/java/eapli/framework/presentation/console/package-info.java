@@ -22,7 +22,7 @@
  * Simple presentation framework using the console.
  *
  * <p>
- * <img src="presentation.svg"/>
+ * <img src="presentation.svg">
  * </p>
  *
  * @author Paulo Gandra Sousa

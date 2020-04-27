@@ -64,7 +64,7 @@ import eapli.framework.domain.model.AggregateRoot;
  * specialized finders for the derived classes.
  * </p>
  * <p>
- * <img src="inheritance.svg"/>
+ * <img src="inheritance.svg">
  * </p>
  * <p>
  * If you are not using the DDD interfaces of the framework use

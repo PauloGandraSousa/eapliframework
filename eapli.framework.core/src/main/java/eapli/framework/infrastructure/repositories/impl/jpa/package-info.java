@@ -24,7 +24,7 @@
  * {@link eapli.framework.domain.repositories.DomainRepository DomainRepository}
  *
  * <p>
- * <img src="repositories-overview.svg"/>
+ * <img src="repositories-overview.svg">
  * </p>
  *
  * @author Paulo Gandra Sousa

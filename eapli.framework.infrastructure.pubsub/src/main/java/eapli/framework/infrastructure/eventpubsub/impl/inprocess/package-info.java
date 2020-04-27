@@ -22,7 +22,7 @@
  * In-memory pub/sub implementation.
  *
  * <p>
- * <img src="pubsub-inmemory.svg"/>
+ * <img src="pubsub-inmemory.svg">
  * </p>
  *
  * @author Paulo Gandra de Sousa

@@ -22,7 +22,7 @@
  * Pub/Sub.
  *
  * <p>
- * <img src="pubsub.svg"/>
+ * <img src="pubsub.svg">
  * </p>
  *
  * @author Paulo Gandra de Sousa
@@ -67,6 +67,6 @@
  *
  * @enduml
  *         -->
- * 
+ *
  */
 package eapli.framework.infrastructure.eventpubsub;

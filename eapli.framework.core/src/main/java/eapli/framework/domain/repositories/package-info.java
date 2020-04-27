@@ -22,7 +22,7 @@
  * Provides generic interfaces for building persistence layers following the
  * Repository pattern (acts as an in memory collection of entities).
  * <p>
- * <img src="overview-repositories.png"/>
+ * <img src="overview-repositories.png">
  * </p>
  *
  * @author Paulo Gandra Sousa

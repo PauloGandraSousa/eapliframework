@@ -24,7 +24,7 @@ package eapli.framework.util;
  * A Strategy is a GoF behavioral design pattern that allows a client to choose between different implementations of the
  * same algorithm. This is a marker interface.
  * <p>
- * <img src="strategy.svg"/>
+ * <img src="strategy.svg">
  * </p>
  *
  * @author Paulo Gandra de Sousa 26/04/2020

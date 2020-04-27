@@ -22,7 +22,7 @@
  * Simple Publish/Subscribe implementation with a database.
  *
  * <p>
- * <img src="overview-pubsub.svg"/>
+ * <img src="overview-pubsub.svg">
  * </p>
  *
  * @author Paulo Gandra de Sousa

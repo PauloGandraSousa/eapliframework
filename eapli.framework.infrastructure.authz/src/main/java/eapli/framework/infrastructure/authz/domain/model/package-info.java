@@ -22,7 +22,7 @@
  * The user domain model.
  *
  * <p>
- * <img src="user-domain-model.svg"/>
+ * <img src="user-domain-model.svg">
  * </p>
  *
  * @author Paulo Gandra de Sousa
