@@ -22,7 +22,7 @@ package eapli.framework.domain.model;
 
 import java.io.Serializable;
 
-import eapli.framework.domain.model.identities.Identifiable;
+import eapli.framework.identities.Identifiable;
 
 /**
  * An entity is a Domain-Driven Design pattern for concepts in the domain which

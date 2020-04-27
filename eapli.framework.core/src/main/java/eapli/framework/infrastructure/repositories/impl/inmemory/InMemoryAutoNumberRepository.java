@@ -20,7 +20,7 @@
  */
 package eapli.framework.infrastructure.repositories.impl.inmemory;
 
-import eapli.framework.domain.model.identities.impl.NumberSequenceGenerator;
+import eapli.framework.identities.impl.NumberSequenceGenerator;
 
 /**
  * An in-memory repository implementation that automatically generates a

@@ -39,11 +39,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
-import eapli.framework.domain.model.general.EmailAddress;
-import eapli.framework.domain.model.identities.impl.UUIDGenerator;
+import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.identities.impl.UUIDGenerator;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.representations.dto.GeneralDTO;
-import eapli.framework.util.Calendars;
+import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Invariants;
 import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitable;

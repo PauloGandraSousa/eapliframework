@@ -33,7 +33,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eapli.framework.domain.model.DomainFactory;
-import eapli.framework.domain.model.general.EmailAddress;
+import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 import eapli.framework.validations.Preconditions;
 

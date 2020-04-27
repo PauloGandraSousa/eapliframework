@@ -35,7 +35,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.util.Calendars;
+import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
 
 /**

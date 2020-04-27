@@ -32,8 +32,8 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import eapli.framework.domain.model.general.EmailAddress;
-import eapli.framework.util.Calendars;
+import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.time.util.Calendars;
 
 /**
  *

@@ -39,3 +39,18 @@ class `AbstractListUI<T>`
 class `ListUI<T>`
 
 - requires two additional parameters in the constructor: `headline` and `emptyMessage`
+
+package renaming to better follow vertical slicing
+
+- `eapli.framework.domain.model.general` -> `eapli.framework.general.domain.model`
+- `eapli.framework.domain.model.math` -> `eapli.framework.math.domain.model`
+- `eapli.framework.domain.model.time` -> `eapli.framework.time.domain.model`
+- `eapli.framework.domain.model.domains` -> `eapli.framework.domains.domain.model`
+- `eapli.framework.domain.model.identities.*` -> `eapli.framework.identities.*`
+- `eapli.framework.domain.activerecord` -> `eapli.framework.activerecord`
+
+class `Calendars` moved to `eapli.framework.time.util`
+
+class `NumberGenerator` moved to `eapli.framework.math.util`
+
+class `Math` moved to `eapli.framework.math.util`

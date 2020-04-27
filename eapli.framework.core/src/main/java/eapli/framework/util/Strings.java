@@ -23,6 +23,8 @@
  */
 package eapli.framework.util;
 
+import eapli.framework.math.util.NumberGenerator;
+
 /**
  * utility class for string manipulation.
  *

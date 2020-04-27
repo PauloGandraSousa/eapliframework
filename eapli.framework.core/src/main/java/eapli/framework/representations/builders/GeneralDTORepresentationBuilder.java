@@ -24,10 +24,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 
-import eapli.framework.domain.model.general.Description;
-import eapli.framework.domain.model.general.Designation;
-import eapli.framework.domain.model.general.EmailAddress;
-import eapli.framework.domain.model.general.Money;
+import eapli.framework.general.domain.model.Description;
+import eapli.framework.general.domain.model.Designation;
+import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.general.domain.model.Money;
 import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.dto.GeneralDTO;
 

@@ -29,8 +29,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import eapli.framework.domain.model.general.Money;
-import eapli.framework.util.Calendars;
+import eapli.framework.general.domain.model.Money;
+import eapli.framework.time.util.Calendars;
 
 /**
  *

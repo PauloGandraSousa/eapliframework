@@ -27,7 +27,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import eapli.framework.util.Calendars;
+import eapli.framework.time.util.Calendars;
 
 /**
  *

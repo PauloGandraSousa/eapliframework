@@ -25,7 +25,7 @@ import java.util.UUID;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.util.Calendars;
+import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
 
 /**

@@ -31,7 +31,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.Calendars;
+import eapli.framework.time.util.Calendars;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 

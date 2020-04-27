@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * A class that only has one object instance, i.e., Singleton.
  *
  * <p>
- * Singleton classes implementing must not allow to create more than one
+ * Singleton classes must not allow to create more than one
  * instance. Usually this is done by making the class final, making the
  * constructors private and providing a static method to access the only
  * instance of the class. For example:
