@@ -2,7 +2,9 @@
 
 ## 9.x.x --> 10.0.x
 
-`Controller` is renamed to `UseCaseController`
+interface `Controller` is deleted
+
+new `UseCaseController` annotation
 
 upgrade spring boot to 2.2.6
 
@@ -15,11 +17,15 @@ fix `SystemUserBuilder` NPE
 
 ### What's new:
 
-`Strategy` marker interface 
+`Strategy` annotation 
 
 `TemplateMethod` annotation
 
 ### Changes
+
+`ReportingRepository` is now an annotation and not a marker interface
+
+`DTO` is now an annotation and not a marker interface
 
 class `ExitWithMessageAction` 
 
