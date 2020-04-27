@@ -45,7 +45,8 @@ import eapli.framework.validations.StringPredicates;
  * @author Paulo Gandra Sousa
  *
  */
-public class GeneralDTO implements DTO, Map<String, Object> {
+@DTO
+public class GeneralDTO implements Map<String, Object> {
 
     private static final Logger LOGGER = LogManager.getLogger(GeneralDTO.class);
 
@@ -54,7 +55,7 @@ public class GeneralDTO implements DTO, Map<String, Object> {
 
     /**
      * Constructs a DTO
-     * 
+     *
      * @param type
      */
     public GeneralDTO(final String type) {
@@ -87,7 +88,8 @@ public class GeneralDTO implements DTO, Map<String, Object> {
      * @param dto
      */
     @SuppressWarnings({ "unchecked", "squid:S3011" })
-    private static void transformFieldToDTO(final Object subject, final Field aField, final GeneralDTO dto) {
+    private static void transformFieldToDTO(final Object subject, final Field aField,
+            final GeneralDTO dto) {
         final boolean oldAccessibility = aField.isAccessible();
         aField.setAccessible(true);
         try {
@@ -96,12 +98,15 @@ public class GeneralDTO implements DTO, Map<String, Object> {
             } else if (aField.getType().isArray()) {
                 if (aField.getType().getComponentType().isPrimitive()
                         || aField.getType().getComponentType() == String.class) {
-                    buildDtoForArray(aField.getType().getComponentType(), aField.getName(), aField.get(subject), dto);
+                    buildDtoForArray(aField.getType().getComponentType(), aField.getName(),
+                            aField.get(subject), dto);
                 } else {
-                    buildDtoForIterable(aField.getName(), (Iterable<Object>) (aField.get(subject)), dto);
+                    buildDtoForIterable(aField.getName(), (Iterable<Object>) (aField.get(subject)),
+                            dto);
                 }
             } else if (Collection.class.isAssignableFrom(aField.getType())) {
-                buildDtoForIterable(aField.getName(), (Iterable<Object>) (aField.get(subject)), dto);
+                buildDtoForIterable(aField.getName(), (Iterable<Object>) (aField.get(subject)),
+                        dto);
             } else {
                 dto.put(aField.getName(), of(aField.get(subject)));
             }
@@ -122,7 +127,8 @@ public class GeneralDTO implements DTO, Map<String, Object> {
 
     /**
      */
-    private static void buildDtoForIterable(final String name, final Iterable<Object> col, final GeneralDTO out) {
+    private static void buildDtoForIterable(final String name, final Iterable<Object> col,
+            final GeneralDTO out) {
 
         final Iterable<GeneralDTO> data = ofMany(col);
         out.put(name, data);
