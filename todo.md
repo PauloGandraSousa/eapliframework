@@ -9,12 +9,16 @@ Ideas about improvements
     - [annotation processing 101](http://hannesdorfmann.com/annotation-processing/annotationprocessing101)
     - [Baeldung](https://www.baeldung.com/java-annotation-processing-builder)
     - [jintin](https://medium.com/@jintin/annotation-processing-in-java-3621cb05343a)
+- JSR-380 Validation
+    - [Baeldung](https://www.baeldung.com/javax-validation)
+    - [Baeldung on method constraints](https://www.baeldung.com/javax-validation-method-constraints)
+    - [Baeldung on spring](https://www.baeldung.com/spring-boot-bean-validation)
+- Design by Contract
+    - [the checker framework](https://checkerframework.org/)
+    - [contracts for java](https://github.com/nhatminhle/cofoja#usage)
 - Java 8 time
     - [toughts on java](https://thoughts-on-java.org/persist-localdate-localdatetime-jpa/)
     - [baeldung](https://www.baeldung.com/spring-data-java-8)
-- POST the build result to the download page in bitbucket
-    - [deploying to bitbucket](https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html)
-    - [bitbucket api](https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Busername%7D/%7Brepo_slug%7D/downloads)
 - Functional
     - [memoization](https://dzone.com/articles/java-8-automatic-memoization)
     - discretedomain first?, rest/tail?
