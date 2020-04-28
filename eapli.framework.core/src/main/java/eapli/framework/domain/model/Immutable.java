@@ -86,8 +86,6 @@ import java.lang.annotation.Target;
  * <a href="https://www.yegor256.com/2014/06/09/objects-should-be-immutable.html">make all of your objects immutable</a>
  * by design.
  *
- *
- *
  * @author Paulo Gandra de Sousa 28/04/2020
  *
  */

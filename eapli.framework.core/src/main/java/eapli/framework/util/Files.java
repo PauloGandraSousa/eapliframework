@@ -24,13 +24,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Paths;
 
 /**
- * utility class for file manipulation.
- *
- * Favour the use of {@link org.apache.commons.io commons-io}
+ * Utility class for file manipulation.
+ * <p>
+ * Favour the use of {@link org.apache.commons.io commons-io}.
  *
  * @author Paulo Gandra Sousa
  */
@@ -42,12 +41,12 @@ public final class Files {
     }
 
     /**
-     * returns the current working directory of the application.
+     * Returns the current working directory of the application.
      *
      * <p>
      * Be careful not to expose this information to the outside as it may expose
-     * security risks - see
-     * https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4797&rule_key=squid%3AS4797
+     * security risks - see <a href=
+     * "squid:S4797">https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4797&rule_key=squid%3AS4797</a>
      *
      * @return the current working directory of the application
      */
@@ -75,14 +74,13 @@ public final class Files {
     }
 
     /**
-     * gets the full content of an input string as a single String. the input stream
-     * is still active and open after calling this method
+     * Gets the full content of an input string as a single String. The input stream
+     * is still active and open after calling this method.
      *
      * @param is
      *            the input stream
      * @return the correspondent UTF-8 String
      * @throws IOException
-     * @throws UnsupportedEncodingException
      */
     public static String contentOf(final InputStream is, final String encoding) throws IOException {
         final StringBuilder result = new StringBuilder();
@@ -96,6 +94,15 @@ public final class Files {
         return result.toString();
     }
 
+    /**
+     * Gets the full content of an input string as a single String encoded as UTF-8. The input stream
+     * is still active and open after calling this method.
+     *
+     * @param is
+     *            the input stream
+     * @return the correspondent UTF-8 String
+     * @throws IOException
+     */
     public static String contentOf(final InputStream is) throws IOException {
         return contentOf(is, "UTF-8");
     }

@@ -26,7 +26,7 @@ import java.math.RoundingMode;
 import eapli.framework.util.Utility;
 
 /**
- * Utility mathematical functions
+ * Utility mathematical functions.
  *
  * @author Paulo Gandra Sousa
  */
@@ -53,7 +53,8 @@ public final class Math {
      *            - exemplo 50
      * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
      */
-    public static float simpleLinearConversion(final float oldMin, final float oldMax, final float newMin,
+    public static float simpleLinearConversion(final float oldMin, final float oldMax,
+            final float newMin,
             final float newMax, final float oldValue) {
         return ((oldValue - oldMin) / (oldMax - oldMin)) * (newMax - newMin) + newMin;
     }
@@ -74,7 +75,8 @@ public final class Math {
      *            - exemplo 50
      * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
      */
-    public static BigDecimal simpleLinearConversion(final BigDecimal oldMin, final BigDecimal oldMax,
+    public static BigDecimal simpleLinearConversion(final BigDecimal oldMin,
+            final BigDecimal oldMax,
             final BigDecimal newMin, final BigDecimal newMax, final BigDecimal oldValue) {
         final BigDecimal a = oldValue.subtract(oldMin);
         final BigDecimal b = oldMax.subtract(oldMin);
@@ -85,7 +87,7 @@ public final class Math {
 
     /**
      * Calculates {@code base} to the power of {@code exp} as a long value
-     * instead of double from the standard Java Library
+     * instead of double from the standard Java Library.
      *
      * @param base
      * @param exp

@@ -36,7 +36,7 @@ import javax.xml.transform.stream.StreamSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * utility class for string formating
+ * Utility class for string formating.
  *
  * @author Paulo Gandra Sousa
  *
@@ -56,7 +56,7 @@ public final class StringFormater {
      * <a href= "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
      *
      * @param input
-     *              a JSON string
+     *            a JSON string
      * @return a pretty formatted JSON object
      */
     public static String prettyformatJson(final String input) {
@@ -73,7 +73,7 @@ public final class StringFormater {
      * returns a pretty formated XML string
      *
      * @param input
-     *              an XML string
+     *            an XML string
      * @return a pretty formated XML string
      */
     public static String prettyFormatXml(final String input) {

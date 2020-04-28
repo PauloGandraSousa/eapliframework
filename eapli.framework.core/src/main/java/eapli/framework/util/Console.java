@@ -233,7 +233,7 @@ public final class Console {
             try {
                 final String strDate = readLine(prompt);
                 final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
-                return Calendars.calendarFromDate(df.parse(strDate));
+                return Calendars.fromDate(df.parse(strDate));
             } catch (@SuppressWarnings("unused") final ParseException ex) {
                 // nothing to do
             }

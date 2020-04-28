@@ -42,7 +42,7 @@ public final class Arrays {
     }
 
     /**
-     * zips two double arrays in to one. That is, uses the {@code op} operator
+     * Zips two double arrays in to one. That is, uses the {@code op} operator
      * to combine the contents of both source arrays z(i) = op(a(i), b(i))
      *
      * @param a
@@ -63,8 +63,8 @@ public final class Arrays {
     }
 
     /**
-     * creates a new double array picking up the elements of the source array
-     * and applying a mapping function to each element
+     * Creates a new double array picking up the elements of the source array
+     * and applying a mapping function to each element.
      *
      * @param src
      * @param map
@@ -79,8 +79,8 @@ public final class Arrays {
     }
 
     /**
-     * creates a new array picking up the elements of the source array and
-     * applying a mapping function to each element
+     * Creates a new array picking up the elements of the source array and
+     * applying a mapping function to each element.
      *
      * @param <T>
      *            the type of the source elements
@@ -95,7 +95,8 @@ public final class Arrays {
      *            the mapping function from source to destination, T -> U
      * @return a new array with the mapped contents
      */
-    public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator, final Function<T, U> map) {
+    public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator,
+            final Function<T, U> map) {
         final U[] dest = creator.apply(src.length);
         for (int i = 0; i < src.length; i++) {
             dest[i] = map.apply(src[i]);
@@ -104,8 +105,8 @@ public final class Arrays {
     }
 
     /**
-     * applies a transformation to each element of an array, mutating the
-     * original array
+     * Applies a transformation to each element of an array, mutating the
+     * original array.
      *
      * @param dest
      * @param map
@@ -117,8 +118,8 @@ public final class Arrays {
     }
 
     /**
-     * applies a transformation to each element of an array, mutating the
-     * original array
+     * Applies a transformation to each element of an array, mutating the
+     * original array.
      *
      * @param dest
      * @param map
@@ -130,8 +131,8 @@ public final class Arrays {
     }
 
     /**
-     * checks whether an element is present in the array or not. this methods
-     * has O(n) complexity
+     * Checks whether an element is present in the array or not. This method
+     * has O(n) complexity.
      *
      * @param src
      * @param elem
@@ -142,8 +143,8 @@ public final class Arrays {
     }
 
     /**
-     * returns the index of an element is present in the array or -1 otherwise.
-     * this methods has O(n) complexity
+     * Returns the index of an element is present in the array or -1 otherwise.
+     * This method has O(n) complexity.
      *
      * @param src
      * @param elem

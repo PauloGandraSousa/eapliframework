@@ -38,8 +38,8 @@ public final class Collections {
     }
 
     /**
-     * Returns the number of elements in an iterable. performance-wise this method is of complexity O(n)
-     * as it needs to traverse the full iterator to determine its size
+     * Returns the number of elements in an iterable. Performance-wise this method is of complexity O(n)
+     * as it needs to traverse the full iterator to determine its size.
      *
      * @param col
      * @return the number of elements in an iterable.
@@ -64,7 +64,7 @@ public final class Collections {
     }
 
     /**
-     * Checks if a value exists in an array. performance-wise the complexity of this method is O(n)
+     * Checks if a value exists in an array. Performance-wise the complexity of this method is O(n).
      *
      * @param elements
      * @param x
