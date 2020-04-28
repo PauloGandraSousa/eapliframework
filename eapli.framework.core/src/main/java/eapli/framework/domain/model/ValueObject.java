@@ -25,7 +25,7 @@ import java.io.Serializable;
 /**
  * A value object is a Domain-Driven Design pattern for domain concepts which do
  * not have a thread of continuity neither need to be tracked by their identity
- * but for the value of its attributes. These are <b>immutable</b> objects which
+ * but for the value of its attributes. These are {@link Immutable} objects which
  * can be freely shared and discarded and replaced by another instance. Equality
  * is done thru comparison of the attributes values.
  * <p>
@@ -36,13 +36,6 @@ import java.io.Serializable;
  * <li>CustomerNumber
  * <li>Money
  * </ul>
- * </p>
- *
- * <p>
- * Make sure you don't provide mutator methods, always construct the object in a
- * valid state and all your private fields are marked final (If you are using
- * ORM tools you might need a default constructor in which case you won't be
- * able to make the fields final)
  * </p>
  *
  * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
@@ -68,6 +61,7 @@ import java.io.Serializable;
  *
  * @author Paulo Gandra Sousa
  */
+@Immutable
 public interface ValueObject extends Serializable {
 
     /**
