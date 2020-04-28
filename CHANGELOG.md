@@ -13,7 +13,7 @@ upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
 fix `SystemUserBuilder` NPE
 
 
-## 10.0.x --> 11.0.0
+## 11.0.x
 
 ### What's new:
 
@@ -21,7 +21,12 @@ fix `SystemUserBuilder` NPE
 
 `TemplateMethod` annotation
 
+`Immutable` annotation
+
+
 ### Changes
+
+method `Calendars#calendarFromDate()` renamed to `fromDate`
 
 `ReportingRepository` is now an annotation and not a marker interface
 

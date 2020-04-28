@@ -59,9 +59,9 @@ public final class Calendars {
     private static final int DAYS_TILL_END_OF_WEEK = 6;
 
     /**
-     * mock the system clock for unit testing
-     *
-     * suppress warning - we are protecting the variable with synchronize getter
+     * Mock the system clock for unit testing.
+     * <p>
+     * suppress warning squid:S2885 - we are protecting the variable with synchronize getter
      */
     @SuppressWarnings("squid:S2885") //
     private static Calendar frozenTime;
@@ -83,7 +83,6 @@ public final class Calendars {
     /**
      * Overrides the use of the system clock to allow unit testing.
      */
-
     /* package */ static synchronized void setNow(final Calendar frozenTime) {
         Calendars.frozenTime = frozenTime;
         nowFunction = Calendars::fakeNow;
@@ -108,7 +107,7 @@ public final class Calendars {
         return date.get(Calendar.WEEK_OF_YEAR);
     }
 
-    public static Calendar calendarFromDate(final Date date) {
+    public static Calendar fromDate(final Date date) {
         final Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal;
@@ -240,7 +239,7 @@ public final class Calendars {
         try {
             final SimpleDateFormat df = new SimpleDateFormat(format);
             final Date date = df.parse(aDateString);
-            return calendarFromDate(date);
+            return fromDate(date);
         } catch (final ParseException ex) {
             LOGGER.error(ex);
         }
