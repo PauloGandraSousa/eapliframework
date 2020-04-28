@@ -26,9 +26,9 @@ package eapli.framework.util;
 import eapli.framework.math.util.NumberGenerator;
 
 /**
- * utility class for string manipulation.
+ * Utility class for string manipulation.
  *
- * see also {@link org.apache.commons.lang3.StringUtils}
+ * @see org.apache.commons.lang3.StringUtils
  *
  * @author Paulo Gandra Sousa
  *

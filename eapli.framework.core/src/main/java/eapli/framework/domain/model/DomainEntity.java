@@ -44,6 +44,22 @@ import eapli.framework.identities.Identifiable;
  * </ul>
  * </p>
  *
+ *
+ * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * <blockquote>
+ * When an object is distinguished by its identity, rather than its attributes, make this primary
+ * to its definition in the model. Keep the class definition simple and focused on life cycle
+ * continuity and identity.
+ * Define a means of distinguishing each object regardless of its form or history. Be alert to
+ * requirements that call for matching objects by attributes. Define an operation that is
+ * guaranteed to produce a unique result for each object, possibly by attaching a symbol that
+ * is guaranteed unique. This means of identification may come from the outside, or it may be
+ * an arbitrary identifier created by and for the system, but it must correspond to the identity
+ * distinctions in the model.
+ * The model must define what it means to be the same thing.
+ * </blockquote>
+ *
+ *
  * <p>
  * Since we will provably persist entities using JPA we are also forcing the
  * implementation of {@code Serializable}.

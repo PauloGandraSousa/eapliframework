@@ -21,14 +21,22 @@
 package eapli.framework.domain.model;
 
 /**
- * A factory of domain objects. When creation of an entire, internally
+ * A factory of domain objects.
+ * <p>
+ * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * <blockquote>
+ * When creation of an entire, internally
  * consistent aggregate, or a large value object, becomes complicated or reveals
  * too much of the internal structure, factories provide encapsulation.
+ * <br>
+ * Shift the responsibility for creating instances of complex objects and aggregates to a
+ * separate object, which may itself have no responsibility in the domain model but is still
+ * part of the domain design. Provide an interface that encapsulates all complex assembly and
+ * that does not require the client to reference the concrete classes of the objects being
+ * instantiated. Create an entire aggregate as a piece, enforcing its invariants. Create a
+ * complex value object as a piece, possibly after assembling the elements with a builder.
+ * </blockquote>
  *
- * <p>
- * Factories will be very helpful to provide extension and modification in our code as they can hide the actual object
- * being created.
- * </p>
  *
  * @param <T>
  *            the type of object this factory builds.

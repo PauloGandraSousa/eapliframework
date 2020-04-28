@@ -22,7 +22,7 @@ package eapli.framework.domain.model;
 
 /**
  * An aggregate root is a Domain-Driven Design pattern for defining scopes of
- * change and "whole-objects". some entities cluster other objects (entities and
+ * change and "whole-objects". Some entities cluster other objects (entities and
  * value objects) which don't make sense to exist outside of that entity (e.g.,
  * OrderLine and Order).
  * <p>
@@ -40,6 +40,37 @@ package eapli.framework.domain.model;
  * <li>Product
  * </ol>
  * </p>
+ *
+ * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * <blockquote>
+ * Cluster the entities and value objects into aggregates and define boundaries around each.
+ * Choose one entity to be the root of each aggregate, and allow external objects to hold
+ * references to the root only (references to internal members passed out for use within a
+ * single operation only). Define properties and invariants for the aggregate as a whole and
+ * give enforcement responsibility to the root or some designated framework mechanism.
+ * <br>
+ * Use the same aggregate boundaries to govern transactions and distribution.
+ * Within an aggregate boundary, apply consistency rules synchronously. Across boundaries,
+ * handle updates asynchronously.
+ * </blockquote>
+ * <p>
+ * <b>Aggregate rules:</b>
+ * <ul>
+ * <li>The root Entity has global identity, entities inside the boundary have local identity, unique only within the
+ * Aggregate.
+ * <li>The root Entity can hand references to the internal Entities to other objects, but they can only use them
+ * transiently (within a single method or block).
+ * <li>Objects within the Aggregate can hold references to other Aggregate roots.
+ * <li>Nothing outside the Aggregate boundary can hold a reference to anything inside
+ * <li>Only Aggregate Roots can be obtained directly with database queries.  Everything else must be done through
+ * traversal.
+ * <li>A delete operation must remove everything within the Aggregate boundary all at once.
+ * <li>When a change to any object within the Aggregate boundary is committed, all invariants of the whole Aggregate
+ * must be satisfied.
+ * </ul>
+ *
+ * <p>
+ * <b>Aggregates and specialization (inheritance)</b>
  * <p>
  * In the case there is a specialization of domain concepts it is important to not think about implementation
  * inheritance but actual domain specialization. The point is not to reuse code but to capture concepts that are indeed

@@ -45,6 +45,15 @@ import java.io.Serializable;
  * able to make the fields final)
  * </p>
  *
+ * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * <blockquote>
+ * When you care only about the attributes and logic of an element of the model, classify it as
+ * a value object. Make it express the meaning of the attributes it conveys and give it related
+ * functionality. Treat the value object as immutable. Make all operations Side-effect-free
+ * Functions that don’t depend on any mutable state. Don’t give a value object any identity
+ * and avoid the design complexities necessary to maintain entities.
+ * </blockquote>
+ *
  * <p>
  * Check the <a href=
  * "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java

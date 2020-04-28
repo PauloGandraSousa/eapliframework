@@ -19,10 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * Main package for DDD
+ * Main package for DDD Domain Model.
  * <p>
  * <img src="overview-ddd.svg">
  * </p>
+ * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * <blockquote>
+ * Isolate the expression of the domain model and the business logic, and eliminate any
+ * dependency on infrastructure, user interface, or even application logic that is not business
+ * logic. Partition a complex program into layers. Develop a design within each layer that is
+ * cohesive and that depends only on the layers below. Follow standard architectural patterns
+ * to provide loose coupling to the layers above. Concentrate all the code related to the
+ * domain model in one layer and isolate it from the user interface, application, and
+ * infrastructure code. The domain objects, free of the responsibility of displaying themselves,
+ * storing themselves, managing application tasks, and so forth, can be focused on expressing
+ * the domain model. This allows a model to evolve to be rich enough and clear enough to
+ * capture essential business knowledge and put it to work.
+ * </blockquote>
  *
  * @author Paulo Gandra Sousa
  *
