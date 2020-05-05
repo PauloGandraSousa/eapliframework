@@ -38,16 +38,16 @@ import eapli.framework.validations.StringPredicates;
 public class Username implements ValueObject, Serializable, Comparable<Username> {
 
     private static final long serialVersionUID = 1L;
-    private final String theUsername;
+    private final String value;
 
     protected Username() {
         // for ORM
-        theUsername = null;
+        value = null;
     }
 
     protected Username(final String username) {
         Preconditions.ensure(StringPredicates.isSingleWord(username), "username should neither be null nor empty");
-        theUsername = username;
+        value = username;
     }
 
     /**
@@ -71,22 +71,22 @@ public class Username implements ValueObject, Serializable, Comparable<Username>
 
         final Username other = (Username) o;
 
-        return theUsername.equals(other.theUsername);
+        return value.equals(other.value);
 
     }
 
     @Override
     public String toString() {
-        return theUsername;
+        return value;
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().with(theUsername).code();
+        return new HashCoder().with(value).code();
     }
 
     @Override
     public int compareTo(final Username o) {
-        return theUsername.compareTo(o.theUsername);
+        return value.compareTo(o.value);
     }
 }

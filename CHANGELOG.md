@@ -71,4 +71,5 @@
 
 - property `Description.theDescription` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
 
+- property `Username.theUsername` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
 

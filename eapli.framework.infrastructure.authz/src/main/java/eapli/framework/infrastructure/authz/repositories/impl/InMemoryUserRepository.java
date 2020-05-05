@@ -29,7 +29,7 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 /**
- * The in-memory user repository. Note that
+ * The in-memory user repository.
  *
  * @author nuno on 20/03/16.
  */
