@@ -43,7 +43,8 @@ import eapli.framework.validations.Preconditions;
  *
  * <p>
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
- * interface; it acts as a Builder (GoF).
+ * interface; it acts as a Builder (GoF). For a class such as {@linkSystemUser} there is not really a need for a builder
+ * and a simple factory or even the constructor would suffice.
  */
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
@@ -75,7 +76,8 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
      * @param email
      * @return this builder
      */
-    public SystemUserBuilder with(final String userName, final String password, final String firstName,
+    public SystemUserBuilder with(final String userName, final String password,
+            final String firstName,
             final String lastName, final String email) {
         withUsername(userName);
         withPassword(password);
@@ -123,7 +125,8 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
      * @return this builder
      */
     public SystemUserBuilder withPassword(final String rawPassword) {
-        password = Password.encodedAndValid(rawPassword, policy, encoder).orElseThrow(IllegalArgumentException::new);
+        password = Password.encodedAndValid(rawPassword, policy, encoder)
+                .orElseThrow(IllegalArgumentException::new);
         return this;
     }
 
@@ -183,7 +186,8 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         if (createdOn == null) {
             theRoles = someRoles.stream().map(RoleAssignment::new).collect(Collectors.toList());
         } else {
-            theRoles = someRoles.stream().map(rt -> new RoleAssignment(rt, createdOn)).collect(Collectors.toList());
+            theRoles = someRoles.stream().map(rt -> new RoleAssignment(rt, createdOn))
+                    .collect(Collectors.toList());
         }
         roles.addAll(theRoles);
         return this;
@@ -206,7 +210,8 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
         }
         if (LOGGER.isDebugEnabled()) {
             final String roleLog = roles.roleTypes().toString();
-            LOGGER.debug("Creating new user [{}] {} ({} {}) with roles {}", user, username, name, email, roleLog);
+            LOGGER.debug("Creating new user [{}] {} ({} {}) with roles {}", user, username, name,
+                    email, roleLog);
         }
         return user;
     }
