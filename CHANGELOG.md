@@ -2,60 +2,64 @@
 
 ## 9.x.x --> 10.0.x
 
-interface `Controller` is deleted
+- interface `Controller` is deleted
 
-new `UseCaseController` annotation
+- new `UseCaseController` annotation
 
-upgrade spring boot to 2.2.6
+- upgrade spring boot to 2.2.6
 
-upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
+- upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
 
-fix `SystemUserBuilder` NPE
+- fix `SystemUserBuilder` NPE
 
 
 ## 11.0.x
 
 ### What's new:
 
-`Strategy` annotation 
+- `Strategy` annotation 
 
-`TemplateMethod` annotation
+- `TemplateMethod` annotation
 
-`Immutable` annotation
+- `Immutable` annotation
 
 
 ### Changes
 
-method `Calendars#calendarFromDate()` renamed to `fromDate`
+- method `Calendars#calendarFromDate()` renamed to `fromDate`
 
-`ReportingRepository` is now an annotation and not a marker interface
+- `ReportingRepository` is now an annotation and not a marker interface
 
-`DTO` is now an annotation and not a marker interface
+- `DTO` is now an annotation and not a marker interface
 
-class `ExitWithMessageAction` 
+- class `ExitWithMessageAction` 
+    - requires an argument in the constructor with the message to show
 
-- requires an argument in the constructor with the message to show
+- class `AbstractListUI<T>` 
+    - requires a new overide `emptyMessage()` with the message to show when there are no elements
+    - there is no overide of the `headline()` method 
 
-class `AbstractListUI<T>` 
+- class `ListUI<T>`
+    - requires two additional parameters in the constructor: `headline` and `emptyMessage`
 
-- requires a new overide `emptyMessage()` with the message to show when there are no elements
-- there is no overide of the `headline()` method 
+- package renaming to better follow vertical slicing
+    - `eapli.framework.domain.model.general` -> `eapli.framework.general.domain.model`
+    - `eapli.framework.domain.model.math` -> `eapli.framework.math.domain.model`
+    - `eapli.framework.domain.model.time` -> `eapli.framework.time.domain.model`
+    - `eapli.framework.domain.model.domains` -> `eapli.framework.domains.domain.model`
+    - `eapli.framework.domain.model.identities.*` -> `eapli.framework.identities.*`
+    - `eapli.framework.domain.activerecord` -> `eapli.framework.activerecord`
 
-class `ListUI<T>`
+- class `Calendars` moved to `eapli.framework.time.util`
 
-- requires two additional parameters in the constructor: `headline` and `emptyMessage`
+- class `NumberGenerator` moved to `eapli.framework.math.util`
 
-package renaming to better follow vertical slicing
+- class `Math` moved to `eapli.framework.math.util`
 
-- `eapli.framework.domain.model.general` -> `eapli.framework.general.domain.model`
-- `eapli.framework.domain.model.math` -> `eapli.framework.math.domain.model`
-- `eapli.framework.domain.model.time` -> `eapli.framework.time.domain.model`
-- `eapli.framework.domain.model.domains` -> `eapli.framework.domains.domain.model`
-- `eapli.framework.domain.model.identities.*` -> `eapli.framework.identities.*`
-- `eapli.framework.domain.activerecord` -> `eapli.framework.activerecord`
 
-class `Calendars` moved to `eapli.framework.time.util`
+## 11.1.0
 
-class `NumberGenerator` moved to `eapli.framework.math.util`
+### What's new
 
-class `Math` moved to `eapli.framework.math.util`
+- new overload `Collections.sizeOf(Collection)`
+

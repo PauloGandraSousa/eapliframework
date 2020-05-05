@@ -20,6 +20,7 @@
  */
 package eapli.framework.util;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,16 +42,27 @@ public final class Collections {
      * Returns the number of elements in an iterable. Performance-wise this method is of complexity O(n)
      * as it needs to traverse the full iterator to determine its size.
      *
+     * @param itens
+     * @return the number of elements in an iterable.
+     */
+    public static int sizeOf(final Iterable<?> itens) {
+        int numberOfElements = 0;
+        for (@SuppressWarnings({ "unused", "squid:S1481" })
+        final Object o : itens) {
+            numberOfElements++;
+        }
+        return numberOfElements;
+    }
+
+    /**
+     * Returns the number of elements in an iterable. This an overload of {@link #sizeOf(Iterable)} for performance
+     * reasons.
+     *
      * @param col
      * @return the number of elements in an iterable.
      */
-    public static int sizeOf(final Iterable<?> col) {
-        int i = 0;
-        for (@SuppressWarnings({ "unused", "squid:S1481" })
-        final Object o : col) {
-            i++;
-        }
-        return i;
+    public static int sizeOf(Collection<?> items) {
+        return items.size();
     }
 
     /**
