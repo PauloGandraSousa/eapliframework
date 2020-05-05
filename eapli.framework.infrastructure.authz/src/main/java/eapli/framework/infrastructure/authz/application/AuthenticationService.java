@@ -83,8 +83,10 @@ public class AuthenticationService {
         Preconditions.nonEmpty(username, "a username must be provided");
         Preconditions.nonEmpty(rawPassword, "a password must be provided");
 
-        final SystemUser newSession = retrieveUser(username).filter(u -> u.passwordMatches(rawPassword, encoder)
-                && u.isActive() && (noActionRightsToValidate(requiredRoles) || u.hasAny(requiredRoles))).orElse(null);
+        final SystemUser newSession = retrieveUser(username)
+                .filter(u -> u.passwordMatches(rawPassword, encoder) && u.isActive()
+                        && (noActionRightsToValidate(requiredRoles) || u.hasAny(requiredRoles)))
+                .orElse(null);
 
         return authz.createSessionForUser(newSession);
     }
@@ -130,7 +132,9 @@ public class AuthenticationService {
      *         session or the password could not be changed
      */
     public boolean changePassword(final String oldPassword, final String newPassword) {
-        return authz.session().map(u -> changePassword(u.authenticatedUser(), oldPassword, newPassword)).map(u -> true)
+        return authz.session()
+                .map(u -> changePassword(u.authenticatedUser(), oldPassword, newPassword))
+                .map(u -> true)
                 .orElse(false);
     }
 

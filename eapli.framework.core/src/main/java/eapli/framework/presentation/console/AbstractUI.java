@@ -21,7 +21,7 @@
 package eapli.framework.presentation.console;
 
 /**
- * simple user interface abstract base class for Console I/O. derived classes
+ * Simple user interface abstract base class for Console I/O. derived classes
  * should implement the purely abstract methods and client code should call the
  * final methods {@link #mainLoop} or {@link #show} - Template Method GoF
  * pattern
@@ -62,7 +62,7 @@ public abstract class AbstractUI {
     /**
      * Template Method pattern
      *
-     * @return true if the user wants to leave this UI
+     * @return {@code true} if the user wants to leave this UI
      */
     public boolean show() {
         drawFormTitle();
@@ -88,7 +88,8 @@ public abstract class AbstractUI {
     }
 
     protected void drawFormTitle(final String title) {
-        final String titleBorder = BORDER.substring(0, 2) + " " + title + " " + BORDER.substring(4 + title.length());
+        final String titleBorder = BORDER.substring(0, 2) + " " + title + " "
+                + BORDER.substring(4 + title.length());
         System.out.println(titleBorder);
     }
 }

@@ -58,14 +58,18 @@ import eapli.framework.validations.StringPredicates;
  * <a href="http://blog.xebia.com/tag/jpa-implementation-patterns/">JPA
  * implementation patterns</a>
  *
- * @param <T> the entity type that we want to build a repository for
- * @param <K> the primary key type of the table
- * @param <I> the type of the <b>business identity</b> of the entity
+ * @param <T>
+ *            the entity type that we want to build a repository for
+ * @param <K>
+ *            the primary key type of the table
+ * @param <I>
+ *            the type of the <b>business identity</b> of the entity
  *
  * @author Paulo Gandra Sousa
  *
  */
-public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements IterableRepository<T, K> {
+public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
+        implements IterableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
@@ -76,19 +80,22 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     private final String identityFieldName;
 
     /**
-     * constructs a repository
+     * Constructs a repository.
      *
-     * @param identityFieldName name of the field that serves as the <em>business
-     *                          identity</em> of the managed class
+     * @param identityFieldName
+     *            name of the field that serves as the <em>business
+     *            identity</em> of the managed class
      */
     @SuppressWarnings("unchecked")
     public JpaBaseRepository(final String identityFieldName) {
         final boolean isGeneric = getClass().getGenericSuperclass() instanceof ParameterizedType;
         if (!isGeneric) {
-            throw new IllegalStateException("The repository must be parametrized to a specific managed class");
+            throw new IllegalStateException(
+                    "The repository must be parametrized to a specific managed class");
         }
 
-        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+                .getGenericSuperclass();
         entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
         this.identityFieldName = identityFieldName;
     }
@@ -100,15 +107,13 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * adds a new entity to the persistence store
+     * Adds a new entity to the persistence store.
      *
      * @param entity
      * @return the newly created persistent object
-     * @throws IntegrityViolationException in case there is an underlying
-     *                                     persistence store exception. usually this
-     *                                     is caused by a constraint violation
-     *                                     (e.g., sql state 23505) but it will wrap
-     *                                     any persistence exception
+     * @throws IntegrityViolationException
+     *             in case there is an underlying persistence store exception. Usually this is caused by a constraint
+     *             violation (e.g., sql state 23505) but it will wrap any persistence exception
      */
     public T create(final T entity) {
         Preconditions.nonNull(entity);
@@ -122,7 +127,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * reads an entity given its K
+     * Reads an entity given its K.
      *
      * @param id
      * @return
@@ -164,13 +169,14 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      *
      * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsupportedOperationException if the delete operation makes no sense
-     *                                       for this repository
+     * @throws UnsupportedOperationException
+     *             if the delete operation makes no sense for this repository
      */
     public void deleteOfIdentity(final I entityId) {
         final String className = this.entityClass.getSimpleName();
         final Query cmd = entityManager()
-                .createQuery("DELETE FROM " + className + " e WHERE e." + identityFieldName() + " = :id");
+                .createQuery("DELETE FROM " + className + " e WHERE e." + identityFieldName()
+                        + " = :id");
         cmd.setParameter("id", entityId);
         cmd.executeUpdate();
     }
@@ -186,16 +192,14 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * Removes the object from the persistence storage. the object reference is
+     * Removes the object from the persistence storage. The object reference is
      * still valid but the persisted entity is marked as deleted in the entity
-     * manager
+     * manager.
      *
      * @param entity
-     * @throws IntegrityViolationException in case there is an underlying
-     *                                     persistence store exception. usually this
-     *                                     is caused by a constraint violation
-     *                                     (e.g., sql state 23505) but it will wrap
-     *                                     any persistence exception
+     * @throws IntegrityViolationException
+     *             in case there is an underlying persistence store exception. Usually this is caused by a constraint
+     *             violation (e.g., sql state 23505) but it will wrap any persistence exception.
      */
     @Override
     @SuppressWarnings("squid:S1226")
@@ -215,8 +219,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      *
      * @param entityId
      * @throws IntegrityViolationException
-     * @throws UnsupportedOperationException if the delete operation makes no sense
-     *                                       for this repository
+     * @throws UnsupportedOperationException
+     *             if the delete operation makes no sense for this repository
      */
     @Override
     public void deleteById(final K entityId) {
@@ -232,7 +236,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * Checks for the existence of an entity with the provided key.
      *
      * @param key
-     * @return true if there is an entity with the provided key.
+     * @return {@code true} if there is an entity with the provided key.
      */
     public boolean containsKey(final K key) {
         return findById(key).isPresent();
@@ -240,14 +244,14 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
 
     /**
      * Inserts or updates an entity <b>and commits</b>.
-     *
-     * note that you should reference the return value to use the persisted entity,
-     * as the original object passed as argument might be copied to a new object
-     *
-     * check <a href=
+     * <p>
+     * Note that you should reference the return value to use the persisted entity,
+     * as the original object passed as argument might be copied to a new object.
+     * </p>
+     * Check <a href=
      * "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
      * > JPA implementation patterns</a> for a discussion on saveOrUpdate() behavior
-     * and merge()
+     * and merge().
      *
      * @param entity
      * @return the persisted entity - might be a different object than the parameter
@@ -269,7 +273,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * helper method to create a type query
+     * Helper method to create a type query.
      *
      * @return
      */
@@ -279,9 +283,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * helper method to create a typed query. since this method concatenates the
+     * Helper method to create a typed query. Since this method concatenates the
      * where clause, be careful if this results from external input, e.g., user
-     * entered data, to avoid SQL injection exploits
+     * entered data, to avoid SQL injection exploits.
      *
      * @param where
      * @return
@@ -291,11 +295,12 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final String className = this.entityClass.getSimpleName();
-        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where, this.entityClass);
+        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
+                this.entityClass);
     }
 
     /**
-     * helper method to create a typed query with a where clause
+     * Helper method to create a typed query with a where clause.
      *
      * @param where
      * @param params
@@ -312,7 +317,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * helper method to create a typed query with a where clause
+     * Helper method to create a typed query with a where clause.
      *
      * @param where
      * @param params
@@ -365,7 +370,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * Fetch results according to result pagination when the results are too much
+     * Fetch results according to result pagination when the results are too much.
      *
      * @param pageNumber
      * @param pageSize
@@ -383,7 +388,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * returns a paged iterator.
+     * Returns a paged iterator.
      *
      * @return a paged iterator
      */
@@ -403,11 +408,12 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for objects that match the given criteria. be careful if the content
+     * Searches for objects that match the given criteria. Be careful if the content
      * of the where parameter is coming from external input, e.g., user entered
-     * data, to avoid SQL injection exploits
+     * data, to avoid SQL injection exploits.
      *
-     * @param where the where clause should use "e" as the query object
+     * @param where
+     *            the where clause should use "e" as the query object
      *
      * @return
      */
@@ -420,9 +426,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for objects that match the given criteria. be careful if the content
+     * Searches for objects that match the given criteria. Be careful if the content
      * of the where parameter is coming from external input, e.g., user entered
-     * data, to avoid SQL injection exploits
+     * data, to avoid SQL injection exploits.
      *
      * @param whereWithParameters
      * @param params
@@ -430,7 +436,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      */
     @SuppressWarnings("squid:S3346")
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
-        assert !StringPredicates.isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
+        assert !StringPredicates
+                .isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final TypedQuery<T> q = query(whereWithParameters, params);
@@ -438,11 +445,12 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for one object that matches the given criteria be careful if the
+     * Searches for one object that matches the given criteria. Be careful if the
      * content of the where parameter is coming from external input, e.g., user
-     * entered data, to avoid SQL injection exploits
+     * entered data, to avoid SQL injection exploits.
      *
-     * @param where the where clause should use "e" as the query object
+     * @param where
+     *            the where clause should use "e" as the query object
      * @return
      */
     protected Optional<T> matchOne(final String where) {
@@ -451,30 +459,33 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for one object that matches the given criteria with parameters be
+     * Searches for one object that matches the given criteria with parameters. Be
      * careful if the content of the where parameter is coming from external input,
-     * e.g., user entered data, to avoid SQL injection exploits
+     * e.g., user entered data, to avoid SQL injection exploits.
      *
-     * @param whereWithParameters the where clause should use "e" as the query
-     *                            object
-     * @param params              a map of the parameter name and its value to use
-     *                            in the query
+     * @param whereWithParameters
+     *            the where clause should use "e" as the query object
+     * @param params
+     *            a map of the parameter name and its value to use in the query
      * @return
      */
-    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters,
+            final Map<String, Object> params) {
         final TypedQuery<T> q = query(whereWithParameters, params);
         return getOptionalResult(q);
     }
 
     /**
-     * searches for one object that matches the given criteria with parameters be
+     * Searches for one object that matches the given criteria with parameters. Be
      * careful if the content of the where parameter is coming from external input,
-     * e.g., user entered data, to avoid SQL injection exploits
+     * e.g., user entered data, to avoid SQL injection exploits.
      *
-     * @param where the where clause should use "e" as the query object
-     * @param args  a list of parameters to be used in the query. each odd parameter
-     *              is assumed to be the name of the parameter; each even parameter
-     *              is assumed to be the value of the preceeding parameter
+     * @param where
+     *            the where clause should use "e" as the query object
+     * @param args
+     *            a list of parameters to be used in the query. Each odd parameter
+     *            is assumed to be the name of the parameter; each even parameter
+     *            is assumed to be the value of the preceding parameter.
      * @return
      */
     protected Optional<T> matchOne(final String where, final Object... args) {
@@ -483,14 +494,16 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * searches for objects that matches the given criteria with parameters be
+     * Searches for objects that matches the given criteria with parameters. Be
      * careful if the content of the where parameter is coming from external input,
-     * e.g., user entered data, to avoid SQL injection exploits
+     * e.g., user entered data, to avoid SQL injection exploits.
      *
-     * @param where the where clause should use "e" as the query object
-     * @param args  a list of parameters to be used in the query. each odd parameter
-     *              is assumed to be the name of the parameter; each even parameter
-     *              is assumed to be the value of the preceeding parameter
+     * @param where
+     *            the where clause should use "e" as the query object
+     * @param args
+     *            a list of parameters to be used in the query. Each odd parameter
+     *            is assumed to be the name of the parameter; each even parameter
+     *            is assumed to be the value of the preceding parameter.
      * @return
      */
     protected List<T> match(final String where, final Object... args) {
@@ -508,21 +521,21 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * returns the number of entities in the persistence store
+     * Returns the number of entities in the persistence store.
      *
      * @return the number of entities in the persistence store
      */
     @Override
     public long count() {
         final TypedQuery<Long> q = createQuery(
-                "SELECT COUNT(tablename) FROM " + entityClass.getSimpleName() + " tablename", Long.class);
+                "SELECT COUNT(tablename) FROM " + entityClass.getSimpleName() + " tablename",
+                Long.class);
         return q.getSingleResult();
     }
 
     /**
-     * returns the number of entities in the persistence store.
-     *
-     * alias to count() but using the List.size terminology
+     * Returns the number of entities in the persistence store. A alias to {@link #count()} but using the List.size
+     * terminology
      *
      * @return the number of entities in the persistence store
      */
@@ -531,7 +544,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     /**
-     * an iterator over JPA
+     * An iterator over JPA.
      *
      * @author Paulo Gandra Sousa
      *
