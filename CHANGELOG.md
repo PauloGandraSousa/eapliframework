@@ -1,16 +1,20 @@
 # EAPLI Framework Changelog
 
-## 9.x.x --> 10.0.x
+## 12.0.0
 
-- interface `Controller` is deleted
+### What's new
 
-- new `UseCaseController` annotation
+- new overload `Collections.sizeOf(Collection)`
 
-- upgrade spring boot to 2.2.6
+- "null" object `InMemoryTransactionalContext`
 
-- upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
+### Changes
 
-- fix `SystemUserBuilder` NPE
+- reverse the order of parametrized types in `InMemoryDomainRepository` to fix in memory repository: the data holder map was keyed by the KEY type and not by the TYPE type
+
+- property `Description.theDescription` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
+
+- property `Username.theUsername` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
 
 
 ## 11.0.x
@@ -57,19 +61,16 @@
 - class `Math` moved to `eapli.framework.math.util`
 
 
-## 12.0.0
+## 9.x.x --> 10.0.x
 
-### What's new
+- interface `Controller` is deleted
 
-- new overload `Collections.sizeOf(Collection)`
+- new `UseCaseController` annotation
 
-- "null" object `InMemoryTransactionalContext`
+- upgrade spring boot to 2.2.6
 
-### Changes
+- upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
 
-- reverse the order of parametrized types in `InMemoryDomainRepository` to fix in memory repository: the data holder map was keyed by the KEY type and not by the TYPE type
+- fix `SystemUserBuilder` NPE
 
-- property `Description.theDescription` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
-
-- property `Username.theUsername` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
 
