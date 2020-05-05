@@ -2,6 +2,8 @@
 
 Ideas about improvements
 
+- validator.inRange(long, long, long)
+- factories with tryBuild() which return Either<T, ConstraintViolations>
 - use annotations, e.g., Utilitarian
     - create a processor for @Utility that will force the class to be final and has no public constructors and will check that all methods are static
     - create a processor for @Singleton ? force the class to be final and has no public constructors
