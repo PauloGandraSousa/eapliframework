@@ -29,10 +29,12 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 /**
+ * The in-memory user repository. Note that
  *
- * Created by nuno on 20/03/16.
+ * @author nuno on 20/03/16.
  */
-public class InMemoryUserRepository extends InMemoryDomainRepository<Username, SystemUser> implements UserRepository {
+public class InMemoryUserRepository extends InMemoryDomainRepository<SystemUser, Username>
+        implements UserRepository {
 
     @Override
     public Iterable<SystemUser> findByActive(final boolean active) {

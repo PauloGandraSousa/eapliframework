@@ -25,7 +25,7 @@ import eapli.framework.identities.impl.NumberSequenceGenerator;
 
 /**
  * An in-memory repository implementation that automatically generates a
- * sequence for ID of each object
+ * sequence for ID of each object.
  *
  * @param <T>
  *            the entity type that we want to build a repository for
@@ -34,7 +34,7 @@ import eapli.framework.identities.impl.NumberSequenceGenerator;
  *
  */
 public class InMemoryDomainAutoNumberRepository<T extends AggregateRoot<Long>>
-        extends InMemoryDomainRepository<Long, T> {
+        extends InMemoryDomainRepository<T, Long> {
     private static NumberSequenceGenerator gen = new NumberSequenceGenerator();
 
     public InMemoryDomainAutoNumberRepository() {

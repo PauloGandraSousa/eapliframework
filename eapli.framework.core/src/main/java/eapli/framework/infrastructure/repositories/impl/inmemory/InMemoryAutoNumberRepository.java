@@ -24,7 +24,7 @@ import eapli.framework.identities.impl.NumberSequenceGenerator;
 
 /**
  * An in-memory repository implementation that automatically generates a
- * sequence for ID of each object
+ * sequence for ID of each object.
  *
  * @param <T>
  *            the entity type that we want to build a repository for

@@ -29,8 +29,8 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 /**
  * An in-memory repository that uses the domain object's identity as primary
- * key. expects the domain identity to be assigned to the object prior to
- * passing it to the repository
+ * key. Expects the domain identity to be assigned to the object prior to
+ * passing it to the repository.
  *
  * @param <T>
  *            the entity type that we want to build a repository for
@@ -39,7 +39,7 @@ import eapli.framework.domain.repositories.DomainRepository;
  *
  * @author Paulo Gandra de Sousa
  */
-public class InMemoryDomainRepository<I extends Comparable<I>/* & ValueObject */, T extends AggregateRoot<I>>
+public class InMemoryDomainRepository<T extends AggregateRoot<I>, I extends Comparable<I>/* & ValueObject */>
         extends InMemoryRepository<T, I> implements DomainRepository<I, T> {
 
     public InMemoryDomainRepository() {

@@ -86,10 +86,10 @@ import eapli.framework.domain.model.AggregateRoot;
  * {@link eapli.framework.infrastructure.repositories.Repository} instead
  * </p>
  *
- * @param <T>
- *            the type of the entity we want to manage in the repository.
  * @param <I>
  *            the type of the business identity of the entity.
+ * @param <T>
+ *            the type of the entity we want to manage in the repository.
  *
  * @author Paulo Gandra Sousa
  *

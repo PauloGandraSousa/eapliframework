@@ -37,9 +37,9 @@ import eapli.framework.infrastructure.repositories.IterableRepository;
 import eapli.framework.validations.Invariants;
 
 /**
- * An implementation of repositories in memory. useful for test purposes. this
+ * An implementation of repositories in memory. Useful for test purposes. This
  * class is parameterized with an identity generation mapping function in the
- * constructor
+ * constructor.
  *
  * @param <T>
  *            the type to be used of the objects stored in the repository
@@ -49,7 +49,7 @@ import eapli.framework.validations.Invariants;
 public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
 
     // Ideally this would be a typed generic Map but since it is a static member
-    // it cannot be generic. the solution is to use the old-style untyped Map
+    // it cannot be generic. The solution is to use the old-style untyped Map
     // and cast whenever needed
     @SuppressWarnings("rawtypes")
     private static final Map DATA = new HashMap();
