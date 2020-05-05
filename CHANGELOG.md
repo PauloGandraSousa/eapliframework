@@ -57,9 +57,18 @@
 - class `Math` moved to `eapli.framework.math.util`
 
 
-## 11.1.0
+## 12.0.0
 
 ### What's new
 
 - new overload `Collections.sizeOf(Collection)`
+
+- "null" object `InMemoryTransactionalContext`
+
+### Changes
+
+- reverse the order of parametrized types in `InMemoryDomainRepository` to fix in memory repository: the data holder map was keyed by the KEY type and not by the TYPE type
+
+- property `Description.theDescription` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
+
 
