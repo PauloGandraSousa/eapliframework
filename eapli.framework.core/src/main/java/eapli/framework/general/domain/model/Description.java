@@ -32,7 +32,7 @@ import eapli.framework.util.StringMixin;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Generic description concept.it must have some content but no special rules
+ * Generic description concept. It must have some content but no special rules
  * about the content exist.
  *
  * <p>
@@ -47,32 +47,32 @@ public class Description implements ValueObject, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
-    private final String theDescription;
+    private final String value;
 
     /**
-     * protected constructor. to construct a new Designation instance use the
-     * valueOf() method
+     * Protected constructor. To construct a new {@code Designation} instance use the
+     * {@link Description#valueOf(String)} method
      *
      * @param name
      */
     protected Description(final String name) {
         Preconditions.nonEmpty(name, "Description should neither be null nor empty");
 
-        theDescription = name;
+        value = name;
     }
 
     protected Description() {
         // for ORM
-        theDescription = null;
+        value = null;
     }
 
     @Override
     public int length() {
-        return theDescription.length();
+        return value.length();
     }
 
     /**
-     * factory method for obtaining Designation value objects.
+     * Factory method for obtaining Designation value objects.
      *
      * @param name
      * @return a new object corresponding to the value
@@ -91,16 +91,16 @@ public class Description implements ValueObject, Serializable, StringMixin {
         }
 
         final Description other = (Description) o;
-        return theDescription.equals(other.theDescription);
+        return value.equals(other.value);
     }
 
     @Override
     public String toString() {
-        return theDescription;
+        return value;
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().with(theDescription).code();
+        return new HashCoder().with(value).code();
     }
 }
