@@ -22,6 +22,9 @@ package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import java.util.Map;
 
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceException;
+
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.validations.Preconditions;
@@ -49,13 +52,16 @@ import eapli.framework.validations.Preconditions;
  *
  * @author Paulo Gandra Sousa
  */
-public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalContextRepository<T, K, I> {
+public class JpaTransactionalRepository<T, K, I>
+        extends JpaWithTransactionalContextRepository<T, K, I> {
 
-    public JpaTransactionalRepository(final String persistenceUnitName, final String identityFieldName) {
+    public JpaTransactionalRepository(final String persistenceUnitName,
+            final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName), identityFieldName);
     }
 
-    /* package */ JpaTransactionalRepository(final String persistenceUnitName, final Class<T> classz,
+    /* package */ JpaTransactionalRepository(final String persistenceUnitName,
+            final Class<T> classz,
             final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName), classz, identityFieldName);
     }
@@ -66,8 +72,10 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
     }
 
     /* package */ JpaTransactionalRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties, final Class<T> classz, final String identityFieldName) {
-        super(new JpaTransactionalContext(persistenceUnitName, properties), classz, identityFieldName);
+            @SuppressWarnings("rawtypes") final Map properties, final Class<T> classz,
+            final String identityFieldName) {
+        super(new JpaTransactionalContext(persistenceUnitName, properties), classz,
+                identityFieldName);
     }
 
     /**
@@ -117,7 +125,7 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
      * @param entityId
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
-     *                                       if the delete operation makes no sense for this repository
+     *             if the delete operation makes no sense for this repository
      */
     @Override
     public void deleteById(final K entityId) {
@@ -174,6 +182,13 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
             context().beginTransaction();
             entity = super.save(entity);
             context().commit();
+        } catch (final OptimisticLockException ex) {
+            throw new ConcurrencyException(ex);
+        } catch (final PersistenceException ex) {
+            if (ex.getCause() instanceof OptimisticLockException) {
+                throw new ConcurrencyException(ex);
+            }
+            throw new IntegrityViolationException(ex);
         } finally {
             context().close();
         }
