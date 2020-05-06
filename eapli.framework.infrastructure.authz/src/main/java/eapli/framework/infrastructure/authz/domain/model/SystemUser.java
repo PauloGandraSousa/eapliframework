@@ -64,7 +64,8 @@ import eapli.framework.visitor.Visitor;
  *
  */
 @Entity
-public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>, Visitable<GeneralDTO>, Serializable {
+public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
+        Visitable<GeneralDTO>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -115,7 +116,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         Preconditions.nonNull(roles, "roles cannot be null");
 
         final RoleSet roleset = new RoleSet();
-        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, createdOn)).collect(Collectors.toList()));
+        roleset.addAll(roles.stream().map(rt -> new RoleAssignment(rt, createdOn))
+                .collect(Collectors.toList()));
         init(username, password, name, email, roleset, createdOn);
     }
 
@@ -146,7 +148,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         init(username, password, name, email, roles, createdOn);
     }
 
-    private void init(final Username username, final Password password, final Name name, final EmailAddress email,
+    private void init(final Username username, final Password password, final Name name,
+            final EmailAddress email,
             final RoleSet roles, final Calendar createdOn) {
         Preconditions.noneNull(roles, username, password, name, email, createdOn);
 
@@ -178,7 +181,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         if (this == that) {
             return true;
         }
-        if (!username.equals(that.username) || !password.equals(that.password) || !name.equals(that.name)
+        if (!username.equals(that.username) || !password.equals(that.password)
+                || !name.equals(that.name)
                 || !email.equals(that.email) || roles.equals(that.roles)) {
             return false;
         }
@@ -201,7 +205,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     /**
      * Add role to user.
      *
-     * @param role Role to assign to SystemUser.
+     * @param role
+     *            Role to assign to SystemUser.
      */
     public void assignToRole(final RoleAssignment role) {
         roles.add(role);
@@ -210,7 +215,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
     /**
      * Add role to user.
      *
-     * @param role Role to assign to SystemUser.
+     * @param role
+     *            Role to assign to SystemUser.
      */
     public void assignToRole(final Role role) {
         Preconditions.nonNull(role);
@@ -222,7 +228,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
      * assignment is kept in the roles of the user. if the user is not assigned to
      * the role, this method does nothing.
      *
-     * @param role Role to remove from SystemUser.
+     * @param role
+     *            Role to remove from SystemUser.
      * @return true if the user had the role and it was unassigned. false otherwise.
      */
     public boolean unassignRole(final Role role) {

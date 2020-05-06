@@ -22,6 +22,7 @@ package eapli.framework.general.domain.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -47,6 +48,7 @@ public class Description implements ValueObject, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "description")
     private final String value;
 
     /**

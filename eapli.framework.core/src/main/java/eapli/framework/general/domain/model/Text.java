@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -59,7 +60,8 @@ public class Text implements ValueObject, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
-    private final String theText;
+    @Column(name = "text")
+    private final String value;
 
     /**
      * Text builder.
@@ -127,7 +129,7 @@ public class Text implements ValueObject, StringMixin {
     }
 
     private Text(final String text) {
-        theText = text;
+        value = text;
     }
 
     /**
@@ -168,7 +170,7 @@ public class Text implements ValueObject, StringMixin {
      * @return the number of lines in the text
      */
     public long lineCount() {
-        return theText.split("\\n", -1).length;
+        return value.split("\\n", -1).length;
     }
 
     /**
@@ -191,12 +193,12 @@ public class Text implements ValueObject, StringMixin {
     }
 
     private String[] wordArray() {
-        return theText.split("[\\s\\.,:;!\\?]+");
+        return value.split("[\\s\\.,:;!\\?]+");
     }
 
     @Override
     public String toString() {
-        return theText;
+        return value;
     }
 
     @Override
@@ -209,12 +211,12 @@ public class Text implements ValueObject, StringMixin {
         }
 
         final Text that = (Text) other;
-        return theText.equals(that.theText);
+        return value.equals(that.value);
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().with(theText).code();
+        return new HashCoder().with(value).code();
     }
 
     /**
@@ -234,6 +236,6 @@ public class Text implements ValueObject, StringMixin {
      * @return a new object
      */
     public Text allCaps() {
-        return valueOf(theText.toUpperCase());
+        return valueOf(value.toUpperCase());
     }
 }

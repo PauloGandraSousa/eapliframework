@@ -46,17 +46,18 @@ import eapli.framework.validations.Preconditions;
 public class Password implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Column(name = "pass")
-    private final String thePassword;
+
+    @Column(name = "password")
+    private final String value;
 
     protected Password() {
         // for ORM only
-        thePassword = null;
+        value = null;
     }
 
     /* package */ Password(final String password) {
         Preconditions.nonNull(password);
-        thePassword = password;
+        value = password;
     }
 
     /**
@@ -69,7 +70,8 @@ public class Password implements ValueObject, Serializable {
      * @return the new Password or an empty Optional if the passwords does not
      *         satisfies the password policy
      */
-    public static Optional<Password> encodedAndValid(final String rawPassword, final PasswordPolicy policy,
+    public static Optional<Password> encodedAndValid(final String rawPassword,
+            final PasswordPolicy policy,
             final PasswordEncoder encoder) {
         Preconditions.noneNull(rawPassword, policy, encoder);
 
@@ -89,12 +91,12 @@ public class Password implements ValueObject, Serializable {
         }
 
         final Password other = (Password) o;
-        return thePassword.equals(other.thePassword);
+        return value.equals(other.value);
     }
 
     @Override
     public int hashCode() {
-        return new HashCoder().with(thePassword).code();
+        return new HashCoder().with(value).code();
     }
 
     /**
@@ -109,6 +111,6 @@ public class Password implements ValueObject, Serializable {
      * for supporting Spring Security UserDetails
      */
     /* package */String value() {
-        return thePassword;
+        return value;
     }
 }

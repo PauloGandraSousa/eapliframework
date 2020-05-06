@@ -22,6 +22,7 @@ package eapli.framework.infrastructure.authz.domain.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
@@ -38,6 +39,8 @@ import eapli.framework.validations.StringPredicates;
 public class Username implements ValueObject, Serializable, Comparable<Username> {
 
     private static final long serialVersionUID = 1L;
+
+    @Column(name = "username")
     private final String value;
 
     protected Username() {
@@ -46,7 +49,8 @@ public class Username implements ValueObject, Serializable, Comparable<Username>
     }
 
     protected Username(final String username) {
-        Preconditions.ensure(StringPredicates.isSingleWord(username), "username should neither be null nor empty");
+        Preconditions.ensure(StringPredicates.isSingleWord(username),
+                "username should neither be null nor empty");
         value = username;
     }
 

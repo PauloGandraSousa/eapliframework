@@ -37,14 +37,18 @@ import eapli.framework.validations.Preconditions;
 public class Name implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @SuppressWarnings("squid:S4784")
-    private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z]+[a-zA-Z ]+$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z]+[a-zA-Z ]+$",
+            Pattern.CASE_INSENSITIVE);
+
     private final String firstName;
     private final String lastName;
 
     protected Name(final String firstName, final String lastName) {
         Preconditions.nonEmpty(firstName);
-        Preconditions.nonEmpty(lastName, "First name and last name should neither be null nor empty");
+        Preconditions.nonEmpty(lastName,
+                "First name and last name should neither be null nor empty");
         Preconditions.matches(VALID_NAME_REGEX, firstName, "Invalid First Name: " + firstName);
         Preconditions.matches(VALID_NAME_REGEX, lastName, "Invalid Last Name: " + lastName);
 
