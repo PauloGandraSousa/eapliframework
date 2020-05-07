@@ -26,11 +26,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -121,7 +124,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
         try {
             entityManager().persist(entity);
         } catch (final PersistenceException ex) {
-            throw new IntegrityViolationException(ex);
+            throw handlePersistenceException(ex);
         }
         return entity;
     }
@@ -210,7 +213,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
             entity = entityManager().merge(entity);
             entityManager().remove(entity);
         } catch (final PersistenceException ex) {
-            throw new IntegrityViolationException(ex);
+            throw handlePersistenceException(ex);
         }
     }
 
@@ -265,10 +268,19 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
         } catch (final OptimisticLockException ex) {
             throw new ConcurrencyException(ex);
         } catch (final PersistenceException ex) {
-            if (ex.getCause() instanceof OptimisticLockException) {
-                throw new ConcurrencyException(ex);
-            }
+            throw handlePersistenceException(ex);
+        }
+    }
+
+    private RuntimeException handlePersistenceException(final PersistenceException ex) {
+        if (ex.getCause() instanceof OptimisticLockException) {
+            throw new ConcurrencyException(ex);
+        }
+        if (ex.getCause() instanceof EntityExistsException
+                || ex.getCause() instanceof ConstraintViolationException) {
             throw new IntegrityViolationException(ex);
+        } else {
+            throw ex;
         }
     }
 

@@ -22,8 +22,11 @@ package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import java.util.Map;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
+import javax.persistence.RollbackException;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -91,6 +94,8 @@ public class JpaTransactionalRepository<T, K, I>
             context().beginTransaction();
             super.delete(entity);
             context().commit();
+        } catch (final RollbackException e) {
+            handleRollbackException(e);
         } finally {
             context().close();
         }
@@ -102,6 +107,8 @@ public class JpaTransactionalRepository<T, K, I>
             context().beginTransaction();
             super.deleteOfIdentity(entityId);
             context().commit();
+        } catch (final RollbackException e) {
+            handleRollbackException(e);
         } finally {
             context().close();
         }
@@ -114,6 +121,8 @@ public class JpaTransactionalRepository<T, K, I>
             final T r = super.update(entity);
             context().commit();
             return r;
+        } catch (final RollbackException e) {
+            throw handleRollbackException(e);
         } finally {
             context().close();
         }
@@ -133,6 +142,8 @@ public class JpaTransactionalRepository<T, K, I>
             context().beginTransaction();
             super.deleteById(entityId);
             context().commit();
+        } catch (final RollbackException e) {
+            handleRollbackException(e);
         } finally {
             context().close();
         }
@@ -151,6 +162,8 @@ public class JpaTransactionalRepository<T, K, I>
             context().beginTransaction();
             super.create(entity);
             context().commit();
+        } catch (final RollbackException e) {
+            handleRollbackException(e);
         } finally {
             context().close();
         }
@@ -182,17 +195,26 @@ public class JpaTransactionalRepository<T, K, I>
             context().beginTransaction();
             entity = super.save(entity);
             context().commit();
-        } catch (final OptimisticLockException ex) {
-            throw new ConcurrencyException(ex);
-        } catch (final PersistenceException ex) {
-            if (ex.getCause() instanceof OptimisticLockException) {
-                throw new ConcurrencyException(ex);
-            }
-            throw new IntegrityViolationException(ex);
+        } catch (final RollbackException e) {
+            handleRollbackException(e);
         } finally {
             context().close();
         }
 
         return entity;
+    }
+
+    private RuntimeException handleRollbackException(final RollbackException e) {
+        // get the cause PersistenceException
+        final Throwable ex = e.getCause();
+        if (ex.getCause() instanceof OptimisticLockException) {
+            throw new ConcurrencyException(e);
+        }
+        if (ex.getCause() instanceof EntityExistsException
+                || ex.getCause() instanceof ConstraintViolationException) {
+            throw new IntegrityViolationException(e);
+        } else {
+            throw e;
+        }
     }
 }
