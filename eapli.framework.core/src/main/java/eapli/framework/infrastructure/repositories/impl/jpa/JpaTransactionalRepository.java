@@ -82,11 +82,12 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     /**
-     * removes the object from the persistence storage. the object reference is still valid but the
-     * persisted entity is/will be deleted
+     * Removes the object from the persistence storage. The object reference is still "valid" but should not be used in
+     * the code afterwards. The persisted entity is/will be deleted in the database.
      *
      * @param entity
      * @throws IntegrityViolationException
+     * @throws RollbackException
      */
     @Override
     public void delete(final T entity) {
@@ -101,6 +102,13 @@ public class JpaTransactionalRepository<T, K, I>
         }
     }
 
+    /**
+     * Removes the object with the specified id from the persistence storage.
+     *
+     * @param entity
+     * @throws IntegrityViolationException
+     * @throws RollbackException
+     */
     @Override
     public void deleteOfIdentity(final I entityId) {
         try {
@@ -114,6 +122,25 @@ public class JpaTransactionalRepository<T, K, I>
         }
     }
 
+    /**
+     * Updates an object in the persistence store. Calling code should not use the {@code entity} reference aftewards
+     * and should instead use the return value of this method.
+     *
+     * <pre>
+     * <code>
+     * Person p = ...
+     * p.method1(..);
+     * ...
+     * Person u = repo.update(p); // p should not be used afterwards
+     * u.method2(..);
+     * ...
+     * </code>
+     * </pre>
+     *
+     * @param entity
+     * @throws IntegrityViolationException
+     * @throws RollbackException
+     */
     @Override
     public T update(final T entity) {
         try {
@@ -155,6 +182,7 @@ public class JpaTransactionalRepository<T, K, I>
      * @param entity
      * @return the newly created persistent object
      * @throws IntegrityViolationException
+     * @throws RollbackException
      */
     @Override
     public T create(final T entity) {
@@ -172,11 +200,24 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     /**
-     * Inserts or updates an entity <b>and commits</b>.
+     * Inserts or updates an entity.
      *
-     * note that you should reference the return value to use the persisted entity, as the original
-     * object passed as argument might be copied to a new object
+     * <p>
+     * Note that you should reference the return value to use the persisted entity, as the original
+     * object passed as argument might be copied to a new object.
      *
+     * <pre>
+     * <code>
+     * Person p = ...
+     * p.method1(..);
+     * ...
+     * Person u = repo.save(p); // p should not be used afterwards
+     * u.method2(..);
+     * ...
+     * </code>
+     * </pre>
+     *
+     * <p>
      * check
      * <a href= "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
      * > JPA implementation patterns</a> for a discussion on saveOrUpdate() Behaviour and merge()
@@ -185,6 +226,7 @@ public class JpaTransactionalRepository<T, K, I>
      * @return the persisted entity - might be a different object than the parameter
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
+     * @throws RollbackException
      */
     @Override
     @SuppressWarnings("squid:S1226")

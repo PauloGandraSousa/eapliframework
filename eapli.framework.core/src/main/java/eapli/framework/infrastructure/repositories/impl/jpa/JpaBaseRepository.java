@@ -189,6 +189,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      *
      * @param entity
      * @return the managed entity reference.
+     * @see JpaBaseRepository#save
      */
     public T update(final T entity) {
         return save(entity);
@@ -246,10 +247,22 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Inserts or updates an entity <b>and commits</b>.
+     * Inserts or updates an entity.
      * <p>
      * Note that you should reference the return value to use the persisted entity,
      * as the original object passed as argument might be copied to a new object.
+     *
+     * <pre>
+     * <code>
+     * Person p = ...
+     * p.method1(..);
+     * ...
+     * Person u = repo.save(p); // p should not be used afterwards
+     * u.method2(..);
+     * ...
+     * </code>
+     * </pre>
+     *
      * </p>
      * Check <a href=
      * "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
@@ -260,6 +273,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      * @return the persisted entity - might be a different object than the parameter
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
+     * @throws PersistenceException
      */
     @Override
     public <S extends T> S save(final S entity) {
