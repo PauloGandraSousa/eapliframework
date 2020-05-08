@@ -1,5 +1,9 @@
 # EAPLI Framework Changelog
 
+## 12.0.1
+
+- fix transaction handling
+
 ## 12.0.0
 
 ### What's new
