@@ -29,7 +29,7 @@ import java.nio.file.Paths;
 /**
  * Utility class for file manipulation.
  * <p>
- * Favour the use of {@link org.apache.commons.io commons-io}.
+ * Favour the use of <a href="https://commons.apache.org/proper/commons-io/">org.apache.commons.io</>.
  *
  * @author Paulo Gandra Sousa
  */
@@ -37,7 +37,7 @@ import java.nio.file.Paths;
 public final class Files {
 
     private Files() {
-        // to make sure this is a utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**
@@ -74,7 +74,7 @@ public final class Files {
     }
 
     /**
-     * Gets the full content of an input string as a single String. The input stream
+     * Gets the full content of an input stream as a single String. The input stream
      * is still active and open after calling this method.
      *
      * @param is
@@ -95,7 +95,7 @@ public final class Files {
     }
 
     /**
-     * Gets the full content of an input string as a single String encoded as UTF-8. The input stream
+     * Gets the full content of an input stream as a single String encoded as UTF-8. The input stream
      * is still active and open after calling this method.
      *
      * @param is

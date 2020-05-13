@@ -40,7 +40,7 @@ public final class NumberGenerator {
     private static final Random RANDOM_GEN = new Random(Calendars.now().getTimeInMillis());
 
     private NumberGenerator() {
-        // ensure utility
+        // ensure no instantiation as this is a utility class
     }
 
     /**

@@ -36,7 +36,8 @@ import eapli.framework.util.Utility;
  * String -> Boolean
  * </pre>
  *
- * See also {@link org.apache.commons.lang3.StringUtils}
+ * See also <a href=
+ * "https://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html">org.apache.commons.lang3.StringUtils</a>
  *
  * @author Paulo Gandra Sousa
  *
@@ -51,14 +52,15 @@ public final class StringPredicates {
     private static final String HEADING_WHITESPACE_REGEX = "^[ \t]+.*";
 
     private StringPredicates() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**
-     * checks if a string is a valid email address.
+     * Checks if a string is a valid email address.
      *
      * <p>
-     * see also (and favor the use of) {@code org.apache.commons.validator.routines.EmailValidator}
+     * See also (and favor the use of) <a href=
+     * "http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/EmailValidator.html">org.apache.commons.validator.routines.EmailValidator</a>
      *
      * @param text
      * @return wether a string is a valid email address or not

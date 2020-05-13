@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Helper class for hashCode() method implementation.
+ * Helper class for {@code hashCode()} method implementation.
  *
  * <p>
  * Example usage:
@@ -58,11 +58,12 @@ import java.util.Objects;
  * </code>
  * </pre>
  * <p>
- * Check this <a href=
- * "https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">stackoverflow</a>
+ * Check <a href=
+ * "https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">this stackoverflow</a>
  * thread for insights on how to properly calculate an hash code.
  * <p>
- * See also {@link org.apache.commons.lang3.builder.HashCodeBuilder}
+ * See also <a href=
+ * "https://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/builder/HashCodeBuilder.html">org.apache.commons.lang3.builder.HashCodeBuilder</a>
  *
  * @author Paulo Gandra Sousa
  *

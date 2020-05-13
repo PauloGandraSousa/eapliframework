@@ -38,7 +38,7 @@ import eapli.framework.validations.Preconditions;
 public final class Arrays {
 
     private Arrays() {
-        // ensure utility
+        // ensure no instantiation as this is a utility class
     }
 
     /**

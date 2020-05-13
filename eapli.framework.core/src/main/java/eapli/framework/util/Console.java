@@ -55,7 +55,7 @@ public final class Console {
     private static final Logger LOGGER = LogManager.getLogger(Console.class);
 
     private Console() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**

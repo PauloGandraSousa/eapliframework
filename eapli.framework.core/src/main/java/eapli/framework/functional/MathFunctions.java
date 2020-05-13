@@ -62,7 +62,8 @@ public final class MathFunctions {
      * Java Lambdas</a>
      *
      * <p>
-     * see also {@code org.apache.commons.math4.primes.Primes}
+     * see also <a href=
+     * "https://commons.apache.org/proper/commons-math/apidocs/org/apache/commons/math4/primes/Primes.html">org.apache.commons.math4.primes.Primes</a>
      *
      * @param number
      * @return whether a number is prime or not.

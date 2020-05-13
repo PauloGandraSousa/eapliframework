@@ -26,7 +26,9 @@ import java.util.List;
 /**
  * Utility functions to handle Collections.
  * <p>
- * See also Apache Common Iterable Utils.
+ * See also <a href=
+ * "https://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/IterableUtils.html">Apache
+ * Common Iterable Utils</a>.
  *
  * @author Paulo Gandra Sousa
  *
@@ -35,7 +37,7 @@ import java.util.List;
 public final class Collections {
 
     private Collections() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**
@@ -45,23 +47,23 @@ public final class Collections {
      * @param itens
      * @return the number of elements in an iterable.
      */
+    @SuppressWarnings({ "unused", "squid:S1481" })
     public static int sizeOf(final Iterable<?> itens) {
         int numberOfElements = 0;
-        for (@SuppressWarnings({ "unused", "squid:S1481" })
-        final Object o : itens) {
+        for (final Object o : itens) {
             numberOfElements++;
         }
         return numberOfElements;
     }
 
     /**
-     * Returns the number of elements in an iterable. This an overload of {@link #sizeOf(Iterable)} for performance
-     * reasons.
+     * Returns the number of elements in an iterable. Since most of the times an Iterable will be an objecs that extends
+     * Collection, this more specialized overload of {@link #sizeOf(Iterable)} will provide better performance.
      *
      * @param col
      * @return the number of elements in an iterable.
      */
-    public static int sizeOf(Collection<?> items) {
+    public static int sizeOf(final Collection<?> items) {
         return items.size();
     }
 

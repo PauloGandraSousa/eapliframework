@@ -27,8 +27,9 @@ import eapli.framework.math.util.NumberGenerator;
 
 /**
  * Utility class for string manipulation.
- *
- * @see org.apache.commons.lang3.StringUtils
+ * <p>
+ * See also <a href=
+ * "https://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html">org.apache.commons.lang3.StringUtils</a>
  *
  * @author Paulo Gandra Sousa
  *
@@ -39,7 +40,7 @@ public final class Strings {
     private static final String CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     private Strings() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**

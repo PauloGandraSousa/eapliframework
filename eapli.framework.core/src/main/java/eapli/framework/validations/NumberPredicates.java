@@ -39,7 +39,7 @@ import eapli.framework.util.Utility;
 public final class NumberPredicates {
 
     private NumberPredicates() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**
@@ -50,7 +50,8 @@ public final class NumberPredicates {
      * <a href ="http://www.mkyong.com/java/how-to-determine-a-prime-number-in-java/">mkyong</a>
      *
      * <p>
-     * See also {@code org.apache.commons.math4.primes.Primes}
+     * See also <a href=
+     * "https://commons.apache.org/proper/commons-math/apidocs/org/apache/commons/math4/primes/Primes.html">org.apache.commons.math4.primes.Primes</a>
      *
      * @param number
      * @return whether a number is prime or not
@@ -72,7 +73,7 @@ public final class NumberPredicates {
      * Checks if a number is positive (greater than zero)
      *
      * @param number
-     *               the number to check
+     *            the number to check
      * @return true if number is positive
      */
     public static boolean isPositive(final long number) {
@@ -83,7 +84,7 @@ public final class NumberPredicates {
      * Checks if a number is negative (less than zero)
      *
      * @param number
-     *               the number to check
+     *            the number to check
      * @return true if number is positive
      */
     public static boolean isNegative(final long number) {
@@ -94,7 +95,7 @@ public final class NumberPredicates {
      * Checks if a number is positive (greater than zero) or zero
      *
      * @param number
-     *               the number to check
+     *            the number to check
      * @return true if number is positive or zero
      */
     public static boolean isNonNegative(final long number) {
@@ -115,7 +116,7 @@ public final class NumberPredicates {
      * Checks if a number is odd.
      *
      * @param number
-     *               the number to be tested
+     *            the number to be tested
      * @return wether a number is odd or not
      */
     public static boolean isOdd(final long number) {
@@ -126,7 +127,7 @@ public final class NumberPredicates {
      * checks if a number is even.
      *
      * @param number
-     *               the number to be tested
+     *            the number to be tested
      * @return true if a number is even.
      */
     public static boolean isEven(final long number) {

@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 public final class NumberFormater {
 
     private NumberFormater() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     public static String format(final BigDecimal amount) {

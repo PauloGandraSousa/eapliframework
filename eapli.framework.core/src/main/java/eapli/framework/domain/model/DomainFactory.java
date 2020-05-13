@@ -53,7 +53,10 @@ public interface DomainFactory<T extends DomainEntity<?>> {
      * pattern) where a series of steps to provide the necessary information to
      * the object constructor is previously loaded into the builder.
      *
-     * @see org.apache.commons.lang3.builder.Builder
+     * <p>
+     * <a href=
+     * "http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/builder/Builder.html">org.apache.commons.lang3.builder.Builder</a>
+     *
      * @return a newly (properly) created domain entity
      */
     T build();

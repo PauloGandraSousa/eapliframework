@@ -66,6 +66,8 @@ public final class Calendars {
     @SuppressWarnings("squid:S2885") //
     private static Calendar frozenTime;
 
+    private static Supplier<Calendar> nowFunction = Calendars::realNow;
+
     private static synchronized Calendar fakeNow() {
         return frozenTime;
     }
@@ -74,10 +76,8 @@ public final class Calendars {
         return new GregorianCalendar();
     }
 
-    private static Supplier<Calendar> nowFunction = Calendars::realNow;
-
     private Calendars() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**

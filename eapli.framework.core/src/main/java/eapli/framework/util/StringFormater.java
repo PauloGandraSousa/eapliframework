@@ -45,7 +45,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public final class StringFormater {
 
     private StringFormater() {
-        // ensure utility
+        // ensure no instantiation as this is a utility class
     }
 
     /**

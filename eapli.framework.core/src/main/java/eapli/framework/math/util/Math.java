@@ -34,7 +34,7 @@ import eapli.framework.util.Utility;
 public final class Math {
 
     private Math() {
-        // to make sure this is an utility class
+        // ensure no instantiation as this is a utility class
     }
 
     /**

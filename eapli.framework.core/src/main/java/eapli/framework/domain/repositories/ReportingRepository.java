@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * @startuml reporting.svg
  *
  *           package domain{
- *           note "the domain is not needed for reporting" as N1
+ *           note "the domain is not needed \nfor reporting" as N1
  *
  *           Vehicle <|-down- Automobile
  *           Vehicle <|-down- MotorBike
@@ -50,14 +50,20 @@ import java.lang.annotation.Target;
  *
  *           package dto{
  *           class AutomobilesGroupedByNumberOfDoors <<DTO>> {
+ *           +numberOfDoors
+ *           +licensePlate
+ *           . . .
  *           }
  *           class VehiclesGroupedByHorsePowerRange <<DTO>>{
+ *           +horsePowerRange
+ *           +licensePlate
+ *           . . .
  *           }
  *           }
  *
  *           package repositories{
  *
- *           class VehicleReportingRepository{
+ *           interface VehicleReportingRepository{
  *           +findAllAutomobilesGroupedByNumberOfDoors()
  *           +findAllVehiclesGroupedByHorsePowerRange()
  *           }
