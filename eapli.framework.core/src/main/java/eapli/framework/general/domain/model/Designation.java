@@ -25,8 +25,8 @@ import javax.persistence.Embeddable;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.StringMixin;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.StringMixin;
 import eapli.framework.validations.Preconditions;
 import eapli.framework.validations.StringPredicates;
 

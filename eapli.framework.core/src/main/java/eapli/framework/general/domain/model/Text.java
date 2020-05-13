@@ -32,9 +32,9 @@ import javax.persistence.Embeddable;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.StringMixin;
 import eapli.framework.util.Factory;
 import eapli.framework.util.HashCoder;
-import eapli.framework.util.StringMixin;
 
 /**
  * A Text composed of lines. lines are separated by the \n character; words are
