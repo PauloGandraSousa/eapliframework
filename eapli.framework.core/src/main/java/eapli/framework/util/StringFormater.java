@@ -38,9 +38,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Utility class for string formating.
  *
+ * @deprecated use the {@link eapli.framework.strings.FormattedString FormattedString} classes instead
+ * @see eapli.framework.strings.FormattedString
  * @author Paulo Gandra Sousa
  *
  */
+@Deprecated
 @Utility
 public final class StringFormater {
 
@@ -70,7 +73,7 @@ public final class StringFormater {
     }
 
     /**
-     * returns a pretty formated XML string
+     * Returns a pretty formated XML string
      *
      * @param input
      *            an XML string
@@ -81,7 +84,7 @@ public final class StringFormater {
     }
 
     /**
-     * returns a formated XML output.
+     * Returns a formated XML output.
      * <p>
      * Based in code from
      * <a href= "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java"> stack
