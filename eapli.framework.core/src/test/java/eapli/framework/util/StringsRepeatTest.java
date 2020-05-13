@@ -27,6 +27,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import eapli.framework.strings.util.Strings;
+
 /**
  *
  * @author Paulo Gandra Sousa

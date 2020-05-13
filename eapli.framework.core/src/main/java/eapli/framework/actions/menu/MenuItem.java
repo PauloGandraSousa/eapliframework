@@ -23,7 +23,7 @@ package eapli.framework.actions.menu;
 import java.util.Optional;
 
 import eapli.framework.actions.Action;
-import eapli.framework.util.Strings;
+import eapli.framework.strings.util.Strings;
 import eapli.framework.validations.Preconditions;
 
 /**

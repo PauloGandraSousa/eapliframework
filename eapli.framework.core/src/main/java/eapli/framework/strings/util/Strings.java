@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.util;
+package eapli.framework.strings.util;
 
 import eapli.framework.math.util.NumberGenerator;
+import eapli.framework.util.Utility;
 
 /**
  * Utility class for string manipulation.
@@ -78,7 +79,7 @@ public final class Strings {
     }
 
     /**
-     * truncates a string to a specified length
+     * Truncates a string to a specified length.
      *
      * @param org
      *            the string to truncate
