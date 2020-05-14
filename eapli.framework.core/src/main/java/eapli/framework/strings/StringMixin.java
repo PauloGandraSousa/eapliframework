@@ -56,13 +56,13 @@ public interface StringMixin {
      * Checks if this string matches the regular expression {@code regex}
      *
      * <p>
-     * Note that regular expression might cause security issues. see <a href=
+     * Note that regular expression might cause security issues. See <a href=
      * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS4784&rule_key=squid%3AS4784">squid:S4784</a>
      *
      * @see java.lang.String#matches(String)
      *
      * @param regex
-     * @return true if this string matches the regular expression {@code regex}
+     * @return {@code true} if this string matches the regular expression {@code regex}
      */
     @SuppressWarnings("squid:S4784")
     default boolean matches(final String regex) {

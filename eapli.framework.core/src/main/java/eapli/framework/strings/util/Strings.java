@@ -87,7 +87,7 @@ public final class Strings {
      *            the desired length
      * @return the original string if the desired length is less than the actual
      *         length of the original string. otherwise a string composed of the
-     *         first len characters from the original string
+     *         first {@code len} characters from the original string
      */
     public static String truncate(final String org, final int len) {
         return len < org.length() ? org.substring(0, len) : org;
@@ -113,7 +113,7 @@ public final class Strings {
     }
 
     /**
-     * returns the last n chars of a string.
+     * Returns the last n chars of a string.
      *
      * @param org
      *            the string to extract characters from
@@ -130,7 +130,7 @@ public final class Strings {
     }
 
     /**
-     * constructs a string with the same character repeated n times.
+     * Constructs a string with the same character repeated n times.
      *
      * @param symbol
      *            the character to repeat

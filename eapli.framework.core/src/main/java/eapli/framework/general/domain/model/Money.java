@@ -113,7 +113,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * Constructs a new Money object.
      *
      * @param amount
-     *                 the amount in the units of currency, e.g., 100.50 EUR
+     *            the amount in the units of currency, e.g., 100.50 EUR
      * @param currency
      */
     public Money(final double amount, final Currency currency) {
@@ -217,7 +217,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
          */
         Preconditions.nonNull(zero);
 
-        return Collector.of(() -> new MoneyCollector(zero), (a, e) -> a.add(e), (a1, a2) -> a1.combine(a2),
+        return Collector.of(() -> new MoneyCollector(zero), (a, e) -> a.add(e),
+                (a1, a2) -> a1.combine(a2),
                 a -> a.current);
     }
 
@@ -278,7 +279,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * @param arg
      * @return a new Money with the value of the addition
      * @throws IllegalArgumentException
-     *                                  if the currencies are not the same
+     *             if the currencies are not the same
      */
     public Money add(final Money arg) {
         /*
@@ -296,7 +297,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      * @param arg
      * @return a new value corresponding to the subtraction
      * @throws IllegalArgumentException
-     *                                  if the currencies are not the same
+     *             if the currencies are not the same
      */
     public Money subtract(final Money arg) {
         return add(arg.negate());
@@ -487,7 +488,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * scraped from http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html
+     * Scraped from
+     * <a href="http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html">cameotutorials</a>
      *
      * @return a formatted representation of this Money value based on the rules defined by the currency
      *         Locale
