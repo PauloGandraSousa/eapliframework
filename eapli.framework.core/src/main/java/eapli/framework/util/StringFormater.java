@@ -20,20 +20,8 @@
  */
 package eapli.framework.util;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.XMLConstants;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import eapli.framework.strings.PrettyJsonString;
+import eapli.framework.strings.PrettyXmlString;
 
 /**
  * Utility class for string formating.
@@ -54,22 +42,12 @@ public final class StringFormater {
     /**
      * Returns a pretty formatted JSON object.
      *
-     * <p>
-     * From
-     * <a href= "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
-     *
      * @param input
      *            a JSON string
      * @return a pretty formatted JSON object
      */
     public static String prettyformatJson(final String input) {
-        try {
-            final ObjectMapper mapper = new ObjectMapper();
-            final Object json = mapper.readValue(input, Object.class);
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
-        } catch (final IOException e) {
-            throw new IllegalArgumentException("Formatting to JSON:" + input, e);
-        }
+        return new PrettyJsonString(input).toString();
     }
 
     /**
@@ -80,36 +58,17 @@ public final class StringFormater {
      * @return a pretty formated XML string
      */
     public static String prettyFormatXml(final String input) {
-        return prettyFormatXml(input, 2);
+        return new PrettyXmlString(input).toString();
     }
 
     /**
      * Returns a formated XML output.
-     * <p>
-     * Based in code from
-     * <a href= "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java"> stack
-     * overflow</a>
      *
      * @param input
      * @param indent
      * @return a formated XML
      */
     public static String prettyFormatXml(final String input, final int indent) {
-        final Source xmlInput = new StreamSource(new StringReader(input));
-        final StringWriter stringWriter = new StringWriter();
-        final StreamResult xmlOutput = new StreamResult(stringWriter);
-        final TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        try {
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
-            transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            transformerFactory.setAttribute("indent-number", indent);
-            final Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.transform(xmlInput, xmlOutput);
-        } catch (final TransformerException e) {
-            throw new IllegalArgumentException(e);
-        }
-        return xmlOutput.getWriter().toString();
+        return new PrettyXmlString(input, indent).toString();
     }
 }
