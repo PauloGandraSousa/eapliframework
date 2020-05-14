@@ -25,49 +25,64 @@ package eapli.framework.general.domain.model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Locale;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.general.domain.model.Money;
-
 /**
- * test cases for the toString() method of the class Money
+ * Test cases for the toString() method of the class Money.
  *
  * @author Paulo Gandra Sousa
  *
  */
 public class MoneyToStringTest {
 
+    private static Locale oldDefault;
+
+    @BeforeClass
+    public static void setUpClass() {
+        oldDefault = Locale.getDefault();
+        Locale.setDefault(new Locale("pt-PT"));
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        Locale.setDefault(oldDefault);
+    }
+
     @Test
     public void oneDecimalPlace() {
         final Money instance = Money.euros(125.5);
-        final String expected = "125.5 EUR";
+        final String expected = "EUR 125.50";
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void threeDecimalPlace() {
         final Money instance = Money.euros(125.527);
-        final String expected = "125.53 EUR";
+        final String expected = "EUR 125.53";
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void onlyCents() {
-        final String expected = "0.09 EUR";
+        final String expected = "EUR 0.09";
         final Money instance = Money.euros(0.09);
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void noDecimalPlaces() {
-        final String expected = "9.0 EUR";
+        final String expected = "EUR 9.00";
         final Money instance = Money.euros(9);
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void bigAmount() {
-        final String expected = "999999999999.53 EUR";
+        final String expected = "EUR 999,999,999,999.53";
         final Money instance = Money.euros(999999999999.53);
         assertEquals(expected, instance.toString());
     }

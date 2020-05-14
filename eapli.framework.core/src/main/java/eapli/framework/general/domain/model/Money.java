@@ -480,7 +480,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Checks if this amount is zero
+     * Checks if this amount is zero.
      *
      * @author Paulo Gandra de Sousa
      * @return true if this amount is zero
@@ -490,11 +490,12 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Return s a formatted representation of this money value according to the Locale currency format.
+     * Returns a formatted representation of this money value according to the Locale currency format.
      * <p>
      * Scraped from
      * <a href="http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html">cameotutorials</a>
      *
+     * @author Paulo Gandra de Sousa
      * @return a formatted representation of this Money value based on the rules defined by the currency
      *         Locale
      */
@@ -504,6 +505,16 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
         nf.setCurrency(currency);
         nf.setGroupingUsed(true);
         nf.setMaximumFractionDigits(currency.getDefaultFractionDigits());
-        return nf.format(amount.doubleValue());
+        return nf.format(amount().doubleValue());
+    }
+
+    /**
+     * Returns a simple representation of the amount and the currency code.
+     *
+     * @author Paulo Gandra de Sousa
+     * @return
+     */
+    public String toSimpleString() {
+        return amountAsDouble() + " " + currency();
     }
 }
