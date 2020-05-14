@@ -32,6 +32,7 @@ import javax.persistence.Embeddable;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.FormattedString;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -90,7 +91,7 @@ import eapli.framework.validations.Preconditions;
  */
 @Embeddable
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class Money implements Comparable<Money>, Serializable, ValueObject {
+public class Money implements Comparable<Money>, Serializable, ValueObject, FormattedString {
 
     private static final long serialVersionUID = 1L;
 
@@ -245,11 +246,12 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
     }
 
     /**
-     * Returns the amount portion of this Money object.
+     * Returns the amount portion of this Money object as a {@code double}. Notice that there might be precision
+     * problems.
      *
      * @return the amount portion of this Money object
      */
-    public double amount() {
+    public double amountAsDouble() {
         /*
          * Notice that I [Martin Fowler] use a BigInteger. In Java I could equally well use a BigDecimal,
          * but in many languages an integer is the only decent option, so using an integer seems the best
@@ -260,7 +262,12 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
         return amount.doubleValue() / HUNDRED;
     }
 
-    public BigDecimal amountAsDecimal() {
+    /**
+     * Returns the amount portion of this Money object.
+     *
+     * @return the amount portion of this Money object
+     */
+    public BigDecimal amount() {
         return new BigDecimal(amount).divide(BigDecimal.valueOf(HUNDRED));
     }
 
@@ -331,7 +338,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
      *
      */
     public Money multiply(final double arg) {
-        return new Money(amount() * arg, currency);
+        return new Money(amountAsDouble() * arg, currency);
     }
 
     /**
@@ -482,19 +489,17 @@ public class Money implements Comparable<Money>, Serializable, ValueObject {
         return signum() == 0;
     }
 
-    @Override
-    public String toString() {
-        return BigDecimal.valueOf(amount()) + " " + currency();
-    }
-
     /**
+     * Return s a formatted representation of this money value according to the Locale currency format.
+     * <p>
      * Scraped from
      * <a href="http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html">cameotutorials</a>
      *
      * @return a formatted representation of this Money value based on the rules defined by the currency
      *         Locale
      */
-    public String formatted() {
+    @Override
+    public String toString() {
         final NumberFormat nf = NumberFormat.getCurrencyInstance();
         nf.setCurrency(currency);
         nf.setGroupingUsed(true);

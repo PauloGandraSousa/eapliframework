@@ -54,13 +54,13 @@ public class MoneyTest {
     @Test
     public void ensureDollarsHasRightAmount() {
         final Money subject = Money.dollars(1);
-        assertEquals(1, subject.amount(), 0.01);
+        assertEquals(1, subject.amountAsDouble(), 0.01);
     }
 
     @Test
     public void ensureEurosHasRightAmount() {
         final Money subject = Money.euros(1);
-        assertEquals(1, subject.amount(), 0.01);
+        assertEquals(1, subject.amountAsDouble(), 0.01);
     }
 
     @Test

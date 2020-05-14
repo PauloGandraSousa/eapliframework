@@ -341,7 +341,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     private void appendMoneyObject(final Money value) {
         buffer.append('{');
-        appendNativeProperty("amount", String.valueOf(value.amount()));
+        appendNativeProperty("amount", String.valueOf(value.amountAsDouble()));
         appendStringProperty("currency", value.currency().getCurrencyCode());
         buffer.append('}');
     }
