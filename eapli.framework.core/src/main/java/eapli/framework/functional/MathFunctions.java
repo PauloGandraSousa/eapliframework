@@ -42,7 +42,7 @@ public final class MathFunctions {
      * Counts the number of primes up to a certain number.
      *
      * <p>
-     * scraped from <a href=
+     * Scraped from <a href=
      * "http://www.oreilly.com/programming/free/files/object-oriented-vs-functional-programming.pdf">Using
      * Java Lambdas</a>
      *
@@ -54,15 +54,17 @@ public final class MathFunctions {
     }
 
     /**
-     * Checks whether a number is prime or not.
+     * Checks whether a number is prime or not using a functional descriptive style. This might not be the most
+     * optimized way to calculate a prime number but it is the descriptive way (the mathematical definition) of what a
+     * prime number is.
      *
      * <p>
-     * scraped from <a href=
+     * Scraped from <a href=
      * "http://www.oreilly.com/programming/free/files/object-oriented-vs-functional-programming.pdf">Using
      * Java Lambdas</a>
      *
      * <p>
-     * see also <a href=
+     * See also <a href=
      * "https://commons.apache.org/proper/commons-math/apidocs/org/apache/commons/math4/primes/Primes.html">org.apache.commons.math4.primes.Primes</a>
      *
      * @param number
