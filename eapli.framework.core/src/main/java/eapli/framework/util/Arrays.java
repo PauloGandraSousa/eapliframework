@@ -136,7 +136,7 @@ public final class Arrays {
      *
      * @param src
      * @param elem
-     * @return true if the element is present in the array
+     * @return {@code true} if the element is present in the array
      */
     public static <T> boolean contains(final T[] src, final T elem) {
         return indexOf(src, elem) != -1;

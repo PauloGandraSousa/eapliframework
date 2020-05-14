@@ -76,20 +76,4 @@ public final class Collections {
     public static <T extends Enum<T>> List<T> listFromEnum(final Class<T> e) {
         return java.util.Arrays.asList(e.getEnumConstants());
     }
-
-    /**
-     * Checks if a value exists in an array. Performance-wise the complexity of this method is O(n).
-     *
-     * @param elements
-     * @param x
-     * @return true if the value exists in the array.
-     */
-    public static <T> boolean contains(final T[] elements, final T x) {
-        for (final T e : elements) {
-            if (e.equals(x)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
