@@ -331,7 +331,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     /**
      * Multiplies this Money object by a scalar and returns the result as a new Money. Business-wise it
      * doesn't make sense to perform 5 EUR * 3 EUR but it makes sense to perform 12 * 5 EUR, e.g., to
-     * get the total annual sum of a monthly payment
+     * get the total annual sum of a monthly payment, or .06 * 100 EUR to calculate the VAT value of a grocery item.
      *
      * @param arg
      * @return a new Money with the value of the multiplication
