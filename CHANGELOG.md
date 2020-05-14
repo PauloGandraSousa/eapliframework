@@ -1,5 +1,32 @@
 # EAPLI Framework Changelog
 
+## 13.0.0
+
+### What's new
+
+- `FormattedString` (and its specializations `PrettyXmlString`, `PrettyJsonString`, `FormattedMoney`)
+
+- `Money` class implements `FormattedString`
+
+- `Money.amountAsDouble`
+
+### Changes
+
+- deprecated `Stringformatter`; you should use the OO-way `FormattedString` classes
+
+- removed `NumberFormatter` class
+
+- removed `Collections.contains` as it was duplicated from `Arrays.contains`
+
+- moved `StringMixin` to `eapli.framework.strings` package
+
+- moved `Strings` to `eapli.framework.strings.util` package
+
+- `Money.amountAsDecimal` renamed to `Money.amount`. This method name was already in use returning a `double`, now it returns a `BigDecimal`. For the `double` value use `amountAsDouble`
+
+- removed `Money.formatted`
+
+
 ## 12.0.1
 
 - fix transaction handling
