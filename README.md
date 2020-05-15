@@ -1,6 +1,6 @@
 # EAPLI Framework
 
-Version: **10.0.2**
+Version: **12.0.1**
 
 ## What is this repository for?
 
