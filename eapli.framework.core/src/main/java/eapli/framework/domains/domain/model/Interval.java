@@ -210,7 +210,7 @@ public class Interval<T extends Serializable & Comparable<T>>
     }
 
     @SuppressWarnings("rawtypes")
-    private static final Interval EMPTY = new Interval(true);
+    private static final Interval<?> EMPTY = new Interval<>(true);
 
     /**
      * Returns an empty interval, i.e., [].
