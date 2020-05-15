@@ -94,7 +94,7 @@ public final class Strings {
     }
 
     /**
-     * Returns the first n chars of a string.
+     * Returns the first <i>n</i> chars of a string.
      *
      * @param org
      *            the string to extract the characters from
@@ -113,7 +113,7 @@ public final class Strings {
     }
 
     /**
-     * Returns the last n chars of a string.
+     * Returns the last <i>n</i> chars of a string.
      *
      * @param org
      *            the string to extract characters from
@@ -130,7 +130,7 @@ public final class Strings {
     }
 
     /**
-     * Constructs a string with the same character repeated n times.
+     * Constructs a string with the same character repeated <i>n</i> times.
      *
      * @param symbol
      *            the character to repeat
@@ -147,5 +147,39 @@ public final class Strings {
             n--;
         }
         return b.toString();
+    }
+
+    /**
+     * Constructs a left padded string from another string.
+     *
+     * @param src
+     *            the string to pad
+     * @param length
+     *            the expected size of the return string. If {@code length} is less than the length of the original
+     *            string, the original string is returned.
+     * @param padding
+     *            the character to use as padding
+     * @return left padded string
+     */
+    public static String leftPadded(final String src, final int length, final char padding) {
+        final String fmt = "%" + length + "s";
+        return String.format(fmt, src).replace(' ', padding);
+    }
+
+    /**
+     * Constructs a right padded string from another string.
+     *
+     * @param src
+     *            the string to pad
+     * @param length
+     *            the expected size of the return string. If {@code length} is less than the length of the original
+     *            string, the original string is returned.
+     * @param padding
+     *            the character to use as padding
+     * @return right padded string
+     */
+    public static String rightPadded(final String src, final int length, final char padding) {
+        final String fmt = "%-" + length + "s";
+        return String.format(fmt, src).replace(' ', padding);
     }
 }

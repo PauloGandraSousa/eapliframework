@@ -33,7 +33,7 @@ import eapli.framework.strings.util.Strings;
  *
  * @author Paulo Gandra Sousa
  */
-public class StringsTest {
+public class StringsTruncateTest {
 
     private static final String TEST_STRING = "1234567890";
 
