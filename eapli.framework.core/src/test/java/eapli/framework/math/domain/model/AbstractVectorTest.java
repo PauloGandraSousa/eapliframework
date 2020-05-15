@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import eapli.framework.math.domain.model.Vector;
 import eapli.framework.math.domain.model.Vector.VectorType;
-import eapli.framework.validations.NumberPredicates;
+import eapli.framework.math.util.NumberPredicates;
 
 /**
  *

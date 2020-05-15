@@ -28,9 +28,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
+import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
-import eapli.framework.validations.StringPredicates;
 
 /**
  * an email address.

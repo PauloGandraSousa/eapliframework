@@ -38,8 +38,8 @@ import org.hibernate.exception.ConstraintViolationException;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.repositories.IterableRepository;
+import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
-import eapli.framework.validations.StringPredicates;
 
 /**
  * An utility class for implementing JPA repositories. This class' methods don't

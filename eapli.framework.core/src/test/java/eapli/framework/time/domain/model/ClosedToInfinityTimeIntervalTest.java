@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.time.util.domain.model;
+package eapli.framework.time.domain.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -38,20 +38,14 @@ import eapli.framework.time.util.Calendars;
  * @author Paulo Gandra de Sousa
  *
  */
-public class ClosedTimeIntervalTest {
+public class ClosedToInfinityTimeIntervalTest {
 
     private static final Calendar START = Calendars.of(2017, 05, 01);
-    private static final Calendar END = Calendars.of(2017, 05, 15);
-    private static TimeInterval INSTANCE = new TimeInterval(START, END);
+    private static TimeInterval INSTANCE = new TimeInterval(START);
 
     @Test
     public void ensureIncludesStart() {
         assertTrue("Start is not included", INSTANCE.includes(START));
-    }
-
-    @Test
-    public void ensureIncludesEnd() {
-        assertTrue("End is not included", INSTANCE.includes(END));
     }
 
     @Test
@@ -62,16 +56,16 @@ public class ClosedTimeIntervalTest {
     }
 
     @Test
+    public void ensureIncludesInTheFuture() {
+        final Calendar mid = (Calendar) START.clone();
+        mid.add(Calendar.YEAR, 2000);
+        assertTrue("Mid is not included", INSTANCE.includes(mid));
+    }
+
+    @Test
     public void ensureDoesntIncludeBeforeStart() {
         final Calendar before = (Calendar) START.clone();
         before.add(Calendar.DATE, -2);
         assertFalse("Mid is not included", INSTANCE.includes(before));
-    }
-
-    @Test
-    public void ensureDoesntIncludeAfterEnd() {
-        final Calendar after = (Calendar) END.clone();
-        after.add(Calendar.DATE, 2);
-        assertFalse("Mid is not included", INSTANCE.includes(after));
     }
 }

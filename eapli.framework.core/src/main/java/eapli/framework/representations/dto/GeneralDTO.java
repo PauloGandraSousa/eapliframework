@@ -35,8 +35,8 @@ import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
-import eapli.framework.validations.StringPredicates;
 
 /**
  * A general collection of key-value pairs to work as a DTO avoiding to create your own custom DTO

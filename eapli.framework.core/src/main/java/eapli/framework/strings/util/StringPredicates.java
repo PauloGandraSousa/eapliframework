@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.validations;
+package eapli.framework.strings.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,8 +71,8 @@ public final class StringPredicates {
     }
 
     /**
-     * Checks if a string is a "phrase". phrases are not empty and do not have heading or trailing
-     * spaces
+     * Checks if a string is a "phrase". Phrases are not empty and do not have heading or trailing
+     * spaces.
      *
      * @param text
      * @return wether a string is a "phrase" or not
@@ -149,7 +149,7 @@ public final class StringPredicates {
     /**
      * Checks whether a string contains any of the characters of the second string, without using
      * regular expressions to avoid potential security threats at the expense of performance. The
-     * complexity of this method O(n^2)
+     * complexity of this method O(n^2).
      *
      * @param subject
      * @param chars

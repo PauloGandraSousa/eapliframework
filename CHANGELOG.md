@@ -28,6 +28,12 @@
 
 - removed `Money.formatted`
 
+- `StringPredicates` moved to `eapli.framework.strings.util`
+
+- `CalendarPredicates` moved to `eapli.framework.time.util`
+
+- `NumberPredicates` moved to `eapli.framework.math.util`
+
 
 ## 12.0.1
 

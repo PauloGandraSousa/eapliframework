@@ -31,8 +31,8 @@ import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.time.util.Calendars;
-import eapli.framework.validations.StringPredicates;
 
 /**
  * Utility class for reading different data types from the Console.

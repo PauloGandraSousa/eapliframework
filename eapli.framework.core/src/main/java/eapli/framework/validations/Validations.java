@@ -26,6 +26,8 @@ import java.util.regex.Pattern;
 
 import eapli.framework.actions.Action;
 import eapli.framework.actions.Actions;
+import eapli.framework.math.util.NumberPredicates;
+import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.util.Utility;
 
 /**

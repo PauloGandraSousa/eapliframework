@@ -26,9 +26,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
-import eapli.framework.validations.StringPredicates;
 
 /**
  * A user name. It must not be empty.
