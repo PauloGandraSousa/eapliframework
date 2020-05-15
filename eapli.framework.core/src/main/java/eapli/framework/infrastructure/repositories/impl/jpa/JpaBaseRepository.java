@@ -30,7 +30,6 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -176,12 +175,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      *             if the delete operation makes no sense for this repository
      */
     public void deleteOfIdentity(final I entityId) {
-        final String className = this.entityClass.getSimpleName();
-        final Query cmd = entityManager()
-                .createQuery("DELETE FROM " + className + " e WHERE e." + identityFieldName()
-                        + " = :id");
-        cmd.setParameter("id", entityId);
-        cmd.executeUpdate();
+        ofIdentity(entityId).ifPresent(this::delete);
     }
 
     /**

@@ -1,5 +1,10 @@
 # EAPLI Framework Changelog
 
+## 13.0.1
+
+- `deleteOfIdentity` is now loading the object in order to remove it with all cascading in place.
+
+
 ## 13.0.0
 
 ### What's new
