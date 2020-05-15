@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A cached formatted string. If the formatted value is needed in several places, there is no need to format it every
- * time it is needed.
+ * time it is needed. This class is thread-safe.
  * <p>
  * This is an application of the Decorator GoF pattern.
  *
@@ -33,6 +33,11 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  */
 public class CachedFormattedString implements FormattedString {
+
+    /**
+     * Just a value to use as key for the cache mechanism. No special meaning.
+     */
+    private static final int CACHE_KEY = 1;
 
     private final BaseFormattedString decorated;
 
@@ -45,6 +50,6 @@ public class CachedFormattedString implements FormattedString {
 
     @Override
     public String toString() {
-        return cache.computeIfAbsent(1, i -> decorated.toString());
+        return cache.computeIfAbsent(CACHE_KEY, i -> decorated.toString());
     }
 }
