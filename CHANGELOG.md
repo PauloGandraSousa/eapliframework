@@ -10,6 +10,8 @@
 
 - `Money.amountAsDouble`
 
+- `Strings.leftPadded` and `Strings.rightPadded`
+
 ### Changes
 
 - deprecated `Stringformatter`; you should use the OO-way `FormattedString` classes
@@ -30,6 +32,7 @@
 ## 12.0.1
 
 - fix transaction handling
+
 
 ## 12.0.0
 
@@ -103,5 +106,3 @@
 - upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
 
 - fix `SystemUserBuilder` NPE
-
-
