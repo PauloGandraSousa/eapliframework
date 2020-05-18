@@ -97,7 +97,7 @@ public class PrettyJsonString implements FormattedString {
             final ObjectMapper mapper = new ObjectMapper();
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(input);
         } catch (final JsonProcessingException e) {
-            throw new IllegalArgumentException("Formatting to JSON:" + input, e);
+            throw new IllegalStateException("Formatting to JSON:" + input, e);
         }
     }
 }

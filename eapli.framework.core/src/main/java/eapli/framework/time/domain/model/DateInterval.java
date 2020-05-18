@@ -27,6 +27,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,16 +48,18 @@ public class DateInterval implements ValueObject {
 
     private static final long serialVersionUID = -3829067411069027990L;
 
-    @JsonIgnore
+    @XmlAttribute
+    @JsonProperty
     @Temporal(TemporalType.DATE)
     private final Calendar start;
 
-    @JsonIgnore
+    @XmlAttribute
+    @JsonProperty
     @Temporal(TemporalType.DATE)
     private final Calendar end;
 
-    @XmlAttribute
-    @JsonProperty
+    @XmlTransient
+    @JsonIgnore
     @Transient
     private final TimeInterval period;
 
