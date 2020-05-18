@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
@@ -47,20 +47,16 @@ import eapli.framework.util.HashCoder;
  * that into consideration. example, the text "the red fox" has one line while
  * the text "the red fox\n" has two lines
  *
- * <p>
- * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
- * to find the private field as there are no setters and getters.
- *
  * @author Paulo Gandra de Sousa
  *
  */
 @Embeddable
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Text implements ValueObject, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
     @Column(name = "text")
+    @JsonProperty("text")
     private final String value;
 
     /**

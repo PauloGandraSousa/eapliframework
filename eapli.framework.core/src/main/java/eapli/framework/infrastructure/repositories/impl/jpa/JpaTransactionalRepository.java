@@ -103,26 +103,6 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     /**
-     * Removes the object with the specified id from the persistence storage.
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws RollbackException
-     */
-    @Override
-    public void deleteOfIdentity(final I entityId) {
-        try {
-            context().beginTransaction();
-            super.deleteOfIdentity(entityId);
-            context().commit();
-        } catch (final RollbackException e) {
-            handleRollbackException(e);
-        } finally {
-            context().close();
-        }
-    }
-
-    /**
      * Updates an object in the persistence store. Calling code should not use the {@code entity} reference aftewards
      * and should instead use the return value of this method.
      *

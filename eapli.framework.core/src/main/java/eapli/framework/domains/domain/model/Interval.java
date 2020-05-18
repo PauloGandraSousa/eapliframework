@@ -26,6 +26,7 @@ import java.util.Arrays;
 import javax.persistence.Embeddable;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
@@ -66,9 +67,13 @@ public class Interval<T extends Serializable & Comparable<T>>
         }
     }
 
+    @JsonProperty
     private final T start;
+    @JsonProperty
     private final T end;
+    @JsonProperty
     private final BoundaryLimitType startBoundary;
+    @JsonProperty
     private final BoundaryLimitType endBoundary;
 
     /**

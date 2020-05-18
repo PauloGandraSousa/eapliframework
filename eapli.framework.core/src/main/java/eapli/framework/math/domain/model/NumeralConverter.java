@@ -23,7 +23,7 @@ package eapli.framework.math.domain.model;
 import eapli.framework.util.Utility;
 
 /**
- * utility class (private to the package) to extract the conversion logic from
+ * Utility class (private to the package) to extract the conversion logic from
  * the Numeral class and enforce the Single Responsibility Principle.
  *
  * @author Paulo Gandra de Sousa

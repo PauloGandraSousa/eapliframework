@@ -22,7 +22,7 @@ package eapli.framework.general.domain.model;
 
 import javax.persistence.Embeddable;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
@@ -35,20 +35,15 @@ import eapli.framework.validations.Preconditions;
  * consists of some character string without heading and trailing white spaces
  * (but spaces in between are allowed).
  *
- * <p>
- * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
- * to find the private field as there are no setters and getters.
- * </p>
- *
  * @author Jorge Santos ajs@isep.ipp.pt
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Designation implements ValueObject, Comparable<Designation>, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonProperty
     private final String name;
 
     /**

@@ -25,8 +25,8 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
- * an integer number in any base. allows to easily convert to/from decimal,
- * binary, octal and hexadecimal bases
+ * An integer number in any base. Allows to easily convert to/from decimal,
+ * binary, octal and hexadecimal bases.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -40,7 +40,7 @@ public class Numeral implements ValueObject {
     private final String representation;
 
     /**
-     * constructs from a decimal value into a certain numeral system
+     * Constructs from a decimal value into a certain numeral system.
      *
      * @param value
      *            the decimal value of the number
@@ -55,7 +55,7 @@ public class Numeral implements ValueObject {
     }
 
     /**
-     * constructs from a certain base
+     * Constructs from a certain base.
      *
      * @param value
      * @param base
@@ -154,7 +154,7 @@ public class Numeral implements ValueObject {
     }
 
     /**
-     * returns the decimal value of this number.
+     * Returns the decimal value of this number.
      *
      * @return the decimal value of this number.
      */

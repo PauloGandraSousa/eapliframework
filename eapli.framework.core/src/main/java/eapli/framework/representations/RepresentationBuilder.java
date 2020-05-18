@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -37,7 +37,7 @@ import eapli.framework.util.Factory;
  * ({@link #startObject(String)}) or as a collection
  * {@link #startCollection(String)}. An object is a set of named properties
  * (defined by {@link #withProperty}. A collection is a collection of elements
- * {@link #withElement} or objects}
+ * {@link #withElement} or objects}.
  *
  * <p>
  * Implementations are free to handle duplicate properties in whatever form
@@ -51,7 +51,7 @@ import eapli.framework.util.Factory;
  */
 public interface RepresentationBuilder<T> extends Factory<T> {
     /**
-     * Signals the start of the root document or of a child object
+     * Signals the start of the root document or of a child object.
      *
      * @param name
      * @return this builder instance
@@ -61,7 +61,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
     }
 
     /**
-     * Signals the end of the root document or of a child object
+     * Signals the end of the root document or of a child object.
      *
      * @return this builder instance
      */
@@ -71,7 +71,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -81,7 +81,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -93,7 +93,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -105,7 +105,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -117,7 +117,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -129,7 +129,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -141,7 +141,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -153,7 +153,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -165,7 +165,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -177,7 +177,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -189,7 +189,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      *
      * @param value
@@ -202,7 +202,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -214,7 +214,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds an element to the current collection. Requires that
-     * {@link #startCollection(String)} was called priorly
+     * {@link #startCollection(String)} was called previously.
      *
      * @param value
      *            the value of the property
@@ -225,7 +225,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
     }
 
     /**
-     * Adds (or updates) a property
+     * Adds (or updates) a property.
      *
      * @param name
      *            the name of the property
@@ -237,7 +237,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -251,7 +251,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -265,7 +265,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -279,7 +279,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -293,7 +293,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -307,7 +307,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -321,7 +321,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -334,7 +334,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
     }
 
     /**
-     * Adds (or updates) a property
+     * Adds (or updates) a property.
      *
      * @param name
      *            the name of the property
@@ -348,7 +348,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -362,7 +362,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -376,7 +376,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -390,7 +390,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Adds (or updates) a property to the current scope, i.e., root or current
-     * child object
+     * child object.
      *
      * @param name
      *            the name of the property
@@ -404,7 +404,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
 
     /**
      * Signals the start of the root document or of a named collection of
-     * elements
+     * elements.
      *
      * @param name
      * @return this builder instance
@@ -414,7 +414,7 @@ public interface RepresentationBuilder<T> extends Factory<T> {
     }
 
     /**
-     * Signals the end of the root document or of a collection
+     * Signals the end of the root document or of a collection.
      *
      * @return this builder instance
      */

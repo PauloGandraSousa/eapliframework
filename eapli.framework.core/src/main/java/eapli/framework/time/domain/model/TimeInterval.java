@@ -26,13 +26,14 @@ import eapli.framework.domains.domain.model.Interval;
 
 /**
  * A concrete interval for Calendars.
- *
+ * <p>
  * A time interval is either a closed interval between time A and time B or a
  * closed interval starting at time A <i>ad infinitum<i>
- *
- * since this class inherits from a generic it cannot control how Calendar
- * objects will be persisted with JPA. see {@link TimestampInterval} and
- * {@link DateInterval} for persistent alternatives
+ * </p>
+ * <p>
+ * Since this class inherits from a generic it cannot control how Calendar
+ * objects will be persisted with JPA. See {@link TimestampInterval} and
+ * {@link DateInterval} for persistent alternatives.
  *
  * @author Paulo Gandra Sousa
  *

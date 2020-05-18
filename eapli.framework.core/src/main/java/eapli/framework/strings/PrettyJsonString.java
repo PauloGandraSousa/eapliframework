@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -24,18 +24,64 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * A string with JSON content pretty formatted for output.
  *
  * @author Paulo Gandra Sousa 13/05/2020
  *
  */
-public class PrettyJsonString extends BaseFormattedString {
+public class PrettyJsonString implements FormattedString {
 
-    public PrettyJsonString(final String input) {
-        super(input);
+    private final Object input;
+
+    /**
+     * Factory method to construct a pretty formatted string from a string with unformatted JSON content.
+     *
+     * @param input
+     *            a json-encoded content
+     * @return a PrettyJsonString
+     */
+    public static PrettyJsonString fromString(final String input) {
+        return new PrettyJsonString(input);
     }
 
     /**
-     * Returns a pretty formatted JSON object.
+     * Factory method to construct a pretty formatted string from a java object.
+     *
+     * @param input
+     *            the java object to map to JSON
+     * @return a PrettyJsonString
+     */
+    public static PrettyJsonString fromObject(final Object input) {
+        return new PrettyJsonString(input);
+    }
+
+    /**
+     * Constructs a pretty formatted string from a string with unformatted JSON content.
+     *
+     * @param input
+     *            a json-encoded content
+     */
+    public PrettyJsonString(final String input) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            this.input = mapper.readValue(input, Object.class);
+        } catch (final JsonProcessingException e) {
+            throw new IllegalArgumentException("Formatting to JSON:" + input, e);
+        }
+    }
+
+    /**
+     * Constructs a pretty formatted string from a java object.
+     *
+     * @param input
+     *            the java object to map to JSON
+     */
+    public PrettyJsonString(final Object input) {
+        this.input = input;
+    }
+
+    /**
+     * Returns a pretty formatted JSON string.
      *
      * <p>
      * From
@@ -46,13 +92,12 @@ public class PrettyJsonString extends BaseFormattedString {
      * @return a pretty formatted JSON object
      */
     @Override
-    protected String formatted() {
+    public String toString() {
         try {
             final ObjectMapper mapper = new ObjectMapper();
-            final Object json = mapper.readValue(input(), Object.class);
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(input);
         } catch (final JsonProcessingException e) {
-            throw new IllegalArgumentException("Formatting to JSON:" + input(), e);
+            throw new IllegalArgumentException("Formatting to JSON:" + input, e);
         }
     }
 }

@@ -29,7 +29,8 @@ import java.util.stream.Collector;
 
 import javax.persistence.Embeddable;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
@@ -84,20 +85,17 @@ import eapli.framework.validations.Preconditions;
  * <a href="http://martinfowler.com/eaaDev/quantity.html">MF bliki</a>, however that link is now
  * broken
  *
- * <p>
- * For Marshaling purposes we are setting the visibility to ANY to allow Jackson to find the private
- * field as there are no setters and getters.
- *
  */
 @Embeddable
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Money implements Comparable<Money>, Serializable, ValueObject, FormattedString {
 
     private static final long serialVersionUID = 1L;
 
     private static final transient int HUNDRED = 100;
     // @Convert(converter = MoneyAmountConverter.class)
+    @JsonProperty
     private final BigInteger amount;
+    @JsonProperty
     private final Currency currency;
 
     /**
@@ -465,6 +463,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * @author Paulo Gandra de Sousa
      * @return true if this amount is negative
      */
+    @JsonIgnore
     public boolean isNegative() {
         return signum() == -1;
     }
@@ -475,6 +474,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * @author Paulo Gandra de Sousa
      * @return true if this amount is positive
      */
+    @JsonIgnore
     public boolean isPositive() {
         return signum() == 1;
     }
@@ -485,6 +485,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * @author Paulo Gandra de Sousa
      * @return true if this amount is zero
      */
+    @JsonIgnore
     public boolean isZero() {
         return signum() == 0;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -33,6 +33,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 /**
+ * A pretty formatted XML string.
  *
  * @author Paulo Gandra Sousa 13/05/2020
  *
@@ -40,11 +41,22 @@ import javax.xml.transform.stream.StreamSource;
 public class PrettyXmlString extends BaseFormattedString {
     private final int indent;
 
+    /**
+     * Constructs a pretty formatted string from a string with unformatted XML content.
+     *
+     * @param input
+     */
     public PrettyXmlString(final String input) {
         super(input);
         indent = 2;
     }
 
+    /**
+     * Constructs a pretty formatted string from a string with unformatted XML content.
+     *
+     * @param input
+     * @param indent
+     */
     public PrettyXmlString(final String input, final int indent) {
         super(input);
         this.indent = indent;

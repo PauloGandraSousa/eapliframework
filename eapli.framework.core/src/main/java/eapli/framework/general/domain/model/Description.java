@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -25,7 +25,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
@@ -36,19 +36,15 @@ import eapli.framework.validations.Preconditions;
  * Generic description concept. It must have some content but no special rules
  * about the content exist.
  *
- * <p>
- * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
- * to find the private field as there are no setters and getters.
- *
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Description implements ValueObject, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
     @Column(name = "description")
+    @JsonProperty("description")
     private final String value;
 
     /**

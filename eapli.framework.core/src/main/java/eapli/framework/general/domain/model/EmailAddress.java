@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
@@ -33,20 +33,16 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
- * an email address.
- *
- * <p>
- * For Marshaling purposes we are setting the visibility to ANY to allow Jackson
- * to find the private field as there are no setters and getters.
+ * An email address.
  *
  * @author Paulo Gandra Sousa
  */
 @Embeddable
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class EmailAddress implements ValueObject, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonProperty
     private final String email;
 
     protected EmailAddress(final String address) {

@@ -27,13 +27,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A persistent date period. only the date part of calendar is relevant.
- * DateIntervals are closed ranges
+ * A persistent date period. Only the date part of calendar is relevant.
+ * DateIntervals are closed ranges.
  *
  * @author Paulo Gandra Sousa
  *
@@ -43,12 +46,15 @@ public class DateInterval implements ValueObject {
 
     private static final long serialVersionUID = -3829067411069027990L;
 
+    @JsonIgnore
     @Temporal(TemporalType.DATE)
     private final Calendar start;
 
+    @JsonIgnore
     @Temporal(TemporalType.DATE)
     private final Calendar end;
 
+    @JsonProperty
     @Transient
     private final TimeInterval period;
 

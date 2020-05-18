@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -23,13 +23,13 @@ package eapli.framework.identities;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 /**
- * An object that has an identity.
+ * An object that has an identity and as such is identifiable by that identity.
  *
  * @param <T>
- *            the type of the entity's identity. e.g., if an object Person is
- *            identified by an IdCardNumber, the class Person should implement
- *            interface Identifiable<IdCardNumber>
- * 
+ *            the type of the entity's identity. E.g., if an object {@code Person} is
+ *            identified by an {@code IdCardNumber}, the class {@code Person} should implement
+ *            interface {@code Identifiable<IdCardNumber>}.
+ *
  * @author Paulo Gandra Sousa
  */
 public interface Identifiable<T> {

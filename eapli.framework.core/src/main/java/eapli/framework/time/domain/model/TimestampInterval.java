@@ -27,12 +27,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 /**
  * A persistent time period. Both the date and the time part of calendar are
- * relevant
+ * relevant.
  *
  * @author Paulo Gandra Sousa
  *
@@ -42,12 +45,15 @@ public class TimestampInterval implements ValueObject {
 
     private static final long serialVersionUID = -4658136141745243778L;
 
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     private final Calendar start;
 
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     private final Calendar end;
 
+    @JsonProperty
     @Transient
     private final TimeInterval period;
 

@@ -1,8 +1,16 @@
 # EAPLI Framework Changelog
 
-## 13.0.1
+## 13.1.0
 
 - `deleteOfIdentity` is now loading the object in order to remove it with all cascading in place.
+
+- `PrettyJsonString` has a new constructor to map java objects to JSON
+
+- upgrade SpringBoot to 2.3.0
+
+- decoupling the versioning of Core from AUTHZ and PUB/SUB
+
+- improve JSON support in `Money`, `Designation` and `Description`
 
 
 ## 13.0.0

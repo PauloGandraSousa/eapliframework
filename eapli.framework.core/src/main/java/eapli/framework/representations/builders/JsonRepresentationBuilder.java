@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 the original author or authors.
+ * Copyright (c) 2013-2020 the original author or authors.
  *
  * MIT License
  *
@@ -28,10 +28,10 @@ import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.validations.Invariants;
 
 /**
- * A simple JSON Representation builder. null values are ignored and no property
- * is created. Dates are represented as ISO8601
- *
- * This is class is mainly for pedagogical purposes; consider using a well-known
+ * A simple JSON Representation builder. Null values are ignored and no property
+ * is created. Dates are represented as ISO8601.
+ * <p>
+ * This class is mainly for pedagogical purposes; consider using a well-known
  * library for marshaling and unmarshaling like
  * <a href="https://github.com/FasterXML/jackson">Jackson</a>
  *
