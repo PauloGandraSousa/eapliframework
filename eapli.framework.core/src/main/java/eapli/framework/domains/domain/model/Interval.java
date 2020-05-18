@@ -214,7 +214,7 @@ public class Interval<T extends Serializable & Comparable<T>>
         return new IntervalBuilder<>(start, BoundaryLimitType.OPEN);
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({"rawtypes", "java:S3740"})
     private static final Interval EMPTY = new Interval(true);
 
     /**

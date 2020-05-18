@@ -96,7 +96,7 @@ import eapli.framework.validations.Invariants;
 public class ValueHistory<T> {
 
     // TODO dependency to PC clock - hard to test
-    private final static Supplier<Instant> clockNow = Instant::now;
+    private static final Supplier<Instant> clockNow = Instant::now;
 
     private final Instant occurredAt;
     private final T value;
