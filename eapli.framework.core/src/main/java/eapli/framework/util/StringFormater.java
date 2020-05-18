@@ -58,7 +58,7 @@ public final class StringFormater {
      * @return a pretty formated XML string
      */
     public static String prettyFormatXml(final String input) {
-        return new PrettyXmlString(input).toString();
+        return PrettyXmlString.fromString(input).toString();
     }
 
     /**
@@ -69,6 +69,6 @@ public final class StringFormater {
      * @return a formated XML
      */
     public static String prettyFormatXml(final String input, final int indent) {
-        return new PrettyXmlString(input, indent).toString();
+        return PrettyXmlString.fromString(input, indent).toString();
     }
 }

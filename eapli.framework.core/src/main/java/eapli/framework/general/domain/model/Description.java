@@ -24,6 +24,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -44,6 +45,7 @@ public class Description implements ValueObject, Serializable, StringMixin {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "description")
+    @XmlAttribute
     @JsonProperty("description")
     private final String value;
 

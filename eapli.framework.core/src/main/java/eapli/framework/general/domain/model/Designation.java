@@ -21,6 +21,7 @@
 package eapli.framework.general.domain.model;
 
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -43,6 +44,7 @@ public class Designation implements ValueObject, Comparable<Designation>, String
 
     private static final long serialVersionUID = 1L;
 
+    @XmlAttribute
     @JsonProperty
     private final String name;
 

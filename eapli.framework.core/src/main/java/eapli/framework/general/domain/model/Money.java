@@ -28,12 +28,15 @@ import java.util.Currency;
 import java.util.stream.Collector;
 
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
+import eapli.framework.strings.XmlCurrencyAdapter;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -92,9 +95,11 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     private static final long serialVersionUID = 1L;
 
     private static final transient int HUNDRED = 100;
-    // @Convert(converter = MoneyAmountConverter.class)
+    @XmlAttribute
     @JsonProperty
     private final BigInteger amount;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(XmlCurrencyAdapter.class)
     @JsonProperty
     private final Currency currency;
 

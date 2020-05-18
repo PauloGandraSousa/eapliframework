@@ -20,17 +20,11 @@
  */
 package eapli.framework.strings;
 
-import java.io.StringReader;
 import java.io.StringWriter;
 
-import javax.xml.XMLConstants;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 /**
  * A pretty formatted XML string.
@@ -38,17 +32,15 @@ import javax.xml.transform.stream.StreamSource;
  * @author Paulo Gandra Sousa 13/05/2020
  *
  */
-public class PrettyXmlString extends BaseFormattedString {
-    private final int indent;
+public class PrettyXmlString implements FormattedString {
 
     /**
      * Constructs a pretty formatted string from a string with unformatted XML content.
      *
      * @param input
      */
-    public PrettyXmlString(final String input) {
-        super(input);
-        indent = 2;
+    public static FormattedString fromString(final String input) {
+        return new PrettyXmlFromString(input, 2);
     }
 
     /**
@@ -57,37 +49,27 @@ public class PrettyXmlString extends BaseFormattedString {
      * @param input
      * @param indent
      */
-    public PrettyXmlString(final String input, final int indent) {
-        super(input);
-        this.indent = indent;
+    public static FormattedString fromString(final String input, final int indent) {
+        return new PrettyXmlFromString(input, indent);
     }
 
-    /**
-     * Returns a formated XML output.
-     * <p>
-     * Based in code from
-     * <a href= "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java"> stack
-     * overflow</a>
-     *
-     * @return a formated XML
-     */
-    @Override
-    protected String formatted() {
-        final Source xmlInput = new StreamSource(new StringReader(input()));
-        final StringWriter stringWriter = new StringWriter();
-        final StreamResult xmlOutput = new StreamResult(stringWriter);
-        final TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        try {
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
-            transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            transformerFactory.setAttribute("indent-number", indent);
-            final Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.transform(xmlInput, xmlOutput);
-        } catch (final TransformerException e) {
-            throw new IllegalArgumentException(e);
-        }
-        return xmlOutput.getWriter().toString();
+    public static <T> FormattedString fromObject(final T input, Class<T> clazz) {
+
+        return new FormattedString() {
+            @Override
+            public final String toString() {
+                final StringWriter writer = new StringWriter();
+                try {
+                    final JAXBContext context = JAXBContext.newInstance(clazz);
+                    final Marshaller mar = context.createMarshaller();
+                    mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+                    mar.marshal(input, writer);
+                } catch (final JAXBException e) {
+                    throw new IllegalArgumentException(e);
+                }
+                return writer.toString();
+            }
+        };
     }
+
 }
