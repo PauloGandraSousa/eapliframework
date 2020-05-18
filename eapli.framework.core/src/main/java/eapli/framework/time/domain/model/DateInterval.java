@@ -26,6 +26,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -54,6 +55,7 @@ public class DateInterval implements ValueObject {
     @Temporal(TemporalType.DATE)
     private final Calendar end;
 
+    @XmlAttribute
     @JsonProperty
     @Transient
     private final TimeInterval period;
