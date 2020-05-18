@@ -1,6 +1,6 @@
 # EAPLI Framework
 
-Version: **13.0.0**
+Version: **13.1**
 
 ## What is this repository for?
 
@@ -54,9 +54,9 @@ There are three main components to the framework:
 
 The javadocs are browsable online:
 
-- [Core](https://pagsousa.bitbucket.io/eapli.framework.core/)
-- [Authz](https://pagsousa.bitbucket.io/eapli.framework.authz/)
-- [Pub/Sub](https://pagsousa.bitbucket.io/eapli.framework.pubsub/)
+- [Core](https://pagsousa.bitbucket.io/13.1/eapli.framework.core/)
+- [Authz](https://pagsousa.bitbucket.io/13.0/eapli.framework.authz/)
+- [Pub/Sub](https://pagsousa.bitbucket.io/13.0/eapli.framework.pubsub/)
 
 ### Core library
 
