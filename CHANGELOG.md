@@ -2,15 +2,25 @@
 
 ## 13.1.0
 
-- `deleteOfIdentity` is now loading the object in order to remove it with all cascading in place.
-
+### What's new
+ 
 - `PrettyJsonString` has a new constructor to map java objects to JSON
-
-- upgrade SpringBoot to 2.3.0
 
 - decoupling the versioning of Core from AUTHZ and PUB/SUB
 
 - improve JSON support in `Money`, `Designation` and `Description`
+
+- improve XML support in `Money`, `Designation` and `Description`
+
+- PrettyXmlString 
+
+### Changes
+
+- `deleteOfIdentity` is now loading the object in order to remove it with all cascading in place.
+
+- fix transaction handling in `JpaAutoTxRepository.update`
+
+- upgrade SpringBoot to 2.3.0
 
 
 ## 13.0.0
@@ -50,7 +60,7 @@
 
 ## 12.0.1
 
-- fix transaction handling
+- fix transaction handling in `deleteOfIdentity`
 
 
 ## 12.0.0
