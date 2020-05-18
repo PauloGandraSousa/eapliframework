@@ -40,7 +40,7 @@ public class PrettyJsonString implements FormattedString {
      *            a json-encoded content
      * @return a PrettyJsonString
      */
-    public static PrettyJsonString fromString(final String input) {
+    public static FormattedString fromString(final String input) {
         return new PrettyJsonString(input);
     }
 
@@ -51,7 +51,7 @@ public class PrettyJsonString implements FormattedString {
      *            the java object to map to JSON
      * @return a PrettyJsonString
      */
-    public static PrettyJsonString fromObject(final Object input) {
+    public static FormattedString fromObject(final Object input) {
         return new PrettyJsonString(input);
     }
 

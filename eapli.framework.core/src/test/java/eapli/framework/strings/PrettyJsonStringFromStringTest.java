@@ -44,7 +44,7 @@ public class PrettyJsonStringFromStringTest {
 
     @Test
     public void testOne() {
-        final PrettyJsonString p = PrettyJsonString.fromString(TEST_ONE);
+        final FormattedString p = PrettyJsonString.fromString(TEST_ONE);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(3, fmtd.split("\n").length);
@@ -52,7 +52,7 @@ public class PrettyJsonStringFromStringTest {
 
     @Test
     public void testCol1() {
-        final PrettyJsonString p = PrettyJsonString.fromString(TEST_COL_1);
+        final FormattedString p = PrettyJsonString.fromString(TEST_COL_1);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(5, fmtd.split("\n").length);
@@ -60,7 +60,7 @@ public class PrettyJsonStringFromStringTest {
 
     @Test
     public void testCol2() {
-        final PrettyJsonString p = PrettyJsonString.fromString(TEST_COL_2);
+        final FormattedString p = PrettyJsonString.fromString(TEST_COL_2);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(1, fmtd.split("\n").length);
@@ -68,7 +68,7 @@ public class PrettyJsonStringFromStringTest {
 
     @Test
     public void testChild() {
-        final PrettyJsonString p = PrettyJsonString.fromString(TEST_CHILD);
+        final FormattedString p = PrettyJsonString.fromString(TEST_CHILD);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(6, fmtd.split("\n").length);
