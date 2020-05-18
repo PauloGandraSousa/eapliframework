@@ -20,26 +20,57 @@
  */
 package eapli.framework.strings;
 
+import static org.junit.Assert.assertEquals;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 /**
  * @author Paulo Gandra de Sousa 15/05/2020
  *
  */
-class PrettyJsonStringFromStringTest {
+public class PrettyJsonStringFromStringTest {
+    private static final Logger LOGGER = LogManager.getLogger(PrettyJsonStringFromStringTest.class);
 
     private final String TEST_ONE = "{\"one\":\"two\"}";
     private final String TEST_COL_1 = "[{\"one\":\"two\"}, {\"a\":\"b\"}]";
     private final String TEST_COL_2 = "[1, 2, 3, 4]";
-    private final String TEST_CHILD = "{\"one\":{\\\"a\\\":\\\"b\\\"},\"c\":\"d\"}";
+    private final String TEST_CHILD = "{\"one\":{\"a\":\"b\"},\"c\":\"d\"}";
 
     private final String TEST_WRONG_ONE = "{\"one\":two}";
     private final String TEST_WRONG_COL_1 = "[\"one\":two]";
     private final String TEST_WRONG_COL_2 = "[\"one\",two}";
 
     @Test
-    void test() {
-        final PrettyJsonString subject = PrettyJsonString.fromString(TEST_ONE);
+    public void testOne() {
+        final PrettyJsonString p = PrettyJsonString.fromString(TEST_ONE);
+        final String fmtd = p.toString();
+        LOGGER.info(fmtd);
+        assertEquals(3, fmtd.split("\n").length);
+    }
 
+    @Test
+    public void testCol1() {
+        final PrettyJsonString p = PrettyJsonString.fromString(TEST_COL_1);
+        final String fmtd = p.toString();
+        LOGGER.info(fmtd);
+        assertEquals(5, fmtd.split("\n").length);
+    }
+
+    @Test
+    public void testCol2() {
+        final PrettyJsonString p = PrettyJsonString.fromString(TEST_COL_2);
+        final String fmtd = p.toString();
+        LOGGER.info(fmtd);
+        assertEquals(1, fmtd.split("\n").length);
+    }
+
+    @Test
+    public void testChild() {
+        final PrettyJsonString p = PrettyJsonString.fromString(TEST_CHILD);
+        final String fmtd = p.toString();
+        LOGGER.info(fmtd);
+        assertEquals(6, fmtd.split("\n").length);
     }
 }
