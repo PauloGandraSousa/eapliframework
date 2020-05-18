@@ -179,7 +179,19 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Updates an entity to the persistence store.
+     * Updates an object in the persistence store. Calling code should not use the {@code entity} reference aftewards
+     * and should instead use the return value of this method.
+     *
+     * <pre>
+     * <code>
+     * Person p = ...
+     * p.method1(..);
+     * ...
+     * Person u = repo.update(p); // p should not be used afterwards
+     * u.method2(..);
+     * ...
+     * </code>
+     * </pre>
      *
      * @param entity
      * @return the managed entity reference.

@@ -103,39 +103,6 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     /**
-     * Updates an object in the persistence store. Calling code should not use the {@code entity} reference aftewards
-     * and should instead use the return value of this method.
-     *
-     * <pre>
-     * <code>
-     * Person p = ...
-     * p.method1(..);
-     * ...
-     * Person u = repo.update(p); // p should not be used afterwards
-     * u.method2(..);
-     * ...
-     * </code>
-     * </pre>
-     *
-     * @param entity
-     * @throws IntegrityViolationException
-     * @throws RollbackException
-     */
-    @Override
-    public T update(final T entity) {
-        try {
-            context().beginTransaction();
-            final T r = super.update(entity);
-            context().commit();
-            return r;
-        } catch (final RollbackException e) {
-            throw handleRollbackException(e);
-        } finally {
-            context().close();
-        }
-    }
-
-    /**
      * Removes the entity with the specified ID from the repository.
      *
      * @param entityId
