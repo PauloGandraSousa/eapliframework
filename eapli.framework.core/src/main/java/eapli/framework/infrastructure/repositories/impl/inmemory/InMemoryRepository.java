@@ -51,7 +51,7 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
     // Ideally this would be a typed generic Map but since it is a static member
     // it cannot be generic. The solution is to use the old-style untyped Map
     // and cast whenever needed
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "java:S3740" })
     private static final Map DATA = new HashMap();
     private final Class<T> entityClass;
 
@@ -70,7 +70,7 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
         this.identityGenerator = identityGenerator;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "squid:S2209" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "squid:S2209", "java:S3740" })
     protected Map<K, T> data() {
         if (!this.DATA.containsKey(this.entityClass)) {
             this.DATA.put(this.entityClass, new HashMap());

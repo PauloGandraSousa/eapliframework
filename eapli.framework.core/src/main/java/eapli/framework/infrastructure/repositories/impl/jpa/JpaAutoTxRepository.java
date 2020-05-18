@@ -65,7 +65,7 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
     protected final JpaBaseRepository<T, K, I> repo;
     private final TransactionalContext autoTx;
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "java:S3740" })
     public JpaAutoTxRepository(final String persistenceUnitName, final String identityFieldName) {
         this(persistenceUnitName, new HashMap(), identityFieldName);
     }
@@ -78,7 +78,7 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
      * @param identityFieldName
      */
     public JpaAutoTxRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties,
+            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties,
             final String identityFieldName) {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
                 .getGenericSuperclass();
@@ -128,7 +128,7 @@ public class JpaAutoTxRepository<T, K, I> implements Repository<T, K> {
      * @return a new transaction context
      */
     public static TransactionalContext buildTransactionalContext(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties) {
+            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties) {
         return new JpaTransactionalContext(persistenceUnitName, properties);
     }
 

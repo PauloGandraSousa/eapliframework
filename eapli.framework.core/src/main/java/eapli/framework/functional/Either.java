@@ -55,7 +55,7 @@ public final class Either<L, R> {
         EMPTY_MARKER
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({ "rawtypes", "java:S3740" })
     private static final Either EMPTY = new Either();
 
     private final SideType type;

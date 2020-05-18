@@ -28,26 +28,22 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  *
- * @author Paulo Gandra Sousa 18-05-2020
+ * @author Paulo Gandra Sousa 18/05/2020
  *
  */
 public class XmlDateAdapter extends XmlAdapter<String, Date> {
 
-    private static final ThreadLocal<DateFormat> dateFormat = new ThreadLocal<DateFormat>() {
-
-        @Override
-        protected DateFormat initialValue() {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        }
-    };
+    private static final ThreadLocal<DateFormat> dateFormat = ThreadLocal
+            .withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    // private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
-    public Date unmarshal(String v) throws Exception {
+    public Date unmarshal(final String v) throws Exception {
         return dateFormat.get().parse(v);
     }
 
     @Override
-    public String marshal(Date v) throws Exception {
+    public String marshal(final Date v) throws Exception {
         return dateFormat.get().format(v);
     }
 }

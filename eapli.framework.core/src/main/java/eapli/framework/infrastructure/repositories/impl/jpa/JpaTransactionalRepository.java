@@ -70,12 +70,14 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     public JpaTransactionalRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties, final String identityFieldName) {
+            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties,
+            final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName, properties), identityFieldName);
     }
 
     /* package */ JpaTransactionalRepository(final String persistenceUnitName,
-            @SuppressWarnings("rawtypes") final Map properties, final Class<T> classz,
+            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties,
+            final Class<T> classz,
             final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName, properties), classz,
                 identityFieldName);

@@ -47,7 +47,7 @@ public class JpaTransactionalContext implements TransactionalContext {
     private final String persistenceUnitName;
     private static EntityManagerFactory singletonEMF;
     private EntityManager entityManager;
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "java:S3740" })
     private final Map properties = new HashMap();
 
     /**
@@ -57,7 +57,7 @@ public class JpaTransactionalContext implements TransactionalContext {
      * @param properties
      *            extend properties to override the persistence.xml file
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked", "java:S3740" })
     public JpaTransactionalContext(final String persistenceUnitName, final Map properties) {
         Preconditions.nonEmpty(persistenceUnitName);
 
@@ -66,7 +66,7 @@ public class JpaTransactionalContext implements TransactionalContext {
         entityManagerFactory();
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "java:S3740" })
     public JpaTransactionalContext(final String persistenceUnitName) {
         this(persistenceUnitName, new HashMap());
     }

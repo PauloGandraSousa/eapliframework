@@ -21,7 +21,8 @@ public class JpaAutoTxUserRepository extends JpaAutoTxRepository<SystemUser, Use
         super(autoTx, "username");
     }
 
-    public JpaAutoTxUserRepository(final String puname, @SuppressWarnings("rawtypes") final Map properties) {
+    public JpaAutoTxUserRepository(final String puname,
+            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties) {
         super(puname, properties, "username");
     }
 

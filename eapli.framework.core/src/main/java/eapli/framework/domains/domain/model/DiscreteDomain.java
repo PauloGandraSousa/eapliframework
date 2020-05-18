@@ -54,7 +54,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
 
     private final Set<T> elements = new HashSet<>();
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "java:S3740" })
     private static final DiscreteDomain EMPTY = new DiscreteDomain<>(Stream.empty());
 
     /**
