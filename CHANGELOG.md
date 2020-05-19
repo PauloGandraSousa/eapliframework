@@ -1,5 +1,14 @@
 # EAPLI Framework Changelog
 
+## 13.2.0
+
+### What's new
+
+- Null (No-Op) `InMemoryTransactionalContext`
+
+### Changed
+
+
 ## 13.1.0
 
 ### What's new
@@ -12,7 +21,7 @@
 
 - improve XML support in `Money`, `Designation` and `Description`
 
-- PrettyXmlString 
+- `PrettyXmlString` has two sttaic factory methods `fromString` and `fromObject`. note that the constructor of this is class are deprecated and should not be used.
 
 ### Changes
 
