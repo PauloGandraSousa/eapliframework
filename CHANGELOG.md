@@ -6,7 +6,16 @@
 
 - Null (No-Op) `InMemoryTransactionalContext`
 
+- new `eapli.framework.io` package
+    - `StreamGobbler`
+    - `util.Files`
+    - `util.Console`
+
 ### Changed
+
+- deprecated `eapli.framework.util.Files`
+
+- deprecated `eapli.framework.util.Console`
 
 
 ## 13.1.0
@@ -21,7 +30,7 @@
 
 - improve XML support in `Money`, `Designation` and `Description`
 
-- `PrettyXmlString` has two sttaic factory methods `fromString` and `fromObject`. note that the constructor of this is class are deprecated and should not be used.
+- `PrettyXmlString` has two static factory methods `fromString` and `fromObject`. note that the constructor of this is class are deprecated and should not be used.
 
 ### Changes
 

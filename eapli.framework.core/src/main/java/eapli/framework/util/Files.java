@@ -20,19 +20,20 @@
  */
 package eapli.framework.util;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Paths;
 
 /**
  * Utility class for file manipulation.
  * <p>
- * Favour the use of <a href="https://commons.apache.org/proper/commons-io/">org.apache.commons.io</>.
+ * Favour the use of
+ * <a href="https://commons.apache.org/proper/commons-io/">org.apache.commons.io</>.
  *
  * @author Paulo Gandra Sousa
+ * @deprecated use {@link eapli.framework.io.util.Files} instead
+ * @see eapli.framework.io.util.Files
  */
+@Deprecated
 @Utility
 public final class Files {
 
@@ -52,7 +53,7 @@ public final class Files {
      */
     @SuppressWarnings("squid:S4797")
     public static String currentDirectory() {
-        return Paths.get(".").toAbsolutePath().toString();
+        return eapli.framework.io.util.Files.currentDirectory();
     }
 
     /**
@@ -64,13 +65,7 @@ public final class Files {
      * @return the filename with extension
      */
     public static String ensureExtension(final String filename, final String extension) {
-        if (!filename.endsWith(extension)) {
-            if (extension.startsWith(".")) {
-                return filename + extension;
-            }
-            return filename + "." + extension;
-        }
-        return filename;
+        return eapli.framework.io.util.Files.ensureExtension(filename, extension);
     }
 
     /**
@@ -83,20 +78,12 @@ public final class Files {
      * @throws IOException
      */
     public static String contentOf(final InputStream is, final String encoding) throws IOException {
-        final StringBuilder result = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-        }
-
-        return result.toString();
+        return eapli.framework.io.util.Files.textFrom(is, encoding);
     }
 
     /**
-     * Gets the full content of an input stream as a single String encoded as UTF-8. The input stream
-     * is still active and open after calling this method.
+     * Gets the full content of an input stream as a single String encoded as UTF-8. The input
+     * stream is still active and open after calling this method.
      *
      * @param is
      *            the input stream
@@ -104,6 +91,6 @@ public final class Files {
      * @throws IOException
      */
     public static String contentOf(final InputStream is) throws IOException {
-        return contentOf(is, "UTF-8");
+        return eapli.framework.io.util.Files.textFrom(is);
     }
 }
