@@ -49,7 +49,7 @@ public class ListUI<T> extends AbstractListUI<T> {
      * moment of construction and not only when it is needed. That is, even if the {@link #show()}
      * method is never called, the call to the underlying database would have been issued anyway when
      * the compiler passes the argument to the constructor. See
-     * {@link #ListUI(Supplier, Visitor, String, String)} for lazy construction.
+     * {@link #ListUI(Supplier, Visitor, String, String, String, String)} for lazy construction.
      *
      * @param source
      *            the list of elements to show
@@ -65,7 +65,7 @@ public class ListUI<T> extends AbstractListUI<T> {
      *            the message to show if there no elements
      */
     public ListUI(final Iterable<T> source, final Visitor<T> printer, final String elementName,
-            final String header, String headline, String emptyMessage) {
+            final String header, final String headline, final String emptyMessage) {
         Preconditions.nonNull(source);
         Preconditions.nonNull(printer);
         Preconditions.nonNull(elementName);
@@ -101,7 +101,8 @@ public class ListUI<T> extends AbstractListUI<T> {
      *            the message to show if there no elements
      */
     public ListUI(final Supplier<Iterable<T>> elementSupplier, final Visitor<T> printer,
-            final String elementName, final String header, String headline, String emptyMessage) {
+            final String elementName, final String header, final String headline,
+            final String emptyMessage) {
         Preconditions.nonNull(elementSupplier);
         Preconditions.nonNull(printer);
         Preconditions.nonNull(elementName);

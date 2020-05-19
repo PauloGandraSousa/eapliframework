@@ -27,7 +27,6 @@ package eapli.framework.strings;
  * <p>
  * This is a more OO way of thinking as opposed to utility classes with static methods.
  *
- * @see eapli.framework.util.StringFormater
  * @author Paulo Gandra Sousa 13/05/2020
  *
  */

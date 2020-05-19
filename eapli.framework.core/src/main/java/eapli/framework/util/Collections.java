@@ -60,7 +60,7 @@ public final class Collections {
      * Returns the number of elements in an iterable. Since most of the times an Iterable will be an objecs that extends
      * Collection, this more specialized overload of {@link #sizeOf(Iterable)} will provide better performance.
      *
-     * @param col
+     * @param items
      * @return the number of elements in an iterable.
      */
     public static int sizeOf(final Collection<?> items) {

@@ -87,8 +87,6 @@ public class PrettyJsonString implements FormattedString {
      * From
      * <a href= "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
      *
-     * @param input
-     *            a JSON string
      * @return a pretty formatted JSON object
      */
     @Override
