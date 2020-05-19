@@ -21,7 +21,10 @@
 package eapli.framework.representations.dto;
 
 /**
- * A domain object that can be transformed to a DTO, e.g., {@link GeneralDTO}.
+ * A domain object that can be transformed to a DTO, e.g., {@link GeneralDTO}. This is ideal for
+ * scenarios where the business objects is the one responsible for defining the structure of the DTO
+ * and there is only one possible DTO representation of the business object.
+ * Alternatively, we could also use automatic mapping thru Jackson/JAX-B.
  *
  * @param <T>
  *            the type of DTO

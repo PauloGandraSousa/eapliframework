@@ -21,8 +21,9 @@
 package eapli.framework.representations;
 
 /**
- * A business object that can guide the generation of a representation of
- * itself.
+ * A business object that can guide the generation of a representation of itself. This is ideal for
+ * scenarios where there might be the need to get different representations for different use cases.
+ * In such scenarios we cannot rely on a single DTO or automatic mapping thru Jackson/JAX-B.
  *
  * @author Paulo Gandra de Sousa
  *
