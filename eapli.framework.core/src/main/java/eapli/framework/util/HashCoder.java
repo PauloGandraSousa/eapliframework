@@ -59,7 +59,8 @@ import java.util.Objects;
  * </pre>
  * <p>
  * Check <a href=
- * "https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">this stackoverflow</a>
+ * "https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">this
+ * stackoverflow</a>
  * thread for insights on how to properly calculate an hash code.
  * <p>
  * See also <a href=

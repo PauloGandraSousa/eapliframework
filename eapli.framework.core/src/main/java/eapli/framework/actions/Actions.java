@@ -213,7 +213,8 @@ public final class Actions {
      * @param maxAttempts
      *            the maximum number of retries
      * @param progressive
-     *            if {@code true} the delay between retries will progressively increase, otherwise it will be constant
+     *            if {@code true} the delay between retries will progressively increase, otherwise
+     *            it will be constant
      * @return {@code true} if the action is successful or {@code false} if the maximum number
      *         of retries has been reached
      */

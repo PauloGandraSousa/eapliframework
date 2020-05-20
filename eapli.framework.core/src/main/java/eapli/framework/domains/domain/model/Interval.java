@@ -214,7 +214,7 @@ public class Interval<T extends Serializable & Comparable<T>>
         return new IntervalBuilder<>(start, BoundaryLimitType.OPEN);
     }
 
-    @SuppressWarnings({"rawtypes", "java:S3740"})
+    @SuppressWarnings({ "rawtypes", "java:S3740" })
     private static final Interval EMPTY = new Interval(true);
 
     /**
@@ -269,14 +269,14 @@ public class Interval<T extends Serializable & Comparable<T>>
         if (target.compareTo(this.end) > 0) {
             return false;
         }
-        return !(hasOpenEnd() && target.compareTo(this.end) == 0);
+        return (!hasOpenEnd() || (target.compareTo(this.end) != 0));
     }
 
     private boolean includesInToInfinityRanges(final T target) {
         if (target.compareTo(this.start) < 0) {
             return false;
         }
-        return !(hasOpenStart() && target.compareTo(this.start) == 0);
+        return (!hasOpenStart() || (target.compareTo(this.start) != 0));
     }
 
     private boolean includesInFiniteRanges(final T target) {
@@ -286,7 +286,7 @@ public class Interval<T extends Serializable & Comparable<T>>
         if (hasOpenStart() && target.compareTo(this.start) == 0) {
             return false;
         }
-        return !(hasOpenEnd() && target.compareTo(this.end) == 0);
+        return (!hasOpenEnd() || (target.compareTo(this.end) != 0));
     }
 
     public boolean endsAtInfinity() {

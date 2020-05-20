@@ -28,7 +28,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * A Strategy is a GoF behavioral design pattern that allows a client to choose between different implementations of the
+ * A Strategy is a GoF behavioral design pattern that allows a client to choose between different
+ * implementations of the
  * same algorithm.
  * <p>
  * <img src="strategy.svg">

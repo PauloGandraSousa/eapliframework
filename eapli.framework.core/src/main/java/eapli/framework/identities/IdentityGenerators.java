@@ -27,7 +27,8 @@ import eapli.framework.util.Singleton;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Helper class to act as a registry of identity generators and generate new ids based on an opaque context
+ * Helper class to act as a registry of identity generators and generate new ids based on an opaque
+ * context
  *
  * @author Paulo Gandra de Sousa
  *

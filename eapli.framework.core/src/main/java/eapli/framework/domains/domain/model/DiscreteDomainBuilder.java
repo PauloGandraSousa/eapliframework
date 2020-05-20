@@ -65,7 +65,7 @@ public class DiscreteDomainBuilder<T extends Serializable> implements Factory<Di
 
     /**
      * Adds elements from a stream
-     * 
+     *
      * @param stream
      * @return this builder
      */

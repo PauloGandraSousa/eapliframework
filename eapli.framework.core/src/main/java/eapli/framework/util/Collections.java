@@ -41,7 +41,8 @@ public final class Collections {
     }
 
     /**
-     * Returns the number of elements in an iterable. Performance-wise this method is of complexity O(n)
+     * Returns the number of elements in an iterable. Performance-wise this method is of complexity
+     * O(n)
      * as it needs to traverse the full iterator to determine its size.
      *
      * @param itens
@@ -57,8 +58,10 @@ public final class Collections {
     }
 
     /**
-     * Returns the number of elements in an iterable. Since most of the times an Iterable will be an objecs that extends
-     * Collection, this more specialized overload of {@link #sizeOf(Iterable)} will provide better performance.
+     * Returns the number of elements in an iterable. Since most of the times an Iterable will be an
+     * objecs that extends
+     * Collection, this more specialized overload of {@link #sizeOf(Iterable)} will provide better
+     * performance.
      *
      * @param items
      * @return the number of elements in an iterable.

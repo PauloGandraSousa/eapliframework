@@ -60,7 +60,7 @@
  *
  *           EventPublisher <|.. SimplePersistentEventPubSub
  *
- *           interface Singleton [[java:eapli.framework.util.Singleton]] {
+ *           interface Singleton [[java:eapli.framework.io.util.Singleton]] {
  *           }
  *
  *           Singleton <|.. SimplePersistentEventPubSub

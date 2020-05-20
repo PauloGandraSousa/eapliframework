@@ -26,9 +26,12 @@ package eapli.framework.util;
  * internal structure, factories provide encapsulation.
  *
  * <p>
- * Factories will be very helpful to provide extension and modification in our code as they can hide the actual object
- * being created. Following the Dependency Inversion Principle (DIP), one should program to an abstraction and not to a
- * realization. Thus a factory is needed to create the actual object while hiding which object is created from the rest
+ * Factories will be very helpful to provide extension and modification in our code as they can hide
+ * the actual object
+ * being created. Following the Dependency Inversion Principle (DIP), one should program to an
+ * abstraction and not to a
+ * realization. Thus a factory is needed to create the actual object while hiding which object is
+ * created from the rest
  * of the code.
  * </p>
  *

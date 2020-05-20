@@ -29,7 +29,8 @@ import java.lang.annotation.Target;
 
 /**
  * A utility type, i.e., these should be final classes, with private
- * constructors and all static methods. Keep in mind that utility classes are not really OO and you should always avoid
+ * constructors and all static methods. Keep in mind that utility classes are not really OO and you
+ * should always avoid
  * having classes with static methods.
  *
  * <p>

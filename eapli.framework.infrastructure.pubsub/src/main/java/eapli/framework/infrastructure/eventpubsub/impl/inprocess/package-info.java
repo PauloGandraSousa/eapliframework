@@ -35,7 +35,7 @@
  *           +{static}EventDispatcher instance()
  *           }
  *
- *           interface Singleton [[java:eapli.framework.util.Singleton]] {
+ *           interface Singleton [[java:eapli.framework.io.util.Singleton]] {
  *           }
  *
  *           Singleton <|.. InProcessEventDispatcher

@@ -26,7 +26,8 @@ import eapli.framework.strings.PrettyXmlString;
 /**
  * Utility class for string formating.
  *
- * @deprecated use the {@link eapli.framework.strings.FormattedString FormattedString} classes instead
+ * @deprecated use the {@link eapli.framework.strings.FormattedString FormattedString} classes
+ *             instead
  * @see eapli.framework.strings.FormattedString
  * @author Paulo Gandra Sousa
  *

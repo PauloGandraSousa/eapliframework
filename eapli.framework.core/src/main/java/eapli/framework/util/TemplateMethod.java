@@ -28,7 +28,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * A Template Method is a GoF design pattern where a general algorithm is defined but some of the steps of the algorithm
+ * A Template Method is a GoF design pattern where a general algorithm is defined but some of the
+ * steps of the algorithm
  * are customizable.
  *
  * <p>

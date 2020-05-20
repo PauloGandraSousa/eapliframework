@@ -206,7 +206,8 @@ public final class Calendars {
      * @param year
      *            the year
      * @param month
-     *            the month (1 - 12). note that the Calendar class uses months from 0 to 11, not 1 to
+     *            the month (1 - 12). note that the Calendar class uses months from 0 to 11, not 1
+     *            to
      *            12
      * @param day
      *            the day of the month
@@ -307,7 +308,8 @@ public final class Calendars {
     }
 
     /**
-     * Creates and returns a {@link String} instance by parsing a given Calendar base on a data format.
+     * Creates and returns a {@link String} instance by parsing a given Calendar base on a data
+     * format.
      *
      * @param calendar
      *            the Calendar object to parse
@@ -348,7 +350,8 @@ public final class Calendars {
     }
 
     /**
-     * Creates and returns a {@link Calendar} instance by parsing a given string base on a data format.
+     * Creates and returns a {@link Calendar} instance by parsing a given string base on a data
+     * format.
      *
      * @param value
      *            the date in string format
