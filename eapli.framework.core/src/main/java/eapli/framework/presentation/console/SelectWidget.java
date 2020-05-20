@@ -23,7 +23,7 @@ package eapli.framework.presentation.console;
 import java.util.Collection;
 import java.util.Iterator;
 
-import eapli.framework.util.Console;
+import eapli.framework.io.util.Console;
 import eapli.framework.visitor.Visitor;
 
 /**

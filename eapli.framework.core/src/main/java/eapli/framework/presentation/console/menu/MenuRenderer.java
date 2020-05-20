@@ -24,7 +24,7 @@ import java.util.Optional;
 
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
-import eapli.framework.util.Console;
+import eapli.framework.io.util.Console;
 import eapli.framework.validations.Preconditions;
 
 /**
