@@ -1,5 +1,14 @@
 # EAPLI Framework Changelog
 
+## 13.3.0
+
+### What's new
+
+- `FormattingOrTransformationException`
+
+- coupling back the version number of all components to make it easier to deploy
+
+
 ## 13.2.0
 
 ### What's new
