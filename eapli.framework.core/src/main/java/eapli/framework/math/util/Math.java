@@ -29,6 +29,7 @@ import eapli.framework.util.Utility;
  * Utility mathematical functions.
  *
  * @author Paulo Gandra Sousa
+ * @author NMB
  */
 @Utility
 public final class Math {
@@ -39,8 +40,9 @@ public final class Math {
 
     /**
      * Permite efectuar a conversão de um valor para outra escala.
+     * <p>
+     * Author NMB
      *
-     * @author NMB
      * @param oldMin
      *            - exemplo 0
      * @param oldMax
@@ -61,8 +63,9 @@ public final class Math {
 
     /**
      * Permite efectuar a conversão de um valor para outra escala.
-     *
-     * @author NMB
+     * <p>
+     * Author NMB
+     * 
      * @param oldMin
      *            - exemplo 0
      * @param oldMax

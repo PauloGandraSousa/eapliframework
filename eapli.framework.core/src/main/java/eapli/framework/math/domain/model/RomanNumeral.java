@@ -25,19 +25,24 @@ import eapli.framework.domain.model.ValueObject;
 /**
  * A Roman numeral representation of an integer number. An object of type RomanNumeral is an integer
  * between 1 and 3999. It can be constructed either from an integer or from a string that represents
- * a Roman numeral in this range. The function toString() will return a standardized Roman numeral
- * representation of the number. The function toInt() will return the number as a value of type int.
+ * a Roman numeral in this range. The function {@link #toString()} will return a standardized Roman
+ * numeral representation of the number. The function {@link #toInt()} will return the number as a
+ * value of type int.
  *
  * <p>
  * This code is based on <a href=
  * "http://math.hws.edu/eck/cs124/javanotes6/c8/ex3-ans.html">http://math.hws.edu/eck/cs124/javanotes6/c8/ex3-ans.html</a>
+ *
+ * @author David J. Eck eck@hws.edu
+ * @author Paulo Gandra de Sousa
  */
 public class RomanNumeral implements ValueObject {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -2871632714426865406L;
 
     /*
-     * The following arrays are used by the toString() function to construct the standard Roman numeral
+     * The following arrays are used by the toString() function to construct the standard Roman
+     * numeral
      * representation of the number. For each i, the number numbers[i] is represented by the
      * corresponding string, letters[i].
      */
@@ -50,9 +55,9 @@ public class RomanNumeral implements ValueObject {
      * Creates the Roman number with the integer value specified by the parameter.
      *
      * @param arabic
-     *               the number we want to express as a Roman literal
+     *            the number we want to express as a Roman literal
      * @throws NumberFormatException
-     *                               if arabic is not in the range 1 to 3999 inclusive.
+     *             if arabic is not in the range 1 to 3999 inclusive.
      *
      */
     public RomanNumeral(final int arabic) {
@@ -128,12 +133,14 @@ public class RomanNumeral implements ValueObject {
     }
 
     /**
-     * Returns a representation of a number as Roman numeral.
+     * Utility method Returns a representation of a number as Roman numeral.
+     * <p>
+     * Author Paulo Gandra de Sousa
      *
      * @param number
-     * @author Paulo Gandra de Sousa
      * @return a representation of a number as Roman numeral
      */
+    @Deprecated
     public static String toString(final int number) {
         final RomanNumeral roman = new RomanNumeral(number);
         return roman.toString();
@@ -143,8 +150,8 @@ public class RomanNumeral implements ValueObject {
      * Find the integer value of letter considered as a Roman numeral.
      *
      * @throws NumberFormatException
-     *                               if letter is not a legal Roman numeral. The letter must be upper
-     *                               case.
+     *             if letter is not a legal Roman numeral. The letter must be upper
+     *             case.
      */
     private int letterToNumber(final char letter) {
         switch (letter) {

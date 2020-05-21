@@ -1,5 +1,17 @@
 # EAPLI Framework Changelog
 
+
+## OPEN-SNAPSHOT
+
+### What's new
+
+- TBD
+
+### Changed
+
+- deprecated class method `RomanNumeral#toString`
+
+
 ## 13.3.0
 
 ### What's new

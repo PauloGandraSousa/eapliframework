@@ -43,7 +43,8 @@ import eapli.framework.validations.Preconditions;
  *
  * <p>
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
- * interface; it acts as a Builder (GoF). For a class such as {@linkSystemUser} there is not really a need for a builder
+ * interface; it acts as a Builder (GoF). For a class such as {@link SystemUser} there is not really
+ * a need for a builder
  * and a simple factory or even the constructor would suffice.
  */
 public class SystemUserBuilder implements DomainFactory<SystemUser> {

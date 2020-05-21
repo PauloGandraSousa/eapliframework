@@ -642,20 +642,20 @@ public class Interval<T extends Serializable & Comparable<T>>
     }
 
     /**
-     * Checks if a group of intervals forms a contiguous interval
+     * Checks if a group of intervals forms a contiguous interval.
      *
      * <p>
      * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin fowler's Range</a>
      * </p>
      *
-     * @TODO need to take into account the boundary limits to see if the intervals
-     *       are really contiguous
      *
      * @param args
      * @return {@code true} if a group of intervals forms a contiguous interval
      */
     public static <T extends Serializable & Comparable<T>> boolean areContiguous(
             final Interval<T>[] args) {
+        // TODO need to take into account the boundary limits to see if the intervals are really
+        // contiguous
         Arrays.sort(args);
         for (int i = 0; i < args.length - 1; i++) {
             if (!args[i].abuts(args[i + 1])) {

@@ -30,6 +30,7 @@ import eapli.framework.util.Utility;
  * Calendar argument.
  *
  * @author Paulo Gandra de Sousa
+ * @author Manuel Meireles (2DD, EAPLI 2016/2017)
  *
  */
 @Utility
@@ -38,8 +39,9 @@ public final class CalendarPredicates {
     /**
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is equal
      * to the other calendar.
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
      * @param a
      *            The one calendar.
      * @param b
@@ -102,7 +104,9 @@ public final class CalendarPredicates {
      * Checks if the calendar date (Year, Month and Day) is before the other
      * calendar.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -118,7 +122,9 @@ public final class CalendarPredicates {
      * Checks if the calendar date (Year, Month and Day) is before the other
      * calendar or both have the same date.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -134,7 +140,9 @@ public final class CalendarPredicates {
      * Checks if the calendar date (Year, Month and Day) is after the other
      * calendar.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -150,7 +158,9 @@ public final class CalendarPredicates {
      * Checks if the calendar date (Year, Month and Day) is after the other calendar
      * or both have the same date.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -165,7 +175,9 @@ public final class CalendarPredicates {
     /**
      * Checks if the calendar date (Year, Month and Day) is before today.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The calendar to check.
      * @return {@code true} if the calendar is before today or {@code false}
@@ -178,7 +190,9 @@ public final class CalendarPredicates {
     /**
      * Checks if the calendar date (Year, Month and Day) is today or before.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The calendar to check.
      * @return {@code true} if the calendar is today or before or {@code false}
@@ -191,7 +205,9 @@ public final class CalendarPredicates {
     /**
      * Checks if the calendar date (Year, Month and Day) is today.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The calendar to check.
      * @return {@code true} if the calendar is equal to today or {@code false}
@@ -204,7 +220,9 @@ public final class CalendarPredicates {
     /**
      * Checks if the calendar date (Year, Month and Day) is today or after.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The calendar to check.
      * @return {@code true} if the calendar is today or after or {@code false}
@@ -217,7 +235,9 @@ public final class CalendarPredicates {
     /**
      * Checks if the calendar date (Year, Month and Day) is after today.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The calendar to check.
      * @return {@code true} if the calendar is after today or {@code false}
@@ -230,7 +250,9 @@ public final class CalendarPredicates {
     /**
      * Compares a Calendar field between the two calendars.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar
      * @param b
@@ -251,7 +273,9 @@ public final class CalendarPredicates {
     /**
      * It compares the dates (regardless of the time).
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -271,7 +295,8 @@ public final class CalendarPredicates {
     }
 
     /**
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
      *
      * @param a
      * @param b
@@ -295,7 +320,9 @@ public final class CalendarPredicates {
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is before
      * the other calendar.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -311,7 +338,9 @@ public final class CalendarPredicates {
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is before
      * or equal the other calendar.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -327,7 +356,9 @@ public final class CalendarPredicates {
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is after
      * the other calendar.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -343,7 +374,9 @@ public final class CalendarPredicates {
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is after
      * or equal the other calendar.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @param b
@@ -359,7 +392,9 @@ public final class CalendarPredicates {
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is before
      * the current time.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @return It returns {@code true} if the one calendar is before the current time or
@@ -373,7 +408,9 @@ public final class CalendarPredicates {
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is the
      * current time or before.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @return {@code true} if the one calendar is the current time or before
@@ -387,7 +424,9 @@ public final class CalendarPredicates {
      * Checks if the calendar time (Hour, Minute, Second and Millisecond) is the
      * current time or before.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @return {@code true} if the one calendar is the current time or before
@@ -401,7 +440,9 @@ public final class CalendarPredicates {
      * checks if the calendar time (Hour, Minute, Second and Millisecond) is the
      * current time or after.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @return It returns {@code true} if the one calendar is the current time or after or
@@ -415,7 +456,9 @@ public final class CalendarPredicates {
      * checks if the calendar time (Hour, Minute, Second and Millisecond) is after
      * the current time.
      *
-     * @author Manuel Meireles (2DD, EAPLI 2016/2017)
+     * <p>
+     * Author Manuel Meireles (2DD, EAPLI 2016/2017)
+     *
      * @param a
      *            The one calendar.
      * @return {@code true} if the one calendar is after the current time or
