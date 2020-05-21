@@ -29,6 +29,8 @@ import eapli.framework.identities.IdentityGenerator;
 
 /**
  * An identity generator that follows a sequence of long numbers.
+ * <p>
+ * This class is thead-safe.
  *
  * @author Paulo Gandra de Sousa
  *
