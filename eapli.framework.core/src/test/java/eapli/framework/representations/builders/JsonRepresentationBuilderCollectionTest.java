@@ -222,7 +222,7 @@ public class JsonRepresentationBuilderCollectionTest {
     }
 
     @Test
-    @Ignore // due to differences in time zones with bitbucket pipeline
+    @Ignore("due to differences in time zones with bitbucket pipeline")
     public void ensureArrayWithDateElement() {
         final String expected = "{\"name\":[\"2019-04-22T23:00Z\"]}";
         final String actual = subject.startObject("Test").startCollection("name").withElement(Calendars.of(2019, 4, 23))
