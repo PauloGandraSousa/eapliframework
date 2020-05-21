@@ -78,7 +78,7 @@ class PrettyXmlFromString extends BaseFormattedString {
             transformer.transform(xmlInput, xmlOutput);
             return xmlOutput.getWriter().toString();
         } catch (final TransformerException e) {
-            throw new IllegalArgumentException(e);
+            throw new FormatingOrTransformationException(e);
         }
     }
 }

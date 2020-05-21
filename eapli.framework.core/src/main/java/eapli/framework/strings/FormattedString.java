@@ -21,16 +21,22 @@
 package eapli.framework.strings;
 
 /**
- * Represents a formatted string. Since strings are immutable objects, formatting them should be a deterministic
- * function and as such the formatted string can safely be cached and reused. This class is immutable.
+ * Represents a formatted string. Since strings are immutable objects, formatting them should be a
+ * deterministic
+ * function and as such the formatted string can safely be cached and reused. This class is
+ * immutable.
  *
  * <p>
  * This is a more OO way of thinking as opposed to utility classes with static methods.
+ *
+ * <p>
+ * Classes implementing this interface might throw the generic runtime exception
+ * {@link FormatingOrTransformationException} or some implementation-specific exception.
  *
  * @author Paulo Gandra Sousa 13/05/2020
  *
  */
 public interface FormattedString {
     @Override
-    public String toString();
+    String toString();
 }

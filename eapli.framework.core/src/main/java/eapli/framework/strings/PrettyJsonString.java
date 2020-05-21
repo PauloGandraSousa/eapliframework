@@ -34,7 +34,8 @@ public class PrettyJsonString implements FormattedString {
     private final Object input;
 
     /**
-     * Factory method to construct a pretty formatted string from a string with unformatted JSON content.
+     * Factory method to construct a pretty formatted string from a string with unformatted JSON
+     * content.
      *
      * @param input
      *            a json-encoded content
@@ -59,14 +60,14 @@ public class PrettyJsonString implements FormattedString {
      * Constructs a pretty formatted string from a string with unformatted JSON content.
      *
      * @param input
-     *            a json-encoded content
+     *            a json-encoded string
      */
     public PrettyJsonString(final String input) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
             this.input = mapper.readValue(input, Object.class);
         } catch (final JsonProcessingException e) {
-            throw new IllegalArgumentException("Formatting to JSON:" + input, e);
+            throw new FormatingOrTransformationException("Formatting to JSON:" + input, e);
         }
     }
 
@@ -85,7 +86,8 @@ public class PrettyJsonString implements FormattedString {
      *
      * <p>
      * From
-     * <a href= "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
+     * <a href=
+     * "https://www.mkyong.com/java/how-to-enable-pretty-print-json-output-jackson/">mykong</a>
      *
      * @return a pretty formatted JSON object
      */
@@ -95,7 +97,7 @@ public class PrettyJsonString implements FormattedString {
             final ObjectMapper mapper = new ObjectMapper();
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(input);
         } catch (final JsonProcessingException e) {
-            throw new IllegalStateException("Formatting to JSON:" + input, e);
+            throw new FormatingOrTransformationException("Formatting to JSON:" + input, e);
         }
     }
 }

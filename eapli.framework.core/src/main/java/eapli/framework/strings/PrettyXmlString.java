@@ -35,10 +35,11 @@ import javax.xml.bind.Marshaller;
 public class PrettyXmlString implements FormattedString {
 
     /**
-     * Constructs a pretty formatted string from a string with unformatted XML content.
+     * Constructs a pretty formatted XML string from a string with unformatted XML content.
      *
      * @param input
-     * @return
+     *            XML content
+     * @return a pretty formatted XML string
      */
     public static FormattedString fromString(final String input) {
         return new PrettyXmlFromString(input, 2);
@@ -48,20 +49,24 @@ public class PrettyXmlString implements FormattedString {
      * Constructs a pretty formatted string from a string with unformatted XML content.
      *
      * @param input
+     *            XML content
      * @param indent
-     * @return
+     *            indentation size
+     * @return a pretty formatted XML string
      */
     public static FormattedString fromString(final String input, final int indent) {
         return new PrettyXmlFromString(input, indent);
     }
 
     /**
-     * Constructs a pretty formatted XML string from an object.
+     * Constructs a pretty formatted XML string from an object with JAX-B annotations.
      *
      * @param <T>
      * @param input
+     *            a java object to marshal as an XML string
      * @param clazz
-     * @return
+     *            the type of object to map
+     * @return a pretty formatted XML string
      */
     public static <T> FormattedString fromObject(final T input, final Class<T> clazz) {
 
@@ -75,7 +80,7 @@ public class PrettyXmlString implements FormattedString {
                     mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
                     mar.marshal(input, writer);
                 } catch (final JAXBException e) {
-                    throw new IllegalArgumentException(e);
+                    throw new FormatingOrTransformationException(e);
                 }
                 return writer.toString();
             }
@@ -108,7 +113,8 @@ public class PrettyXmlString implements FormattedString {
      * Constructs a pretty formatted string from a string with unformatted XML content.
      *
      * @param input
-     * @deprecated in future versions of the framework this class will just have the static factory methods
+     * @deprecated in future versions of the framework this class will just have the static factory
+     *             methods
      */
     @Deprecated
     public PrettyXmlString(final String input) {
@@ -121,7 +127,8 @@ public class PrettyXmlString implements FormattedString {
      *
      * @param input
      * @param indent
-     * @deprecated in future versions of the framework this class will just have the static factory methods
+     * @deprecated in future versions of the framework this class will just have the static factory
+     *             methods
      */
     @Deprecated
     public PrettyXmlString(final String input, final int indent) {

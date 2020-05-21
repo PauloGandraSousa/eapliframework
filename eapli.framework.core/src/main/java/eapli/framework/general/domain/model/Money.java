@@ -40,7 +40,7 @@ import eapli.framework.strings.XmlCurrencyAdapter;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Represents money values.
+ * A money value (amount and currency).
  *
  * <p>
  * For a full description see the book Patterns of Enterprise Application Architecture (Martin
@@ -86,8 +86,10 @@ import eapli.framework.validations.Preconditions;
  * <p>
  * <strong>NOTE:</strong> The original source code was available at
  * <a href="http://martinfowler.com/eaaDev/quantity.html">MF bliki</a>, however that link is now
- * broken
+ * broken.
  *
+ * @author Martin Fowler
+ * @author Paulo Gandra de Sousa
  */
 @Embeddable
 public class Money implements Comparable<Money>, Serializable, ValueObject, FormattedString {
@@ -95,9 +97,11 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     private static final long serialVersionUID = 1L;
 
     private static final transient int HUNDRED = 100;
+
     @XmlAttribute
     @JsonProperty
     private final BigInteger amount;
+
     @XmlAttribute
     @XmlJavaTypeAdapter(XmlCurrencyAdapter.class)
     @JsonProperty
@@ -166,7 +170,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Factory method to construct a Money object of {@code amount} EUR. If you use one currency a lot,
+     * Factory method to construct a Money object of {@code amount} EUR. If you use one currency a
+     * lot,
      * you may want a special constructor for that currency.
      *
      * @param amount
@@ -205,9 +210,11 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * creates a collector that can be used to sum up a stream of Money objects in a reduction style.
+     * creates a collector that can be used to sum up a stream of Money objects in a reduction
+     * style.
      * that is, since Money is an immutable object, collecting Money objects from streams have the
-     * implication of creating a new Money object for each collect step which might impact performance.
+     * implication of creating a new Money object for each collect step which might impact
+     * performance.
      *
      * @author Paulo Gandra de Sousa
      * @param zero
@@ -215,7 +222,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      */
     public static Collector<Money, MoneyCollector, Money> collector(final Money zero) {
         /*
-         * alternatively the collector returned could use an internal mutable representation of Money and
+         * alternatively the collector returned could use an internal mutable representation of
+         * Money and
          * just create an instance when combining streams
          *
          */
@@ -249,17 +257,22 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Returns the amount portion of this Money object as a {@code double}. Notice that there might be precision
+     * Returns the amount portion of this Money object as a {@code double}. Notice that there might
+     * be precision
      * problems.
      *
      * @return the amount portion of this Money object
      */
     public double amountAsDouble() {
         /*
-         * Notice that I [Martin Fowler] use a BigInteger. In Java I could equally well use a BigDecimal,
-         * but in many languages an integer is the only decent option, so using an integer seems the best
-         * for explanation. Don't be afraid to choose your representation of the amount part of a quantity
-         * based on performance factors. The beauty of objects is that you can choose any data structure you
+         * Notice that I [Martin Fowler] use a BigInteger. In Java I could equally well use a
+         * BigDecimal,
+         * but in many languages an integer is the only decent option, so using an integer seems the
+         * best
+         * for explanation. Don't be afraid to choose your representation of the amount part of a
+         * quantity
+         * based on performance factors. The beauty of objects is that you can choose any data
+         * structure you
          * like on the inside, providing you hide it on the outside.
          */
         return amount.doubleValue() / HUNDRED;
@@ -293,7 +306,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      */
     public Money add(final Money arg) {
         /*
-         * For addition and subtraction I'm [Martin Fowler] not trying to do any fancy conversion. Notice
+         * For addition and subtraction I'm [Martin Fowler] not trying to do any fancy conversion.
+         * Notice
          * that I'm using a special constructor with a marker argument.
          */
         Preconditions.ensure(currency.equals(arg.currency), "Cannot add different currencies");
@@ -332,9 +346,12 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Multiplies this Money object by a scalar and returns the result as a new Money. Business-wise it
-     * doesn't make sense to perform 5 EUR * 3 EUR but it makes sense to perform 12 * 5 EUR, e.g., to
-     * get the total annual sum of a monthly payment, or .06 * 100 EUR to calculate the VAT value of a grocery item.
+     * Multiplies this Money object by a scalar and returns the result as a new Money. Business-wise
+     * it
+     * doesn't make sense to perform 5 EUR * 3 EUR but it makes sense to perform 12 * 5 EUR, e.g.,
+     * to
+     * get the total annual sum of a monthly payment, or .06 * 100 EUR to calculate the VAT value of
+     * a grocery item.
      *
      * @param arg
      * @return a new Money with the value of the multiplication
@@ -345,12 +362,16 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Divides this Money object by a certain integer denominator doing the right allocation of cents.
+     * Divides this Money object by a certain integer denominator doing the right allocation of
+     * cents.
      *
      * <p>
-     * Multiplication is very straightforward. But division is not, as we have to take care of errant
-     * pennies. We'll do that by returning an array of monies, such that the sum of the array is equal
-     * to the original amount, and the original amount is distributed fairly between the elements of the
+     * Multiplication is very straightforward. But division is not, as we have to take care of
+     * errant
+     * pennies. We'll do that by returning an array of monies, such that the sum of the array is
+     * equal
+     * to the original amount, and the original amount is distributed fairly between the elements of
+     * the
      * array. Fairly in this sense means those at the beginning get the extra pennies.
      *
      * @param denominator
@@ -392,7 +413,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      */
     public boolean isGreaterThan(final Money arg) {
         /*
-         * It's also useful to provide some better named operations such as greaterThan. That makes methods
+         * It's also useful to provide some better named operations such as greaterThan. That makes
+         * methods
          * that need the comparison much easier to read.
          */
         return compareTo(arg) > 0;
@@ -406,14 +428,16 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      */
     public boolean isLessThan(final Money arg) {
         /*
-         * It's also useful to provide some better named operations such as greaterThan. That makes methods
+         * It's also useful to provide some better named operations such as greaterThan. That makes
+         * methods
          * that need the comparison much easier to read.
          */
         return compareTo(arg) < 0;
     }
 
     /**
-     * Compares two Money objects checking if this money's amount is greater than or equal to the other.
+     * Compares two Money objects checking if this money's amount is greater than or equal to the
+     * other.
      *
      * @author Paulo Gandra de Sousa
      * @param arg
@@ -424,7 +448,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Compares two Money objects checking if this money's amount is less than or equal to the other.
+     * Compares two Money objects checking if this money's amount is less than or equal to the
+     * other.
      *
      * @author Paulo Gandra de Sousa
      * @param arg
@@ -496,13 +521,16 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Returns a formatted representation of this money value according to the Locale currency format.
+     * Returns a formatted representation of this money value according to the Locale currency
+     * format.
      * <p>
      * Scraped from
-     * <a href="http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html">cameotutorials</a>
+     * <a href=
+     * "http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html">cameotutorials</a>
      *
      * @author Paulo Gandra de Sousa
-     * @return a formatted representation of this Money value based on the rules defined by the currency
+     * @return a formatted representation of this Money value based on the rules defined by the
+     *         currency
      *         Locale
      */
     @Override
@@ -515,10 +543,10 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     }
 
     /**
-     * Returns a simple representation of the amount and the currency code.
+     * Returns a simple representation of the amount and the currency code not taking into account
+     * the Locale.
      *
-     * @author Paulo Gandra de Sousa
-     * @return
+     * @return a representation of the money value
      */
     public String toSimpleString() {
         return amountAsDouble() + " " + currency();
