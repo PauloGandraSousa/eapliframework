@@ -50,9 +50,9 @@ public class PrettyJsonStringFromStringTest {
         assertEquals(3, fmtd.split("\n").length);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = FormatingOrTransformationException.class)
     public void testWrongOne() {
-        final FormattedString p = PrettyJsonString.fromString(TEST_WRONG_ONE);
+        PrettyJsonString.fromString(TEST_WRONG_ONE);
     }
 
     @Test
