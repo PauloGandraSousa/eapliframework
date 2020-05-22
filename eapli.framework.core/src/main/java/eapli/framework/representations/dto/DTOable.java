@@ -20,16 +20,35 @@
  */
 package eapli.framework.representations.dto;
 
+import eapli.framework.representations.Representationable;
+
 /**
  * A domain object that can be transformed to a DTO, e.g., {@link GeneralDTO}. This is ideal for
  * scenarios where the business objects is the one responsible for defining the structure of the DTO
  * and there is only one possible DTO representation of the business object.
- * Alternatively, we could also use automatic mapping thru Jackson/JAX-B.
+ * <p>
+ * <img src="dto.svg">
+ * <p>
+ * Alternatively, domain classes could be annotated with JAX-B or Jackson and the client code could
+ * use automatic mapping thru Jackson/JAX-B.
  *
  * @param <T>
  *            the type of DTO
  * @author Paulo Gandra Sousa
+ * @see Representationable
  *
+ *      <!--
+ * @startuml dto.svg
+ *           package DomainReponsability <<cloud>> {
+ *           interface DTOable<DTOX>
+ *           DomainObjectX ..|> DTOable
+ *           DomainObjectX ..> DTOX
+ *           }
+ *
+ *           Client1 ...> DomainObjectX
+ *           Client1 ...> DTOX
+ * @enduml
+ *         -->
  */
 @FunctionalInterface
 public interface DTOable<T> {

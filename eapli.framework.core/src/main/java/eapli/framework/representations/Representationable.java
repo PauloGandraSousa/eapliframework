@@ -20,13 +20,60 @@
  */
 package eapli.framework.representations;
 
+import eapli.framework.representations.dto.DTOable;
+
 /**
  * A business object that can guide the generation of a representation of itself. This is ideal for
  * scenarios where there might be the need to get different representations for different use cases.
  * In such scenarios we cannot rely on a single DTO or automatic mapping thru Jackson/JAX-B.
+ * <p>
+ * Generally speaking, a domain object implementing this interface will provide a way to pass
+ * key/value pairs of its own internal state to an external {@link RepresentationBuilder} ignoring
+ * what properties the client class needs or how it will use them and in which format, thus
+ * decoupling the domain from the representation.
+ * <p>
+ * <img src="representationable.svg">
+ * <p>
+ * For instance in the previous example, {@code Representation1} might be a DTO with all the
+ * properties and child objects of {@code DomainObjectX} while {@code Representation2} might be a
+ * summary DTO with just the code and human-friendly name of the domain object. If other clients
+ * need different representations (in content and7or format) new builders can be added without any
+ * change to the underlying domain object.
  *
+ * @see RepresentationBuilder
+ * @see DTOable
  * @author Paulo Gandra de Sousa
  *
+ *         <!--
+ * @startuml representationable.svg
+ *           interface Representationable
+ *           interface RepresentationBuilder
+ *           Representationable ..> RepresentationBuilder
+ *
+ *           package DomainResponsability <<cloud>> {
+ *           class DomainObjectX
+ *           DomainObjectX ..|> Representationable
+ *           }
+ *
+ *           package Client1Reponsability <<cloud>> {
+ *           ConcreteBuilder1 ..|> RepresentationBuilder
+ *           ConcreteBuilder1 ..> Representation1
+ *
+ *           Client1 ..> DomainObjectX
+ *           Client1 ..> ConcreteBuilder1
+ *           Client1 .left.> Representation1
+ *           }
+ * 
+ *           package Client2Reponsability <<cloud>> {
+ *           ConcreteBuilder2 ..|> RepresentationBuilder
+ *           ConcreteBuilder2 .up.> Representation2
+ *
+ *           Client2 ..> DomainObjectX
+ *           Client2 ..> ConcreteBuilder2
+ *           Client2 .right.> Representation2
+ *           }
+ * @enduml
+ *         -->
  */
 @FunctionalInterface
 public interface Representationable {

@@ -32,20 +32,19 @@ import eapli.framework.time.util.Calendars;
 import eapli.framework.util.Factory;
 
 /**
- * A Builder interface to generate representations of business objects, usually
- * a DTO. Root documents are initiated either as a single object
- * ({@link #startObject(String)}) or as a collection
- * {@link #startCollection(String)}. An object is a set of named properties
- * (defined by {@link #withProperty}. A collection is a collection of elements
- * {@link #withElement} or objects}.
+ * A Builder interface to generate representations of business objects, usually a DTO. Root
+ * documents are initiated either as a single object ({@link #startObject(String)}) or
+ * as a collection {@link #startCollection(String)}. An object is a set of named properties (defined
+ * by {@link #withProperty}. A collection is a collection of elements {@link #withElement} or
+ * objects}.
  *
  * <p>
- * Implementations are free to handle duplicate properties in whatever form
+ * Implementations are free to handle properties in whatever form
  * suits it best, either by ignoring, adding duplicates or launching exceptions.
  *
  * @param <T>
- *            the type of Representation that will be generated, e.g., a DTO
- *
+ *            the type of Representation that will be generated, e.g., a DTO, a String
+ * @see Representationable
  * @author Paulo Gandra de Sousa
  *
  */
