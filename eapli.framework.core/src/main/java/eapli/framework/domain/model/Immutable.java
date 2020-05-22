@@ -85,6 +85,9 @@ import java.lang.annotation.Target;
  * You should thrive to
  * <a href="https://www.yegor256.com/2014/06/09/objects-should-be-immutable.html">make all of your objects immutable</a>
  * by design.
+ * 
+ * <p>
+ * Immutable classes are thread-safe by definition.
  *
  * @author Paulo Gandra de Sousa 28/04/2020
  *

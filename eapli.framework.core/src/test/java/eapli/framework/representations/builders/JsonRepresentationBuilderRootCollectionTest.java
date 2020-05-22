@@ -137,7 +137,7 @@ public class JsonRepresentationBuilderRootCollectionTest {
     }
 
     @Test
-    @Ignore // due to differences in time zones with bitbucket pipeline
+    @Ignore("due to differences in time zones with bitbucket pipeline")
     public void ensureRootArrayWithDateElement() {
         final String expected = "[\"2019-04-22T23:00Z\"]";
         final String actual = subject.startCollection("name").withElement(Calendars.of(2019, 4, 23)).endCollection()

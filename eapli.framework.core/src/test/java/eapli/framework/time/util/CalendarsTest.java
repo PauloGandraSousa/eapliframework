@@ -84,7 +84,7 @@ public class CalendarsTest {
      *
      */
     @Test
-    @Ignore // due to differences in time zones with bitbucket pipeline
+    @Ignore("due to differences in time zones with bitbucket pipeline")
     public void ensureFirstDayOfWeek13Of2014Is24() {
         System.out.println("beginningOfWeek");
         final int year = 2014;
@@ -100,7 +100,7 @@ public class CalendarsTest {
      * Test of endOfWeek method, of class DateTime.
      *
      */
-    @Ignore // due to differences in time zones with bitbucket pipeline
+    @Ignore("due to differences in time zones with bitbucket pipeline")
     @Test
     public void ensureLastDayOfWeek13Of2014Is30() {
         System.out.println("endOfWeek");

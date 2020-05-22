@@ -25,6 +25,8 @@ import eapli.framework.validations.Preconditions;
 
 /**
  * An id generator that uses a prefix and a sequence number, e.g., AX00001
+ * <p>
+ * This class is thread-safe.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -33,6 +35,7 @@ public class PrefixedNumberSequenceGenerator implements IdentityGenerator<String
 
     private final String prefix;
     private final String mask;
+    // we rely on the thread-safety of {@link NumberSequenceGenerator}
     private final NumberSequenceGenerator numberPartGenerator;
 
     public PrefixedNumberSequenceGenerator(final String prefix, final int length) {

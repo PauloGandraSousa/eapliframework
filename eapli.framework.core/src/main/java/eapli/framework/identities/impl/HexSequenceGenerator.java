@@ -25,11 +25,15 @@ import eapli.framework.identities.IdentityGenerator;
 /**
  * An id generator that produces an hexadecimal representation.
  *
+ * <p>
+ * This class is thread-safe.
+ *
  * @author Paulo Gandra de Sousa
  *
  */
 public class HexSequenceGenerator implements IdentityGenerator<String> {
 
+    // we rely on the thread-safety of {@link NumberSequenceGenerator}
     private final NumberSequenceGenerator generator;
 
     public HexSequenceGenerator() {

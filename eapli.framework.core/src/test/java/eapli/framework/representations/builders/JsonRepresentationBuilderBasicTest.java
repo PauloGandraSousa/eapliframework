@@ -209,7 +209,7 @@ public class JsonRepresentationBuilderBasicTest {
     }
 
     @Test
-    @Ignore // due to differences in time zones with bitbucket pipeline
+    @Ignore("due to differences in time zones with bitbucket pipeline")
     public void ensureDateProperty() {
         final String actual = subject.startObject("Test").withProperty("name", Calendars.of(2019, 4, 23)).build();
         final String expected = "{\"name\":\"2019-04-22T23:00Z\"}";
