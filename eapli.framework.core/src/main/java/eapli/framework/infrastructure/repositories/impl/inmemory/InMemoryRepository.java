@@ -22,12 +22,12 @@ package eapli.framework.infrastructure.repositories.impl.inmemory;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -52,7 +52,7 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
     // it cannot be generic. The solution is to use the old-style untyped Map
     // and cast whenever needed
     @SuppressWarnings({ "rawtypes", "java:S3740" })
-    private static final Map DATA = new HashMap();
+    private static final Map DATA = new ConcurrentHashMap();
     private final Class<T> entityClass;
 
     private final Function<? super T, ? extends K> identityGenerator;
@@ -73,7 +73,7 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
     @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "squid:S2209", "java:S3740" })
     protected Map<K, T> data() {
         if (!this.DATA.containsKey(this.entityClass)) {
-            this.DATA.put(this.entityClass, new HashMap());
+            this.DATA.put(this.entityClass, new ConcurrentHashMap());
         }
         return (Map<K, T>) this.DATA.get(this.entityClass);
     }
