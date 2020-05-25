@@ -118,7 +118,7 @@ public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
     /**
      * Sets the password of the user <strong>performing</strong> policy
-     * enforcement and encoding. if the password does not meet the requirements
+     * enforcement and encoding. If the password does not meet the requirements
      * of the policy, an {@code IllegalArgumentException} is thrown.
      *
      * @param rawPassword

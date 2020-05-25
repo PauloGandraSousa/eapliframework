@@ -33,7 +33,7 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 /**
  * The JPA implementation for scenarios running in a container.
  *
- * Created by nuno on 20/03/16.
+ * @author nuno on 20/03/16.
  */
 @Component
 class JpaUserRepository extends JpaBaseRepository<SystemUser, Username, Username> implements UserRepository {

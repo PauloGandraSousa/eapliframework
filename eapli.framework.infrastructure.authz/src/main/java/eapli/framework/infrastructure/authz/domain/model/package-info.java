@@ -53,14 +53,16 @@
  *           class SystemUserBuilder
  *
  *           SystemUserBuilder ..> SystemUser
+ *           'SystemUserBuilder ..> PasswordPolicy
+ *           'SystemUserBuilder ..> PasswordEncoder
  *
- *           SystemUser -> Username
- *           SystemUser -> Password
  *           SystemUser -> Name
- *           SystemUser -> RoleSet
+ *           SystemUser -> Password
+ *           SystemUser -> Username
+ *           SystemUser -left-> RoleSet
  *           RoleSet ..|> Set
- *           Set ..> RoleAssignment
- *           Role <-- RoleAssignment
+ *           RoleSet .down.> RoleAssignment
+ *           Role <-down- RoleAssignment
  *           Password ..> PasswordPolicy
  *           Password ..> PasswordEncoder
  * @enduml

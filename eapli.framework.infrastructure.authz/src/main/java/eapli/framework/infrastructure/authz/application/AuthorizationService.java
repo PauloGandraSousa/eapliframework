@@ -54,7 +54,7 @@ public final class AuthorizationService {
     private static final Logger LOGGER = LogManager.getLogger(AuthorizationService.class);
 
     /**
-     * the current logged in user session. null if there is no session.
+     * The current logged in user session. {@code null} if there is no session.
      */
     private UserSession theSession = null;
 
@@ -66,7 +66,7 @@ public final class AuthorizationService {
     }
 
     /**
-     * creates a session for a user. if the user is null, it deletes the current
+     * Creates a session for a user. If the user is {@code null}, it deletes the current
      * session.
      *
      * @param user
@@ -82,7 +82,7 @@ public final class AuthorizationService {
     }
 
     /**
-     * clear the session
+     * Clear the session.
      */
     public Optional<UserSession> clearSession() {
         theSession = null;
@@ -124,9 +124,9 @@ public final class AuthorizationService {
      * have the requested permissions.
      *
      * <p>
-     * consider using {@link #loggedinUserWithPermissions(Role...)} to perform
+     * Consider using {@link #loggedinUserWithPermissions(Role...)} to perform
      * this check without throwing exceptions, as these scenarios are not really
-     * exceptions but accounted for
+     * exceptions but something accounted for.
      *
      * @param actions
      * @throws UnauthenticatedException
@@ -145,7 +145,7 @@ public final class AuthorizationService {
     }
 
     /**
-     * returns the authenticated user if there is a session and the
+     * Returns the authenticated user if there is a session and the
      * authenticated user has the desired permissions. otherwise returns an
      * empty optional.
      *

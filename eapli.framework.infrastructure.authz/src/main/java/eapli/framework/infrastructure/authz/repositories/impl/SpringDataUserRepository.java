@@ -35,7 +35,8 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBaseRepository;
 
 /**
- *
+ * The Spring Data implementation.
+ * 
  * @author Paulo Gandra de Sousa
  *
  */

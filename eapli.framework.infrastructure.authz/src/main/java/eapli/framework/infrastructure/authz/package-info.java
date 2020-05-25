@@ -101,7 +101,8 @@
  * {@link eapli.framework.infrastructure.authz.application.AuthzRegistry
  * AuthzRegistry} will provide a singleton instance of each service. In order to
  * properly use the registry it is necessary to call its
- * {@link eapli.framework.infrastructure.authz.application.AuthzRegistry#configure(eapli.framework.infrastructure.authz.domain.repositories.UserRepository, eapli.framework.infrastructure.authz.application.PasswordPolicy, org.springframework.security.crypto.password.PasswordEncoder)}
+ * {@link eapli.framework.infrastructure.authz.application.AuthzRegistry#configure(eapli.framework.infrastructure.authz.domain.repositories.UserRepository, eapli.framework.infrastructure.authz.application.PasswordPolicy, org.springframework.security.crypto.password.PasswordEncoder)
+ * configure}
  * method in the start of the application to inject the proper
  * {@link eapli.framework.infrastructure.authz.domain.repositories.UserRepository
  * UserRepository} implementation.

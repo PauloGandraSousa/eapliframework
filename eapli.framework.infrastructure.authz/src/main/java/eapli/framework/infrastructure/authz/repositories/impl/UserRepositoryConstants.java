@@ -23,12 +23,15 @@
  */
 package eapli.framework.infrastructure.authz.repositories.impl;
 
+import eapli.framework.util.Utility;
+
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
-final class UserRepositoryConstants {
+@Utility
+/* package */ final class UserRepositoryConstants {
     private UserRepositoryConstants() {
         // ensure utility
     }

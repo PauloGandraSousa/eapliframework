@@ -27,12 +27,12 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 /**
  * User repository.
  *
- * Created by nuno on 21/03/16.
+ * @author nuno on 21/03/16.
  */
 public interface UserRepository extends DomainRepository<Username, SystemUser> {
 
     /**
-     * returns the currently active/inactive users
+     * Returns the currently active/inactive users.
      *
      * @param active
      *            the status we want to look for
