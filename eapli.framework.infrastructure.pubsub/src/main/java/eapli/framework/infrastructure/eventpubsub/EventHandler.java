@@ -26,7 +26,7 @@ package eapli.framework.infrastructure.eventpubsub;
 import eapli.framework.domain.events.DomainEvent;
 
 /**
- * an observer of domain events
+ * An observer of domain events.
  *
  * @author Paulo Gandra de Sousa
  *
@@ -34,5 +34,11 @@ import eapli.framework.domain.events.DomainEvent;
 @FunctionalInterface
 public interface EventHandler {
 
+    /**
+     * Handles the event. Implementations should make no assumption about thread-affinity and should
+     * be prepared to the fact that this method call is executed in its own thread.
+     *
+     * @param domainEvent
+     */
     void onEvent(DomainEvent domainEvent);
 }

@@ -30,39 +30,25 @@
  *         <!--
  * @startuml pubsub-inmemory.svg
  *
- *           class InProcessEventDispatcher {
- *           -InProcessEventDispatcher()
- *           +{static}EventDispatcher instance()
+ *
+ *           interface EventDispatcher {
+ *           }
+ *           interface EventPublisher {
  *           }
  *
- *           interface Singleton [[java:eapli.framework.io.util.Singleton]] {
- *           }
+ *           EventDispatcher <|.. InProcessPublisherDispatcher
+ *           EventPublisher <|.. InProcessPublisherDispatcher
  *
- *           Singleton <|.. InProcessEventDispatcher
- *
- *           interface EventDispatcher [[java:eapli.framework.infrastructure.eventpubsub.EventDispatcher]] {
- *           }
- *
- *           EventDispatcher <|.. InProcessEventDispatcher
- *
- *           class InProcessEventPublisher{
- *           -InProcessEventPublisher()
- *           +{static}EventPublisher instance()
- *           }
- *
- *           Singleton <|.. InProcessEventPublisher
- *
- *           interface EventPublisher [[java:eapli.framework.infrastructure.eventpubsub.EventPublisher]] {
- *           }
- *
- *           EventPublisher <|.. InProcessEventPublisher
- *
- *           class InProcessPubSub [[java:eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub]] {
- *           -{static}Logger LOGGER
- *           -Map<Class<? extends DomainEvent>,List<EventHandler>> handlers
+ *           class InProcessPubSub <<utility>>{
  *           -InProcessPubSub()
  *           +{static}EventDispatcher dispatcher()
  *           +{static}EventPublisher publisher()
+ *           }
+ *
+ *           class InProcessPublisherDispatcher <<package private>>{
+ *           -{static}Logger LOGGER
+ *           -Map<Class<? extends DomainEvent>,List<EventHandler>> handlers
+ *           -InProcessPubSub()
  *           +void subscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
  *           +void unsubscribe(EventHandler observer, Class<? extends DomainEvent>[] events)
  *           +void unsubscribe(EventHandler observer)
@@ -70,13 +56,9 @@
  *           +void shutdown()
  *           }
  *
- *           Singleton <|.. InProcessPubSub
- *
- *           EventDispatcher <|.. InProcessPubSub
- *           EventPublisher <|.. InProcessPubSub
- *
- *           InProcessPubSub <.. InProcessEventDispatcher
- *           InProcessPubSub <.. InProcessEventPublisher
+ *           InProcessPubSub ..> InProcessPublisherDispatcher
+ *           InProcessPubSub ..> EventDispatcher
+ *           InProcessPubSub ..> EventPublisher
  *
  * @enduml
  *         -->

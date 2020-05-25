@@ -50,7 +50,7 @@ public final class InProcessPubSub {
 
     /**
      * Provides access to the component if you are not using dependency
-     * injection, e.g, Spring
+     * injection, e.g, Spring.
      *
      * @return the dispatcher
      */
@@ -59,8 +59,8 @@ public final class InProcessPubSub {
     }
 
     /**
-     * provides access to the component if you are not using dependency
-     * injection, e.g, Spring
+     * Provides access to the component if you are not using dependency
+     * injection, e.g, Spring.
      *
      * @return the publisher
      */
