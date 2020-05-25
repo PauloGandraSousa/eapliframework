@@ -11,6 +11,8 @@
 
 - deprecated class method `RomanNumeral#toString`
 
+- thread-safety in in-memory pub/sub
+
 
 ## 13.3.0
 

@@ -20,10 +20,10 @@
  */
 package eapli.framework.infrastructure.eventpubsub.impl.inprocess;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,11 +48,11 @@ import eapli.framework.validations.Preconditions;
  *
  */
 @Component
-class InProcessPublisherDispatcher implements EventDispatcher, EventPublisher {
+/* package */class InProcessPublisherDispatcher implements EventDispatcher, EventPublisher {
 
     private static final Logger LOGGER = LogManager.getLogger(InProcessPublisherDispatcher.class);
 
-    private final Map<Class<? extends DomainEvent>, List<EventHandler>> handlers = new ConcurrentHashMap<>();
+    private final Map<Class<? extends DomainEvent>, Queue<EventHandler>> handlers = new ConcurrentHashMap<>();
 
     /* package */ InProcessPublisherDispatcher() {
         // ensure package instantiation only
@@ -65,15 +65,15 @@ class InProcessPublisherDispatcher implements EventDispatcher, EventPublisher {
      * domain.events.EventHandler, java.lang.Class)
      */
     @Override
-    public synchronized void subscribe(final EventHandler observer,
+    public void subscribe(final EventHandler observer,
             @SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
         Preconditions.nonNull(observer);
 
         for (final Class<? extends DomainEvent> classz : events) {
-            final List<EventHandler> observers = new ArrayList<>();
+            final Queue<EventHandler> observers = new ConcurrentLinkedQueue<>();
             observers.add(observer);
             handlers.merge(classz, observers, (o, n) -> {
-                o.add(n.get(0));
+                o.add(observer);
                 return o;
             });
         }
@@ -92,7 +92,7 @@ class InProcessPublisherDispatcher implements EventDispatcher, EventPublisher {
         Preconditions.nonNull(observer);
 
         for (final Class<? extends DomainEvent> classz : events) {
-            final List<EventHandler> observers = handlers.get(classz);
+            final Queue<EventHandler> observers = handlers.get(classz);
             if (observers != null) {
                 observers.remove(observer);
             }
@@ -122,8 +122,11 @@ class InProcessPublisherDispatcher implements EventDispatcher, EventPublisher {
     public void publish(final DomainEvent event) {
         Preconditions.nonNull(event, "cannot publish null");
 
-        final List<EventHandler> observers = handlers.get(event.getClass());
+        final Queue<EventHandler> observers = handlers.get(event.getClass());
         if (observers != null) {
+            // publish the event in a separate thread, but all event handlers are called from the
+            // same thread
+            // TODO publish the event to each handler in its own thread?
             new Thread(() -> observers.forEach(observer -> observer.onEvent(event))).start();
         }
         LOGGER.debug("Publishing event {} to subscribed observers", event);
