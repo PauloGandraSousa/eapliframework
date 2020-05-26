@@ -20,13 +20,15 @@
  */
 package eapli.framework.actions;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import eapli.framework.validations.Invariants;
 
 /**
  * A helper class to keep a simple history of actions and manage undo/redo.
+ * <p>
+ * This class is thread-safe.
  *
  * @author Paulo Gandra Sousa
  *
@@ -35,11 +37,16 @@ public class ActionHistoryKeeper {
     /**
      * the history of actions already performed, i.e., an Undo list
      */
-    private final Deque<UndoableAction> history = new ArrayDeque<>();
+    private final Deque<UndoableAction> history = new ConcurrentLinkedDeque<>();
     /**
      * the actions that were undone and can eventually be redone
      */
-    private final Deque<UndoableAction> forward = new ArrayDeque<>();
+    private final Deque<UndoableAction> forward = new ConcurrentLinkedDeque<>();
+
+    /**
+     * Eventough we use concurrent deques, we need to synchronize moving from one deque to another
+     */
+    private final Object lock = new Object();
 
     /**
      * Executes the action and saves it in the history.
@@ -60,8 +67,10 @@ public class ActionHistoryKeeper {
      *            the action to save
      */
     public void save(final UndoableAction action) {
-        history.push(action);
-        forward.clear();
+        synchronized (lock) {
+            history.push(action);
+            forward.clear();
+        }
     }
 
     /**
@@ -71,9 +80,12 @@ public class ActionHistoryKeeper {
     public void undo() {
         Invariants.ensure(canUndo());
 
-        final UndoableAction action = history.poll();
+        UndoableAction action;
+        synchronized (lock) {
+            action = history.poll();
+            forward.push(action);
+        }
         action.undo();
-        forward.push(action);
     }
 
     /**
