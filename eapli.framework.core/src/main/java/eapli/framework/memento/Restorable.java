@@ -22,6 +22,8 @@ package eapli.framework.memento;
 
 /**
  * An object that can be restored to a previous state.
+ * <p>
+ * Preferably, implementations of this interface should be thread-safe.
  *
  * @author Paulo Gandra Sousa
  *

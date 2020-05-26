@@ -25,10 +25,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,7 +50,7 @@ public class GeneralDTO implements Map<String, Object> {
 
     private static final Logger LOGGER = LogManager.getLogger(GeneralDTO.class);
 
-    private final Map<String, Object> data = new HashMap<>();
+    private final Map<String, Object> data = new ConcurrentHashMap<>();
     private final String type;
 
     /**
@@ -164,11 +164,14 @@ public class GeneralDTO implements Map<String, Object> {
     }
 
     /**
-     * Gets the list of all non-synthetic fields from the inheritance structure. Synthetic fields are
-     * ignored mostly due to JacoCo instrumentation which adds a synthetic field {@code $jacocoData}.
+     * Gets the list of all non-synthetic fields from the inheritance structure. Synthetic fields
+     * are
+     * ignored mostly due to JacoCo instrumentation which adds a synthetic field
+     * {@code $jacocoData}.
      *
      * <p>
-     * We are ignoring the security issue S1523 we since control the execution and know the use we are
+     * We are ignoring the security issue S1523 we since control the execution and know the use we
+     * are
      * giving to the reflected fields, eventough care must be taken when using reflection
      *
      * @param type
@@ -186,8 +189,8 @@ public class GeneralDTO implements Map<String, Object> {
     }
 
     /**
-     * Returns the name of the type contained in this DTO. Might be helpful for client code to parse the
-     * DTO.
+     * Returns the name of the type contained in this DTO. Might be helpful for client code to parse
+     * the DTO.
      *
      * @return the name of the type contained in this DTO
      */

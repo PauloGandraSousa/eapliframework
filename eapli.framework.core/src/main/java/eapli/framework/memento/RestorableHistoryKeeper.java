@@ -20,8 +20,8 @@
  */
 package eapli.framework.memento;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import eapli.framework.validations.Invariants;
 import eapli.framework.validations.Preconditions;
@@ -29,15 +29,18 @@ import eapli.framework.validations.Preconditions;
 /**
  * A history keeper that keeps track of {@link Memento} and allows to easily restore back to a
  * previous state in a LIFO manner.
+ * <p>
+ * This class is thread-safe. The {@link Restorable} object managed by this object should also be
+ * thread-safe.
  *
  * @param <T>
- *            the type of object to track history
+ *            the type of object to track in the history
  *
  * @author Paulo Gandra Sousa
  *
  */
 public class RestorableHistoryKeeper<T extends Restorable> {
-    private final Deque<Memento> history = new ArrayDeque<>();
+    private final Deque<Memento> history = new ConcurrentLinkedDeque<>();
     private final T subject;
 
     /**

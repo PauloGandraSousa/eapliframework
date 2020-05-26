@@ -32,10 +32,15 @@ import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.dto.GeneralDTO;
 
 /**
+ * A builder for {@link GeneralDTO} objects.
+ * <p>
+ * This class is thread-safe.
+ * 
  * @author Paulo Gandra de Sousa
  *
  */
 public class GeneralDTORepresentationBuilder implements RepresentationBuilder<GeneralDTO> {
+
     private final GeneralDTO dto;
 
     public GeneralDTORepresentationBuilder(final String type) {
@@ -132,6 +137,6 @@ public class GeneralDTORepresentationBuilder implements RepresentationBuilder<Ge
 
     @Override
     public RepresentationBuilder<GeneralDTO> withElement(final String value) {
-        throw new UnsupportedOperationException("Not implemnted yet");
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }
