@@ -20,8 +20,6 @@
  */
 package eapli.framework.math.domain.model;
 
-import eapli.framework.domain.model.ValueObject;
-
 /**
  * A Numeral System to encode numeric values.
  *
@@ -29,7 +27,7 @@ import eapli.framework.domain.model.ValueObject;
  *
  */
 @FunctionalInterface
-public interface NumeralSystem extends ValueObject {
+public interface NumeralSystem {
     /**
      * Returns the symbols to be used as representation of the number. the
      * length of this string of symbols determines the base of the numeral

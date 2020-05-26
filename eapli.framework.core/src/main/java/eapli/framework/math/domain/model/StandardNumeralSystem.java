@@ -20,7 +20,7 @@
  */
 package eapli.framework.math.domain.model;
 
-import eapli.framework.domain.model.ValueObject;
+import eapli.framework.domain.model.Immutable;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
@@ -31,11 +31,11 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  *
  */
-public class StandardNumeralSystem implements ValueObject, NumeralSystem {
-
-    private static final long serialVersionUID = 1L;
+@Immutable
+public class StandardNumeralSystem implements NumeralSystem {
 
     private final int base;
+
     private static final String SYMBOLS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /**

@@ -11,7 +11,10 @@
 
 - deprecated class method `RomanNumeral#toString`
 
-- thread-safety in in-memory pub/sub
+- thread-safety in:
+    - `in-memory pub/sub`
+    - `ActionHistoryKeeper`
+    - `Macro`
 
 
 ## 13.3.0

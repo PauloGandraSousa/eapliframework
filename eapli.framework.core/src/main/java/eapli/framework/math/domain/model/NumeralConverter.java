@@ -30,7 +30,8 @@ import eapli.framework.util.Utility;
  *
  */
 @Utility
-class NumeralConverter {
+/* package */class NumeralConverter {
+
     private NumeralConverter() {
         // ensure utility
     }

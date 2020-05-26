@@ -26,7 +26,9 @@ import eapli.framework.identities.IdentityGenerator;
 
 /**
  * An identity generator using UUIDs.
- *
+ * <p>
+ * This class is thread-safe.
+ * 
  * @author Paulo Gandra de Sousa
  *
  */

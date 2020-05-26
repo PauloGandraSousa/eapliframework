@@ -39,6 +39,7 @@ public abstract class DomainEventBase implements DomainEvent {
 
     @Temporal(TemporalType.TIMESTAMP)
     private final Calendar occuredAt;
+
     @Temporal(TemporalType.TIMESTAMP)
     private final Calendar registeredAt;
 
