@@ -20,22 +20,25 @@
  */
 package eapli.framework.actions;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * A collection of actions that can be executed as one single action. Execution
- * stops on the first action that returns false.
+ * stops on the first action that returns {@code false}.
+ * <p>
+ * This class is thread-safe. Several threads can share the same Macro object and execute it; each
+ * one will get its own {@code errorCause} upon failure to execute an action.
  *
  * @author Paulo Gandra de Sousa
  *
  */
 public class Macro implements Action {
 
-    private final List<Action> actions = new ArrayList<>();
+    private final Queue<Action> actions = new ConcurrentLinkedQueue<>();
 
-    private Action errorCause;
+    private final ThreadLocal<Action> errorCause = ThreadLocal.withInitial(null);
 
     public Macro() {
     }
@@ -51,12 +54,13 @@ public class Macro implements Action {
     }
 
     /**
-     * Returns the action that caused macro execution to stop.
+     * Returns the action that caused macro execution to stop. Each thread that executed the macro
+     * will get the action that failed on that thread execution.
      *
      * @return the action that caused macro execution to stop
      */
     public Optional<Action> errorCause() {
-        return Optional.ofNullable(errorCause);
+        return Optional.ofNullable(errorCause.get());
     }
 
     /**
@@ -69,10 +73,11 @@ public class Macro implements Action {
     public boolean execute() {
         for (final Action e : actions) {
             if (!e.execute()) {
-                errorCause = e;
+                errorCause.set(e);
                 return false;
             }
         }
+        errorCause.remove();
         return true;
     }
 }
