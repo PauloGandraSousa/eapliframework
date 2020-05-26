@@ -35,9 +35,10 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.validations.Preconditions;
 
 /**
- * An utility class for providing transactional context to JPA repositories not
- * running in containers. as such, this class creates its own
- * EntityManagerFactory instead of using an injected EMF by the container.
+ * A utility class for providing transactional context to JPA repositories not
+ * running in containers. As such, this class creates its own
+ * {@link javax.persistence.EntityManagerFactory EntityManagerFactory} instead of using an injected
+ * EMF by the container.
  *
  * @author Paulo Gandra Sousa
  */
@@ -71,7 +72,7 @@ public class JpaTransactionalContext implements TransactionalContext {
         this(persistenceUnitName, new HashMap());
     }
 
-    public final synchronized EntityManagerFactory entityManagerFactory() {
+    protected final synchronized EntityManagerFactory entityManagerFactory() {
         if (singletonEMF == null) {
             LOGGER.info("Not runing in container mode.");
             singletonEMF = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
@@ -79,7 +80,7 @@ public class JpaTransactionalContext implements TransactionalContext {
         return singletonEMF;
     }
 
-    public EntityManager entityManager() {
+    protected EntityManager entityManager() {
         if (entityManager == null || !entityManager.isOpen()) {
             LOGGER.trace("Creating a new entity manager");
             entityManager = entityManagerFactory().createEntityManager();

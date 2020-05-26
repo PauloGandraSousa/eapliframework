@@ -20,6 +20,7 @@
  */
 package eapli.framework.actions;
 
+import eapli.framework.domain.model.Immutable;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -34,6 +35,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  *
  */
+@Immutable
 public class ChainedAction implements Action {
 
     private final Action current;
@@ -83,7 +85,8 @@ public class ChainedAction implements Action {
 
     /**
      * Creates a new ChainedAction where the {@code next} action is appended to
-     * the end of the current chain. Builder method useful in conjunction with {@link #first(Action)}
+     * the end of the current chain. Builder method useful in conjunction with
+     * {@link #first(Action)}
      *
      * @param next
      * @return the new object
