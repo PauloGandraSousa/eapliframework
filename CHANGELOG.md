@@ -9,12 +9,20 @@
 
 ### Changed
 
-- deprecated class method `RomanNumeral#toString`
+- Deprecated class method `RomanNumeral#toString`
 
-- thread-safety in:
+- Thread-safety in:
     - `in-memory pub/sub`
     - `ActionHistoryKeeper`
     - `Macro`
+    - `RestorableHistoryKeeper`
+    - `GeneralDTO`
+    - `GeneralDTORepresentationalBuilder`
+    - `InMemoryRepository`
+
+- `InMemoryRepository` is now abstract (this could potentially be a breaking change but we are ignoring it since the published interface is to derive this class and do not use it directly)
+
+- Concurrent unit tests for InMemoryRepository using [Concurrent JUnit](https://github.com/ThomasKrieger/concurrent-junit)
 
 
 ## 13.3.0
@@ -23,7 +31,7 @@
 
 - `FormattingOrTransformationException`
 
-- coupling back the version number of all components to make it easier to deploy
+- Coupling back the version number of all components to make it easier to deploy
 
 
 ## 13.2.0
@@ -32,16 +40,16 @@
 
 - Null (No-Op) `InMemoryTransactionalContext`
 
-- new `eapli.framework.io` package
+- New `eapli.framework.io` package
     - `StreamGobbler`
     - `util.Files`
     - `util.Console`
 
 ### Changed
 
-- deprecated `eapli.framework.util.Files`
-
-- deprecated `eapli.framework.util.Console`
+- Deprecated:
+    - `eapli.framework.util.Files`
+    - `eapli.framework.util.Console`
 
 
 ## 13.1.0
@@ -50,21 +58,21 @@
  
 - `PrettyJsonString` has a new constructor to map java objects to JSON
 
-- decoupling the versioning of Core from AUTHZ and PUB/SUB
+- Decoupling the versioning of Core from AUTHZ and PUB/SUB
 
-- improve JSON support in `Money`, `Designation` and `Description`
+- Improve JSON support in `Money`, `Designation` and `Description`
 
-- improve XML support in `Money`, `Designation` and `Description`
+- Improve XML support in `Money`, `Designation` and `Description`
 
 - `PrettyXmlString` has two static factory methods `fromString` and `fromObject`. note that the constructor of this is class are deprecated and should not be used.
 
 ### Changes
 
-- `deleteOfIdentity` is now loading the object in order to remove it with all cascading in place.
+- `Repository#deleteOfIdentity` is now loading the object in order to remove it with all cascading in place.
 
-- fix transaction handling in `JpaAutoTxRepository.update`
+- Fix transaction handling in `JpaAutoTxRepository.update`
 
-- upgrade SpringBoot to 2.3.0
+- Upgrade SpringBoot to 2.3.0
 
 
 ## 13.0.0
@@ -81,47 +89,43 @@
 
 ### Changes
 
-- deprecated `Stringformatter`; you should use the OO-way `FormattedString` classes
+- Deprecated `Stringformatter`; you should use the OO-way `FormattedString` classes
 
-- removed `NumberFormatter` class
+- Removed:
+    - `NumberFormatter` class
+	 - `Collections.contains` as it was duplicated from `Arrays.contains`
+    - `Money.formatted`
 
-- removed `Collections.contains` as it was duplicated from `Arrays.contains`
-
-- moved `StringMixin` to `eapli.framework.strings` package
-
-- moved `Strings` to `eapli.framework.strings.util` package
+- Moved 
+    - `StringMixin` to `eapli.framework.strings` package
+    - `Strings` to `eapli.framework.strings.util` package
+    - `StringPredicates` to `eapli.framework.strings.util`
+    - `CalendarPredicates` to `eapli.framework.time.util`
+    - `NumberPredicates` to `eapli.framework.math.util`
 
 - `Money.amountAsDecimal` renamed to `Money.amount`. This method name was already in use returning a `double`, now it returns a `BigDecimal`. For the `double` value use `amountAsDouble`
-
-- removed `Money.formatted`
-
-- `StringPredicates` moved to `eapli.framework.strings.util`
-
-- `CalendarPredicates` moved to `eapli.framework.time.util`
-
-- `NumberPredicates` moved to `eapli.framework.math.util`
 
 
 ## 12.0.1
 
-- fix transaction handling in `deleteOfIdentity`
+- Fix transaction handling in `deleteOfIdentity`
 
 
 ## 12.0.0
 
 ### What's new
 
-- new overload `Collections.sizeOf(Collection)`
+- New overload `Collections.sizeOf(Collection)`
 
 - "null" object `InMemoryTransactionalContext`
 
 ### Changes
 
-- reverse the order of parametrized types in `InMemoryDomainRepository` to fix in memory repository: the data holder map was keyed by the KEY type and not by the TYPE type
+- Reverse the order of parametrized types in `InMemoryDomainRepository` to fix in memory repository: the data holder map was keyed by the KEY type and not by the TYPE type
 
-- property `Description.theDescription` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
+- Property `Description.theDescription` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
 
-- property `Username.theUsername` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
+- Property `Username.theUsername` renamed to `value` - check if you used the old name in JPQL queries and in `@AttributeOverride` annotations
 
 
 ## 11.0.x
@@ -137,23 +141,23 @@
 
 ### Changes
 
-- method `Calendars#calendarFromDate()` renamed to `fromDate`
+- Method `Calendars#calendarFromDate()` renamed to `fromDate`
 
 - `ReportingRepository` is now an annotation and not a marker interface
 
 - `DTO` is now an annotation and not a marker interface
 
-- class `ExitWithMessageAction` 
+- Class `ExitWithMessageAction` 
     - requires an argument in the constructor with the message to show
 
-- class `AbstractListUI<T>` 
+- Class `AbstractListUI<T>` 
     - requires a new overide `emptyMessage()` with the message to show when there are no elements
     - there is no overide of the `headline()` method 
 
-- class `ListUI<T>`
+- Class `ListUI<T>`
     - requires two additional parameters in the constructor: `headline` and `emptyMessage`
 
-- package renaming to better follow vertical slicing
+- Package renaming to better follow vertical slicing
     - `eapli.framework.domain.model.general` -> `eapli.framework.general.domain.model`
     - `eapli.framework.domain.model.math` -> `eapli.framework.math.domain.model`
     - `eapli.framework.domain.model.time` -> `eapli.framework.time.domain.model`
@@ -161,21 +165,20 @@
     - `eapli.framework.domain.model.identities.*` -> `eapli.framework.identities.*`
     - `eapli.framework.domain.activerecord` -> `eapli.framework.activerecord`
 
-- class `Calendars` moved to `eapli.framework.time.util`
-
-- class `NumberGenerator` moved to `eapli.framework.math.util`
-
-- class `Math` moved to `eapli.framework.math.util`
+- moved:
+    - class `Calendars` to `eapli.framework.time.util`
+    - class `NumberGenerator` to `eapli.framework.math.util`
+    - class `Math` to `eapli.framework.math.util`
 
 
 ## 9.x.x --> 10.0.x
 
-- interface `Controller` is deleted
+- Interface `Controller` is deleted
 
-- new `UseCaseController` annotation
+- New `UseCaseController` annotation
 
-- upgrade spring boot to 2.2.6
+- Upgrade spring boot to 2.2.6
 
-- upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
+- Upgrade hibernate 5.4.14 to avoid problem with H2 drop-and-create
 
-- fix `SystemUserBuilder` NPE
+- Fix `SystemUserBuilder` NPE

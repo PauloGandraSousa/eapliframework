@@ -46,7 +46,7 @@ import eapli.framework.validations.Invariants;
  * @param <K>
  *            the type to be used as key of an object
  */
-public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
+public abstract class InMemoryRepository<T, K> implements IterableRepository<T, K> {
 
     // Ideally this would be a typed generic Map but since it is a static member
     // it cannot be generic. The solution is to use the old-style untyped Map
@@ -70,12 +70,17 @@ public class InMemoryRepository<T, K> implements IterableRepository<T, K> {
         this.identityGenerator = identityGenerator;
     }
 
+    /**
+     * Resets all data. This is basically to support test scenarios, however, if the test run in
+     * parallel this will cause problems.
+     */
+    /* package */ static void reset() {
+        DATA.clear();
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "squid:S2209", "java:S3740" })
     protected Map<K, T> data() {
-        if (!this.DATA.containsKey(this.entityClass)) {
-            this.DATA.put(this.entityClass, new ConcurrentHashMap());
-        }
-        return (Map<K, T>) this.DATA.get(this.entityClass);
+        return (Map<K, T>) this.DATA.computeIfAbsent(this.entityClass, (k) -> new ConcurrentHashMap());
     }
 
     @Override
