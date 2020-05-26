@@ -1,17 +1,17 @@
 # EAPLI Framework Changelog
 
 
-## OPEN-SNAPSHOT
+## 13.3.1
 
 ### What's new
 
-- TBD
+- n.a.
 
 ### Changed
 
 - Deprecated class method `RomanNumeral#toString`
 
-- Thread-safety in:
+- Fixes thread-safety in:
     - `in-memory pub/sub`
     - `ActionHistoryKeeper`
     - `Macro`
@@ -20,7 +20,7 @@
     - `GeneralDTORepresentationalBuilder`
     - `InMemoryRepository`
 
-- `InMemoryRepository` is now abstract (this could potentially be a breaking change but we are ignoring it since the published interface is to derive this class and do not use it directly)
+- `InMemoryRepository` is now abstract (this could potentially be a breaking change but we are ignoring it since the published interface is to derive this class and not to use it directly)
 
 - Concurrent unit tests for InMemoryRepository using [Concurrent JUnit](https://github.com/ThomasKrieger/concurrent-junit)
 
