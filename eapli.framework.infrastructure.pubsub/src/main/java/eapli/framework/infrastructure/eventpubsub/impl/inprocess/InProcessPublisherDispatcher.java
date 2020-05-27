@@ -120,16 +120,32 @@ import eapli.framework.validations.Preconditions;
      */
     @Override
     public void publish(final DomainEvent event) {
-        Preconditions.nonNull(event, "cannot publish null");
+        Preconditions.nonNull(event, "Cannot publish a null event");
 
         final Queue<EventHandler> observers = handlers.get(event.getClass());
         if (observers != null) {
-            // publish the event in a separate thread, but all event handlers are called from the
-            // same thread
-            // TODO publish the event to each handler in its own thread?
-            new Thread(() -> observers.forEach(observer -> observer.onEvent(event))).start();
+            publishToSubscribers(event, observers);
         }
-        LOGGER.debug("Publishing event {} to subscribed observers", event);
+    }
+
+    private void publishToSubscribers(final DomainEvent event, final Queue<EventHandler> observers) {
+        // Publish the event in a separate thread to the different subscribers. This way the
+        // "main" thread can continue even if the events are not yet published.
+        new Thread(() -> {
+            LOGGER.debug("Publishing event {} to subscribed observers (in thread {})", event,
+                    Thread.currentThread().getId());
+            observers.forEach(observer -> publishToOneSubscriber(event, observer));
+        }).start();
+    }
+
+    private void publishToOneSubscriber(final DomainEvent event, final EventHandler observer) {
+        // Each event handler in turn, will be called in a separate thread so each subscriber
+        // can act isolated and without order dependency on each other.
+        new Thread(() -> {
+            LOGGER.debug("Publishing event {} to observer {} in thread {}", event, observer,
+                    Thread.currentThread().getId());
+            observer.onEvent(event);
+        }).start();
     }
 
     @Override

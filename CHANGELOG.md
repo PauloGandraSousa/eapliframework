@@ -8,7 +8,7 @@
 
 ### Changed
 
--TBD
+- In-process Pub/Sub uses a separate thread to publish the events and separate threads to call each subscriber
 
 
 ## 13.3.1
