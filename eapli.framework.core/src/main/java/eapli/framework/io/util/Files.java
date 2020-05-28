@@ -127,13 +127,17 @@ public final class Files {
      * @throws InterruptedException
      */
     public static int openInOSViewer(final String path) throws IOException, InterruptedException {
-        final boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
+        final String osname = System.getProperty("os.name").toLowerCase();
+        final boolean isWindows = osname.startsWith("windows");
+        final boolean isMac = osname.indexOf("mac") >= 0;
+        final boolean isNix = osname.indexOf("nix") >= 0 || osname.indexOf("nux") >= 0 || osname.indexOf("aix") >= 0;
 
         final ProcessBuilder builder = new ProcessBuilder();
         if (isWindows) {
             builder.command("cmd.exe", "/c", "start " + path);
-        } else {
+        } else if (isMac) {
+            builder.command("sh", "-c", "open " + path);
+        } else if (isNix) {
             builder.command("sh", "-c", "xdg-open " + path);
         }
         builder.directory(new File(System.getProperty("user.home")));
