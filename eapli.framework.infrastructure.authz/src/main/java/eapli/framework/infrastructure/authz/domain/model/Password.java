@@ -38,7 +38,7 @@ import eapli.framework.validations.Preconditions;
  * class by {@link SystemUserBuilder} and {@link PasswordEncoder}.
  *
  * <p>
- * IMPORTANT: passwords should never be stored in plain format
+ * <b>IMPORTANT</b>: passwords should never be stored in plain format
  *
  * @author Paulo Gandra Sousa
  */
