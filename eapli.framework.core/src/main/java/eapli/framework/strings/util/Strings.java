@@ -23,6 +23,11 @@
  */
 package eapli.framework.strings.util;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import eapli.framework.math.util.NumberGenerator;
 import eapli.framework.util.Utility;
 
@@ -90,6 +95,19 @@ public final class Strings {
             sb.append(String.format("%02x", each));
         }
         return sb.toString();
+    }
+
+    /**
+     * Shuffles the characters in a string.
+     * <p>
+     * Inspired by <a href="https://mkyong.com/java/java-password-generator-example/">MKyong</a>.
+     *
+     * @return the same characters as in the original string but shuffled
+     */
+    public static String shuffle(final String src) {
+        final List<String> letters = Arrays.asList(src.split(""));
+        Collections.shuffle(letters);
+        return letters.stream().collect(Collectors.joining());
     }
 
     /**
