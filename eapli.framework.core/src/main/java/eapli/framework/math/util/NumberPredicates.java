@@ -92,7 +92,7 @@ public final class NumberPredicates {
     }
 
     /**
-     * Checks if a number is positive (greater than zero) or zero
+     * Checks if a number is positive (greater than zero) or zero.
      *
      * @param number
      *            the number to check

@@ -29,10 +29,10 @@ import eapli.framework.util.Utility;
  * Very simple pseudo random generator support.
  *
  * <p>
- * make sure you check
- * https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS2245&rule_key=squid%3AS2245
- * in order to understand the security issues that rise from using pseudorandon
- * number generators
+ * make sure you check <a href=
+ * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS2245&rule_key=squid%3AS2245">Sonar
+ * squid:S2245</a>
+ * in order to understand the security issues that rise from using pseudorandon number generators
  */
 @Utility
 public final class NumberGenerator {

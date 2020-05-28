@@ -25,7 +25,7 @@ import eapli.framework.identities.Identifiable;
 /**
  * An Active Record is a design pattern where an object both holds behaviour
  * (business logic) and knows how to handle its own persistence. Active Records
- * might have static finder methods or use a separated Finder class.
+ * might have static finder methods or use a separated {@link Finder} class.
  *
  * @param <I>
  *            the type of the business identity

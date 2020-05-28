@@ -47,7 +47,8 @@ import eapli.framework.util.Utility;
      *
      * @param a
      * @param b
-     * @param consequence the action to execute of the test fails
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensureAreEqual(final long a, final long b, final Action consequence) {
         ensure(a == b, consequence);
@@ -58,7 +59,8 @@ import eapli.framework.util.Utility;
      *
      * @param a
      * @param b
-     * @param consequence the action to execute of the test fails
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensureAreEqual(final Object a, final Object b, final Action consequence) {
         ensure(Objects.equals(a, b), consequence);
@@ -69,7 +71,8 @@ import eapli.framework.util.Utility;
      *
      * @param regex
      * @param arg
-     * @param consequence the action to execute of the test fails
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensureMatches(final Pattern regex, final String arg, final Action consequence) {
         ensure(regex.matcher(arg).find(), consequence);
@@ -80,7 +83,8 @@ import eapli.framework.util.Utility;
      * true then the specified action is performed
      *
      * @param test
-     * @param consequence the action to execute of the test fails
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensure(final boolean test, final Action consequence) {
         Actions.doIfNot(consequence, test);
@@ -90,7 +94,8 @@ import eapli.framework.util.Utility;
      * Checks if all object references are not null.
      *
      * @param objects
-     * @param consequence the action to execute of the test fails
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensureNoneNull(final Action consequence, final Object... objects) {
         for (final Object each : objects) {
@@ -101,38 +106,44 @@ import eapli.framework.util.Utility;
     /**
      * Checks if a Collection is non null and contains at least an element.
      *
-     * @param arg         the collection to test
-     * @param consequence the action to execute of the collection is null or empty
+     * @param arg
+     *            the collection to test
+     * @param consequence
+     *            the action to execute of the collection is null or empty
      */
     public static void ensureNonEmpty(final Collection<?> arg, final Action consequence) {
         ensure(arg != null && !arg.isEmpty(), consequence);
     }
 
     /**
-     * checks if a string is neither null nor empty nor just white space.
+     * Checks if a string is neither null nor empty nor just white space.
      *
-     * @param arg         the string to test
-     * @param consequence the action to execute of the test fails
+     * @param arg
+     *            the string to test
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensureNonEmpty(final String arg, final Action consequence) {
         Actions.doIfNot(consequence, !StringPredicates.isNullOrWhiteSpace(arg));
     }
 
     /**
-     * checks if a value is positive
+     * Checks if a value is positive, that is n > 0.
      *
      * @param arg
-     * @param consequence the action to execute of the test fails
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensureIsPositive(final long arg, final Action consequence) {
         Actions.doIfNot(consequence, NumberPredicates.isPositive(arg));
     }
 
     /**
-     * checks if a value is non negative
+     * Checks if a value is non negative, that is n >= 0.
      *
      * @param arg
-     * @param consequence the action to execute of the test fails
+     * @param consequence
+     *            the action to execute of the test fails
      */
     public static void ensureNonNegative(final long arg, final Action consequence) {
         Actions.doIfNot(consequence, NumberPredicates.isNonNegative(arg));
