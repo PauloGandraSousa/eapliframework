@@ -4,7 +4,8 @@
 
 ### What's new
 
-- TBD
+- `Math.fibonacci` and `Math.fibonacciSeries`
+
 
 ### Changed
 

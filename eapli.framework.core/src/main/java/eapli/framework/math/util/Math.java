@@ -21,9 +21,12 @@
 package eapli.framework.math.util;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.stream.Stream;
 
 import eapli.framework.util.Utility;
+import eapli.framework.validations.Preconditions;
 
 /**
  * Utility mathematical functions.
@@ -65,7 +68,7 @@ public final class Math {
      * Permite efectuar a conversão de um valor para outra escala.
      * <p>
      * Author NMB
-     * 
+     *
      * @param oldMin
      *            - exemplo 0
      * @param oldMax
@@ -102,5 +105,51 @@ public final class Math {
             s *= base;
         }
         return s;
+    }
+
+    /**
+     * Calculates the <i>n</i>th element of the
+     * <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci sequence</a>.
+     *
+     * <p>
+     * Scrapped from <a href="https://mkyong.com/java/java-fibonacci-examples/">MKyong</a>
+     *
+     * @param n
+     *            the index of the desired element. The classic non-extended Fibonacci sequence
+     *            starts at 0.
+     * @return the <i>n</i>th element of the Fibonacci sequence
+     */
+    public static BigInteger fibonacci(final int n) {
+        return fibonacciSequence(n).reduce((a, b) -> b).orElse(BigInteger.ZERO);
+    }
+
+    /**
+     * Calculates the <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci
+     * sequence</a> up to a certain index.
+     * <p>
+     * Scrapped from <a href="https://mkyong.com/java/java-fibonacci-examples/">MKyong</a>
+     * <p>
+     * If you need to get a {@code List} instead of a {@code Stream} just use one of the standard
+     * collectors, e.g.:
+     *
+     * <pre>
+     * <code>
+     * List<BigInteger> l = Math.fibionacciSerires(10).collect(Collectors.toList());
+     * </code>
+     * </pre>
+     *
+     * @param upperIndex
+     *            the upper limit of the sequence. The classic non-extended Fibonacci sequence
+     *            starts at 1.
+     * @return
+     */
+    public static Stream<BigInteger> fibonacciSequence(final int upperIndex) {
+        Preconditions.nonNegative(upperIndex, "The Fibonacci (non-extended) sequence only works for natural numbers");
+
+        return Stream
+                .iterate(new BigInteger[] { BigInteger.ZERO, BigInteger.ONE },
+                        t -> new BigInteger[] { t[1], t[0].add(t[1]) })
+                .limit(upperIndex + 1L)
+                .map(i -> i[0]);
     }
 }
