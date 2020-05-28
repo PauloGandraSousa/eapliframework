@@ -4,12 +4,16 @@
 
 ### What's new
 
-- `Math.fibonacci` and `Math.fibonacciSeries`
-- `Math.heads`
-- `NumberGenerator.nBytes`
-- `NumberGenerator.anHex`
-- `Strings.asHexadecimal`
-- new class `ArrayPredicates`
+- new methods:
+    - `Math.fibonacci` and `Math.fibonacciSeries`
+    - `Math.heads`
+    - `NumberGenerator.nBytes`
+    - `NumberGenerator.anHex`
+    - `Strings.asHexadecimal`
+    - `Strings.shuffle`
+- new classes:
+    - `ArrayPredicates`
+    - `RandomRawPassword`
 
 ### Changed
 
