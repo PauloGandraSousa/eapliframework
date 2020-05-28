@@ -25,12 +25,15 @@ package eapli.framework.util;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ *
+ * @author Paulo Gandra de Sousa 28/05/2020
+ *
+ */
 public class ArraysTest {
 
     private final String[] originalStrings = { "aa", "bb", "cc", "dd" };
@@ -42,16 +45,6 @@ public class ArraysTest {
         for (int i = 0; i < originalStrings.length; i++) {
             testStrings[i] = originalStrings[i];
         }
-    }
-
-    @Test
-    public void ensureContainsAA() {
-        assertTrue(Arrays.contains(testStrings, "aa"));
-    }
-
-    @Test
-    public void ensureDoesNotContainXX() {
-        assertFalse(Arrays.contains(testStrings, "xx"));
     }
 
     @Test
@@ -98,5 +91,23 @@ public class ArraysTest {
         for (int i = 0; i < testDoubles.length; i++) {
             assertEquals(i + 1.0, testDoubles[i], 0.001);
         }
+    }
+
+    @Test
+    public void ensureCountOfUnexistingElementIsZero() {
+        final Integer[] test = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        assertEquals(0, Arrays.countOf(test, 42));
+    }
+
+    @Test
+    public void ensureCountOfExistingSingleElementIsOne() {
+        final Integer[] test = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        assertEquals(1, Arrays.countOf(test, 2));
+    }
+
+    @Test
+    public void ensureCountOfExistingTripleElementIsThree() {
+        final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
+        assertEquals(3, Arrays.countOf(test, 2));
     }
 }

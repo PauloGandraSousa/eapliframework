@@ -152,4 +152,14 @@ public final class Math {
                 .limit(upperIndex + 1L)
                 .map(i -> i[0]);
     }
+
+    /**
+     * Fifty/fifty chance.
+     *
+     * @return {@code true} or {@code false} in what tends to be a 50/50 distribution
+     */
+    public static boolean heads() {
+        return NumberGenerator.anInt() % 2 == 0;
+    }
+
 }

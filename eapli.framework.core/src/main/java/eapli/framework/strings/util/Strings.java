@@ -79,6 +79,20 @@ public final class Strings {
     }
 
     /**
+     * Returns an hexadecimal representation of a byte buffer.
+     *
+     * @param buffer
+     * @return an hexadecimal representation of the byte buffer
+     */
+    public static String asHexadecimal(final byte[] buffer) {
+        final StringBuilder sb = new StringBuilder();
+        for (final byte each : buffer) {
+            sb.append(String.format("%02x", each));
+        }
+        return sb.toString();
+    }
+
+    /**
      * Truncates a string to a specified length.
      *
      * @param org
@@ -155,7 +169,8 @@ public final class Strings {
      * @param src
      *            the string to pad
      * @param length
-     *            the expected size of the return string. If {@code length} is less than the length of the original
+     *            the expected size of the return string. If {@code length} is less than the length
+     *            of the original
      *            string, the original string is returned.
      * @param padding
      *            the character to use as padding
@@ -172,7 +187,8 @@ public final class Strings {
      * @param src
      *            the string to pad
      * @param length
-     *            the expected size of the return string. If {@code length} is less than the length of the original
+     *            the expected size of the return string. If {@code length} is less than the length
+     *            of the original
      *            string, the original string is returned.
      * @param padding
      *            the character to use as padding

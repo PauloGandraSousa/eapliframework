@@ -20,24 +20,25 @@
  */
 package eapli.framework.math.util;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
-import eapli.framework.time.util.Calendars;
+import eapli.framework.strings.util.Strings;
 import eapli.framework.util.Utility;
 
 /**
- * Very simple pseudo random generator support.
+ * Very simple secure random generator support.
  *
  * <p>
- * make sure you check <a href=
+ * Make sure you check <a href=
  * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS2245&rule_key=squid%3AS2245">Sonar
  * squid:S2245</a>
- * in order to understand the security issues that rise from using pseudorandon number generators
+ * in order to understand the security issues that rise from using pseudorandom number generators.
  */
 @Utility
 public final class NumberGenerator {
-    @SuppressWarnings("squid:S2245")
-    private static final Random RANDOM_GEN = new Random(Calendars.now().getTimeInMillis());
+
+    private static final Random RANDOM_GEN = new SecureRandom();
 
     private NumberGenerator() {
         // ensure no instantiation as this is a utility class
@@ -45,7 +46,7 @@ public final class NumberGenerator {
 
     /**
      *
-     * @return a pseudo random integer
+     * @return a random integer
      */
     public static int anInt() {
         return RANDOM_GEN.nextInt();
@@ -54,7 +55,7 @@ public final class NumberGenerator {
     /**
      *
      * @param bound
-     * @return a pseudo random integer between 0 (inclusive) and {@code bound}
+     * @return a random integer between 0 (inclusive) and {@code bound}
      *         (exclusive)
      */
     public static int anInt(final int bound) {
@@ -63,18 +64,46 @@ public final class NumberGenerator {
 
     /**
      *
-     * @return a pseudo random float between 0 and 1
+     * @return a random float between 0 and 1
      */
     public static float aFloat() {
         return RANDOM_GEN.nextFloat();
     }
 
     /**
-     * fifty/fifty chance.
+     * Fifty/fifty chance.
      *
-     * @return true or false in what tends to be a 50/50 distribution
+     * @return {@code true} or {@code false} in what tends to be a 50/50 distribution
+     * @deprecated This function does not returns a number so it was moved to {@link Math#heads()}
      */
+    @Deprecated
     public static boolean heads() {
-        return anInt() % 2 == 0;
+        return Math.heads();
+    }
+
+    /**
+     *
+     * @param n
+     * @return an array of random bytes
+     */
+    public static byte[] nBytes(final int n) {
+        final byte[] buffer = new byte[n];
+        RANDOM_GEN.nextBytes(buffer);
+        return buffer;
+    }
+
+    /**
+     *
+     * @param length
+     * @return a random hexadecimal string
+     */
+    public static String anHex(final int length) {
+        if (NumberPredicates.isOdd(length)) {
+            final byte[] buffer = nBytes((length + 1) / 2);
+            return Strings.asHexadecimal(buffer).substring(0, length);
+        } else {
+            final byte[] buffer = nBytes(length / 2);
+            return Strings.asHexadecimal(buffer);
+        }
     }
 }

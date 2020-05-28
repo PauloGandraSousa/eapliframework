@@ -42,6 +42,20 @@ public final class Arrays {
     }
 
     /**
+     * Checks whether an element is present in the array or not. This method
+     * has O(n) complexity.
+     *
+     * @param src
+     * @param elem
+     * @return {@code true} if the element is present in the array
+     * @deprecated use {@link ArrayPredicates#contains(Object[], Object)} instead
+     */
+    @Deprecated
+    public static <T> boolean contains(final T[] src, final T elem) {
+        return ArrayPredicates.contains(src, elem);
+    }
+
+    /**
      * Zips two double arrays in to one. That is, uses the {@code op} operator
      * to combine the contents of both source arrays z(i) = op(a(i), b(i))
      *
@@ -131,18 +145,6 @@ public final class Arrays {
     }
 
     /**
-     * Checks whether an element is present in the array or not. This method
-     * has O(n) complexity.
-     *
-     * @param src
-     * @param elem
-     * @return {@code true} if the element is present in the array
-     */
-    public static <T> boolean contains(final T[] src, final T elem) {
-        return indexOf(src, elem) != -1;
-    }
-
-    /**
      * Returns the index of an element is present in the array or -1 otherwise.
      * This method has O(n) complexity.
      *
@@ -158,5 +160,23 @@ public final class Arrays {
             }
         }
         return -1;
+    }
+
+    /**
+     * Counts the number of times a value appears in an array.
+     *
+     * @param <T>
+     * @param src
+     * @param elem
+     * @return the number of times a value appears in an array
+     */
+    public static <T> int countOf(final T[] src, final T elem) {
+        int appears = 0;
+        for (final T each : src) {
+            if (each.equals(elem)) {
+                appears++;
+            }
+        }
+        return appears;
     }
 }

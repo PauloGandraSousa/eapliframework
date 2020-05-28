@@ -5,13 +5,21 @@
 ### What's new
 
 - `Math.fibonacci` and `Math.fibonacciSeries`
-
+- `Math.heads`
+- `NumberGenerator.nBytes`
+- `NumberGenerator.anHex`
+- `Strings.asHexadecimal`
+- new class `ArrayPredicates`
 
 ### Changed
 
 - In-process Pub/Sub uses a separate thread to publish the events and separate threads to call each subscriber
 
 - Fix `openInOSViewer` for Mac
+
+- deprecated:
+    - `NumberGenerator.heads`; you should use `Math.heads` instead
+    - `Arrays.contains`
 
 
 ## 13.3.1
