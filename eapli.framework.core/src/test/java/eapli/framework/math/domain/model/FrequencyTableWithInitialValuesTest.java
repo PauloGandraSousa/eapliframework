@@ -46,7 +46,7 @@ public class FrequencyTableWithInitialValuesTest extends FrequencyTableWithIniti
         subject.collect("b");
         subject.collect("c");
 
-        assertEquals(4, subject.tokens().size());
+        assertEquals(4, subject.size());
         assertTrue(subject.tokens().contains("a"));
         assertTrue(subject.tokens().contains("b"));
         assertTrue(subject.tokens().contains("c"));

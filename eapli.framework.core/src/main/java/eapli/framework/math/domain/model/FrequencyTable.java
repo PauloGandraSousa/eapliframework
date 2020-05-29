@@ -123,7 +123,8 @@ public class FrequencyTable<T> {
     }
 
     /**
-     * Returns the frequency of a certain "token".
+     * Returns the frequency of a certain "token". If the token does not exist in the table returns
+     * 0.
      *
      * @param token
      *            the desired "token"
@@ -143,11 +144,23 @@ public class FrequencyTable<T> {
     }
 
     /**
+     * Returns the number of tokens in the table. If there are more than
+     * {@Integer.MAX_VALUE} entries it returns {@Integer.MAX_VALUE}.
      *
-     * @return
+     * @return the number of tokens in the table
      */
     public int size() {
         return frequencies.size();
+    }
+
+    /**
+     * Checks if a token is present in the table.
+     * 
+     * @param token
+     * @return {@code token} if the token is present in the table
+     */
+    public boolean contains(final T token) {
+        return frequencies.containsKey(token);
     }
 
     /**
@@ -200,10 +213,10 @@ public class FrequencyTable<T> {
     /**
      * Ideas:
      *
-     * public Set<Entry<T, long>> topPercentile() {
+     * public Set<Entry<T, Long>> topPercentile() {
      * }
      *
-     * public Set<Entry<T, long>> bottomPercentile() {
+     * public Set<Entry<T, Long>> bottomPercentile() {
      * }
      *
      * public FrequencyTable<T> slice(int topPercentile, int bottomPercentile) {

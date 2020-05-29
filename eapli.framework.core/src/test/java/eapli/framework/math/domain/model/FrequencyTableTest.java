@@ -21,6 +21,7 @@
 package eapli.framework.math.domain.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -163,5 +164,19 @@ public class FrequencyTableTest {
             }
         });
         assertTrue(true);
+    }
+
+    @Test
+    public void ensureContainsCollectedToken() {
+        subject.collect("a");
+
+        assertTrue(subject.contains("a"));
+    }
+
+    @Test
+    public void ensureDoesNotContainUnknownToken() {
+        subject.collect("a");
+
+        assertFalse(subject.contains("w"));
     }
 }

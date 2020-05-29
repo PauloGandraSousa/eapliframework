@@ -21,6 +21,7 @@
 package eapli.framework.math.domain.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -48,10 +49,29 @@ public abstract class FrequencyTableWithInitialValuesBaseTest {
     }
 
     @Test
+    public void ensureContainsInitialTokenEvenIfNotCollected() {
+        subject.collect("a");
+
+        assertTrue(subject.contains("w"));
+    }
+
+    @Test
+    public void ensureContainsCollectedToken() {
+        subject.collect("a");
+
+        assertTrue(subject.contains("a"));
+    }
+
+    @Test
+    public void ensureDoesNotContainUnknownToken() {
+        assertFalse(subject.contains("xyz"));
+    }
+
+    @Test
     public void ensureCollectingOneOfTheInitialValuesHasRightValues() {
         subject.collect("a");
 
-        assertEquals(2, subject.tokens().size());
+        assertEquals(2, subject.size());
         assertTrue(subject.tokens().contains("a"));
         assertTrue(subject.tokens().contains("w"));
     }
