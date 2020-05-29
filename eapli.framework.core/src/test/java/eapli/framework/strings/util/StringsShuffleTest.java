@@ -21,7 +21,10 @@
 package eapli.framework.strings.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 /**
@@ -29,19 +32,35 @@ import org.junit.Test;
  *
  */
 public class StringsShuffleTest {
+    private static final Logger LOGGER = LogManager.getLogger(StringsShuffleTest.class);
 
     @Test
     public void testMantainsLength() {
         ensure1MantainsLength("ABCDEFG");
-        ensure1MantainsLength("AB");
-        ensure1MantainsLength("ABCDEFG12345");
-        ensure1MantainsLength("ABCDEFGABCDEFGABCDEFGABCDEFGABCDEFGABCDEFGABCDEFGABCDEFGABCDEFG");
-        ensure1MantainsLength("ABCDEFGghijklmn");
+        ensure1MantainsLength("ABC");
+        ensure1MantainsLength("ABCDEFG 12345");
+        ensure1MantainsLength("The quick brown fox jumps over the fence");
+        ensure1MantainsLength("12345");
+    }
+
+    @Test
+    public void testIsNotTheSame() {
+        ensure1IsNotTheSame("ABCDEFG");
+        ensure1IsNotTheSame("ABC");
+        ensure1IsNotTheSame("ABCDEFG 12345");
+        ensure1IsNotTheSame("The quick brown fox jumps over the fence");
+        ensure1IsNotTheSame("12345");
     }
 
     private void ensure1MantainsLength(final String test) {
         final String r = Strings.shuffle(test);
         assertEquals(test.length(), r.length());
+    }
+
+    private void ensure1IsNotTheSame(final String test) {
+        final String r = Strings.shuffle(test);
+        LOGGER.debug("Suffled |{}| to |{}|", test, r);
+        assertNotEquals(test, r);
     }
 
 }
