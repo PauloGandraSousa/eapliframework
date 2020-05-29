@@ -24,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -48,29 +47,29 @@ public class FrequencyTableWithAllowedValuesTest extends FrequencyTableWithIniti
         subject.collect("b");
         subject.collect("c");
 
-        assertEquals(2, subject.values().size());
-        assertTrue(subject.values().contains("a"));
-        assertTrue(subject.values().contains("w"));
+        assertEquals(2, subject.tokens().size());
+        assertTrue(subject.tokens().contains("a"));
+        assertTrue(subject.tokens().contains("w"));
 
-        assertFalse(subject.values().contains("b"));
-        assertFalse(subject.values().contains("c"));
+        assertFalse(subject.tokens().contains("b"));
+        assertFalse(subject.tokens().contains("c"));
     }
 
     @Test
     public void ensureHasRightFrequencies() {
         initSample();
 
-        assertEquals(BigInteger.valueOf(3), subject.frequencyOf("a"));
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("w"));
+        assertEquals(3L, subject.frequencyOf("a"));
+        assertEquals(0L, subject.frequencyOf("w"));
     }
 
     @Test
     public void ensureUnknownValueHasFrequency0() {
         initSample();
 
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("b"));
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("c"));
+        assertEquals(0L, subject.frequencyOf("b"));
+        assertEquals(0L, subject.frequencyOf("c"));
 
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("z"));
+        assertEquals(0L, subject.frequencyOf("z"));
     }
 }

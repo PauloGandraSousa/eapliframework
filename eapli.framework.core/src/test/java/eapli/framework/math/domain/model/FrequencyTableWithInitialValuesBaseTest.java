@@ -23,8 +23,6 @@ package eapli.framework.math.domain.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigInteger;
-
 import org.junit.Test;
 
 /**
@@ -38,32 +36,32 @@ public abstract class FrequencyTableWithInitialValuesBaseTest {
 
     @Test
     public void ensureEmptyHasInitialValuesWithFrequency0() {
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("a"));
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("w"));
+        assertEquals(0L, subject.frequencyOf("a"));
+        assertEquals(0L, subject.frequencyOf("w"));
     }
 
     @Test
     public void ensureEmptyHasInitialValues() {
-        assertEquals(2, subject.values().size());
-        assertTrue(subject.values().contains("a"));
-        assertTrue(subject.values().contains("w"));
+        assertEquals(2, subject.tokens().size());
+        assertTrue(subject.tokens().contains("a"));
+        assertTrue(subject.tokens().contains("w"));
     }
 
     @Test
     public void ensureCollectingOneOfTheInitialValuesHasRightValues() {
         subject.collect("a");
 
-        assertEquals(2, subject.values().size());
-        assertTrue(subject.values().contains("a"));
-        assertTrue(subject.values().contains("w"));
+        assertEquals(2, subject.tokens().size());
+        assertTrue(subject.tokens().contains("a"));
+        assertTrue(subject.tokens().contains("w"));
     }
 
     @Test
     public void ensureCollectingOneOfTheInitialValuesHasRightFrequencies() {
         subject.collect("a");
 
-        assertEquals(BigInteger.ONE, subject.frequencyOf("a"));
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("w"));
+        assertEquals(1L, subject.frequencyOf("a"));
+        assertEquals(0L, subject.frequencyOf("w"));
     }
 
     protected void initSample() {

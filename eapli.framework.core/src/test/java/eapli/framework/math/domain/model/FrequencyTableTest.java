@@ -22,8 +22,10 @@ package eapli.framework.math.domain.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.math.BigInteger;
+import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,28 +46,28 @@ public class FrequencyTableTest {
 
     @Test
     public void ensureEmptyHas0Values() {
-        assertEquals(0, subject.values().size());
+        assertEquals(0, subject.tokens().size());
     }
 
     @Test
     public void ensureEmptyHasFrequency0() {
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("a"));
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("w"));
+        assertEquals(0L, subject.frequencyOf("a"));
+        assertEquals(0L, subject.frequencyOf("w"));
     }
 
     @Test
     public void ensureCollectingOneHasOneValue() {
         subject.collect("a");
 
-        assertEquals(1, subject.values().size());
-        assertTrue(subject.values().contains("a"));
+        assertEquals(1, subject.tokens().size());
+        assertTrue(subject.tokens().contains("a"));
     }
 
     @Test
     public void ensureCollectingOneHasFrequency1() {
         subject.collect("a");
 
-        assertEquals(BigInteger.ONE, subject.frequencyOf("a"));
+        assertEquals(1L, subject.frequencyOf("a"));
     }
 
     @Test
@@ -73,11 +75,13 @@ public class FrequencyTableTest {
         subject.collect("a");
         subject.collect("b");
         subject.collect("c");
+        subject.collect("a");
+        subject.collect("c");
 
-        assertEquals(3, subject.values().size());
-        assertTrue(subject.values().contains("a"));
-        assertTrue(subject.values().contains("b"));
-        assertTrue(subject.values().contains("c"));
+        assertEquals(3, subject.tokens().size());
+        assertTrue(subject.tokens().contains("a"));
+        assertTrue(subject.tokens().contains("b"));
+        assertTrue(subject.tokens().contains("c"));
     }
 
     @Test
@@ -88,9 +92,9 @@ public class FrequencyTableTest {
         subject.collect("c");
         subject.collect("a");
 
-        assertEquals(BigInteger.valueOf(3), subject.frequencyOf("a"));
-        assertEquals(BigInteger.ONE, subject.frequencyOf("b"));
-        assertEquals(BigInteger.ONE, subject.frequencyOf("c"));
+        assertEquals(3L, subject.frequencyOf("a"));
+        assertEquals(1L, subject.frequencyOf("b"));
+        assertEquals(1L, subject.frequencyOf("c"));
     }
 
     @Test
@@ -101,6 +105,63 @@ public class FrequencyTableTest {
         subject.collect("c");
         subject.collect("a");
 
-        assertEquals(BigInteger.ZERO, subject.frequencyOf("z"));
+        assertEquals(0L, subject.frequencyOf("z"));
+    }
+
+    @Test
+    public void ensureHasRightTotalOccurrences() {
+        subject.collect("a");
+        subject.collect("b");
+        subject.collect("a");
+        subject.collect("c");
+        subject.collect("a");
+
+        assertEquals(5L, subject.totalOccurrences());
+    }
+
+    @Test
+    public void testSortedByValue() {
+        initData();
+
+        final Stream<Entry<String, Long>> r = subject.sortedEntriesByToken();
+
+        System.out.println("Sorted by value");
+        final String last = "";
+        r.forEach(e -> {
+            System.out.println(e);
+            if (e.getKey().compareTo(last) < 0) {
+                fail("Not indescending order");
+            }
+        });
+        assertTrue(true);
+    }
+
+    private void initData() {
+        subject.collect("c");
+        subject.collect("b");
+        subject.collect("a");
+        subject.collect("b");
+        subject.collect("b");
+        subject.collect("b");
+        subject.collect("a");
+        subject.collect("a");
+        subject.collect("b");
+    }
+
+    @Test
+    public void testSortedByFrequency() {
+        initData();
+
+        final Stream<Entry<String, Long>> r = subject.sortedEntriesByFrequency();
+
+        System.out.println("Sorted by frequency");
+        final Long last = 0L;
+        r.forEach(e -> {
+            System.out.println(e);
+            if (e.getValue().compareTo(last) < 0) {
+                fail("Not indescending order");
+            }
+        });
+        assertTrue(true);
     }
 }

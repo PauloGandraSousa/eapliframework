@@ -20,103 +20,196 @@
  */
 package eapli.framework.math.domain.model;
 
-import java.math.BigInteger;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
+
+import eapli.framework.validations.Preconditions;
 
 /**
- * A frequency table, that is, the number of occurrences of a certain value.
- *
+ * A frequency table, that is, the number of occurrences of a certain "token", e.g., a word in a
+ * text.
+ * <p>
+ * Conceptually, a frequency table can be seen as a map from "token" to number, as such this class
+ * exposes some methods common in the {@link java.util.Map Map} interface such as
+ * {@link java.util.Map#forEach(BiConsumer) forEach}.
  * <p>
  * This class is thread-safe.
  *
  * @author Paulo Gandra Sousa 28/05/2020
+ *
  * @param <T>
+ *            the type of object to count the frequency of. This should be a class with proper
+ *            {@code hashCode} and {@code equals}, preferably an immutable class but at least
+ *            one whose hash code does not change thru out the object's life-cycle even if the
+ *            object is mutable.
  */
 public class FrequencyTable<T> {
 
-    private final Map<T, BigInteger> frequencies = new ConcurrentHashMap<>();
+    private final Map<T, Long> frequencies = new ConcurrentHashMap<>();
 
-    private final Function<T, BigInteger> collector;
+    private final Function<T, Long> collector;
 
     /**
-     * Constructs an empty frequency table that will collect any value.
+     * Constructs an empty frequency table that will collect any "token".
      */
     public FrequencyTable() {
         collector = this::collectAny;
     }
 
     /**
-     * Initializes the frequency table with the expected values. Each expected value will have its
-     * frequency count as 0.
+     * Initializes the frequency table with the expected "tokens". Each expected "token" will have
+     * its frequency count as 0.
      *
-     * @param valuesToConsider
-     * @param onlyTheseValues
-     *            if {@code true} only the specified values will be counted and any unknown value
+     * @param tokensToConsider
+     * @param onlyTheseTokens
+     *            if {@code true} only the specified "tokens" will be counted and any unknown
+     *            "token"
      *            passed to collect will be ignored
      */
-    public FrequencyTable(final Iterable<T> valuesToConsider, final boolean onlyTheseValues) {
-        valuesToConsider.forEach(this::consider);
-        if (onlyTheseValues) {
-            collector = this::collectIfPresent;
+    public FrequencyTable(final Iterable<T> tokensToConsider, final boolean onlyTheseTokens) {
+        tokensToConsider.forEach(this::consider);
+        if (onlyTheseTokens) {
+            collector = this::collectIfKnownToken;
         } else {
             collector = this::collectAny;
         }
     }
 
     /**
-     * Increments the count of an entry in the table by one. If the value is not yet present in the
-     * table it will be added and its frequency set to 1.
+     * Increments the count of an entry in the table by one. If the "token" is not yet present in
+     * the table it will be added and its frequency set to 1.
      * <p>
-     * If the frequency table was initialized to ignore unknown values, and if the value is not yet
-     * present in the table, the value is ignored.
+     * If the frequency table was initialized to ignore unknown "tokens", and if the "token" is not
+     * yet present in the table, the "token" is ignored.
      *
-     * @param one
-     * @return
+     * @param token
+     * @return the frequency count of that "token" after collecting it
      */
-    public BigInteger collect(final T one) {
-        return collector.apply(one);
+    public Long collect(final T token) {
+        Preconditions.nonNull(token);
+
+        return collector.apply(token);
     }
 
-    private BigInteger collectAny(final T one) {
-        return frequencies.merge(one, BigInteger.ONE, (o, a) -> o.add(a));
+    private Long collectAny(final T token) {
+        return frequencies.merge(token, 1L, (old, accumulate) -> old + accumulate);
     }
 
-    private BigInteger collectIfPresent(final T one) {
-        return frequencies.computeIfPresent(one, (w, o) -> o.add(BigInteger.ONE));
+    private Long collectIfKnownToken(final T token) {
+        return frequencies.computeIfPresent(token, (key, currentFrequency) -> currentFrequency + 1L);
     }
 
     /**
-     * Considers that a certain value should be considered but it might not be present at all in the
+     * A certain "token" should be considered but it might not be present at all in the
      * source. That is, its frequency is 0.
      * <p>
      * Useful when 0 frequencies must be taken into account. Typically the calling object
-     * initializes the frequency table with the expected values and afterwards counts the frequency
-     * from a certain source.
+     * initializes the frequency table with the expected "tokens" and afterwards counts the
+     * frequency from a certain source.
+     * <p>
+     * If the "token" is already present in the table, its frequency won't be changed.
      *
-     * @param one
-     * @return
+     * @param token
+     * @return the frequency count of that "token" after considering it
      */
-    public BigInteger consider(final T one) {
-        return frequencies.merge(one, BigInteger.ZERO, (o, a) -> o.add(a));
+    public Long consider(final T token) {
+        return frequencies.merge(token, 0L, (o, a) -> o + a);
     }
 
     /**
+     * Returns the frequency of a certain "token".
      *
-     * @param what
-     * @return
+     * @param token
+     *            the desired "token"
+     * @return the frequency of the specified "token"
      */
-    public BigInteger frequencyOf(final T what) {
-        return frequencies.getOrDefault(what, BigInteger.ZERO);
+    public long frequencyOf(final T token) {
+        return frequencies.getOrDefault(token, 0L);
     }
 
     /**
+     * Returns the "tokens" present in the frequency table.
      *
-     * @return
+     * @return the "tokens" present in the frequency table
      */
-    public Set<T> values() {
+    public Set<T> tokens() {
         return frequencies.keySet();
     }
+
+    /**
+     *
+     * @return
+     */
+    public int size() {
+        return frequencies.size();
+    }
+
+    /**
+     * Returns all the entries in the table as a tuple ("token", frequency).
+     *
+     * @return all the entries in the table
+     */
+    public Set<Entry<T, Long>> entries() {
+        return frequencies.entrySet();
+    }
+
+    /**
+     * Returns a stream of tuples ordered by the "token" (ascending order).
+     *
+     * @return a stream of tuples ordered by the "token"
+     */
+    public Stream<Entry<T, Long>> sortedEntriesByToken() {
+        final Map<T, Long> sorted = new TreeMap<>(frequencies);
+        return sorted.entrySet().stream();
+    }
+
+    /**
+     * Returns a stream of tuples ordered by the frequency (descending order).
+     *
+     * @return a stream of tuples ordered by the frequency
+     */
+    public Stream<Entry<T, Long>> sortedEntriesByFrequency() {
+        return frequencies.entrySet().stream().sorted(Entry.comparingByValue());
+    }
+
+    /**
+     * Executes an action for each entry in the table.
+     *
+     * @param action
+     */
+    @SuppressWarnings("java:S4276")
+    public void forEach(final BiConsumer<T, Long> action) {
+        frequencies.forEach(action);
+    }
+
+    /**
+     * Returns the total occurrences collected by this table. That is, the sum of all frequencies.
+     *
+     * @return the total occurrences
+     */
+    public long totalOccurrences() {
+        return entries().stream().map(Entry::getValue).reduce(0L, (a, b) -> a + b);
+    }
+
+    /**
+     * Ideas:
+     *
+     * public Set<Entry<T, long>> topPercentile() {
+     * }
+     *
+     * public Set<Entry<T, long>> bottomPercentile() {
+     * }
+     *
+     * public FrequencyTable<T> slice(int topPercentile, int bottomPercentile) {
+     * }
+     *
+     * public FrequencyTable<T> filter(Predicate<T, long> filter) {
+     * }
+     */
 }
