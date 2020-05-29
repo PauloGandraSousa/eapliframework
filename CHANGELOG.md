@@ -14,6 +14,7 @@
 - new classes:
     - `ArrayPredicates`
     - `RandomRawPassword`
+    - `FrequencyTable`
 
 ### Changed
 
