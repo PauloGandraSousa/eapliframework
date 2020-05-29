@@ -18,10 +18,9 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.math.domain.model;
+package eapli.framework.math.domain.model.frequencytable;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -29,30 +28,31 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.math.domain.model.FrequencyTable;
+
 /**
- * Test frequency table with only some accepted values.
+ * Test frequency table with some initial values to consider but accepting any value.
  *
  * @author Paulo Gandra Sousa 28/05/2020
  */
-public class FrequencyTableWithAllowedValuesTest extends FrequencyTableWithInitialValuesBaseTest {
+public class FrequencyTableWithInitialValuesTest extends FrequencyTableWithInitialValuesBaseTest {
 
     @Before
     public void setup() {
-        subject = new FrequencyTable<>(Arrays.asList("a", "w"), true);
+        subject = new FrequencyTable<>(Arrays.asList("a", "w"), false);
     }
 
     @Test
-    public void ensureCollectingUnknowValueIsIgnored() {
+    public void ensureHasRightValues() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("c");
 
-        assertEquals(2, subject.tokens().size());
+        assertEquals(4, subject.size());
         assertTrue(subject.tokens().contains("a"));
+        assertTrue(subject.tokens().contains("b"));
+        assertTrue(subject.tokens().contains("c"));
         assertTrue(subject.tokens().contains("w"));
-
-        assertFalse(subject.tokens().contains("b"));
-        assertFalse(subject.tokens().contains("c"));
     }
 
     @Test
@@ -60,15 +60,14 @@ public class FrequencyTableWithAllowedValuesTest extends FrequencyTableWithIniti
         initSample();
 
         assertEquals(3L, subject.frequencyOf("a"));
+        assertEquals(1L, subject.frequencyOf("b"));
+        assertEquals(1L, subject.frequencyOf("c"));
         assertEquals(0L, subject.frequencyOf("w"));
     }
 
     @Test
     public void ensureUnknownValueHasFrequency0() {
         initSample();
-
-        assertEquals(0L, subject.frequencyOf("b"));
-        assertEquals(0L, subject.frequencyOf("c"));
 
         assertEquals(0L, subject.frequencyOf("z"));
     }

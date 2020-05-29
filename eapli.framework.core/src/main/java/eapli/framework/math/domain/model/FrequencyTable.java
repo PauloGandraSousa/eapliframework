@@ -155,7 +155,7 @@ public class FrequencyTable<T> {
 
     /**
      * Checks if a token is present in the table.
-     * 
+     *
      * @param token
      * @return {@code token} if the token is present in the table
      */
@@ -213,7 +213,9 @@ public class FrequencyTable<T> {
     /**
      * Ideas:
      *
-     * public Set<Entry<T, Long>> topPercentile() {
+     * public Set<Entry<T, Long>> topPercentile(int percentile) {
+     * }
+     * public Set<Entry<T, Long>> top(int n) {
      * }
      *
      * public Set<Entry<T, Long>> bottomPercentile() {
