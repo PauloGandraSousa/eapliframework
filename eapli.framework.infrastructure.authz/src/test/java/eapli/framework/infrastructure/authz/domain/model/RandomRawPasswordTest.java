@@ -67,7 +67,7 @@ public class RandomRawPasswordTest {
         final RandomRawPassword rrp = new RandomRawPassword(N);
 
         for (final char c : rrp.toString().toCharArray()) {
-            assertTrue(RandomRawPassword.ALLOWED_CHARS.indexOf(c) > 0);
+            assertTrue(RandomRawPassword.ALLOWED_CHARS.indexOf(c) >= 0);
         }
     }
 }
