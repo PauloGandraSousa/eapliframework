@@ -20,7 +20,9 @@
 
 - In-process Pub/Sub uses a separate thread to publish the events and separate threads to call each subscriber
 
-- Fix `openInOSViewer` for Mac
+- Fix 
+    - `openInOSViewer` for Mac
+    - make sure the active transaction is rollbacked on closing the transactional context
 
 - deprecated:
     - `NumberGenerator.heads`; you should use `Math.heads` instead

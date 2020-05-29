@@ -72,12 +72,24 @@ public class ArrayPredicatesTest {
     @Test
     public void ensureAll() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
-        assertFalse(ArrayPredicates.all(test, i -> i < 50));
+        assertTrue(ArrayPredicates.all(test, i -> i < 50));
     }
 
     @Test
     public void ensureAllNot() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
         assertFalse(ArrayPredicates.all(test, i -> i < 5));
+    }
+
+    @Test
+    public void ensureAny() {
+        final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
+        assertTrue(ArrayPredicates.any(test, i -> i > 5));
+    }
+
+    @Test
+    public void ensureAnyNot() {
+        final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
+        assertFalse(ArrayPredicates.any(test, i -> i > 50));
     }
 }

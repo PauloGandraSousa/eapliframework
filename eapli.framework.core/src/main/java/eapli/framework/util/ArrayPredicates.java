@@ -79,4 +79,21 @@ public final class ArrayPredicates {
         }
         return true;
     }
+
+    /**
+     * Checks if any of the elements of the array satisfies a certain condition.
+     *
+     * @param <T>
+     * @param src
+     * @param condition
+     * @return {@code true} if at least one of the elements of the array satisfies the condition
+     */
+    public static <T> boolean any(final T[] src, final Predicate<T> condition) {
+        for (final T each : src) {
+            if (condition.test(each)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
