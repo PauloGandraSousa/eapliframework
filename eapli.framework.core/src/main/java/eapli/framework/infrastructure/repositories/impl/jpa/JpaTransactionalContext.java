@@ -106,7 +106,7 @@ public class JpaTransactionalContext implements TransactionalContext {
 
     @Override
     public void close() {
-        rollback()
+        rollback();
         entityManager().close();
     }
 }
