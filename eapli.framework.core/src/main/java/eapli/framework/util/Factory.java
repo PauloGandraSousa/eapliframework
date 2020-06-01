@@ -21,18 +21,13 @@
 package eapli.framework.util;
 
 /**
- * A factory (GoF). When creation of an entire, internally consistent aggregate,
- * or a large value object, becomes complicated or reveals too much of the
- * internal structure, factories provide encapsulation.
+ * A factory or <a href="https://refactoring.guru/design-patterns/builder">Builder</a> object.
  *
  * <p>
  * Factories will be very helpful to provide extension and modification in our code as they can hide
- * the actual object
- * being created. Following the Dependency Inversion Principle (DIP), one should program to an
- * abstraction and not to a
- * realization. Thus a factory is needed to create the actual object while hiding which object is
- * created from the rest
- * of the code.
+ * the actual object being created. Following the Dependency Inversion Principle (DIP), one should
+ * program to an abstraction and not to a realization. Thus a factory is needed to create the actual
+ * object while hiding which object is created from the rest of the code.
  * </p>
  *
  * @param <T>

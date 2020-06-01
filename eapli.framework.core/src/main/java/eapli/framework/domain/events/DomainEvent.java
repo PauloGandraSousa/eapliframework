@@ -32,18 +32,27 @@ import eapli.framework.domain.model.ValueObject;
  * These are not technical issues/events but meaningful domain concepts.
  * </p>
  *
- * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * Quoting
+ * <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric
+ * Evans</a>:
  * <blockquote>
  * Model information about activity in the domain as a series of discrete events. Represent
  * each event as a domain object. These are distinct from system events that reflect activity
  * within the software itself, although often a system event is associated with a domain
  * event, either as part of a response to the domain event or as a way of carrying information
  * about the domain event into the system.
+ * <p>
  * A domain event is a full-fledged part of the domain model, a representation of something
  * that happened in the domain. Ignore irrelevant domain activity while making explicit the
  * events that the domain experts want to track or be notified of, or which are associated
  * with state change in the other model objects.
  * </blockquote>
+ *
+ * <p>
+ * Domain events are published by {@link eapli.framework.domain.model.AggregateRoot AggregateRoots}
+ * or {@link eapli.framework.domain.services.DomainService Domain} or
+ * {@link eapli.framework.application.ApplicationService Application services} and are handled
+ * by <a href="https://refactoring.guru/design-patterns/observer">Observers</a>.
  *
  * @author Paulo Gandra Sousa
  */

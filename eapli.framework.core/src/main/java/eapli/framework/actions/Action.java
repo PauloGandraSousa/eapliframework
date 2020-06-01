@@ -21,7 +21,9 @@
 package eapli.framework.actions;
 
 /**
- * An Action (the GoF Command pattern).
+ * An Action (the GoF <a href="https://refactoring.guru/design-patterns/command">Command</a>
+ * pattern). <b>Command</b> is a behavioral design pattern that turns a request into a stand-alone
+ * object that contains all information about the request.
  *
  * @author Paulo Gandra Sousa
  */

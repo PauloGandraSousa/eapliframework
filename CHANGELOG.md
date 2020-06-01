@@ -4,6 +4,10 @@
 
 ### What's new
 
+- new annotations:
+    - `ApplicationService`
+    - `DomainService`
+    - `InfrastructureService`
 - new methods:
     - `Math.fibonacci` and `Math.fibonacciSeries`
     - `Math.heads`

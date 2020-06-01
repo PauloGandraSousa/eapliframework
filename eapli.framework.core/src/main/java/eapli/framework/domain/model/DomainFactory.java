@@ -23,7 +23,9 @@ package eapli.framework.domain.model;
 /**
  * A factory of domain objects.
  * <p>
- * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * Quoting
+ * <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric
+ * Evans</a>:
  * <blockquote>
  * When creation of an entire, internally
  * consistent aggregate, or a large value object, becomes complicated or reveals
@@ -37,6 +39,10 @@ package eapli.framework.domain.model;
  * complex value object as a piece, possibly after assembling the elements with a builder.
  * </blockquote>
  *
+ * <p>
+ * This interface can also be used on a
+ * <a href="https://refactoring.guru/design-patterns/builder">Builder</a> as the last step of the
+ * building process.
  *
  * @param <T>
  *            the type of object this factory builds.

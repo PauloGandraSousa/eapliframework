@@ -24,7 +24,10 @@
 package eapli.framework.visitor;
 
 /**
- * a visitor (GoF)
+ * A visitor is a <a href="https://refactoring.guru/design-patterns/visitor">GoF</a> behavioral
+ * pattern that allows to dynamically extend a class with new behavior. A class that is meant to be
+ * extended might not know in advance all the possible future uses of that class, however it can
+ * leave the class open for extension thru a visitor.
  *
  * @author Paulo Gandra Sousa
  * @param <T>
