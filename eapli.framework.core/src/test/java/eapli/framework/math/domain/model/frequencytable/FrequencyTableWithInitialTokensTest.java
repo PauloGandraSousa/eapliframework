@@ -21,76 +21,54 @@
 package eapli.framework.math.domain.model.frequencytable;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.math.domain.model.FrequencyTable;
 
 /**
- * Base test for Frequency Table accepting with any value.
+ * Test frequency table with some initial values to consider but accepting any value.
  *
  * @author Paulo Gandra Sousa 28/05/2020
  */
-public abstract class FrequencyTableWithInitialValuesBaseTest {
+public class FrequencyTableWithInitialTokensTest extends FrequencyTableWithInitialTokensBaseTest {
 
-    protected FrequencyTable<String> subject;
-
-    @Test
-    public void ensureEmptyHasInitialValuesWithFrequency0() {
-        assertEquals(0L, subject.frequencyOf("a"));
-        assertEquals(0L, subject.frequencyOf("w"));
+    @Before
+    public void setup() {
+        subject = new FrequencyTable<>(Arrays.asList("a", "w"), false);
     }
 
     @Test
-    public void ensureEmptyHasInitialValues() {
-        assertEquals(2, subject.tokens().size());
-        assertTrue(subject.tokens().contains("a"));
-        assertTrue(subject.tokens().contains("w"));
-    }
-
-    @Test
-    public void ensureContainsInitialTokenEvenIfNotCollected() {
-        subject.collect("a");
-
-        assertTrue(subject.contains("w"));
-    }
-
-    @Test
-    public void ensureContainsCollectedToken() {
-        subject.collect("a");
-
-        assertTrue(subject.contains("a"));
-    }
-
-    @Test
-    public void ensureDoesNotContainUnknownToken() {
-        assertFalse(subject.contains("xyz"));
-    }
-
-    @Test
-    public void ensureCollectingOneOfTheInitialValuesHasRightValues() {
-        subject.collect("a");
-
-        assertEquals(2, subject.size());
-        assertTrue(subject.tokens().contains("a"));
-        assertTrue(subject.tokens().contains("w"));
-    }
-
-    @Test
-    public void ensureCollectingOneOfTheInitialValuesHasRightFrequencies() {
-        subject.collect("a");
-
-        assertEquals(1L, subject.frequencyOf("a"));
-        assertEquals(0L, subject.frequencyOf("w"));
-    }
-
-    protected void initSample() {
+    public void ensureHasRightTokens() {
         subject.collect("a");
         subject.collect("b");
-        subject.collect("a");
         subject.collect("c");
-        subject.collect("a");
+
+        assertEquals(4, subject.size());
+        assertTrue(subject.tokens().contains("a"));
+        assertTrue(subject.tokens().contains("b"));
+        assertTrue(subject.tokens().contains("c"));
+        assertTrue(subject.tokens().contains("w"));
+    }
+
+    @Test
+    public void ensureHasRightFrequencies() {
+        initSample();
+
+        assertEquals(3L, subject.frequencyOf("a"));
+        assertEquals(1L, subject.frequencyOf("b"));
+        assertEquals(1L, subject.frequencyOf("c"));
+        assertEquals(0L, subject.frequencyOf("w"));
+    }
+
+    @Test
+    public void ensureUnknownTokenHasFrequency0() {
+        initSample();
+
+        assertEquals(0L, subject.frequencyOf("z"));
     }
 }

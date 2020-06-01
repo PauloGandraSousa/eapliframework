@@ -48,7 +48,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureEmptyHas0Values() {
+    public void ensureEmptyHas0Tokens() {
         assertEquals(0, subject.tokens().size());
     }
 
@@ -59,7 +59,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureCollectingOneHasOneValue() {
+    public void ensureCollectingOneHasOneToken() {
         subject.collect("a");
 
         assertEquals(1, subject.tokens().size());
@@ -74,7 +74,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureHasRightValues() {
+    public void ensureHasRightTokens() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("c");
@@ -101,7 +101,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureUnknownValueHasFrequency0() {
+    public void ensureUnknownTokenHasFrequency0() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("a");
@@ -123,17 +123,17 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void testSortedByValue() {
+    public void testSortedByToken() {
         initData();
 
         final Stream<Entry<String, Long>> r = subject.sortedEntriesByToken();
 
-        System.out.println("Sorted by value");
+        System.out.println("Sorted by value ascending");
         final String last = "";
         r.forEach(e -> {
             System.out.println(e);
             if (e.getKey().compareTo(last) < 0) {
-                fail("Not indescending order");
+                fail("Not in ascending order");
             }
         });
         assertTrue(true);
@@ -157,12 +157,12 @@ public class FrequencyTableTest {
 
         final Stream<Entry<String, Long>> r = subject.sortedEntriesByFrequency();
 
-        System.out.println("Sorted by frequency");
+        System.out.println("Sorted by frequency descending");
         final Long last = 0L;
         r.forEach(e -> {
             System.out.println(e);
             if (e.getValue().compareTo(last) < 0) {
-                fail("Not indescending order");
+                fail("Not in descending order");
             }
         });
         assertTrue(true);
