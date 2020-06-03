@@ -35,16 +35,20 @@ import eapli.framework.validations.Preconditions;
 /**
  * An utility class for implementing JPA repositories not running in containers and not relying on
  * external transaction managers. This class' methods initiate an explicit transaction and commit in
- * the end of the method. check JpaBaseRepository if you want to have transaction control outside of
- * the base class (for instance, when using a JPA container). If you are not using a container and
- * all your controllers update just one aggregate, use this class that explicitly opens and closes a
- * transaction in each method.
+ * the end of the method.
+ * <p>
+ * Check {@link JpaBaseRepository} if you want to have transaction control outside of the base class
+ * (for instance, when using a JPA container). If you are not using a container and all your
+ * controllers update just one aggregate, use this class that explicitly opens and closes a
+ * transaction in each method. If you need fine control over when to commit or rollback your
+ * transactions or need to enroll more than one repository in the same transaction use the
+ * {@link JpaAutoTxRepository} class.
  *
  * <p>
  * We are closing the entity manager at the end of each method (in the finally block) because this
  * code is running in a non-container managed way. if it was the case to be running under an
  * application server with a JPA container and managed transactions/sessions, one should not be
- * doing this
+ * doing this.
  *
  * @param <T>
  *            the entity type that we want to build a repository for
@@ -84,7 +88,8 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     /**
-     * Removes the object from the persistence storage. The object reference is still "valid" but should not be used in
+     * Removes the object from the persistence storage. The object reference is still "valid" but
+     * should not be used in
      * the code afterwards. The persisted entity is/will be deleted in the database.
      *
      * @param entity
@@ -168,7 +173,8 @@ public class JpaTransactionalRepository<T, K, I>
      *
      * <p>
      * check
-     * <a href= "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
+     * <a href=
+     * "http://blog.xebia.com/2009/03/23/jpa-implementation-patterns-saving-detached-entities/"
      * > JPA implementation patterns</a> for a discussion on saveOrUpdate() Behaviour and merge()
      *
      * @param entity
