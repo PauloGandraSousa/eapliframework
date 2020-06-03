@@ -1,5 +1,16 @@
 # EAPLI Framework Changelog
 
+## OPEN-SNAPSHOT
+
+### What's new
+
+- TBD
+
+### Changed
+
+- TBD
+
+
 ## 13.4.0
 
 ### What's new
