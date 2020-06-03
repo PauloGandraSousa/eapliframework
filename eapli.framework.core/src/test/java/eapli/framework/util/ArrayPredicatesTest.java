@@ -38,7 +38,6 @@ public class ArrayPredicatesTest {
 
     private final String[] originalStrings = { "aa", "bb", "cc", "dd" };
     private final String[] testStrings = new String[originalStrings.length];
-    private final double[] testDoubles = { 1, 2, 3, 4, 5, 6 };
 
     @Before
     public void setUp() throws Exception {

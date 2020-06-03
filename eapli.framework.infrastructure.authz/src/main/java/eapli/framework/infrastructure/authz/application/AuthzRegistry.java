@@ -86,9 +86,9 @@ public final class AuthzRegistry {
     }
 
     /**
-     * Helper method to initialize the registry in case you are not using Spring
-     * Dependency Injection. This method should be called <strong>only
-     * once</strong> on application startup.
+     * Helper method to initialize the registry in case you are not using Spring Dependency
+     * Injection. This method should be called <strong>only once</strong> on application
+     * startup.
      *
      * @param userRepo
      * @param policy
