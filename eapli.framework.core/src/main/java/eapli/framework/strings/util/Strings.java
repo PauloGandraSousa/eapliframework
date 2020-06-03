@@ -216,4 +216,17 @@ public final class Strings {
         final String fmt = "%-" + length + "s";
         return String.format(fmt, src).replace(' ', padding);
     }
+
+    /**
+     * Very simple tokenizer. Removes empty tokens.
+     *
+     * @param src
+     * @param delimeter
+     *            the delimiting regular expression
+     * @return
+     */
+    public static String[] tokenize(final String src, final String delimeter) {
+        return Arrays.stream(src.split(delimeter)).map(String::trim).filter(e -> !e.isEmpty())
+                .toArray(i -> new String[i]);
+    }
 }

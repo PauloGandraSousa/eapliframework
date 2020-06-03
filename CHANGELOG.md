@@ -4,7 +4,7 @@
 
 ### What's new
 
-- TBD
+- `Strings.tokenize`
 
 ### Changed
 
