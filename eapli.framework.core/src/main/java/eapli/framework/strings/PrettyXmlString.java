@@ -20,11 +20,20 @@
  */
 package eapli.framework.strings;
 
+import java.io.StringReader;
 import java.io.StringWriter;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  * A pretty formatted XML string.
@@ -42,7 +51,7 @@ public class PrettyXmlString implements FormattedString {
      * @return a pretty formatted XML string
      */
     public static FormattedString fromString(final String input) {
-        return new PrettyXmlFromString(input, 2);
+        return fromString(input, 2);
     }
 
     /**
@@ -55,7 +64,38 @@ public class PrettyXmlString implements FormattedString {
      * @return a pretty formatted XML string
      */
     public static FormattedString fromString(final String input, final int indent) {
-        return new PrettyXmlFromString(input, indent);
+        return new FormattedString() {
+            /**
+             * Returns a formated XML output.
+             * <p>
+             * Based in code from
+             * <a href=
+             * "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java"> stack
+             * overflow</a>
+             *
+             * @return a formated XML
+             */
+            @Override
+            public String toString() {
+                try {
+                    final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+                    transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+                    transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+                    transformerFactory.setAttribute("indent-number", indent);
+                    final Transformer transformer = transformerFactory.newTransformer();
+                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+                    final Source xmlInput = new StreamSource(new StringReader(input));
+                    final StreamResult xmlOutput = new StreamResult(new StringWriter());
+                    transformer.transform(xmlInput, xmlOutput);
+                    return xmlOutput.getWriter().toString();
+                } catch (final TransformerException e) {
+                    throw new FormatingOrTransformationException(e);
+                }
+            }
+
+        };
     }
 
     /**
