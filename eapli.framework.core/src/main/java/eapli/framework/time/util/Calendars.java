@@ -234,7 +234,7 @@ public final class Calendars {
      *
      * @param aDateString
      * @param format
-     * @return a Calendar object or null if there was an error parsing the string
+     * @return a Calendar object or {@code null} if there was an error parsing the string
      */
     public static Calendar parse(final String aDateString, final String format) {
         try {
@@ -242,9 +242,9 @@ public final class Calendars {
             final Date date = df.parse(aDateString);
             return fromDate(date);
         } catch (final ParseException ex) {
-            LOGGER.error(ex);
+            LOGGER.trace(ex);
+            return null;
         }
-        return null;
     }
 
     public static Calendar parse(final String aDateString) {

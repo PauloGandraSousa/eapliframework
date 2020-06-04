@@ -4,7 +4,12 @@
 
 ### What's new
 
-- `Strings.tokenize`
+- In class `Strings`:
+    - `matchResults`
+    - `split`
+    - `tokenizeCsv`
+    - `parseCSV`
+    - `matchResults`
 
 ### Changed
 
