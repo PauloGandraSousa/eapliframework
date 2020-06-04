@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -251,59 +250,9 @@ public final class Strings {
 
     /**
      * <a href=
-     * "https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch09s13.html"
-     * >OReilly</a>.
-     *
-     * The comma is not removed from the token.
-     */
-    private static final String CSV_OREILLY = "(,|\\\r?\\\n|^)([^\",\\\r\\\n]+|\"(?:[^\"]|\"\")*\")?";
-
-    /**
-     * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1197">RegExLib.com 1197</a>
-     *
-     */
-    private static final String CSV_LIB_1197 = "((?:[^\",]|(?:\"(?:\\{2}|\\\"|[^\"])*?\"))*)";
-
-    /**
-     * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1106">RegExLib.com 1106</a>
-     */
-    private static final String CSV_LIB_1106 = "(?<=,)\\s*(?=,)|^(?=,)|[^\\\"]{2,}(?=\\\")|([^,\\\"]+(?=,|$))";
-
-    /**
-     * <a href=
      * "https://softwareengineering.stackexchange.com/questions/166454/can-the-csv-format-be-defined-by-a-regex"
      * >stackexchange</a>
      */
-
-    /**
-     * Based on the regex from
-     * <a href="https://www.regextester.com/103086">regextester</a>
-     *
-     * added the handling of whitespace after comma.
-     * <p>
-     *
-     * <pre>
-     * (\,<span style=
-    "border-style:dotted;border-width:2px;border-color:red;background-color:#AFEEEE"> *</span>|\n|^)(?:"([^"]*(?:""[^"]*)*)"|([^"\,\n]*))
-     * </pre>
-     */
-    private static final String CSV_REGEX_TESTER = "(\\, *|\\n|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\"\\,\\n]*))";
-
-    /**
-     * Simple tokenizer based on regular expressions to parse a CSV line. This does not capture
-     * malformed CSV like missing end quote.
-     *
-     */
-    public static String[] tokenizeCSV(final String input) {
-
-        final UnaryOperator<String> removeLeadComma = s -> s.startsWith(",") ? s.substring(1) : s;
-        final List<String> matches = matchResults(input, CSV_REGEX_TESTER);
-        if (!matches.isEmpty() && matches.get(0).startsWith(",")) {
-            matches.add(0, "");
-        }
-        return matches.stream().map(removeLeadComma).map(String::trim)
-                .toArray(i -> new String[i]);
-    }
 
     /**
      * Very simple tokenizer - finds the tokens around the delimiter. Trims tokens. If the input is
@@ -338,119 +287,5 @@ public final class Strings {
      */
     public static String[] split(final String src, final String delimiter) {
         return Arrays.stream(src.split(delimiter)).map(String::trim).toArray(i -> new String[i]);
-    }
-
-    private static final char DEFAULT_SEPARATOR = ',';
-    private static final char DEFAULT_QUOTE = '"';
-
-    /**
-     * Parse a CSV line with comma separator and double quotes.
-     *
-     * @param cvsLine
-     * @return
-     */
-    public static List<String> parseCsvLine(final String cvsLine) {
-        return parseCsvLine(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
-    }
-
-    /**
-     * Parse a CSV line with double quotes and the specified separator, e.g., comma or semicolon.
-     *
-     * @param cvsLine
-     * @param separators
-     * @return
-     */
-    public static List<String> parseCsvLine(final String cvsLine, final char separators) {
-        return parseCsvLine(cvsLine, separators, DEFAULT_QUOTE);
-    }
-
-    /**
-     * Parse a CSV line of text.
-     * <p>
-     * Based on <a href="https://mkyong.com/java/how-to-read-and-parse-csv-file-in-java/">MKyong</a>
-     *
-     * @param cvsLine
-     * @param separators
-     * @param customQuote
-     * @return
-     */
-    public static List<String> parseCsvLine(final String cvsLine, final char separators, final char customQuote) {
-
-        final List<String> result = new ArrayList<>();
-
-        // if empty, return!
-        if (cvsLine == null || cvsLine.isEmpty()) {
-            return result;
-        }
-
-        StringBuilder curVal = new StringBuilder();
-        boolean inQuotes = false;
-        boolean startCollectChar = false;
-        boolean doubleQuotesInColumn = false;
-
-        final char[] chars = cvsLine.toCharArray();
-
-        for (final char ch : chars) {
-            if (inQuotes) {
-                startCollectChar = true;
-                if (ch == customQuote) {
-                    inQuotes = false;
-                    doubleQuotesInColumn = false;
-                } else {
-                    doubleQuotesInColumn = handleCharInQuotedField(curVal, doubleQuotesInColumn, ch);
-                }
-            } else {
-                if (ch == customQuote) {
-                    inQuotes = startQuotedField(customQuote, curVal, startCollectChar, chars);
-                } else if (ch == separators) {
-                    curVal = addToken(result, curVal);
-                    startCollectChar = false;
-                } else {
-                    curVal.append(ch);
-                }
-            }
-        }
-
-        result.add(curVal.toString());
-
-        return result;
-    }
-
-    private static StringBuilder addToken(final List<String> result, StringBuilder curVal) {
-        result.add(curVal.toString());
-        curVal = new StringBuilder();
-        return curVal;
-    }
-
-    private static boolean startQuotedField(final char customQuote, final StringBuilder curVal,
-            final boolean startCollectChar,
-            final char[] chars) {
-        boolean inQuotes;
-        inQuotes = true;
-
-        // Fixed : allow "" in empty quote enclosed
-        if (chars[0] != '"' && customQuote == '\"') {
-            curVal.append('"');
-        }
-
-        // double quotes in column will hit this!
-        if (startCollectChar) {
-            curVal.append('"');
-        }
-        return inQuotes;
-    }
-
-    private static boolean handleCharInQuotedField(final StringBuilder curVal, boolean doubleQuotesInColumn,
-            final char ch) {
-        // Fixed : allow "" in custom quote enclosed
-        if (ch == '\"') {
-            if (!doubleQuotesInColumn) {
-                curVal.append(ch);
-                doubleQuotesInColumn = true;
-            }
-        } else {
-            curVal.append(ch);
-        }
-        return doubleQuotesInColumn;
     }
 }

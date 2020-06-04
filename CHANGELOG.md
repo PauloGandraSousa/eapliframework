@@ -7,9 +7,7 @@
 - In class `Strings`:
     - `matchResults`
     - `split`
-    - `tokenizeCsv`
-    - `parseCSV`
-    - `matchResults`
+- New class `CsvLine`
 
 ### Changed
 
