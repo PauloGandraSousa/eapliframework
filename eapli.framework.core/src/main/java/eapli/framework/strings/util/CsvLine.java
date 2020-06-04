@@ -23,9 +23,11 @@
  */
 package eapli.framework.strings.util;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.UnaryOperator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import eapli.framework.util.Utility;
 
@@ -77,27 +79,112 @@ public final class CsvLine {
     }
 
     /**
-     * Simple tokenizer based on regular expressions to parse a CSV line. This does not capture
-     * malformed CSV like missing end quote.
+     * Removes lead comma and trims the token.
+     *
+     * @param s
+     * @return
+     */
+    private static String cleanToken(final String s) {
+        return (s.startsWith(",") ? s.substring(1) : s).trim();
+    }
+
+    private static List<String> matchTokens(final String input, final String regexPattern) throws ParseException {
+        final Pattern pattern = Pattern.compile(regexPattern);
+        final List<String> list = new ArrayList<>();
+        final Matcher m = pattern.matcher(input);
+        int pos = 0;
+        while (m.find(pos)) {
+            final String match = m.group();
+            if (pos == 0 && !match.isEmpty() && match.charAt(0) == ',') {
+                list.add("");
+            }
+            if (m.start() > pos) {
+                throw new ParseException("Sintax error around position", pos);
+            }
+            list.add(cleanToken(match));
+            pos = m.end();
+        }
+        if (pos < input.length()) {
+            throw new ParseException("Sintax error around position", pos);
+        }
+        return list;
+    }
+
+    /**
+     * Simple tokenizer based on regular expressions to parse a CSV line. Empty input will return
+     * empty token.
+     *
+     * @throws ParseException
      *
      */
-    public static String[] tokenize(final String input) {
+    public static String[] fields(final String input) throws ParseException {
+        if (input.isEmpty()) {
+            return new String[] { "" };
+        }
 
-        final UnaryOperator<String> removeLeadComma = s -> s.startsWith(",") ? s.substring(1) : s;
-        final List<String> matches = Strings.matchResults(input, CSV_REGEX_TESTER);
+        final List<String> matches = matchTokens(input, CSV_REGEX_TESTER);
         if (!matches.isEmpty() && matches.get(0).startsWith(",")) {
             matches.add(0, "");
         }
-        return matches.stream().map(removeLeadComma).map(String::trim)
-                .toArray(i -> new String[i]);
+        return matches.toArray(new String[0]);
     }
 
+    /**
+     * Prepares a quoted string to be represented as a properly escaped CSV field with double
+     * quotes.
+     *
+     * <pre>
+     * The girl said "hello"
+     * </pre>
+     *
+     * is transformed to:
+     *
+     * <pre>
+     * The girl said ""hello""
+     * </pre>
+     *
+     * @param msg
+     * @return
+     */
     public static String escapeQuotes(final String msg) {
         return msg.replace("\"", "\"\"");
     }
 
+    /**
+     * Takes a CSV escaped quote content and removes the double quotes.
+     *
+     * <pre>
+     * The girl said ""hello""
+     * </pre>
+     *
+     * is transformed to:
+     *
+     * <pre>
+     * The girl said "hello"
+     * </pre>
+     *
+     *
+     * @param msg
+     * @return
+     */
     public static String unescapeQuotes(final String msg) {
         return msg.replace("\"\"", "\"");
+    }
+
+    /**
+     * Builds a CSV record where all fields (no matter what data type) are quoted.
+     *
+     * @param fields
+     * @return
+     */
+    public static String allQuoted(final Object[] fields) {
+        final StringBuilder sb = new StringBuilder();
+        for (final Object f : fields) {
+            sb.append(escapeQuotes(f.toString()));
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
     }
 
     /**
@@ -105,8 +192,9 @@ public final class CsvLine {
      *
      * @param cvsLine
      * @return
+     * @throws ParseException
      */
-    public static List<String> parse(final String cvsLine) {
+    public static List<String> parse(final String cvsLine) throws ParseException {
         return parse(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
     }
 
@@ -116,13 +204,16 @@ public final class CsvLine {
      * @param cvsLine
      * @param separators
      * @return
+     * @throws ParseException
      */
-    public static List<String> parse(final String cvsLine, final char separators) {
+    public static List<String> parse(final String cvsLine, final char separators) throws ParseException {
         return parse(cvsLine, separators, DEFAULT_QUOTE);
     }
 
     /**
-     * Parse a CSV line of text.
+     * Parse a CSV line of text. Empty strings produce no tokens. Empty fields count as a (empty)
+     * token. Quoted fields are not unquoted. Handles double quotes (escaped quotes).
+     *
      * <p>
      * Based on <a href="https://mkyong.com/java/how-to-read-and-parse-csv-file-in-java/">MKyong</a>
      *
@@ -130,8 +221,10 @@ public final class CsvLine {
      * @param separators
      * @param customQuote
      * @return
+     * @throws ParseException
      */
-    public static List<String> parse(final String cvsLine, final char separators, final char customQuote) {
+    public static List<String> parse(final String cvsLine, final char separators, final char customQuote)
+            throws ParseException {
 
         final List<String> result = new ArrayList<>();
 
@@ -142,71 +235,51 @@ public final class CsvLine {
 
         StringBuilder curVal = new StringBuilder();
         boolean inQuotes = false;
-        boolean startCollectChar = false;
-        boolean doubleQuotesInColumn = false;
-
-        final char[] chars = cvsLine.toCharArray();
-
-        for (final char ch : chars) {
+        char previousChar = '\0';
+        for (final char ch : cvsLine.toCharArray()) {
             if (inQuotes) {
-                startCollectChar = true;
                 if (ch == customQuote) {
-                    inQuotes = false;
-                    doubleQuotesInColumn = false;
+                    if (previousChar == customQuote) {
+                        handleEscapedQuote(curVal, customQuote);
+                    } else {
+                        inQuotes = false;
+                        curVal.append(ch);
+                    }
                 } else {
-                    doubleQuotesInColumn = handleCharInQuotedField(curVal, doubleQuotesInColumn, ch);
+                    curVal.append(ch);
                 }
             } else {
                 if (ch == customQuote) {
-                    inQuotes = startQuotedField(customQuote, curVal, startCollectChar, chars);
+                    inQuotes = startQuotedField(curVal, customQuote);
                 } else if (ch == separators) {
                     curVal = addToken(result, curVal);
-                    startCollectChar = false;
                 } else {
                     curVal.append(ch);
                 }
             }
+            previousChar = ch;
         }
-
-        result.add(curVal.toString());
+        if (inQuotes) {
+            throw new ParseException("Unfinished quote", -1);
+        }
+        result.add(curVal.toString().trim());
 
         return result;
     }
 
+    private static void handleEscapedQuote(final StringBuilder curVal, final char customQuote) {
+        curVal.append(customQuote);
+        curVal.append(customQuote);
+    }
+
     private static StringBuilder addToken(final List<String> result, StringBuilder curVal) {
-        result.add(curVal.toString());
+        result.add(curVal.toString().trim());
         curVal = new StringBuilder();
         return curVal;
     }
 
-    private static boolean startQuotedField(final char customQuote, final StringBuilder curVal,
-            final boolean startCollectChar, final char[] chars) {
-        boolean inQuotes;
-        inQuotes = true;
-
-        // Fixed : allow "" in empty quote enclosed
-        if (chars[0] != '"' && customQuote == '\"') {
-            curVal.append('"');
-        }
-
-        // double quotes in column will hit this!
-        if (startCollectChar) {
-            curVal.append('"');
-        }
-        return inQuotes;
-    }
-
-    private static boolean handleCharInQuotedField(final StringBuilder curVal, boolean doubleQuotesInColumn,
-            final char ch) {
-        // Fixed : allow "" in custom quote enclosed
-        if (ch == '\"') {
-            if (!doubleQuotesInColumn) {
-                curVal.append(ch);
-                doubleQuotesInColumn = true;
-            }
-        } else {
-            curVal.append(ch);
-        }
-        return doubleQuotesInColumn;
+    private static boolean startQuotedField(final StringBuilder curVal, final char customQuote) {
+        curVal.append(customQuote);
+        return true;
     }
 }

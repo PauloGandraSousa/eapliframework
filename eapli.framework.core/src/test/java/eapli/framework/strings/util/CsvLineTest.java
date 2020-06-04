@@ -25,6 +25,8 @@ package eapli.framework.strings.util;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.ParseException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
@@ -43,7 +45,9 @@ public class CsvLineTest {
     private static final String FIXTURE_NO_CONTENT_FIELDS2 = "abc,,,";
     private static final String FIXTURE_NO_CONTENT_FIELDS3 = "abc, , , ";
     private static final String FIXTURE_SIMPLE = "123, abc";
-    private static final String FIXTURE_QUOTED = "123, abc, \"xyz\", 321";
+    private static final String FIXTURE_QUOTED1 = "123, abc, \"xyz\", 321";
+    private static final String FIXTURE_QUOTED2 = "\"123\", abc, \"xyz\", 321";
+    private static final String FIXTURE_QUOTED3 = "\"123\", \"abc\", \"xyz\", \"321\"";
     private static final String FIXTURE_WITH_SPACES = "   I,  Love ,Rock-n-Roll  ";
     private static final String FIXTURE_SINGLE_FIELD = "abcd";
     private static final String FIXTURE_ALL_NO_CONTENT = ",,";
@@ -51,9 +55,59 @@ public class CsvLineTest {
     private static final String FIXTURE_FIRST_NO_CONTENT = ",ab,cd";
     private static final String FIXTURE_MIDDLE_NO_CONTENT = "ab,,cd";
 
+    private static final String FIXTURE_ESCAPED_QUOTE_IN_FIELD = "a, \"sd\"\"b\",1";
+    private static final String FIXTURE_QUOTE_IN_FIELD = "a, sd\"b,1";
+    private static final String FIXTURE_QUOTE_IN_FIELD2 = "a, sd\",1";
+    private static final String FIXTURE_MISSING_END_QUOTE_IN_FIELD = "a, \"sdb,1";
+    private static final String FIXTURE_MISSING_END_QUOTE_IN_FIELD2 = "a, sdb,\"";
+
     @Test
-    public void ensureTokenizeAllSpaces() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_ALL_SPACES);
+    public void ensureEscapeQuotes() {
+        final String input = "The girl said\"hello\"";
+        final String expected = "The girl said\"\"hello\"\"";
+
+        final String result = CsvLine.escapeQuotes(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureEscapeQuotesEvenWithoutQuotes() {
+        final String input = "The girl";
+        final String expected = "The girl";
+
+        final String result = CsvLine.escapeQuotes(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureUnescapeQuotes() {
+        final String input = "The girl said\"\"hello\"\"";
+        final String expected = "The girl said\"hello\"";
+
+        final String result = CsvLine.unescapeQuotes(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureUnescapeQuotesEvenWithoutQuotes() {
+        final String input = "The girl";
+        final String expected = "The girl";
+
+        final String result = CsvLine.unescapeQuotes(input);
+
+        assertEquals(expected, result);
+    }
+
+    //
+    // tokenize
+    //
+
+    @Test
+    public void ensureTokenizeAllSpaces() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_ALL_SPACES);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_SPACES, subject);
 
@@ -62,8 +116,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeEmpty() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_EMPTY);
+    public void ensureTokenizeEmpty() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_EMPTY);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_EMPTY, subject);
 
@@ -71,8 +125,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeNocontentInFieldIsStillCounted() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_MIDDLE_NO_CONTENT);
+    public void ensureTokenizeNocontentInFieldIsStillCounted() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_MIDDLE_NO_CONTENT);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_MIDDLE_NO_CONTENT, subject);
 
@@ -83,8 +137,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeCSVNocontentInFieldIsStillCounted2() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_FIRST_NO_CONTENT);
+    public void ensureTokenizeNoContentInFieldIsStillCounted2() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_FIRST_NO_CONTENT);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_FIRST_NO_CONTENT, subject);
 
@@ -95,22 +149,10 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeCSVNocontentInFieldIsStillCounted3() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_ALL_NO_CONTENT);
+    public void ensureTokenizeNoContentInFieldIsStillCounted3() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_ALL_NO_CONTENT);
 
-        LOGGER.info("SPLIT: {} -> {}", FIXTURE_ALL_NO_CONTENT, subject);
-
-        assertEquals(3, subject.length);
-        assertEquals("", subject[0]);
-        assertEquals("", subject[1]);
-        assertEquals("", subject[2]);
-    }
-
-    @Test
-    public void ensureTokenizeCSVNocontentInFieldIsStillCounted4() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_ALL_NO_CONTENT_WITH_SPACE);
-
-        LOGGER.info("SPLIT: {} -> {}", FIXTURE_ALL_NO_CONTENT_WITH_SPACE, subject);
+        LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_NO_CONTENT, subject);
 
         assertEquals(3, subject.length);
         assertEquals("", subject[0]);
@@ -119,8 +161,20 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeCSVStringWithNoDelimeterHas1Token() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_SINGLE_FIELD);
+    public void ensureTokenizeNocontentInFieldIsStillCounted4() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_ALL_NO_CONTENT_WITH_SPACE);
+
+        LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_NO_CONTENT_WITH_SPACE, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("", subject[0]);
+        assertEquals("", subject[1]);
+        assertEquals("", subject[2]);
+    }
+
+    @Test
+    public void ensureTokenizeStringWithNoDelimeterHas1Token() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_SINGLE_FIELD);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_SINGLE_FIELD, subject);
 
@@ -129,8 +183,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeCSVTokensAreTrimmed() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_WITH_SPACES);
+    public void ensureTokenizeTokensAreTrimmed() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_WITH_SPACES);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_WITH_SPACES, subject);
 
@@ -141,10 +195,10 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeQuoted() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_QUOTED);
+    public void ensureTokenizeQuoted() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_QUOTED1);
 
-        LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED, subject);
+        LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED1, subject);
 
         assertEquals(4, subject.length);
         assertEquals("123", subject[0]);
@@ -154,9 +208,35 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeCommaInQuotes() {
+    public void ensureTokenizeQuoted2() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_QUOTED2);
+
+        LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED2, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("\"123\"", subject[0]);
+        assertEquals("abc", subject[1]);
+        assertEquals("\"xyz\"", subject[2]);
+        assertEquals("321", subject[3]);
+    }
+
+    @Test
+    public void ensureTokenizeQuoted3() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_QUOTED3);
+
+        LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED3, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("\"123\"", subject[0]);
+        assertEquals("\"abc\"", subject[1]);
+        assertEquals("\"xyz\"", subject[2]);
+        assertEquals("\"321\"", subject[3]);
+    }
+
+    @Test
+    public void ensureTokenizeCommaInQuotes() throws ParseException {
         final String FIXTURE_COMMA_IN_QUOTES = "123, \"I think, therefore I am\", 321";
-        final String[] subject = CsvLine.tokenize(FIXTURE_COMMA_IN_QUOTES);
+        final String[] subject = CsvLine.fields(FIXTURE_COMMA_IN_QUOTES);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_COMMA_IN_QUOTES, subject);
 
@@ -167,8 +247,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeSimple() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_SIMPLE);
+    public void ensureTokenizeSimple() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_SIMPLE);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_SIMPLE, subject);
 
@@ -178,8 +258,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeNoContent() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_NO_CONTENT_FIELDS);
+    public void ensureTokenizeNoContent() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_NO_CONTENT_FIELDS);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS, subject);
 
@@ -191,8 +271,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeNoContent2() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_NO_CONTENT_FIELDS2);
+    public void ensureTokenizeNoContent2() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_NO_CONTENT_FIELDS2);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS2, subject);
 
@@ -204,8 +284,8 @@ public class CsvLineTest {
     }
 
     @Test
-    public void ensureTokenizeNoContent3() {
-        final String[] subject = CsvLine.tokenize(FIXTURE_NO_CONTENT_FIELDS3);
+    public void ensureTokenizeNoContent3() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_NO_CONTENT_FIELDS3);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS3, subject);
 
@@ -214,5 +294,263 @@ public class CsvLineTest {
         assertEquals("", subject[1]);
         assertEquals("", subject[2]);
         assertEquals("", subject[3]);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureTokenizeThrowsForUnescapedQuoteInField() throws ParseException {
+        CsvLine.fields(FIXTURE_QUOTE_IN_FIELD);
+    }
+
+    @Test
+    public void ensureTokeniseEscapedQuoteInField() throws ParseException {
+        final String[] subject = CsvLine.fields(FIXTURE_ESCAPED_QUOTE_IN_FIELD);
+
+        LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("a", subject[0]);
+        assertEquals("\"sd\"\"b\"", subject[1]);
+        assertEquals("1", subject[2]);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureTokenizeThrowsForUnescapedQuoteInField2() throws ParseException {
+        CsvLine.fields(FIXTURE_QUOTE_IN_FIELD2);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureTokenizeMissingQuoteInField() throws ParseException {
+        CsvLine.fields(FIXTURE_MISSING_END_QUOTE_IN_FIELD);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureTokenizeMissingQuoteInField2() throws ParseException {
+        CsvLine.fields(FIXTURE_MISSING_END_QUOTE_IN_FIELD2);
+    }
+
+    //
+    // parse
+    //
+    @Test
+    public void ensureParseAllSpaces() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_ALL_SPACES).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_ALL_SPACES, subject);
+
+        assertEquals(1, subject.length);
+        assertEquals("", subject[0]);
+    }
+
+    @Test
+    public void ensureParseEmpty() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_EMPTY).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_EMPTY, subject);
+
+        assertEquals(0, subject.length);
+    }
+
+    @Test
+    public void ensureParseNocontentInFieldIsStillCounted() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_MIDDLE_NO_CONTENT).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_MIDDLE_NO_CONTENT, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("ab", subject[0]);
+        assertEquals("", subject[1]);
+        assertEquals("cd", subject[2]);
+    }
+
+    @Test
+    public void ensureParseNocontentInFieldIsStillCounted2() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_FIRST_NO_CONTENT).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_FIRST_NO_CONTENT, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("", subject[0]);
+        assertEquals("ab", subject[1]);
+        assertEquals("cd", subject[2]);
+    }
+
+    @Test
+    public void ensureParseNocontentInFieldIsStillCounted3() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_ALL_NO_CONTENT).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_ALL_NO_CONTENT, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("", subject[0]);
+        assertEquals("", subject[1]);
+        assertEquals("", subject[2]);
+    }
+
+    @Test
+    public void ensureParseNocontentInFieldIsStillCounted4() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_ALL_NO_CONTENT_WITH_SPACE).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_ALL_NO_CONTENT_WITH_SPACE, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("", subject[0]);
+        assertEquals("", subject[1]);
+        assertEquals("", subject[2]);
+    }
+
+    @Test
+    public void ensureParseStringWithNoDelimeterHas1Token() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_SINGLE_FIELD).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_SINGLE_FIELD, subject);
+
+        assertEquals(1, subject.length);
+        assertEquals(FIXTURE_SINGLE_FIELD, subject[0]);
+    }
+
+    @Test
+    public void ensureParseTokensAreTrimmed() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_WITH_SPACES).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_WITH_SPACES, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("I", subject[0]);
+        assertEquals("Love", subject[1]);
+        assertEquals("Rock-n-Roll", subject[2]);
+    }
+
+    @Test
+    public void ensureParseQuoted() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_QUOTED1).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_QUOTED1, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("123", subject[0]);
+        assertEquals("abc", subject[1]);
+        assertEquals("\"xyz\"", subject[2]);
+        assertEquals("321", subject[3]);
+    }
+
+    @Test
+    public void ensureParseQuoted2() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_QUOTED2).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_QUOTED2, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("\"123\"", subject[0]);
+        assertEquals("abc", subject[1]);
+        assertEquals("\"xyz\"", subject[2]);
+        assertEquals("321", subject[3]);
+    }
+
+    @Test
+    public void ensureParseQuoted3() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_QUOTED3).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_QUOTED3, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("\"123\"", subject[0]);
+        assertEquals("\"abc\"", subject[1]);
+        assertEquals("\"xyz\"", subject[2]);
+        assertEquals("\"321\"", subject[3]);
+    }
+
+    @Test
+    public void ensureParseCommaInQuotes() throws ParseException {
+        final String FIXTURE_COMMA_IN_QUOTES = "123, \"I think, therefore I am\", 321";
+        final String[] subject = CsvLine.parse(FIXTURE_COMMA_IN_QUOTES).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_COMMA_IN_QUOTES, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("123", subject[0]);
+        assertEquals("\"I think, therefore I am\"", subject[1]);
+        assertEquals("321", subject[2]);
+    }
+
+    @Test
+    public void ensureParseSimple() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_SIMPLE).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_SIMPLE, subject);
+
+        assertEquals(2, subject.length);
+        assertEquals("123", subject[0]);
+        assertEquals("abc", subject[1]);
+    }
+
+    @Test
+    public void ensureParseNoContent() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_NO_CONTENT_FIELDS).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("", subject[0]);
+        assertEquals("", subject[1]);
+        assertEquals("", subject[2]);
+        assertEquals("321", subject[3]);
+    }
+
+    @Test
+    public void ensureParseNoContent2() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_NO_CONTENT_FIELDS2).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS2, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("abc", subject[0]);
+        assertEquals("", subject[1]);
+        assertEquals("", subject[2]);
+        assertEquals("", subject[3]);
+    }
+
+    @Test
+    public void ensureParseNoContent3() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_NO_CONTENT_FIELDS3).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS3, subject);
+
+        assertEquals(4, subject.length);
+        assertEquals("abc", subject[0]);
+        assertEquals("", subject[1]);
+        assertEquals("", subject[2]);
+        assertEquals("", subject[3]);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureParseQuoteInField() throws ParseException {
+        CsvLine.parse(FIXTURE_QUOTE_IN_FIELD).toArray(new String[0]);
+    }
+
+    @Test
+    public void ensureParseEscapedQuoteInField() throws ParseException {
+        final String[] subject = CsvLine.parse(FIXTURE_ESCAPED_QUOTE_IN_FIELD).toArray(new String[0]);
+
+        LOGGER.info("PARSE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD, subject);
+
+        assertEquals(3, subject.length);
+        assertEquals("a", subject[0]);
+        assertEquals("\"sd\"\"b\"", subject[1]);
+        assertEquals("1", subject[2]);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureParseQuoteInField2() throws ParseException {
+        CsvLine.parse(FIXTURE_QUOTE_IN_FIELD2).toArray(new String[0]);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureParseMissingQuoteInField() throws ParseException {
+        CsvLine.parse(FIXTURE_MISSING_END_QUOTE_IN_FIELD).toArray(new String[0]);
+    }
+
+    @Test(expected = ParseException.class)
+    public void ensureParseMissingQuoteInField2() throws ParseException {
+        CsvLine.parse(FIXTURE_MISSING_END_QUOTE_IN_FIELD2).toArray(new String[0]);
     }
 }

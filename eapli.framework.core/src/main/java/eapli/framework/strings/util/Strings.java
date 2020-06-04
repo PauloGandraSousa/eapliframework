@@ -221,6 +221,7 @@ public final class Strings {
     }
 
     /**
+     * Get all matches of regular expression.
      *
      * @param input
      * @param regexPattern
@@ -235,24 +236,6 @@ public final class Strings {
         }
         return list;
     }
-
-    /**
-     * Very simple tokenizer - finds the matching tokens. Trims tokens.
-     *
-     * @param input
-     * @param regexPattern
-     *            the delimiting regular expression
-     * @return
-     */
-    public static String[] tokenize(final String input, final String regexPattern) {
-        return matchResults(input, regexPattern).stream().map(String::trim).toArray(i -> new String[i]);
-    }
-
-    /**
-     * <a href=
-     * "https://softwareengineering.stackexchange.com/questions/166454/can-the-csv-format-be-defined-by-a-regex"
-     * >stackexchange</a>
-     */
 
     /**
      * Very simple tokenizer - finds the tokens around the delimiter. Trims tokens. If the input is
