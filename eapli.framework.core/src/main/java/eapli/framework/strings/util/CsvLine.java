@@ -117,16 +117,14 @@ public final class CsvLine {
      * @throws ParseException
      *
      */
-    public static String[] fields(final String input) throws ParseException {
+    public static List<String> tokenizer(final String input) throws ParseException {
         if (input.isEmpty()) {
-            return new String[] { "" };
+            final List<String> matches = new ArrayList<>();
+            matches.add(0, "");
+            return matches;
         }
 
-        final List<String> matches = matchTokens(input, CSV_REGEX_TESTER);
-        if (!matches.isEmpty() && matches.get(0).startsWith(",")) {
-            matches.add(0, "");
-        }
-        return matches.toArray(new String[0]);
+        return matchTokens(input, CSV_REGEX_TESTER);
     }
 
     /**

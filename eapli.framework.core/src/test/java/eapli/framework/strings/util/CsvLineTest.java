@@ -107,7 +107,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeAllSpaces() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_ALL_SPACES);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_ALL_SPACES).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_SPACES, subject);
 
@@ -117,7 +117,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeEmpty() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_EMPTY);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_EMPTY).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_EMPTY, subject);
 
@@ -126,7 +126,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeNocontentInFieldIsStillCounted() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_MIDDLE_NO_CONTENT);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_MIDDLE_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_MIDDLE_NO_CONTENT, subject);
 
@@ -138,7 +138,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeNoContentInFieldIsStillCounted2() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_FIRST_NO_CONTENT);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_FIRST_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_FIRST_NO_CONTENT, subject);
 
@@ -150,7 +150,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeNoContentInFieldIsStillCounted3() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_ALL_NO_CONTENT);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_ALL_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_NO_CONTENT, subject);
 
@@ -162,7 +162,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeNocontentInFieldIsStillCounted4() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_ALL_NO_CONTENT_WITH_SPACE);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_ALL_NO_CONTENT_WITH_SPACE).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_NO_CONTENT_WITH_SPACE, subject);
 
@@ -174,7 +174,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeStringWithNoDelimeterHas1Token() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_SINGLE_FIELD);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_SINGLE_FIELD).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_SINGLE_FIELD, subject);
 
@@ -184,7 +184,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeTokensAreTrimmed() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_WITH_SPACES);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_WITH_SPACES).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_WITH_SPACES, subject);
 
@@ -196,7 +196,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeQuoted() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_QUOTED1);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_QUOTED1).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED1, subject);
 
@@ -209,7 +209,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeQuoted2() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_QUOTED2);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_QUOTED2).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED2, subject);
 
@@ -222,7 +222,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeQuoted3() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_QUOTED3);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_QUOTED3).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED3, subject);
 
@@ -236,7 +236,7 @@ public class CsvLineTest {
     @Test
     public void ensureTokenizeCommaInQuotes() throws ParseException {
         final String FIXTURE_COMMA_IN_QUOTES = "123, \"I think, therefore I am\", 321";
-        final String[] subject = CsvLine.fields(FIXTURE_COMMA_IN_QUOTES);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_COMMA_IN_QUOTES).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_COMMA_IN_QUOTES, subject);
 
@@ -248,7 +248,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeSimple() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_SIMPLE);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_SIMPLE).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_SIMPLE, subject);
 
@@ -259,7 +259,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeNoContent() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_NO_CONTENT_FIELDS);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_NO_CONTENT_FIELDS).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS, subject);
 
@@ -272,7 +272,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeNoContent2() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_NO_CONTENT_FIELDS2);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_NO_CONTENT_FIELDS2).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS2, subject);
 
@@ -285,7 +285,7 @@ public class CsvLineTest {
 
     @Test
     public void ensureTokenizeNoContent3() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_NO_CONTENT_FIELDS3);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_NO_CONTENT_FIELDS3).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS3, subject);
 
@@ -298,12 +298,12 @@ public class CsvLineTest {
 
     @Test(expected = ParseException.class)
     public void ensureTokenizeThrowsForUnescapedQuoteInField() throws ParseException {
-        CsvLine.fields(FIXTURE_QUOTE_IN_FIELD);
+        CsvLine.tokenizer(FIXTURE_QUOTE_IN_FIELD);
     }
 
     @Test
     public void ensureTokeniseEscapedQuoteInField() throws ParseException {
-        final String[] subject = CsvLine.fields(FIXTURE_ESCAPED_QUOTE_IN_FIELD);
+        final String[] subject = CsvLine.tokenizer(FIXTURE_ESCAPED_QUOTE_IN_FIELD).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD, subject);
 
@@ -315,17 +315,17 @@ public class CsvLineTest {
 
     @Test(expected = ParseException.class)
     public void ensureTokenizeThrowsForUnescapedQuoteInField2() throws ParseException {
-        CsvLine.fields(FIXTURE_QUOTE_IN_FIELD2);
+        CsvLine.tokenizer(FIXTURE_QUOTE_IN_FIELD2);
     }
 
     @Test(expected = ParseException.class)
     public void ensureTokenizeMissingQuoteInField() throws ParseException {
-        CsvLine.fields(FIXTURE_MISSING_END_QUOTE_IN_FIELD);
+        CsvLine.tokenizer(FIXTURE_MISSING_END_QUOTE_IN_FIELD);
     }
 
     @Test(expected = ParseException.class)
     public void ensureTokenizeMissingQuoteInField2() throws ParseException {
-        CsvLine.fields(FIXTURE_MISSING_END_QUOTE_IN_FIELD2);
+        CsvLine.tokenizer(FIXTURE_MISSING_END_QUOTE_IN_FIELD2);
     }
 
     //
