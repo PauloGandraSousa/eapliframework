@@ -31,8 +31,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
-import eapli.framework.csv.util.CsvLineMarshaler;
-
 /**
  *
  * @author Paulo Gandra Sousa 04/06/2020
@@ -104,6 +102,46 @@ public class CsvLineMarshalerTest {
         final String expected = "The girl";
 
         final String result = CsvLineMarshaler.unescapeQuotes(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureQuote() {
+        final String input = "A";
+        final String expected = "\"A\"";
+
+        final String result = CsvLineMarshaler.quote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureQuoteDoesNotChangeIfThereAreQuotes() {
+        final String input = "\"A\"";
+        final String expected = "\"A\"";
+
+        final String result = CsvLineMarshaler.quote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureUnquote() {
+        final String input = "\"A\"";
+        final String expected = "A";
+
+        final String result = CsvLineMarshaler.unquote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureUnquoteDoesNotChangeIfThereAreNoQuotes() {
+        final String input = "A";
+        final String expected = "A";
+
+        final String result = CsvLineMarshaler.unquote(input);
 
         assertEquals(expected, result);
     }

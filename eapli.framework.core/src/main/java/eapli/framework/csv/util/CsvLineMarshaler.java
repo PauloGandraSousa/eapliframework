@@ -48,15 +48,18 @@ public final class CsvLineMarshaler {
      * The comma is not removed from the token.
      */
     private static final String CSV_OREILLY = "(,|\\\r?\\\n|^)([^\",\\\r\\\n]+|\"(?:[^\"]|\"\")*\")?";
+
     /**
      * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1197">RegExLib.com 1197</a>
      *
      */
     private static final String CSV_LIB_1197 = "((?:[^\",]|(?:\"(?:\\{2}|\\\"|[^\"])*?\"))*)";
+
     /**
      * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1106">RegExLib.com 1106</a>
      */
     private static final String CSV_LIB_1106 = "(?<=,)\\s*(?=,)|^(?=,)|[^\\\"]{2,}(?=\\\")|([^,\\\"]+(?=,|$))";
+
     /**
      * Based on the regex from
      * <a href="https://www.regextester.com/103086">regextester</a>
@@ -176,6 +179,9 @@ public final class CsvLineMarshaler {
      * @return
      */
     public static String quote(final String field) {
+        if (field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
+            return field;
+        }
         return "\"" + field + "\"";
     }
 
@@ -187,6 +193,9 @@ public final class CsvLineMarshaler {
      * @return
      */
     public static String unquote(final String field) {
+        if (field.charAt(0) != '"' && field.charAt(field.length() - 1) != '"') {
+            return field;
+        }
         return field.substring(1, field.length() - 1);
     }
 
@@ -203,7 +212,11 @@ public final class CsvLineMarshaler {
 
         final StringBuilder sb = new StringBuilder();
         for (final Object f : fields) {
-            sb.append(escapeQuotes(f.toString()));
+            if (f != null) {
+                sb.append(quote(escapeQuotes(f.toString())));
+            } else {
+                sb.append("");
+            }
             sb.append(",");
         }
         sb.deleteCharAt(sb.length() - 1);
