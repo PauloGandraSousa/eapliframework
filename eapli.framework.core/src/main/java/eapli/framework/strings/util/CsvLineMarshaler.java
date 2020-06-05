@@ -38,7 +38,7 @@ import eapli.framework.util.Utility;
  *
  */
 @Utility
-public final class CsvLine {
+public final class CsvLineMarshaler {
 
     /**
      * <a href=
@@ -74,7 +74,7 @@ public final class CsvLine {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
 
-    private CsvLine() {
+    private CsvLineMarshaler() {
         // ensure utility
     }
 
@@ -117,7 +117,7 @@ public final class CsvLine {
      * @throws ParseException
      *
      */
-    public static List<String> tokenizer(final String input) throws ParseException {
+    public static List<String> tokenize(final String input) throws ParseException {
         if (input.isEmpty()) {
             final List<String> matches = new ArrayList<>();
             matches.add(0, "");
@@ -175,7 +175,11 @@ public final class CsvLine {
      * @param fields
      * @return
      */
-    public static String allQuoted(final Object[] fields) {
+    public static String build(final Object[] fields) {
+        if (fields.length == 0) {
+            return "";
+        }
+
         final StringBuilder sb = new StringBuilder();
         for (final Object f : fields) {
             sb.append(escapeQuotes(f.toString()));
@@ -233,18 +237,20 @@ public final class CsvLine {
 
         StringBuilder curVal = new StringBuilder();
         boolean inQuotes = false;
-        char previousChar = '\0';
-        for (final char ch : cvsLine.toCharArray()) {
+        final char[] chars = cvsLine.toCharArray();
+
+        int i = 0;
+        while (i < chars.length) {
+            final char ch = chars[i];
             if (inQuotes) {
+                curVal.append(ch);
                 if (ch == customQuote) {
-                    if (previousChar == customQuote) {
-                        handleEscapedQuote(curVal, customQuote);
+                    if (i < chars.length - 1 && chars[i + 1] == customQuote) {
+                        i++;
+                        curVal.append(customQuote);
                     } else {
                         inQuotes = false;
-                        curVal.append(ch);
                     }
-                } else {
-                    curVal.append(ch);
                 }
             } else {
                 if (ch == customQuote) {
@@ -255,7 +261,8 @@ public final class CsvLine {
                     curVal.append(ch);
                 }
             }
-            previousChar = ch;
+
+            i++;
         }
         if (inQuotes) {
             throw new ParseException("Unfinished quote", -1);
@@ -263,11 +270,6 @@ public final class CsvLine {
         result.add(curVal.toString().trim());
 
         return result;
-    }
-
-    private static void handleEscapedQuote(final StringBuilder curVal, final char customQuote) {
-        curVal.append(customQuote);
-        curVal.append(customQuote);
     }
 
     private static StringBuilder addToken(final List<String> result, StringBuilder curVal) {
