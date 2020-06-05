@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.strings.util;
+package eapli.framework.csv.util;
 
 import java.text.ParseException;
 import java.util.ArrayList;

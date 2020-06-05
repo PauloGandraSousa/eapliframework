@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.strings.util;
+package eapli.framework.csv.util;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,6 +30,8 @@ import java.text.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
+
+import eapli.framework.csv.util.CsvLineMarshaler;
 
 /**
  *

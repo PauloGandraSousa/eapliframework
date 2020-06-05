@@ -7,7 +7,7 @@
 - In class `Strings`:
     - `matchResults`
     - `split`
-- New class `CsvLine`
+- New class `CsvLineMarshaler`
 
 ### Changed
 
