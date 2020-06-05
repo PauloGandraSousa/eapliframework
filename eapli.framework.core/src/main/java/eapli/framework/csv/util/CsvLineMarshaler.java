@@ -141,11 +141,11 @@ public final class CsvLineMarshaler {
      * The girl said ""hello""
      * </pre>
      *
-     * @param msg
+     * @param field
      * @return
      */
-    public static String escapeQuotes(final String msg) {
-        return msg.replace("\"", "\"\"");
+    public static String escapeQuotes(final String field) {
+        return field.replace("\"", "\"\"");
     }
 
     /**
@@ -162,11 +162,32 @@ public final class CsvLineMarshaler {
      * </pre>
      *
      *
-     * @param msg
+     * @param field
      * @return
      */
-    public static String unescapeQuotes(final String msg) {
-        return msg.replace("\"\"", "\"");
+    public static String unescapeQuotes(final String field) {
+        return field.replace("\"\"", "\"");
+    }
+
+    /**
+     * Adds quotes around a field content.
+     *
+     * @param field
+     * @return
+     */
+    public static String quote(final String field) {
+        return "\"" + field + "\"";
+    }
+
+    /**
+     * Removes the quotes around a field content. Note that this function assumes the field is
+     * properly quoted.
+     *
+     * @param field
+     * @return
+     */
+    public static String unquote(final String field) {
+        return field.substring(1, field.length() - 1);
     }
 
     /**
