@@ -175,7 +175,7 @@ public final class CsvLineMarshaler {
      * @param fields
      * @return
      */
-    public static String build(final Object[] fields) {
+    public static String marshal(final Object[] fields) {
         if (fields.length == 0) {
             return "";
         }
