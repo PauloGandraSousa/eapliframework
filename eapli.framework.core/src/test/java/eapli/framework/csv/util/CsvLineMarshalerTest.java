@@ -107,9 +107,29 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureQuote() {
+    public void ensureQuoteEmpty() {
+        final String input = "";
+        final String expected = "\"\"";
+
+        final String result = CsvLineMarshaler.quote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureQuote1() {
         final String input = "A";
         final String expected = "\"A\"";
+
+        final String result = CsvLineMarshaler.quote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureQuote() {
+        final String input = "Abc";
+        final String expected = "\"Abc\"";
 
         final String result = CsvLineMarshaler.quote(input);
 
@@ -127,7 +147,27 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnquote() {
+    public void ensureUnquoteEmpty() {
+        final String input = "";
+        final String expected = "";
+
+        final String result = CsvLineMarshaler.unquote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureUnquoteEmpty1() {
+        final String input = "\"\"";
+        final String expected = "";
+
+        final String result = CsvLineMarshaler.unquote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureUnquote1() {
         final String input = "\"A\"";
         final String expected = "A";
 
@@ -137,9 +177,19 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
+    public void ensureUnquote() {
+        final String input = "\"Abc\"";
+        final String expected = "Abc";
+
+        final String result = CsvLineMarshaler.unquote(input);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
     public void ensureUnquoteDoesNotChangeIfThereAreNoQuotes() {
-        final String input = "A";
-        final String expected = "A";
+        final String input = "Abc";
+        final String expected = "Abc";
 
         final String result = CsvLineMarshaler.unquote(input);
 

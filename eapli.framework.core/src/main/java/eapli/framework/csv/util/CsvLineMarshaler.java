@@ -179,7 +179,7 @@ public final class CsvLineMarshaler {
      * @return
      */
     public static String quote(final String field) {
-        if (field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
+        if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
             return field;
         }
         return "\"" + field + "\"";
@@ -193,7 +193,7 @@ public final class CsvLineMarshaler {
      * @return
      */
     public static String unquote(final String field) {
-        if (field.charAt(0) != '"' && field.charAt(field.length() - 1) != '"') {
+        if (field.isEmpty() || (field.charAt(0) != '"' && field.charAt(field.length() - 1) != '"')) {
             return field;
         }
         return field.substring(1, field.length() - 1);
