@@ -46,10 +46,10 @@ public class StringsShuffleTest {
     @Test
     public void testIsNotTheSame() {
         ensure1IsNotTheSame("ABCDEFG");
-        ensure1IsNotTheSame("ABC");
+        ensure1IsNotTheSame("ABC fgh");
         ensure1IsNotTheSame("ABCDEFG 12345");
         ensure1IsNotTheSame("The quick brown fox jumps over the fence");
-        ensure1IsNotTheSame("12345");
+        ensure1IsNotTheSame("123456789");
     }
 
     private void ensure1MantainsLength(final String test) {
