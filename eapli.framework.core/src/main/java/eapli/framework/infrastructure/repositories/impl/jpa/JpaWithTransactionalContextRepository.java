@@ -49,18 +49,29 @@ import eapli.framework.domain.repositories.TransactionalContext;
     private JpaTransactionalContext txContext;
 
     /**
+     * Constructor.
+     *
      * @param txCtx
+     *            the transactional context to enroll
      * @param identityFieldName
+     *            the name of the <b>business identity</b> field (not the primary key)
      *
      */
-    public JpaWithTransactionalContextRepository(final TransactionalContext txCtx,
-            final String identityFieldName) {
+    public JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final String identityFieldName) {
         super(identityFieldName);
         setTxCtx(txCtx);
     }
 
-    /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx,
-            final Class<T> classz,
+    /**
+     * Internal Constructor.
+     *
+     * @param txCtx
+     *            the transactional context to enroll
+     * @param classz
+     * @param identityFieldName
+     *            the name of the <b>business identity</b> field (not the primary key)
+     */
+    /* package */ JpaWithTransactionalContextRepository(final TransactionalContext txCtx, final Class<T> classz,
             final String identityFieldName) {
         super(classz, identityFieldName);
         setTxCtx(txCtx);
@@ -83,6 +94,10 @@ import eapli.framework.domain.repositories.TransactionalContext;
         return this.txContext.entityManager();
     }
 
+    /**
+     *
+     * @return
+     */
     protected TransactionalContext context() {
         return txContext;
     }

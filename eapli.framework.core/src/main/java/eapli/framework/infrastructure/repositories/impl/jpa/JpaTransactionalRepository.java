@@ -59,26 +59,62 @@ import eapli.framework.validations.Preconditions;
  *
  * @author Paulo Gandra Sousa
  */
-public class JpaTransactionalRepository<T, K, I>
-        extends JpaWithTransactionalContextRepository<T, K, I> {
+public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalContextRepository<T, K, I> {
 
-    public JpaTransactionalRepository(final String persistenceUnitName,
-            final String identityFieldName) {
+    /**
+     * Constructor.
+     *
+     * @param persistenceUnitName
+     *            the name of the persistence unit
+     * @param identityFieldName
+     *            the name of the <b>business identity</b> field (not the primary key)
+     */
+    public JpaTransactionalRepository(final String persistenceUnitName, final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName), identityFieldName);
     }
 
+    /**
+     * Internal constructor.
+     *
+     * @param persistenceUnitName
+     *            the name of the persistence unit
+     * @param classz
+     * @param identityFieldName
+     *            the name of the <b>business identity</b> field (not the primary key)
+     */
     /* package */ JpaTransactionalRepository(final String persistenceUnitName,
             final Class<T> classz,
             final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName), classz, identityFieldName);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param persistenceUnitName
+     *            the name of the persistence unit
+     * @param properties
+     *            the extended properties to pass to JPA
+     * @param identityFieldName
+     *            the name of the <b>business identity</b> field (not the primary key)
+     */
     public JpaTransactionalRepository(final String persistenceUnitName,
             @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties,
             final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName, properties), identityFieldName);
     }
 
+    /**
+     * Internal constructor.
+     *
+     * @param persistenceUnitName
+     *            the name of the persistence unit
+     * @param properties
+     *            the extended properties to pass to JPA
+     * @param classz
+     * @param identityFieldName
+     *            the name of the <b>business identity</b> field (not the primary key)
+     */
     /* package */ JpaTransactionalRepository(final String persistenceUnitName,
             @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties,
             final Class<T> classz,
@@ -89,8 +125,8 @@ public class JpaTransactionalRepository<T, K, I>
 
     /**
      * Removes the object from the persistence storage. The object reference is still "valid" but
-     * should not be used in
-     * the code afterwards. The persisted entity is/will be deleted in the database.
+     * should not be used in the code afterwards. The persisted entity is/will be deleted in the
+     * database.
      *
      * @param entity
      * @throws IntegrityViolationException
@@ -131,7 +167,7 @@ public class JpaTransactionalRepository<T, K, I>
     }
 
     /**
-     * adds <b>and commits</b> a new entity to the persistence store
+     * Adds <b>and commits</b> a new entity to the persistence store.
      *
      * @param entity
      * @return the newly created persistent object

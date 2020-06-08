@@ -1,5 +1,15 @@
 # EAPLI Framework Changelog
 
+## OPEN-SNAPSHOT
+
+### What's new
+
+- Class `JpaAutoTxRepository` now implements `IterableRepository`
+
+### Changed
+
+- TBD
+
 ## 13.5.0
 
 ### What's new

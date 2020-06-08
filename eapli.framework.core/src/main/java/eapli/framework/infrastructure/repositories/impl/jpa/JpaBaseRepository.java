@@ -102,6 +102,12 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
         this.identityFieldName = identityFieldName;
     }
 
+    /**
+     * Internal constructor.
+     *
+     * @param classz
+     * @param identityFieldName
+     */
     /* package */ JpaBaseRepository(final Class<T> classz, final String identityFieldName) {
         assert classz != null : "you must parametrize the class";
         entityClass = classz;
@@ -114,7 +120,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      * @param entity
      * @return the newly created persistent object
      * @throws IntegrityViolationException
-     *             in case there is an underlying persistence store exception. Usually this is caused by a constraint
+     *             in case there is an underlying persistence store exception. Usually this is
+     *             caused by a constraint
      *             violation (e.g., sql state 23505) but it will wrap any persistence exception
      */
     public T create(final T entity) {
@@ -152,14 +159,20 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
         return read(id);
     }
 
+    /**
+     * Returns the name of the <b>business identity</b> field.
+     *
+     * @return the name of the <b>business identity</b> field
+     */
     protected String identityFieldName() {
         return identityFieldName;
     }
 
     /**
-     * Gets the entity with the specified identity.
+     * Gets the entity with the specified business identity.
      *
      * @param id
+     *            the business identity to look for
      * @return the entity with the specified identity.
      */
     public Optional<T> ofIdentity(final I id) {
@@ -170,6 +183,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      * Removes the entity with the specified identity from the repository.
      *
      * @param entityId
+     *            the business identity to look for
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
@@ -179,7 +193,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Updates an object in the persistence store. Calling code should not use the {@code entity} reference aftewards
+     * Updates an object in the persistence store. Calling code should not use the {@code entity}
+     * reference aftewards
      * and should instead use the return value of this method.
      *
      * <pre>
@@ -208,7 +223,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      *
      * @param entity
      * @throws IntegrityViolationException
-     *             in case there is an underlying persistence store exception. Usually this is caused by a constraint
+     *             in case there is an underlying persistence store exception. Usually this is
+     *             caused by a constraint
      *             violation (e.g., sql state 23505) but it will wrap any persistence exception.
      */
     @Override
@@ -305,7 +321,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Helper method to create a type query.
+     * Helper method to create a typed query.
      *
      * @return
      */
@@ -376,10 +392,10 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Returns the first n entities according to its "natural" order.
+     * Returns the first <em>n</em> entities according to its "natural" order.
      *
      * @param n
-     * @return the first n entities according to its "natural" order
+     * @return the first <em>n</em> entities according to its "natural" order
      */
     @Override
     public List<T> first(final int n) {
@@ -402,7 +418,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Fetch results according to result pagination when the results are too much.
+     * Fetch a "page" of results. This method should be used when there is a large number of objects
+     * in the persistence store and making a {@link #findAll()} will simply be impractical.
      *
      * @param pageNumber
      * @param pageSize
@@ -566,8 +583,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Returns the number of entities in the persistence store. A alias to {@link #count()} but using the List.size
-     * terminology
+     * Returns the number of entities in the persistence store. A alias to {@link #count()} but
+     * using the {@code List} terminology.
      *
      * @return the number of entities in the persistence store
      */

@@ -26,7 +26,7 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
 /**
- * An utility class for implementing simple agnostic JPA repositories, that is, not tied to any
+ * A utility class for implementing simple agnostic JPA repositories, that is, not tied to any
  * particular managed entity. Can be useful if you want to have a Reporting repository that returns
  * different types of DTOs. If you want a repository for a JPA Entity use the typed
  * {@link JpaBaseRepository}
@@ -50,16 +50,28 @@ public abstract class JpaAbstractRepository {
     private EntityManager entityManager;
 
     /**
-     * constructor
+     * Constructor.
      */
     public JpaAbstractRepository() {
         super();
     }
 
+    /**
+     * Provides access to the underlying entity manager factory. In principle, derived classes
+     * should not need to use this method. neither override it.
+     *
+     * @return
+     */
     protected EntityManagerFactory entityManagerFactory() {
         return emFactory;
     }
 
+    /**
+     * Provides access to the underlying entity manager. In principle, derived classes
+     * should not need to use this method. neither override it.
+     *
+     * @return
+     */
     protected EntityManager entityManager() {
         if (entityManager == null || !entityManager.isOpen()) {
             entityManager = entityManagerFactory().createEntityManager();
@@ -67,6 +79,15 @@ public abstract class JpaAbstractRepository {
         return entityManager;
     }
 
+    /**
+     * Allows to create a typed query (SELECT, INSERT, UPDATE, DELETE) in case the {@code match*()}
+     * family of methods is not enough.
+     *
+     * @param <R>
+     * @param jpql
+     * @param classz
+     * @return
+     */
     protected <R> TypedQuery<R> createQuery(final String jpql, final Class<R> classz) {
         return entityManager().createQuery(jpql, classz);
     }

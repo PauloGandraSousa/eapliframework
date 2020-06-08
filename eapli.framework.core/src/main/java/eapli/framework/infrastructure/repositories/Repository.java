@@ -96,7 +96,7 @@ public interface Repository<T, K> {
     void deleteById(K entityId);
 
     /**
-     * returns the number of entities in the repository.
+     * Returns the number of entities in the repository.
      *
      * @return the number of entities in the repository
      */

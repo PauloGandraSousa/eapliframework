@@ -67,11 +67,19 @@ public class JpaTransactionalContext implements TransactionalContext {
         entityManagerFactory();
     }
 
+    /**
+     *
+     * @param persistenceUnitName
+     */
     @SuppressWarnings({ "rawtypes", "java:S3740" })
     public JpaTransactionalContext(final String persistenceUnitName) {
         this(persistenceUnitName, new HashMap());
     }
 
+    /**
+     *
+     * @return
+     */
     protected final synchronized EntityManagerFactory entityManagerFactory() {
         if (singletonEMF == null) {
             LOGGER.info("Not runing in container mode.");
@@ -80,6 +88,10 @@ public class JpaTransactionalContext implements TransactionalContext {
         return singletonEMF;
     }
 
+    /**
+     *
+     * @return
+     */
     protected EntityManager entityManager() {
         if (entityManager == null || !entityManager.isOpen()) {
             LOGGER.trace("Creating a new entity manager");
