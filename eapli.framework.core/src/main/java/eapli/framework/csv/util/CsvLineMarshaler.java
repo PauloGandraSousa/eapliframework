@@ -173,7 +173,7 @@ public final class CsvLineMarshaler {
     }
 
     /**
-     * Adds quotes around a field content.
+     * Adds quotes around a field content if the field is not yet quoted.
      *
      * @param field
      * @return
@@ -186,8 +186,7 @@ public final class CsvLineMarshaler {
     }
 
     /**
-     * Removes the quotes around a field content. Note that this function assumes the field is
-     * properly quoted.
+     * Removes the quotes around a field content.
      *
      * @param field
      * @return
@@ -204,7 +203,9 @@ public final class CsvLineMarshaler {
      *
      * @param fields
      * @return
+     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(Object[])}
      */
+    @Deprecated
     public static String marshal(final Object[] fields) {
         if (fields.length == 0) {
             return "";
@@ -229,7 +230,9 @@ public final class CsvLineMarshaler {
      * @param cvsLine
      * @return
      * @throws ParseException
+     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String)}
      */
+    @Deprecated
     public static List<String> parse(final String cvsLine) throws ParseException {
         return parse(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
     }
@@ -241,7 +244,9 @@ public final class CsvLineMarshaler {
      * @param separators
      * @return
      * @throws ParseException
+     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String, char)}
      */
+    @Deprecated
     public static List<String> parse(final String cvsLine, final char separators) throws ParseException {
         return parse(cvsLine, separators, DEFAULT_QUOTE);
     }
@@ -258,7 +263,9 @@ public final class CsvLineMarshaler {
      * @param customQuote
      * @return
      * @throws ParseException
+     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String, char, char)}
      */
+    @Deprecated
     public static List<String> parse(final String cvsLine, final char separators, final char customQuote)
             throws ParseException {
 
