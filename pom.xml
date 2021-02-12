@@ -19,15 +19,14 @@
 
 
 	<properties>
-		<hibernate.version>5.4.15.Final</hibernate.version>
-		
+		<hibernate.version>5.4.27.Final</hibernate.version>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<java.version>1.8</java.version>
-
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>11</java.version>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
 		<sonar.exclusions>src/main/java/**/*/package-info.java</sonar.exclusions>
@@ -71,32 +70,38 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<generateBackupPoms>false</generateBackupPoms>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.2.0</version>
 				<configuration>
-					<!-- force use of JDK8 -->
-					<source>1.8</source>
-					<javadocVersion>1.8.0</javadocVersion>
- 
 					<!-- UML Taglet JDK 8 -->
-					<taglet>org.jdrupes.taglets.plantUml.Taglet</taglet>
-					<tagletArtifact>
-						<!-- https://mvnrepository.com/artifact/org.jdrupes.taglets/plantuml-taglet -->
-						<groupId>org.jdrupes.taglets</groupId>
-						<artifactId>plantuml-taglet</artifactId>
-						<version>1.0.5</version>
-					</tagletArtifact>
+					<!-- <source>1.8</source> <javadocVersion>1.8.0</javadocVersion> <taglet>org.jdrupes.taglets.plantUml.Taglet</taglet> 
+						<tagletArtifact> <groupId>org.jdrupes.taglets</groupId> <artifactId>plantuml-taglet</artifactId> 
+						<version>1.0.5</version> </tagletArtifact> -->
 
 					<!-- UML DocLet JDK 9+ -->
-<!-- 
 					<doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
 					<docletArtifact>
 						<groupId>nl.talsmasoftware</groupId>
 						<artifactId>umldoclet</artifactId>
 						<version>2.0.8</version>
 					</docletArtifact>
- -->
- 
+
 					<!-- params -->
 					<doclint>none</doclint>
 					<additionalOptions>

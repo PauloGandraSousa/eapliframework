@@ -5,6 +5,7 @@
 ### What's new
 
 - Class `JpaAutoTxRepository` now implements `IterableRepository`
+- Use Java 11
 
 ### Changed
 
