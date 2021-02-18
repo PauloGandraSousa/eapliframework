@@ -1,5 +1,17 @@
 # EAPLI Framework Changelog
 
+
+## 14.1.0-SNAPSHOT
+
+### What's new
+
+- TBD
+
+### Changed
+
+- TBD
+
+
 ## 14.0.0
 
 ### What's new
@@ -9,6 +21,7 @@
 ### Changed
 
 - Use Java 11
+
 
 ## 13.5.0
 
