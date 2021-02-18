@@ -30,8 +30,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domains.domain.model.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -47,7 +45,7 @@ public class ToInfinityOpenIntervalTest extends IntervalTestBase {
     @Test
     public void ensureStartIsNotInRange() {
         System.out.println("ensureStartIsNotInRange");
-        final Long target = new Long(START_VALUE);
+        final Long target = Long.valueOf(START_VALUE);
         final boolean result = subject.includes(target);
         assertFalse("start cannot be part of an open range", result);
     }

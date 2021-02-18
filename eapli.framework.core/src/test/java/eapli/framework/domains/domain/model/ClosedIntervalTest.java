@@ -29,8 +29,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domains.domain.model.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -46,7 +44,7 @@ public class ClosedIntervalTest extends IntervalTestBase {
     @Test
     public void ensureStartIsInRange() {
         System.out.println("ensureStartIsInRange");
-        final Long target = new Long(START_VALUE);
+        final Long target = Long.valueOf(START_VALUE);
         final boolean result = subject.includes(target);
         assertTrue("start must be part of a closed range", result);
     }
@@ -54,7 +52,7 @@ public class ClosedIntervalTest extends IntervalTestBase {
     @Test
     public void ensureEndIsInRange() {
         System.out.println("ensureEndIsInRange");
-        final Long target = new Long(END_VALUE);
+        final Long target = Long.valueOf(END_VALUE);
         final boolean result = subject.includes(target);
         assertTrue("end must be part of a closed range", result);
     }

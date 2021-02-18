@@ -26,8 +26,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.domains.domain.model.Interval;
-
 /**
  *
  * @author Paulo Gandra Sousa
@@ -49,7 +47,7 @@ public class IntervalTest extends IntervalTestBase {
     @Test
     public void ensureLowerIsNotInRange() {
         System.out.println("ensureLowerIsNotInRange");
-        final Long target = new Long(START_VALUE - DELTA_VALUE);
+        final Long target = Long.valueOf(START_VALUE - DELTA_VALUE);
         final boolean result = subject.includes(target);
         assertFalse("value lower than start cannot be part of an open range", result);
     }
@@ -57,7 +55,7 @@ public class IntervalTest extends IntervalTestBase {
     @Test
     public void ensureUpperIsNotInRange() {
         System.out.println("ensureUpperIsNotInRange");
-        final Long target = new Long(END_VALUE + DELTA_VALUE);
+        final Long target = Long.valueOf(END_VALUE + DELTA_VALUE);
         final boolean result = subject.includes(target);
         assertFalse("value greater than end cannot be part of an open range", result);
     }
@@ -65,7 +63,7 @@ public class IntervalTest extends IntervalTestBase {
     @Test
     public void ensureMiddleIsInRange() {
         System.out.println("ensureMiddleIsInRange");
-        final Long target = new Long(START_VALUE + DELTA_VALUE / 2);
+        final Long target = Long.valueOf(START_VALUE + DELTA_VALUE / 2);
         final boolean result = subject.includes(target);
         assertTrue("value in the middle is part of an open range", result);
     }
