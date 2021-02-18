@@ -80,7 +80,6 @@ Start by reading the technical description available in the [documentation folde
 Most top level packages have UML diagrams to provide more context of classes 
 in that package. Diagrams were created using [PlantUML](http://plantuml.com/) with the UMLDocLet and the PlantUML Taglet.
 
-When running maven the javadoc generation will be executed and the diagrams will be generated. In order to generate the javadoc and UML diagrams the JDK version must be *strictly 1.8*.
 
 ### Configuration
 
@@ -91,13 +90,11 @@ t.b.d.
 All compile, test and runtime dependencies are managed thru maven. Main 
 dependencies include:
 
-- JDK 1.8+
+- JDK 11+
 - Apache Commons Logging
 - JPA
 - Spring Framework
 - Spring Data JPA
-
-The java source is Java 1.8+ so any JDK 1.8 or later will work, but the javadoc doclet and taglet require *strictly JDK 1.8.x*.
 
 ### Database configuration
 
