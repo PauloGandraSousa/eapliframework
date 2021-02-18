@@ -55,34 +55,34 @@ public class MoneyToStringTest {
     @Test
     public void oneDecimalPlace() {
         final Money instance = Money.euros(125.5);
-        final String expected = "EUR 125.50";
+        final String expected = "€\u00A0125.50";
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void threeDecimalPlace() {
         final Money instance = Money.euros(125.527);
-        final String expected = "EUR 125.53";
+        final String expected = "€\u00A0125.53";
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void onlyCents() {
-        final String expected = "EUR 0.09";
+        final String expected = "€\u00A00.09";
         final Money instance = Money.euros(0.09);
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void noDecimalPlaces() {
-        final String expected = "EUR 9.00";
+        final String expected = "€\u00A09.00";
         final Money instance = Money.euros(9);
         assertEquals(expected, instance.toString());
     }
 
     @Test
     public void bigAmount() {
-        final String expected = "EUR 999,999,999,999.53";
+        final String expected = "€\u00A0999,999,999,999.53";
         final Money instance = Money.euros(999999999999.53);
         assertEquals(expected, instance.toString());
     }
