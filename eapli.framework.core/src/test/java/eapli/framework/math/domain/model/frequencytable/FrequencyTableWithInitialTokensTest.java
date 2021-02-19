@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,13 +20,13 @@
  */
 package eapli.framework.math.domain.model.frequencytable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.math.domain.model.FrequencyTable;
 
@@ -37,7 +37,7 @@ import eapli.framework.math.domain.model.FrequencyTable;
  */
 public class FrequencyTableWithInitialTokensTest extends FrequencyTableWithInitialTokensBaseTest {
 
-    @Before
+    @BeforeEach
     public void setup() {
         subject = new FrequencyTable<>(Arrays.asList("a", "w"), false);
     }

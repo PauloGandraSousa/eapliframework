@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,10 +23,11 @@
  */
 package eapli.framework.math.domain.model.numeral;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.math.domain.model.Numeral;
 
@@ -36,49 +37,49 @@ import eapli.framework.math.domain.model.Numeral;
  */
 public class NumeralTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureBaseIsBiggerThan2() {
-        Numeral.valueOf("0", 1);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("0", 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureBaseIsSmallerThan36() {
-        Numeral.valueOf("0", 37);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("0", 37));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureValueIsNonNegative() {
-        Numeral.valueOf(-1);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(-1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureValueIsNotEmpty() {
-        Numeral.valueOf("", 8);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("", 8));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureValueIsNotNull() {
-        Numeral.valueOf(null, 8);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(null, 8));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureDecimalValueHasValidSymbols() {
-        Numeral.valueOf("123A", 10);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("123A", 10));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureBinaryValueHasValidSymbols() {
-        Numeral.valueOf("12", 2);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("12", 2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureOctalValueHasValidSymbols() {
-        Numeral.valueOf("1238", 8);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("1238", 8));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureHexaDecimalValueHasValidSymbols() {
-        Numeral.valueOf("123AG", 16);
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("123AG", 16));
     }
 
     private class TestCaseData {
