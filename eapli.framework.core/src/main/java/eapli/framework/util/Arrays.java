@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -106,7 +106,7 @@ public final class Arrays {
      *            a constructor to create the destination array with the
      *            expected number of positions
      * @param map
-     *            the mapping function from source to destination, T -> U
+     *            the mapping function from source to destination, T -&gt; U
      * @return a new array with the mapped contents
      */
     public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator,

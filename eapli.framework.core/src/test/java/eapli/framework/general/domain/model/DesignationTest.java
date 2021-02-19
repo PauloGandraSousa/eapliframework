@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,50 +23,50 @@
  */
 package eapli.framework.general.domain.model;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import eapli.framework.general.domain.model.Designation;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
+@Tag("junit5")
 public class DesignationTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureNotNull() {
-        Designation.valueOf(null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureNotEmpty() {
-        Designation.valueOf("");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(""));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureNoHeadingWhitespace() {
-        Designation.valueOf("  ABC");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureNoTrailingWhitespace() {
-        Designation.valueOf("ABC   ");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("ABC   "));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureNoHeadingNorTrailingWhitespace() {
-        Designation.valueOf("  ABC  ");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC  "));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureNoWhitespaceOnly() {
-        Designation.valueOf("    ");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("    "));
     }
 
     @Test
     public void ensureStartsWithSomething() {
-        Assert.assertNotNull(Designation.valueOf("ABC"));
+        Assertions.assertNotNull(Designation.valueOf("ABC"));
     }
 }

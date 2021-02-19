@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,11 +23,10 @@
  */
 package eapli.framework.general.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-
-import eapli.framework.general.domain.model.Money;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -92,10 +91,10 @@ public class MoneySubtractTest {
         assertEquals(expected, subject.subtract(other));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureCannotSubtractDifferentCurrencies() {
         final Money subject = Money.euros(1);
         final Money other = Money.dollars(0.5);
-        subject.subtract(other);
+        assertThrows(IllegalArgumentException.class, () -> subject.subtract(other));
     }
 }

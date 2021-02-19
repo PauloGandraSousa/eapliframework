@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,13 +23,13 @@
  */
 package eapli.framework.general.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Locale;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test cases for the toSimpleString() method of the class Money.
@@ -41,13 +41,13 @@ public class MoneyToSimpleStringTest {
 
     private static Locale oldDefault;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         oldDefault = Locale.getDefault();
         Locale.setDefault(new Locale("pt-PT"));
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
         Locale.setDefault(oldDefault);
     }
