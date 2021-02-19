@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -70,10 +70,15 @@ public class RomanNumeral implements ValueObject {
         num = arabic;
     }
 
-    /*
+    /**
      * Constructor. Creates the Roman number with the given representation. For example,
      * RomanNumeral("xvii") is 17. If the parameter is not a legal Roman numeral, a
      * NumberFormatException is thrown. Both upper and lower case letters are allowed.
+     *
+     * @param roman
+     *            a roman literal, e.g., "xvii". Both upper and lower case letters are allowed.
+     * @throws NumberFormatException
+     *             If the parameter is not a legal Roman numeral
      */
     public RomanNumeral(String roman) {
         if (roman.length() == 0) {
@@ -128,6 +133,13 @@ public class RomanNumeral implements ValueObject {
         num = arabic;
     }
 
+    /**
+     * Factory method. constructs a Roman Numeral from a string literal.
+     *
+     * @param roman
+     *            a roman literal
+     * @return a RomanNumeral object
+     */
     public static RomanNumeral valueOf(final String roman) {
         return new RomanNumeral(roman);
     }

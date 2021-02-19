@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -141,7 +141,7 @@ public final class Math {
      * @param upperIndex
      *            the upper limit of the sequence. The classic non-extended Fibonacci sequence
      *            starts at 1.
-     * @return
+     * @return a stream with the Fibonacci sequence
      */
     public static Stream<BigInteger> fibonacciSequence(final int upperIndex) {
         Preconditions.nonNegative(upperIndex, "The Fibonacci (non-extended) sequence only works for natural numbers");
