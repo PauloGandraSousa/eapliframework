@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -35,13 +35,18 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import eapli.framework.util.Utility;
+
 /**
  * A pretty formatted XML string.
  *
  * @author Paulo Gandra Sousa 13/05/2020
  *
  */
-public class PrettyXmlString implements FormattedString {
+@Utility
+public class PrettyXmlString {
+    private PrettyXmlString() {
+    }
 
     /**
      * Constructs a pretty formatted XML string from a string with unformatted XML content.
@@ -125,54 +130,5 @@ public class PrettyXmlString implements FormattedString {
                 return writer.toString();
             }
         };
-    }
-
-    //
-    // DEPRECATED
-    // in future versions of the framework this class will just have the static factory methods
-    //
-
-    private final int indent;
-    private final String input;
-
-    /**
-     * Returns a formated XML output.
-     * <p>
-     * Based in code from
-     * <a href= "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java"> stack
-     * overflow</a>
-     *
-     * @return a formated XML
-     */
-    @Override
-    public String toString() {
-        return fromString(input, indent).toString();
-    }
-
-    /**
-     * Constructs a pretty formatted string from a string with unformatted XML content.
-     *
-     * @param input
-     * @deprecated in future versions of the framework this class will just have the static factory
-     *             methods
-     */
-    @Deprecated
-    public PrettyXmlString(final String input) {
-        this.input = input;
-        indent = 2;
-    }
-
-    /**
-     * Constructs a pretty formatted string from a string with unformatted XML content.
-     *
-     * @param input
-     * @param indent
-     * @deprecated in future versions of the framework this class will just have the static factory
-     *             methods
-     */
-    @Deprecated
-    public PrettyXmlString(final String input, final int indent) {
-        this.input = input;
-        this.indent = indent;
     }
 }

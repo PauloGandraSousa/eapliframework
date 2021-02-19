@@ -42,20 +42,6 @@ public final class Arrays {
     }
 
     /**
-     * Checks whether an element is present in the array or not. This method
-     * has O(n) complexity.
-     *
-     * @param src
-     * @param elem
-     * @return {@code true} if the element is present in the array
-     * @deprecated use {@link ArrayPredicates#contains(Object[], Object)} instead
-     */
-    @Deprecated
-    public static <T> boolean contains(final T[] src, final T elem) {
-        return ArrayPredicates.contains(src, elem);
-    }
-
-    /**
      * Zips two double arrays in to one. That is, uses the {@code op} operator
      * to combine the contents of both source arrays z(i) = op(a(i), b(i))
      *

@@ -71,17 +71,6 @@ public final class NumberGenerator {
     }
 
     /**
-     * Fifty/fifty chance.
-     *
-     * @return {@code true} or {@code false} in what tends to be a 50/50 distribution
-     * @deprecated This function does not returns a number so it was moved to {@link Math#heads()}
-     */
-    @Deprecated
-    public static boolean heads() {
-        return Math.heads();
-    }
-
-    /**
      *
      * @param n
      * @return an array of random bytes

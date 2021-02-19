@@ -133,20 +133,6 @@ public class RomanNumeral implements ValueObject {
     }
 
     /**
-     * Utility method Returns a representation of a number as Roman numeral.
-     * <p>
-     * Author Paulo Gandra de Sousa
-     *
-     * @param number
-     * @return a representation of a number as Roman numeral
-     */
-    @Deprecated
-    public static String toString(final int number) {
-        final RomanNumeral roman = new RomanNumeral(number);
-        return roman.toString();
-    }
-
-    /**
      * Find the integer value of letter considered as a Roman numeral.
      *
      * @throws NumberFormatException
