@@ -140,7 +140,7 @@ public final class CsvLineMarshaler {
      * </pre>
      *
      * @param field
-     * @return
+     * @return a properly escaped CSV field with double quotes
      */
     public static String escapeQuotes(final String field) {
         return field.replace("\"", "\"\"");
