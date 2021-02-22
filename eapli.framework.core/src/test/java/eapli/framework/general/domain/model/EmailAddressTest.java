@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,10 +23,8 @@
  */
 package eapli.framework.general.domain.model;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import eapli.framework.general.domain.model.EmailAddress;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra Sousa
@@ -36,31 +34,31 @@ public class EmailAddressTest {
 
     @Test
     public void testEmailAddress() {
-        Assert.assertNotNull(new EmailAddress("geral@acme.com"));
+        Assertions.assertNotNull(new EmailAddress("geral@acme.com"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureEmailAddressHasAt() {
-        new EmailAddress("geralATacme.com");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geralATacme.com"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureEmailAddressHasHostAndDomain() {
-        new EmailAddress("geral@acme");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geral@acme"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureEmailAddressHasName() {
-        new EmailAddress("@acme.com");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("@acme.com"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureEmailAddressIsNotNull() {
-        new EmailAddress(null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureEmailAddressIsNotEmpty() {
-        new EmailAddress("");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(""));
     }
 }

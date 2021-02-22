@@ -122,7 +122,7 @@ public class MathIsPrimeTest {
     @Test
     public void ensureNoPrimeUpTo998() {
         final IntStream notPrimes = IntStream.range(2, 998)
-                .filter(i -> Arrays.binarySearch(first168Primes, new Integer(i)) < 0);
+                .filter(i -> Arrays.binarySearch(first168Primes, Integer.valueOf(i)) < 0);
         assertTrue(notPrimes.noneMatch(MathFunctions::isPrime));
     }
 

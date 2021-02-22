@@ -144,7 +144,7 @@ public class EitherTest {
         final Either<String, Integer> subject = rightSubject();
 
         subject.consume(stringLength, intValue);
-        assertEquals(TESTING_INT, new Integer(helper.i));
+        assertEquals(TESTING_INT, Integer.valueOf(helper.i));
     }
 
     @Test
@@ -173,7 +173,7 @@ public class EitherTest {
         final Either<String, Integer> subject = rightSubject();
 
         subject.map(stringLengthOp, intValueOp);
-        assertEquals(TESTING_INT, new Integer(helper.i));
+        assertEquals(TESTING_INT, Integer.valueOf(helper.i));
     }
 
     @Test

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,14 +23,15 @@
  */
 package eapli.framework.math.domain.model.numeral;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.math.domain.model.Numeral;
 
@@ -76,9 +77,9 @@ public abstract class NumeralTestBase {
         return x.matches(pattern);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureInvalidNumeralIsNotAccepted() {
         final String subject = "12=F";
-        Numeral.valueOf(subject, getBase());
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(subject, getBase()));
     }
 }

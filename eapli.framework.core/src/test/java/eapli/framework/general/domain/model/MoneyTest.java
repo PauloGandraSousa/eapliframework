@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,14 +23,12 @@
  */
 package eapli.framework.general.domain.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.Currency;
 
-import org.junit.Test;
-
-import eapli.framework.general.domain.model.Money;
+import org.junit.jupiter.api.Test;
 
 /**
  *

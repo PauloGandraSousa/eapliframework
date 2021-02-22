@@ -1,6 +1,29 @@
 # EAPLI Framework Changelog
 
-## OPEN-SNAPSHOT
+
+## 15.0.0-SNAPSHOT
+
+### What's new
+
+- TBD
+
+### Changed
+
+- Class `PrettyXmlString` is now a pure utility class
+- Removed class:
+	- `eapli.framework.util.Console`. Use `eapli.framework.io.util.Console` instead
+	- `eapli.framework.util.Files`. Use `eapli.framework.io.util.Files` instead
+	- `eapli.framework.util.StringFormatter`. See `eapli.framework.strings.FormattedString`
+- Removed deprecated methods:
+    - `RomanNumeral.toString(int)`
+    - `NumberGenerator.heads`
+    - `PrettyXmlString.PrettyXmlString(String)`
+    - `PrettyXmlString.PrettyXmlString(String, int)`
+    - `PrettyXmlString.toString()`
+    - `Arrays.contains(T[], T)`
+
+
+## 14.0.0
 
 ### What's new
 
@@ -8,7 +31,8 @@
 
 ### Changed
 
-- TBD
+- Use Java 11
+
 
 ## 13.5.0
 

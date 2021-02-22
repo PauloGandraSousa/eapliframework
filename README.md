@@ -1,12 +1,10 @@
 # EAPLI Framework
 
-Version: **13.5**
-
 ## What is this repository for?
 
 Application Framework for teaching Domain Driven Design and JPA Persistence in 
-the course unit "Engenharia de AplicaÃ§Ãµes" (Software Application Engeneering) of 
-the course "Licenciatura em Engenharia InformÃ¡tica" (Informatics Engineering) of 
+the course unit "Engenharia de Aplicações" (Software Application Engineering) of 
+the course "Licenciatura em Engenharia Informática" (Informatics Engineering) of 
 the [Instituto Superior de Engenharia do Porto](http://www.isep.ipp.pt).
 
 Feel free to fork and pull-request.
@@ -22,7 +20,7 @@ Paulo Gandra de Sousa [pag@isep.ipp.pt](emailto:pag@isep.ipp.pt) / [pagsousa@gma
 
 ## License and copyright
 
-Copyright (c) 2013-2020 the original author or authors.
+Copyright (c) 2013-2021 the original author or authors.
 
 MIT License
 
@@ -82,7 +80,6 @@ Start by reading the technical description available in the [documentation folde
 Most top level packages have UML diagrams to provide more context of classes 
 in that package. Diagrams were created using [PlantUML](http://plantuml.com/) with the UMLDocLet and the PlantUML Taglet.
 
-When running maven the javadoc generation will be executed and the diagrams will be generated. In order to generate the javadoc and UML diagrams the JDK version must be *strictly 1.8*.
 
 ### Configuration
 
@@ -93,13 +90,11 @@ t.b.d.
 All compile, test and runtime dependencies are managed thru maven. Main 
 dependencies include:
 
-- JDK 1.8+
+- JDK 11+
 - Apache Commons Logging
 - JPA
 - Spring Framework
 - Spring Data JPA
-
-The java source is Java 1.8+ so any JDK 1.8 or later will work, but the javadoc doclet and taglet require *strictly JDK 1.8.x*.
 
 ### Database configuration
 

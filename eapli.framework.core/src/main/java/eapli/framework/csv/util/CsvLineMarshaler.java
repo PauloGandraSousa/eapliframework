@@ -47,18 +47,18 @@ public final class CsvLineMarshaler {
      *
      * The comma is not removed from the token.
      */
-    private static final String CSV_OREILLY = "(,|\\\r?\\\n|^)([^\",\\\r\\\n]+|\"(?:[^\"]|\"\")*\")?";
+    // "(,|\\\r?\\\n|^)([^\",\\\r\\\n]+|\"(?:[^\"]|\"\")*\")?"
 
     /**
      * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1197">RegExLib.com 1197</a>
      *
      */
-    private static final String CSV_LIB_1197 = "((?:[^\",]|(?:\"(?:\\{2}|\\\"|[^\"])*?\"))*)";
+    // "((?:[^\",]|(?:\"(?:\\{2}|\\\"|[^\"])*?\"))*)"
 
     /**
      * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1106">RegExLib.com 1106</a>
      */
-    private static final String CSV_LIB_1106 = "(?<=,)\\s*(?=,)|^(?=,)|[^\\\"]{2,}(?=\\\")|([^,\\\"]+(?=,|$))";
+    // "(?<=,)\\s*(?=,)|^(?=,)|[^\\\"]{2,}(?=\\\")|([^,\\\"]+(?=,|$))"
 
     /**
      * Based on the regex from
@@ -66,11 +66,6 @@ public final class CsvLineMarshaler {
      *
      * added the handling of whitespace after comma.
      * <p>
-     *
-     * <pre>
-     * (\,<span style=
-    "border-style:dotted;border-width:2px;border-color:red;background-color:#AFEEEE"> *</span>|\n|^)(?:"([^"]*(?:""[^"]*)*)"|([^"\,\n]*))
-     * </pre>
      */
     private static final String CSV_REGEX_TESTER = "(\\, *|\\n|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\"\\,\\n]*))";
 
@@ -145,7 +140,7 @@ public final class CsvLineMarshaler {
      * </pre>
      *
      * @param field
-     * @return
+     * @return a properly escaped CSV field with double quotes
      */
     public static String escapeQuotes(final String field) {
         return field.replace("\"", "\"\"");

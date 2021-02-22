@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,11 +23,10 @@
  */
 package eapli.framework.general.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-
-import eapli.framework.general.domain.model.Money;
+import org.junit.jupiter.api.Test;
 
 /**
  * test cases for the valueOf() method of the Money class
@@ -77,33 +76,33 @@ public class MoneyValueOfTest {
         assertEquals(expected, instance);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureStringWithInvalidAmountIsInvalid() {
         final String test = "2X9 EUR";
-        Money.valueOf(test);
+        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureStringWithInvalidCurrencyCodeIsInvalid() {
         final String test = "29 AAA";
-        Money.valueOf(test);
+        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureStringWithoutSpacesIsInvalid() {
         final String test = "9EUR";
-        Money.valueOf(test);
+        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureStringWithJustDigitsIsInvalid() {
         final String test = "9.4";
-        Money.valueOf(test);
+        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureStringWithJustCurrencyIsInvalid() {
         final String test = "USD";
-        Money.valueOf(test);
+        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
     }
 }

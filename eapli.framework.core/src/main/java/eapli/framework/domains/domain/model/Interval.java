@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -447,13 +447,13 @@ public class Interval<T extends Serializable & Comparable<T>>
      * start of the other interval.
      *
      * <pre>
-     * [4, 7] < [5, 7]
-     * [4, 7] < ]5, 7]
-     * ]4, 7] < [5, 7]
-     * ]4, 7] < ]5, 7]
-     * ]-oo, 5] < [-100, 5[
-     * ]-oo, 5] < ]-100, 5[
-     * ]-oo, +oo[ < [3, +oo[
+     * [4, 7] &lt; [5, 7]
+     * [4, 7] &lt; ]5, 7]
+     * ]4, 7] &lt; [5, 7]
+     * ]4, 7] &lt; ]5, 7]
+     * ]-oo, 5] &lt; [-100, 5[
+     * ]-oo, 5] &lt; ]-100, 5[
+     * ]-oo, +oo[ &lt; [3, +oo[
      * </pre>
      *
      * <p>
@@ -461,9 +461,9 @@ public class Interval<T extends Serializable & Comparable<T>>
      * closed ones.
      *
      * <pre>
-     * [4, 10] < ]4, 7]
-     * [4, 10] < ]4, 10]
-     * [4, 10] < ]4, 50]
+     * [4, 10] &lt; ]4, 7]
+     * [4, 10] &lt; ]4, 10]
+     * [4, 10] &lt; ]4, 50]
      * </pre>
      *
      * <p>
@@ -472,13 +472,13 @@ public class Interval<T extends Serializable & Comparable<T>>
      * endpoint is the same, open intervals will be before closed ones.
      *
      * <pre>
-     * [4, 7] < [4, 10]
-     * ]4, 7] < ]4, 10]
-     * ]-oo, 1] < ]-oo, 4[
-     * ]-oo, 5] < ]-oo, +oo[
+     * [4, 7] &lt; [4, 10]
+     * ]4, 7] &lt; ]4, 10]
+     * ]-oo, 1] &lt; ]-oo, 4[
+     * ]-oo, 5] &lt; ]-oo, +oo[
      *
-     * ]-oo, 4[ < ]-oo, 4]
-     * [4, 10[ < [4, 10]
+     * ]-oo, 4[ &lt; ]-oo, 4]
+     * [4, 10[ &lt; [4, 10]
      * </pre>
      *
      * <p>
@@ -489,7 +489,7 @@ public class Interval<T extends Serializable & Comparable<T>>
      * The empty interval, i.e., [], is always first to any other interval.
      *
      * <pre>
-     * [] < X, for any X != []
+     * [] &lt; X, for any X != []
      * </pre>
      *
      * @return -1 if this object is naturally before the other, 1 if this object is

@@ -194,9 +194,11 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
     }
 
     /**
+     * Gets the entity with the specified business identity.
      *
      * @param id
-     * @return
+     *            the business identity to look for
+     * @return the entity with the specified identity.
      */
     public Optional<T> ofIdentity(final I id) {
         return this.repo.ofIdentity(id);

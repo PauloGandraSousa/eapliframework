@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -39,20 +39,6 @@ public final class Arrays {
 
     private Arrays() {
         // ensure no instantiation as this is a utility class
-    }
-
-    /**
-     * Checks whether an element is present in the array or not. This method
-     * has O(n) complexity.
-     *
-     * @param src
-     * @param elem
-     * @return {@code true} if the element is present in the array
-     * @deprecated use {@link ArrayPredicates#contains(Object[], Object)} instead
-     */
-    @Deprecated
-    public static <T> boolean contains(final T[] src, final T elem) {
-        return ArrayPredicates.contains(src, elem);
     }
 
     /**
@@ -106,7 +92,7 @@ public final class Arrays {
      *            a constructor to create the destination array with the
      *            expected number of positions
      * @param map
-     *            the mapping function from source to destination, T -> U
+     *            the mapping function from source to destination, T -&gt; U
      * @return a new array with the mapped contents
      */
     public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator,
