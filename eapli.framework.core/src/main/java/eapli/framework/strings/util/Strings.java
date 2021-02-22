@@ -225,7 +225,7 @@ public final class Strings {
      *
      * @param input
      * @param regexPattern
-     * @return
+     * @return a list of all matches of the regular expression
      */
     public static List<String> matchResults(final String input, final String regexPattern) {
         final Pattern pattern = Pattern.compile(regexPattern);
@@ -263,10 +263,22 @@ public final class Strings {
      * assert (tokens.length == 1);
      * </pre>
      *
+     * <p>
+     * Otherwise, it will split the input along the separator token
+     *
+     * <pre>
+     * String[] tokens = Strings.split("abc, def, ghi", ",");
+     * assert (tokens.length == 3);
+     * assert (tokens[0].equals("abc"));
+     * assert (tokens[1].equals("def"));
+     * assert (tokens[2].equals("ghi"));
+     * </pre>
+     *
      * @param src
      * @param delimiter
      *            the delimiting regular expression
-     * @return
+     * @return the array of strings computed from splitting the source string and removing empty
+     *         elements
      */
     public static String[] split(final String src, final String delimiter) {
         return Arrays.stream(src.split(delimiter)).map(String::trim).toArray(i -> new String[i]);

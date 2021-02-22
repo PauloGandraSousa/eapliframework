@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -48,7 +48,6 @@ public class CsvRecord {
      * Builds a CSV record where all fields (no matter what data type) are quoted.
      *
      * @param fields
-     * @return
      */
     public CsvRecord(final Object[] fields) {
         if (fields.length == 0) {
@@ -65,40 +64,6 @@ public class CsvRecord {
         }
         sb.deleteCharAt(sb.length() - 1);
         record = sb.toString();
-    }
-
-    /**
-     * Prepares a quoted string to be represented as a properly escaped CSV field with double
-     * quotes.
-     *
-     * <pre>
-     * The girl said "hello"
-     * </pre>
-     *
-     * is transformed to:
-     *
-     * <pre>
-     * The girl said ""hello""
-     * </pre>
-     *
-     * @param field
-     * @return
-     */
-    private String escapeQuotes(final String field) {
-        return field.replace("\"", "\"\"");
-    }
-
-    /**
-     * Adds quotes around a field content.
-     *
-     * @param field
-     * @return
-     */
-    private String quote(final String field) {
-        if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
-            return field;
-        }
-        return "\"" + field + "\"";
     }
 
     /**
@@ -180,6 +145,40 @@ public class CsvRecord {
         result.add(curVal.toString().trim());
 
         fields = result;
+    }
+
+    /**
+     * Prepares a quoted string to be represented as a properly escaped CSV field with double
+     * quotes.
+     *
+     * <pre>
+     * The girl said "hello"
+     * </pre>
+     *
+     * is transformed to:
+     *
+     * <pre>
+     * The girl said ""hello""
+     * </pre>
+     *
+     * @param field
+     * @return
+     */
+    private String escapeQuotes(final String field) {
+        return field.replace("\"", "\"\"");
+    }
+
+    /**
+     * Adds quotes around a field content.
+     *
+     * @param field
+     * @return
+     */
+    private String quote(final String field) {
+        if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
+            return field;
+        }
+        return "\"" + field + "\"";
     }
 
     /**
