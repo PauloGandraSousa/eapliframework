@@ -221,11 +221,11 @@ public final class Strings {
     }
 
     /**
-     * Get all matches of regular expression.
+     * Get all matches of a regular expression.
      *
      * @param input
      * @param regexPattern
-     * @return
+     * @return all matches of the regular expression
      */
     public static List<String> matchResults(final String input, final String regexPattern) {
         final Pattern pattern = Pattern.compile(regexPattern);
@@ -266,7 +266,7 @@ public final class Strings {
      * @param src
      * @param delimiter
      *            the delimiting regular expression
-     * @return
+     * @return the tokens after splitting the source string around the delimiter
      */
     public static String[] split(final String src, final String delimiter) {
         return Arrays.stream(src.split(delimiter)).map(String::trim).toArray(i -> new String[i]);

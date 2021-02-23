@@ -161,17 +161,23 @@ public final class CsvLineMarshaler {
      *
      *
      * @param field
-     * @return
+     * @return unquoted content
      */
     public static String unescapeQuotes(final String field) {
         return field.replace("\"\"", "\"");
     }
 
     /**
-     * Adds quotes around a field content.
+     * Adds quotes around a field content if is currently not quoted.
+     *
+     * <pre>
+     * "abc" -&gt; "abc"
+     *
+     * abc -&gt; "abc"
+     * </pre>
      *
      * @param field
-     * @return
+     * @return quoted content
      */
     public static String quote(final String field) {
         if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
@@ -181,11 +187,20 @@ public final class CsvLineMarshaler {
     }
 
     /**
-     * Removes the quotes around a field content. Note that this function assumes the field is
-     * properly quoted.
+     * Removes the quotes around a field content if it is quoted.
+     *
+     * <pre>
+     * "abc" -&gt; abc
+     *
+     * "abc -&gt; "abc
+     *
+     * abc" -&gt; abc"
+     *
+     * abc -&gt; abc
+     * </pre>
      *
      * @param field
-     * @return
+     * @return unquoted content
      */
     public static String unquote(final String field) {
         if (field.isEmpty() || (field.charAt(0) != '"' && field.charAt(field.length() - 1) != '"')) {
@@ -198,7 +213,7 @@ public final class CsvLineMarshaler {
      * Builds a CSV record where all fields (no matter what data type) are quoted.
      *
      * @param fields
-     * @return
+     * @return a CSV-formatted string
      */
     public static String marshal(final Object[] fields) {
         if (fields.length == 0) {
@@ -222,7 +237,7 @@ public final class CsvLineMarshaler {
      * Parse a CSV line with comma separator and double quotes.
      *
      * @param cvsLine
-     * @return
+     * @return a list where the elements are each independent CSV field
      * @throws ParseException
      */
     public static List<String> parse(final String cvsLine) throws ParseException {
@@ -234,7 +249,7 @@ public final class CsvLineMarshaler {
      *
      * @param cvsLine
      * @param separators
-     * @return
+     * @return a list where the elements are each independent CSV field
      * @throws ParseException
      */
     public static List<String> parse(final String cvsLine, final char separators) throws ParseException {
@@ -251,7 +266,7 @@ public final class CsvLineMarshaler {
      * @param cvsLine
      * @param separators
      * @param customQuote
-     * @return
+     * @return a list where the elements are each independent CSV field
      * @throws ParseException
      */
     public static List<String> parse(final String cvsLine, final char separators, final char customQuote)
