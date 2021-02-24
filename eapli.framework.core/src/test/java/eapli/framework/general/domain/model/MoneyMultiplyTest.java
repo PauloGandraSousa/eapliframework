@@ -25,35 +25,21 @@ package eapli.framework.general.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class MoneyMultiplyTest {
 
-    @Test
-    public void ensureMultiplyBy0() {
+    @ParameterizedTest
+    @CsvSource({
+            "0, 0",
+            "1, 10",
+            "0.5, 5",
+            "12, 120"
+    })
+    public void ensureMultiplyBy(final double m, final double r) {
         final Money subject = Money.euros(10);
-        final Money expected = Money.euros(0);
-        assertEquals(expected, subject.multiply(0));
-    }
-
-    @Test
-    public void ensureMultiplyBy1() {
-        final Money subject = Money.euros(10);
-        final Money expected = Money.euros(10);
-        assertEquals(expected, subject.multiply(1));
-    }
-
-    @Test
-    public void ensureMultiplyByHalf() {
-        final Money subject = Money.euros(10);
-        final Money expected = Money.euros(5);
-        assertEquals(expected, subject.multiply(0.5));
-    }
-
-    @Test
-    public void ensureMultiplyBy12() {
-        final Money subject = Money.euros(10);
-        final Money expected = Money.euros(120);
-        assertEquals(expected, subject.multiply(12));
+        final Money expected = Money.euros(r);
+        assertEquals(expected, subject.multiply(m));
     }
 }

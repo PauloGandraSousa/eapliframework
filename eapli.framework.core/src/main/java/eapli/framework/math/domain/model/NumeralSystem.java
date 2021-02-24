@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,6 +20,8 @@
  */
 package eapli.framework.math.domain.model;
 
+import java.io.Serializable;
+
 /**
  * A Numeral System to encode numeric values.
  *
@@ -27,7 +29,7 @@ package eapli.framework.math.domain.model;
  *
  */
 @FunctionalInterface
-public interface NumeralSystem {
+public interface NumeralSystem extends Serializable {
     /**
      * Returns the symbols to be used as representation of the number. the
      * length of this string of symbols determines the base of the numeral

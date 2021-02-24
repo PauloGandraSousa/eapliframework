@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -27,8 +27,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
-import eapli.framework.strings.util.StringPredicates;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  *
@@ -64,31 +64,14 @@ public class StringPredicatesTest {
         assertFalse(StringPredicates.isNullOrEmpty(text));
     }
 
-    @Test
-    public void testContainsDigitSingleChar() {
-        System.out.println("ContainsDigit single char");
-        final String text = "1";
-        assertTrue(StringPredicates.containsDigit(text));
-    }
-
-    @Test
-    public void testContainsDigitInTheMiddle() {
-        System.out.println("ContainsDigit in the middle");
-        final String text = "ab1cd";
-        assertTrue(StringPredicates.containsDigit(text));
-    }
-
-    @Test
-    public void testContainsDigitInTheBegining() {
-        System.out.println("ContainsDigit in the begining");
-        final String text = "1cd";
-        assertTrue(StringPredicates.containsDigit(text));
-    }
-
-    @Test
-    public void testContainsDigitInTheEnd() {
-        System.out.println("ContainsDigit in the end");
-        final String text = "ad1";
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "1",
+            "ab1cd",
+            "1cd",
+            "ad1"
+    })
+    public void testContainsDigit(final String text) {
         assertTrue(StringPredicates.containsDigit(text));
     }
 

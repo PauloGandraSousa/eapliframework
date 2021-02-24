@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -63,7 +63,7 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
      *            a function that maps an Entity to its key
      */
     @SuppressWarnings("unchecked")
-    public InMemoryRepository(final Function<? super T, ? extends K> identityGenerator) {
+    protected InMemoryRepository(final Function<? super T, ? extends K> identityGenerator) {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
                 .getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
@@ -80,7 +80,7 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
 
     @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "squid:S2209", "java:S3740" })
     protected Map<K, T> data() {
-        return (Map<K, T>) this.DATA.computeIfAbsent(this.entityClass, (k) -> new ConcurrentHashMap());
+        return (Map<K, T>) this.DATA.computeIfAbsent(this.entityClass, k -> new ConcurrentHashMap());
     }
 
     @Override
