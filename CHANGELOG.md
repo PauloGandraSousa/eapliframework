@@ -1,11 +1,22 @@
 # EAPLI Framework Changelog
 
 
-## 15.0.0-SNAPSHOT
+## 15.1.0-SNAPSHOT
 
 ### What's new
 
 - TBD
+
+### Changed
+
+- TBD
+
+
+## 15.0.0
+
+### What's new
+
+- n.a
 
 ### Changed
 
