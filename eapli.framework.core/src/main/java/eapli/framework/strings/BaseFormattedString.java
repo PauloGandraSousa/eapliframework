@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -21,7 +21,8 @@
 package eapli.framework.strings;
 
 /**
- * Base behavior for a formatted string. Acts a holder of the original string to format. This class is immutable.
+ * Base behavior for a formatted string. Acts a holder of the original string to format. This class
+ * is immutable.
  *
  * @author Paulo Gandra Sousa 13/05/2020
  *
@@ -30,7 +31,7 @@ public abstract class BaseFormattedString implements FormattedString {
 
     private final String input;
 
-    public BaseFormattedString(final String input) {
+    protected BaseFormattedString(final String input) {
         this.input = input;
     }
 

@@ -221,11 +221,11 @@ public final class Strings {
     }
 
     /**
-     * Get all matches of regular expression.
+     * Get all matches of a regular expression.
      *
      * @param input
      * @param regexPattern
-     * @return a list of all matches of the regular expression
+     * @return all matches of the regular expression
      */
     public static List<String> matchResults(final String input, final String regexPattern) {
         final Pattern pattern = Pattern.compile(regexPattern);

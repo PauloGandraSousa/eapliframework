@@ -109,7 +109,8 @@ public final class Console {
     }
 
     /**
-     * Reads input from the console as an integer value.
+     * Reads input from the console as an integer value. Will keep asking for input if the user
+     * enters invalid input, i.e., input that cannot be parsed.
      *
      * @param prompt
      * @return the integer that was read
@@ -126,7 +127,8 @@ public final class Console {
     }
 
     /**
-     * Reads input from the console as a long value.
+     * Reads input from the console as a long value. Will keep asking for input if the user
+     * enters invalid input, i.e., input that cannot be parsed.
      *
      * @param prompt
      * @return the long that was read
@@ -143,7 +145,8 @@ public final class Console {
     }
 
     /**
-     * Reads input from the console as a boolean (Y, S, N).
+     * Reads input from the console as a boolean (Y, S, N). Will keep asking for input if the user
+     * enters invalid input, i.e., input that cannot be parsed.
      *
      * @param prompt
      * @return the boolean that was read
@@ -213,7 +216,8 @@ public final class Console {
     }
 
     /**
-     * Reads a date from the console.
+     * Reads a date from the console. Will keep asking for input if the user
+     * enters invalid input, i.e., input that cannot be parsed.
      *
      * @param prompt
      * @return the date that was read
@@ -223,7 +227,8 @@ public final class Console {
     }
 
     /**
-     * Reads a date from the console.
+     * Reads a date from the console. Will keep asking for input if the user
+     * enters invalid input, i.e., input that cannot be parsed.
      *
      * @param prompt
      * @param dateFormat
@@ -242,7 +247,8 @@ public final class Console {
     }
 
     /**
-     * Reads a double form the console.
+     * Reads a double form the console. Will keep asking for input if the user
+     * enters invalid input, i.e., input that cannot be parsed.
      *
      * @param prompt
      * @return the double that was read

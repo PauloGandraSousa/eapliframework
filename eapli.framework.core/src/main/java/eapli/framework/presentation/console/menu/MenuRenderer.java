@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -38,7 +38,7 @@ public abstract class MenuRenderer {
     protected final Menu menu;
     protected final MenuItemRenderer itemRenderer;
 
-    public MenuRenderer(final Menu menu, final MenuItemRenderer itemRenderer) {
+    protected MenuRenderer(final Menu menu, final MenuItemRenderer itemRenderer) {
         Preconditions.nonNull(menu);
 
         this.menu = menu;

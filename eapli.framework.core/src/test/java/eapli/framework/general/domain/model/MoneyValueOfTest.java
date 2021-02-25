@@ -26,7 +26,9 @@ package eapli.framework.general.domain.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * test cases for the valueOf() method of the Money class
@@ -36,73 +38,29 @@ import org.junit.jupiter.api.Test;
  */
 public class MoneyValueOfTest {
 
-    @Test
-    public void properStringWithCents() {
-        final String test = "125.50 EUR";
+    @ParameterizedTest
+    @CsvSource({
+            "125.50 EUR, 125.5",
+            "125.527 EUR, 125.53",
+            "0.09 EUR, 0.09",
+            "9 EUR, 9",
+            "999999999999.50 EUR, 999999999999.50"
+    })
+    public void properString(final String test, final double e) {
         final Money instance = Money.valueOf(test);
-        final Money expected = Money.euros(125.5);
+        final Money expected = Money.euros(e);
         assertEquals(expected, instance);
     }
 
-    @Test
-    public void properStringWith3DigitCents() {
-        final String test = "125.527 EUR";
-        final Money instance = Money.valueOf(test);
-        final Money expected = Money.euros(125.53);
-        assertEquals(expected, instance);
-    }
-
-    @Test
-    public void properStringWithJustCents() {
-        final String test = "0.09 EUR";
-        final Money instance = Money.valueOf(test);
-        final Money expected = Money.euros(0.09);
-        assertEquals(expected, instance);
-    }
-
-    @Test
-    public void properStringWithoutCents() {
-        final String test = "9 EUR";
-        final Money instance = Money.valueOf(test);
-        final Money expected = Money.euros(9);
-        assertEquals(expected, instance);
-    }
-
-    @Test
-    public void properStringWithBigAmount() {
-        final String test = "999999999999.50 EUR";
-        final Money instance = Money.valueOf(test);
-        final Money expected = Money.euros(999999999999.50);
-        assertEquals(expected, instance);
-    }
-
-    @Test
-    public void ensureStringWithInvalidAmountIsInvalid() {
-        final String test = "2X9 EUR";
-        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
-    }
-
-    @Test
-    public void ensureStringWithInvalidCurrencyCodeIsInvalid() {
-        final String test = "29 AAA";
-        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
-    }
-
-    @Test
-    public void ensureStringWithoutSpacesIsInvalid() {
-        final String test = "9EUR";
-        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
-    }
-
-    @Test
-    public void ensureStringWithJustDigitsIsInvalid() {
-        final String test = "9.4";
-        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
-    }
-
-    @Test
-    public void ensureStringWithJustCurrencyIsInvalid() {
-        final String test = "USD";
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "2X9 EUR", // invalid amount
+            "29 AAA", // invalid currency
+            "9EUR", // no spaces
+            "9.4", // no currency
+            "USD" // no amount
+    })
+    public void ensureInvalidStringThrows(final String test) {
         assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
     }
 }

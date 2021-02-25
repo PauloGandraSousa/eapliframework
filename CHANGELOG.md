@@ -21,6 +21,7 @@
     - `PrettyXmlString.PrettyXmlString(String, int)`
     - `PrettyXmlString.toString()`
     - `Arrays.contains(T[], T)`
+- fix handling of null values for Money constructor when reconstructing from the DB and there are no records in the table
 
 
 ## 14.0.0

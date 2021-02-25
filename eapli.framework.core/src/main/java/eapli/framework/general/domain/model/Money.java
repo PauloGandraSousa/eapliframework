@@ -152,7 +152,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * @param currency
      */
     public Money(final BigInteger amount, final String currency) {
-        this.amount = amount;
+        this.amount = amount == null ? BigInteger.ZERO : amount;
         this.currency = Currency.getInstance(currency);
     }
 

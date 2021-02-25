@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -43,11 +43,11 @@ public abstract class DomainEventBase implements DomainEvent {
     @Temporal(TemporalType.TIMESTAMP)
     private final Calendar registeredAt;
 
-    public DomainEventBase() {
+    protected DomainEventBase() {
         occuredAt = registeredAt = Calendars.now();
     }
 
-    public DomainEventBase(final Calendar occuredAt) {
+    protected DomainEventBase(final Calendar occuredAt) {
         Preconditions.nonNull(occuredAt);
 
         this.occuredAt = occuredAt;

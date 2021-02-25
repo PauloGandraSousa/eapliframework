@@ -27,7 +27,7 @@ import eapli.framework.domain.model.ValueObject;
  * between 1 and 3999. It can be constructed either from an integer or from a string that represents
  * a Roman numeral in this range. The function {@link #toString()} will return a standardized Roman
  * numeral representation of the number. The function {@link #toInt()} will return the number as a
- * value of type int.
+ * value of type {@code int}.
  *
  * <p>
  * This code is based on <a href=
@@ -42,8 +42,7 @@ public class RomanNumeral implements ValueObject {
 
     /*
      * The following arrays are used by the toString() function to construct the standard Roman
-     * numeral
-     * representation of the number. For each i, the number numbers[i] is represented by the
+     * numeral representation of the number. For each i, the number numbers[i] is represented by the
      * corresponding string, letters[i].
      */
     private static int[] numbers = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };

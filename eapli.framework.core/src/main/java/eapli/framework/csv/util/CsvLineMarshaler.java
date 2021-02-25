@@ -161,7 +161,7 @@ public final class CsvLineMarshaler {
      *
      *
      * @param field
-     * @return
+     * @return unquoted content
      */
     public static String unescapeQuotes(final String field) {
         return field.replace("\"\"", "\"");
@@ -170,8 +170,14 @@ public final class CsvLineMarshaler {
     /**
      * Adds quotes around a field content if the field is not yet quoted.
      *
+     * <pre>
+     * "abc" -&gt; "abc"
+     *
+     * abc -&gt; "abc"
+     * </pre>
+     *
      * @param field
-     * @return
+     * @return quoted content
      */
     public static String quote(final String field) {
         if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
@@ -183,8 +189,18 @@ public final class CsvLineMarshaler {
     /**
      * Removes the quotes around a field content.
      *
+     * <pre>
+     * "abc" -&gt; abc
+     *
+     * "abc -&gt; "abc
+     *
+     * abc" -&gt; abc"
+     *
+     * abc -&gt; abc
+     * </pre>
+     *
      * @param field
-     * @return
+     * @return unquoted content
      */
     public static String unquote(final String field) {
         if (field.isEmpty() || (field.charAt(0) != '"' && field.charAt(field.length() - 1) != '"')) {
@@ -197,7 +213,7 @@ public final class CsvLineMarshaler {
      * Builds a CSV record where all fields (no matter what data type) are quoted.
      *
      * @param fields
-     * @return
+     * @return a CSV-formatted string
      * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(Object[])}
      */
     @Deprecated
@@ -223,7 +239,7 @@ public final class CsvLineMarshaler {
      * Parse a CSV line with comma separator and double quotes.
      *
      * @param cvsLine
-     * @return
+     * @return a list where the elements are each independent CSV field
      * @throws ParseException
      * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String)}
      */
@@ -237,7 +253,7 @@ public final class CsvLineMarshaler {
      *
      * @param cvsLine
      * @param separators
-     * @return
+     * @return a list where the elements are each independent CSV field
      * @throws ParseException
      * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String, char)}
      */
@@ -256,7 +272,7 @@ public final class CsvLineMarshaler {
      * @param cvsLine
      * @param separators
      * @param customQuote
-     * @return
+     * @return a list where the elements are each independent CSV field
      * @throws ParseException
      * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String, char, char)}
      */

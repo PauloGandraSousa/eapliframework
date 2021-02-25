@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -22,6 +22,7 @@ package eapli.framework.infrastructure.authz.domain.model;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
@@ -54,11 +55,11 @@ public class RandomRawPasswordTest {
         ensureLength(24);
     }
 
-    private void ensureLength(final int N) {
-        final RandomRawPassword rrp = new RandomRawPassword(N);
+    private void ensureLength(final int n) {
+        final RandomRawPassword rrp = new RandomRawPassword(n);
 
         assertNotNull(rrp.toString());
-        assertTrue(rrp.toString().length() == N);
+        assertEquals(rrp.toString().length(), n);
     }
 
     @Test

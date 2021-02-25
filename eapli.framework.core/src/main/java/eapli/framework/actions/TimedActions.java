@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -96,7 +96,7 @@ public final class TimedActions {
         }
     }
 
-    private static final Timer timer = new Timer();
+    private static final Timer TIMER = new Timer();
 
     /**
      * Runs a periodic task each <em>interval</em> milliseconds. The first execution
@@ -115,7 +115,7 @@ public final class TimedActions {
         Preconditions.isPositive(interval);
 
         LOGGER.debug("Scheduling task {} each {} milliseconds", cmd, interval);
-        timer.scheduleAtFixedRate(new RecurringTask(cmd), 0, interval);
+        TIMER.scheduleAtFixedRate(new RecurringTask(cmd), 0, interval);
     }
 
     private static ScheduledExecutorService scheduledThreadPool = Executors
@@ -154,6 +154,6 @@ public final class TimedActions {
     public static void shutdownRecurringTasks() {
         LOGGER.debug("shuting down scheduled/timer tasks");
         scheduledThreadPool.shutdownNow();
-        timer.cancel();
+        TIMER.cancel();
     }
 }

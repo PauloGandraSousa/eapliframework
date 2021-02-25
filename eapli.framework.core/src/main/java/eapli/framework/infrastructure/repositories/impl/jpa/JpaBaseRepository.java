@@ -504,7 +504,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      */
     protected Optional<T> matchOne(final String where) {
         final TypedQuery<T> q = query(where);
-        return getOptionalResult(q);
+        return getSingleResultAsOptional(q);
     }
 
     /**
@@ -521,7 +521,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     protected Optional<T> matchOne(final String whereWithParameters,
             final Map<String, Object> params) {
         final TypedQuery<T> q = query(whereWithParameters, params);
-        return getOptionalResult(q);
+        return getSingleResultAsOptional(q);
     }
 
     /**
@@ -539,7 +539,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      */
     protected Optional<T> matchOne(final String where, final Object... args) {
         final TypedQuery<T> q = query(where, args);
-        return getOptionalResult(q);
+        return getSingleResultAsOptional(q);
     }
 
     /**
@@ -560,7 +560,14 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
         return q.getResultList();
     }
 
-    private Optional<T> getOptionalResult(final TypedQuery<T> q) {
+    /**
+     * Avoid {@code NoResultException} and use Optional instead to signal that there are no results
+     * to this query.
+     *
+     * @param q
+     * @return
+     */
+    private Optional<T> getSingleResultAsOptional(final TypedQuery<T> q) {
         try {
             final T ret = q.getSingleResult();
             return Optional.of(ret);

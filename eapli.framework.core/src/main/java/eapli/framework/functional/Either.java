@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -34,7 +34,10 @@ import eapli.framework.validations.Preconditions;
  * <p>
  * Objects of this class can represent one (1) value of either {@code L} or
  * {@code R}. Useful for error handling where, by convention, the left type is
- * the correct response and the right type is the error response.
+ * the error response and the right type is the success response.
+ * The mnemonic often used in Haskell to remember/explain this "bias" is that an Either (usually
+ * used for error-checking), gives you <em>either</em> the <em>right</em> answer, or else whatever's
+ * <em>left</em>.
  * </p>
  * <p>
  * Consider using a java functional library instead, e.g.,
@@ -43,7 +46,9 @@ import eapli.framework.validations.Preconditions;
  *
  * @author Paulo Gandra de Sousa
  * @param <L>
+ *            "left" type; by convention, the error result
  * @param <R>
+ *            "right" type; by convention, the success result
  */
 public final class Either<L, R> {
 
