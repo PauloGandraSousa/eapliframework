@@ -41,8 +41,8 @@ public class CsvRecord {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
 
-    private String record;
-    private List<String> fields;
+    private final String record;
+    private final List<String> fields;
 
     /**
      * Builds a CSV record where all fields (no matter what data type) are quoted.
@@ -50,6 +50,7 @@ public class CsvRecord {
      * @param fields
      */
     public CsvRecord(final Object[] fields) {
+        this.fields = new ArrayList<>();
         if (fields.length == 0) {
             record = "";
             return;
@@ -57,10 +58,13 @@ public class CsvRecord {
 
         final StringBuilder sb = new StringBuilder();
         for (final Object f : fields) {
+            String e = "";
             if (f != null) {
-                sb.append(quote(escapeQuotes(f.toString())));
+                e = quote(escapeQuotes(f.toString()));
+                sb.append(e);
             }
             sb.append(",");
+            this.fields.add(e);
         }
         sb.deleteCharAt(sb.length() - 1);
         record = sb.toString();
@@ -107,6 +111,7 @@ public class CsvRecord {
         // if empty, return!
         if (csvLine == null || csvLine.isEmpty()) {
             fields = result;
+            record = "";
             return;
         }
 
@@ -145,6 +150,7 @@ public class CsvRecord {
         result.add(curVal.toString().trim());
 
         fields = result;
+        record = csvLine;
     }
 
     /**
