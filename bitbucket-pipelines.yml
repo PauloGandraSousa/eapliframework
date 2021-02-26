@@ -17,22 +17,12 @@ pipelines:
         caches:
           - maven
         script: 
-          - apt-get update && apt-get install -y graphviz 
-          # - dot -V
-          # - mvn -B verify # -B batch mode makes Maven less verbose
           - mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report -Dmaven.test.failure.ignore=true -Dmaven.javadoc.skip=true
           - mvn -B sonar:sonar -Dsonar.projectKey=pag_isep_eapli.framework -Dsonar.organization=pag_isep-bitbucket -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_PASS -Dmaven.javadoc.skip=true
-          # - mvn -B deploy
-          # upload artifacts to download area
-          # pub/sub
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.pubsub/target/eapli.framework.infrastructure.pubsub-1.1.0-SNAPSHOT.jar"
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.pubsub/target/eapli.framework.infrastructure.pubsub-1.1.0-SNAPSHOT-sources.jar"
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.pubsub/target/eapli.framework.infrastructure.pubsub-1.1.0-SNAPSHOT-javadoc.jar"
-          # authz
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.authz/target/eapli.framework.infrastructure.authz-8.1.0-SNAPSHOT.jar"
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.authz/target/eapli.framework.infrastructure.authz-8.1.0-SNAPSHOT-sources.jar"
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.infrastructure.authz/target/eapli.framework.infrastructure.authz-8.1.0-SNAPSHOT-javadoc.jar"
-          # core
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.core/target/eapli.framework.core-8.1.0-SNAPSHOT.jar"
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.core/target/eapli.framework.core-8.1.0-SNAPSHOT-sources.jar"
-          #- curl -v --user "$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD" -X POST "https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/eapli.framework.core/target/eapli.framework.core-8.1.0-SNAPSHOT-javadoc.jar"
+    - step:
+        trigger: manual
+        caches:
+          - maven
+        script: 
+          - apt-get update && apt-get install -y graphviz 
+          - mvn -B site
