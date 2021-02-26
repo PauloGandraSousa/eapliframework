@@ -11,6 +11,12 @@ pipelines:
         caches:
           - maven
         script: 
+          - mvn -B verify -Dmaven.test.failure.ignore=true -Dmaven.javadoc.skip=true
+    - step:
+        trigger: manual
+        caches:
+          - maven
+        script: 
           - apt-get update && apt-get install -y graphviz 
           # - dot -V
           # - mvn -B verify # -B batch mode makes Maven less verbose
