@@ -34,89 +34,89 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class MoneySignalTest {
+class MoneySignalTest {
     @Test
-    public void testNegateAPositive() {
+    void testNegateAPositive() {
         final Money subject = Money.euros(1);
         final Money expected = Money.euros(-1);
         assertEquals(expected, subject.negate());
     }
 
     @Test
-    public void testNegateANegative() {
+    void testNegateANegative() {
         final Money subject = Money.euros(-1);
         final Money expected = Money.euros(1);
         assertEquals(expected, subject.negate());
     }
 
     @Test
-    public void ensureSignumOfPositive() {
+    void ensureSignumOfPositive() {
         final Money subject = Money.euros(150);
         assertEquals(1, subject.signum());
     }
 
     @Test
-    public void ensureSignumOfNegative() {
+    void ensureSignumOfNegative() {
         final Money subject = Money.euros(-0.99);
         assertEquals(-1, subject.signum());
     }
 
     @Test
-    public void ensureSignumOfZero() {
+    void ensureSignumOfZero() {
         final Money subject = Money.euros(0);
         assertEquals(0, subject.signum());
     }
 
     @Test
-    public void ensureNegativeIsNegative() {
+    void ensureNegativeIsNegative() {
         final Money subject = Money.euros(-150);
         assertTrue(subject.isNegative());
     }
 
     @Test
-    public void ensurePositiveIsNotNegative() {
+    void ensurePositiveIsNotNegative() {
         final Money subject = Money.euros(150);
         assertFalse(subject.isNegative());
     }
 
     @Test
-    public void ensureZeroIsNotNegative() {
+    void ensureZeroIsNotNegative() {
         final Money subject = Money.euros(0);
         assertFalse(subject.isNegative());
     }
 
     @Test
-    public void ensureZeroIsNotPositive() {
+    void ensureZeroIsNotPositive() {
         final Money subject = Money.euros(0);
         assertFalse(subject.isPositive());
     }
 
     @Test
-    public void ensureNegativeIsNotPositive() {
+    void ensureNegativeIsNotPositive() {
         final Money subject = Money.euros(-150);
         assertFalse(subject.isPositive());
     }
 
     @Test
-    public void ensurePositiveIsPositive() {
+    void ensurePositiveIsPositive() {
         final Money subject = Money.euros(150);
         assertTrue(subject.isPositive());
     }
 
     @Test
-    public void ensureZeroIsZero() {
+    void ensureZeroIsZero() {
         final Money subject = Money.euros(0);
         assertTrue(subject.isZero());
     }
 
     @Test
-    public void ensureNegativeIsNotZero() {
+    void ensureNegativeIsNotZero() {
         final Money subject = Money.euros(-150);
         assertFalse(subject.isZero());
     }
 
     @Test
-    public void ensurePositiveIsNotZero() {
+    void ensurePositiveIsNotZero() {
         final Money subject = Money.euros(150);
         assertFalse(subject.isZero());
     }

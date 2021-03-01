@@ -30,35 +30,35 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra Sousa
  *
  */
-public class EmailAddressTest {
+class EmailAddressTest {
 
     @Test
-    public void testEmailAddress() {
+    void testEmailAddress() {
         Assertions.assertNotNull(new EmailAddress("geral@acme.com"));
     }
 
     @Test
-    public void ensureEmailAddressHasAt() {
+    void ensureEmailAddressHasAt() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geralATacme.com"));
     }
 
     @Test
-    public void ensureEmailAddressHasHostAndDomain() {
+    void ensureEmailAddressHasHostAndDomain() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geral@acme"));
     }
 
     @Test
-    public void ensureEmailAddressHasName() {
+    void ensureEmailAddressHasName() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("@acme.com"));
     }
 
     @Test
-    public void ensureEmailAddressIsNotNull() {
+    void ensureEmailAddressIsNotNull() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(null));
     }
 
     @Test
-    public void ensureEmailAddressIsNotEmpty() {
+    void ensureEmailAddressIsNotEmpty() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(""));
     }
 }

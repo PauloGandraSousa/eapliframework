@@ -28,7 +28,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class MoneyMultiplyTest {
+/**
+ *
+ * @author Paulo Gandra de Sousa
+ *
+ */
+class MoneyMultiplyTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -37,7 +42,7 @@ public class MoneyMultiplyTest {
             "0.5, 5",
             "12, 120"
     })
-    public void ensureMultiplyBy(final double m, final double r) {
+    void ensureMultiplyBy(final double m, final double r) {
         final Money subject = Money.euros(10);
         final Money expected = Money.euros(r);
         assertEquals(expected, subject.multiply(m));
