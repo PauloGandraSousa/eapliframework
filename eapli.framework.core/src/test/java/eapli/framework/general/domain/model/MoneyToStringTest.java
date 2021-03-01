@@ -37,51 +37,51 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra Sousa
  *
  */
-public class MoneyToStringTest {
+class MoneyToStringTest {
 
     private static Locale oldDefault;
 
     @BeforeAll
-    public static void setUpClass() {
+    static void setUpClass() {
         oldDefault = Locale.getDefault();
         Locale.setDefault(new Locale("pt-PT"));
     }
 
     @AfterAll
-    public static void tearDownClass() {
+    static void tearDownClass() {
         Locale.setDefault(oldDefault);
     }
 
     @Test
-    public void oneDecimalPlace() {
+    void oneDecimalPlace() {
         final Money instance = Money.euros(125.5);
         final String expected = "€\u00A0125.50";
         assertEquals(expected, instance.toString());
     }
 
     @Test
-    public void threeDecimalPlace() {
+    void threeDecimalPlace() {
         final Money instance = Money.euros(125.527);
         final String expected = "€\u00A0125.53";
         assertEquals(expected, instance.toString());
     }
 
     @Test
-    public void onlyCents() {
+    void onlyCents() {
         final String expected = "€\u00A00.09";
         final Money instance = Money.euros(0.09);
         assertEquals(expected, instance.toString());
     }
 
     @Test
-    public void noDecimalPlaces() {
+    void noDecimalPlaces() {
         final String expected = "€\u00A09.00";
         final Money instance = Money.euros(9);
         assertEquals(expected, instance.toString());
     }
 
     @Test
-    public void bigAmount() {
+    void bigAmount() {
         final String expected = "€\u00A0999,999,999,999.53";
         final Money instance = Money.euros(999999999999.53);
         assertEquals(expected, instance.toString());

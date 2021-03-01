@@ -33,10 +33,10 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class MoneyAddTest {
+class MoneyAddTest {
 
     @Test
-    public void ensureAdd0() {
+    void ensureAdd0() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(0);
         final Money expected = Money.euros(1);
@@ -44,7 +44,7 @@ public class MoneyAddTest {
     }
 
     @Test
-    public void ensureAdd1() {
+    void ensureAdd1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         final Money expected = Money.euros(2);
@@ -52,7 +52,7 @@ public class MoneyAddTest {
     }
 
     @Test
-    public void ensureAddCents() {
+    void ensureAddCents() {
         final Money subject = Money.euros(0.99);
         final Money other = Money.euros(0.01);
         final Money expected = Money.euros(1);
@@ -60,7 +60,7 @@ public class MoneyAddTest {
     }
 
     @Test
-    public void ensureAddCents2() {
+    void ensureAddCents2() {
         final Money subject = Money.euros(1.65);
         final Money other = Money.euros(0.40);
         final Money expected = Money.euros(2.05);
@@ -68,7 +68,7 @@ public class MoneyAddTest {
     }
 
     @Test
-    public void ensureAdd50Cents() {
+    void ensureAdd50Cents() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(0.5);
         final Money expected = Money.euros(1.5);
@@ -76,7 +76,7 @@ public class MoneyAddTest {
     }
 
     @Test
-    public void ensureAddMinus1() {
+    void ensureAddMinus1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(-1);
         final Money expected = Money.euros(0);
@@ -84,7 +84,7 @@ public class MoneyAddTest {
     }
 
     @Test
-    public void ensureAddMinus50Cents() {
+    void ensureAddMinus50Cents() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(-0.5);
         final Money expected = Money.euros(0.5);
@@ -92,7 +92,7 @@ public class MoneyAddTest {
     }
 
     @Test
-    public void ensureCannotAddDifferentCurrencies() {
+    void ensureCannotAddDifferentCurrencies() {
         final Money subject = Money.euros(1);
         final Money other = Money.dollars(0.5);
         Assertions.assertThrows(IllegalArgumentException.class, () -> subject.add(other));

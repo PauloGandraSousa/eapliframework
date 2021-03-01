@@ -34,107 +34,107 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class MoneyComparisionTest {
+class MoneyComparisionTest {
     @Test
-    public void ensure1CompareTo0() {
+    void ensure1CompareTo0() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(0);
         assertEquals(1, subject.compareTo(other));
     }
 
     @Test
-    public void ensure0CompareTo1() {
+    void ensure0CompareTo1() {
         final Money subject = Money.euros(0);
         final Money other = Money.euros(1);
         assertEquals(-1, subject.compareTo(other));
     }
 
     @Test
-    public void ensure1CompareTo1() {
+    void ensure1CompareTo1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         assertEquals(0, subject.compareTo(other));
     }
 
     @Test
-    public void ensure1GreaterThan0() {
+    void ensure1GreaterThan0() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(0);
         assertTrue(subject.isGreaterThan(other));
     }
 
     @Test
-    public void ensure1NotGreaterThan1() {
+    void ensure1NotGreaterThan1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         assertFalse(subject.isGreaterThan(other));
     }
 
     @Test
-    public void ensure0NotGreaterThan1() {
+    void ensure0NotGreaterThan1() {
         final Money subject = Money.euros(0);
         final Money other = Money.euros(1);
         assertFalse(subject.isGreaterThan(other));
     }
 
     @Test
-    public void ensure1NotLessThan0() {
+    void ensure1NotLessThan0() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(0);
         assertFalse(subject.isLessThan(other));
     }
 
     @Test
-    public void ensure1NotLessThan1() {
+    void ensure1NotLessThan1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         assertFalse(subject.isLessThan(other));
     }
 
     @Test
-    public void ensure0LessThan1() {
+    void ensure0LessThan1() {
         final Money subject = Money.euros(0);
         final Money other = Money.euros(1);
         assertTrue(subject.isLessThan(other));
     }
 
     @Test
-    public void ensure2GreaterThanOrEqualTo1() {
+    void ensure2GreaterThanOrEqualTo1() {
         final Money subject = Money.euros(2);
         final Money other = Money.euros(1);
         assertTrue(subject.isGreaterThanOrEqual(other));
     }
 
     @Test
-    public void ensure1GreaterThanOrEqualTo1() {
+    void ensure1GreaterThanOrEqualTo1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         assertTrue(subject.isGreaterThanOrEqual(other));
     }
 
     @Test
-    public void ensure0NotGreaterThanOrEqualTo1() {
+    void ensure0NotGreaterThanOrEqualTo1() {
         final Money subject = Money.euros(0);
         final Money other = Money.euros(1);
         assertFalse(subject.isGreaterThanOrEqual(other));
     }
 
     @Test
-    public void ensure2NotLessThanOrEqualTo1() {
+    void ensure2NotLessThanOrEqualTo1() {
         final Money subject = Money.euros(2);
         final Money other = Money.euros(1);
         assertFalse(subject.isLessThanOrEqual(other));
     }
 
     @Test
-    public void ensure1LessThanOrEqualTo1() {
+    void ensure1LessThanOrEqualTo1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         assertTrue(subject.isLessThanOrEqual(other));
     }
 
     @Test
-    public void ensure0LessThanOrEqualTo1() {
+    void ensure0LessThanOrEqualTo1() {
         final Money subject = Money.euros(0);
         final Money other = Money.euros(1);
         assertTrue(subject.isLessThanOrEqual(other));

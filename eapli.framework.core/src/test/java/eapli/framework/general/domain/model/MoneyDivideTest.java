@@ -28,16 +28,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-public class MoneyDivideTest {
+/**
+ *
+ * @author Paulo Gandra de Sousa
+ *
+ */
+class MoneyDivideTest {
 
     @Test
-    public void ensureCannotDivideBy0() {
+    void ensureCannotDivideBy0() {
         final Money subject = Money.euros(1);
         assertThrows(ArithmeticException.class, () -> subject.divide(0));
     }
 
     @Test
-    public void ensureDivide100By2() {
+    void ensureDivide100By2() {
         final Money subject = Money.euros(100);
         final Money[] expecteds = { Money.euros(50), Money.euros(50) };
         final Money[] actuals = subject.divide(2);
@@ -45,7 +50,7 @@ public class MoneyDivideTest {
     }
 
     @Test
-    public void ensureDivide100By1() {
+    void ensureDivide100By1() {
         final Money subject = Money.euros(100);
         final Money[] expecteds = { Money.euros(100) };
         final Money[] actuals = subject.divide(1);
@@ -53,7 +58,7 @@ public class MoneyDivideTest {
     }
 
     @Test
-    public void ensureDivide100By3() {
+    void ensureDivide100By3() {
         final Money subject = Money.euros(100);
         final Money[] expecteds = { Money.euros(33.34), Money.euros(33.33), Money.euros(33.33) };
         final Money[] actuals = subject.divide(3);
@@ -61,7 +66,7 @@ public class MoneyDivideTest {
     }
 
     @Test
-    public void ensureDivide99By2() {
+    void ensureDivide99By2() {
         final Money subject = Money.euros(99);
         final Money[] expecteds = { Money.euros(49.50), Money.euros(49.50) };
         final Money[] actuals = subject.divide(2);
@@ -69,7 +74,7 @@ public class MoneyDivideTest {
     }
 
     @Test
-    public void ensureDivide99By1() {
+    void ensureDivide99By1() {
         final Money subject = Money.euros(99);
         final Money[] expecteds = { Money.euros(99) };
         final Money[] actuals = subject.divide(1);
@@ -77,7 +82,7 @@ public class MoneyDivideTest {
     }
 
     @Test
-    public void ensureDivide99By3() {
+    void ensureDivide99By3() {
         final Money subject = Money.euros(99);
         final Money[] expecteds = { Money.euros(33), Money.euros(33), Money.euros(33) };
         final Money[] actuals = subject.divide(3);

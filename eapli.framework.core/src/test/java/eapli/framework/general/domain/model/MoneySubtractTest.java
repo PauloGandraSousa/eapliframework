@@ -33,10 +33,10 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class MoneySubtractTest {
+class MoneySubtractTest {
 
     @Test
-    public void ensureSubtract0() {
+    void ensureSubtract0() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(0);
         final Money expected = Money.euros(1);
@@ -44,7 +44,7 @@ public class MoneySubtractTest {
     }
 
     @Test
-    public void ensureSubtract1() {
+    void ensureSubtract1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         final Money expected = Money.euros(0);
@@ -52,7 +52,7 @@ public class MoneySubtractTest {
     }
 
     @Test
-    public void ensureSubtractCents() {
+    void ensureSubtractCents() {
         final Money subject = Money.euros(0.99);
         final Money other = Money.euros(0.01);
         final Money expected = Money.euros(0.98);
@@ -60,7 +60,7 @@ public class MoneySubtractTest {
     }
 
     @Test
-    public void ensureSubtractCents2() {
+    void ensureSubtractCents2() {
         final Money subject = Money.euros(1.35);
         final Money other = Money.euros(0.40);
         final Money expected = Money.euros(0.95);
@@ -68,7 +68,7 @@ public class MoneySubtractTest {
     }
 
     @Test
-    public void ensureSubtract50Cents() {
+    void ensureSubtract50Cents() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(0.5);
         final Money expected = Money.euros(0.5);
@@ -76,7 +76,7 @@ public class MoneySubtractTest {
     }
 
     @Test
-    public void ensureSubtractMinus1() {
+    void ensureSubtractMinus1() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(-1);
         final Money expected = Money.euros(2);
@@ -84,7 +84,7 @@ public class MoneySubtractTest {
     }
 
     @Test
-    public void ensureSubtractMinus50Cents() {
+    void ensureSubtractMinus50Cents() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(-0.5);
         final Money expected = Money.euros(1.5);
@@ -92,7 +92,7 @@ public class MoneySubtractTest {
     }
 
     @Test
-    public void ensureCannotSubtractDifferentCurrencies() {
+    void ensureCannotSubtractDifferentCurrencies() {
         final Money subject = Money.euros(1);
         final Money other = Money.dollars(0.5);
         assertThrows(IllegalArgumentException.class, () -> subject.subtract(other));

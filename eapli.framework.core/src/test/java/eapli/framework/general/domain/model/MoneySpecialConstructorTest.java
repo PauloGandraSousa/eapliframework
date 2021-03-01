@@ -35,26 +35,26 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class MoneySpecialConstructorTest {
+class MoneySpecialConstructorTest {
 
     @Test
-    public void ensureSpecialConstructorThrowsOnNullCurrency() {
+    void ensureSpecialConstructorThrowsOnNullCurrency() {
         assertThrows(NullPointerException.class, () -> new Money(BigInteger.ONE, null));
     }
 
     @Test
-    public void ensureSpecialConstructorThrowsOnInvalidCurrency() {
+    void ensureSpecialConstructorThrowsOnInvalidCurrency() {
         assertThrows(IllegalArgumentException.class, () -> new Money(BigInteger.ONE, "xpto"));
     }
 
     @Test
-    public void ensureSpecialConstructorHandlesNullAmount() {
+    void ensureSpecialConstructorHandlesNullAmount() {
         final Money subject = new Money(null, "EUR");
         assertEquals(subject, Money.euros(0));
     }
 
     @Test
-    public void ensureSpecialConstructor() {
+    void ensureSpecialConstructor() {
         final Money subject = new Money(BigInteger.ONE, "EUR");
         assertEquals(subject, Money.euros(0.01));
     }

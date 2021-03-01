@@ -35,48 +35,48 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class MoneyTest {
+class MoneyTest {
 
     @Test
-    public void ensureDollarsHasRightCurrency() {
+    void ensureDollarsHasRightCurrency() {
         final Money subject = Money.dollars(1);
         assertEquals(Currency.getInstance("USD"), subject.currency());
     }
 
     @Test
-    public void ensureEurosHasRightCurrency() {
+    void ensureEurosHasRightCurrency() {
         final Money subject = Money.euros(1);
         assertEquals(Currency.getInstance("EUR"), subject.currency());
     }
 
     @Test
-    public void ensureDollarsHasRightAmount() {
+    void ensureDollarsHasRightAmount() {
         final Money subject = Money.dollars(1);
         assertEquals(1, subject.amountAsDouble(), 0.01);
     }
 
     @Test
-    public void ensureEurosHasRightAmount() {
+    void ensureEurosHasRightAmount() {
         final Money subject = Money.euros(1);
         assertEquals(1, subject.amountAsDouble(), 0.01);
     }
 
     @Test
-    public void ensureEqualsObject() {
+    void ensureEqualsObject() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(1);
         assertEquals(subject, other);
     }
 
     @Test
-    public void ensureNotEqualIfDifferentCurrency() {
+    void ensureNotEqualIfDifferentCurrency() {
         final Money subject = Money.euros(1);
         final Money other = Money.dollars(2);
         assertNotEquals(subject, other);
     }
 
     @Test
-    public void ensureNotEqualIfDifferentAmount() {
+    void ensureNotEqualIfDifferentAmount() {
         final Money subject = Money.euros(1);
         final Money other = Money.euros(2);
         assertNotEquals(subject, other);
