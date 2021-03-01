@@ -35,20 +35,20 @@ import eapli.framework.math.domain.model.Numeral;
  * @author Paulo Gandra de Sousa
  *
  */
-public class NumeralTest {
+class NumeralTest {
 
     @Test
-    public void ensureBaseIsBiggerThan2() {
+    void ensureBaseIsBiggerThan2() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("0", 1));
     }
 
     @Test
-    public void ensureBaseIsSmallerThan36() {
+    void ensureBaseIsSmallerThan36() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("0", 37));
     }
 
     @Test
-    public void ensureValueIsNonNegative() {
+    void ensureValueIsNonNegative() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(-1));
     }
 
@@ -58,27 +58,27 @@ public class NumeralTest {
     }
 
     @Test
-    public void ensureValueIsNotNull() {
+    void ensureValueIsNotNull() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(null, 8));
     }
 
     @Test
-    public void ensureDecimalValueHasValidSymbols() {
+    void ensureDecimalValueHasValidSymbols() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("123A", 10));
     }
 
     @Test
-    public void ensureBinaryValueHasValidSymbols() {
+    void ensureBinaryValueHasValidSymbols() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("12", 2));
     }
 
     @Test
-    public void ensureOctalValueHasValidSymbols() {
+    void ensureOctalValueHasValidSymbols() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("1238", 8));
     }
 
     @Test
-    public void ensureHexaDecimalValueHasValidSymbols() {
+    void ensureHexaDecimalValueHasValidSymbols() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("123AG", 16));
     }
 
@@ -113,7 +113,7 @@ public class NumeralTest {
             new TestCaseData(999999, "11110100001000111111", "3641077", "F423F"), };
 
     @Test
-    public void testCases() {
+    void testCases() {
         for (final TestCaseData data : testCases) {
             testFromBase2(data);
             testFromBase8(data);

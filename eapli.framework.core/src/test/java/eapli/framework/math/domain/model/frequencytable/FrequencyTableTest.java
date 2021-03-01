@@ -38,28 +38,28 @@ import eapli.framework.math.domain.model.FrequencyTable;
  *
  * @author Paulo Gandra Sousa 28/05/2020
  */
-public class FrequencyTableTest {
+class FrequencyTableTest {
 
     private FrequencyTable<String> subject;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         subject = new FrequencyTable<>();
     }
 
     @Test
-    public void ensureEmptyHas0Tokens() {
+    void ensureEmptyHas0Tokens() {
         assertEquals(0, subject.tokens().size());
     }
 
     @Test
-    public void ensureEmptyHasFrequency0() {
+    void ensureEmptyHasFrequency0() {
         assertEquals(0L, subject.frequencyOf("a"));
         assertEquals(0L, subject.frequencyOf("w"));
     }
 
     @Test
-    public void ensureCollectingOneHasOneToken() {
+    void ensureCollectingOneHasOneToken() {
         subject.collect("a");
 
         assertEquals(1, subject.tokens().size());
@@ -67,14 +67,14 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureCollectingOneHasFrequency1() {
+    void ensureCollectingOneHasFrequency1() {
         subject.collect("a");
 
         assertEquals(1L, subject.frequencyOf("a"));
     }
 
     @Test
-    public void ensureHasRightTokens() {
+    void ensureHasRightTokens() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("c");
@@ -88,7 +88,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureHasRightFrequencies() {
+    void ensureHasRightFrequencies() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("a");
@@ -101,7 +101,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureUnknownTokenHasFrequency0() {
+    void ensureUnknownTokenHasFrequency0() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("a");
@@ -112,7 +112,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureHasRightTotalOccurrences() {
+    void ensureHasRightTotalOccurrences() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("a");
@@ -123,7 +123,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void testSortedByToken() {
+    void testSortedByToken() {
         initData();
 
         final Stream<Entry<String, Long>> r = subject.sortedEntriesByToken();
@@ -152,7 +152,7 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void testSortedByFrequency() {
+    void testSortedByFrequency() {
         initData();
 
         final Stream<Entry<String, Long>> r = subject.sortedEntriesByFrequency();
@@ -169,14 +169,14 @@ public class FrequencyTableTest {
     }
 
     @Test
-    public void ensureContainsCollectedToken() {
+    void ensureContainsCollectedToken() {
         subject.collect("a");
 
         assertTrue(subject.contains("a"));
     }
 
     @Test
-    public void ensureDoesNotContainUnknownToken() {
+    void ensureDoesNotContainUnknownToken() {
         subject.collect("a");
 
         assertFalse(subject.contains("w"));

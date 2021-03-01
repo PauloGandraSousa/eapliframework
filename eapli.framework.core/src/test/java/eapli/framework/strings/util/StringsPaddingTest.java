@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,16 +23,16 @@
  */
 package eapli.framework.strings.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class StringsPaddingTest {
+class StringsPaddingTest {
 
     private static final String TEST_STRING = "1234567890";
     private static final int PADDING_LENGTH = 12;
@@ -43,32 +43,32 @@ public class StringsPaddingTest {
     //
 
     @Test
-    public void ensureLeftPadWithLargerLengthHasRightLength() {
+    void ensureLeftPadWithLargerLengthHasRightLength() {
         final String subject = Strings.leftPadded(TEST_STRING, PADDING_LENGTH, '-');
         assertEquals(PADDING_LENGTH, subject.length());
     }
 
     @Test
-    public void ensureLeftPadWithLargerLengthHasOriginalString() {
+    void ensureLeftPadWithLargerLengthHasOriginalString() {
         final String subject = Strings.leftPadded(TEST_STRING, PADDING_LENGTH, '-');
         assertTrue(subject.contains(TEST_STRING));
     }
 
     @Test
-    public void ensureLeftPadWithLargerLengthHasRightPadding() {
+    void ensureLeftPadWithLargerLengthHasRightPadding() {
         final String subject = Strings.leftPadded(TEST_STRING, PADDING_LENGTH, '-');
         assertTrue(subject.contains(EXPECTED_PADDING));
         assertEquals('-', subject.charAt(0));
     }
 
     @Test
-    public void ensureLeftPadWithSmallerLengthHasOriginalLength() {
+    void ensureLeftPadWithSmallerLengthHasOriginalLength() {
         final String subject = Strings.leftPadded(TEST_STRING, 5, '-');
         assertEquals(TEST_STRING.length(), subject.length());
     }
 
     @Test
-    public void ensureLeftPadWithSmallerLengthHasOriginalString() {
+    void ensureLeftPadWithSmallerLengthHasOriginalString() {
         final String subject = Strings.leftPadded(TEST_STRING, 5, '-');
         assertEquals(TEST_STRING, subject);
     }
@@ -78,32 +78,32 @@ public class StringsPaddingTest {
     //
 
     @Test
-    public void ensureRightPadWithLargerLengthHasRightLength() {
+    void ensureRightPadWithLargerLengthHasRightLength() {
         final String subject = Strings.rightPadded(TEST_STRING, PADDING_LENGTH, '-');
         assertEquals(PADDING_LENGTH, subject.length());
     }
 
     @Test
-    public void ensureRightPadWithLargerLengthHasOriginalString() {
+    void ensureRightPadWithLargerLengthHasOriginalString() {
         final String subject = Strings.rightPadded(TEST_STRING, PADDING_LENGTH, '-');
         assertTrue(subject.contains(TEST_STRING));
     }
 
     @Test
-    public void ensureRightPadWithLargerLengthHasRightPadding() {
+    void ensureRightPadWithLargerLengthHasRightPadding() {
         final String subject = Strings.rightPadded(TEST_STRING, PADDING_LENGTH, '-');
         assertTrue(subject.contains(EXPECTED_PADDING));
         assertEquals('-', subject.charAt(subject.length() - 1));
     }
 
     @Test
-    public void ensureRightPadWithSmallerLengthHasOriginalLength() {
+    void ensureRightPadWithSmallerLengthHasOriginalLength() {
         final String subject = Strings.rightPadded(TEST_STRING, 5, '-');
         assertEquals(TEST_STRING.length(), subject.length());
     }
 
     @Test
-    public void ensureRightPadWithSmallerLengthHasOriginalString() {
+    void ensureRightPadWithSmallerLengthHasOriginalString() {
         final String subject = Strings.rightPadded(TEST_STRING, 5, '-');
         assertEquals(TEST_STRING, subject);
     }

@@ -39,7 +39,7 @@ import eapli.framework.math.domain.model.NumeralSystem;
  * @author Paulo Gandra de Sousa
  *
  */
-public class MyNumeralTest {
+class MyNumeralTest {
 
     private Numeral instance;
 
@@ -47,13 +47,13 @@ public class MyNumeralTest {
     private static final NumeralSystem SYSTEM = () -> SYMBOLS;
 
     @Test
-    public void ensure0is0() {
+    void ensure0is0() {
         instance = Numeral.valueOf("=", SYSTEM);
         assertEquals(0, instance.decimalValue());
     }
 
     @Test
-    public void ensureBaseSymbols() {
+    void ensureBaseSymbols() {
         for (int i = 0; i < 10; i++) {
             final String result = Numeral.valueOf(i).toBase(SYSTEM).toString();
             final String expected = String.valueOf(SYMBOLS.charAt(i));
@@ -65,7 +65,7 @@ public class MyNumeralTest {
     }
 
     @Test
-    public void ensureNoStrangeSymbols() {
+    void ensureNoStrangeSymbols() {
         final Stream<String> results = IntStream.range(0, 10000)
                 .<String>mapToObj(x -> Numeral.valueOf(x).toBase(SYSTEM).toString());
         assertTrue(results.allMatch(x -> validateSymbols(x)));
@@ -77,7 +77,7 @@ public class MyNumeralTest {
     }
 
     @Test
-    public void testSomeCases() {
+    void testSomeCases() {
         assertEquals(128, Numeral.valueOf("!\"(", SYSTEM).decimalValue());
         assertEquals(1024, Numeral.valueOf("!=\"$", SYSTEM).decimalValue());
         assertEquals(9999, Numeral.valueOf("))))", SYSTEM).decimalValue());

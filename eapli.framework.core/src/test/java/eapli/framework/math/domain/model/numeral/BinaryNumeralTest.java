@@ -27,7 +27,7 @@ package eapli.framework.math.domain.model.numeral;
  * @author Paulo Gandra de Sousa
  *
  */
-public class BinaryNumeralTest extends NumeralTestBase {
+class BinaryNumeralTest extends NumeralTestBase {
 
     @Override
     protected int getBase() {

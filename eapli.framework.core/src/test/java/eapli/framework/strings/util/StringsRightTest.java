@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,41 +23,39 @@
  */
 package eapli.framework.strings.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-
-import eapli.framework.strings.util.Strings;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class StringsRightTest {
+class StringsRightTest {
 
     private static final String TEST_STRING = "1234567890";
 
     @Test
-    public void ensureRight0IsEmpty() {
+    void ensureRight0IsEmpty() {
         final String result = Strings.right(TEST_STRING, 0);
         assertEquals("", result);
     }
 
     @Test
-    public void ensureRightNegativeIsEmpty() {
+    void ensureRightNegativeIsEmpty() {
         final String result = Strings.right(TEST_STRING, -1);
         assertEquals("", result);
     }
 
     @Test
-    public void ensureRightNLengthIsN() {
+    void ensureRightNLengthIsN() {
         final int n = 3;
         final String result = Strings.right(TEST_STRING, n);
         assertEquals(n, result.length());
     }
 
     @Test
-    public void ensureRight3Is890() {
+    void ensureRight3Is890() {
         final String expected = "890";
         final int n = 3;
         final String result = Strings.right(TEST_STRING, n);
@@ -65,7 +63,7 @@ public class StringsRightTest {
     }
 
     @Test
-    public void ensureRightLenBiggerThanLengthIsOriginalString() {
+    void ensureRightLenBiggerThanLengthIsOriginalString() {
         final String expected = TEST_STRING;
         final int n = TEST_STRING.length() + 15;
         final String result = Strings.right(TEST_STRING, n);

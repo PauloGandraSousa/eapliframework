@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,17 +23,15 @@
  */
 package eapli.framework.strings.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-
-import eapli.framework.strings.util.Strings;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class StringsRepeatTest {
+class StringsRepeatTest {
 
     @Test
     public void ensureRepeat0Isempty() {
@@ -42,20 +40,20 @@ public class StringsRepeatTest {
     }
 
     @Test
-    public void ensureRepeatNegativeIsempty() {
+    void ensureRepeatNegativeIsempty() {
         final String result = Strings.repeat('-', -1);
         assertEquals(0, result.length());
     }
 
     @Test
-    public void ensureRepeatNLengthIsN() {
+    void ensureRepeatNLengthIsN() {
         final int n = 10;
         final String result = Strings.repeat('-', n);
         assertEquals(n, result.length());
     }
 
     @Test
-    public void ensureSymbolsIsRepeated() {
+    void ensureSymbolsIsRepeated() {
         final char symbol = '-';
         final String result = Strings.repeat(symbol, 10);
         for (int i = 0; i < result.length(); i++) {
