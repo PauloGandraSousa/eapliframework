@@ -50,27 +50,7 @@ import eapli.framework.validations.Preconditions;
  * @param <R>
  *            "right" type; by convention, the success result
  */
-public final class Either<L, R> {
-
-    private enum SideType {
-        LEFT, RIGHT,
-        /**
-         * marker value for empty objects
-         */
-        EMPTY_MARKER
-    }
-
-    @SuppressWarnings({ "rawtypes", "java:S3740" })
-    private static final Either EMPTY = new Either();
-
-    private final SideType type;
-    private L left;
-    private R right;
-
-    @SuppressWarnings({ "unchecked" })
-    /* package */static <T, U> Either<T, U> empty() {
-        return EMPTY;
-    }
+public interface Either<L, R> {
 
     /**
      * Factory method to create a left value Either.
@@ -78,8 +58,12 @@ public final class Either<L, R> {
      * @param left
      * @return a new Either
      */
-    public static <T, U> Either<T, U> left(final T left) {
-        return new Either<>(left, true);
+    static <T, U> Either<T, U> left(final T left) {
+        // this doesn't make much sense as we are creating an either to avoid exceptions in the
+        // first place...
+        Preconditions.nonNull(left);
+
+        return new LeftEither<>(left);
     }
 
     /**
@@ -88,47 +72,9 @@ public final class Either<L, R> {
      * @param right
      * @return a new Either
      */
-    public static <T, U> Either<T, U> right(final U right) {
-        return new Either<>(right);
-    }
-
-    /**
-     * Constructs a left Either.
-     *
-     * @param left
-     * @param marker
-     *            just to make the compiler happy due to the erasure of both
-     *            constructors
-     */
-    @SuppressWarnings("squid:S1172")
-    private Either(final L left, final boolean marker) {
-        Preconditions.nonNull(left);
-
-        type = SideType.LEFT;
-        this.left = left;
-    }
-
-    /**
-     * Constructs a right Either.
-     *
-     * @param right
-     */
-    private Either(final R right) {
+    static <T, U> Either<T, U> right(final U right) {
         Preconditions.nonNull(right);
-
-        type = SideType.RIGHT;
-        this.right = right;
-    }
-
-    /**
-     * Constructs an empty Either.
-     */
-    private Either() {
-        type = SideType.EMPTY_MARKER;
-    }
-
-    /* package */ boolean isEmpty() {
-        return type == SideType.EMPTY_MARKER;
+        return new RightEither<>(right);
     }
 
     /**
@@ -141,34 +87,23 @@ public final class Either<L, R> {
      * @param rightMapper
      * @return a new either resulting from the projection
      */
-    public <T, U> Either<T, U> map(final Function<? super L, ? extends T> leftMapper,
-            final Function<? super R, ? extends U> rightMapper) {
-        if (type == SideType.LEFT) {
-            return left(leftMapper.apply(left));
-        } else if (type == SideType.RIGHT) {
-            return right(rightMapper.apply(right));
-        } else {
-            return empty();
-        }
-    }
+    <T, U> Either<T, U> map(final Function<? super L, ? extends T> leftMapper,
+            final Function<? super R, ? extends U> rightMapper);
 
     /**
-     * Creates a new Either by filtering the current value. Since this method
+     * Creates a new {@code Either} by filtering the current value. If the current value satisfies
+     * the predicate, the returned {@code Either} will be the "same", otherwise, an "empty"
+     * {@code either} will be returned.
+     *
+     * Since this method
      * returns a new {@code Either} it is suitable for composition.
      *
      * @param leftPredicate
      * @param rightPredicate
      * @return a new either resulting from the projection
      */
-    public Either<L, R> filter(final Predicate<? super L> leftPredicate,
-            final Predicate<? super R> rightPredicate) {
-        if (type == SideType.LEFT && leftPredicate.test(left)) {
-            return left(left);
-        } else if (type == SideType.RIGHT && rightPredicate.test(right)) {
-            return right(right);
-        }
-        return empty();
-    }
+    Either<L, R> filter(final Predicate<? super L> leftPredicate,
+            final Predicate<? super R> rightPredicate);
 
     /**
      * Folds the current value (either right or left) using {@code def} as the
@@ -180,16 +115,8 @@ public final class Either<L, R> {
      *            default/initial value
      * @return the folded value
      */
-    public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
-            final BiFunction<T, ? super R, ? extends T> rightAccum, final T def) {
-        if (type == SideType.LEFT) {
-            return leftAccum.apply(def, left);
-        } else if (type == SideType.RIGHT) {
-            return rightAccum.apply(def, right);
-        } else {
-            return def;
-        }
-    }
+    <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
+            final BiFunction<T, ? super R, ? extends T> rightAccum, final T def);
 
     /**
      * Acts on the value of this Either instance, executing the "normal" function
@@ -199,14 +126,7 @@ public final class Either<L, R> {
      * @param leftConsumer
      * @param rightConsumer
      */
-    public void consume(final Consumer<? super L> leftConsumer,
-            final Consumer<? super R> rightConsumer) {
-        if (type == SideType.LEFT) {
-            leftConsumer.accept(left);
-        } else {
-            rightConsumer.accept(right);
-        }
-    }
+    void consume(final Consumer<? super L> leftConsumer, final Consumer<? super R> rightConsumer);
 
     /**
      * Returns the value hold on the left of the either or throws a
@@ -217,12 +137,7 @@ public final class Either<L, R> {
      *
      * @return the value hold on the left of the either if there is a left value
      */
-    public L leftValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
-        if (type == SideType.LEFT) {
-            return left;
-        }
-        throw exceptionBuilder.get();
-    }
+    L leftValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder);
 
     /**
      * Returns the value hold on the left of the either or the default value, if
@@ -232,9 +147,7 @@ public final class Either<L, R> {
      *
      * @return the value hold on the left of the either if there is a left value
      */
-    public L leftValueOrElse(final L def) {
-        return (type == SideType.LEFT) ? left : def;
-    }
+    L leftValueOrElse(final L def);
 
     /**
      * Returns the value hold on the right of the either or throws a
@@ -245,12 +158,7 @@ public final class Either<L, R> {
      *
      * @return the value hold on the left of the either if there is a left value
      */
-    public R rightValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
-        if (type == SideType.RIGHT) {
-            return right;
-        }
-        throw exceptionBuilder.get();
-    }
+    R rightValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder);
 
     /**
      * Returns the value hold on the right of the either or the default value, if
@@ -260,22 +168,214 @@ public final class Either<L, R> {
      *
      * @return the value hold on the left of the either if there is a left value
      */
-    public R rightValueOrElse(final R def) {
-        return (type == SideType.RIGHT) ? right : def;
-    }
+    R rightValueOrElse(final R def);
 
     /**
      * Returns a new Either with the values (and types) swapped.
      *
      * @return a new Either with the values (and types) swapped
      */
-    public Either<R, L> swap() {
-        if (type == SideType.LEFT) {
-            return right(left);
-        } else if (type == SideType.RIGHT) {
-            return left(right);
-        } else {
-            return empty();
+    Either<R, L> swap();
+}
+
+/**
+ * Left projection.
+ *
+ * @author Paulo Gandra de Sousa 02/03/2021
+ *
+ * @param <L>
+ * @param <R>
+ */
+final class LeftEither<L, R> implements Either<L, R> {
+
+    private final L value;
+
+    /**
+     * @param left
+     */
+    public LeftEither(final L left) {
+        super();
+        value = left;
+    }
+
+    @Override
+    public <T, U> Either<T, U> map(final Function<? super L, ? extends T> leftMapper,
+            final Function<? super R, ? extends U> rightMapper) {
+        return Either.left(leftMapper.apply(value));
+    }
+
+    @Override
+    public Either<L, R> filter(final Predicate<? super L> leftPredicate, final Predicate<? super R> rightPredicate) {
+        if (leftPredicate.test(value)) {
+            return this;
         }
+        return new EmptyEither<>();
+    }
+
+    @Override
+    public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
+            final BiFunction<T, ? super R, ? extends T> rightAccum,
+            final T def) {
+        return leftAccum.apply(def, value);
+    }
+
+    @Override
+    public void consume(final Consumer<? super L> leftConsumer, final Consumer<? super R> rightConsumer) {
+        leftConsumer.accept(value);
+    }
+
+    @Override
+    public L leftValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
+        return value;
+    }
+
+    @Override
+    public L leftValueOrElse(final L def) {
+        return value;
+    }
+
+    @Override
+    public R rightValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
+        throw exceptionBuilder.get();
+    }
+
+    @Override
+    public R rightValueOrElse(final R def) {
+        return def;
+    }
+
+    @Override
+    public Either<R, L> swap() {
+        return Either.right(value);
+    }
+}
+
+/**
+ * Right projection.
+ *
+ * @author Paulo Gandra de Sousa 02/03/2021
+ *
+ * @param <L>
+ * @param <R>
+ */
+final class RightEither<L, R> implements Either<L, R> {
+
+    private final R value;
+
+    /**
+     * @param right
+     */
+    public RightEither(final R right) {
+        value = right;
+    }
+
+    @Override
+    public <T, U> Either<T, U> map(final Function<? super L, ? extends T> leftMapper,
+            final Function<? super R, ? extends U> rightMapper) {
+        return Either.right(rightMapper.apply(value));
+    }
+
+    @Override
+    public Either<L, R> filter(final Predicate<? super L> leftPredicate, final Predicate<? super R> rightPredicate) {
+        if (rightPredicate.test(value)) {
+            return this;
+        }
+        return new EmptyEither<>();
+    }
+
+    @Override
+    public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
+            final BiFunction<T, ? super R, ? extends T> rightAccum,
+            final T def) {
+        return rightAccum.apply(def, value);
+    }
+
+    @Override
+    public void consume(final Consumer<? super L> leftConsumer, final Consumer<? super R> rightConsumer) {
+        rightConsumer.accept(value);
+    }
+
+    @Override
+    public L leftValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
+        throw exceptionBuilder.get();
+    }
+
+    @Override
+    public L leftValueOrElse(final L def) {
+        return def;
+    }
+
+    @Override
+    public R rightValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
+        return value;
+    }
+
+    @Override
+    public R rightValueOrElse(final R def) {
+        return value;
+    }
+
+    @Override
+    public Either<R, L> swap() {
+        return Either.left(value);
+    }
+}
+
+/**
+ * Special case due to {@link Either#filter}
+ *
+ * @author Paulo Gandra de Sousa 02/03/2021
+ *
+ * @param <L>
+ * @param <R>
+ */
+final class EmptyEither<L, R> implements Either<L, R> {
+
+    @Override
+    public <T, U> Either<T, U> map(final Function<? super L, ? extends T> leftMapper,
+            final Function<? super R, ? extends U> rightMapper) {
+        return new EmptyEither<>();
+    }
+
+    @Override
+    public Either<L, R> filter(final Predicate<? super L> leftPredicate, final Predicate<? super R> rightPredicate) {
+        return this;
+    }
+
+    @Override
+    public <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
+            final BiFunction<T, ? super R, ? extends T> rightAccum,
+            final T def) {
+        return def;
+    }
+
+    @Override
+    public void consume(final Consumer<? super L> leftConsumer, final Consumer<? super R> rightConsumer) {
+        // nothing to do
+    }
+
+    @Override
+    public L leftValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
+        throw exceptionBuilder.get();
+    }
+
+    @Override
+    public L leftValueOrElse(final L def) {
+        return def;
+    }
+
+    @Override
+    public R rightValueOrElseThrow(final Supplier<? extends RuntimeException> exceptionBuilder) {
+        throw exceptionBuilder.get();
+    }
+
+    @Override
+    public R rightValueOrElse(final R def) {
+        return def;
+    }
+
+    @Override
+    public Either<R, L> swap() {
+        return new EmptyEither<>();
     }
 }

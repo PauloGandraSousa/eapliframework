@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,15 +20,16 @@
  */
 package eapli.framework.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.actions.Actions;
 
@@ -55,7 +56,7 @@ public class EitherTest {
     /**
      * @throws java.lang.Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         helper = new Helper();
         stringLength = x -> helper.i = x.length();
@@ -77,14 +78,14 @@ public class EitherTest {
         return subject;
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureCannotCreateLeftFromNull() {
-        Either.left(null);
+        assertThrows(IllegalArgumentException.class, () -> Either.left(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureCannotCreateRightFromNull() {
-        Either.right(null);
+        assertThrows(IllegalArgumentException.class, () -> Either.right(null));
     }
 
     @Test
@@ -94,11 +95,11 @@ public class EitherTest {
         assertEquals(TESTING, subject.leftValueOrElseThrow(IllegalArgumentException::new));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureLeftValueOfRightEitherThrowsException() {
         final Either<String, Integer> subject = rightSubject();
 
-        subject.leftValueOrElseThrow(IllegalArgumentException::new);
+        assertThrows(IllegalArgumentException.class, () -> subject.leftValueOrElseThrow(IllegalArgumentException::new));
     }
 
     @Test
@@ -108,11 +109,12 @@ public class EitherTest {
         assertEquals(TESTING_INT, subject.rightValueOrElseThrow(IllegalArgumentException::new));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ensureRightValueOfLeftEitherThrowsException() {
         final Either<String, Integer> subject = leftSubject();
 
-        subject.rightValueOrElseThrow(IllegalArgumentException::new);
+        assertThrows(IllegalArgumentException.class,
+                () -> subject.rightValueOrElseThrow(IllegalArgumentException::new));
     }
 
     @Test
@@ -147,9 +149,13 @@ public class EitherTest {
         assertEquals(TESTING_INT, Integer.valueOf(helper.i));
     }
 
+    private <L, R> Either<L, R> empty() {
+        return new EmptyEither<>();
+    }
+
     @Test
     public void ensureConsumeEmptyDoesNothing() {
-        Either.empty().consume(x -> Actions.throwState("This should never happen"),
+        empty().consume(x -> Actions.throwState("This should never happen"),
                 y -> Actions.throwState("This should never happen"));
         // it will fall thru as neither action should be invoked
         assertTrue(true);
@@ -157,7 +163,7 @@ public class EitherTest {
 
     @Test
     public void ensureMappingAnEmptyEitherReturnsEmpty() {
-        assertTrue(Either.empty().map(x -> x, y -> y).isEmpty());
+        assertTrue(empty().map(x -> x, y -> y) instanceof EmptyEither);
     }
 
     @Test
@@ -180,33 +186,36 @@ public class EitherTest {
     public void ensureFilterLeftIsEmpty() {
         final Either<String, Integer> subject = leftSubject();
 
-        assertTrue(subject.filter(x -> x.equals(TESTING.concat("ABC")), y -> y == TESTING_INT + 1000).isEmpty());
+        final Either<String, Integer> result = subject.filter(x -> x.equals(TESTING.concat("ABC")),
+                y -> y == TESTING_INT + 1000);
+        assertTrue(result instanceof EmptyEither);
     }
 
     @Test
     public void ensureFilterLeftIsNotEmpty() {
         final Either<String, Integer> subject = leftSubject();
 
-        assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT).isEmpty());
+        assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT) instanceof EmptyEither);
     }
 
     @Test
     public void ensureFilterRightIsEmpty() {
         final Either<String, Integer> subject = rightSubject();
 
-        assertTrue(subject.filter(x -> x.equals(TESTING.concat("ABC")), y -> y == TESTING_INT + 1000).isEmpty());
+        assertTrue(subject.filter(x -> x.equals(TESTING.concat("ABC")),
+                y -> y == TESTING_INT + 1000) instanceof EmptyEither);
     }
 
     @Test
     public void ensureFilterRightIsNotEmpty() {
         final Either<String, Integer> subject = rightSubject();
 
-        assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT).isEmpty());
+        assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT) instanceof EmptyEither);
     }
 
     @Test
     public void ensureFilteringEmptyIsEmpty() {
-        assertTrue(Either.empty().filter(x -> true, y -> true).isEmpty());
+        assertTrue(empty().filter(x -> true, y -> true) instanceof EmptyEither);
     }
 
     @Test
@@ -227,7 +236,7 @@ public class EitherTest {
 
     @Test
     public void ensureFoldingOnEmptyEitherReturnsDefault() {
-        final Either<String, Integer> subject = Either.empty();
+        final Either<String, Integer> subject = empty();
 
         final int DEFAULT = 1234;
         final int actual = subject.fold((x, y) -> x + y.length(), (x, y) -> x + y, DEFAULT);
@@ -250,6 +259,6 @@ public class EitherTest {
 
     @Test
     public void ensureSwapingAnEmptyReturnsAnEmpty() {
-        assertTrue(Either.empty().swap().isEmpty());
+        assertTrue(empty().swap() instanceof EmptyEither);
     }
 }

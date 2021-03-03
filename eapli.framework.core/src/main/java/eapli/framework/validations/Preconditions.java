@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -30,7 +30,7 @@ import eapli.framework.util.Utility;
 
 /**
  * Utility class for validating preconditions, usually on function parameters.
- * if the precondition is not met, an IllegalArgumentException is thrown.
+ * if the precondition is not met, an {@link IllegalArgumentException} is thrown.
  *
  * @author Paulo Gandra de Sousa
  *

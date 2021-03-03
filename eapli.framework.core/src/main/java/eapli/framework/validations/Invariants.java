@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -28,7 +28,7 @@ import eapli.framework.util.Utility;
 
 /**
  * Utility class for expressing and ensuring class/method's invariants. If the
- * invariant does not hold, an IllegalStateException is thrown.
+ * invariant does not hold, an {@link IllegalStateException} is thrown.
  *
  * @author Paulo Gandra de Sousa
  *
