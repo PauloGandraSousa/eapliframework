@@ -27,6 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import eapli.framework.functional.Either.LeftProjection;
+import eapli.framework.functional.Either.RightProjection;
+
 /**
  *
  * @author Paulo Gandra de Sousa
@@ -56,7 +59,7 @@ class EitherLeftTest extends EitherBaseTest {
 
     @Override
     @Test
-    void ensureOppositeValueThrowsException() {
+    void ensureOppositeValueOrElseThrowThrowsException() {
         final Either<String, Integer> subject = subject();
 
         assertThrows(IllegalArgumentException.class,
@@ -65,7 +68,7 @@ class EitherLeftTest extends EitherBaseTest {
 
     @Override
     @Test
-    void ensureOppositeValueReturnsDefault() {
+    void ensureOppositeValueOrElseReturnsDefault() {
         final Either<String, Integer> subject = subject();
 
         final Integer DEFAULT = 1000;
@@ -123,5 +126,163 @@ class EitherLeftTest extends EitherBaseTest {
         final Either<String, Integer> subject = subject();
 
         assertEquals(TESTING, subject.swap().rightValueOrElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    @Override
+    void ensureProjectLeft() {
+        final Either<String, Integer> subject = subject();
+
+        assertTrue(subject.left() instanceof LeftProjection);
+    }
+
+    @Test
+    @Override
+    void ensureProjectRight() {
+        final Either<String, Integer> subject = subject();
+
+        assertTrue(subject.right() instanceof EmptyRight);
+    }
+
+    @Test
+    @Override
+    void ensureOnLeft() {
+        final Either<String, Integer> subject = subject();
+
+        subject.onLeft(stringLength);
+        assertEquals(TESTING.length(), helper.i);
+    }
+
+    @Test
+    @Override
+    void ensureOnRight() {
+        final Either<String, Integer> subject = subject();
+
+        subject.onRight(intValue);
+        assertEquals(-1, helper.i);
+    }
+
+    @Test
+    @Override
+    void ensureHoldsValueOrDefault() {
+        final Either<String, Integer> subject = subject();
+
+        assertEquals(TESTING, subject.leftValueOrElse("-10"));
+    }
+
+    @Test
+    @Override
+    void ensureProjectionMap() {
+        final Either<String, Integer> subject = subject();
+
+        subject.left().map(stringLengthOp);
+        assertEquals(TESTING.length(), helper.i);
+    }
+
+    @Test
+    @Override
+    void ensureProjectionFold() {
+        final Either<String, Integer> subject = subject();
+        final LeftProjection<String> left = subject.left();
+
+        final int actual = left.fold((x, y) -> x + y.length(), 0);
+
+        assertEquals(TESTING.length(), actual);
+    }
+
+    @Test
+    @Override
+    void ensureProjectionFilter() {
+        final Either<String, Integer> subject = subject();
+
+        final LeftProjection<String> left = subject.left();
+        assertFalse(left.filter(x -> x.equals(TESTING)) instanceof EmptyLeft);
+    }
+
+    @Test
+    @Override
+    void ensureProjectionConsume() {
+        final Either<String, Integer> subject = subject();
+
+        final LeftProjection<String> left = subject.left();
+        left.consume(stringLength);
+        assertEquals(TESTING.length(), helper.i);
+    }
+
+    @Test
+    @Override
+    void ensureProjectionValue() {
+        final Either<String, Integer> subject = subject();
+
+        final LeftProjection<String> left = subject.left();
+        final String actual = left.orElse("-10");
+        assertEquals(TESTING, actual);
+    }
+
+    @Test
+    @Override
+    void ensureProjectionValueOrThrows() {
+        final Either<String, Integer> subject = subject();
+
+        final LeftProjection<String> left = subject.left();
+        final String actual = left.orElseThrow(IllegalArgumentException::new);
+        assertEquals(TESTING, actual);
+    }
+
+    @Test
+    @Override
+    void ensureOppositeProjectionMap() {
+        final Either<String, Integer> subject = subject();
+
+        final RightProjection<Integer> opposite = subject.right();
+        assertTrue(opposite.map(intValueOp) instanceof EmptyRight);
+    }
+
+    @Test
+    @Override
+    void ensureOppositeProjectionFold() {
+        final Either<String, Integer> subject = subject();
+
+        final RightProjection<Integer> opposite = subject.right();
+        final int actual = opposite.fold((x, y) -> x + y, 12345);
+        assertEquals(12345, actual);
+    }
+
+    @Test
+    @Override
+    void ensureOppositeProjectionFilter() {
+        final Either<String, Integer> subject = subject();
+
+        final RightProjection<Integer> opposite = subject.right();
+        assertTrue(opposite.filter(x -> x == 0) instanceof EmptyRight);
+    }
+
+    @Test
+    @Override
+    void ensureOppositeProjectionConsumeDoesNothing() {
+        final Either<String, Integer> subject = subject();
+
+        subject.right().consume(intValue);
+        assertEquals(Helper.DEFAULT_INT, helper.i);
+    }
+
+    @Test
+    @Override
+    void ensureOppositeProjectionOrElseReturnsDefault() {
+        final Either<String, Integer> subject = subject();
+
+        final int actual = subject.right().orElse(-10);
+        assertEquals(-10, actual);
+    }
+
+    @Test
+    @Override
+    void ensureOppositeProjectionOrElseThrowThrows() {
+        final Either<String, Integer> subject = subject();
+        final RightProjection<Integer> opposite = subject.right();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            opposite.orElseThrow(IllegalArgumentException::new);
+        });
     }
 }

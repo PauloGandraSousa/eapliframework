@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra de Sousa 04/03/2021
@@ -23,7 +24,11 @@ abstract class EitherBaseTest {
     protected UnaryOperator<Integer> intValueOp;
 
     protected static class Helper {
-        protected int i;
+        /**
+         *
+         */
+        protected static final int DEFAULT_INT = -1;
+        protected int i = DEFAULT_INT;
     }
 
     /**
@@ -51,23 +56,84 @@ abstract class EitherBaseTest {
 
     abstract Either<String, Integer> subject();
 
+    @Test
     abstract void ensureCannotCreateFromNull();
 
+    @Test
     abstract void ensureHoldsValue();
 
-    abstract void ensureOppositeValueThrowsException();
+    @Test
+    abstract void ensureHoldsValueOrDefault();
 
-    abstract void ensureOppositeValueReturnsDefault();
+    @Test
+    abstract void ensureOppositeValueOrElseThrowThrowsException();
 
+    @Test
+    abstract void ensureOppositeValueOrElseReturnsDefault();
+
+    @Test
     abstract void ensureConsume();
 
+    @Test
     abstract void ensureMap();
 
+    @Test
     abstract void ensureFilterIsEmpty();
 
+    @Test
     abstract void ensureFilterIsNotEmpty();
 
+    @Test
     abstract void ensureFolding();
 
+    @Test
     abstract void ensureSwap();
+
+    @Test
+    abstract void ensureProjectLeft();
+
+    @Test
+    abstract void ensureProjectRight();
+
+    @Test
+    abstract void ensureOnLeft();
+
+    @Test
+    abstract void ensureOnRight();
+
+    @Test
+    abstract void ensureProjectionMap();
+
+    @Test
+    abstract void ensureProjectionFold();
+
+    @Test
+    abstract void ensureProjectionFilter();
+
+    @Test
+    abstract void ensureProjectionConsume();
+
+    @Test
+    abstract void ensureProjectionValue();
+
+    @Test
+    abstract void ensureProjectionValueOrThrows();
+
+    @Test
+    abstract void ensureOppositeProjectionMap();
+
+    @Test
+    abstract void ensureOppositeProjectionFold();
+
+    @Test
+    abstract void ensureOppositeProjectionFilter();
+
+    @Test
+    abstract void ensureOppositeProjectionConsumeDoesNothing();
+
+    @Test
+    abstract void ensureOppositeProjectionOrElseReturnsDefault();
+
+    @Test
+    abstract void ensureOppositeProjectionOrElseThrowThrows();
 }
