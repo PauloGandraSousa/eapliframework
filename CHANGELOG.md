@@ -1,6 +1,17 @@
 # EAPLI Framework Changelog
 
 
+## 16.1.0
+
+### What's new
+
+- `CsvLineMarshaler.unquote` method
+
+### Changed
+
+- n.a. 
+
+
 ## 16.0.0
 
 ### What's new
