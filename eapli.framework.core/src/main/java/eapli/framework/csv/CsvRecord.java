@@ -45,15 +45,24 @@ public class CsvRecord {
     private final List<String> fields;
 
     /**
+     * @param result
+     * @param record
+     */
+    private CsvRecord(final List<String> result, final String record) {
+        fields = result;
+        this.record = record;
+    }
+
+    /**
      * Builds a CSV record where all fields (no matter what data type) are quoted.
      *
      * @param fields
+     * @return
      */
-    public CsvRecord(final Object[] fields) {
-        this.fields = new ArrayList<>();
-        if (fields.length == 0) {
-            record = "";
-            return;
+    public static CsvRecord valueOf(final Object[] fields) {
+        final List<String> result = new ArrayList<>();
+        if (fields == null || fields.length == 0) {
+            return new CsvRecord(result, "");
         }
 
         final StringBuilder sb = new StringBuilder();
@@ -64,20 +73,22 @@ public class CsvRecord {
                 sb.append(e);
             }
             sb.append(",");
-            this.fields.add(e);
+            result.add(e);
         }
         sb.deleteCharAt(sb.length() - 1);
-        record = sb.toString();
+
+        return new CsvRecord(result, sb.toString());
     }
 
     /**
      * Parse a CSV line with comma separator and double quotes.
      *
      * @param csvLine
+     * @return
      * @throws ParseException
      */
-    public CsvRecord(final String csvLine) throws ParseException {
-        this(csvLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
+    public static CsvRecord parse(final String csvLine) throws ParseException {
+        return parse(csvLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
     }
 
     /**
@@ -85,10 +96,11 @@ public class CsvRecord {
      *
      * @param csvLine
      * @param separators
+     * @return
      * @throws ParseException
      */
-    public CsvRecord(final String csvLine, final char separators) throws ParseException {
-        this(csvLine, separators, DEFAULT_QUOTE);
+    public static CsvRecord parse(final String csvLine, final char separators) throws ParseException {
+        return parse(csvLine, separators, DEFAULT_QUOTE);
     }
 
     /**
@@ -101,18 +113,17 @@ public class CsvRecord {
      * @param csvLine
      * @param separators
      * @param customQuote
+     * @return
      * @throws ParseException
      */
-    public CsvRecord(final String csvLine, final char separators, final char customQuote)
+    public static CsvRecord parse(final String csvLine, final char separators, final char customQuote)
             throws ParseException {
 
         final List<String> result = new ArrayList<>();
 
         // if empty, return!
         if (csvLine == null || csvLine.isEmpty()) {
-            fields = result;
-            record = "";
-            return;
+            return new CsvRecord(result, "");
         }
 
         StringBuilder curVal = new StringBuilder();
@@ -147,10 +158,9 @@ public class CsvRecord {
         if (inQuotes) {
             throw new ParseException("Unfinished quote", -1);
         }
-        result.add(curVal.toString().trim());
+        addToken(result, curVal);
 
-        fields = result;
-        record = csvLine;
+        return new CsvRecord(result, csvLine);
     }
 
     /**
@@ -170,17 +180,24 @@ public class CsvRecord {
      * @param field
      * @return
      */
-    private String escapeQuotes(final String field) {
+    private static String escapeQuotes(final String field) {
         return field.replace("\"", "\"\"");
     }
 
     /**
      * Adds quotes around a field content.
      *
+     * <pre>
+     * "abc" -&gt; "abc"
+     *
+     * abc -&gt; "abc"
+     * </pre>
+     *
+     *
      * @param field
      * @return
      */
-    private String quote(final String field) {
+    private static String quote(final String field) {
         if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
             return field;
         }
@@ -203,13 +220,13 @@ public class CsvRecord {
         return record;
     }
 
-    private StringBuilder addToken(final List<String> result, StringBuilder curVal) {
+    private static StringBuilder addToken(final List<String> result, StringBuilder curVal) {
         result.add(curVal.toString().trim());
         curVal = new StringBuilder();
         return curVal;
     }
 
-    private boolean startQuotedField(final StringBuilder curVal, final char customQuote) {
+    private static boolean startQuotedField(final StringBuilder curVal, final char customQuote) {
         curVal.append(customQuote);
         return true;
     }

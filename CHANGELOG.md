@@ -5,11 +5,12 @@
 
 ### What's new
 
-- TBD
+- `CsvRecord` class to parse/build CSV strings
 
 ### Changed
 
 - `XmlDateAdapter` use RFC 1123 for representing dates in XML
+- removed deprecated methods from `CsvLineMarshaler` and utility methods. 
 
 
 ## 15.0.0

@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 import eapli.framework.util.Utility;
 
 /**
- * Simple utility to parse CSV records.
+ * Simple utility to parse CSV records based on regular expressions.
  *
  * @author Paulo Gandra Sousa 04/06/2020
  *
@@ -40,7 +40,7 @@ import eapli.framework.util.Utility;
 @Utility
 public final class CsvLineMarshaler {
 
-    /**
+    /*
      * <a href=
      * "https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch09s13.html"
      * >OReilly</a>.
@@ -49,13 +49,13 @@ public final class CsvLineMarshaler {
      */
     // "(,|\\\r?\\\n|^)([^\",\\\r\\\n]+|\"(?:[^\"]|\"\")*\")?"
 
-    /**
+    /*
      * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1197">RegExLib.com 1197</a>
      *
      */
     // "((?:[^\",]|(?:\"(?:\\{2}|\\\"|[^\"])*?\"))*)"
 
-    /**
+    /*
      * <a href="http://regexlib.com/REDetails.aspx?regexp_id=1106">RegExLib.com 1106</a>
      */
     // "(?<=,)\\s*(?=,)|^(?=,)|[^\\\"]{2,}(?=\\\")|([^,\\\"]+(?=,|$))"
@@ -68,9 +68,6 @@ public final class CsvLineMarshaler {
      * <p>
      */
     private static final String CSV_REGEX_TESTER = "(\\, *|\\n|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\"\\,\\n]*))";
-
-    private static final char DEFAULT_SEPARATOR = ',';
-    private static final char DEFAULT_QUOTE = '"';
 
     private CsvLineMarshaler() {
         // ensure utility
@@ -112,6 +109,9 @@ public final class CsvLineMarshaler {
      * Simple tokenizer based on regular expressions to parse a CSV line. Empty input will return
      * empty token.
      *
+     * @param input
+     * @return list of tokens
+     *
      * @throws ParseException
      *
      */
@@ -123,215 +123,5 @@ public final class CsvLineMarshaler {
         }
 
         return matchTokens(input, CSV_REGEX_TESTER);
-    }
-
-    /**
-     * Prepares a quoted string to be represented as a properly escaped CSV field with double
-     * quotes.
-     *
-     * <pre>
-     * The girl said "hello"
-     * </pre>
-     *
-     * is transformed to:
-     *
-     * <pre>
-     * The girl said ""hello""
-     * </pre>
-     *
-     * @param field
-     * @return a properly escaped CSV field with double quotes
-     */
-    public static String escapeQuotes(final String field) {
-        return field.replace("\"", "\"\"");
-    }
-
-    /**
-     * Takes a CSV escaped quote content and removes the double quotes.
-     *
-     * <pre>
-     * The girl said ""hello""
-     * </pre>
-     *
-     * is transformed to:
-     *
-     * <pre>
-     * The girl said "hello"
-     * </pre>
-     *
-     *
-     * @param field
-     * @return unquoted content
-     */
-    public static String unescapeQuotes(final String field) {
-        return field.replace("\"\"", "\"");
-    }
-
-    /**
-     * Adds quotes around a field content if the field is not yet quoted.
-     *
-     * <pre>
-     * "abc" -&gt; "abc"
-     *
-     * abc -&gt; "abc"
-     * </pre>
-     *
-     * @param field
-     * @return quoted content
-     */
-    public static String quote(final String field) {
-        if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
-            return field;
-        }
-        return "\"" + field + "\"";
-    }
-
-    /**
-     * Removes the quotes around a field content.
-     *
-     * <pre>
-     * "abc" -&gt; abc
-     *
-     * "abc -&gt; "abc
-     *
-     * abc" -&gt; abc"
-     *
-     * abc -&gt; abc
-     * </pre>
-     *
-     * @param field
-     * @return unquoted content
-     */
-    public static String unquote(final String field) {
-        if (field.isEmpty() || (field.charAt(0) != '"' && field.charAt(field.length() - 1) != '"')) {
-            return field;
-        }
-        return field.substring(1, field.length() - 1);
-    }
-
-    /**
-     * Builds a CSV record where all fields (no matter what data type) are quoted.
-     *
-     * @param fields
-     * @return a CSV-formatted string
-     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(Object[])}
-     */
-    @Deprecated
-    public static String marshal(final Object[] fields) {
-        if (fields.length == 0) {
-            return "";
-        }
-
-        final StringBuilder sb = new StringBuilder();
-        for (final Object f : fields) {
-            if (f != null) {
-                sb.append(quote(escapeQuotes(f.toString())));
-            } else {
-                sb.append("");
-            }
-            sb.append(",");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        return sb.toString();
-    }
-
-    /**
-     * Parse a CSV line with comma separator and double quotes.
-     *
-     * @param cvsLine
-     * @return a list where the elements are each independent CSV field
-     * @throws ParseException
-     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String)}
-     */
-    @Deprecated
-    public static List<String> parse(final String cvsLine) throws ParseException {
-        return parse(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
-    }
-
-    /**
-     * Parse a CSV line with double quotes and the specified separator, e.g., comma or semicolon.
-     *
-     * @param cvsLine
-     * @param separators
-     * @return a list where the elements are each independent CSV field
-     * @throws ParseException
-     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String, char)}
-     */
-    @Deprecated
-    public static List<String> parse(final String cvsLine, final char separators) throws ParseException {
-        return parse(cvsLine, separators, DEFAULT_QUOTE);
-    }
-
-    /**
-     * Parse a CSV line of text. Empty strings produce no tokens. Empty fields count as a (empty)
-     * token. Quoted fields are not unquoted. Handles double quotes (escaped quotes).
-     *
-     * <p>
-     * Based on <a href="https://mkyong.com/java/how-to-read-and-parse-csv-file-in-java/">MKyong</a>
-     *
-     * @param cvsLine
-     * @param separators
-     * @param customQuote
-     * @return a list where the elements are each independent CSV field
-     * @throws ParseException
-     * @deprecated use {@link eapli.framework.csv.CsvRecord#CsvRecord(String, char, char)}
-     */
-    @Deprecated
-    public static List<String> parse(final String cvsLine, final char separators, final char customQuote)
-            throws ParseException {
-
-        final List<String> result = new ArrayList<>();
-
-        // if empty, return!
-        if (cvsLine == null || cvsLine.isEmpty()) {
-            return result;
-        }
-
-        StringBuilder curVal = new StringBuilder();
-        boolean inQuotes = false;
-        final char[] chars = cvsLine.toCharArray();
-
-        int i = 0;
-        while (i < chars.length) {
-            final char ch = chars[i];
-            if (inQuotes) {
-                curVal.append(ch);
-                if (ch == customQuote) {
-                    if (i < chars.length - 1 && chars[i + 1] == customQuote) {
-                        i++;
-                        curVal.append(customQuote);
-                    } else {
-                        inQuotes = false;
-                    }
-                }
-            } else {
-                if (ch == customQuote) {
-                    inQuotes = startQuotedField(curVal, customQuote);
-                } else if (ch == separators) {
-                    curVal = addToken(result, curVal);
-                } else {
-                    curVal.append(ch);
-                }
-            }
-
-            i++;
-        }
-        if (inQuotes) {
-            throw new ParseException("Unfinished quote", -1);
-        }
-        result.add(curVal.toString().trim());
-
-        return result;
-    }
-
-    private static StringBuilder addToken(final List<String> result, StringBuilder curVal) {
-        result.add(curVal.toString().trim());
-        curVal = new StringBuilder();
-        return curVal;
-    }
-
-    private static boolean startQuotedField(final StringBuilder curVal, final char customQuote) {
-        curVal.append(customQuote);
-        return true;
     }
 }
