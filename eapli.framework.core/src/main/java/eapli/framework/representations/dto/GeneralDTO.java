@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -90,7 +90,7 @@ public class GeneralDTO implements Map<String, Object> {
     @SuppressWarnings({ "unchecked", "squid:S3011" })
     private static void transformFieldToDTO(final Object subject, final Field aField,
             final GeneralDTO dto) {
-        final boolean oldAccessibility = aField.isAccessible();
+        final boolean oldAccessibility = aField.canAccess(subject);
         aField.setAccessible(true);
         try {
             if (aField.getType().isPrimitive() || aField.getType() == String.class) {

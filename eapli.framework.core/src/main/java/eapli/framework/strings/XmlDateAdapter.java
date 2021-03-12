@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,8 +20,10 @@
  */
 package eapli.framework.strings;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -33,17 +35,16 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class XmlDateAdapter extends XmlAdapter<String, Date> {
 
-    private static final ThreadLocal<DateFormat> DATE_FORMAT_HOLDER = ThreadLocal
-            .withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-    // private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     @Override
     public Date unmarshal(final String v) throws Exception {
-        return DATE_FORMAT_HOLDER.get().parse(v);
+        final Instant l = LocalDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse(v))
+                .atZone(ZoneId.systemDefault()).toInstant();
+        return Date.from(l);
     }
 
     @Override
     public String marshal(final Date v) throws Exception {
-        return DATE_FORMAT_HOLDER.get().format(v);
+        final LocalDateTime l = v.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return DateTimeFormatter.RFC_1123_DATE_TIME.format(l);
     }
 }

@@ -1,7 +1,7 @@
 # EAPLI Framework Changelog
 
 
-## 15.1.0-SNAPSHOT
+## 16.0.0-SNAPSHOT
 
 ### What's new
 
@@ -9,7 +9,7 @@
 
 ### Changed
 
-- TBD
+- `XmlDateAdapter` use RFC 1123 for representing dates in XML
 
 
 ## 15.0.0

@@ -215,7 +215,7 @@ public interface Either<L, R> {
          *
          * @param <T>
          * @param mapper
-         * @return
+         * @return a new projection based on the application of the mapping function
          */
         <T> RightProjection<T> map(final Function<? super R, ? extends T> mapper);
 

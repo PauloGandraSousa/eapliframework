@@ -79,7 +79,8 @@ abstract class NumeralTestBase {
 
     @Test
     void ensureInvalidNumeralIsNotAccepted() {
+        final int base = getBase();
         final String subject = "12=F";
-        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(subject, getBase()));
+        assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(subject, base));
     }
 }

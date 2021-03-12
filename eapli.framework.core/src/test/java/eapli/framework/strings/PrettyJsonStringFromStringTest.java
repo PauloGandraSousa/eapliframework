@@ -57,6 +57,16 @@ public class PrettyJsonStringFromStringTest {
     }
 
     @Test
+    public void testWrongCol1() {
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_COL_1));
+    }
+
+    @Test
+    public void testWrongCol2() {
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_COL_2));
+    }
+
+    @Test
     public void testCol1() {
         final FormattedString p = PrettyJsonString.fromString(TEST_COL_1);
         final String fmtd = p.toString();

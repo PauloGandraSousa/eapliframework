@@ -63,7 +63,7 @@ public class PrefixedNumberSequenceGeneratorTest {
 
     @Test
     public void ensureLengthIsNotNegative() {
-        instance = new PrefixedNumberSequenceGenerator(PREFIX, -1);
+        assertThrows(IllegalArgumentException.class, () -> instance = new PrefixedNumberSequenceGenerator(PREFIX, -1));
     }
 
     @Test
