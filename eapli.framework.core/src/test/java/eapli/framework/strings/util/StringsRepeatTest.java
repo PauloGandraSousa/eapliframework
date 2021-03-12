@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 class StringsRepeatTest {
 
     @Test
-    public void ensureRepeat0Isempty() {
+    void ensureRepeat0Isempty() {
         final String result = Strings.repeat('-', 0);
         assertEquals(0, result.length());
     }

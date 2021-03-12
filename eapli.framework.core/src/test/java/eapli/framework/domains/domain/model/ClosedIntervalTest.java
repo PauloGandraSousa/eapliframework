@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,19 +23,19 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class ClosedIntervalTest extends IntervalTestBase {
+class ClosedIntervalTest extends IntervalTestBase {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         System.out.println("closedRange");
         subject = Interval.closedFrom(START).closedTo(END);
@@ -46,19 +46,19 @@ public class ClosedIntervalTest extends IntervalTestBase {
         System.out.println("ensureStartIsInRange");
         final Long target = Long.valueOf(START_VALUE);
         final boolean result = subject.includes(target);
-        assertTrue("start must be part of a closed range", result);
+        assertTrue(result, "start must be part of a closed range");
     }
 
     @Test
-    public void ensureEndIsInRange() {
+    void ensureEndIsInRange() {
         System.out.println("ensureEndIsInRange");
         final Long target = Long.valueOf(END_VALUE);
         final boolean result = subject.includes(target);
-        assertTrue("end must be part of a closed range", result);
+        assertTrue(result, "end must be part of a closed range");
     }
 
     @Test
-    public void ensureStringRepresentationIsOk() {
+    void ensureStringRepresentationIsOk() {
         final String expected = "[" + START + ", " + END + "]";
         final String actual = subject.toString();
         assertEquals(expected, actual);

@@ -73,7 +73,7 @@ class MathIsPrimeTest {
     }
 
     @Test
-    public void ensure9IsNotPrime() {
+    void ensure9IsNotPrime() {
         assertFalse(MathFunctions.isPrime(9));
     }
 

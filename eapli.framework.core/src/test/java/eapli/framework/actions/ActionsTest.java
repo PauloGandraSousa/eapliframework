@@ -36,30 +36,31 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class ActionsTest {
+class ActionsTest {
 
     @Test
-    public void testSucess() {
+    void testSucess() {
         assertTrue(Actions.SUCCESS.execute());
     }
 
     @Test
-    public void testFail() {
+    void testFail() {
         assertFalse(Actions.FAIL.execute());
     }
 
     @Test
-    public void testThrowState() {
+    void testThrowState() {
         assertThrows(IllegalStateException.class, () -> Actions.THROW_STATE.execute());
     }
 
     @Test
-    public void testThrowStateWithMsg() {
-        assertThrows(IllegalStateException.class, () -> Actions.throwState("Test").execute());
+    void testThrowStateWithMsg() {
+        final Action subject = Actions.throwState("Test");
+        assertThrows(IllegalStateException.class, () -> subject.execute());
     }
 
     @Test
-    public void testThrowStateWithMsgHasTheRightMessage() {
+    void testThrowStateWithMsgHasTheRightMessage() {
         try {
             Actions.throwState("Test").execute();
         } catch (final IllegalStateException e) {
@@ -70,17 +71,18 @@ public class ActionsTest {
     }
 
     @Test
-    public void testThrowArgument() {
+    void testThrowArgument() {
         assertThrows(IllegalArgumentException.class, () -> Actions.THROW_ARGUMENT.execute());
     }
 
     @Test
-    public void testThrowArgumentWithMsg() {
-        assertThrows(IllegalArgumentException.class, () -> Actions.throwArgument("Test").execute());
+    void testThrowArgumentWithMsg() {
+        final Action subject = Actions.throwArgument("Test");
+        assertThrows(IllegalArgumentException.class, () -> subject.execute());
     }
 
     @Test
-    public void testThrowArgumentWithMsgHasTheRightMessage() {
+    void testThrowArgumentWithMsgHasTheRightMessage() {
         try {
             Actions.throwArgument("Test").execute();
         } catch (final IllegalArgumentException e) {
@@ -91,73 +93,73 @@ public class ActionsTest {
     }
 
     @Test
-    public void ensureDoIf() {
+    void ensureDoIf() {
         final AdderHelper helper = new AdderHelper();
         Actions.doIf(helper.adder(), () -> true);
         assertEquals(1, helper.current());
     }
 
     @Test
-    public void ensureDoIfDoesnotExecuteIfFalse() {
+    void ensureDoIfDoesnotExecuteIfFalse() {
         final AdderHelper helper = new AdderHelper();
         Actions.doIf(helper.adder(), () -> false);
         assertEquals(0, helper.current());
     }
 
     @Test
-    public void ensureDoIfNot() {
+    void ensureDoIfNot() {
         final AdderHelper helper = new AdderHelper();
         Actions.doIfNot(helper.adder(), () -> false);
         assertEquals(1, helper.current());
     }
 
     @Test
-    public void ensureDoIfNotDoesnotExecuteIfTrue() {
+    void ensureDoIfNotDoesnotExecuteIfTrue() {
         final AdderHelper helper = new AdderHelper();
         Actions.doIfNot(helper.adder(), () -> true);
         assertEquals(0, helper.current());
     }
 
     @Test
-    public void ensureRepeat10Times() {
+    void ensureRepeat10Times() {
         final AdderHelper helper = new AdderHelper();
         Actions.repeat(helper.adder(), 10);
         assertEquals(10, helper.current());
     }
 
     @Test
-    public void ensureRepeat0Times() {
+    void ensureRepeat0Times() {
         final AdderHelper helper = new AdderHelper();
         Actions.repeat(helper.adder(), 0);
         assertEquals(0, helper.current());
     }
 
     @Test
-    public void ensureRepeatMinus1Times() {
+    void ensureRepeatMinus1Times() {
         final AdderHelper helper = new AdderHelper();
         Actions.repeat(helper.adder(), -1);
         assertEquals(0, helper.current());
     }
 
     @Test
-    public void ensureRetryWorksIfActionSucceeds() {
+    void ensureRetryWorksIfActionSucceeds() {
         assertTrue(Actions.retry(Actions.SUCCESS, 10, 20));
     }
 
     @Test
-    public void ensureRetryWorksAtFirst() {
+    void ensureRetryWorksAtFirst() {
         final AdderHelper helper = new AdderHelper();
         final boolean result = Actions.retry(helper.adder(), 10, 20);
         assertTrue(result && helper.current() == 1);
     }
 
     @Test
-    public void ensureRetryFailsIfActionFails() {
+    void ensureRetryFailsIfActionFails() {
         assertFalse(Actions.retry(Actions.FAIL, 10, 3));
     }
 
     @Test
-    public void ensureRetryRunsNTimesIfActionFails() {
+    void ensureRetryRunsNTimesIfActionFails() {
         final AdderHelper helper = new AdderHelper();
         final Action add1AndFail = () -> {
             helper.add1();

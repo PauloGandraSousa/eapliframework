@@ -34,7 +34,7 @@ import eapli.framework.actions.AdderHelper.AddAction;
  * @author Paulo Gandra de Sousa
  *
  */
-public class AddActionTest {
+class AddActionTest {
     private AdderHelper target;
     private AddAction subject;
 
@@ -42,19 +42,19 @@ public class AddActionTest {
      * @throws java.lang.Exception
      */
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         target = new AdderHelper();
         subject = new AddAction(target, 5);
     }
 
     @Test
-    public void ensureExecuteAdds() {
+    void ensureExecuteAdds() {
         subject.execute();
         assertEquals(5, target.current());
     }
 
     @Test
-    public void ensureUndo() {
+    void ensureUndo() {
         subject.execute();
         subject.undo();
         assertEquals(0, target.current());

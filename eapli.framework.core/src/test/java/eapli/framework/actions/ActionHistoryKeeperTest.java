@@ -36,36 +36,36 @@ import eapli.framework.actions.AdderHelper.AddAction;
  * @author Paulo Gandra de Sousa
  *
  */
-public class ActionHistoryKeeperTest {
+class ActionHistoryKeeperTest {
 
     private AdderHelper target;
     private ActionHistoryKeeper subject;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         target = new AdderHelper();
         subject = new ActionHistoryKeeper();
     }
 
     @Test
-    public void ensureCannotUndoIfThereWereNoActions() {
+    void ensureCannotUndoIfThereWereNoActions() {
         assertFalse(subject.canUndo());
     }
 
     @Test
-    public void ensureCanUndoIfThereWereActions() {
+    void ensureCanUndoIfThereWereActions() {
         final AddAction action = new AddAction(target, 5);
         subject.execute(action);
         assertTrue(subject.canUndo());
     }
 
     @Test
-    public void ensureCannotRedoIfThereWereNoUndos() {
+    void ensureCannotRedoIfThereWereNoUndos() {
         assertFalse(subject.canRedo());
     }
 
     @Test
-    public void ensureCanRedoIfThereWereUndos() {
+    void ensureCanRedoIfThereWereUndos() {
         final AddAction action = new AddAction(target, 5);
         subject.execute(action);
         subject.undo();
@@ -73,7 +73,7 @@ public class ActionHistoryKeeperTest {
     }
 
     @Test
-    public void testDoUndo() {
+    void testDoUndo() {
         // DO
         AddAction action = new AddAction(target, 2);
         subject.execute(action);

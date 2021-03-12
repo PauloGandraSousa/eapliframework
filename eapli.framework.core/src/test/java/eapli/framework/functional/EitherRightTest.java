@@ -35,7 +35,7 @@ import eapli.framework.functional.Either.RightProjection;
  * @author Paulo Gandra de Sousa
  *
  */
-public class EitherRightTest extends EitherBaseTest {
+class EitherRightTest extends EitherBaseTest {
 
     @Override
     Either<String, Integer> subject() {
@@ -45,27 +45,27 @@ public class EitherRightTest extends EitherBaseTest {
 
     @Override
     @Test
-    public void ensureCannotCreateFromNull() {
+    void ensureCannotCreateFromNull() {
         assertThrows(IllegalArgumentException.class, () -> Either.right(null));
     }
 
     @Override
     @Test
-    public void ensureOppositeValueOrElseThrowThrowsException() {
+    void ensureOppositeValueOrElseThrowThrowsException() {
         final Either<String, Integer> subject = subject();
         assertThrows(IllegalArgumentException.class, () -> subject.leftValueOrElseThrow(IllegalArgumentException::new));
     }
 
     @Override
     @Test
-    public void ensureHoldsValue() {
+    void ensureHoldsValue() {
         final Either<String, Integer> subject = subject();
         assertEquals(TESTING_INT, subject.rightValueOrElseThrow(IllegalArgumentException::new));
     }
 
     @Override
     @Test
-    public void ensureOppositeValueOrElseReturnsDefault() {
+    void ensureOppositeValueOrElseReturnsDefault() {
         final Either<String, Integer> subject = subject();
         final String DEFAULT = "ABC";
         assertEquals(DEFAULT, subject.leftValueOrElse(DEFAULT));
@@ -73,7 +73,7 @@ public class EitherRightTest extends EitherBaseTest {
 
     @Override
     @Test
-    public void ensureConsume() {
+    void ensureConsume() {
         final Either<String, Integer> subject = subject();
         subject.consume(stringLength, intValue);
         assertEquals(TESTING_INT, Integer.valueOf(helper.i));
@@ -81,7 +81,7 @@ public class EitherRightTest extends EitherBaseTest {
 
     @Override
     @Test
-    public void ensureMap() {
+    void ensureMap() {
         final Either<String, Integer> subject = subject();
         subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING_INT, Integer.valueOf(helper.i));
@@ -89,7 +89,7 @@ public class EitherRightTest extends EitherBaseTest {
 
     @Override
     @Test
-    public void ensureFilterIsEmpty() {
+    void ensureFilterIsEmpty() {
         final Either<String, Integer> subject = subject();
         assertTrue(subject.filter(x -> x.equals(TESTING.concat("ABC")),
                 y -> y == TESTING_INT + 1000) instanceof EmptyEither);
@@ -97,14 +97,14 @@ public class EitherRightTest extends EitherBaseTest {
 
     @Override
     @Test
-    public void ensureFilterIsNotEmpty() {
+    void ensureFilterIsNotEmpty() {
         final Either<String, Integer> subject = subject();
         assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT) instanceof EmptyEither);
     }
 
     @Override
     @Test
-    public void ensureFolding() {
+    void ensureFolding() {
         final Either<String, Integer> subject = subject();
         final int actual = subject.fold((x, y) -> x + y.length(), (x, y) -> x + y, 0);
         assertEquals(TESTING_INT.intValue(), actual);
@@ -112,7 +112,7 @@ public class EitherRightTest extends EitherBaseTest {
 
     @Override
     @Test
-    public void ensureSwap() {
+    void ensureSwap() {
         final Either<String, Integer> subject = subject();
         assertEquals(TESTING_INT, subject.swap().leftValueOrElseThrow(IllegalStateException::new));
     }

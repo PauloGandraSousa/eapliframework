@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,66 +20,66 @@
  */
 package eapli.framework.math.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa 28/05/2020
  *
  */
-public class MathTest {
+class MathTest {
 
     @Test
-    public void ensureFibonacci0() {
+    void ensureFibonacci0() {
         final BigInteger expected = BigInteger.valueOf(0);
         assertEquals(expected, Math.fibonacci(0));
     }
 
     @Test
-    public void ensureFibonacci1() {
+    void ensureFibonacci1() {
         final BigInteger expected = BigInteger.valueOf(1);
         assertEquals(expected, Math.fibonacci(1));
     }
 
     @Test
-    public void ensureFibonacci2() {
+    void ensureFibonacci2() {
         final BigInteger expected = BigInteger.valueOf(1);
         assertEquals(expected, Math.fibonacci(2));
     }
 
     @Test
-    public void ensureFibonacci3() {
+    void ensureFibonacci3() {
         final BigInteger expected = BigInteger.valueOf(2);
         assertEquals(expected, Math.fibonacci(3));
     }
 
     @Test
-    public void ensureFibonacci9() {
+    void ensureFibonacci9() {
         final BigInteger expected = BigInteger.valueOf(34);
         assertEquals(expected, Math.fibonacci(9));
     }
 
     @Test
-    public void ensureFibonacci10() {
+    void ensureFibonacci10() {
         final BigInteger expected = BigInteger.valueOf(55);
         assertEquals(expected, Math.fibonacci(10));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureFibonacciNegative() {
-        final BigInteger expected = BigInteger.valueOf(1);
-        assertEquals(expected, Math.fibonacci(-3));
+    @Test
+    void ensureFibonacciNegative() {
+        assertThrows(IllegalArgumentException.class, () -> Math.fibonacci(-3));
     }
 
     @Test
-    public void ensureFirst10Fibonacci() {
+    void ensureFirst10Fibonacci() {
         final List<Integer> auxExpected = Arrays.asList(0, 1, 1, 2, 3, 5, 8, 13, 21, 34);
         final List<BigInteger> expected = auxExpected.stream().map(i -> BigInteger.valueOf(i))
                 .collect(Collectors.toList());
@@ -91,7 +91,7 @@ public class MathTest {
     }
 
     @Test
-    public void ensureFirstFibonacci() {
+    void ensureFirstFibonacci() {
         final List<Integer> auxExpected = Arrays.asList(0);
         final List<BigInteger> expected = auxExpected.stream().map(i -> BigInteger.valueOf(i))
                 .collect(Collectors.toList());
@@ -102,7 +102,7 @@ public class MathTest {
     }
 
     @Test
-    public void ensureFirst2Fibonacci() {
+    void ensureFirst2Fibonacci() {
         final List<Integer> auxExpected = Arrays.asList(0, 1);
         final List<BigInteger> expected = auxExpected.stream().map(i -> BigInteger.valueOf(i))
                 .collect(Collectors.toList());

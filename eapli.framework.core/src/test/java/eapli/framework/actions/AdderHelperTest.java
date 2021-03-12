@@ -32,19 +32,19 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class AdderHelperTest {
+class AdderHelperTest {
 
     private final AdderHelper instance = new AdderHelper();
 
     @Test
-    public void testAdd10() {
+    void testAdd10() {
         final int expected = 10;
         instance.add(10);
         assertEquals(expected, instance.current());
     }
 
     @Test
-    public void testSubtract10() {
+    void testSubtract10() {
         final int expected = -10;
         instance.subtract(10);
         assertEquals(expected, instance.current());
