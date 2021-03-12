@@ -36,7 +36,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  * @author Paulo Gandra Sousa
  *
  */
-public class MoneyValueOfTest {
+class MoneyValueOfTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -46,7 +46,7 @@ public class MoneyValueOfTest {
             "9 EUR, 9",
             "999999999999.50 EUR, 999999999999.50"
     })
-    public void properString(final String test, final double e) {
+    void properString(final String test, final double e) {
         final Money instance = Money.valueOf(test);
         final Money expected = Money.euros(e);
         assertEquals(expected, instance);
@@ -60,7 +60,7 @@ public class MoneyValueOfTest {
             "9.4", // no currency
             "USD" // no amount
     })
-    public void ensureInvalidStringThrows(final String test) {
+    void ensureInvalidStringThrows(final String test) {
         assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
     }
 }

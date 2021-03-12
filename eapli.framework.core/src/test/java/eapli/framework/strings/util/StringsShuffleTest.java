@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,22 +20,22 @@
  */
 package eapli.framework.strings.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra Sousa 28/05/2020
  *
  */
-public class StringsShuffleTest {
+class StringsShuffleTest {
     private static final Logger LOGGER = LogManager.getLogger(StringsShuffleTest.class);
 
     @Test
-    public void testMantainsLength() {
+    void testMantainsLength() {
         ensure1MantainsLength("ABCDEFG");
         ensure1MantainsLength("ABC");
         ensure1MantainsLength("ABCDEFG 12345");
@@ -44,7 +44,7 @@ public class StringsShuffleTest {
     }
 
     @Test
-    public void testIsNotTheSame() {
+    void testIsNotTheSame() {
         ensure1IsNotTheSame("ABCDEFG");
         ensure1IsNotTheSame("ABC fgh");
         ensure1IsNotTheSame("ABCDEFG 12345");
@@ -62,5 +62,4 @@ public class StringsShuffleTest {
         LOGGER.debug("Suffled |{}| to |{}|", test, r);
         assertNotEquals(test, r);
     }
-
 }

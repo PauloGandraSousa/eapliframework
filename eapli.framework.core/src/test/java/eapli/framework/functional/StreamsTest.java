@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,24 +23,24 @@
  */
 package eapli.framework.functional;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-public class StreamsTest {
+class StreamsTest {
 
     /**
      * Test method for
      * {@link eapli.framework.functional.Streams#zip(java.util.stream.Stream, java.util.stream.Stream, java.util.function.BiFunction)}.
      */
     @Test
-    public void testZipIntArrays() {
+    void testZipIntArrays() {
         final Integer[] a = new Integer[] { 2, 4, 6 };
         final Integer[] b = new Integer[] { 2, 4, 6 };
 

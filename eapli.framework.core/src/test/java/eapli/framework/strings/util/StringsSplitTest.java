@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,17 +23,17 @@
  */
 package eapli.framework.strings.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa 03/06/2020
  */
-public class StringsSplitTest {
+class StringsSplitTest {
 
     private static final Logger LOGGER = LogManager.getLogger(StringsSplitTest.class);
 
@@ -52,7 +52,7 @@ public class StringsSplitTest {
     private static final String FIXTURE_MIDDLE_NO_CONTENT = "ab,,cd";
 
     @Test
-    public void ensureWith3DelimetersHas3Tokens() {
+    void ensureWith3DelimetersHas3Tokens() {
         final String FIXTURE_SIMPLE_SPACE = "I Love Rock-n-Roll";
         final String[] subject = Strings.split(FIXTURE_SIMPLE_SPACE, " ");
 
@@ -65,7 +65,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitAllSpacesStringHas0Tokens() {
+    void ensureSplitAllSpacesStringHas0Tokens() {
         final String[] subject = Strings.split(FIXTURE_ALL_SPACES, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_ALL_SPACES, subject);
@@ -74,7 +74,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitEmptyStringHas1Token() {
+    void ensureSplitEmptyStringHas1Token() {
         final String[] subject = Strings.split(FIXTURE_EMPTY, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_EMPTY, subject);
@@ -83,7 +83,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitNocontentInFieldIsStillCounted() {
+    void ensureSplitNocontentInFieldIsStillCounted() {
         final String[] subject = Strings.split(FIXTURE_MIDDLE_NO_CONTENT, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_MIDDLE_NO_CONTENT, subject);
@@ -95,7 +95,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitNocontentInFieldIsStillCounted2() {
+    void ensureSplitNocontentInFieldIsStillCounted2() {
         final String[] subject = Strings.split(FIXTURE_FIRST_NO_CONTENT, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_FIRST_NO_CONTENT, subject);
@@ -108,7 +108,7 @@ public class StringsSplitTest {
 
     // not really what is expected, but according to the specification...
     @Test
-    public void ensureSplitNoContentHas0Tokens() {
+    void ensureSplitNoContentHas0Tokens() {
         final String[] subject = Strings.split(FIXTURE_ALL_NO_CONTENT, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_ALL_NO_CONTENT, subject);
@@ -117,7 +117,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitNocontentInFieldIsStillCounted4() {
+    void ensureSplitNocontentInFieldIsStillCounted4() {
         final String[] subject = Strings.split(FIXTURE_ALL_NO_CONTENT_WITH_SPACE, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_ALL_NO_CONTENT_WITH_SPACE, subject);
@@ -129,7 +129,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitStringWithNoDelimeterHas1Token() {
+    void ensureSplitStringWithNoDelimeterHas1Token() {
         final String[] subject = Strings.split(FIXTURE_SINGLE_FIELD, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_SINGLE_FIELD, subject);
@@ -139,7 +139,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitTokensAreTrimmed() {
+    void ensureSplitTokensAreTrimmed() {
         final String[] subject = Strings.split(FIXTURE_WITH_SPACES, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_WITH_SPACES, subject);
@@ -151,7 +151,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitQuoted() {
+    void ensureSplitQuoted() {
         final String[] subject = Strings.split(FIXTURE_QUOTED, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_QUOTED, subject);
@@ -164,7 +164,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitSimple() {
+    void ensureSplitSimple() {
         final String[] subject = Strings.split(FIXTURE_SIMPLE, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_SIMPLE, subject);
@@ -175,7 +175,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitNoContent() {
+    void ensureSplitNoContent() {
         final String[] subject = Strings.split(FIXTURE_NO_CONTENT_FIELDS, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_NO_CONTENT_FIELDS, subject);
@@ -189,7 +189,7 @@ public class StringsSplitTest {
 
     // not really what is expected, but according to the specification
     @Test
-    public void ensureSplitNoContent2() {
+    void ensureSplitNoContent2() {
         final String[] subject = Strings.split(FIXTURE_NO_CONTENT_FIELDS2, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_NO_CONTENT_FIELDS2, subject);
@@ -199,7 +199,7 @@ public class StringsSplitTest {
     }
 
     @Test
-    public void ensureSplitNoContent3() {
+    void ensureSplitNoContent3() {
         final String[] subject = Strings.split(FIXTURE_NO_CONTENT_FIELDS3, ",");
 
         LOGGER.info("SPLIT: {} -> {}", FIXTURE_NO_CONTENT_FIELDS3, subject);

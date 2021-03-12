@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,28 +23,27 @@
  */
 package eapli.framework.strings.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-
-import eapli.framework.strings.util.Strings;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class StringsTruncateTest {
+class StringsTruncateTest {
 
     private static final String TEST_STRING = "1234567890";
 
     @Test
-    public void ensureTruncate5HasLength5() {
+    void ensureTruncate5HasLength5() {
         final String subject = Strings.truncate(TEST_STRING, 5);
         assertEquals(5, subject.length());
     }
 
     @Test
-    public void ensureTruncate5HasFirst5CharsOfOriginal() {
+    void ensureTruncate5HasFirst5CharsOfOriginal() {
         final String subject = Strings.truncate(TEST_STRING, 5);
         for (int i = 0; i < 5; i++) {
             assertEquals(TEST_STRING.charAt(i), subject.charAt(i));
@@ -52,24 +51,24 @@ public class StringsTruncateTest {
     }
 
     @Test
-    public void ensureTruncateBiggerThanLengthHasOriginalString() {
+    void ensureTruncateBiggerThanLengthHasOriginalString() {
         final String subject = Strings.truncate(TEST_STRING, 2 + TEST_STRING.length());
         assertEquals(TEST_STRING, subject);
     }
 
     @Test
-    public void ensureTruncateLengthHasOriginalString() {
+    void ensureTruncateLengthHasOriginalString() {
         final String subject = Strings.truncate(TEST_STRING, TEST_STRING.length());
         assertEquals(TEST_STRING, subject);
     }
 
-    @Test(expected = StringIndexOutOfBoundsException.class)
-    public void ensureTruncateNegativeHasOriginalString() {
-        Strings.truncate(TEST_STRING, -1);
+    @Test
+    void ensureTruncateNegativeHasOriginalString() {
+        assertThrows(StringIndexOutOfBoundsException.class, () -> Strings.truncate(TEST_STRING, -1));
     }
 
     @Test
-    public void ensureTruncateZeroHasemptyString() {
+    void ensureTruncateZeroHasemptyString() {
         final String subject = Strings.truncate(TEST_STRING, 0);
         assertEquals("", subject);
     }

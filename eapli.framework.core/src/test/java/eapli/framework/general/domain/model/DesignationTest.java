@@ -33,30 +33,30 @@ import org.junit.jupiter.api.Test;
  *
  */
 @Tag("junit5")
-public class DesignationTest {
+class DesignationTest {
 
     @Test
-    public void ensureNotNull() {
+    void ensureNotNull() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(null));
     }
 
     @Test
-    public void ensureNotEmpty() {
+    void ensureNotEmpty() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(""));
     }
 
     @Test
-    public void ensureNoHeadingWhitespace() {
+    void ensureNoHeadingWhitespace() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC"));
     }
 
     @Test
-    public void ensureNoTrailingWhitespace() {
+    void ensureNoTrailingWhitespace() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("ABC   "));
     }
 
     @Test
-    public void ensureNoHeadingNorTrailingWhitespace() {
+    void ensureNoHeadingNorTrailingWhitespace() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC  "));
     }
 
@@ -66,7 +66,7 @@ public class DesignationTest {
     }
 
     @Test
-    public void ensureStartsWithSomething() {
+    void ensureStartsWithSomething() {
         Assertions.assertNotNull(Designation.valueOf("ABC"));
     }
 }

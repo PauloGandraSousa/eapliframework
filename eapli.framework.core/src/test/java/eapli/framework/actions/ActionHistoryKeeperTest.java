@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,12 +23,12 @@
  */
 package eapli.framework.actions;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.actions.AdderHelper.AddAction;
 
@@ -41,7 +41,7 @@ public class ActionHistoryKeeperTest {
     private AdderHelper target;
     private ActionHistoryKeeper subject;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         target = new AdderHelper();
         subject = new ActionHistoryKeeper();

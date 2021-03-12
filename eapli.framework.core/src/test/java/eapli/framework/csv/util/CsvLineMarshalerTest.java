@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,19 +23,20 @@
  */
 package eapli.framework.csv.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.text.ParseException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa 04/06/2020
  */
-public class CsvLineMarshalerTest {
+class CsvLineMarshalerTest {
 
     private static final Logger LOGGER = LogManager.getLogger(CsvLineMarshalerTest.class);
 
@@ -67,7 +68,7 @@ public class CsvLineMarshalerTest {
     private static final String FIXTURE_MISSING_END_QUOTE_IN_FIELD2 = "a, sdb,\"";
 
     @Test
-    public void ensureEscapeQuotes() {
+    void ensureEscapeQuotes() {
         final String input = "The girl said\"hello\"";
         final String expected = "The girl said\"\"hello\"\"";
 
@@ -77,7 +78,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureEscapeQuotesEvenWithoutQuotes() {
+    void ensureEscapeQuotesEvenWithoutQuotes() {
         final String input = "The girl";
         final String expected = "The girl";
 
@@ -87,7 +88,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnescapeQuotes() {
+    void ensureUnescapeQuotes() {
         final String input = "The girl said\"\"hello\"\"";
         final String expected = "The girl said\"hello\"";
 
@@ -97,7 +98,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnescapeQuotesEvenWithoutQuotes() {
+    void ensureUnescapeQuotesEvenWithoutQuotes() {
         final String input = "The girl";
         final String expected = "The girl";
 
@@ -107,7 +108,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureQuoteEmpty() {
+    void ensureQuoteEmpty() {
         final String input = "";
         final String expected = "\"\"";
 
@@ -117,7 +118,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureQuote1() {
+    void ensureQuote1() {
         final String input = "A";
         final String expected = "\"A\"";
 
@@ -127,7 +128,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureQuote() {
+    void ensureQuote() {
         final String input = "Abc";
         final String expected = "\"Abc\"";
 
@@ -137,7 +138,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureQuoteDoesNotChangeIfThereAreQuotes() {
+    void ensureQuoteDoesNotChangeIfThereAreQuotes() {
         final String input = "\"A\"";
         final String expected = "\"A\"";
 
@@ -147,7 +148,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnquoteEmpty() {
+    void ensureUnquoteEmpty() {
         final String input = "";
         final String expected = "";
 
@@ -157,7 +158,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnquoteEmpty1() {
+    void ensureUnquoteEmpty1() {
         final String input = "\"\"";
         final String expected = "";
 
@@ -167,7 +168,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnquote1() {
+    void ensureUnquote1() {
         final String input = "\"A\"";
         final String expected = "A";
 
@@ -177,7 +178,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnquote() {
+    void ensureUnquote() {
         final String input = "\"Abc\"";
         final String expected = "Abc";
 
@@ -187,7 +188,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureUnquoteDoesNotChangeIfThereAreNoQuotes() {
+    void ensureUnquoteDoesNotChangeIfThereAreNoQuotes() {
         final String input = "Abc";
         final String expected = "Abc";
 
@@ -201,7 +202,7 @@ public class CsvLineMarshalerTest {
     //
 
     @Test
-    public void ensureTokenizeAllSpaces() throws ParseException {
+    void ensureTokenizeAllSpaces() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ALL_SPACES).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_SPACES, subject);
@@ -211,7 +212,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeEmpty() throws ParseException {
+    void ensureTokenizeEmpty() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_EMPTY).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_EMPTY, subject);
@@ -220,7 +221,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeNocontentInFieldIsStillCounted() throws ParseException {
+    void ensureTokenizeNocontentInFieldIsStillCounted() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_MIDDLE_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_MIDDLE_NO_CONTENT, subject);
@@ -232,7 +233,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeNoContentInFieldIsStillCounted2() throws ParseException {
+    void ensureTokenizeNoContentInFieldIsStillCounted2() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_FIRST_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_FIRST_NO_CONTENT, subject);
@@ -244,7 +245,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeNoContentInFieldIsStillCounted3() throws ParseException {
+    void ensureTokenizeNoContentInFieldIsStillCounted3() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ALL_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_NO_CONTENT, subject);
@@ -256,7 +257,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeNocontentInFieldIsStillCounted4() throws ParseException {
+    void ensureTokenizeNocontentInFieldIsStillCounted4() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ALL_NO_CONTENT_WITH_SPACE).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ALL_NO_CONTENT_WITH_SPACE, subject);
@@ -268,7 +269,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeStringWithNoDelimeterHas1Token() throws ParseException {
+    void ensureTokenizeStringWithNoDelimeterHas1Token() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_SINGLE_FIELD).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_SINGLE_FIELD, subject);
@@ -278,7 +279,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeTokensAreTrimmed() throws ParseException {
+    void ensureTokenizeTokensAreTrimmed() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_WITH_SPACES).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_WITH_SPACES, subject);
@@ -290,7 +291,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeQuoted0() throws ParseException {
+    void ensureTokenizeQuoted0() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_QUOTED0).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED0, subject);
@@ -300,7 +301,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeQuoted() throws ParseException {
+    void ensureTokenizeQuoted() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_QUOTED1).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED1, subject);
@@ -313,7 +314,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeQuoted2() throws ParseException {
+    void ensureTokenizeQuoted2() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_QUOTED2).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED2, subject);
@@ -326,7 +327,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeQuoted3() throws ParseException {
+    void ensureTokenizeQuoted3() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_QUOTED3).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_QUOTED3, subject);
@@ -339,7 +340,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeCommaInQuotes() throws ParseException {
+    void ensureTokenizeCommaInQuotes() throws ParseException {
         final String FIXTURE_COMMA_IN_QUOTES = "123, \"I think, therefore I am\", 321";
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_COMMA_IN_QUOTES).toArray(new String[0]);
 
@@ -352,7 +353,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeSimple() throws ParseException {
+    void ensureTokenizeSimple() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_SIMPLE).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_SIMPLE, subject);
@@ -363,7 +364,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeNoContent() throws ParseException {
+    void ensureTokenizeNoContent() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_NO_CONTENT_FIELDS).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS, subject);
@@ -376,7 +377,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeNoContent2() throws ParseException {
+    void ensureTokenizeNoContent2() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_NO_CONTENT_FIELDS2).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS2, subject);
@@ -389,7 +390,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeNoContent3() throws ParseException {
+    void ensureTokenizeNoContent3() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_NO_CONTENT_FIELDS3).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS3, subject);
@@ -401,13 +402,13 @@ public class CsvLineMarshalerTest {
         assertEquals("", subject[3]);
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void ensureTokenizeThrowsForUnescapedQuoteInField() throws ParseException {
-        CsvLineMarshaler.tokenize(FIXTURE_QUOTE_IN_FIELD);
+        assertThrows(ParseException.class, () -> CsvLineMarshaler.tokenize(FIXTURE_QUOTE_IN_FIELD));
     }
 
     @Test
-    public void ensureTokeniseEscapedQuoteInField() throws ParseException {
+    void ensureTokeniseEscapedQuoteInField() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ESCAPED_QUOTE_IN_FIELD).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD, subject);
@@ -419,7 +420,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeEscapedQuoteInField1() throws ParseException {
+    void ensureTokenizeEscapedQuoteInField1() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ESCAPED_QUOTE_IN_FIELD1).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD1, subject);
@@ -429,7 +430,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeEscapedQuoteInField2() throws ParseException {
+    void ensureTokenizeEscapedQuoteInField2() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ESCAPED_QUOTE_IN_FIELD2).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD2, subject);
@@ -439,7 +440,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeEscapedQuoteInField3() throws ParseException {
+    void ensureTokenizeEscapedQuoteInField3() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ESCAPED_QUOTE_IN_FIELD3).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD3, subject);
@@ -449,7 +450,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeEscapedQuoteInField4() throws ParseException {
+    void ensureTokenizeEscapedQuoteInField4() throws ParseException {
         final String[] subject = CsvLineMarshaler.tokenize(FIXTURE_ESCAPED_QUOTE_IN_FIELD4).toArray(new String[0]);
 
         LOGGER.info("TOKENIZE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD4, subject);
@@ -458,26 +459,26 @@ public class CsvLineMarshalerTest {
         assertEquals("\"\"\"\"\"\"", subject[0]);
     }
 
-    @Test(expected = ParseException.class)
-    public void ensureTokenizeThrowsForUnescapedQuoteInField2() throws ParseException {
-        CsvLineMarshaler.tokenize(FIXTURE_QUOTE_IN_FIELD2);
+    @Test
+    void ensureTokenizeThrowsForUnescapedQuoteInField2() throws ParseException {
+        assertThrows(ParseException.class, () -> CsvLineMarshaler.tokenize(FIXTURE_QUOTE_IN_FIELD2));
     }
 
-    @Test(expected = ParseException.class)
-    public void ensureTokenizeMissingQuoteInField() throws ParseException {
-        CsvLineMarshaler.tokenize(FIXTURE_MISSING_END_QUOTE_IN_FIELD);
+    @Test
+    void ensureTokenizeMissingQuoteInField() throws ParseException {
+        assertThrows(ParseException.class, () -> CsvLineMarshaler.tokenize(FIXTURE_MISSING_END_QUOTE_IN_FIELD));
     }
 
-    @Test(expected = ParseException.class)
-    public void ensureTokenizeMissingQuoteInField2() throws ParseException {
-        CsvLineMarshaler.tokenize(FIXTURE_MISSING_END_QUOTE_IN_FIELD2);
+    @Test
+    void ensureTokenizeMissingQuoteInField2() throws ParseException {
+        assertThrows(ParseException.class, () -> CsvLineMarshaler.tokenize(FIXTURE_MISSING_END_QUOTE_IN_FIELD2));
     }
 
     //
     // parse
     //
     @Test
-    public void ensureParseAllSpaces() throws ParseException {
+    void ensureParseAllSpaces() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ALL_SPACES).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ALL_SPACES, subject);
@@ -487,7 +488,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseEmpty() throws ParseException {
+    void ensureParseEmpty() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_EMPTY).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_EMPTY, subject);
@@ -496,7 +497,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseNocontentInFieldIsStillCounted() throws ParseException {
+    void ensureParseNocontentInFieldIsStillCounted() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_MIDDLE_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_MIDDLE_NO_CONTENT, subject);
@@ -508,7 +509,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseNocontentInFieldIsStillCounted2() throws ParseException {
+    void ensureParseNocontentInFieldIsStillCounted2() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_FIRST_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_FIRST_NO_CONTENT, subject);
@@ -520,7 +521,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseNocontentInFieldIsStillCounted3() throws ParseException {
+    void ensureParseNocontentInFieldIsStillCounted3() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ALL_NO_CONTENT).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ALL_NO_CONTENT, subject);
@@ -532,7 +533,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseNocontentInFieldIsStillCounted4() throws ParseException {
+    void ensureParseNocontentInFieldIsStillCounted4() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ALL_NO_CONTENT_WITH_SPACE).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ALL_NO_CONTENT_WITH_SPACE, subject);
@@ -544,7 +545,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseStringWithNoDelimeterHas1Token() throws ParseException {
+    void ensureParseStringWithNoDelimeterHas1Token() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_SINGLE_FIELD).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_SINGLE_FIELD, subject);
@@ -554,7 +555,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseTokensAreTrimmed() throws ParseException {
+    void ensureParseTokensAreTrimmed() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_WITH_SPACES).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_WITH_SPACES, subject);
@@ -566,7 +567,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseQuoted0() throws ParseException {
+    void ensureParseQuoted0() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_QUOTED0).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_QUOTED0, subject);
@@ -576,7 +577,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseQuoted() throws ParseException {
+    void ensureParseQuoted() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_QUOTED1).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_QUOTED1, subject);
@@ -589,7 +590,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseQuoted2() throws ParseException {
+    void ensureParseQuoted2() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_QUOTED2).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_QUOTED2, subject);
@@ -602,7 +603,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseQuoted3() throws ParseException {
+    void ensureParseQuoted3() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_QUOTED3).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_QUOTED3, subject);
@@ -615,7 +616,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseCommaInQuotes() throws ParseException {
+    void ensureParseCommaInQuotes() throws ParseException {
         final String FIXTURE_COMMA_IN_QUOTES = "123, \"I think, therefore I am\", 321";
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_COMMA_IN_QUOTES).toArray(new String[0]);
 
@@ -628,7 +629,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseSimple() throws ParseException {
+    void ensureParseSimple() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_SIMPLE).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_SIMPLE, subject);
@@ -639,7 +640,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseNoContent() throws ParseException {
+    void ensureParseNoContent() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_NO_CONTENT_FIELDS).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS, subject);
@@ -652,7 +653,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseNoContent2() throws ParseException {
+    void ensureParseNoContent2() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_NO_CONTENT_FIELDS2).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS2, subject);
@@ -665,7 +666,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseNoContent3() throws ParseException {
+    void ensureParseNoContent3() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_NO_CONTENT_FIELDS3).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_NO_CONTENT_FIELDS3, subject);
@@ -677,13 +678,13 @@ public class CsvLineMarshalerTest {
         assertEquals("", subject[3]);
     }
 
-    @Test(expected = ParseException.class)
-    public void ensureParseQuoteInField() throws ParseException {
-        CsvLineMarshaler.parse(FIXTURE_QUOTE_IN_FIELD).toArray(new String[0]);
+    @Test
+    void ensureParseQuoteInField() throws ParseException {
+        assertThrows(ParseException.class, () -> CsvLineMarshaler.parse(FIXTURE_QUOTE_IN_FIELD).toArray(new String[0]));
     }
 
     @Test
-    public void ensureParseEscapedQuoteInField() throws ParseException {
+    void ensureParseEscapedQuoteInField() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ESCAPED_QUOTE_IN_FIELD).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD, subject);
@@ -695,7 +696,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseEscapedQuoteInField1() throws ParseException {
+    void ensureParseEscapedQuoteInField1() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ESCAPED_QUOTE_IN_FIELD1).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD1, subject);
@@ -705,7 +706,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseEscapedQuoteInField2() throws ParseException {
+    void ensureParseEscapedQuoteInField2() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ESCAPED_QUOTE_IN_FIELD2).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD2, subject);
@@ -715,7 +716,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseEscapedQuoteInField3() throws ParseException {
+    void ensureParseEscapedQuoteInField3() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ESCAPED_QUOTE_IN_FIELD3).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD3, subject);
@@ -725,7 +726,7 @@ public class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureParseEscapedQuoteInField4() throws ParseException {
+    void ensureParseEscapedQuoteInField4() throws ParseException {
         final String[] subject = CsvLineMarshaler.parse(FIXTURE_ESCAPED_QUOTE_IN_FIELD4).toArray(new String[0]);
 
         LOGGER.info("PARSE: {} -> {}", FIXTURE_ESCAPED_QUOTE_IN_FIELD4, subject);
@@ -734,18 +735,21 @@ public class CsvLineMarshalerTest {
         assertEquals("\"\"\"\"\"\"", subject[0]);
     }
 
-    @Test(expected = ParseException.class)
-    public void ensureParseQuoteInField2() throws ParseException {
-        CsvLineMarshaler.parse(FIXTURE_QUOTE_IN_FIELD2).toArray(new String[0]);
+    @Test
+    void ensureParseQuoteInField2() throws ParseException {
+        assertThrows(ParseException.class,
+                () -> CsvLineMarshaler.parse(FIXTURE_QUOTE_IN_FIELD2).toArray(new String[0]));
     }
 
-    @Test(expected = ParseException.class)
-    public void ensureParseMissingQuoteInField() throws ParseException {
-        CsvLineMarshaler.parse(FIXTURE_MISSING_END_QUOTE_IN_FIELD).toArray(new String[0]);
+    @Test
+    void ensureParseMissingQuoteInField() throws ParseException {
+        assertThrows(ParseException.class,
+                () -> CsvLineMarshaler.parse(FIXTURE_MISSING_END_QUOTE_IN_FIELD).toArray(new String[0]));
     }
 
-    @Test(expected = ParseException.class)
-    public void ensureParseMissingQuoteInField2() throws ParseException {
-        CsvLineMarshaler.parse(FIXTURE_MISSING_END_QUOTE_IN_FIELD2).toArray(new String[0]);
+    @Test
+    void ensureParseMissingQuoteInField2() throws ParseException {
+        assertThrows(ParseException.class,
+                () -> CsvLineMarshaler.parse(FIXTURE_MISSING_END_QUOTE_IN_FIELD2).toArray(new String[0]));
     }
 }

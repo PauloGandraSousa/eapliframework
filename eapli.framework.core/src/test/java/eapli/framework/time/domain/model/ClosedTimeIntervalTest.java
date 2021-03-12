@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,14 +23,13 @@
  */
 package eapli.framework.time.domain.model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Calendar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import eapli.framework.time.domain.model.TimeInterval;
 import eapli.framework.time.util.Calendars;
 
 /**
@@ -46,32 +45,32 @@ public class ClosedTimeIntervalTest {
 
     @Test
     public void ensureIncludesStart() {
-        assertTrue("Start is not included", INSTANCE.includes(START));
+        assertTrue(INSTANCE.includes(START), "Start is not included");
     }
 
     @Test
     public void ensureIncludesEnd() {
-        assertTrue("End is not included", INSTANCE.includes(END));
+        assertTrue(INSTANCE.includes(END), "End is not included");
     }
 
     @Test
     public void ensureIncludesMid() {
         final Calendar mid = (Calendar) START.clone();
         mid.add(Calendar.DATE, 2);
-        assertTrue("Mid is not included", INSTANCE.includes(mid));
+        assertTrue(INSTANCE.includes(mid), "Mid is not included");
     }
 
     @Test
     public void ensureDoesntIncludeBeforeStart() {
         final Calendar before = (Calendar) START.clone();
         before.add(Calendar.DATE, -2);
-        assertFalse("Mid is not included", INSTANCE.includes(before));
+        assertFalse(INSTANCE.includes(before), "Mid is not included");
     }
 
     @Test
     public void ensureDoesntIncludeAfterEnd() {
         final Calendar after = (Calendar) END.clone();
         after.add(Calendar.DATE, 2);
-        assertFalse("Mid is not included", INSTANCE.includes(after));
+        assertFalse(INSTANCE.includes(after), "Mid is not included");
     }
 }

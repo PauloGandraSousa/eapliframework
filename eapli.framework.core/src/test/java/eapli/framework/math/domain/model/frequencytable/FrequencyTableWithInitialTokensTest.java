@@ -35,15 +35,15 @@ import eapli.framework.math.domain.model.FrequencyTable;
  *
  * @author Paulo Gandra Sousa 28/05/2020
  */
-public class FrequencyTableWithInitialTokensTest extends FrequencyTableWithInitialTokensBaseTest {
+class FrequencyTableWithInitialTokensTest extends FrequencyTableWithInitialTokensBaseTest {
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         subject = new FrequencyTable<>(Arrays.asList("a", "w"), false);
     }
 
     @Test
-    public void ensureHasRightTokens() {
+    void ensureHasRightTokens() {
         subject.collect("a");
         subject.collect("b");
         subject.collect("c");
@@ -56,7 +56,7 @@ public class FrequencyTableWithInitialTokensTest extends FrequencyTableWithIniti
     }
 
     @Test
-    public void ensureHasRightFrequencies() {
+    void ensureHasRightFrequencies() {
         initSample();
 
         assertEquals(3L, subject.frequencyOf("a"));
@@ -66,7 +66,7 @@ public class FrequencyTableWithInitialTokensTest extends FrequencyTableWithIniti
     }
 
     @Test
-    public void ensureUnknownTokenHasFrequency0() {
+    void ensureUnknownTokenHasFrequency0() {
         initSample();
 
         assertEquals(0L, subject.frequencyOf("z"));

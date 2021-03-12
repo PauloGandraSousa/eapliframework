@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,52 +23,52 @@
  */
 package eapli.framework.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-public class MathIsPrimeTest {
+class MathIsPrimeTest {
 
     /**
      * Test method for
      * {@link eapli.framework.functional.MathFunctions#isPrime(int)}.
      */
     @Test
-    public void ensure1IsPrime() {
+    void ensure1IsPrime() {
         assertTrue(MathFunctions.isPrime(1));
     }
 
     @Test
-    public void ensure2IsPrime() {
+    void ensure2IsPrime() {
         assertTrue(MathFunctions.isPrime(2));
     }
 
     @Test
-    public void ensure3IsPrime() {
+    void ensure3IsPrime() {
         assertTrue(MathFunctions.isPrime(3));
     }
 
     @Test
-    public void ensure4IsNotPrime() {
+    void ensure4IsNotPrime() {
         assertFalse(MathFunctions.isPrime(4));
     }
 
     @Test
-    public void ensure5IsPrime() {
+    void ensure5IsPrime() {
         assertTrue(MathFunctions.isPrime(5));
     }
 
     @Test
-    public void ensure7IsPrime() {
+    void ensure7IsPrime() {
         assertTrue(MathFunctions.isPrime(7));
     }
 
@@ -78,12 +78,12 @@ public class MathIsPrimeTest {
     }
 
     @Test
-    public void ensure15IsNotPrime() {
+    void ensure15IsNotPrime() {
         assertFalse(MathFunctions.isPrime(15));
     }
 
     @Test
-    public void ensure21IsNotPrime() {
+    void ensure21IsNotPrime() {
         assertFalse(MathFunctions.isPrime(21));
     }
 
@@ -108,7 +108,7 @@ public class MathIsPrimeTest {
             977, 983, 991, 997 };
 
     @Test
-    public void ensureFirst168Primes() {
+    void ensureFirst168Primes() {
 
         assertTrue(Arrays.stream(first168Primes).allMatch(MathFunctions::isPrime));
         /*
@@ -120,14 +120,14 @@ public class MathIsPrimeTest {
     }
 
     @Test
-    public void ensureNoPrimeUpTo998() {
+    void ensureNoPrimeUpTo998() {
         final IntStream notPrimes = IntStream.range(2, 998)
                 .filter(i -> Arrays.binarySearch(first168Primes, Integer.valueOf(i)) < 0);
         assertTrue(notPrimes.noneMatch(MathFunctions::isPrime));
     }
 
     @Test
-    public void ensureThereAre168PrimesUpTo998() {
+    void ensureThereAre168PrimesUpTo998() {
         assertEquals(first168Primes.length, MathFunctions.countPrimes(998));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,15 +23,15 @@
  */
 package eapli.framework.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 import java.time.Instant;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.util.Collections;
 
@@ -39,7 +39,7 @@ import eapli.framework.util.Collections;
  * @author Paulo Gandra de Sousa 25/06/2019
  *
  */
-public class ValueHistoryTest {
+class ValueHistoryTest {
 
     private static final Integer FORTY_TWO = Integer.valueOf(42);
 
@@ -52,14 +52,14 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureSingleHasValue() {
+    void ensureSingleHasValue() {
         final ValueHistory<Integer> subject = singleSubject();
 
         assertEquals(FORTY_TWO, subject.value());
     }
 
     @Test
-    public void ensureSingleHasRightDateTime() {
+    void ensureSingleHasRightDateTime() {
         final ValueHistory<Integer> subject = singleSubject();
         final Instant i = Instant.now();
 
@@ -67,7 +67,7 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureSingleHasSingleHistory() {
+    void ensureSingleHasSingleHistory() {
         final ValueHistory<Integer> subject = singleSubject();
 
         final int i = Collections.sizeOf(subject.history());
@@ -75,7 +75,7 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureSingleHasMessage() {
+    void ensureSingleHasMessage() {
         final String MESSAGE = "initial";
         final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO, MESSAGE);
 
@@ -83,21 +83,21 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureDoubleHasMessage() {
+    void ensureDoubleHasMessage() {
         final String MESSAGE = "second";
         final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).map(x -> x + 1, MESSAGE);
         assertEquals(MESSAGE, subject.message().orElseThrow(IllegalStateException::new));
     }
 
     @Test
-    public void ensureOneAndThenHasValue() {
+    void ensureOneAndThenHasValue() {
         final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).andThen(1000);
 
         assertEquals(Integer.valueOf(1000), subject.value());
     }
 
     @Test
-    public void ensureOneAndThenWithMessageHasValue() {
+    void ensureOneAndThenWithMessageHasValue() {
         final String MESSAGE = "just because";
         final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).andThen(1000, MESSAGE);
 
@@ -105,7 +105,7 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureOneAndThenWithMessageHasMessage() {
+    void ensureOneAndThenWithMessageHasMessage() {
         final String MESSAGE = "just because";
         final ValueHistory<Integer> subject = ValueHistory.of(FORTY_TWO).andThen(1000, MESSAGE);
 
@@ -113,14 +113,14 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureTripleMapHasValue() {
+    void ensureTripleMapHasValue() {
         final ValueHistory<Integer> subject = tripleMapSubject();
 
         assertEquals(Integer.valueOf(45), subject.value());
     }
 
     @Test
-    public void ensureTripleMapHas4History() {
+    void ensureTripleMapHas4History() {
         final ValueHistory<Integer> subject = tripleMapSubject();
 
         int i = 0;
@@ -132,7 +132,7 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureTripleMapHasHistoryInRightOrderAndValues() {
+    void ensureTripleMapHasHistoryInRightOrderAndValues() {
         final ValueHistory<Integer> subject = tripleMapSubject();
 
         final int[] actual = new int[4];
@@ -142,25 +142,25 @@ public class ValueHistoryTest {
         }
 
         final int[] expected = new int[] { 45, 44, 43, 42 };
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void ensureCannotUndoTheInitialValue() {
+    void ensureCannotUndoTheInitialValue() {
         final ValueHistory<Integer> subject = singleSubject();
 
         assertFalse(subject.previous().isPresent());
     }
 
     @Test
-    public void ensureUndoingTheInitialValueHasEmptyHistory() {
+    void ensureUndoingTheInitialValueHasEmptyHistory() {
         final ValueHistory<Integer> subject = singleSubject();
 
         assertFalse(subject.previous().isPresent());
     }
 
     @Test
-    public void ensureUndoingTripleMapGetsTheSecondLastEntry() {
+    void ensureUndoingTripleMapGetsTheSecondLastEntry() {
         final ValueHistory<Integer> subject = tripleMapSubject();
         final ValueHistory<Integer> second = subject.previous()
                 .orElseThrow(IllegalStateException::new);
@@ -176,14 +176,14 @@ public class ValueHistoryTest {
     }
 
     @Test
-    public void ensureFlatMap1HasValue() {
+    void ensureFlatMap1HasValue() {
         final ValueHistory<Integer> subject = singleSubject();
 
         assertEquals(Integer.valueOf(FORTY_TWO + 1), subject.flatMap(this::wrapper1).value());
     }
 
     @Test
-    public void ensureFlatMap1HasRightHistory() {
+    void ensureFlatMap1HasRightHistory() {
         final ValueHistory<Integer> subject = singleSubject().flatMap(this::wrapper1);
 
         final int[] actual = new int[2];
@@ -193,11 +193,11 @@ public class ValueHistoryTest {
         }
 
         final int[] expected = new int[] { 43, 42 };
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void ensureFlatMap2HasRightHistory() {
+    void ensureFlatMap2HasRightHistory() {
         final ValueHistory<Integer> subject = singleSubject().flatMap(this::wrapper2);
 
         final int[] actual = new int[3];
@@ -207,6 +207,6 @@ public class ValueHistoryTest {
         }
 
         final int[] expected = new int[] { 44, 43, 42 };
-        Assert.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 }

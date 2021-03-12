@@ -39,7 +39,7 @@ import eapli.framework.math.domain.model.Numeral;
  * @author Paulo Gandra de Sousa
  *
  */
-public abstract class NumeralTestBase {
+abstract class NumeralTestBase {
 
     private Numeral instance;
 
@@ -48,13 +48,13 @@ public abstract class NumeralTestBase {
     protected abstract int getBase();
 
     @Test
-    public void ensure0is0() {
+    void ensure0is0() {
         instance = Numeral.valueOf("0", getBase());
         assertEquals(0, instance.decimalValue());
     }
 
     @Test
-    public void ensureBaseSymbols() {
+    void ensureBaseSymbols() {
         for (int i = 0; i < getBase(); i++) {
             final String result = Numeral.valueOf(i).toBase(getBase()).toString();
             final String expected = String.valueOf(SYMBOLS.charAt(i));
@@ -66,7 +66,7 @@ public abstract class NumeralTestBase {
     }
 
     @Test
-    public void ensureConvertingToBaseDoesNotProduceStrangeSymbols() {
+    void ensureConvertingToBaseDoesNotProduceStrangeSymbols() {
         final Stream<String> results = IntStream.range(0, 10000)
                 .<String>mapToObj(x -> Numeral.valueOf(x).toBase(getBase()).toString());
         assertTrue(results.allMatch(x -> validateSymbols(x, getBase())));
@@ -78,7 +78,7 @@ public abstract class NumeralTestBase {
     }
 
     @Test
-    public void ensureInvalidNumeralIsNotAccepted() {
+    void ensureInvalidNumeralIsNotAccepted() {
         final String subject = "12=F";
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf(subject, getBase()));
     }

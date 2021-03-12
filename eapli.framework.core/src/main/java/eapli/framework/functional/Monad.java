@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -57,7 +57,7 @@ public interface Monad<T> {
      * {@link #map} method instead.
      *
      * @param mapper
-     *            a mapper function from <code>T</code> to <code>Monad<R></code>
+     *            a mapper function from <code>T</code> to <code>Monad&lt;R&gt;</code>
      * @return a new Monad wrapping the result of the mapping
      */
     <R> Monad<R> flatMap(final Function<? super T, ? extends Monad<R>> mapper);

@@ -33,44 +33,44 @@ import eapli.framework.math.domain.model.FrequencyTable;
  *
  * @author Paulo Gandra Sousa 28/05/2020
  */
-public abstract class FrequencyTableWithInitialTokensBaseTest {
+abstract class FrequencyTableWithInitialTokensBaseTest {
 
     protected FrequencyTable<String> subject;
 
     @Test
-    public void ensureEmptyHasInitialTokensWithFrequency0() {
+    void ensureEmptyHasInitialTokensWithFrequency0() {
         assertEquals(0L, subject.frequencyOf("a"));
         assertEquals(0L, subject.frequencyOf("w"));
     }
 
     @Test
-    public void ensureEmptyHasInitialTokens() {
+    void ensureEmptyHasInitialTokens() {
         assertEquals(2, subject.tokens().size());
         assertTrue(subject.tokens().contains("a"));
         assertTrue(subject.tokens().contains("w"));
     }
 
     @Test
-    public void ensureContainsInitialTokenEvenIfNotCollected() {
+    void ensureContainsInitialTokenEvenIfNotCollected() {
         subject.collect("a");
 
         assertTrue(subject.contains("w"));
     }
 
     @Test
-    public void ensureContainsCollectedToken() {
+    void ensureContainsCollectedToken() {
         subject.collect("a");
 
         assertTrue(subject.contains("a"));
     }
 
     @Test
-    public void ensureDoesNotContainUnknownToken() {
+    void ensureDoesNotContainUnknownToken() {
         assertFalse(subject.contains("xyz"));
     }
 
     @Test
-    public void ensureCollectingOneOfTheInitialTokensHasRightValues() {
+    void ensureCollectingOneOfTheInitialTokensHasRightValues() {
         subject.collect("a");
 
         assertEquals(2, subject.size());
@@ -79,7 +79,7 @@ public abstract class FrequencyTableWithInitialTokensBaseTest {
     }
 
     @Test
-    public void ensureCollectingOneOfTheInitialTokensHasRightFrequencies() {
+    void ensureCollectingOneOfTheInitialTokensHasRightFrequencies() {
         subject.collect("a");
 
         assertEquals(1L, subject.frequencyOf("a"));
