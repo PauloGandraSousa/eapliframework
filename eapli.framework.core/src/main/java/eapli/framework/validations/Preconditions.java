@@ -54,7 +54,7 @@ public final class Preconditions {
     }
 
     /**
-     * Ensures a value is non negative, that is n >= 0
+     * Ensures a value is non negative, that is n &gt;= 0
      *
      * @param arg
      * @throws IllegalArgumentException
@@ -65,7 +65,7 @@ public final class Preconditions {
     }
 
     /**
-     * Ensures a value is non negative, that is n >= 0.
+     * Ensures a value is non negative, that is n &gt;= 0.
      *
      * @param arg
      * @param msg
