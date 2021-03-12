@@ -31,6 +31,8 @@ import java.text.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  *
@@ -107,90 +109,31 @@ class CsvLineMarshalerTest {
         assertEquals(expected, result);
     }
 
-    @Test
-    void ensureQuoteEmpty() {
-        final String input = "";
-        final String expected = "\"\"";
+    @ParameterizedTest
+    @CsvSource({
+            "'', \"\"", // empty adds quotes
+            "A, \"A\"", // unquoted adds quotes
+            "Abc, \"Abc\"", // unquoted adds quotes
+            "\"A\", \"A\"", // already quoted keeps quotes
+    })
+    void ensureQuote(final String input, final String expected) {
 
         final String result = CsvLineMarshaler.quote(input);
 
         assertEquals(expected, result);
     }
 
-    @Test
-    void ensureQuote1() {
-        final String input = "A";
-        final String expected = "\"A\"";
-
-        final String result = CsvLineMarshaler.quote(input);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureQuote() {
-        final String input = "Abc";
-        final String expected = "\"Abc\"";
-
-        final String result = CsvLineMarshaler.quote(input);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureQuoteDoesNotChangeIfThereAreQuotes() {
-        final String input = "\"A\"";
-        final String expected = "\"A\"";
-
-        final String result = CsvLineMarshaler.quote(input);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureUnquoteEmpty() {
-        final String input = "";
-        final String expected = "";
-
-        final String result = CsvLineMarshaler.unquote(input);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureUnquoteEmpty1() {
-        final String input = "\"\"";
-        final String expected = "";
-
-        final String result = CsvLineMarshaler.unquote(input);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureUnquote1() {
-        final String input = "\"A\"";
-        final String expected = "A";
-
-        final String result = CsvLineMarshaler.unquote(input);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
+    @ParameterizedTest
+    @CsvSource({
+            "'', ''", // empty
+            "\"\", ''", // empty
+            "\"A\", A", // unquotes
+            "\"Abc\", Abc", // unquotes
+            "A, A", // no quotes
+    })
     void ensureUnquote() {
-        final String input = "\"Abc\"";
-        final String expected = "Abc";
-
-        final String result = CsvLineMarshaler.unquote(input);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureUnquoteDoesNotChangeIfThereAreNoQuotes() {
-        final String input = "Abc";
-        final String expected = "Abc";
+        final String input = "";
+        final String expected = "";
 
         final String result = CsvLineMarshaler.unquote(input);
 

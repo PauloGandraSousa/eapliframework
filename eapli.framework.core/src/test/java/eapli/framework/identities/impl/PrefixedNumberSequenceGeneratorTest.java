@@ -34,53 +34,53 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class PrefixedNumberSequenceGeneratorTest {
+class PrefixedNumberSequenceGeneratorTest {
 
     private static final String PREFIX = "ABC";
     private static final byte LENGTH = 8;
     private PrefixedNumberSequenceGenerator instance;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         instance = new PrefixedNumberSequenceGenerator(PREFIX, LENGTH);
     }
 
     @Test
-    public void ensurePrefixIsNotNull() {
+    void ensurePrefixIsNotNull() {
         assertThrows(IllegalArgumentException.class,
                 () -> instance = new PrefixedNumberSequenceGenerator(null, LENGTH));
     }
 
     @Test
-    public void ensurePrefixIsNotEmpty() {
+    void ensurePrefixIsNotEmpty() {
         assertThrows(IllegalArgumentException.class, () -> instance = new PrefixedNumberSequenceGenerator("", LENGTH));
     }
 
     @Test
-    public void ensureLengthIsBiggerThanZero() {
+    void ensureLengthIsBiggerThanZero() {
         assertThrows(IllegalArgumentException.class, () -> instance = new PrefixedNumberSequenceGenerator(PREFIX, 0));
     }
 
     @Test
-    public void ensureLengthIsNotNegative() {
-        instance = new PrefixedNumberSequenceGenerator(PREFIX, -1);
+    void ensureLengthIsNotNegative() {
+        assertThrows(IllegalArgumentException.class, () -> instance = new PrefixedNumberSequenceGenerator(PREFIX, -1));
     }
 
     @Test
-    public void ensureGeneratedIdLength() {
+    void ensureGeneratedIdLength() {
         final String result = instance.newId();
         final int expected = PREFIX.length() + LENGTH;
         assertEquals(expected, result.length());
     }
 
     @Test
-    public void ensureGeneratedIdPrefix() {
+    void ensureGeneratedIdPrefix() {
         final String result = instance.newId();
         assertEquals(PREFIX, result.substring(0, PREFIX.length()));
     }
 
     @Test
-    public void ensureGeneratedIdHasPaddingZeros() {
+    void ensureGeneratedIdHasPaddingZeros() {
         final String result = instance.newId();
         assertEquals(PREFIX + "00000001", result);
     }

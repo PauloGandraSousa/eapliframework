@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class NumberSequenceGeneratorTest {
+class NumberSequenceGeneratorTest {
 
     private static final long SEED = 20L;
     private NumberSequenceGenerator instance;
@@ -42,18 +42,18 @@ public class NumberSequenceGeneratorTest {
      * @throws java.lang.Exception
      */
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         instance = new NumberSequenceGenerator();
     }
 
     @Test
-    public void ensureIdAfterSeed() {
+    void ensureIdAfterSeed() {
         instance = new NumberSequenceGenerator(SEED);
         assertTrue(instance.newId() >= SEED);
     }
 
     @Test
-    public void ensure100IdsAreDifferentAndSequential() {
+    void ensure100IdsAreDifferentAndSequential() {
         final long[] ids = new long[100];
 
         for (int i = 0; i < ids.length; i++) {

@@ -37,38 +37,38 @@ import eapli.framework.time.util.Calendars;
  * @author Paulo Gandra de Sousa
  *
  */
-public class ClosedTimeIntervalTest {
+class ClosedTimeIntervalTest {
 
     private static final Calendar START = Calendars.of(2017, 05, 01);
     private static final Calendar END = Calendars.of(2017, 05, 15);
     private static TimeInterval INSTANCE = new TimeInterval(START, END);
 
     @Test
-    public void ensureIncludesStart() {
+    void ensureIncludesStart() {
         assertTrue(INSTANCE.includes(START), "Start is not included");
     }
 
     @Test
-    public void ensureIncludesEnd() {
+    void ensureIncludesEnd() {
         assertTrue(INSTANCE.includes(END), "End is not included");
     }
 
     @Test
-    public void ensureIncludesMid() {
+    void ensureIncludesMid() {
         final Calendar mid = (Calendar) START.clone();
         mid.add(Calendar.DATE, 2);
         assertTrue(INSTANCE.includes(mid), "Mid is not included");
     }
 
     @Test
-    public void ensureDoesntIncludeBeforeStart() {
+    void ensureDoesntIncludeBeforeStart() {
         final Calendar before = (Calendar) START.clone();
         before.add(Calendar.DATE, -2);
         assertFalse(INSTANCE.includes(before), "Mid is not included");
     }
 
     @Test
-    public void ensureDoesntIncludeAfterEnd() {
+    void ensureDoesntIncludeAfterEnd() {
         final Calendar after = (Calendar) END.clone();
         after.add(Calendar.DATE, 2);
         assertFalse(INSTANCE.includes(after), "Mid is not included");

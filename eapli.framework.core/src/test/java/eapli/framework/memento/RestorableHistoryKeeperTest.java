@@ -23,6 +23,7 @@
  */
 package eapli.framework.memento;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -34,19 +35,20 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra Sousa
  *
  */
-public class RestorableHistoryKeeperTest {
+class RestorableHistoryKeeperTest {
 
     private SampleAdder subject;
     private RestorableHistoryKeeper<SampleAdder> instance;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         subject = new SampleAdder();
         instance = new RestorableHistoryKeeper<>(subject);
     }
 
-    public void testSavepointRestore2() {
-        final int NRUNS = 3;
+    @Test
+    void testSavepointRestore2() {
+        final int NRUNS = 15;
         // create savepoints
         int expected = 0;
         for (int i = 1; i <= NRUNS; i++) {
@@ -58,28 +60,28 @@ public class RestorableHistoryKeeperTest {
 
         // go back to savepoints
         for (int j = NRUNS; j >= 1; j--) {
+            instance.restore();
             final int curr = subject.current();
             if (curr != expected) {
                 fail("wrong state @ " + j + ". expected " + expected + " but got " + curr);
             }
-            instance.restore();
             expected -= j;
         }
     }
 
     @Test
-    public void testSavepointRestore() {
+    void testSavepointRestore() {
         // create savepoints
         subject.add(2);
-        assert subject.current() == 2;
+        assertEquals(2, subject.current());
         instance.savepoint();
 
         subject.add(4);
-        assert subject.current() == 6;
+        assertEquals(6, subject.current());
         instance.savepoint();
 
         subject.add(8);
-        assert subject.current() == 14;
+        assertEquals(14, subject.current());
 
         // go back to savepoints
         instance.restore();
@@ -104,7 +106,7 @@ public class RestorableHistoryKeeperTest {
      * {@link eapli.framework.memento.RestorableHistoryKeeper#canRestore()}.
      */
     @Test
-    public void ensureCanotRestoreIfThereWereNoSavepoints() {
+    void ensureCanotRestoreIfThereWereNoSavepoints() {
         assertFalse(instance.canRestore());
     }
 
@@ -113,7 +115,7 @@ public class RestorableHistoryKeeperTest {
      * {@link eapli.framework.memento.RestorableHistoryKeeper#canRestore()}.
      */
     @Test
-    public void ensureCanRestoreIfThereWereSavepoints() {
+    void ensureCanRestoreIfThereWereSavepoints() {
         instance.savepoint();
         assertTrue(instance.canRestore());
     }

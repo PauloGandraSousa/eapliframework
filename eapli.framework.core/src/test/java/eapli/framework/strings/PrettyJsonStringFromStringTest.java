@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa 15/05/2020
  *
  */
-public class PrettyJsonStringFromStringTest {
+class PrettyJsonStringFromStringTest {
     private static final Logger LOGGER = LogManager.getLogger(PrettyJsonStringFromStringTest.class);
 
     private final String TEST_ONE = "{\"one\":\"two\"}";
@@ -44,7 +44,7 @@ public class PrettyJsonStringFromStringTest {
     private final String TEST_WRONG_COL_2 = "[\"one\",two}";
 
     @Test
-    public void testOne() {
+    void testOne() {
         final FormattedString p = PrettyJsonString.fromString(TEST_ONE);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
@@ -52,12 +52,22 @@ public class PrettyJsonStringFromStringTest {
     }
 
     @Test
-    public void testWrongOne() {
+    void testWrongOne() {
         assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_ONE));
     }
 
     @Test
-    public void testCol1() {
+    void testWrongCol1() {
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_COL_1));
+    }
+
+    @Test
+    void testWrongCol2() {
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_COL_2));
+    }
+
+    @Test
+    void testCol1() {
         final FormattedString p = PrettyJsonString.fromString(TEST_COL_1);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
@@ -65,7 +75,7 @@ public class PrettyJsonStringFromStringTest {
     }
 
     @Test
-    public void testCol2() {
+    void testCol2() {
         final FormattedString p = PrettyJsonString.fromString(TEST_COL_2);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
@@ -73,7 +83,7 @@ public class PrettyJsonStringFromStringTest {
     }
 
     @Test
-    public void testChild() {
+    void testChild() {
         final FormattedString p = PrettyJsonString.fromString(TEST_CHILD);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);

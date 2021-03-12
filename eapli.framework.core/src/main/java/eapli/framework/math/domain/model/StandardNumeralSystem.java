@@ -34,6 +34,8 @@ import eapli.framework.validations.Preconditions;
 @Immutable
 public class StandardNumeralSystem implements NumeralSystem {
 
+    private static final long serialVersionUID = 1699227365061045769L;
+
     private final int base;
 
     private static final String SYMBOLS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

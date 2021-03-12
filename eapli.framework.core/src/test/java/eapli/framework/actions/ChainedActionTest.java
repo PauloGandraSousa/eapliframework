@@ -38,20 +38,20 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class ChainedActionTest {
+class ChainedActionTest {
 
     @Test
-    public void ensureFirstActionCannotBeNull() {
+    void ensureFirstActionCannotBeNull() {
         assertThrows(IllegalArgumentException.class, () -> new ChainedAction(null, Actions.SUCCESS));
     }
 
     @Test
-    public void ensureNextActionCannotBeNull() {
+    void ensureNextActionCannotBeNull() {
         assertThrows(IllegalArgumentException.class, () -> new ChainedAction(Actions.SUCCESS, null));
     }
 
     @Test
-    public void ensureExecuteGoesThruChain() {
+    void ensureExecuteGoesThruChain() {
         final AdderHelper helper = new AdderHelper();
         final ChainedAction chain = new ChainedAction(helper.adder(), helper.adder());
         chain.execute();
@@ -59,14 +59,14 @@ public class ChainedActionTest {
     }
 
     @Test
-    public void ensureExecuteGoesThruChainReturnsSuccess() {
+    void ensureExecuteGoesThruChainReturnsSuccess() {
         final AdderHelper helper = new AdderHelper();
         final ChainedAction chain = new ChainedAction(helper.adder(), helper.adder());
         assertTrue(chain.execute());
     }
 
     @Test
-    public void ensureExecuteGoesThruComplexChain() {
+    void ensureExecuteGoesThruComplexChain() {
         final AdderHelper helper = new AdderHelper();
         final ChainedAction chain2 = build4Add1Chain(helper);
         chain2.execute();
@@ -74,7 +74,7 @@ public class ChainedActionTest {
     }
 
     @Test
-    public void ensureExecuteGoesThruComplexChainInTheRightOrder() {
+    void ensureExecuteGoesThruComplexChainInTheRightOrder() {
         final List<Integer> helper = new ArrayList<>();
         final ChainedAction chain = new ChainedAction(() -> helper.add(1), () -> helper.add(2))
                 .then(() -> helper.add(3)).then(() -> helper.add(4)).then(() -> helper.add(5));
@@ -89,7 +89,7 @@ public class ChainedActionTest {
     }
 
     @Test
-    public void ensureExecuteGoesThruComplexChainInTheRightOrder2() {
+    void ensureExecuteGoesThruComplexChainInTheRightOrder2() {
         final List<Integer> helper = new ArrayList<>();
         final ChainedAction chain0 = new ChainedAction(() -> helper.add(2), () -> helper.add(1));
         final ChainedAction chain1 = new ChainedAction(() -> helper.add(3), chain0);
@@ -105,7 +105,7 @@ public class ChainedActionTest {
     }
 
     @Test
-    public void ensureExecuteGoesThruComplexChainReturnSucess() {
+    void ensureExecuteGoesThruComplexChainReturnSucess() {
         final AdderHelper helper = new AdderHelper();
         final ChainedAction chain2 = build4Add1Chain(helper);
         assertTrue(chain2.execute());
@@ -119,20 +119,20 @@ public class ChainedActionTest {
     }
 
     @Test
-    public void ensureExecuteReturnsFalseOnFail() {
+    void ensureExecuteReturnsFalseOnFail() {
         final ChainedAction chain = new ChainedAction(Actions.FAIL, Actions.SUCCESS);
         assertFalse(chain.execute());
     }
 
     @Test
-    public void ensureExecuteReturnsFalseOnFail2() {
+    void ensureExecuteReturnsFalseOnFail2() {
         final AdderHelper helper = new AdderHelper();
         final ChainedAction chain = build4Add1Chain(helper).then(Actions.FAIL);
         assertFalse(chain.execute());
     }
 
     @Test
-    public void ensureExecuteStopsWhenActionFails() {
+    void ensureExecuteStopsWhenActionFails() {
         final List<Integer> helper = new ArrayList<>();
         final ChainedAction chain = new ChainedAction(() -> helper.add(1), () -> helper.add(2))
                 .then(() -> helper.add(3)).then(Actions.FAIL).then(() -> helper.add(5));

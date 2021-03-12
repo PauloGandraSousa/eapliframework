@@ -33,24 +33,24 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-public class SampleAdderTest {
+class SampleAdderTest {
 
     private final SampleAdder instance = new SampleAdder();
 
     @Test
-    public void testSnapshot() {
+    void testSnapshot() {
         assertNotNull(instance.snapshot());
     }
 
     @Test
-    public void testAdd10() {
+    void testAdd10() {
         final int expected = 10;
         instance.add(10);
         assertEquals(expected, instance.current());
     }
 
     @Test
-    public void testRestoreTo() {
+    void testRestoreTo() {
         final int expected = instance.current();
         final Memento m = instance.snapshot();
         instance.add(10);

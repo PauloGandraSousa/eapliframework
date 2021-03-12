@@ -20,12 +20,12 @@
  */
 package eapli.framework.math.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.util.ArrayPredicates;
 
@@ -40,11 +40,11 @@ import eapli.framework.util.ArrayPredicates;
  * @author Paulo Gandra Sousa 28/05/2020
  *
  */
-public class NumberGeneratorTest {
+class NumberGeneratorTest {
     private static final Logger LOGGER = LogManager.getLogger(NumberGeneratorTest.class);
 
     @Test
-    public void ensureIntRandomness() {
+    void ensureIntRandomness() {
         final Integer[] r = new Integer[] {
                 NumberGenerator.anInt(),
                 NumberGenerator.anInt(),
@@ -56,7 +56,7 @@ public class NumberGeneratorTest {
     }
 
     @Test
-    public void ensureIntRandomnessLotsOfNumbers() {
+    void ensureIntRandomnessLotsOfNumbers() {
         // of course even with true randomness, there is the possibility that 100 numbers will have
         // some repeated numbers...
         final int N = 100;
@@ -69,7 +69,7 @@ public class NumberGeneratorTest {
     }
 
     @Test
-    public void ensureIntRandomnessIsWithinBounds() {
+    void ensureIntRandomnessIsWithinBounds() {
         final int N = 100;
         final int BOUND = 500;
         final Integer[] r = new Integer[N];
@@ -81,7 +81,7 @@ public class NumberGeneratorTest {
     }
 
     @Test
-    public void ensureFloatRandomnessIsWithinBounds() {
+    void ensureFloatRandomnessIsWithinBounds() {
         final int N = 100;
         final Float[] r = new Float[N];
         for (int i = 0; i < N; i++) {
@@ -92,7 +92,7 @@ public class NumberGeneratorTest {
     }
 
     @Test
-    public void ensureBytesHasRightSize() {
+    void ensureBytesHasRightSize() {
         final int N = 12;
 
         ensure1BytesHasRightSize(N);
@@ -108,7 +108,7 @@ public class NumberGeneratorTest {
     }
 
     @Test
-    public void ensureHexHasRightSize() {
+    void ensureHexHasRightSize() {
         final int N = 12;
 
         ensure1HexHasRightSize(N);

@@ -33,17 +33,17 @@ class SampleAdder implements Restorable {
 
     private int current;
 
-    public int add(final int x) {
+    int add(final int x) {
         current += x;
         return current();
     }
 
-    public int subtract(final int x) {
+    int subtract(final int x) {
         current -= x;
         return current();
     }
 
-    public int current() {
+    int current() {
         return current;
     }
 

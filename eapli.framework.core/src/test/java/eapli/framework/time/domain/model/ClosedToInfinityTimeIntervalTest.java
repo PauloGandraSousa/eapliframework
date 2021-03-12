@@ -37,32 +37,32 @@ import eapli.framework.time.util.Calendars;
  * @author Paulo Gandra de Sousa
  *
  */
-public class ClosedToInfinityTimeIntervalTest {
+class ClosedToInfinityTimeIntervalTest {
 
     private static final Calendar START = Calendars.of(2017, 05, 01);
     private static TimeInterval INSTANCE = new TimeInterval(START);
 
     @Test
-    public void ensureIncludesStart() {
+    void ensureIncludesStart() {
         assertTrue(INSTANCE.includes(START), "Start is not included");
     }
 
     @Test
-    public void ensureIncludesMid() {
+    void ensureIncludesMid() {
         final Calendar mid = (Calendar) START.clone();
         mid.add(Calendar.DATE, 2);
         assertTrue(INSTANCE.includes(mid), "Mid is not included");
     }
 
     @Test
-    public void ensureIncludesInTheFuture() {
+    void ensureIncludesInTheFuture() {
         final Calendar mid = (Calendar) START.clone();
         mid.add(Calendar.YEAR, 2000);
         assertTrue(INSTANCE.includes(mid), "Mid is not included");
     }
 
     @Test
-    public void ensureDoesntIncludeBeforeStart() {
+    void ensureDoesntIncludeBeforeStart() {
         final Calendar before = (Calendar) START.clone();
         before.add(Calendar.DATE, -2);
         assertFalse(INSTANCE.includes(before), "Mid is not included");
