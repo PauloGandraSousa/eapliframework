@@ -32,17 +32,10 @@ abstract class EitherBaseTest {
     }
 
     /**
-     *
-     */
-    public EitherBaseTest() {
-        super();
-    }
-
-    /**
      * @throws java.lang.Exception
      */
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         helper = new Helper();
         stringLength = x -> helper.i = x.length();
         stringLengthOp = x -> {

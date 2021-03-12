@@ -20,11 +20,12 @@
  */
 package eapli.framework.strings;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra de Sousa 15/05/2020
@@ -50,9 +51,9 @@ public class PrettyJsonStringFromStringTest {
         assertEquals(3, fmtd.split("\n").length);
     }
 
-    @Test(expected = FormatingOrTransformationException.class)
+    @Test
     public void testWrongOne() {
-        PrettyJsonString.fromString(TEST_WRONG_ONE);
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_ONE));
     }
 
     @Test

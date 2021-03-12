@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,12 +23,13 @@
  */
 package eapli.framework.actions;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -47,14 +48,14 @@ public class ActionsTest {
         assertFalse(Actions.FAIL.execute());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testThrowState() {
-        Actions.THROW_STATE.execute();
+        assertThrows(IllegalStateException.class, () -> Actions.THROW_STATE.execute());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testThrowStateWithMsg() {
-        Actions.throwState("Test").execute();
+        assertThrows(IllegalStateException.class, () -> Actions.throwState("Test").execute());
     }
 
     @Test
@@ -68,14 +69,14 @@ public class ActionsTest {
         fail("somethign terrible just happened...");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testThrowArgument() {
-        Actions.THROW_ARGUMENT.execute();
+        assertThrows(IllegalArgumentException.class, () -> Actions.THROW_ARGUMENT.execute());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testThrowArgumentWithMsg() {
-        Actions.throwArgument("Test").execute();
+        assertThrows(IllegalArgumentException.class, () -> Actions.throwArgument("Test").execute());
     }
 
     @Test

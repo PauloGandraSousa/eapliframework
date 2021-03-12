@@ -59,7 +59,6 @@ class EitherEmptySpecialCaseTest {
     @Test
     void ensureFoldingOnEmptyEitherReturnsDefault() {
         final Either<String, Integer> subject = empty();
-
         final int DEFAULT = 1234;
         final int actual = subject.fold((x, y) -> x + y.length(), (x, y) -> x + y, DEFAULT);
         assertEquals(DEFAULT, actual);

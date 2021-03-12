@@ -53,7 +53,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureHoldsValue() {
         final Either<String, Integer> subject = subject();
-
         assertEquals(TESTING, subject.leftValueOrElseThrow(IllegalArgumentException::new));
     }
 
@@ -61,7 +60,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureOppositeValueOrElseThrowThrowsException() {
         final Either<String, Integer> subject = subject();
-
         assertThrows(IllegalArgumentException.class,
                 () -> subject.rightValueOrElseThrow(IllegalArgumentException::new));
     }
@@ -70,7 +68,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureOppositeValueOrElseReturnsDefault() {
         final Either<String, Integer> subject = subject();
-
         final Integer DEFAULT = 1000;
         assertEquals(DEFAULT, subject.rightValueOrElse(DEFAULT));
     }
@@ -79,7 +76,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureConsume() {
         final Either<String, Integer> subject = subject();
-
         subject.consume(stringLength, intValue);
         assertEquals(TESTING.length(), helper.i);
     }
@@ -88,7 +84,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureMap() {
         final Either<String, Integer> subject = subject();
-
         subject.map(stringLengthOp, intValueOp);
         assertEquals(TESTING.length(), helper.i);
     }
@@ -97,7 +92,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureFilterIsEmpty() {
         final Either<String, Integer> subject = subject();
-
         final Either<String, Integer> result = subject.filter(x -> x.equals(TESTING.concat("ABC")),
                 y -> y == TESTING_INT + 1000);
         assertTrue(result instanceof EmptyEither);
@@ -107,7 +101,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureFilterIsNotEmpty() {
         final Either<String, Integer> subject = subject();
-
         assertFalse(subject.filter(x -> x.equals(TESTING), y -> y == TESTING_INT) instanceof EmptyEither);
     }
 
@@ -115,7 +108,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureFolding() {
         final Either<String, Integer> subject = subject();
-
         final int actual = subject.fold((x, y) -> x + y.length(), (x, y) -> x + y, 0);
         assertEquals(TESTING.length(), actual);
     }
@@ -124,7 +116,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Test
     void ensureSwap() {
         final Either<String, Integer> subject = subject();
-
         assertEquals(TESTING, subject.swap().rightValueOrElseThrow(IllegalStateException::new));
     }
 
@@ -132,7 +123,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureProjectLeft() {
         final Either<String, Integer> subject = subject();
-
         assertTrue(subject.left() instanceof LeftProjection);
     }
 
@@ -140,7 +130,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureProjectRight() {
         final Either<String, Integer> subject = subject();
-
         assertTrue(subject.right() instanceof EmptyRight);
     }
 
@@ -148,7 +137,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureOnLeft() {
         final Either<String, Integer> subject = subject();
-
         subject.onLeft(stringLength);
         assertEquals(TESTING.length(), helper.i);
     }
@@ -157,7 +145,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureOnRight() {
         final Either<String, Integer> subject = subject();
-
         subject.onRight(intValue);
         assertEquals(-1, helper.i);
     }
@@ -166,7 +153,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureHoldsValueOrDefault() {
         final Either<String, Integer> subject = subject();
-
         assertEquals(TESTING, subject.leftValueOrElse("-10"));
     }
 
@@ -174,7 +160,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureProjectionMap() {
         final Either<String, Integer> subject = subject();
-
         subject.left().map(stringLengthOp);
         assertEquals(TESTING.length(), helper.i);
     }
@@ -184,9 +169,7 @@ class EitherLeftTest extends EitherBaseTest {
     void ensureProjectionFold() {
         final Either<String, Integer> subject = subject();
         final LeftProjection<String> left = subject.left();
-
         final int actual = left.fold((x, y) -> x + y.length(), 0);
-
         assertEquals(TESTING.length(), actual);
     }
 
@@ -194,7 +177,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureProjectionFilter() {
         final Either<String, Integer> subject = subject();
-
         final LeftProjection<String> left = subject.left();
         assertFalse(left.filter(x -> x.equals(TESTING)) instanceof EmptyLeft);
     }
@@ -203,7 +185,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureProjectionConsume() {
         final Either<String, Integer> subject = subject();
-
         final LeftProjection<String> left = subject.left();
         left.consume(stringLength);
         assertEquals(TESTING.length(), helper.i);
@@ -213,7 +194,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureProjectionValue() {
         final Either<String, Integer> subject = subject();
-
         final LeftProjection<String> left = subject.left();
         final String actual = left.orElse("-10");
         assertEquals(TESTING, actual);
@@ -223,7 +203,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureProjectionValueOrThrows() {
         final Either<String, Integer> subject = subject();
-
         final LeftProjection<String> left = subject.left();
         final String actual = left.orElseThrow(IllegalArgumentException::new);
         assertEquals(TESTING, actual);
@@ -233,7 +212,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureOppositeProjectionMap() {
         final Either<String, Integer> subject = subject();
-
         final RightProjection<Integer> opposite = subject.right();
         assertTrue(opposite.map(intValueOp) instanceof EmptyRight);
     }
@@ -242,7 +220,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureOppositeProjectionFold() {
         final Either<String, Integer> subject = subject();
-
         final RightProjection<Integer> opposite = subject.right();
         final int actual = opposite.fold((x, y) -> x + y, 12345);
         assertEquals(12345, actual);
@@ -252,7 +229,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureOppositeProjectionFilter() {
         final Either<String, Integer> subject = subject();
-
         final RightProjection<Integer> opposite = subject.right();
         assertTrue(opposite.filter(x -> x == 0) instanceof EmptyRight);
     }
@@ -261,7 +237,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureOppositeProjectionConsumeDoesNothing() {
         final Either<String, Integer> subject = subject();
-
         subject.right().consume(intValue);
         assertEquals(Helper.DEFAULT_INT, helper.i);
     }
@@ -270,7 +245,6 @@ class EitherLeftTest extends EitherBaseTest {
     @Override
     void ensureOppositeProjectionOrElseReturnsDefault() {
         final Either<String, Integer> subject = subject();
-
         final int actual = subject.right().orElse(-10);
         assertEquals(-10, actual);
     }
@@ -280,7 +254,6 @@ class EitherLeftTest extends EitherBaseTest {
     void ensureOppositeProjectionOrElseThrowThrows() {
         final Either<String, Integer> subject = subject();
         final RightProjection<Integer> opposite = subject.right();
-
         assertThrows(IllegalArgumentException.class, () -> {
             opposite.orElseThrow(IllegalArgumentException::new);
         });
