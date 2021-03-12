@@ -1,6 +1,16 @@
 # EAPLI Framework Changelog
 
 
+## 16.2.0
+
+### What's new
+
+- `CsvRecord.valueOf` method allows to pass a bit mask for determining if a field is quoted or not
+
+### Changed
+
+- n.a. 
+
 ## 16.1.0
 
 ### What's new
