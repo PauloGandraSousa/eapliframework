@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -43,9 +43,7 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
- * a set of roles.
- *
- * part of the SystemUser aggregate
+ * A set of roles. Part of the {@link SystemUser} aggregate.
  *
  * @author Paulo Gandra Sousa
  */
@@ -59,7 +57,7 @@ import eapli.framework.validations.Preconditions;
     private Long pk;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private final Set<RoleAssignment> data = new HashSet<>();
+    private final Set<RoleAssignment> assignments = new HashSet<>();
 
     @Override
     public boolean add(final RoleAssignment arg0) {
@@ -67,7 +65,7 @@ import eapli.framework.validations.Preconditions;
 
         // TODO validations are missing, e.g., no overlap in roles with the same
         // role type
-        return data.add(arg0);
+        return assignments.add(arg0);
     }
 
     /**
@@ -77,7 +75,7 @@ import eapli.framework.validations.Preconditions;
      * @return true if a user currently has an assignment of a certain role
      */
     public boolean hasAssignment(final Role r) {
-        for (final RoleAssignment assignment : data) {
+        for (final RoleAssignment assignment : assignments) {
             if (!assignment.isExpired() && assignment.isOf(r)) {
                 return true;
             }
@@ -94,7 +92,7 @@ import eapli.framework.validations.Preconditions;
      *         certain role
      */
     public boolean hasOrHadAssignment(final Role r) {
-        for (final RoleAssignment assignment : data) {
+        for (final RoleAssignment assignment : assignments) {
             if (assignment.isOf(r)) {
                 return true;
             }
@@ -104,7 +102,7 @@ import eapli.framework.validations.Preconditions;
 
     public Collection<Role> roleTypes() {
         final List<Role> ret = new ArrayList<>();
-        data.forEach(role -> ret.add(role.type()));
+        assignments.forEach(role -> ret.add(role.type()));
         return ret;
     }
 
@@ -131,68 +129,68 @@ import eapli.framework.validations.Preconditions;
      * @return the first non-expired assignment to a role or an empty optional
      */
     public Optional<RoleAssignment> getAssignment(final Role role) {
-        return data.stream().filter(e -> !e.isExpired() && e.isOf(role)).findFirst();
+        return assignments.stream().filter(e -> !e.isExpired() && e.isOf(role)).findFirst();
     }
 
     @Override
     public boolean addAll(final Collection<? extends RoleAssignment> arg0) {
-        return data.addAll(arg0);
+        return assignments.addAll(arg0);
     }
 
     @Override
     public void clear() {
-        data.clear();
+        assignments.clear();
     }
 
     @Override
     public boolean contains(final Object arg0) {
-        return data.contains(arg0);
+        return assignments.contains(arg0);
     }
 
     @Override
     public boolean containsAll(final Collection<?> arg0) {
 
-        return data.containsAll(arg0);
+        return assignments.containsAll(arg0);
     }
 
     @Override
     public boolean isEmpty() {
-        return data.isEmpty();
+        return assignments.isEmpty();
     }
 
     @Override
     public Iterator<RoleAssignment> iterator() {
-        return data.iterator();
+        return assignments.iterator();
     }
 
     @Override
     public boolean remove(final Object arg0) {
-        return data.remove(arg0);
+        return assignments.remove(arg0);
     }
 
     @Override
     public boolean removeAll(final Collection<?> arg0) {
-        return data.removeAll(arg0);
+        return assignments.removeAll(arg0);
     }
 
     @Override
     public boolean retainAll(final Collection<?> arg0) {
-        return data.retainAll(arg0);
+        return assignments.retainAll(arg0);
     }
 
     @Override
     public int size() {
-        return data.size();
+        return assignments.size();
     }
 
     @Override
     public Object[] toArray() {
-        return data.toArray();
+        return assignments.toArray();
     }
 
     @Override
     public <T> T[] toArray(final T[] arg0) {
-        return data.toArray(arg0);
+        return assignments.toArray(arg0);
     }
 
     @Override
@@ -208,9 +206,9 @@ import eapli.framework.validations.Preconditions;
 
         // we need to perform a deep equals() as we want to compare values and
         // not object instances, so we cannot do this.data.equals(roles.data)
-        for (final RoleAssignment r : data) {
+        for (final RoleAssignment r : assignments) {
             boolean found = false;
-            for (final RoleAssignment or : roles.data) {
+            for (final RoleAssignment or : roles.assignments) {
                 if (r.equals(or)) {
                     found = true;
                     break;
@@ -225,6 +223,6 @@ import eapli.framework.validations.Preconditions;
 
     @Override
     public int hashCode() {
-        return new HashCoder().with(data).code();
+        return new HashCoder().with(assignments).code();
     }
 }

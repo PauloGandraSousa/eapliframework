@@ -164,14 +164,26 @@ public class ValueHistory<T> {
         return new ValueHistory<>(startValue, message);
     }
 
+    /**
+     *
+     * @return
+     */
     public Instant when() {
         return occurredAt;
     }
 
+    /**
+     *
+     * @return
+     */
     public T value() {
         return value;
     }
 
+    /**
+     *
+     * @return
+     */
     public Optional<String> message() {
         return Optional.ofNullable(message);
     }
@@ -218,6 +230,11 @@ public class ValueHistory<T> {
         return new ValueHistory<>(this, mapper.apply(value()), message);
     }
 
+    /**
+     *
+     * @param mapper
+     * @return
+     */
     public ValueHistory<T> flatMap(final Function<T, ValueHistory<T>> mapper) {
         final ValueHistory<T> mapped = mapper.apply(value());
 

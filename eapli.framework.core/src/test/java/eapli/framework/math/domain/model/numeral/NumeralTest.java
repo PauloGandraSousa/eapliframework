@@ -53,7 +53,7 @@ class NumeralTest {
     }
 
     @Test
-    public void ensureValueIsNotEmpty() {
+    void ensureValueIsNotEmpty() {
         assertThrows(IllegalArgumentException.class, () -> Numeral.valueOf("", 8));
     }
 

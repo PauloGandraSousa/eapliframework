@@ -61,7 +61,7 @@ class DesignationTest {
     }
 
     @Test
-    public void ensureNoWhitespaceOnly() {
+    void ensureNoWhitespaceOnly() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("    "));
     }
 

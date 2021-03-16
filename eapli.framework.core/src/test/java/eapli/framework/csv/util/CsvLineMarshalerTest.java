@@ -288,7 +288,7 @@ class CsvLineMarshalerTest {
     }
 
     @Test
-    public void ensureTokenizeThrowsForUnescapedQuoteInField() throws ParseException {
+    void ensureTokenizeThrowsForUnescapedQuoteInField() throws ParseException {
         assertThrows(ParseException.class, () -> CsvLineMarshaler.tokenize(FIXTURE_QUOTE_IN_FIELD));
     }
 

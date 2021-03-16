@@ -5,11 +5,11 @@
 
 ### What's new
 
-- TBD
+- `RoleAssignment.unassignedOn`
 
 ### Changed
 
-- TBD
+- deprecated - `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead
 
 
 ## 16.2.0

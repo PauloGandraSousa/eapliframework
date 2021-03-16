@@ -397,7 +397,7 @@ public class Interval<T extends Serializable & Comparable<T>>
     }
 
     /**
-     * find out what the gap between two ranges.
+     * Find out what's the gap between two ranges.
      *
      * <p>
      * Based on <a href="https://martinfowler.com/eaaDev/Range.html">Martin Fowler's
@@ -420,8 +420,8 @@ public class Interval<T extends Serializable & Comparable<T>>
             lower = arg;
             higher = this;
         }
-        return new Interval<>(lower.end, lower.endBoundary.negate(), higher.start,
-                higher.startBoundary.negate());
+        return new Interval<>(lower.end, lower.endBoundary.negate(),
+                higher.start, higher.startBoundary.negate());
     }
 
     /**

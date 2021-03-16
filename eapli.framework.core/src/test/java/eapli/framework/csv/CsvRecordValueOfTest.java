@@ -25,8 +25,6 @@ package eapli.framework.csv;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -36,8 +34,6 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
  * @author Paulo Gandra Sousa 04/06/2020
  */
 class CsvRecordValueOfTest {
-
-    private static final Logger LOGGER = LogManager.getLogger(CsvRecordValueOfTest.class);
 
     @ParameterizedTest
     @NullAndEmptySource

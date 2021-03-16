@@ -48,24 +48,28 @@ public class RoleAssignment implements ValueObject, Serializable {
     private Long pk;
 
     private final Role type;
+
     @Temporal(TemporalType.DATE)
     private final Calendar assignedOn;
+
     @Temporal(TemporalType.DATE)
     private Calendar unassignedOn;
+
     private boolean expired;
 
+    /**
+     *
+     * @param type
+     */
     public RoleAssignment(final Role type) {
         this(type, Calendars.now());
     }
 
-    public Optional<Calendar> getUnassignedOn() {
-        return Optional.ofNullable(unassignedOn);
-    }
-
-    public boolean isExpired() {
-        return expired;
-    }
-
+    /**
+     *
+     * @param type
+     * @param assignedOn
+     */
     public RoleAssignment(final Role type, final Calendar assignedOn) {
         Preconditions.noneNull(type, assignedOn);
 
@@ -78,6 +82,14 @@ public class RoleAssignment implements ValueObject, Serializable {
         // for ORM
         type = null;
         assignedOn = null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isExpired() {
+        return expired;
     }
 
     @Override
@@ -105,15 +117,23 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     @Override
-
     public String toString() {
         return type + "@" + assignedOn;
     }
 
+    /**
+     *
+     * @return
+     */
     public Role type() {
         return type;
     }
 
+    /**
+     *
+     * @param r
+     * @return
+     */
     public boolean isOf(final Role r) {
         return type.equals(r);
     }
@@ -131,5 +151,23 @@ public class RoleAssignment implements ValueObject, Serializable {
         expired = true;
         unassignedOn = Calendars.now();
         return true;
+    }
+
+    /**
+     *
+     * @return
+     * @deprecated use {@link #unassignedOn}
+     */
+    @Deprecated(forRemoval = true)
+    public Optional<Calendar> getUnassignedOn() {
+        return unassignedOn();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Optional<Calendar> unassignedOn() {
+        return Optional.ofNullable(unassignedOn);
     }
 }
