@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import eapli.framework.validations.Preconditions;
+
 /**
  * A CSV record, one line. Can be used to either parse a CSV string or construct a CSV string. An OO
  * alternative to the utility class {@link eapli.framework.csv.util.CsvLineMarshaler
@@ -60,16 +62,42 @@ public class CsvRecord {
      * @return
      */
     public static CsvRecord valueOf(final Object[] fields) {
+        if (fields == null) {
+            return valueOf(null, null);
+        } else {
+            final boolean[] mask = new boolean[fields.length];
+            for (int i = 0; i < fields.length; i++) {
+                mask[i] = true;
+            }
+            return valueOf(fields, mask);
+        }
+    }
+
+    /**
+     * Builds a CSV record quoting each field according to a bitmask.
+     *
+     * @param fields
+     * @param quote
+     * @return
+     */
+    public static CsvRecord valueOf(final Object[] fields, final boolean[] quote) {
         final List<String> result = new ArrayList<>();
         if (fields == null || fields.length == 0) {
             return new CsvRecord(result, "");
         }
 
+        Preconditions.ensure(fields.length <= quote.length);
+
         final StringBuilder sb = new StringBuilder();
-        for (final Object f : fields) {
+        for (int i = 0; i < fields.length; i++) {
+            final Object f = fields[i];
             String e = "";
             if (f != null) {
-                e = quote(escapeQuotes(f.toString()));
+                if (quote[i]) {
+                    e = quote(escapeQuotes(f.toString()));
+                } else {
+                    e = f.toString();
+                }
                 sb.append(e);
             }
             sb.append(",");

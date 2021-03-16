@@ -124,4 +124,27 @@ public final class CsvLineMarshaler {
 
         return matchTokens(input, CSV_REGEX_TESTER);
     }
+
+    /**
+     * Removes the quotes around a field content.
+     *
+     * <pre>
+     * "abc" -&gt; abc
+     *
+     * "abc -&gt; "abc
+     *
+     * abc" -&gt; abc"
+     *
+     * abc -&gt; abc
+     * </pre>
+     *
+     * @param field
+     * @return unquoted content
+     */
+    public static String unquote(final String field) {
+        if (field.isEmpty() || (field.charAt(0) != '"' && field.charAt(field.length() - 1) != '"')) {
+            return field;
+        }
+        return field.substring(1, field.length() - 1);
+    }
 }

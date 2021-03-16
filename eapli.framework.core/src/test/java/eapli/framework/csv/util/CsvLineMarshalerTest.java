@@ -31,6 +31,8 @@ import java.text.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  *
@@ -66,6 +68,23 @@ class CsvLineMarshalerTest {
     private static final String FIXTURE_QUOTE_IN_FIELD2 = "a, sd\",1";
     private static final String FIXTURE_MISSING_END_QUOTE_IN_FIELD = "a, \"sdb,1";
     private static final String FIXTURE_MISSING_END_QUOTE_IN_FIELD2 = "a, sdb,\"";
+
+    @ParameterizedTest
+    @CsvSource({
+            "'', ''", // empty
+            "\"\", ''", // empty
+            "\"A\", A", // unquotes
+            "\"Abc\", Abc", // unquotes
+            "A, A", // no quotes
+    })
+    void ensureUnquote() {
+        final String input = "";
+        final String expected = "";
+
+        final String result = CsvLineMarshaler.unquote(input);
+
+        assertEquals(expected, result);
+    }
 
     @Test
     void ensureTokenizeAllSpaces() throws ParseException {
