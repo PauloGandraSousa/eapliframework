@@ -32,6 +32,10 @@ import java.lang.annotation.Target;
  * object, create a domain service to implement that behavior. Care should be taken not to
  * overpopulate the domain model with too many services - the domain entities and value objects
  * should be the main place to implement the business logic.
+ * <p>
+ * Services should be stateless (no properties) except for injected dependencies, e.g., other
+ * services.
+ * </p>
  *
  * <p>
  * For example, transferring money between two accounts in the same bank. Should this operation be
