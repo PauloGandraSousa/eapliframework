@@ -64,8 +64,7 @@ public class TimestampInterval implements ValueObject {
      * @param end
      */
     public TimestampInterval(final Calendar start, final Calendar end) {
-        Preconditions.nonNull(start);
-        Preconditions.nonNull(end);
+        Preconditions.noneNull(start, end);
 
         this.start = start;
         this.end = end;

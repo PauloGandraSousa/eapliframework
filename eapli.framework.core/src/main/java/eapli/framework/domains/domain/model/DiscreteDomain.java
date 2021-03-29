@@ -162,7 +162,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * @return a new domain instance corresponding to the intersection
      */
     public DiscreteDomain<T> intersection(final DiscreteDomain<T> other) {
-        final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
+        final var builder = new DiscreteDomainBuilder<T>();
         for (final T each : elements) {
             if (other.contains(each)) {
                 builder.with(each);
@@ -195,7 +195,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * @return a new domain instance corresponding to the union
      */
     public DiscreteDomain<T> union(final DiscreteDomain<T> other) {
-        final DiscreteDomainBuilder<T> builder = new DiscreteDomainBuilder<>();
+        final var builder = new DiscreteDomainBuilder<T>();
         elements.forEach(builder::with);
         other.forEach(builder::with);
         return builder.build();

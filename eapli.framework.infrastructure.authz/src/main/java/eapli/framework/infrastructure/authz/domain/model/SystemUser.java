@@ -74,14 +74,21 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 
     @EmbeddedId
     private Username username;
+
     private Password password;
+
     private Name name;
+
     private EmailAddress email;
+
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     private RoleSet roles;
+
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
+
     private boolean active;
+
     @Temporal(TemporalType.DATE)
     private Calendar deactivatedOn;
 

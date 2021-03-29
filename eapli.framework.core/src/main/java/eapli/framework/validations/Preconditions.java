@@ -166,7 +166,7 @@ public final class Preconditions {
     }
 
     /**
-     * ensures an object reference is not null
+     * Ensures an object reference is not null.
      *
      * @param arg
      * @throws IllegalArgumentException
@@ -177,7 +177,7 @@ public final class Preconditions {
     }
 
     /**
-     * ensures an object reference is not null
+     * Ensures an object reference is not null.
      *
      * @param arg
      * @param msg

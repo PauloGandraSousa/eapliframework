@@ -89,8 +89,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
 
     private void ensureElementInvariants() {
         Invariants.ensure(state.hasStarted(), CALL_START_FIRST);
-        Invariants.ensure(state.isInCollection(),
-                CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
+        Invariants.ensure(state.isInCollection(), CANNOT_ADD_AN_ELEMENT_TO_A_COLLECTION_THAT_HAS_NOT_STARTED);
     }
 
     @Override
@@ -135,8 +134,7 @@ public class JsonRepresentationBuilder implements RepresentationBuilder<String> 
     @Override
     public RepresentationBuilder<String> endObject() {
         Invariants.ensure(state.hasStarted(), CALL_START_FIRST);
-        Invariants.ensure(state.isInObject(),
-                "Cannot end an object if there was no object started");
+        Invariants.ensure(state.isInObject(), "Cannot end an object if there was no object started");
 
         state.leave();
 

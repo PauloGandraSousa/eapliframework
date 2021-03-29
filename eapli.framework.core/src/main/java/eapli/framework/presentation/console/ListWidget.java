@@ -27,9 +27,7 @@ import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitor;
 
 /**
- * A simple widget to list the items of a collection
- *
- * e.g., create a widget for User
+ * A simple widget to list the items of a collection, e.g., create a widget for User.
  *
  * <pre>
  * Collection<User> items = controller.all();

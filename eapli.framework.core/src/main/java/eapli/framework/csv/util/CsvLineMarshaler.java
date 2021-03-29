@@ -26,7 +26,6 @@ package eapli.framework.csv.util;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import eapli.framework.util.Utility;
@@ -84,12 +83,12 @@ public final class CsvLineMarshaler {
     }
 
     private static List<String> matchTokens(final String input, final String regexPattern) throws ParseException {
-        final Pattern pattern = Pattern.compile(regexPattern);
+        final var pattern = Pattern.compile(regexPattern);
         final List<String> list = new ArrayList<>();
-        final Matcher m = pattern.matcher(input);
+        final var m = pattern.matcher(input);
         int pos = 0;
         while (m.find(pos)) {
-            final String match = m.group();
+            final var match = m.group();
             if (pos == 0 && !match.isEmpty() && match.charAt(0) == ',') {
                 list.add("");
             }

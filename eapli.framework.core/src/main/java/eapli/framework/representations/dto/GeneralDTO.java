@@ -88,8 +88,7 @@ public class GeneralDTO implements Map<String, Object> {
      * @param dto
      */
     @SuppressWarnings({ "unchecked", "squid:S3011" })
-    private static void transformFieldToDTO(final Object subject, final Field aField,
-            final GeneralDTO dto) {
+    private static void transformFieldToDTO(final Object subject, final Field aField, final GeneralDTO dto) {
         final boolean oldAccessibility = aField.canAccess(subject);
         aField.setAccessible(true);
         try {
@@ -117,6 +116,11 @@ public class GeneralDTO implements Map<String, Object> {
         }
     }
 
+    /**
+     *
+     * @param col
+     * @return
+     */
     public static Iterable<GeneralDTO> ofMany(final Iterable<?> col) {
         final List<GeneralDTO> data = new ArrayList<>();
         for (final Object member : col) {
@@ -125,17 +129,12 @@ public class GeneralDTO implements Map<String, Object> {
         return data;
     }
 
-    /**
-     */
-    private static void buildDtoForIterable(final String name, final Iterable<Object> col,
-            final GeneralDTO out) {
+    private static void buildDtoForIterable(final String name, final Iterable<Object> col, final GeneralDTO out) {
 
         final Iterable<GeneralDTO> data = ofMany(col);
         out.put(name, data);
     }
 
-    /**
-     */
     private static void buildDtoForArray(final Class<?> type, final String name, final Object array,
             final GeneralDTO out) {
         final int length = Array.getLength(array);
@@ -159,6 +158,11 @@ public class GeneralDTO implements Map<String, Object> {
         out.put(name, data);
     }
 
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public static Object valueOf(final GeneralDTO dto) {
         throw new UnsupportedOperationException("Not implemented yet");
     }

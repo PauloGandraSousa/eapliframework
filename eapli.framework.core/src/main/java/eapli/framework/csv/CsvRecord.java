@@ -88,10 +88,10 @@ public class CsvRecord {
 
         Preconditions.ensure(fields.length <= quote.length);
 
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         for (int i = 0; i < fields.length; i++) {
             final Object f = fields[i];
-            String e = "";
+            var e = "";
             if (f != null) {
                 if (quote[i]) {
                     e = quote(escapeQuotes(f.toString()));
@@ -154,8 +154,8 @@ public class CsvRecord {
             return new CsvRecord(result, "");
         }
 
-        StringBuilder curVal = new StringBuilder();
-        boolean inQuotes = false;
+        var curVal = new StringBuilder();
+        var inQuotes = false;
         final char[] chars = csvLine.toCharArray();
 
         int i = 0;

@@ -110,7 +110,7 @@ public final class StringPredicates {
      * @return whether a String is empty (zero length or all spaces) or null
      */
     public static boolean isNullOrWhiteSpace(final String text) {
-        return isNullOrEmpty(text) || text.trim().isEmpty();
+        return text == null || text.isBlank();
     }
 
     /**

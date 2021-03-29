@@ -48,11 +48,14 @@ import eapli.framework.validations.Invariants;
  * @param <T>
  */
 @Embeddable
-public class Interval<T extends Serializable & Comparable<T>>
-        implements ValueObject, Comparable<Interval<T>> {
+public class Interval<T extends Serializable & Comparable<T>> implements ValueObject, Comparable<Interval<T>> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     *
+     *
+     */
     protected enum BoundaryLimitType {
         INFINITY, OPEN, CLOSED;
 
@@ -69,10 +72,13 @@ public class Interval<T extends Serializable & Comparable<T>>
 
     @JsonProperty
     private final T start;
+
     @JsonProperty
     private final T end;
+
     @JsonProperty
     private final BoundaryLimitType startBoundary;
+
     @JsonProperty
     private final BoundaryLimitType endBoundary;
 
@@ -197,8 +203,7 @@ public class Interval<T extends Serializable & Comparable<T>>
      * @param start
      * @return a builder
      */
-    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> closedFrom(
-            final U start) {
+    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> closedFrom(final U start) {
         return new IntervalBuilder<>(start, BoundaryLimitType.CLOSED);
     }
 
@@ -209,8 +214,7 @@ public class Interval<T extends Serializable & Comparable<T>>
      *
      * @return a builder
      */
-    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> openFrom(
-            final U start) {
+    public static <U extends Comparable<U> & Serializable> IntervalBuilder<U> openFrom(final U start) {
         return new IntervalBuilder<>(start, BoundaryLimitType.OPEN);
     }
 
@@ -227,6 +231,10 @@ public class Interval<T extends Serializable & Comparable<T>>
         return EMPTY;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEmpty() {
         return start == end && start == null && endBoundary == startBoundary && endBoundary == null;
     }
@@ -241,6 +249,10 @@ public class Interval<T extends Serializable & Comparable<T>>
         return builder.toInfinity();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isUniversal() {
         return endBoundary == startBoundary && endBoundary == BoundaryLimitType.INFINITY;
     }
@@ -631,8 +643,7 @@ public class Interval<T extends Serializable & Comparable<T>>
      * @param args
      * @return a new Interval spanning the the contiguous group of intervals
      */
-    public static <T extends Serializable & Comparable<T>> Interval<T> combination(
-            final Interval<T>[] args) {
+    public static <T extends Serializable & Comparable<T>> Interval<T> combination(final Interval<T>[] args) {
         Arrays.sort(args);
         if (!areContiguous(args)) {
             throw new IllegalArgumentException("Unable to combine date ranges");
@@ -652,8 +663,7 @@ public class Interval<T extends Serializable & Comparable<T>>
      * @param args
      * @return {@code true} if a group of intervals forms a contiguous interval
      */
-    public static <T extends Serializable & Comparable<T>> boolean areContiguous(
-            final Interval<T>[] args) {
+    public static <T extends Serializable & Comparable<T>> boolean areContiguous(final Interval<T>[] args) {
         // TODO need to take into account the boundary limits to see if the intervals are really
         // contiguous
         Arrays.sort(args);
@@ -670,7 +680,7 @@ public class Interval<T extends Serializable & Comparable<T>>
         if (isEmpty()) {
             return "[]";
         }
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         sb.append(startBracket(hasOpenStart()));
         sb.append(rangeValue(this.startsAtInfinity(), start));
         sb.append(", ");

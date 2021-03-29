@@ -94,8 +94,8 @@ public final class Files {
      * @throws IOException
      */
     public static String textFrom(final InputStream is, final String encoding) throws IOException {
-        final StringBuilder result = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding))) {
+        final var result = new StringBuilder();
+        try (var reader = new BufferedReader(new InputStreamReader(is, encoding))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 result.append(line);
@@ -132,7 +132,7 @@ public final class Files {
         final boolean isMac = osname.indexOf("mac") >= 0;
         final boolean isNix = osname.indexOf("nix") >= 0 || osname.indexOf("nux") >= 0 || osname.indexOf("aix") >= 0;
 
-        final ProcessBuilder builder = new ProcessBuilder();
+        final var builder = new ProcessBuilder();
         if (isWindows) {
             builder.command("cmd.exe", "/c", "start " + path);
         } else if (isMac) {
@@ -142,10 +142,9 @@ public final class Files {
         }
         builder.directory(new File(System.getProperty("user.home")));
         final Process process = builder.start();
-        final StreamGobbler streamGobbler = new StreamGobbler(process.getInputStream(), LOGGER::info);
+
+        final var streamGobbler = new StreamGobbler(process.getInputStream(), LOGGER::info);
         Executors.newSingleThreadExecutor().submit(streamGobbler);
-        final int exitCode = process.waitFor();
-        assert exitCode == 0;
-        return exitCode;
+        return process.waitFor();
     }
 }

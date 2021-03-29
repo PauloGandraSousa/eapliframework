@@ -37,6 +37,7 @@ import eapli.framework.validations.Preconditions;
  * @param <T>
  */
 public class DiscreteDomainBuilder<T extends Serializable> implements Factory<DiscreteDomain<T>> {
+
     private final Set<T> from = new HashSet<>();
 
     /**

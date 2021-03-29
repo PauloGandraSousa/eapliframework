@@ -70,8 +70,7 @@ public class DateInterval implements ValueObject {
      * @param end
      */
     public DateInterval(final Calendar start, final Calendar end) {
-        Preconditions.nonNull(start);
-        Preconditions.nonNull(end);
+        Preconditions.noneNull(start, end);
 
         this.start = Calendars.dateOf(start);
         this.end = Calendars.dateOf(end);

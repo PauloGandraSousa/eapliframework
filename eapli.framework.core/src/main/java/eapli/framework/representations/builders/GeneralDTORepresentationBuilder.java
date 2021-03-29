@@ -35,7 +35,7 @@ import eapli.framework.representations.dto.GeneralDTO;
  * A builder for {@link GeneralDTO} objects.
  * <p>
  * This class is thread-safe.
- * 
+ *
  * @author Paulo Gandra de Sousa
  *
  */
@@ -77,22 +77,19 @@ public class GeneralDTORepresentationBuilder implements RepresentationBuilder<Ge
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name,
-            final Designation value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Designation value) {
         dto.put(name, value);
         return this;
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name,
-            final Description value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final Description value) {
         dto.put(name, value);
         return this;
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name,
-            final EmailAddress value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final EmailAddress value) {
         dto.put(name, value);
         return this;
     }
@@ -116,15 +113,13 @@ public class GeneralDTORepresentationBuilder implements RepresentationBuilder<Ge
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name,
-            final BigInteger value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final BigInteger value) {
         dto.put(name, value);
         return this;
     }
 
     @Override
-    public RepresentationBuilder<GeneralDTO> withProperty(final String name,
-            final BigDecimal value) {
+    public RepresentationBuilder<GeneralDTO> withProperty(final String name, final BigDecimal value) {
         dto.put(name, value);
         return this;
     }

@@ -53,6 +53,7 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
     // and cast whenever needed
     @SuppressWarnings({ "rawtypes", "java:S3740" })
     private static final Map DATA = new ConcurrentHashMap();
+
     private final Class<T> entityClass;
 
     private final Function<? super T, ? extends K> identityGenerator;

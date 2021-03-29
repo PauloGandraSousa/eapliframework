@@ -179,7 +179,7 @@ public class RomanNumeral implements ValueObject {
     @Override
     @SuppressWarnings("squid:S00117")
     public String toString() {
-        final StringBuilder roman = new StringBuilder("");
+        final var roman = new StringBuilder("");
         int N = num; // N represents the part of num that still has
         // to be converted to Roman numeral representation.
         for (int i = 0; i < numbers.length; i++) {

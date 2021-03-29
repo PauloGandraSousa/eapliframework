@@ -68,8 +68,8 @@ public final class Console {
     public static String readLine(final String prompt) {
         try {
             System.out.println(prompt);
-            final InputStreamReader converter = new InputStreamReader(System.in);
-            final BufferedReader in = new BufferedReader(converter);
+            final var converter = new InputStreamReader(System.in);
+            final var in = new BufferedReader(converter);
 
             return in.readLine();
         } catch (final IOException ex) {
@@ -92,8 +92,8 @@ public final class Console {
         do {
             try {
                 System.out.println(prompt);
-                final InputStreamReader converter = new InputStreamReader(System.in);
-                final BufferedReader in = new BufferedReader(converter);
+                final var converter = new InputStreamReader(System.in);
+                final var in = new BufferedReader(converter);
 
                 final String text = in.readLine();
                 if (StringPredicates.isNullOrEmpty(text)) {
@@ -207,7 +207,7 @@ public final class Console {
         do {
             try {
                 final String strDate = readLine(prompt);
-                final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
+                final var df = new SimpleDateFormat(dateFormat);
                 return df.parse(strDate);
             } catch (@SuppressWarnings("unused") final ParseException ex) {
                 // nothing to do
@@ -238,7 +238,7 @@ public final class Console {
         do {
             try {
                 final String strDate = readLine(prompt);
-                final SimpleDateFormat df = new SimpleDateFormat(dateFormat);
+                final var df = new SimpleDateFormat(dateFormat);
                 return Calendars.fromDate(df.parse(strDate));
             } catch (@SuppressWarnings("unused") final ParseException ex) {
                 // nothing to do

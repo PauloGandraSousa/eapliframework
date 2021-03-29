@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -78,7 +77,7 @@ public final class Strings {
      *         specified char set
      */
     public static String randomString(final int len, final String charSet) {
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         for (int i = 0; i < len; i++) {
             final int c = NumberGenerator.anInt(charSet.length());
             sb.append(charSet.charAt(c));
@@ -93,7 +92,7 @@ public final class Strings {
      * @return an hexadecimal representation of the byte buffer
      */
     public static String asHexadecimal(final byte[] buffer) {
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         for (final byte each : buffer) {
             sb.append(String.format("%02x", each));
         }
@@ -176,7 +175,7 @@ public final class Strings {
      */
     public static String repeat(final char symbol, final int size) {
         int n = size;
-        final StringBuilder b = new StringBuilder();
+        final var b = new StringBuilder();
         while (n > 0) {
             b.append(symbol);
             n--;
@@ -198,7 +197,7 @@ public final class Strings {
      * @return left padded string
      */
     public static String leftPadded(final String src, final int length, final char padding) {
-        final String fmt = "%" + length + "s";
+        final var fmt = "%" + length + "s";
         return String.format(fmt, src).replace(' ', padding);
     }
 
@@ -216,7 +215,7 @@ public final class Strings {
      * @return right padded string
      */
     public static String rightPadded(final String src, final int length, final char padding) {
-        final String fmt = "%-" + length + "s";
+        final var fmt = "%-" + length + "s";
         return String.format(fmt, src).replace(' ', padding);
     }
 
@@ -228,9 +227,9 @@ public final class Strings {
      * @return all matches of the regular expression
      */
     public static List<String> matchResults(final String input, final String regexPattern) {
-        final Pattern pattern = Pattern.compile(regexPattern);
+        final var pattern = Pattern.compile(regexPattern);
         final List<String> list = new ArrayList<>();
-        final Matcher m = pattern.matcher(input);
+        final var m = pattern.matcher(input);
         while (m.find()) {
             list.add(m.group());
         }

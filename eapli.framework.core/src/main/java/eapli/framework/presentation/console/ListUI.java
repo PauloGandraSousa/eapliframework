@@ -44,10 +44,13 @@ public class ListUI<T> extends AbstractListUI<T> {
     protected final String theEmptyMessage;
 
     /**
-     * Eagerly Constructs the UI. This constructor should be avoided if the underlying data is fetched
-     * from an external database or file as the actual data needs to be evaluated by the compiler in the
+     * Eagerly Constructs the UI. This constructor should be avoided if the underlying data is
+     * fetched
+     * from an external database or file as the actual data needs to be evaluated by the compiler in
+     * the
      * moment of construction and not only when it is needed. That is, even if the {@link #show()}
-     * method is never called, the call to the underlying database would have been issued anyway when
+     * method is never called, the call to the underlying database would have been issued anyway
+     * when
      * the compiler passes the argument to the constructor. See
      * {@link #ListUI(Supplier, Visitor, String, String, String, String)} for lazy construction.
      *
@@ -66,12 +69,7 @@ public class ListUI<T> extends AbstractListUI<T> {
      */
     public ListUI(final Iterable<T> source, final Visitor<T> printer, final String elementName,
             final String header, final String headline, final String emptyMessage) {
-        Preconditions.nonNull(source);
-        Preconditions.nonNull(printer);
-        Preconditions.nonNull(elementName);
-        Preconditions.nonNull(header);
-        Preconditions.nonNull(headline);
-        Preconditions.nonNull(emptyMessage);
+        Preconditions.noneNull(source, printer, elementName, header, headline, emptyMessage);
 
         this.source = source;
         elementSupplier = null;
@@ -83,7 +81,8 @@ public class ListUI<T> extends AbstractListUI<T> {
     }
 
     /**
-     * Lazily constructs the UI. Since this constructor uses a {@link Supplier} object, the fetching of
+     * Lazily constructs the UI. Since this constructor uses a {@link Supplier} object, the fetching
+     * of
      * data only occurs when the data is really needed and not at the moment of construction of the
      * {@code ListUI} object.
      *
@@ -103,12 +102,7 @@ public class ListUI<T> extends AbstractListUI<T> {
     public ListUI(final Supplier<Iterable<T>> elementSupplier, final Visitor<T> printer,
             final String elementName, final String header, final String headline,
             final String emptyMessage) {
-        Preconditions.nonNull(elementSupplier);
-        Preconditions.nonNull(printer);
-        Preconditions.nonNull(elementName);
-        Preconditions.nonNull(header);
-        Preconditions.nonNull(headline);
-        Preconditions.nonNull(emptyMessage);
+        Preconditions.noneNull(elementSupplier, printer, elementName, header, headline, emptyMessage);
 
         this.elementSupplier = elementSupplier;
         this.source = null;
@@ -167,7 +161,6 @@ public class ListUI<T> extends AbstractListUI<T> {
 
     @Override
     protected String emptyMessage() {
-        // TODO Auto-generated method stub
-        return null;
+        return "";
     }
 }
