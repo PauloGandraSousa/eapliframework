@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -49,5 +49,10 @@ public class InMemoryTransactionalContext implements TransactionalContext {
     @Override
     public void close() {
         // NOP
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 }

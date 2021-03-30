@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -43,8 +43,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
  *
  * @author Paulo Gandra Sousa
  */
-/* package */ class JpaWithTransactionalContextRepository<T, K, I>
-        extends JpaBaseRepository<T, K, I> {
+/* package */ class JpaWithTransactionalContextRepository<T, K, I> extends JpaBaseRepository<T, K, I> {
 
     private JpaTransactionalContext txContext;
 
@@ -86,12 +85,12 @@ import eapli.framework.domain.repositories.TransactionalContext;
 
     @Override
     protected EntityManagerFactory entityManagerFactory() {
-        return this.txContext.entityManagerFactory();
+        return txContext.entityManagerFactory();
     }
 
     @Override
     protected EntityManager entityManager() {
-        return this.txContext.entityManager();
+        return txContext.entityManager();
     }
 
     /**

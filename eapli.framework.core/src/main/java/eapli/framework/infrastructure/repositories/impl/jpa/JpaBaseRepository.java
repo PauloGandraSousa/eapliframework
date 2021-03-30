@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -27,9 +27,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
+import javax.persistence.PessimisticLockException;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -70,8 +72,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  *
  */
-public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
-        implements IterableRepository<T, K> {
+public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements IterableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
@@ -317,6 +318,15 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
             throw new IntegrityViolationException(ex);
         } else {
             throw ex;
+        }
+    }
+
+    @Override
+    public void lock(final T entity) {
+        try {
+            entityManager().lock(entity, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
+        } catch (final PessimisticLockException e) {
+            throw new ConcurrencyException(e);
         }
     }
 

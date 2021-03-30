@@ -179,7 +179,8 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
         return Optional.of(ret);
     }
 
-    public long size() {
-        return count();
+    @Override
+    public void lock(final T entity) {
+        // NOP
     }
 }

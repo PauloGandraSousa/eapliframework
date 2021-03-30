@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -30,7 +30,9 @@ import eapli.framework.domain.model.AggregateRoot;
  * leaking details of the implementation of the actual persistence mechanism.
  *
  * <p>
- * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * Quoting
+ * <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric
+ * Evans</a>:
  * <blockquote>
  * For each type of aggregate that needs global access, create a service that can provide the
  * illusion of an in-memory collection of all objects of that aggregate’s root type. Set up access
@@ -69,13 +71,17 @@ import eapli.framework.domain.model.AggregateRoot;
  * </ul>
  * </li>
  * </ul>
- * Note that these methods should only exist in order to support the application use cases. If there are reporting needs
- * those should not be present in the Domain repository. A specialized {@link ReportingRepository} should be defined for
+ * Note that these methods should only exist in order to support the application use cases. If there
+ * are reporting needs
+ * those should not be present in the Domain repository. A specialized {@link ReportingRepository}
+ * should be defined for
  * such features or a separate reporting tool should be used.
  * </p>
  * <p>
- * If the aggregate is an inheritance hierarchy, the abstract root of the hierarchy should determine the aggregate root,
- * not the specialized derived classes. Thus, the repository should be based on the abstract root class and provide
+ * If the aggregate is an inheritance hierarchy, the abstract root of the hierarchy should determine
+ * the aggregate root,
+ * not the specialized derived classes. Thus, the repository should be based on the abstract root
+ * class and provide
  * specialized finders for the derived classes.
  * </p>
  * <p>
@@ -162,8 +168,10 @@ import eapli.framework.domain.model.AggregateRoot;
  *           note right of VehicleRepositoryJpaImpl
  *           findAllAutomobiles: "SELECT e FROM Automobile e ORDER BY e.licensePlate"
  *           findAllMotorBikes: "SELECT e FROM MotorBike e ORDER BY e.licensePlate"
- *           findAutomobilesWith5Doors: "SELECT e from Automobile e WHERE e.numberOfDoors=5 ORDER BY e.licensePlate"
- *           countOfMotorbikeswithSidecar: "SELECT COUNT(e) FROM MotorBike e WHERE e.hasSideCar=true"
+ *           findAutomobilesWith5Doors: "SELECT e from Automobile e WHERE e.numberOfDoors=5 ORDER BY
+ *           e.licensePlate"
+ *           countOfMotorbikeswithSidecar: "SELECT COUNT(e) FROM MotorBike e WHERE
+ *           e.hasSideCar=true"
  *           totalHorsePower: "SELECT SUM(e.horsePower) FROM Vehicle e"
  *           end note
  *
@@ -238,6 +246,7 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
      * removes the specified entity from the repository.
      *
      * @param entity
+     * @throws ConcurrencyException
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
@@ -248,11 +257,21 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
      * Removes the entity with the specified identity from the repository.
      *
      * @param entityId
+     * @throws ConcurrencyException
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
      */
     void deleteOfIdentity(final I entityId);
+
+    /**
+     * Performs an exclusive pessimistic lock on the desired entity.
+     *
+     * @param entity
+     * @throws ConcurrencyException
+     *             if it is not possible to acquire the lock on that object
+     */
+    void lock(T entity);
 
     /**
      * Returns the number of entities in the repository.

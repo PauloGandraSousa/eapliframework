@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -82,14 +82,15 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
     public JpaAutoTxRepository(final String persistenceUnitName,
             @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties,
             final String identityFieldName) {
+
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass()
                 .getGenericSuperclass();
+
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass,
-                identityFieldName);
-        this.autoTx = null;
+        repo = new JpaTransactionalRepository<>(persistenceUnitName, properties, entityClass, identityFieldName);
+        autoTx = null;
     }
 
     /**
@@ -109,9 +110,8 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
         @SuppressWarnings("unchecked")
         final Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
 
-        this.repo = new JpaWithTransactionalContextRepository<>(tx, entityClass,
-                identityFieldName);
-        this.autoTx = tx;
+        repo = new JpaWithTransactionalContextRepository<>(tx, entityClass, identityFieldName);
+        autoTx = tx;
     }
 
     /**
@@ -142,7 +142,8 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      * @return the transactional context this repository is enrolled or {@code null} if not enrolled
      */
     public TransactionalContext context() {
-        return this.autoTx;
+        // TODO this method should return an Optional
+        return autoTx;
     }
 
     /**
@@ -151,19 +152,31 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      *
      * @return {@code true} if the repository is running in single transaction mode
      *         {@code false} if running within a Transactional Context
+     * @deprecated the name of this method is misleading. Use
+     *             {@link #isPartOfTransactionalContext()} instead.
      */
+    @Deprecated(forRemoval = true)
     public boolean isInTransaction() {
+        return context() == null;
+    }
+
+    /**
+     * Checks if the repository is running as part of a transaction context.
+     *
+     * @return {@code true} if the repository is running within a Transactional Context
+     */
+    public boolean isPartOfTransactionalContext() {
         return context() == null;
     }
 
     @Override
     public void delete(final T entity) {
-        this.repo.delete(entity);
+        repo.delete(entity);
     }
 
     @Override
     public void deleteById(final K id) {
-        this.repo.deleteById(id);
+        repo.deleteById(id);
     }
 
     /**
@@ -175,22 +188,22 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      *             if the delete operation makes no sense for this repository
      */
     public void deleteOfIdentity(final I entityId) {
-        this.repo.deleteOfIdentity(entityId);
+        repo.deleteOfIdentity(entityId);
     }
 
     @Override
     public <S extends T> S save(final S entity) {
-        return this.repo.save(entity);
+        return repo.save(entity);
     }
 
     @Override
     public Iterable<T> findAll() {
-        return this.repo.findAll();
+        return repo.findAll();
     }
 
     @Override
     public Optional<T> findById(final K id) {
-        return this.repo.findById(id);
+        return repo.findById(id);
     }
 
     /**
@@ -201,17 +214,17 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      * @return the entity with the specified identity.
      */
     public Optional<T> ofIdentity(final I id) {
-        return this.repo.ofIdentity(id);
+        return repo.ofIdentity(id);
     }
 
     @Override
     public long count() {
-        return this.repo.count();
+        return repo.count();
     }
 
     @Override
     public Iterator<T> iterator() {
-        return this.repo.iterator();
+        return repo.iterator();
     }
 
     /**
@@ -282,8 +295,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      *            a map of the parameter name and its value to use in the query
      * @return
      */
-    protected Optional<T> matchOne(final String whereWithParameters,
-            final Map<String, Object> params) {
+    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
         return repo.matchOne(whereWithParameters, params);
     }
 
@@ -319,16 +331,21 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
 
     @Override
     public Iterator<T> iterator(final int pagesize) {
-        return this.repo.iterator(pagesize);
+        return repo.iterator(pagesize);
     }
 
     @Override
     public Optional<T> first() {
-        return this.repo.first();
+        return repo.first();
     }
 
     @Override
     public Iterable<T> first(final int n) {
-        return this.repo.first(n);
+        return repo.first(n);
+    }
+
+    @Override
+    public void lock(final T entity) {
+        repo.lock(entity);
     }
 }

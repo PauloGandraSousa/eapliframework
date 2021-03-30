@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -46,7 +46,7 @@ import eapli.framework.validations.Preconditions;
  *
  * <p>
  * We are closing the entity manager at the end of each method (in the finally block) because this
- * code is running in a non-container managed way. if it was the case to be running under an
+ * code is running in a non-container managed way. If it was the case to be running under an
  * application server with a JPA container and managed transactions/sessions, one should not be
  * doing this.
  *
@@ -82,8 +82,7 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
      * @param identityFieldName
      *            the name of the <b>business identity</b> field (not the primary key)
      */
-    /* package */ JpaTransactionalRepository(final String persistenceUnitName,
-            final Class<T> classz,
+    /* package */ JpaTransactionalRepository(final String persistenceUnitName, final Class<T> classz,
             final String identityFieldName) {
         super(new JpaTransactionalContext(persistenceUnitName), classz, identityFieldName);
     }

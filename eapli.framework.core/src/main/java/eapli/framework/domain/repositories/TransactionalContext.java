@@ -28,23 +28,31 @@ package eapli.framework.domain.repositories;
  */
 public interface TransactionalContext {
     /**
-     * start a transaction in the persistence store
+     * Start a transaction in the persistence store.
      */
     void beginTransaction();
 
     /**
-     * commit changes to the persistence store
+     * Commit changes to the persistence store.
      */
     void commit();
 
     /**
-     * rollback all changes from the beginning of the transaction
+     * Rollback all changes from the beginning of the transaction.
      */
     void rollback();
 
     /**
-     * close the connection to the persistence store and rollback any pending
-     * transaction
+     * Close the connection to the persistence store and rollback any pending
+     * transaction.
      */
     void close();
+
+    /**
+     * Indicate whether a resource transaction is in progress. Checks if the
+     * {@link #beginTransaction} method has been invoked.
+     *
+     * @return {@code true} if the transactional context is currently active.
+     */
+    boolean isActive();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -101,4 +101,11 @@ public interface Repository<T, K> {
      * @return the number of entities in the repository
      */
     long count();
+
+    /**
+     * Performs an exclusive pessimistic lock on the desired entity.
+     *
+     * @param entity
+     */
+    void lock(T entity);
 }

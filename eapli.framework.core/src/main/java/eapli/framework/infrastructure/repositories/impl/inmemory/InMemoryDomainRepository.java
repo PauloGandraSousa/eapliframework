@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -39,7 +39,10 @@ import eapli.framework.domain.repositories.DomainRepository;
  *
  * @author Paulo Gandra de Sousa
  */
-public class InMemoryDomainRepository<T extends AggregateRoot<I>, I extends Comparable<I>/* & ValueObject */>
+public class InMemoryDomainRepository<T extends AggregateRoot<I>, I extends Comparable<I>/*
+                                                                                          * &
+                                                                                          * ValueObject
+                                                                                          */>
         extends InMemoryRepository<T, I> implements DomainRepository<I, T> {
 
     public InMemoryDomainRepository() {
@@ -58,5 +61,10 @@ public class InMemoryDomainRepository<T extends AggregateRoot<I>, I extends Comp
     @Override
     public void deleteOfIdentity(final I id) {
         deleteById(id);
+    }
+
+    @Override
+    public void lock(final T entity) {
+        // NOP
     }
 }

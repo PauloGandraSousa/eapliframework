@@ -6,10 +6,16 @@
 ### What's new
 
 - `RoleAssignment.unassignedOn`
+- `TransactionalContext.isActive`
+- `Repository.lock`
+- `DomainRepository.lock`
+- `JpaAutoTxRepository.isPartOfTransactionalContext`
 
 ### Changed
 
-- deprecated - `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead
+- deprecated 
+	- `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead
+	- `JpaAutoTxRepository.isInTransaction`
 
 
 ## 16.2.0

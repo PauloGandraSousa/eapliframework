@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -46,8 +46,11 @@ public class JpaTransactionalContext implements TransactionalContext {
     private static final Logger LOGGER = LogManager.getLogger(JpaTransactionalContext.class);
 
     private final String persistenceUnitName;
+
     private static EntityManagerFactory singletonEMF;
+
     private EntityManager entityManager;
+
     @SuppressWarnings({ "rawtypes", "java:S3740" })
     private final Map properties = new HashMap();
 
@@ -118,9 +121,14 @@ public class JpaTransactionalContext implements TransactionalContext {
 
     @Override
     public void close() {
-        if (entityManager().getTransaction().isActive()) {
+        if (isActive()) {
             rollback();
         }
         entityManager().close();
+    }
+
+    @Override
+    public boolean isActive() {
+        return entityManager().getTransaction().isActive();
     }
 }
