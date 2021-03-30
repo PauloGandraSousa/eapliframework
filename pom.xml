@@ -6,7 +6,7 @@
 
 	<packaging>pom</packaging>
 	<groupId>eapli</groupId>
-	<version>16.3.0</version>
+	<version>16.3.0-SNAPSHOT</version>
 	<name>eapli.framework</name>
 	<artifactId>eapli.framework</artifactId>
 
