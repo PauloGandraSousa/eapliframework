@@ -180,7 +180,8 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
     }
 
     @Override
-    public void lock(final T entity) {
+    public T lock(final T entity) {
         // NOP
+        return entity;
     }
 }

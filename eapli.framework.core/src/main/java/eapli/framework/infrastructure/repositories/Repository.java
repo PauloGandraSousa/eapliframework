@@ -107,5 +107,5 @@ public interface Repository<T, K> {
      *
      * @param entity
      */
-    void lock(T entity);
+    T lock(T entity);
 }

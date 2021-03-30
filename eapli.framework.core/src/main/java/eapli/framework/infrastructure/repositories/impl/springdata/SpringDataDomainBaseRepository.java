@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -24,8 +24,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
 import eapli.framework.domain.model.AggregateRoot;
@@ -51,15 +51,7 @@ import eapli.framework.domain.model.AggregateRoot;
  */
 @NoRepositoryBean
 public interface SpringDataDomainBaseRepository<K, I extends Comparable<I>, T extends AggregateRoot<I>>
-        extends Repository<T, K> {
-
-    long count();
-
-    <S extends T> S save(S entity);
-
-    <S extends T> void delete(S entity);
-
-    Iterable<T> findAll();
+        extends CrudRepository<T, K> {
 
     /**
      * Each specific repository MUST implement this method and define the exact JPQL query.
@@ -74,6 +66,7 @@ public interface SpringDataDomainBaseRepository<K, I extends Comparable<I>, T ex
      * Each specific repository MUST implement this method and define the exact JPQL query
      *
      * @param id
+     * @return
      */
     @Query("SELECT e FROM #{#entityName} e WHERE e.«entity-biz-id» = :id")
     Optional<T> ofIdentity(@Param("id") I id);

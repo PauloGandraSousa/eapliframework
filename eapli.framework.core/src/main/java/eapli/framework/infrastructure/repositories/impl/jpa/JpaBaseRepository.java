@@ -322,9 +322,10 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     @Override
-    public void lock(final T entity) {
+    public T lock(final T entity) {
         try {
             entityManager().lock(entity, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
+            return entity;
         } catch (final PessimisticLockException e) {
             throw new ConcurrencyException(e);
         }

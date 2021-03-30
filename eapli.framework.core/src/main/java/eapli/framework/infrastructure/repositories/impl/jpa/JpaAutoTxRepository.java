@@ -345,7 +345,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
     }
 
     @Override
-    public void lock(final T entity) {
-        repo.lock(entity);
+    public T lock(final T entity) {
+        return repo.lock(entity);
     }
 }

@@ -64,7 +64,8 @@ public class InMemoryDomainRepository<T extends AggregateRoot<I>, I extends Comp
     }
 
     @Override
-    public void lock(final T entity) {
+    public T lock(final T entity) {
         // NOP
+        return entity;
     }
 }

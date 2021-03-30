@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,41 +20,53 @@
  */
 package eapli.framework.infrastructure.repositories.impl.springdata;
 
-import java.util.Optional;
+import javax.persistence.LockModeType;
 
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Base interface for Spring Data repositories. Note that this interface expects {@code <K>} to be
  * the primary key type, which may or may not be the business identity of the type {@code <T>} being
  * managed.
  *
- * <p>
- * This interface extends Repository instead of CrudRepository to have findById return an Optional.
  *
  * @param <T>
  *            the managed entity type
  * @param <K>
  *            the primary key of the entity in the database
- * 
+ *
  * @see SpringDataDomainBaseRepository
  *
  * @author Paulo Gandra Sousa
  *
  */
 @NoRepositoryBean
-public interface SpringDataBaseRepository<T, K> extends Repository<T, K> {
+public interface SpringDataBaseRepository<T, K> extends CrudRepository<T, K> {
 
-    long count();
+    /**
+     * Acquires an exclusive write lock to a managed entity previously fetched from the persistence
+     * storage.
+     *
+     * @param entity
+     * @return
+     */
+    @Query("SELECT e FROM #{#entityName} e WHERE e = :entity")
+    @Lock(LockModeType.PESSIMISTIC_FORCE_INCREMENT)
+    T lock(@Param("entity") T entity);
 
-    <S extends T> S save(S entity);
-
-    void delete(T entity);
-
-    void deleteById(K id);
-
-    Optional<T> findById(K id);
-
-    Iterable<T> findAll();
+    /**
+     * Loads and acquires an exclusive write lock to a managed entity.
+     * <p>
+     * Each specific repository MUST implement this method and define the exact JPQL query
+     *
+     * @param id
+     * @return
+     */
+    @Query("SELECT e FROM #{#entityName} e WHERE e.«pk» = :id")
+    @Lock(LockModeType.PESSIMISTIC_FORCE_INCREMENT)
+    T lockById(@Param("entity") K id);
 }

@@ -271,7 +271,7 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
      * @throws ConcurrencyException
      *             if it is not possible to acquire the lock on that object
      */
-    void lock(T entity);
+    T lock(T entity);
 
     /**
      * Returns the number of entities in the repository.
