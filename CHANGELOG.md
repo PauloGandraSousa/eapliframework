@@ -1,7 +1,7 @@
 # EAPLI Framework Changelog
 
 
-## 16.3.0-SNAPSHOT
+## 16.3.0
 
 ### What's new
 
@@ -15,7 +15,7 @@
 
 - deprecated 
 	- `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead
-	- `JpaAutoTxRepository.isInTransaction`
+	- `JpaAutoTxRepository.isInTransaction`; use `JpaAutoTxRepository.isPartOfTransactionalContext` instead
 
 
 ## 16.2.0
