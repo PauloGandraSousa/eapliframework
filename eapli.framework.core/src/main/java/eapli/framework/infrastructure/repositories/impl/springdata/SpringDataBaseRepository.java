@@ -20,13 +20,8 @@
  */
 package eapli.framework.infrastructure.repositories.impl.springdata;
 
-import javax.persistence.LockModeType;
-
-import org.springframework.data.jpa.repository.Lock;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Base interface for Spring Data repositories. Note that this interface expects {@code <K>} to be
@@ -47,26 +42,4 @@ import org.springframework.data.repository.query.Param;
 @NoRepositoryBean
 public interface SpringDataBaseRepository<T, K> extends CrudRepository<T, K> {
 
-    /**
-     * Acquires an exclusive write lock to a managed entity previously fetched from the persistence
-     * storage.
-     *
-     * @param entity
-     * @return
-     */
-    @Query("SELECT e FROM #{#entityName} e WHERE e = :entity")
-    @Lock(LockModeType.PESSIMISTIC_FORCE_INCREMENT)
-    T lock(@Param("entity") T entity);
-
-    /**
-     * Loads and acquires an exclusive write lock to a managed entity.
-     * <p>
-     * Each specific repository MUST implement this method and define the exact JPQL query
-     *
-     * @param id
-     * @return
-     */
-    @Query("SELECT e FROM #{#entityName} e WHERE e.«pk» = :id")
-    @Lock(LockModeType.PESSIMISTIC_FORCE_INCREMENT)
-    T lockById(@Param("entity") K id);
 }

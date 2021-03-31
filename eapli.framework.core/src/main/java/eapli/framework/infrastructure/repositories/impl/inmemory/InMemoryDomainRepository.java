@@ -26,6 +26,7 @@ import java.util.function.Function;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 import eapli.framework.domain.repositories.DomainRepository;
+import eapli.framework.domain.repositories.LockableDomainRepository;
 
 /**
  * An in-memory repository that uses the domain object's identity as primary
@@ -43,7 +44,7 @@ public class InMemoryDomainRepository<T extends AggregateRoot<I>, I extends Comp
                                                                                           * &
                                                                                           * ValueObject
                                                                                           */>
-        extends InMemoryRepository<T, I> implements DomainRepository<I, T> {
+        extends InMemoryRepository<T, I> implements DomainRepository<I, T>, LockableDomainRepository<I, T> {
 
     public InMemoryDomainRepository() {
         super(DomainEntity::identity);
@@ -64,8 +65,13 @@ public class InMemoryDomainRepository<T extends AggregateRoot<I>, I extends Comp
     }
 
     @Override
-    public T lock(final T entity) {
+    public T lockItUp(final T entity) {
         // NOP
         return entity;
+    }
+
+    @Override
+    public Optional<T> lockOfIdentity(final I id) {
+        return ofIdentity(id);
     }
 }

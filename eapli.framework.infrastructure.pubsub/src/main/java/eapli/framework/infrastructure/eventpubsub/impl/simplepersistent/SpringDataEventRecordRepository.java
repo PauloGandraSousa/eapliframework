@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -29,13 +29,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBaseRepository;
+import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataDomainBaseRepository;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-interface SpringDataEventRecordRepository extends EventRecordRepository, SpringDataBaseRepository<EventRecord, Long> {
+interface SpringDataEventRecordRepository
+        extends EventRecordRepository, SpringDataDomainBaseRepository<Long, Long, EventRecord> {
     @Override
     @Query("SELECT e FROM #{#entityName} e WHERE e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)")
     Iterable<EventRecord> findNotConsumed(@Param("instance") String instanceKey);

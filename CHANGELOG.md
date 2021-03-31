@@ -7,9 +7,11 @@
 
 - `RoleAssignment.unassignedOn`
 - `TransactionalContext.isActive`
-- `Repository.lock`
 - `DomainRepository.lock`
 - `JpaAutoTxRepository.isPartOfTransactionalContext`
+- `SpringDataLockableRepository`
+- `LockableRepository`
+- `LockableDomainRepository`
 
 ### Changed
 

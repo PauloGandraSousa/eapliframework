@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -31,5 +31,10 @@ import eapli.framework.domain.repositories.DomainRepository;
  */
 interface EventRecordRepository extends DomainRepository<Long, EventRecord> {
 
+    /**
+     *
+     * @param instanceKey
+     * @return
+     */
     Iterable<EventRecord> findNotConsumed(String instanceKey);
 }

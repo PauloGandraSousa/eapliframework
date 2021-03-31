@@ -265,15 +265,6 @@ public interface DomainRepository<I extends Comparable<I>/* & ValueObject */, T 
     void deleteOfIdentity(final I entityId);
 
     /**
-     * Performs an exclusive pessimistic lock on the desired entity.
-     *
-     * @param entity
-     * @throws ConcurrencyException
-     *             if it is not possible to acquire the lock on that object
-     */
-    T lock(T entity);
-
-    /**
      * Returns the number of entities in the repository.
      *
      * @return the number of entities in the repository.

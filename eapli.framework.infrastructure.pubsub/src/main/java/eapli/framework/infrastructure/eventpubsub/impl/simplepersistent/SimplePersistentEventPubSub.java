@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -54,6 +54,7 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 
     @Autowired
     private EventRecordRepository eventRepo;
+
     @Autowired
     private EventConsumptionRepository consumptionRepo;
 

@@ -101,11 +101,4 @@ public interface Repository<T, K> {
      * @return the number of entities in the repository
      */
     long count();
-
-    /**
-     * Performs an exclusive pessimistic lock on the desired entity.
-     *
-     * @param entity
-     */
-    T lock(T entity);
 }

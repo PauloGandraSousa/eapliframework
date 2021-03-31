@@ -24,7 +24,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;
 
@@ -51,7 +50,7 @@ import eapli.framework.domain.model.AggregateRoot;
  */
 @NoRepositoryBean
 public interface SpringDataDomainBaseRepository<K, I extends Comparable<I>, T extends AggregateRoot<I>>
-        extends CrudRepository<T, K> {
+        extends SpringDataBaseRepository<T, K> {
 
     /**
      * Each specific repository MUST implement this method and define the exact JPQL query.
@@ -66,7 +65,7 @@ public interface SpringDataDomainBaseRepository<K, I extends Comparable<I>, T ex
      * Each specific repository MUST implement this method and define the exact JPQL query
      *
      * @param id
-     * @return
+     * @return the desired entity
      */
     @Query("SELECT e FROM #{#entityName} e WHERE e.«entity-biz-id» = :id")
     Optional<T> ofIdentity(@Param("id") I id);

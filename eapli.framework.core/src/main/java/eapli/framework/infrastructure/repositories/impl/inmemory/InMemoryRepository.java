@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import eapli.framework.infrastructure.repositories.IterableRepository;
+import eapli.framework.infrastructure.repositories.LockableRepository;
 import eapli.framework.validations.Invariants;
 
 /**
@@ -46,7 +47,7 @@ import eapli.framework.validations.Invariants;
  * @param <K>
  *            the type to be used as key of an object
  */
-public abstract class InMemoryRepository<T, K> implements IterableRepository<T, K> {
+public abstract class InMemoryRepository<T, K> implements IterableRepository<T, K>, LockableRepository<T, K> {
 
     // Ideally this would be a typed generic Map but since it is a static member
     // it cannot be generic. The solution is to use the old-style untyped Map
@@ -180,8 +181,14 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
     }
 
     @Override
-    public T lock(final T entity) {
+    public T lockItUp(final T entity) {
         // NOP
         return entity;
+    }
+
+    @Override
+    public Optional<T> lockById(final K id) {
+        // NOP
+        return findById(id);
     }
 }

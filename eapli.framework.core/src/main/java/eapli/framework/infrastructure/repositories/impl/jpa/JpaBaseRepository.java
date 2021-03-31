@@ -39,6 +39,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.repositories.IterableRepository;
+import eapli.framework.infrastructure.repositories.LockableRepository;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
 
@@ -72,7 +73,8 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  *
  */
-public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements IterableRepository<T, K> {
+public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
+        implements IterableRepository<T, K>, LockableRepository<T, K> {
 
     private static final String SELECT_E_FROM = "SELECT e FROM ";
     private static final String PARAMS_MUST_NOT_BE_NULL_OR_EMPTY = "Params must not be null or empty";
@@ -142,8 +144,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * @param id
      * @return
      */
-    protected Optional<T> read(final K id) {
-        return Optional.ofNullable(this.entityManager().find(this.entityClass, id));
+    protected Optional<T> read(final K id, final LockModeType locking) {
+        return Optional.ofNullable(this.entityManager().find(this.entityClass, id, locking));
     }
 
     /**
@@ -157,7 +159,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     public Optional<T> findById(final K id) {
         Preconditions.nonNull(id);
 
-        return read(id);
+        return read(id, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
     }
 
     /**
@@ -322,13 +324,31 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
     }
 
     @Override
-    public T lock(final T entity) {
+    public T lockItUp(final T entity) {
+        Preconditions.nonNull(entity);
+
         try {
             entityManager().lock(entity, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
             return entity;
         } catch (final PessimisticLockException e) {
             throw new ConcurrencyException(e);
         }
+    }
+
+    @Override
+    public Optional<T> lockById(final K id) {
+        Preconditions.nonNull(id);
+
+        return read(id, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Optional<T> lockOfIdentity(final I id) {
+        return matchOne(LockModeType.PESSIMISTIC_FORCE_INCREMENT, "e." + identityFieldName() + " = :id", "id", id);
     }
 
     /**
@@ -345,17 +365,25 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * Helper method to create a typed query. Since this method concatenates the
      * where clause, be careful if this results from external input, e.g., user
      * entered data, to avoid SQL injection exploits.
+     * <p>
      *
+     * @param locking
+     *            the explicitly locking mode to set. pass {@code null} if you want to use the
+     *            default locking strategy.
      * @param where
      * @return
      */
     @SuppressWarnings({ "squid:S3346", "squid:S2077" })
-    private TypedQuery<T> query(final String where) {
+    private TypedQuery<T> query(final LockModeType locking, final String where) {
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
         final String className = this.entityClass.getSimpleName();
-        return entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
+        final var query = entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
                 this.entityClass);
+        if (locking != null) {
+            query.setLockMode(locking);
+        }
+        return query;
     }
 
     /**
@@ -366,11 +394,11 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * @return
      */
     @SuppressWarnings("squid:S3346")
-    protected TypedQuery<T> query(final String where, final Map<String, Object> params) {
+    protected TypedQuery<T> query(final LockModeType locking, final String where, final Map<String, Object> params) {
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
-        final TypedQuery<T> q = query(where);
+        final TypedQuery<T> q = query(locking, where);
         params.entrySet().stream().forEach(e -> q.setParameter(e.getKey(), e.getValue()));
         return q;
     }
@@ -383,12 +411,12 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * @return
      */
     @SuppressWarnings("squid:S3346")
-    protected TypedQuery<T> query(final String where, final Object... args) {
+    protected TypedQuery<T> query(final LockModeType locking, final String where, final Object... args) {
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert args != null && args.length >= 2 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
         assert args.length % 2 == 0 : "uneven number of arguments passed";
 
-        final TypedQuery<T> q = query(where);
+        final TypedQuery<T> q = query(locking, where);
         boolean handleAsArgName = true;
         String argName = "";
         for (final Object o : args) {
@@ -472,17 +500,24 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * of the where parameter is coming from external input, e.g., user entered
      * data, to avoid SQL injection exploits.
      *
+     * @param locking
+     *            the explicitly locking mode to set. pass {@code null} if you want to use the
+     *            default locking strategy.
      * @param where
      *            the where clause should use "e" as the query object
      *
      * @return
      */
     @SuppressWarnings("squid:S3346")
-    protected List<T> match(final String where) {
+    protected List<T> match(final LockModeType locking, final String where) {
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
-        final TypedQuery<T> q = query(where);
+        final TypedQuery<T> q = query(locking, where);
         return q.getResultList();
+    }
+
+    protected List<T> match(final String where) {
+        return match(null, where);
     }
 
     /**
@@ -490,18 +525,27 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * of the where parameter is coming from external input, e.g., user entered
      * data, to avoid SQL injection exploits.
      *
+     * @param locking
+     *            the explicitly locking mode to set. pass {@code null} if you want to use the
+     *            default locking strategy.
      * @param whereWithParameters
      * @param params
      * @return
      */
     @SuppressWarnings("squid:S3346")
-    protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
+    protected List<T> match(final LockModeType locking, final String whereWithParameters,
+            final Map<String, Object> params) {
         assert !StringPredicates
                 .isNullOrEmpty(whereWithParameters) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
         assert params != null && params.size() > 0 : PARAMS_MUST_NOT_BE_NULL_OR_EMPTY;
 
-        final TypedQuery<T> q = query(whereWithParameters, params);
+        final TypedQuery<T> q = query(locking, whereWithParameters, params);
         return q.getResultList();
+    }
+
+    protected List<T> match(final String whereWithParameters,
+            final Map<String, Object> params) {
+        return match(null, whereWithParameters, params);
     }
 
     /**
@@ -509,13 +553,20 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * content of the where parameter is coming from external input, e.g., user
      * entered data, to avoid SQL injection exploits.
      *
+     * @param locking
+     *            the explicitly locking mode to set. pass {@code null} if you want to use the
+     *            default locking strategy.
      * @param where
      *            the where clause should use "e" as the query object
      * @return
      */
-    protected Optional<T> matchOne(final String where) {
-        final TypedQuery<T> q = query(where);
+    protected Optional<T> matchOne(final LockModeType locking, final String where) {
+        final TypedQuery<T> q = query(locking, where);
         return getSingleResultAsOptional(q);
+    }
+
+    protected Optional<T> matchOne(final String where) {
+        return matchOne(null, where);
     }
 
     /**
@@ -523,16 +574,23 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * careful if the content of the where parameter is coming from external input,
      * e.g., user entered data, to avoid SQL injection exploits.
      *
+     * @param locking
+     *            the explicitly locking mode to set. pass {@code null} if you want to use the
+     *            default locking strategy.
      * @param whereWithParameters
      *            the where clause should use "e" as the query object
      * @param params
      *            a map of the parameter name and its value to use in the query
      * @return
      */
-    protected Optional<T> matchOne(final String whereWithParameters,
+    protected Optional<T> matchOne(final LockModeType locking, final String whereWithParameters,
             final Map<String, Object> params) {
-        final TypedQuery<T> q = query(whereWithParameters, params);
+        final TypedQuery<T> q = query(locking, whereWithParameters, params);
         return getSingleResultAsOptional(q);
+    }
+
+    protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
+        return matchOne(null, whereWithParameters, params);
     }
 
     /**
@@ -540,6 +598,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * careful if the content of the where parameter is coming from external input,
      * e.g., user entered data, to avoid SQL injection exploits.
      *
+     * @param locking
+     *            the explicitly locking mode to set. pass {@code null} if you want to use the
+     *            default locking strategy.
      * @param where
      *            the where clause should use "e" as the query object
      * @param args
@@ -548,9 +609,13 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      *            is assumed to be the value of the preceding parameter.
      * @return
      */
-    protected Optional<T> matchOne(final String where, final Object... args) {
-        final TypedQuery<T> q = query(where, args);
+    protected Optional<T> matchOne(final LockModeType locking, final String where, final Object... args) {
+        final TypedQuery<T> q = query(locking, where, args);
         return getSingleResultAsOptional(q);
+    }
+
+    protected Optional<T> matchOne(final String where, final Object... args) {
+        return matchOne(null, where, args);
     }
 
     /**
@@ -558,6 +623,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      * careful if the content of the where parameter is coming from external input,
      * e.g., user entered data, to avoid SQL injection exploits.
      *
+     * @param locking
+     *            the explicitly locking mode to set. pass {@code null} if you want to use the
+     *            default locking strategy.
      * @param where
      *            the where clause should use "e" as the query object
      * @param args
@@ -566,9 +634,13 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository implements
      *            is assumed to be the value of the preceding parameter.
      * @return
      */
-    protected List<T> match(final String where, final Object... args) {
-        final TypedQuery<T> q = query(where, args);
+    protected List<T> match(final LockModeType locking, final String where, final Object... args) {
+        final TypedQuery<T> q = query(locking, where, args);
         return q.getResultList();
+    }
+
+    protected List<T> match(final String where, final Object... args) {
+        return match(null, where, args);
     }
 
     /**

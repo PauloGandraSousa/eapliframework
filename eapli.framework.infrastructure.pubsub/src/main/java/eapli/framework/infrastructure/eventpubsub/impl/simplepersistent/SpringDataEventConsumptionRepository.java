@@ -29,14 +29,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBaseRepository;
+import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataDomainBaseRepository;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
 interface SpringDataEventConsumptionRepository
-        extends EventConsumptionRepository, SpringDataBaseRepository<EventConsumption, Long> {
+        extends EventConsumptionRepository, SpringDataDomainBaseRepository<Long, Long, EventConsumption> {
 
     @Override
     @Query("SELECT e FROM #{#entityName} e WHERE e.id = :id")

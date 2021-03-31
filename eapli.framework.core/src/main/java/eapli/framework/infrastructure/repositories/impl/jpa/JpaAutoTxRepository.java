@@ -28,11 +28,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
 
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.IterableRepository;
+import eapli.framework.infrastructure.repositories.LockableRepository;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -51,7 +53,7 @@ import eapli.framework.validations.Preconditions;
  *
  * @author Paulo Gandra Sousa
  */
-public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
+public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, LockableRepository<T, K> {
 
     protected final JpaBaseRepository<T, K, I> repo;
     private final TransactionalContext autoTx;
@@ -250,6 +252,11 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      * @param params
      * @return
      */
+    protected List<T> match(final LockModeType locking, final String whereWithParameters,
+            final Map<String, Object> params) {
+        return repo.match(locking, whereWithParameters, params);
+    }
+
     protected List<T> match(final String whereWithParameters, final Map<String, Object> params) {
         return repo.match(whereWithParameters, params);
     }
@@ -295,6 +302,11 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      *            a map of the parameter name and its value to use in the query
      * @return
      */
+    protected Optional<T> matchOne(final LockModeType locking, final String whereWithParameters,
+            final Map<String, Object> params) {
+        return repo.matchOne(locking, whereWithParameters, params);
+    }
+
     protected Optional<T> matchOne(final String whereWithParameters, final Map<String, Object> params) {
         return repo.matchOne(whereWithParameters, params);
     }
@@ -312,8 +324,8 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
      *            is assumed to be the value of the preceding parameter.
      * @return
      */
-    protected Optional<T> matchOne(final String where, final Object... args) {
-        return repo.matchOne(where, args);
+    protected Optional<T> matchOne(final LockModeType locking, final String where, final Object... args) {
+        return repo.matchOne(locking, where, args);
     }
 
     /**
@@ -345,7 +357,16 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K> {
     }
 
     @Override
-    public T lock(final T entity) {
-        return repo.lock(entity);
+    public T lockItUp(final T entity) {
+        return repo.lockItUp(entity);
+    }
+
+    @Override
+    public Optional<T> lockById(final K id) {
+        return repo.lockById(id);
+    }
+
+    public Optional<T> lockOfIdentity(final I id) {
+        return repo.lockOfIdentity(id);
     }
 }
