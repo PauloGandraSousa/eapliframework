@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,62 +23,61 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.LongStream;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import eapli.framework.domains.domain.model.Interval;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class EmptyIntervalTest extends IntervalTestBase {
+class EmptyIntervalTest extends IntervalTestBase {
 
-    @BeforeClass
-    public static void setUpClass() {
+    @BeforeAll
+    static void setUpClass() {
         System.out.println("EmptyRange");
         subject = Interval.empty();
     }
 
     @Test
-    public void ensureIsEmpty() {
+    void ensureIsEmpty() {
         assertTrue(subject.isEmpty());
     }
 
     @Test
-    public void ensureDoesNotInclude() {
+    void ensureDoesNotInclude() {
         final boolean result = LongStream.range(START_VALUE * -2L, END_VALUE * -2L).noneMatch(x -> subject.includes(x));
         assertTrue(result);
     }
 
     @Test
-    public void ensureNotFromInfinity() {
+    void ensureNotFromInfinity() {
         assertFalse(subject.startsAtInfinity());
     }
 
     @Test
-    public void ensureNotToInfinity() {
+    void ensureNotToInfinity() {
         assertFalse(subject.endsAtInfinity());
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void ensureStart() {
-        subject.start();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void ensureEnd() {
-        subject.end();
+    @Test
+    void ensureStart() {
+        assertThrows(IllegalStateException.class, () -> subject.start());
     }
 
     @Test
-    public void ensureStringRepresentationIsOk() {
+    void ensureEnd() {
+        assertThrows(IllegalStateException.class, () -> subject.end());
+    }
+
+    @Test
+    void ensureStringRepresentationIsOk() {
         final String expected = "[]";
         final String actual = subject.toString();
         assertEquals(expected, actual);

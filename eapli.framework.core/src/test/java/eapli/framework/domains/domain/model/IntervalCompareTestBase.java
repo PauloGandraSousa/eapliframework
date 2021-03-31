@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -19,8 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package eapli.framework.domains.domain.model;
-
-import eapli.framework.domains.domain.model.Interval;
 
 /**
  * Test cases for compare described in the documentation of
@@ -141,7 +139,7 @@ import eapli.framework.domains.domain.model.Interval;
  * @author Paulo Gandra de Sousa
  *
  */
-public abstract class IntervalCompareTestBase {
+abstract class IntervalCompareTestBase {
 
     protected static final int ANCHOR_1 = 4;
     protected static final int ANCHOR_2 = 7;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,26 +20,28 @@
  */
 package eapli.framework.domains.domain.model;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import eapli.framework.domains.domain.model.Interval;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class ExtendedIntervalTest extends IntervalTestBase {
+class ExtendedIntervalTest extends IntervalTestBase {
 
     private static final Long NEW_START = END + 2;
     private static final Long NEW_END = START - 2;
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureNewStartCannotBeAfterEnd() {
-        subject = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
+    @Test
+    void ensureNewStartCannotBeAfterEnd() {
+        assertThrows(IllegalArgumentException.class,
+                () -> subject = Interval.closedFrom(START).closedTo(END).withStart(NEW_START));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureNewEndCannotBeBeforeStart() {
-        subject = Interval.closedFrom(START).closedTo(END).withEnd(NEW_END);
+    @Test
+    void ensureNewEndCannotBeBeforeStart() {
+        assertThrows(IllegalArgumentException.class,
+                () -> subject = Interval.closedFrom(START).closedTo(END).withEnd(NEW_END));
     }
 }

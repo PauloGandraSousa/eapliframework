@@ -20,48 +20,48 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
-public class UniversalIntervalCompareTest extends IntervalCompareTestBase {
+class UniversalIntervalCompareTest extends IntervalCompareTestBase {
 
     //
     // UNIVERSAL interval, i.e., ]-oo, +oo[
     //
 
     @Test
-    public void ensureUniversalIsAfterEmpty() {
+    void ensureUniversalIsAfterEmpty() {
         assertEquals(1, U.compareTo(E));
     }
 
     @Test
-    public void ensureIsSame() {
+    void ensureIsSame() {
         assertEquals(0, U.compareTo(U));
     }
 
     @Test
-    public void ensureUniversalIsBeforeCXI() {
+    void ensureUniversalIsBeforeCXI() {
         assertEquals(-1, U.compareTo(C5_I));
     }
 
     @Test
-    public void ensureUniversalIsBeforeOXI() {
+    void ensureUniversalIsBeforeOXI() {
         assertEquals(-1, U.compareTo(O5_I));
     }
 
     @Test
-    public void ensureUniversalIsAfterIOX() {
+    void ensureUniversalIsAfterIOX() {
         assertEquals(1, U.compareTo(I_O10));
     }
 
     @Test
-    public void ensureUniversalIsAfterICX() {
+    void ensureUniversalIsAfterICX() {
         assertEquals(1, U.compareTo(I_C10));
     }
 }

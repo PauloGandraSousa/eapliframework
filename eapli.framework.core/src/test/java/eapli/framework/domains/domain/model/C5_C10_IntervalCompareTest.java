@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,18 +20,16 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-
-import eapli.framework.domains.domain.model.Interval;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
-public class C5_C10_IntervalCompareTest extends IntervalCompareTestBase {
+class C5_C10_IntervalCompareTest extends IntervalCompareTestBase {
 
     //
     // [x, y]
@@ -39,69 +37,69 @@ public class C5_C10_IntervalCompareTest extends IntervalCompareTestBase {
     private final Interval<Integer> subject = C5_C10;
 
     @Test
-    public void ensureIsAfterEmpty() {
+    void ensureIsAfterEmpty() {
         assertEquals(1, subject.compareTo(E));
     }
 
     @Test
-    public void ensureIsAfterUniversal() {
+    void ensureIsAfterUniversal() {
         assertEquals(1, subject.compareTo(U));
     }
 
     @Test
-    public void ensureIsSame() {
+    void ensureIsSame() {
         assertEquals(0, subject.compareTo(subject));
     }
 
     @Test
-    public void ensureIsAfterIOX() {
+    void ensureIsAfterIOX() {
         assertEquals(1, subject.compareTo(I_O10));
     }
 
     @Test
-    public void ensureIsAfterICX() {
+    void ensureIsAfterICX() {
         assertEquals(1, subject.compareTo(I_C10));
     }
 
     @Test
-    public void ensureIsAfterCXOY() {
+    void ensureIsAfterCXOY() {
         assertEquals(1, subject.compareTo(C5_O10));
     }
 
     @Test
-    public void ensureIsBeforeOXCY() {
+    void ensureIsBeforeOXCY() {
         assertEquals(-1, subject.compareTo(O5_C10));
     }
 
     @Test
-    public void ensureIsBeforeOXOY() {
+    void ensureIsBeforeOXOY() {
         assertEquals(-1, subject.compareTo(O5_O10));
     }
 
     @Test
-    public void ensureIsBeforeCXI() {
+    void ensureIsBeforeCXI() {
         assertEquals(-1, subject.compareTo(C5_I));
     }
 
     @Test
-    public void ensureIsBeforeOXI() {
+    void ensureIsBeforeOXI() {
         assertEquals(-1, subject.compareTo(O5_I));
     }
 
     // [4, 7] < [5, 7]
     @Test
-    public void ensureIsBeforeC10_C50() {
+    void ensureIsBeforeC10_C50() {
         assertEquals(-1, subject.compareTo(C10_C50));
     }
 
     // [4, 7] < ]5, 7]
     @Test
-    public void ensureIsBeforeO10_C50() {
+    void ensureIsBeforeO10_C50() {
         assertEquals(-1, subject.compareTo(O10_C50));
     }
 
     // [4, 10] < ]4, 7]
-    public void ensureIsBeforeO5_C7() {
+    void ensureIsBeforeO5_C7() {
         assertEquals(-1, subject.compareTo(O5_C7));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,42 +23,42 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class OpenIntervalTest extends IntervalTestBase {
+class OpenIntervalTest extends IntervalTestBase {
 
-    @BeforeClass
-    public static void setUpClass() {
+    @BeforeAll
+    static void setUpClass() {
         System.out.println("openRange");
         subject = Interval.openFrom(START).openTo(END);
     }
 
     @Test
-    public void ensureStartIsNotInRange() {
+    void ensureStartIsNotInRange() {
         System.out.println("ensureStartIsNotInRange");
         final Long target = Long.valueOf(START_VALUE);
         final boolean result = subject.includes(target);
-        assertFalse("start cannot be part of an open range", result);
+        assertFalse(result, "start cannot be part of an open range");
     }
 
     @Test
-    public void ensureEndIsNotInRange() {
+    void ensureEndIsNotInRange() {
         System.out.println("ensureEndIsNotInRange");
         final Long target = Long.valueOf(END_VALUE);
         final boolean result = subject.includes(target);
-        assertFalse("end cannot be part of an open range", result);
+        assertFalse(result, "end cannot be part of an open range");
     }
 
     @Test
-    public void ensureStringRepresentationIsOk() {
+    void ensureStringRepresentationIsOk() {
         final String expected = "]" + START + ", " + END + "[";
         final String actual = subject.toString();
         assertEquals(expected, actual);

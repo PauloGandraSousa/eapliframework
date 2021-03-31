@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,18 +20,16 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-
-import eapli.framework.domains.domain.model.Interval;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
-public class I_O10_IntervalCompareTest extends IntervalCompareTestBase {
+class I_O10_IntervalCompareTest extends IntervalCompareTestBase {
 
     //
     // ]-oo, x[
@@ -39,52 +37,52 @@ public class I_O10_IntervalCompareTest extends IntervalCompareTestBase {
     private final Interval<Integer> subject = I_O10;
 
     @Test
-    public void ensureIsAfterEmpty() {
+    void ensureIsAfterEmpty() {
         assertEquals(1, subject.compareTo(E));
     }
 
     @Test
-    public void ensureIsBeforeUniversal() {
+    void ensureIsBeforeUniversal() {
         assertEquals(-1, subject.compareTo(U));
     }
 
     @Test
-    public void ensureIsSame() {
+    void ensureIsSame() {
         assertEquals(0, subject.compareTo(subject));
     }
 
     @Test
-    public void ensureIOXIsBeforeICX() {
+    void ensureIOXIsBeforeICX() {
         assertEquals(-1, I_O10.compareTo(I_C10));
     }
 
     @Test
-    public void ensureIOXIsBeforeCXCY() {
+    void ensureIOXIsBeforeCXCY() {
         assertEquals(-1, I_O10.compareTo(C5_C10));
     }
 
     @Test
-    public void ensureIOXIsBeforeCXOY() {
+    void ensureIOXIsBeforeCXOY() {
         assertEquals(-1, I_O10.compareTo(C5_O10));
     }
 
     @Test
-    public void ensureIOXIsBeforeOXCY() {
+    void ensureIOXIsBeforeOXCY() {
         assertEquals(-1, I_O10.compareTo(O5_C10));
     }
 
     @Test
-    public void ensureIOXIsBeforeOXOY() {
+    void ensureIOXIsBeforeOXOY() {
         assertEquals(-1, I_O10.compareTo(O5_O10));
     }
 
     @Test
-    public void ensureIOXIsBeforeCXI() {
+    void ensureIOXIsBeforeCXI() {
         assertEquals(-1, I_O10.compareTo(C5_I));
     }
 
     @Test
-    public void ensureIOXIsBeforeOXI() {
+    void ensureIOXIsBeforeOXI() {
         assertEquals(-1, I_O10.compareTo(O5_I));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,45 +20,43 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import eapli.framework.domains.domain.model.Interval;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class ExtendedStartIntervalTest extends IntervalTestBase {
+class ExtendedStartIntervalTest extends IntervalTestBase {
 
     private static final Long NEW_START = START - 2;
 
-    @BeforeClass
-    public static void setUpClass() {
+    @BeforeAll
+    static void setUpClass() {
         System.out.println("Extended Start/End Range");
         subject = Interval.closedFrom(START).closedTo(END).withStart(NEW_START);
     }
 
     @Test
-    public void ensureNewStart() {
+    void ensureNewStart() {
         assertEquals(NEW_START, subject.start());
     }
 
     @Test
-    public void ensureClosedStart() {
+    void ensureClosedStart() {
         assertFalse(subject.hasOpenStart());
     }
 
     @Test
-    public void ensureEnd() {
+    void ensureEnd() {
         assertEquals(END, subject.end());
     }
 
     @Test
-    public void ensureClosedend() {
+    void ensureClosedend() {
         assertFalse(subject.hasOpenEnd());
     }
 }

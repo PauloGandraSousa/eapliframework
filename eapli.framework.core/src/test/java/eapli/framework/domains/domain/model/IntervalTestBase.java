@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,15 +20,13 @@
  */
 package eapli.framework.domains.domain.model;
 
-import eapli.framework.domains.domain.model.Interval;
-
 /**
  * base class for testing Range
  *
  * @author Paulo Gandra Sousa
  */
 @SuppressWarnings("squid:S2187")
-public class IntervalTestBase {
+class IntervalTestBase {
 
     protected static final Long START_VALUE = 5L;
     protected static final Long DELTA_VALUE = 5L;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,63 +20,63 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
-public class EmptyIntervalCompareTest extends IntervalCompareTestBase {
+class EmptyIntervalCompareTest extends IntervalCompareTestBase {
 
     //
     // EMPTY interval, i.e., []
     //
 
     @Test
-    public void ensureIsSame() {
+    void ensureIsSame() {
         assertEquals(0, E.compareTo(E));
     }
 
     @Test
-    public void ensureEmptyIsBeforeIOX() {
+    void ensureEmptyIsBeforeIOX() {
         assertEquals(-1, E.compareTo(I_O10));
     }
 
     @Test
-    public void ensureEmptyIsBeforeICX() {
+    void ensureEmptyIsBeforeICX() {
         assertEquals(-1, E.compareTo(I_C10));
     }
 
     @Test
-    public void ensureEmptyIsBeforeOXCY() {
+    void ensureEmptyIsBeforeOXCY() {
         assertEquals(-1, E.compareTo(O5_C10));
     }
 
     @Test
-    public void ensureEmptyIsBeforeOXOY() {
+    void ensureEmptyIsBeforeOXOY() {
         assertEquals(-1, E.compareTo(O5_O10));
     }
 
     @Test
-    public void ensureEmptyIsBeforeCXCY() {
+    void ensureEmptyIsBeforeCXCY() {
         assertEquals(-1, E.compareTo(C5_C10));
     }
 
     @Test
-    public void ensureEmptyIsBeforeCXOY() {
+    void ensureEmptyIsBeforeCXOY() {
         assertEquals(-1, E.compareTo(C5_O10));
     }
 
     @Test
-    public void ensureEmptyIsBeforeOXI() {
+    void ensureEmptyIsBeforeOXI() {
         assertEquals(-1, E.compareTo(O5_I));
     }
 
     @Test
-    public void ensureEmptyIsBeforeCXI() {
+    void ensureEmptyIsBeforeCXI() {
         assertEquals(-1, E.compareTo(C5_I));
     }
 }

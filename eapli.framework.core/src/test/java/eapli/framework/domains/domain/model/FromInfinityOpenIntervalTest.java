@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,51 +23,51 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra Sousa
  */
-public class FromInfinityOpenIntervalTest extends IntervalTestBase {
+class FromInfinityOpenIntervalTest extends IntervalTestBase {
 
-    @BeforeClass
-    public static void setUpClass() {
+    @BeforeAll
+    static void setUpClass() {
         System.out.println("FromInfinityOpenRangeTest");
         final Interval.IntervalBuilder<Long> b = Interval.fromInfinity();
         subject = b.openTo(END);
     }
 
     @Test
-    public void ensureEndIsNotInRange() {
+    void ensureEndIsNotInRange() {
         System.out.println("ensureEndIsNotInRange");
         final Long target = Long.valueOf(END_VALUE);
         final boolean result = subject.includes(target);
-        assertFalse("end cannot be part of an open range", result);
+        assertFalse(result, "end cannot be part of an open range");
     }
 
     @Test
-    public void ensureSmallValueIsIncluded() {
+    void ensureSmallValueIsIncluded() {
         System.out.println("ensureSmallValueIsIncluded");
         final Long target = Long.MIN_VALUE;
         final boolean result = subject.includes(target);
-        assertTrue("From infinity range must include any value smaller than end", result);
+        assertTrue(result, "From infinity range must include any value smaller than end");
     }
 
     @Test
-    public void ensureIsFromInfinity() {
+    void ensureIsFromInfinity() {
         System.out.println("ensureIsFromInfinity");
         final boolean result = subject.startsAtInfinity();
-        assertTrue("from infinity ranges must be from infinity", result);
+        assertTrue(result, "from infinity ranges must be from infinity");
     }
 
     @Test
-    public void ensureStringRepresentationIsOk() {
+    void ensureStringRepresentationIsOk() {
         final String expected = "]oo, " + END + "[";
         final String actual = subject.toString();
         assertEquals(expected, actual);

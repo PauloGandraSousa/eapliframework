@@ -42,7 +42,7 @@ class ClosedIntervalTest extends IntervalTestBase {
     }
 
     @Test
-    public void ensureStartIsInRange() {
+    void ensureStartIsInRange() {
         System.out.println("ensureStartIsInRange");
         final Long target = Long.valueOf(START_VALUE);
         final boolean result = subject.includes(target);

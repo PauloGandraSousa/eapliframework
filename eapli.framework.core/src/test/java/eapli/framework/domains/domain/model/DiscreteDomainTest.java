@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,24 +23,20 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.Iterator;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import eapli.framework.domains.domain.model.DiscreteDomain;
-import eapli.framework.domains.domain.model.DiscreteDomainBuilder;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra Sousa
  *
  */
-public class DiscreteDomainTest {
+class DiscreteDomainTest {
 
     private static DiscreteDomain<Long> EMPTY;
     private static DiscreteDomain<Long> TEN;
@@ -54,8 +50,8 @@ public class DiscreteDomainTest {
     /**
      * @throws java.lang.Exception
      */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
+    @BeforeAll
+    static void setUpBeforeClass() throws Exception {
         EMPTY = DiscreteDomain.empty();
 
         TEN = build(10, 10);
@@ -80,27 +76,27 @@ public class DiscreteDomainTest {
     }
 
     @Test
-    public void ensureEmptyDomainIsEmpty() {
-        assertTrue("Empty domain is not empty", EMPTY.isEmpty());
+    void ensureEmptyDomainIsEmpty() {
+        assertTrue(EMPTY.isEmpty(), "Empty domain is not empty");
     }
 
     @Test
-    public void ensureNonEmptyDomainIsNotEmpty() {
-        assertFalse("Non Empty domain is empty", ONE_TO_TEN.isEmpty());
+    void ensureNonEmptyDomainIsNotEmpty() {
+        assertFalse(ONE_TO_TEN.isEmpty(), "Non Empty domain is empty");
     }
 
     @Test
-    public void ensureTheDomainDoesNotContainNotAddedElement() {
-        assertFalse("TheDomainDoesNotContainNotAddedElement", ONE_TO_TEN.contains(50L));
+    void ensureTheDomainDoesNotContainNotAddedElement() {
+        assertFalse(ONE_TO_TEN.contains(50L), "TheDomainDoesNotContainNotAddedElement");
     }
 
     @Test
-    public void ensureTheDomainContainsAddedElement() {
-        assertTrue("TheDomainContainsAddedElement", ONE_TO_TEN.contains(5L));
+    void ensureTheDomainContainsAddedElement() {
+        assertTrue(ONE_TO_TEN.contains(5L), "TheDomainContainsAddedElement");
     }
 
     @Test
-    public void ensureTheDomainContainsAllAddedElements() {
+    void ensureTheDomainContainsAllAddedElements() {
         for (long e = 1; e <= 10; e++) {
             if (!ONE_TO_TEN.contains(e)) {
                 fail("Element " + e + " is missing in the domain");
@@ -109,7 +105,7 @@ public class DiscreteDomainTest {
     }
 
     @Test
-    public void ensureTheDomainDoesNotContainExtraElements() {
+    void ensureTheDomainDoesNotContainExtraElements() {
         for (final long e : ONE_TO_TEN) {
             if (e > 10 || e < 1) {
                 fail("Element " + e + " should not be in the domain");
@@ -117,10 +113,9 @@ public class DiscreteDomainTest {
         }
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void ensureImmutable() {
-        final Iterator<Long> i = ONE_TO_TEN.iterator();
-        i.remove();
+    @Test
+    void ensureImmutable() {
+        assertThrows(UnsupportedOperationException.class, () -> ONE_TO_TEN.iterator().remove());
     }
 
     //
@@ -128,25 +123,25 @@ public class DiscreteDomainTest {
     //
 
     @Test
-    public void ensureIntersection1_10And5_7Is5_7() {
+    void ensureIntersection1_10And5_7Is5_7() {
         final DiscreteDomain<Long> i = ONE_TO_TEN.intersection(FIVE_TO_SEVEN);
         assertEquals(FIVE_TO_SEVEN, i);
     }
 
     @Test
-    public void ensureIntersection1_10And10_15Is10() {
+    void ensureIntersection1_10And10_15Is10() {
         final DiscreteDomain<Long> i = ONE_TO_TEN.intersection(TEN_TO_FIFTHTEEN);
         assertEquals(TEN, i);
     }
 
     @Test
-    public void ensureIntersection10_15And5_7IsEmpty() {
+    void ensureIntersection10_15And5_7IsEmpty() {
         final DiscreteDomain<Long> i = TEN_TO_FIFTHTEEN.intersection(FIVE_TO_SEVEN);
         assertEquals(EMPTY, i);
     }
 
     @Test
-    public void ensureIntersection10_15AndEmptyIsEmpty() {
+    void ensureIntersection10_15AndEmptyIsEmpty() {
         final DiscreteDomain<Long> i = TEN_TO_FIFTHTEEN.intersection(EMPTY);
         assertEquals(EMPTY, i);
     }
@@ -156,19 +151,19 @@ public class DiscreteDomainTest {
     //
 
     @Test
-    public void ensureUnion10_15And5_7Is5_7_10_15() {
+    void ensureUnion10_15And5_7Is5_7_10_15() {
         final DiscreteDomain<Long> u = TEN_TO_FIFTHTEEN.union(FIVE_TO_SEVEN);
         assertEquals(FIVE_TO_SEVEN_TEN_TO_FIFHTEEN, u);
     }
 
     @Test
-    public void ensureUnion1_10And5_7Is1_10() {
+    void ensureUnion1_10And5_7Is1_10() {
         final DiscreteDomain<Long> u = ONE_TO_TEN.union(FIVE_TO_SEVEN);
         assertEquals(ONE_TO_TEN, u);
     }
 
     @Test
-    public void ensureUnion1_10AndEmptyIs1_10() {
+    void ensureUnion1_10AndEmptyIs1_10() {
         final DiscreteDomain<Long> u = ONE_TO_TEN.union(EMPTY);
         assertEquals(ONE_TO_TEN, u);
     }
@@ -178,37 +173,37 @@ public class DiscreteDomainTest {
     //
 
     @Test
-    public void ensure1_10Minus5_7Is1_4_8_10() {
+    void ensure1_10Minus5_7Is1_4_8_10() {
         final DiscreteDomain<Long> u = ONE_TO_TEN.without(FIVE_TO_SEVEN);
         assertEquals(ONE_TO_FOUR_EIGTH_TO_TEN, u);
     }
 
     @Test
-    public void ensure1_10Minus10_to_15Is1_TO_9() {
+    void ensure1_10Minus10_to_15Is1_TO_9() {
         final DiscreteDomain<Long> u = ONE_TO_TEN.without(TEN_TO_FIFTHTEEN);
         assertEquals(ONE_TO_NINE, u);
     }
 
     @Test
-    public void ensure10_to_15Minus5_to7Is10_to_15() {
+    void ensure10_to_15Minus5_to7Is10_to_15() {
         final DiscreteDomain<Long> u = TEN_TO_FIFTHTEEN.without(FIVE_TO_SEVEN);
         assertEquals(TEN_TO_FIFTHTEEN, u);
     }
 
     @Test
-    public void ensure10_to_15MinusEmptyIs10_to_15() {
+    void ensure10_to_15MinusEmptyIs10_to_15() {
         final DiscreteDomain<Long> u = TEN_TO_FIFTHTEEN.without(EMPTY);
         assertEquals(TEN_TO_FIFTHTEEN, u);
     }
 
     @Test
-    public void ensureEmptyMinus10_to_15IsEmpty() {
+    void ensureEmptyMinus10_to_15IsEmpty() {
         final DiscreteDomain<Long> u = EMPTY.without(TEN_TO_FIFTHTEEN);
         assertEquals(EMPTY, u);
     }
 
     @Test
-    public void ensureAMinusBUnionAIntersectionBIsA() {
+    void ensureAMinusBUnionAIntersectionBIsA() {
         final DiscreteDomain<Long> aMinusB = ONE_TO_TEN.without(TEN_TO_FIFTHTEEN);
         final DiscreteDomain<Long> aIntersectionB = ONE_TO_TEN.intersection(TEN_TO_FIFTHTEEN);
         final DiscreteDomain<Long> u = aMinusB.union(aIntersectionB);

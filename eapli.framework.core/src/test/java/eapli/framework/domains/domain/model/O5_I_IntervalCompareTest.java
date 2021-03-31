@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,18 +20,16 @@
  */
 package eapli.framework.domains.domain.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-
-import eapli.framework.domains.domain.model.Interval;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
-public class O5_I_IntervalCompareTest extends IntervalCompareTestBase {
+class O5_I_IntervalCompareTest extends IntervalCompareTestBase {
 
     //
     // ]x, +I[
@@ -39,52 +37,52 @@ public class O5_I_IntervalCompareTest extends IntervalCompareTestBase {
     private final Interval<Integer> subject = O5_I;
 
     @Test
-    public void ensureIsAfterEmpty() {
+    void ensureIsAfterEmpty() {
         assertEquals(1, subject.compareTo(E));
     }
 
     @Test
-    public void ensureIsAfterUniversal() {
+    void ensureIsAfterUniversal() {
         assertEquals(1, subject.compareTo(U));
     }
 
     @Test
-    public void ensureIsSame() {
+    void ensureIsSame() {
         assertEquals(0, subject.compareTo(subject));
     }
 
     @Test
-    public void ensureIsAfterICX() {
+    void ensureIsAfterICX() {
         assertEquals(1, subject.compareTo(I_C10));
     }
 
     @Test
-    public void ensureIsAfterIOX() {
+    void ensureIsAfterIOX() {
         assertEquals(1, subject.compareTo(I_O10));
     }
 
     @Test
-    public void ensureIsAfterCXI() {
+    void ensureIsAfterCXI() {
         assertEquals(1, subject.compareTo(C5_I));
     }
 
     @Test
-    public void ensureIsAfterCXCY() {
+    void ensureIsAfterCXCY() {
         assertEquals(1, subject.compareTo(C5_C10));
     }
 
     @Test
-    public void ensureIsAfterCXOY() {
+    void ensureIsAfterCXOY() {
         assertEquals(1, subject.compareTo(C5_O10));
     }
 
     @Test
-    public void ensureIsAfterOXCY() {
+    void ensureIsAfterOXCY() {
         assertEquals(1, subject.compareTo(O5_C10));
     }
 
     @Test
-    public void ensureIsAfterOXOY() {
+    void ensureIsAfterOXOY() {
         assertEquals(1, subject.compareTo(O5_O10));
     }
 }
