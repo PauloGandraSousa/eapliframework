@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -41,7 +41,9 @@ package eapli.framework.domain.model;
  * </ol>
  * </p>
  *
- * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * Quoting
+ * <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric
+ * Evans</a>:
  * <blockquote>
  * Cluster the entities and value objects into aggregates and define boundaries around each.
  * Choose one entity to be the root of each aggregate, and allow external objects to hold
@@ -56,24 +58,30 @@ package eapli.framework.domain.model;
  * <p>
  * <b>Aggregate rules:</b>
  * <ul>
- * <li>The root Entity has global identity, entities inside the boundary have local identity, unique only within the
+ * <li>The root Entity has global identity, entities inside the boundary have local identity, unique
+ * only within the
  * Aggregate.
- * <li>The root Entity can hand references to the internal Entities to other objects, but they can only use them
+ * <li>The root Entity can hand references to the internal Entities to other objects, but they can
+ * only use them
  * transiently (within a single method or block).
  * <li>Objects within the Aggregate can hold references to other Aggregate roots.
  * <li>Nothing outside the Aggregate boundary can hold a reference to anything inside
- * <li>Only Aggregate Roots can be obtained directly with database queries.  Everything else must be done through
+ * <li>Only Aggregate Roots can be obtained directly with database queries.  Everything else must be
+ * done through
  * traversal.
  * <li>A delete operation must remove everything within the Aggregate boundary all at once.
- * <li>When a change to any object within the Aggregate boundary is committed, all invariants of the whole Aggregate
+ * <li>When a change to any object within the Aggregate boundary is committed, all invariants of the
+ * whole Aggregate
  * must be satisfied.
  * </ul>
  *
  * <p>
  * <b>Aggregates and specialization (inheritance)</b>
  * <p>
- * In the case there is a specialization of domain concepts it is important to not think about implementation
- * inheritance but actual domain specialization. The point is not to reuse code but to capture concepts that are indeed
+ * In the case there is a specialization of domain concepts it is important to not think about
+ * implementation
+ * inheritance but actual domain specialization. The point is not to reuse code but to capture
+ * concepts that are indeed
  * specialization of more abstract concepts.
  * </p>
  * <p>

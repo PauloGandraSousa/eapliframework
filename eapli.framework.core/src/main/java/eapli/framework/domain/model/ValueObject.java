@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -38,7 +38,9 @@ import java.io.Serializable;
  * </ul>
  * </p>
  *
- * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * Quoting
+ * <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric
+ * Evans</a>:
  * <blockquote>
  * When you care only about the attributes and logic of an element of the model, classify it as
  * a value object. Make it express the meaning of the attributes it conveys and give it related

@@ -1,6 +1,17 @@
 # EAPLI Framework Changelog
 
 
+## 15.4.0-SNAPSHOT
+
+### What's new
+
+- `EmailAddress` implements `Comparable`
+
+### Changed
+
+- TBD
+
+
 ## 16.3.0
 
 ### What's new

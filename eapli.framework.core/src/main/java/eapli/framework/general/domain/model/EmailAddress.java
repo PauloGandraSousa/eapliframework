@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -38,7 +38,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Embeddable
-public class EmailAddress implements ValueObject, Serializable, StringMixin {
+public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
 
@@ -82,5 +82,10 @@ public class EmailAddress implements ValueObject, Serializable, StringMixin {
     @Override
     public String toString() {
         return email;
+    }
+
+    @Override
+    public int compareTo(final EmailAddress o) {
+        return email.compareTo(o.email);
     }
 }

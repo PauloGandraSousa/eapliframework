@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -45,7 +45,9 @@ import eapli.framework.identities.Identifiable;
  * </p>
  *
  *
- * Quoting <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric Evans</a>:
+ * Quoting
+ * <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric
+ * Evans</a>:
  * <blockquote>
  * When an object is distinguished by its identity, rather than its attributes, make this primary
  * to its definition in the model. Keep the class definition simple and focused on life cycle
