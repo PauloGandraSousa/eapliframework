@@ -43,10 +43,18 @@ public abstract class DomainEventBase implements DomainEvent {
     @Temporal(TemporalType.TIMESTAMP)
     private final Calendar registeredAt;
 
+    /**
+     * Constructs the object registering its occurrence at the current instant.
+     */
     protected DomainEventBase() {
         occuredAt = registeredAt = Calendars.now();
     }
 
+    /**
+     * Constructs the object registering its occurrence at the specified instant.
+     *
+     * @param occuredAt
+     */
     protected DomainEventBase(final Calendar occuredAt) {
         Preconditions.nonNull(occuredAt);
 

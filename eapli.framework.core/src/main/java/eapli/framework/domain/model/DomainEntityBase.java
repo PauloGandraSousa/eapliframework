@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -35,8 +35,7 @@ import java.io.Serializable;
  * @author Paulo Gandra de Sousa
  *
  */
-public abstract class DomainEntityBase<I extends Comparable<I>>
-        implements DomainEntity<I>, Serializable {
+public abstract class DomainEntityBase<I extends Comparable<I>> implements DomainEntity<I>, Serializable {
 
     private static final long serialVersionUID = 1L;
 

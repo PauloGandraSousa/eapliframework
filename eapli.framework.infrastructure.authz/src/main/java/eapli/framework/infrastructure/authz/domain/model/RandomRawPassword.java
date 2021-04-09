@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -45,10 +45,18 @@ public class RandomRawPassword {
 
     private final String rawPassword;
 
+    /**
+     * Constructs a random password with the default length.
+     */
     public RandomRawPassword() {
         this(DEFAULT_LENGTH);
     }
 
+    /**
+     * Constructs a random password with the desired length.
+     *
+     * @param length
+     */
     public RandomRawPassword(final int length) {
         rawPassword = Strings.randomString(length, ALLOWED_CHARS);
     }
