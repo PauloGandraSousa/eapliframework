@@ -326,7 +326,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         if (!active) {
             // we could simply do nothing instead of taking a harsh approach of
             // throwing an exception
-            throw new IllegalStateException();
+            throw new IllegalStateException("Cannot deactivate an inactive user");
         }
         active = false;
         this.deactivatedOn = deactivatedOn;
