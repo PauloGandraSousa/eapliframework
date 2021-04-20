@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -31,6 +31,9 @@ import java.lang.annotation.Target;
  * A Data Transfer Object is a "data bag" used for
  * interfacing between systems such as remote communication and the UI and the
  * domain layer.
+ *
+ * <p>
+ * See Project Lombok's <code>&#64;Data</code> to generate the boilerplate code.
  *
  * @author Paulo Gandra Sousa
  *

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -22,13 +22,60 @@
  * Provides generic interfaces for building persistence layers following the
  * Repository pattern (acts as an in memory collection of entities).
  * <p>
- * <img src="overview-repositories.png">
+ * It is important to understand that a Repository is in fact a Port in the Ports and Connectors
+ * architecture. That is the Repository is an interface; not to be confused with the repository
+ * implementation (the connector).
+ * <p>
+ * <img src="repository-ports-connectors.svg">
+ * <p>
+ * <img src="framework-overview-repositories.png">
  * </p>
  *
  * @author Paulo Gandra Sousa
  *
  *         <!--
- * @startuml overview-repositories.png
+ * @startuml repository-ports-connectors.svg
+ *
+ *           package Presentation {
+ *           class UseCaseXUI
+ *           }
+ *           package Application {
+ *           class UseCaseXController
+ *           UseCaseXUI .> UseCaseXController
+ *
+ *           note right of UseCaseXController
+ *           the implementation of the repository is injected
+ *           thru a dependency injection container
+ *           or similar
+ *           end note
+ *           }
+ *           package Domain {
+ *           class Xpto <<root>>
+ *           }
+ *           package Repositories {
+ *           interface XptoRepository
+ *           XptoRepository .> Xpto
+ *           }
+ *           package RepositoriesImpl {
+ *           class XptoRepositoryImpl
+ *           XptoRepositoryImpl .up.|> XptoRepository
+ *           XptoRepositoryImpl .up.> Xpto
+ *           }
+ *
+ *           UseCaseXController ..> Xpto
+ *           UseCaseXController ..> XptoRepository
+ *
+ *           'Presentation .> Application
+ *           'Application .> Repositories
+ *           'Application ..> Domain
+ *           'Repositories .> Domain
+ *           'RepositoriesImpl .up.> Domain
+ *           'RepositoriesImpl .up.|> Repositories
+ *
+ * @enduml
+ *         -->
+ *         <!--
+ * @startuml framework-overview-repositories.png
  *
  *           DomainRepository <|-up- IterableRepository
  *

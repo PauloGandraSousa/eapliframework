@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -25,8 +25,8 @@ import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Target;
 
 /**
- * The business identity of a domain entity. For instance, a Citizen will have a citizen number as its primary business
- * entity, while a Product will have its SKU as its business identity.
+ * The business identity of a domain entity. For instance, a Citizen will have a citizen number as
+ * its primary business entity, while a Product will have its SKU as its business identity.
  *
  * @author Paulo Gandra de Sousa
  *

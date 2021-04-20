@@ -96,6 +96,10 @@ import java.lang.annotation.Target;
  * <p>
  * Immutable classes are thread-safe by definition.
  *
+ * <p>
+ * See Project Lombok's <code>&#64;Value</code> to generate the boilerplate code and ensure
+ * immutability.
+ *
  * @author Paulo Gandra de Sousa 28/04/2020
  *
  */

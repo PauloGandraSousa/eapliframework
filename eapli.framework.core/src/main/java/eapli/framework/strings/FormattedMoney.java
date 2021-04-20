@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -44,8 +44,8 @@ public class FormattedMoney implements FormattedString {
     }
 
     /**
-     * A money value with the current Locale's currency
-     * 
+     * A money value with the current Locale's currency.
+     *
      * @param amount
      */
     public FormattedMoney(final double amount) {
@@ -53,8 +53,8 @@ public class FormattedMoney implements FormattedString {
     }
 
     /**
-     * A money value with the current Locale's currency
-     * 
+     * A money value with the current Locale's currency.
+     *
      * @param amount
      * @param cur
      *
