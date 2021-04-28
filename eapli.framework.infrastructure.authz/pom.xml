@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>eapli</groupId>
 			<artifactId>eapli.framework.core</artifactId>
-			<version>${project.parent.version}</version>
+			<version>16.3.1</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -153,5 +153,10 @@
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
+		<repository>
+			<id>jfrog-pagsousa</id>
+			<name>jfrog-pagsousa</name>
+			<url>https://pagsousa.jfrog.io/artifactory/default-maven-virtual</url>
+		</repository>
 	</repositories>
 </project>
