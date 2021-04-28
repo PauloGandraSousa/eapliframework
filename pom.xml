@@ -142,9 +142,9 @@
 
 	<distributionManagement>
 		<repository>
-			<id>bintray-pagsousa-eapli</id>
-			<name>pagsousa-eapli</name>
-			<url>https://api.bintray.com/maven/pagsousa/eapli/eapli.framework/;publish=1</url>
+			<id>jfrog-pagsousa</id>
+			<name>jfrog-pagsousa</name>
+			<url>https://pagsousa.jfrog.io/artifactory/default-maven-virtual</url>
 		</repository>
 	</distributionManagement>
 
