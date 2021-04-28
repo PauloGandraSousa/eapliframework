@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -39,7 +39,7 @@ public class Name implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("squid:S4784")
-    private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z]+[a-zA-Z ]+$",
+    private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z][a-zA-Z ]+$",
             Pattern.CASE_INSENSITIVE);
 
     private final String firstName;
