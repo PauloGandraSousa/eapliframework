@@ -109,6 +109,36 @@ public class CsvRecord {
     }
 
     /**
+     * Helper state-holder for parser.
+     *
+     * @author Paulo Gandra de Sousa 2021.04.28
+     *
+     */
+    private static class ParseState {
+        private final List<String> result = new ArrayList<>();
+        private StringBuilder curVal = new StringBuilder();
+        private boolean inQuotes = false;
+
+        void addToken() {
+            result.add(curVal.toString().trim());
+            curVal = new StringBuilder();
+        }
+
+        void addChar(final char ch) {
+            curVal.append(ch);
+        }
+
+        void startQuotedField(final char customQuote) {
+            curVal.append(customQuote);
+            inQuotes = true;
+        }
+
+        void endQuotedField() {
+            inQuotes = false;
+        }
+    }
+
+    /**
      * Parse a CSV line with comma separator and double quotes.
      *
      * @param csvLine
@@ -147,48 +177,56 @@ public class CsvRecord {
     public static CsvRecord parse(final String csvLine, final char separators, final char customQuote)
             throws ParseException {
 
-        final List<String> result = new ArrayList<>();
+        final var state = new ParseState();
 
         // if empty, return!
         if (csvLine == null || csvLine.isEmpty()) {
-            return new CsvRecord(result, "");
+            return new CsvRecord(state.result, "");
         }
 
-        var curVal = new StringBuilder();
-        var inQuotes = false;
         final char[] chars = csvLine.toCharArray();
-
         int i = 0;
         while (i < chars.length) {
             final char ch = chars[i];
-            if (inQuotes) {
-                curVal.append(ch);
-                if (ch == customQuote) {
-                    if (i < chars.length - 1 && chars[i + 1] == customQuote) {
-                        i++;
-                        curVal.append(customQuote);
-                    } else {
-                        inQuotes = false;
-                    }
-                }
+            if (state.inQuotes) {
+                i = parseInQuotes(state, ch, customQuote, chars, i);
             } else {
-                if (ch == customQuote) {
-                    inQuotes = startQuotedField(curVal, customQuote);
-                } else if (ch == separators) {
-                    curVal = addToken(result, curVal);
-                } else {
-                    curVal.append(ch);
-                }
+                parseNotInQuotes(state, ch, separators, customQuote);
             }
 
             i++;
         }
-        if (inQuotes) {
+        if (state.inQuotes) {
             throw new ParseException("Unfinished quote", -1);
         }
-        addToken(result, curVal);
+        state.addToken();
 
-        return new CsvRecord(result, csvLine);
+        return new CsvRecord(state.result, csvLine);
+    }
+
+    private static void parseNotInQuotes(final ParseState state, final char ch, final char separators,
+            final char customQuote) {
+        if (ch == customQuote) {
+            state.startQuotedField(customQuote);
+        } else if (ch == separators) {
+            state.addToken();
+        } else {
+            state.addChar(ch);
+        }
+    }
+
+    private static int parseInQuotes(final ParseState state, final char ch, final char customQuote, final char[] chars,
+            int i) {
+        state.addChar(ch);
+        if (ch == customQuote) {
+            if (i < chars.length - 1 && chars[i + 1] == customQuote) {
+                i++;
+                state.addChar(customQuote);
+            } else {
+                state.endQuotedField();
+            }
+        }
+        return i;
     }
 
     /**
@@ -246,16 +284,5 @@ public class CsvRecord {
     @Override
     public String toString() {
         return record;
-    }
-
-    private static StringBuilder addToken(final List<String> result, StringBuilder curVal) {
-        result.add(curVal.toString().trim());
-        curVal = new StringBuilder();
-        return curVal;
-    }
-
-    private static boolean startQuotedField(final StringBuilder curVal, final char customQuote) {
-        curVal.append(customQuote);
-        return true;
     }
 }
