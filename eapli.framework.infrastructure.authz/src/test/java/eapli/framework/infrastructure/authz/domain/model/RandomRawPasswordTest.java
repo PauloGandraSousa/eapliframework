@@ -20,50 +20,47 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * @author Paulo Gandra Sousa 28/05/2020
  *
  */
-public class RandomRawPasswordTest {
+class RandomRawPasswordTest {
 
     @Test
-    public void ensureDefault() {
+    void ensureMinLength3() {
+        assertThrows(IllegalArgumentException.class, () -> new RandomRawPassword(2));
+    }
+
+    @Test
+    void ensureDefault() {
         final RandomRawPassword rrp = new RandomRawPassword();
 
         assertNotNull(rrp.toString());
         assertTrue(rrp.toString().length() > 0);
     }
 
-    @Test
-    public void ensureLength8() {
-        ensureLength(8);
-    }
-
-    @Test
-    public void ensureLength10() {
-        ensureLength(10);
-    }
-
-    @Test
-    public void ensureLength24() {
-        ensureLength(24);
-    }
-
-    private void ensureLength(final int n) {
+    @ParameterizedTest
+    @ValueSource(ints = { 3, 4, 6, 8, 10, 24 })
+    void ensureLength(final int n) {
         final RandomRawPassword rrp = new RandomRawPassword(n);
+
+        System.out.println("Random password: " + rrp.toString());
 
         assertNotNull(rrp.toString());
         assertEquals(rrp.toString().length(), n);
     }
 
     @Test
-    public void ensureOnlyHasAllowedCharacters() {
+    void ensureOnlyHasAllowedCharacters() {
         final int N = 124;
         final RandomRawPassword rrp = new RandomRawPassword(N);
 
