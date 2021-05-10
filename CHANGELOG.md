@@ -1,15 +1,16 @@
 # EAPLI Framework Changelog
 
 
-## 15.4.0-SNAPSHOT
+## 16.4.0-SNAPSHOT
 
 ### What's new
 
 - `EmailAddress` implements `Comparable`
+- `Money.valueOf(double, String)`
 
 ### Changed
 
-- TBD
+- `RandomRawPassword` ensures at least a capital letter, a number and a symbol are present.
 
 
 ## 16.3.0

@@ -144,7 +144,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Special constructor to reconstruct objects from the database - to be used in SELECT NEW JPQL
      * queries <strong>only</strong>.
      * <p/>
-     * This is an example of a "public but not published" interface
+     * This is an example of a <strong>"public but not published"</strong> interface
      * <p>
      * Author Paulo Gandra de Sousa
      *
@@ -210,6 +210,21 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
         final double am = Double.parseDouble(parts[0]);
         final Currency curr = Currency.getInstance(parts[1]);
         return new Money(am, curr);
+    }
+
+    /**
+     * Builds a Money.
+     * <p>
+     * Author Paulo Gandra de Sousa
+     *
+     * @param amount
+     * @param currency
+     *            the currency code
+     * @return a new object corresponding to the value
+     */
+    public static Money valueOf(final double amount, final String currency) {
+        final Currency curr = Currency.getInstance(currency);
+        return new Money(amount, curr);
     }
 
     /**
