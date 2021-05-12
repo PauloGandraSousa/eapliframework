@@ -7,6 +7,7 @@
 
 - `EmailAddress` implements `Comparable`
 - `Money.valueOf(double, String)`
+- `RomanNumeral.valueOf(int)`
 
 ### Changed
 

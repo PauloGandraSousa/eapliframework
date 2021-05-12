@@ -33,6 +33,8 @@ import eapli.framework.util.Utility;
 /**
  * Simple utility to parse CSV records based on regular expressions.
  *
+ * @see eapli.framework.csv.CsvRecord
+ *
  * @author Paulo Gandra Sousa 04/06/2020
  *
  */
