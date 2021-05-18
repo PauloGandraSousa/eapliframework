@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,21 +23,26 @@
  */
 package eapli.framework.representations.builders;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class JsonRepresentationBuilderCollectionOfCollectionTest {
+/**
+ *
+ * @author Paulo Gandra de Sousa
+ *
+ */
+class JsonRepresentationBuilderCollectionOfCollectionTest {
     private JsonRepresentationBuilder subject;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         subject = new JsonRepresentationBuilder();
     }
 
     @Test
-    public void ensureCollectionOfOneCollection() {
+    void ensureCollectionOfOneCollection() {
         final String expected = "{\"name\":[[1,2,3]]}";
         final String actual = subject.startObject("Test").startCollection("name").startCollection("c1").withElement(1)
                 .withElement(2).withElement(3).endCollection().endCollection().build();
@@ -50,7 +55,7 @@ public class JsonRepresentationBuilderCollectionOfCollectionTest {
     }
 
     @Test
-    public void ensureCollectionOfTwoCollections() {
+    void ensureCollectionOfTwoCollections() {
         final String expected = "{\"name\":[[1,2],[3,4]]}";
         final String actual = subject.startObject("Test").startCollection("name").startCollection("c1").withElement(1)
                 .withElement(2).endCollection().startCollection("c2").withElement(3).withElement(4).endCollection()
@@ -64,7 +69,7 @@ public class JsonRepresentationBuilderCollectionOfCollectionTest {
     }
 
     @Test
-    public void ensurePolymorphicCollection() {
+    void ensurePolymorphicCollection() {
         final String expected = "{\"name\":[[1,2],\"a\",[3,4]]}";
         final String actual = subject.startObject("Test").startCollection("name").startCollection("c1").withElement(1)
                 .withElement(2).endCollection().withElement("a").startCollection("c2").withElement(3).withElement(4)
