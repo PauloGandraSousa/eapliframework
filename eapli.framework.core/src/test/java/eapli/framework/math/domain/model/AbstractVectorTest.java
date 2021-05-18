@@ -30,7 +30,6 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import eapli.framework.math.domain.model.Vector;
 import eapli.framework.math.domain.model.Vector.VectorType;
 import eapli.framework.math.util.NumberPredicates;
 
