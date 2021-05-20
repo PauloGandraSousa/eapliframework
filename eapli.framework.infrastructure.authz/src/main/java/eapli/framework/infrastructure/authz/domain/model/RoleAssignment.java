@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -36,6 +36,12 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
+ * A role assignment of a user. Serves as history of roles(action rights) the user has/had.
+ * <p>
+ * This an example of a Value Object in the Domain but mapped as a Table (entity) in the relational
+ * model to overcome a limitation with Hibernate JPA that does not support embeddedable dentro de
+ * embeddeables.
+ *
  * @author Paulo Gandra Sousa
  */
 @Entity

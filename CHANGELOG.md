@@ -1,7 +1,16 @@
 # EAPLI Framework Changelog
 
 
-## 16.4.0-SNAPSHOT
+## 17.0.0 [ AUTHZ ]
+
+### What's new
+
+### Changed
+
+- `Role` was mapped as a java object. it is now mapped as a VARCHAR column. 
+
+
+## 16.4.0
 
 ### What's new
 
