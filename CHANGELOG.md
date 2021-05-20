@@ -1,7 +1,7 @@
 # EAPLI Framework Changelog
 
 
-## 16.4.0-SNAPSHOT
+## 16.4.0
 
 ### What's new
 
