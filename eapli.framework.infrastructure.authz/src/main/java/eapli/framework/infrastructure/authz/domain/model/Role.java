@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -25,17 +25,20 @@ package eapli.framework.infrastructure.authz.domain.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Embeddable;
+
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
  * A generic concept for a role that can be used by application code to classify
- * users
+ * users.
  *
  * @author Paulo Gandra de Sousa
  *
  */
+@Embeddable
 public class Role implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
