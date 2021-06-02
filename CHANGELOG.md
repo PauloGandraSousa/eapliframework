@@ -1,6 +1,18 @@
 # EAPLI Framework Changelog
 
 
+## 16.5.0 [ CORE ]
+
+## What's new
+
+- `JpaAbstractRepository.createNativeQuery`
+- `JpaAutoTxRepository.createNativeQuery`
+
+## Changed
+
+- TBD
+
+
 ## 17.0.0 [ AUTHZ ]
 
 ### What's new
@@ -15,7 +27,9 @@
 ### What's new
 
 - `EmailAddress` implements `Comparable`
+
 - `Money.valueOf(double, String)`
+
 - `RomanNumeral.valueOf(int)`
 
 ### Changed
@@ -28,17 +42,23 @@
 ### What's new
 
 - `RoleAssignment.unassignedOn`
+
 - `TransactionalContext.isActive`
+
 - `DomainRepository.lock`
+
 - `JpaAutoTxRepository.isPartOfTransactionalContext`
+
 - `SpringDataLockableRepository`
+
 - `LockableRepository`
+
 - `LockableDomainRepository`
 
 ### Changed
 
 - deprecated 
-	- `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead
+	- `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead 
 	- `JpaAutoTxRepository.isInTransaction`; use `JpaAutoTxRepository.isPartOfTransactionalContext` instead
 
 

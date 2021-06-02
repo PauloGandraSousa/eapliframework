@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.LockModeType;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -341,6 +342,22 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
         return repo.createQuery(queryString, class1);
     }
 
+    /**
+     * Creates a native query.
+     *
+     * @param <R>
+     * @param sql
+     * @param classz
+     * @return
+     */
+    protected <R> Query createNativeQuery(final String sql, final Class<R> classz) {
+        return repo.createNativeQuery(sql, classz);
+    }
+
+    /**
+     *
+     * @param pagesize
+     */
     @Override
     public Iterator<T> iterator(final int pagesize) {
         return repo.iterator(pagesize);
