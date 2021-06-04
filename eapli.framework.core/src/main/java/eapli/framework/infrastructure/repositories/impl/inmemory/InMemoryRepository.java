@@ -60,7 +60,6 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
     private final Function<? super T, ? extends K> identityGenerator;
 
     /**
-     *
      * @param identityGenerator
      *            a function that maps an Entity to its key
      */
@@ -80,9 +79,49 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
         DATA.clear();
     }
 
+    /**
+     * @return the data held by this repository keyed by their primary identity
+     */
     @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "squid:S2209", "java:S3740" })
     protected Map<K, T> data() {
         return (Map<K, T>) this.DATA.computeIfAbsent(this.entityClass, k -> new ConcurrentHashMap());
+    }
+
+    /**
+     * @return a stream of the objects hold in this repository.
+     */
+    protected Stream<T> valuesStream() {
+        return data().values().stream();
+    }
+
+    private List<T> matchAll(final Predicate<T> filterFunc) {
+        return valuesStream().filter(filterFunc).collect(Collectors.toList());
+    }
+
+    /**
+     * Filters the data according to a predicate function.
+     *
+     * @param filterFunc
+     *
+     * @return the objects that match the criteria
+     */
+    protected Iterable<T> match(final Predicate<T> filterFunc) {
+        return matchAll(filterFunc);
+    }
+
+    /**
+     * @param filterFunc
+     *
+     * @return
+     */
+    protected Optional<T> matchOne(final Predicate<T> filterFunc) {
+        final List<T> all = matchAll(filterFunc);
+        if (all.isEmpty()) {
+            return Optional.empty();
+        }
+        Invariants.ensure(all.size() == 1, "More than result was returned");
+        final T ret = all.get(0);
+        return Optional.of(ret);
     }
 
     @Override
@@ -138,9 +177,9 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
     }
 
     /**
-     *
      * @param id
      *            K identifier for object
+     *
      * @return T if object identified by K is found, otherwise returns null.
      */
     @Override
@@ -156,28 +195,6 @@ public abstract class InMemoryRepository<T, K> implements IterableRepository<T, 
     @Override
     public Iterator<T> iterator() {
         return data().values().iterator();
-    }
-
-    private List<T> matchAll(final Predicate<T> filterFunc) {
-        return valuesStream().filter(filterFunc).collect(Collectors.toList());
-    }
-
-    protected Stream<T> valuesStream() {
-        return data().values().stream();
-    }
-
-    protected Iterable<T> match(final Predicate<T> filterFunc) {
-        return matchAll(filterFunc);
-    }
-
-    protected Optional<T> matchOne(final Predicate<T> filterFunc) {
-        final List<T> all = matchAll(filterFunc);
-        if (all.isEmpty()) {
-            return Optional.empty();
-        }
-        Invariants.ensure(all.size() == 1, "More than result was returned");
-        final T ret = all.get(0);
-        return Optional.of(ret);
     }
 
     @Override

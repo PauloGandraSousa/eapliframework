@@ -32,7 +32,6 @@ import eapli.framework.validations.Preconditions;
  * Utility class to handle Arrays.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Utility
 public final class Arrays {
@@ -48,6 +47,7 @@ public final class Arrays {
      * @param a
      * @param b
      * @param op
+     *
      * @return a new array with the zipped contents
      */
     public static double[] zip(final double[] a, final double[] b, final DoubleBinaryOperator op) {
@@ -68,6 +68,7 @@ public final class Arrays {
      *
      * @param src
      * @param map
+     *
      * @return a new array with the mapped contents
      */
     public static double[] map(final double[] src, final DoubleUnaryOperator map) {
@@ -93,6 +94,7 @@ public final class Arrays {
      *            expected number of positions
      * @param map
      *            the mapping function from source to destination, T -&gt; U
+     *
      * @return a new array with the mapped contents
      */
     public static <T, U> U[] map(final T[] src, final IntFunction<U[]> creator,
@@ -136,6 +138,7 @@ public final class Arrays {
      *
      * @param src
      * @param elem
+     *
      * @return the zero-based index where the element is found in the array. -1
      *         otherwise
      */
@@ -154,15 +157,16 @@ public final class Arrays {
      * @param <T>
      * @param src
      * @param elem
+     *
      * @return the number of times a value appears in an array
      */
     public static <T> int countOf(final T[] src, final T elem) {
-        int appears = 0;
+        var count = 0;
         for (final T each : src) {
             if (each.equals(elem)) {
-                appears++;
+                count++;
             }
         }
-        return appears;
+        return count;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -26,7 +26,6 @@ import java.util.function.Predicate;
  * Utility class for Array predicates.
  *
  * @author Paulo Gandra de Sousa 28/05/2020
- *
  */
 @Utility
 public final class ArrayPredicates {
@@ -41,6 +40,7 @@ public final class ArrayPredicates {
      *
      * @param src
      * @param elem
+     *
      * @return {@code true} if the element is present in the array
      */
     public static <T> boolean contains(final T[] src, final T elem) {
@@ -52,6 +52,7 @@ public final class ArrayPredicates {
      *
      * @param <T>
      * @param src
+     *
      * @return {@code true} if all elements of the array are distinct.
      */
     public static <T> boolean areAllDistinct(final T[] src) {
@@ -69,6 +70,7 @@ public final class ArrayPredicates {
      * @param <T>
      * @param src
      * @param condition
+     *
      * @return {@code true} if all elements of the array satisfy a certain condition
      */
     public static <T> boolean all(final T[] src, final Predicate<T> condition) {
@@ -86,6 +88,7 @@ public final class ArrayPredicates {
      * @param <T>
      * @param src
      * @param condition
+     *
      * @return {@code true} if at least one of the elements of the array satisfies the condition
      */
     public static <T> boolean any(final T[] src, final Predicate<T> condition) {

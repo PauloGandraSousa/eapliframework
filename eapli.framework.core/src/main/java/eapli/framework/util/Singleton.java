@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -29,7 +29,6 @@ import java.lang.annotation.Target;
 
 /**
  * A class that only has one object instance, i.e., Singleton.
- *
  * <p>
  * Singleton classes must not allow to create more than one
  * instance. Usually this is done by making the class final, making the
@@ -66,7 +65,6 @@ import java.lang.annotation.Target;
  * on demand</a> pattern for thread safety.
  *
  * @author Paulo Gandra Sousa
- *
  */
 @Documented
 @Retention(SOURCE)
