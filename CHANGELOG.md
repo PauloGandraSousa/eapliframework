@@ -1,6 +1,16 @@
 # EAPLI Framework Changelog
 
 
+## 16.6.0 [ CORE ]
+
+## What's new
+
+- `JpaAutoTxRepository.entityManager`
+
+## Changed
+
+- n.a.
+
 ## 16.5.0 [ CORE ]
 
 ## What's new
@@ -10,7 +20,7 @@
 
 ## Changed
 
-- TBD
+- n.a.
 
 
 ## 17.0.0 [ AUTHZ ]

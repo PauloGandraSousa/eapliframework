@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -121,6 +122,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      * Factory method to create a new JPA transaction.
      *
      * @param persistenceUnitName
+     *
      * @return a new transaction context
      */
     public static TransactionalContext buildTransactionalContext(final String persistenceUnitName) {
@@ -132,6 +134,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *
      * @param persistenceUnitName
      * @param properties
+     *
      * @return a new transaction context
      */
     public static TransactionalContext buildTransactionalContext(final String persistenceUnitName,
@@ -155,6 +158,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *
      * @return {@code true} if the repository is running in single transaction mode
      *         {@code false} if running within a Transactional Context
+     *
      * @deprecated the name of this method is misleading. Use
      *             {@link #isPartOfTransactionalContext()} instead.
      */
@@ -186,6 +190,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      * Removes the entity with the specified identity from the repository.
      *
      * @param entityId
+     *
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
@@ -214,6 +219,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *
      * @param id
      *            the business identity to look for
+     *
      * @return the entity with the specified identity.
      */
     public Optional<T> ofIdentity(final I id) {
@@ -251,6 +257,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *
      * @param whereWithParameters
      * @param params
+     *
      * @return
      */
     protected List<T> match(final LockModeType locking, final String whereWithParameters,
@@ -273,6 +280,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *            a list of parameters to be used in the query. Each odd parameter
      *            is assumed to be the name of the parameter; each even parameter
      *            is assumed to be the value of the preceding parameter.
+     *
      * @return
      */
     protected List<T> match(final String where, final Object... args) {
@@ -286,6 +294,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *
      * @param where
      *            the where clause should use "e" as the query object
+     *
      * @return
      */
     protected Optional<T> matchOne(final String where) {
@@ -301,6 +310,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *            the where clause should use "e" as the query object
      * @param params
      *            a map of the parameter name and its value to use in the query
+     *
      * @return
      */
     protected Optional<T> matchOne(final LockModeType locking, final String whereWithParameters,
@@ -323,6 +333,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *            a list of parameters to be used in the query. Each odd parameter
      *            is assumed to be the name of the parameter; each even parameter
      *            is assumed to be the value of the preceding parameter.
+     *
      * @return
      */
     protected Optional<T> matchOne(final LockModeType locking, final String where, final Object... args) {
@@ -336,6 +347,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      * @param <R>
      * @param jpql
      * @param classz
+     *
      * @return
      */
     protected <U> TypedQuery<U> createQuery(final String queryString, final Class<U> class1) {
@@ -348,6 +360,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      * @param <R>
      * @param sql
      * @param classz
+     *
      * @return
      */
     protected <R> Query createNativeQuery(final String sql, final Class<R> classz) {
@@ -355,7 +368,16 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
     }
 
     /**
+     * Provides access to the underlying entity manager. In principle, derived classes
+     * should not need to use this method. neither override it.
      *
+     * @return
+     */
+    protected EntityManager entityManager() {
+        return repo.entityManager();
+    }
+
+    /**
      * @param pagesize
      */
     @Override
