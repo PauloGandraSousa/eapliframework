@@ -6,14 +6,14 @@
 	<artifactId>eapli.framework.infrastructure.pubsub</artifactId>
 	<packaging>jar</packaging>
 	<name>eapli.framework.infrastructure.pubsub</name>
-	<version>16.3.1</version>
+	<version>16.4.0</version>
 
 
 	<parent>
 		<groupId>eapli</groupId>
 		<artifactId>eapli.framework</artifactId>
 		<relativePath>../</relativePath>
-		<version>16.3.0</version>
+		<version>16.4.0</version>
 	</parent>
 
 
