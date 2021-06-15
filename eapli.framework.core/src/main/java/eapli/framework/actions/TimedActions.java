@@ -36,7 +36,6 @@ import eapli.framework.validations.Preconditions;
  * Utility functions for action execution with time control.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Utility
 public final class TimedActions {
@@ -118,14 +117,13 @@ public final class TimedActions {
         TIMER.scheduleAtFixedRate(new RecurringTask(cmd), 0, interval);
     }
 
-    private static ScheduledExecutorService scheduledThreadPool = Executors
-            .newScheduledThreadPool(5);
+    private static final ScheduledExecutorService SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(5);
 
     /**
-     * Schedules a periodic action at a specified interval in milliseconds. the
-     * first execution will happen as soon as possible. There will be one single
-     * thread pool {@link java.util.concurrent.ScheduledExecutorService executor}
-     * for scheduled recurring tasks.
+     * Schedules a periodic action at a specified interval in milliseconds. The first execution will
+     * happen as soon as possible. There will be one single thread pool
+     * {@link java.util.concurrent.ScheduledExecutorService executor} for all scheduled recurring
+     * tasks.
      *
      * @param cmd
      *            the action to execute
@@ -137,7 +135,7 @@ public final class TimedActions {
         Preconditions.isPositive(period);
 
         LOGGER.debug("Scheduling task {} each {} milliseconds", cmd, period);
-        scheduledThreadPool.scheduleAtFixedRate(() -> {
+        SCHEDULED_THREAD_POOL.scheduleAtFixedRate(() -> {
             LOGGER.trace("Executing recurring task {}", cmd);
             cmd.execute();
         }, 0, period, TimeUnit.MILLISECONDS);
@@ -149,11 +147,10 @@ public final class TimedActions {
      * {@link #atFixedRate(Action, int) atFixedRate} or
      * {@link #periodically(Action, int) periodically}, otherwise the application
      * may not end normally as the recurring task's threads will keep executing
-     *
      */
     public static void shutdownRecurringTasks() {
         LOGGER.debug("shuting down scheduled/timer tasks");
-        scheduledThreadPool.shutdownNow();
+        SCHEDULED_THREAD_POOL.shutdownNow();
         TIMER.cancel();
     }
 }

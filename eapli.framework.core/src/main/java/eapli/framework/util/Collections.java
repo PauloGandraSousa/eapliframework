@@ -51,7 +51,8 @@ public final class Collections {
     @SuppressWarnings({ "squid:S1481" })
     public static int sizeOf(final Iterable<?> itens) {
         var numberOfElements = 0;
-        for (final Object o : itens) {
+        for (@SuppressWarnings("unused")
+        final Object o : itens) {
             numberOfElements++;
         }
         return numberOfElements;
