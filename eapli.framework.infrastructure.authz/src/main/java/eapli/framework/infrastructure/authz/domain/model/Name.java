@@ -31,7 +31,6 @@ import eapli.framework.validations.Preconditions;
 
 /**
  * A Person's name
- *
  */
 @Embeddable
 public class Name implements ValueObject, Serializable {
@@ -39,7 +38,7 @@ public class Name implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("squid:S4784")
-    private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z][a-zA-Z ]+$",
+    private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z][A-Za-z ',.\\-]*$",
             Pattern.CASE_INSENSITIVE);
 
     private final String firstName;
@@ -66,6 +65,7 @@ public class Name implements ValueObject, Serializable {
      *
      * @param firstName
      * @param lastName
+     *
      * @return a Name
      */
     public static Name valueOf(final String firstName, final String lastName) {
@@ -73,7 +73,6 @@ public class Name implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @return the first, or given, name
      */
     public String firstName() {
@@ -81,7 +80,6 @@ public class Name implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @return the last, or family, name
      */
     public String lastName() {
@@ -97,7 +95,7 @@ public class Name implements ValueObject, Serializable {
             return false;
         }
 
-        final Name name = (Name) o;
+        final var name = (Name) o;
 
         if (!firstName.equals(name.firstName)) {
             return false;

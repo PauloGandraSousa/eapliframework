@@ -1,6 +1,30 @@
 # EAPLI Framework Changelog
 
 
+
+## 17.0.0 [ CORE ]
+
+## What's new
+
+- n.a.
+
+## Changed
+
+- removed deprecated `JpaAutoTxRepository.isInTransaction`. Use `isInTransactionalContext`.
+- `JpaAutoTxRepository.context` now returns an `Optional<TransactionalContext>`.
+
+
+## 17.1.0 [ AUTHZ ]
+
+## What's new
+
+- `Name` now supports dot (`.`), dash (`-`) and apostrophe (`'`)
+
+## Changed
+
+- removed deprecated `RoleAssignment.getUnassignedOn`. Use `unassignedOn`.
+
+
 ## 16.6.0 [ CORE ]
 
 ## What's new

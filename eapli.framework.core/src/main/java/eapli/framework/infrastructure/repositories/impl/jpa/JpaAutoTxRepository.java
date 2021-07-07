@@ -147,24 +147,8 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      *
      * @return the transactional context this repository is enrolled or {@code null} if not enrolled
      */
-    public TransactionalContext context() {
-        // TODO this method should return an Optional
-        return autoTx;
-    }
-
-    /**
-     * Returns if the repository is running in single transaction mode or within
-     * a TransactionalContext.
-     *
-     * @return {@code true} if the repository is running in single transaction mode
-     *         {@code false} if running within a Transactional Context
-     *
-     * @deprecated the name of this method is misleading. Use
-     *             {@link #isPartOfTransactionalContext()} instead.
-     */
-    @Deprecated(forRemoval = true)
-    public boolean isInTransaction() {
-        return context() == null;
+    public Optional<TransactionalContext> context() {
+        return Optional.ofNullable(autoTx);
     }
 
     /**
@@ -173,7 +157,7 @@ public class JpaAutoTxRepository<T, K, I> implements IterableRepository<T, K>, L
      * @return {@code true} if the repository is running within a Transactional Context
      */
     public boolean isPartOfTransactionalContext() {
-        return context() == null;
+        return context().isPresent();
     }
 
     @Override

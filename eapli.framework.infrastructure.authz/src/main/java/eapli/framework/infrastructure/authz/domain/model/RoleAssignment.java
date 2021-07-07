@@ -64,7 +64,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     private boolean expired;
 
     /**
-     *
      * @param type
      */
     public RoleAssignment(final Role type) {
@@ -72,7 +71,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @param type
      * @param assignedOn
      */
@@ -91,7 +89,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @return
      */
     public boolean isExpired() {
@@ -128,7 +125,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @return
      */
     public Role type() {
@@ -136,8 +132,8 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @param r
+     *
      * @return
      */
     public boolean isOf(final Role r) {
@@ -160,17 +156,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
-     * @return
-     * @deprecated use {@link #unassignedOn}
-     */
-    @Deprecated(forRemoval = true)
-    public Optional<Calendar> getUnassignedOn() {
-        return unassignedOn();
-    }
-
-    /**
-     *
      * @return
      */
     public Optional<Calendar> unassignedOn() {
