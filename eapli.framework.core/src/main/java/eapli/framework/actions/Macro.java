@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -32,25 +32,28 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * one will get its own {@code errorCause} upon failure to execute an action.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 public class Macro implements Action {
 
     private final Queue<Action> actions = new ConcurrentLinkedQueue<>();
 
-    private final ThreadLocal<Action> errorCause = ThreadLocal.withInitial(null);
+    private final ThreadLocal<Action> errorCause = ThreadLocal.withInitial(() -> null);
 
-    public Macro() {
-    }
-
+    /**
+     * @param actions
+     */
     public Macro(final Action... actions) {
         for (final Action a : actions) {
-            this.actions.add(a);
+            with(a);
         }
     }
 
-    public void record(final Action action) {
+    /**
+     * @param action
+     */
+    public Macro with(final Action action) {
         actions.add(action);
+        return this;
     }
 
     /**
