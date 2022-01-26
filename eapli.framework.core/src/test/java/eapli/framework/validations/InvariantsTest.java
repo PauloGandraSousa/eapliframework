@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,271 +20,272 @@
  */
 package eapli.framework.validations;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
-public class InvariantsTest {
+class InvariantsTest {
 
     private static final String MESSAGE = "message";
 
     @Test
-    public void testAreEqualLong() {
+    void testAreEqualLong() {
         Invariants.areEqual(42, 42);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualLongFail() {
-        Invariants.areEqual(42, 24);
+    @Test
+    void testAreEqualLongFail() {
+        assertThrows(IllegalStateException.class, () -> Invariants.areEqual(42, -1));
     }
 
     @Test
-    public void testAreEqualObject() {
+    void testAreEqualObject() {
         Invariants.areEqual("abc", "abc", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualObjectFail() {
-        Invariants.areEqual("abc", "xpto", MESSAGE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualObjectFailOn1Null() {
-        Invariants.areEqual(null, "xpto", MESSAGE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualObjectFailOn2Null() {
-        Invariants.areEqual("abc", null, MESSAGE);
+    @Test
+    void testAreEqualObjectFail() {
+        assertThrows(IllegalStateException.class, () -> Invariants.areEqual("abc", "xpto", MESSAGE));
     }
 
     @Test
-    public void testMatches() {
+    void testAreEqualObjectFailOn1Null() {
+        assertThrows(IllegalStateException.class, () -> Invariants.areEqual(null, "xpto", MESSAGE));
+    }
+
+    @Test
+    void testAreEqualObjectFailOn2Null() {
+        assertThrows(IllegalStateException.class, () -> Invariants.areEqual("abc", null, MESSAGE));
+    }
+
+    @Test
+    void testMatches() {
         Invariants.matches(Pattern.compile("A"), "bcdA234", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testMatchesFail() {
-        Invariants.matches(Pattern.compile("x"), "bcdA234", MESSAGE);
+    @Test
+    void testMatchesFail() {
+        final Pattern pat = Pattern.compile("x");
+        assertThrows(IllegalStateException.class, () -> Invariants.matches(pat, "bcdA234", MESSAGE));
     }
 
     @Test
-    public void testEnsureBoolean() {
+    void testEnsureBoolean() {
         Invariants.ensure(true);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testEnsureBooleanFail() {
-        Invariants.ensure(false);
+    @Test
+    void testEnsureBooleanFail() {
+        assertThrows(IllegalStateException.class, () -> Invariants.ensure(false));
     }
 
     @Test
-    public void testEnsureBooleanString() {
+    void testEnsureBooleanString() {
         Invariants.ensure(true, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testEnsureBooleanStringFail() {
-        Invariants.ensure(false, MESSAGE);
+    @Test
+    void testEnsureBooleanStringFail() {
+        assertThrows(IllegalStateException.class, () -> Invariants.ensure(false, MESSAGE));
     }
 
     @Test
-    public void testNonNullObject() {
+    void testNonNullObject() {
         Invariants.nonNull("abc");
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonNullObjectFail() {
+    @Test
+    void testNonNullObjectFail() {
         final String x = null;
-        Invariants.nonNull(x);
+        assertThrows(IllegalStateException.class, () -> Invariants.nonNull(x));
     }
 
     @Test
-    public void testNonNullObjectString() {
+    void testNonNullObjectString() {
         Invariants.nonNull("abc", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonNullObjectStringFail() {
+    @Test
+    void testNonNullObjectStringFail() {
         final String x = null;
-        Invariants.nonNull(x, MESSAGE);
+        assertThrows(IllegalStateException.class, () -> Invariants.nonNull(x, MESSAGE));
     }
 
     @Test
-    public void testNonNullObjectArray() {
+    void testNonNullObjectArray() {
         Invariants.noneNull("abc", Integer.valueOf(42), BigDecimal.ONE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonNullObjectArrayFail() {
-        Invariants.noneNull("abc", Integer.valueOf(42), null, BigDecimal.ONE);
+    @Test
+    void testNonNullObjectArrayFail() {
+        final Integer fortytwo = Integer.valueOf(42);
+        assertThrows(IllegalStateException.class, () -> Invariants.noneNull("abc", fortytwo, null, BigDecimal.ONE));
     }
 
     @Test
-    public void testNonEmptyCollection() {
+    void testNonEmptyCollection() {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
         Invariants.nonEmpty(items);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyCollectionFailOnEmpty() {
+    @Test
+    void testNonEmptyCollectionFailOnEmpty() {
         final Collection<String> items = new ArrayList<>();
-        Invariants.nonEmpty(items);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyCollectionFailOnNull() {
-        final Collection<String> items = null;
-        Invariants.nonEmpty(items);
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty(items));
     }
 
     @Test
-    public void testNonEmptyCollectionString() {
+    void testNonEmptyCollectionFailOnNull() {
+        final Collection<String> items = null;
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty(items));
+    }
+
+    @Test
+    void testNonEmptyCollectionString() {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
         Invariants.nonEmpty(items, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyCollectionStringFailOnEmpty() {
+    @Test
+    void testNonEmptyCollectionStringFailOnEmpty() {
         final Collection<String> items = new ArrayList<>();
-        Invariants.nonEmpty(items, MESSAGE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyCollectionStringFailOnNull() {
-        final Collection<String> items = null;
-        Invariants.nonEmpty(items, MESSAGE);
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty(items, MESSAGE));
     }
 
     @Test
-    public void testNonEmptyString() {
+    void testNonEmptyCollectionStringFailOnNull() {
+        final Collection<String> items = null;
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty(items, MESSAGE));
+    }
+
+    @Test
+    void testNonEmptyString() {
         Invariants.nonEmpty("abc");
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringFailOnEmpty() {
-        Invariants.nonEmpty("");
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringFailOnEmpty2() {
-        Invariants.nonEmpty("   ");
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringFailOnNull() {
-        final String x = null;
-        Invariants.nonEmpty(x);
+    @Test
+    void testNonEmptyStringFailOnEmpty() {
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty(""));
     }
 
     @Test
-    public void testNonEmptyStringString() {
+    void testNonEmptyStringFailOnEmpty2() {
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty("   "));
+    }
+
+    @Test
+    void testNonEmptyStringFailOnNull() {
+        final String x = null;
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty(x));
+    }
+
+    @Test
+    void testNonEmptyStringString() {
         Invariants.nonEmpty("abc", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringStringFailOnEmpty() {
-        Invariants.nonEmpty("", MESSAGE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringStringFailOnEmpty2() {
-        Invariants.nonEmpty("   ", MESSAGE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringStringFailOnNull() {
-        final String x = null;
-        Invariants.nonEmpty(x, MESSAGE);
+    @Test
+    void testNonEmptyStringStringFailOnEmpty() {
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty("", MESSAGE));
     }
 
     @Test
-    public void testIsPositiveLong() {
+    void testNonEmptyStringStringFailOnEmpty2() {
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty("   ", MESSAGE));
+    }
+
+    @Test
+    void testNonEmptyStringStringFailOnNull() {
+        final String x = null;
+        assertThrows(IllegalStateException.class, () -> Invariants.nonEmpty(x, MESSAGE));
+    }
+
+    @Test
+    void testIsPositiveLong() {
         Invariants.isPositive(42);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testIsPositiveLongFailsOnZero() {
-        Invariants.isPositive(0);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testIsPositiveLongFailsOnNegative() {
-        Invariants.isPositive(-10);
+    @Test
+    void testIsPositiveLongFailsOnZero() {
+        assertThrows(IllegalStateException.class, () -> Invariants.isPositive(0));
     }
 
     @Test
-    public void testIsPositiveLongString() {
+    void testIsPositiveLongFailsOnNegative() {
+        assertThrows(IllegalStateException.class, () -> Invariants.isPositive(-10));
+    }
+
+    @Test
+    void testIsPositiveLongString() {
         Invariants.isPositive(42, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testIsPositiveLongStringFailsOnZero() {
-        Invariants.isPositive(0, MESSAGE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testIsPositiveLongStringFailsOnNegative() {
-        Invariants.isPositive(-10, MESSAGE);
+    @Test
+    void testIsPositiveLongStringFailsOnZero() {
+        assertThrows(IllegalStateException.class, () -> Invariants.isPositive(0, MESSAGE));
     }
 
     @Test
-    public void testNonNegativeLong() {
+    void testIsPositiveLongStringFailsOnNegative() {
+        assertThrows(IllegalStateException.class, () -> Invariants.isPositive(-10, MESSAGE));
+    }
+
+    @Test
+    void testNonNegativeLong() {
         Invariants.nonNegative(42);
         assertTrue(true);
     }
 
     @Test
-    public void testNonNegativeLong0() {
+    void testNonNegativeLong0() {
         Invariants.nonNegative(0);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonNegativeLongFail() {
-        Invariants.nonNegative(-10);
+    @Test
+    void testNonNegativeLongFail() {
+        assertThrows(IllegalStateException.class, () -> Invariants.nonNegative(-10));
     }
 
     @Test
-    public void testNonNegativeLongString() {
+    void testNonNegativeLongString() {
         Invariants.nonNegative(42, MESSAGE);
         assertTrue(true);
     }
 
     @Test
-    public void testNonNegativeLongString0() {
+    void testNonNegativeLongString0() {
         Invariants.nonNegative(0, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonNegativeLongStringFail() {
-        Invariants.nonNegative(-10, MESSAGE);
+    @Test
+    void testNonNegativeLongStringFail() {
+        assertThrows(IllegalStateException.class, () -> Invariants.nonNegative(-10, MESSAGE));
     }
 }

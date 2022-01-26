@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -20,271 +20,274 @@
  */
 package eapli.framework.validations;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
-public class PreconditionsTest {
+class PreconditionsTest {
 
     private static final String MESSAGE = "message";
 
     @Test
-    public void testAreEqualLong() {
+    void testAreEqualLong() {
         Preconditions.areEqual(42, 42);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testAreEqualLongFail() {
-        Preconditions.areEqual(42, 24);
+    @Test
+    void ensureAreEqualLongFail() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.areEqual(42, -1));
     }
 
     @Test
-    public void testAreEqualObject() {
+    void testAreEqualObject() {
         Preconditions.areEqual("abc", "abc", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testAreEqualObjectFail() {
-        Preconditions.areEqual("abc", "xpto", MESSAGE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAreEqualObjectFailOn1Null() {
-        Preconditions.areEqual(null, "xpto", MESSAGE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAreEqualObjectFailOn2Null() {
-        Preconditions.areEqual("abc", null, MESSAGE);
+    @Test
+    void ensureAreEqualObjectFail() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.areEqual("abc", "xpto", MESSAGE));
     }
 
     @Test
-    public void testMatches() {
+    void ensureAreEqualObjectFailOn1Null() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.areEqual(null, "xpto", MESSAGE));
+    }
+
+    @Test
+    void ensureAreEqualObjectFailOn2Null() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.areEqual("abc", null, MESSAGE));
+    }
+
+    @Test
+    void testMatches() {
         Preconditions.matches(Pattern.compile("A"), "bcdA234", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testMatchesFail() {
-        Preconditions.matches(Pattern.compile("x"), "bcdA234", MESSAGE);
+    @Test
+    void ensureMatchesFail() {
+        final Pattern pat = Pattern.compile("x");
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.matches(pat, "bcdA234", MESSAGE));
     }
 
     @Test
-    public void testEnsureBoolean() {
+    void testEnsureBoolean() {
         Preconditions.ensure(true);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testEnsureBooleanFail() {
-        Preconditions.ensure(false);
+    @Test
+    void ensureEnsureBooleanFail() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.ensure(false));
     }
 
     @Test
-    public void testEnsureBooleanString() {
+    void testEnsureBooleanString() {
         Preconditions.ensure(true, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testEnsureBooleanStringFail() {
-        Preconditions.ensure(false, MESSAGE);
+    @Test
+    void ensureEnsureBooleanStringFail() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.ensure(false, MESSAGE));
     }
 
     @Test
-    public void testNonNullObject() {
+    void testNonNullObject() {
         Preconditions.nonNull("abc");
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonNullObjectFail() {
+    @Test
+    void ensureNonNullObjectFail() {
         final String x = null;
-        Preconditions.nonNull(x);
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonNull(x));
     }
 
     @Test
-    public void testNonNullObjectString() {
+    void testNonNullObjectString() {
         Preconditions.nonNull("abc", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonNullObjectStringFail() {
+    @Test
+    void ensureNonNullObjectStringFail() {
         final String x = null;
-        Preconditions.nonNull(x, MESSAGE);
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonNull(x, MESSAGE));
     }
 
     @Test
-    public void testNonNullObjectArray() {
+    void testNonNullObjectArray() {
         Preconditions.noneNull("abc", Integer.valueOf(42), BigDecimal.ONE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonNullObjectArrayFail() {
-        Preconditions.noneNull("abc", Integer.valueOf(42), null, BigDecimal.ONE);
+    @Test
+    void ensureNonNullObjectArrayFail() {
+        final Integer fortytwo = Integer.valueOf(42);
+        assertThrows(IllegalArgumentException.class,
+                () -> Preconditions.noneNull("abc", fortytwo, null, BigDecimal.ONE));
     }
 
     @Test
-    public void testNonEmptyCollection() {
+    void testNonEmptyCollection() {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
         Preconditions.nonEmpty(items);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyCollectionFailOnEmpty() {
-        final Collection<String> items = new ArrayList<>();
-        Preconditions.nonEmpty(items);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyCollectionFailOnNull() {
-        final Collection<String> items = null;
-        Preconditions.nonEmpty(items);
+    @Test
+    void ensureNonEmptyCollectionFailOnEmpty() {
+        final var items = new ArrayList<>();
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty(items));
     }
 
     @Test
-    public void testNonEmptyCollectionString() {
+    void ensureNonEmptyCollectionFailOnNull() {
+        final List<?> items = null;
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty(items));
+    }
+
+    @Test
+    void testNonEmptyCollectionString() {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
         Preconditions.nonEmpty(items, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyCollectionStringFailOnEmpty() {
-        final Collection<String> items = new ArrayList<>();
-        Preconditions.nonEmpty(items, MESSAGE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyCollectionStringFailOnNull() {
-        final Collection<String> items = null;
-        Preconditions.nonEmpty(items, MESSAGE);
+    @Test
+    void ensureNonEmptyCollectionStringFailOnEmpty() {
+        final var items = new ArrayList<>();
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty(items, MESSAGE));
     }
 
     @Test
-    public void testNonEmptyString() {
+    void ensureNonEmptyCollectionStringFailOnNull() {
+        final List<?> items = null;
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty(items, MESSAGE));
+    }
+
+    @Test
+    void testNonEmptyString() {
         Preconditions.nonEmpty("abc");
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyStringFailOnEmpty() {
-        Preconditions.nonEmpty("");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyStringFailOnEmpty2() {
-        Preconditions.nonEmpty("   ");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyStringFailOnNull() {
-        final String x = null;
-        Preconditions.nonEmpty(x);
+    @Test
+    void ensureNonEmptyStringFailOnEmpty() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty(""));
     }
 
     @Test
-    public void testNonEmptyStringString() {
+    void ensureNonEmptyStringFailOnEmpty2() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty("   "));
+    }
+
+    @Test
+    void ensureNonEmptyStringFailOnNull() {
+        final String x = null;
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty(x));
+    }
+
+    @Test
+    void testNonEmptyStringString() {
         Preconditions.nonEmpty("abc", MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyStringStringFailOnEmpty() {
-        Preconditions.nonEmpty("", MESSAGE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyStringStringFailOnEmpty2() {
-        Preconditions.nonEmpty("   ", MESSAGE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonEmptyStringStringFailOnNull() {
-        final String x = null;
-        Preconditions.nonEmpty(x, MESSAGE);
+    @Test
+    void ensureNonEmptyStringStringFailOnEmpty() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty("", MESSAGE));
     }
 
     @Test
-    public void testIsPositiveLong() {
+    void ensureNonEmptyStringStringFailOnEmpty2() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty("   ", MESSAGE));
+    }
+
+    @Test
+    void ensureNonEmptyStringStringFailOnNull() {
+        final String x = null;
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonEmpty(x, MESSAGE));
+    }
+
+    @Test
+    void testIsPositiveLong() {
         Preconditions.isPositive(42);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIsPositiveLongFailsOnZero() {
-        Preconditions.isPositive(0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testIsPositiveLongFailsOnNegative() {
-        Preconditions.isPositive(-10);
+    @Test
+    void ensureIsPositiveLongFailsOnZero() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.isPositive(0));
     }
 
     @Test
-    public void testIsPositiveLongString() {
+    void ensureIsPositiveLongFailsOnNegative() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.isPositive(-10));
+    }
+
+    @Test
+    void testIsPositiveLongString() {
         Preconditions.isPositive(42, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIsPositiveLongStringFailsOnZero() {
-        Preconditions.isPositive(0, MESSAGE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testIsPositiveLongStringFailsOnNegative() {
-        Preconditions.isPositive(-10, MESSAGE);
+    @Test
+    void ensureIsPositiveLongStringFailsOnZero() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.isPositive(0, MESSAGE));
     }
 
     @Test
-    public void testNonNegativeLong() {
+    void ensureIsPositiveLongStringFailsOnNegative() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.isPositive(-10, MESSAGE));
+    }
+
+    @Test
+    void testNonNegativeLong() {
         Preconditions.nonNegative(42);
         assertTrue(true);
     }
 
     @Test
-    public void testNonNegativeLong0() {
+    void testNonNegativeLong0() {
         Preconditions.nonNegative(0);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonNegativeLongFail() {
-        Preconditions.nonNegative(-10);
+    @Test
+    void ensureNonNegativeLongFail() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonNegative(-10));
     }
 
     @Test
-    public void testNonNegativeLongString() {
+    void testNonNegativeLongString() {
         Preconditions.nonNegative(42, MESSAGE);
         assertTrue(true);
     }
 
     @Test
-    public void testNonNegativeLongString0() {
+    void testNonNegativeLongString0() {
         Preconditions.nonNegative(0, MESSAGE);
         assertTrue(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNonNegativeLongStringFail() {
-        Preconditions.nonNegative(-10, MESSAGE);
+    @Test
+    void ensureNonNegativeLongStringFail() {
+        assertThrows(IllegalArgumentException.class, () -> Preconditions.nonNegative(-10, MESSAGE));
     }
 }

@@ -25,13 +25,12 @@ package eapli.framework.memento;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
 class SampleAdderTest {
 
@@ -56,5 +55,12 @@ class SampleAdderTest {
         instance.add(10);
         instance.restoreTo(m);
         assertEquals(expected, instance.current());
+    }
+
+    @Test
+    void ensureCannotRestoreToSomethingThatIsNotAMemento() {
+        final Memento m = new Memento() {
+        };
+        assertThrows(IllegalArgumentException.class, () -> instance.restoreTo(m));
     }
 }

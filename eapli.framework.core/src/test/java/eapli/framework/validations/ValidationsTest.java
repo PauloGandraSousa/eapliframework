@@ -31,9 +31,7 @@ import org.junit.Test;
 import eapli.framework.actions.Actions;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
 public class ValidationsTest {
 
@@ -46,7 +44,6 @@ public class ValidationsTest {
     @Test(expected = IllegalStateException.class)
     public void testAreEqualLongFail() {
         Validations.ensureAreEqual(42, 24, Actions.THROW_STATE);
-        assertTrue(true);
     }
 
     @Test

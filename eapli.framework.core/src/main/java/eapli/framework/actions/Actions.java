@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -29,7 +29,6 @@ import eapli.framework.validations.Preconditions;
  * Utility class for working with {@link Action}.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Utility
 public final class Actions {
@@ -113,13 +112,11 @@ public final class Actions {
 
     /**
      * A generic NO-OP action that will always succeed.
-     *
      */
     public static final Action SUCCESS = () -> true;
 
     /**
      * A generic NO-OP action that will always fail.
-     *
      */
     public static final Action FAIL = () -> false;
 
@@ -130,6 +127,7 @@ public final class Actions {
      *            the action to execute if the condition evaluates to {@code false}
      * @param condition
      *            the condition to be evaluated
+     *
      * @return {@code false} if the condition is met. otherwise, the result of
      *         the {@code consequence} action
      */
@@ -147,6 +145,7 @@ public final class Actions {
      *            the action to execute if the value evaluates to {@code false}
      * @param condition
      *            the value to test
+     *
      * @return {@code false} if {@code condition} is {@code true}. otherwise,
      *         the result of the {@code consequence} action
      */
@@ -161,6 +160,7 @@ public final class Actions {
      *            the action to execute if the condition evaluates to {@code true}
      * @param condition
      *            the condition to be evaluated
+     *
      * @return {@code false} if the condition is not met. otherwise, the result
      *         of the {@code consequence} action
      */
@@ -178,6 +178,7 @@ public final class Actions {
      *            the action to execute if the value evaluates to {@code true}
      * @param condition
      *            the value to test
+     *
      * @return {@code false} if {@code condition} is {@code false}. otherwise,
      *         the result of the {@code consequence} action
      */
@@ -215,6 +216,7 @@ public final class Actions {
      * @param progressive
      *            if {@code true} the delay between retries will progressively increase, otherwise
      *            it will be constant
+     *
      * @return {@code true} if the action is successful or {@code false} if the maximum number
      *         of retries has been reached
      */
@@ -245,6 +247,7 @@ public final class Actions {
      *            the delay between retries
      * @param maxAttempts
      *            the maximum number of retries
+     *
      * @return {@code true} if the action is successful or {@code false} if the maximum number
      *         of retries has been reached
      */
