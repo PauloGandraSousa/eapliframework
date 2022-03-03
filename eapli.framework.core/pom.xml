@@ -6,6 +6,10 @@
 
 	<packaging>jar</packaging>
 	<name>eapli.framework.core</name>
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
 	<artifactId>eapli.framework.core</artifactId>
 	<version>17.1.0</version>
 
