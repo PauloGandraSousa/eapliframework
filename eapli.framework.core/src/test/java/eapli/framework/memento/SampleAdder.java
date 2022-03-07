@@ -27,7 +27,6 @@ package eapli.framework.memento;
  * very simple sample class for the use of memento
  *
  * @author Paulo Gandra de Sousa
- *
  */
 class SampleAdder implements Restorable {
 
@@ -35,11 +34,6 @@ class SampleAdder implements Restorable {
 
     int add(final int x) {
         current += x;
-        return current();
-    }
-
-    int subtract(final int x) {
-        current -= x;
         return current();
     }
 

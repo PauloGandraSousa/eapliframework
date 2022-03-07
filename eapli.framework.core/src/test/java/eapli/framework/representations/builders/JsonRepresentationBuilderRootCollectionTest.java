@@ -37,9 +37,7 @@ import eapli.framework.general.domain.model.Money;
 import eapli.framework.time.util.Calendars;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
 class JsonRepresentationBuilderRootCollectionTest {
     private JsonRepresentationBuilder subject;
@@ -51,37 +49,37 @@ class JsonRepresentationBuilderRootCollectionTest {
 
     @Test
     void ensureCannotEndCollectionWithoutStartingCollection() {
-        assertThrows(IllegalStateException.class, () -> subject.endCollection().build());
+        assertThrows(IllegalStateException.class, () -> subject.endCollection());
     }
 
     @Test
     void ensureCannotEndCollectionMoreThanOnce() {
-        assertThrows(IllegalStateException.class,
-                () -> subject.startCollection("name").withElement(1).endCollection().endCollection().build());
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.endCollection());
     }
 
     @Test
     void ensureCannotAddPropertyAfterEndOfCollection() {
-        assertThrows(IllegalStateException.class,
-                () -> subject.startCollection("name").withElement(1).endCollection().withProperty("one", 1).build());
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.withProperty("one", 1));
     }
 
     @Test
     void ensureCannotAddCollectionAfterEndOfCollection() {
-        assertThrows(IllegalStateException.class, () -> subject.startCollection("name").withElement(1).endCollection()
-                .startCollection("two").endCollection().build());
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.startCollection("two"));
     }
 
     @Test
     void ensureCannotAddObjectAfterEndOfCollection() {
-        assertThrows(IllegalStateException.class, () -> subject.startCollection("name").withElement(1).endCollection()
-                .startObject("two").endObject().build());
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.startObject("two"));
     }
 
     @Test
     void ensureCannotAddElementAfterEndOfCollection() {
-        assertThrows(IllegalStateException.class,
-                () -> subject.startCollection("name").withElement(1).endCollection().withElement(1).build());
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.withElement(1));
     }
 
     @Test

@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra Sousa
- *
  */
 class RestorableHistoryKeeperTest {
 
@@ -62,9 +61,7 @@ class RestorableHistoryKeeperTest {
         for (int j = NRUNS; j >= 1; j--) {
             instance.restore();
             final int curr = subject.current();
-            if (curr != expected) {
-                fail("wrong state @ " + j + ". expected " + expected + " but got " + curr);
-            }
+            assertEquals(expected, curr);
             expected -= j;
         }
     }
