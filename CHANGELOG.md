@@ -1,6 +1,16 @@
 # EAPLI Framework Changelog
 
 
+## 18.0.0 [ CORE ]
+
+## What's new
+
+- n.a.
+
+## Changed
+
+- removed `Macro.record`; use `with()`
+
 
 ## 17.0.0 [ CORE ]
 
@@ -12,6 +22,7 @@
 
 - removed deprecated `JpaAutoTxRepository.isInTransaction`. Use `isInTransactionalContext`.
 - `JpaAutoTxRepository.context` now returns an `Optional<TransactionalContext>`.
+- removed `Macro.record`; use `with()`
 
 
 ## 17.1.0 [ AUTHZ ]
