@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 class ClosedIntervalTest extends IntervalTestBase {
 
     @BeforeAll
-    public static void setUpClass() {
+    static void setUpClass() {
         System.out.println("closedRange");
         subject = Interval.closedFrom(START).closedTo(END);
     }

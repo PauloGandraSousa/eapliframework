@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,9 +23,13 @@
  */
 package eapli.framework.math.domain.model;
 
-import eapli.framework.math.domain.model.Vector;
 import eapli.framework.math.domain.model.Vector.VectorType;
 
+/**
+ *
+ * @author Paulo Gandra Sousa
+ *
+ */
 public class V321Test extends AbstractVectorTest {
 
     private final double[] elems = new double[] { 3, 2, 1 };

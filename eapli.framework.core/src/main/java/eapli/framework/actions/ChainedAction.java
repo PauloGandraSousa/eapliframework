@@ -28,8 +28,8 @@ import eapli.framework.validations.Preconditions;
  * execution of the chain stops when the first action on the chain fails.
  *
  * <p>
- * It implements the Composite (GoF) pattern. Subclasses that override execute()
- * MUST call next().
+ * It implements the Composite (GoF) pattern. Subclasses that override {@code execute()}
+ * MUST call {@code next()}.
  * </p>
  *
  * @author Paulo Gandra Sousa
@@ -48,12 +48,10 @@ public class ChainedAction implements Action {
      *            the action to wrap
      * @param next
      *            the next action to execute. since this can in turn be another
-     *            ChainedAction it allows to build an arbitrarily long chain of
+     *            {@code ChainedAction} it allows to build an arbitrarily long chain of
      *            actions
      */
     public ChainedAction(final Action current, final Action next) {
-        // the cast to Object is needed to force the compiler to fetch the right
-        // override {@link Preconditions#nonNull(Object...)}
         Preconditions.noneNull(current, next);
 
         this.current = current;

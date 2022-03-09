@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,10 +23,10 @@
  */
 package eapli.framework.representations.builders;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.representations.dto.GeneralDTO;
 import eapli.framework.representations.dto.GeneralDtoBaseTest;
@@ -35,42 +35,42 @@ import eapli.framework.representations.dto.GeneralDtoBaseTest;
  *
  * @author Paulo Gandra Sousa
  */
-public class GeneralDTOOfSimpleRepresentationBuilderTest extends GeneralDtoBaseTest {
+class GeneralDTOOfSimpleRepresentationBuilderTest extends GeneralDtoBaseTest {
 
     private GeneralDTORepresentationBuilder subject;
     private GeneralDTO representation;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         subject = new GeneralDTORepresentationBuilder("SimpleClass");
         representation = BIZ_OBJ_S1.buildRepresentation(subject);
     }
 
     @Test
-    public void ensureDTOHas2Fields() {
+    void ensureDTOHas2Fields() {
         System.out.println("ensureDTOHas2Fields");
 
-        assertEquals("Name of type is incorrect", 2, representation.size());
+        assertEquals(2, representation.size(), "Name of type is incorrect");
     }
 
     @Test
-    public void ensureStringFieldIsTransformed() {
+    void ensureStringFieldIsTransformed() {
         System.out.println("ensureStringFieldIsTransformed");
 
-        assertEquals("'stringField' is incorrectly transformed", STRING_FIELD_VALUE_1,
-                representation.get("stringField"));
+        assertEquals(STRING_FIELD_VALUE_1, representation.get("stringField"),
+                "'stringField' is incorrectly transformed");
     }
 
     @Test
-    public void ensureIntFieldIsTransformed() {
+    void ensureIntFieldIsTransformed() {
         System.out.println("ensureIntFieldIsTransformed");
 
-        assertEquals("'intField' is incorrectly transformed", Integer.valueOf(INT_FIELD_VALUE_1),
-                representation.get("intField"));
+        assertEquals(Integer.valueOf(INT_FIELD_VALUE_1), representation.get("intField"),
+                "'intField' is incorrectly transformed");
     }
 
     @Test
-    public void ensureSamePropertyTwiceIsIgnored() {
+    void ensureSamePropertyTwiceIsIgnored() {
         final GeneralDTORepresentationBuilder otherSubject = new GeneralDTORepresentationBuilder("Test");
         final GeneralDTO actual = otherSubject.withProperty("name", "value").withProperty("name", "value").build();
         assertEquals(1, actual.size());

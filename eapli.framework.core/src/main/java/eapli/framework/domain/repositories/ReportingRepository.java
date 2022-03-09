@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -29,9 +29,9 @@ import java.lang.annotation.Target;
 
 /**
  * A repository that only has reporting (query) methods. Reporting is a different bounded
- * context than the rest of the application business logic and should be treated as that. {@link DomainRepository} has
- * finders and save methods to support the application use cases, while a separte ReportingRepository should support the
- * reporting needs of the application.
+ * context than the rest of the application business logic and should be treated as that.
+ * {@link DomainRepository} has finders and save methods to support the application use cases, while
+ * a separate {@code ReportingRepository } should support the reporting needs of the application.
  * <p>
  * <img src="reporting.svg">
  * </p>

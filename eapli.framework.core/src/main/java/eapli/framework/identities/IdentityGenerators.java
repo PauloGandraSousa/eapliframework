@@ -31,7 +31,6 @@ import eapli.framework.validations.Preconditions;
  * context.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Singleton
 public class IdentityGenerators {
@@ -50,10 +49,19 @@ public class IdentityGenerators {
         // ensure singleton
     }
 
+    /**
+     * @return
+     */
     public static IdentityGenerators instance() {
         return LazyHolder.INSTANCE;
     }
 
+    /**
+     * @param context
+     * @param gen
+     *
+     * @return
+     */
     public IdentityGenerators with(final String context, final IdentityGenerator<?> gen) {
         Preconditions.nonNull(gen);
         Preconditions.nonEmpty(context);
@@ -62,6 +70,12 @@ public class IdentityGenerators {
         return this;
     }
 
+    /**
+     * @param <T>
+     * @param context
+     *
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public <T> T newId(final String context) {
         return (T) generators.get(context).newId();

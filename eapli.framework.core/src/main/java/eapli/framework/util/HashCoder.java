@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -25,7 +25,6 @@ import java.util.Objects;
 
 /**
  * Helper class for {@code hashCode()} method implementation.
- *
  * <p>
  * Example usage:
  *
@@ -60,19 +59,20 @@ import java.util.Objects;
  * <p>
  * Check <a href=
  * "https://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">this
- * stackoverflow</a>
- * thread for insights on how to properly calculate an hash code.
+ * stackoverflow</a> thread for insights on how to properly calculate an hash code.
  * <p>
  * See also <a href=
  * "https://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/builder/HashCodeBuilder.html">org.apache.commons.lang3.builder.HashCodeBuilder</a>
  *
  * @author Paulo Gandra Sousa
- *
  */
 public final class HashCoder {
 
     private int result;
 
+    /**
+     * Constructor.
+     */
     public HashCoder() {
         result = 31;
     }
@@ -127,6 +127,7 @@ public final class HashCoder {
      *
      * @param currentHash
      * @param partHash
+     *
      * @return the hash code
      */
     public static int compute(final int currentHash, final int partHash) {
@@ -137,6 +138,7 @@ public final class HashCoder {
      * utility method to generate the hash of an object
      *
      * @param f
+     *
      * @return the hash code
      */
     public static int hash(final Object f) {

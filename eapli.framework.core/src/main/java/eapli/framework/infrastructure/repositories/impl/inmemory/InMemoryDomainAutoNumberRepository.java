@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -31,12 +31,15 @@ import eapli.framework.identities.impl.NumberSequenceGenerator;
  *            the entity type that we want to build a repository for
  *
  * @author Paulo Gandra de Sousa
- *
  */
 public class InMemoryDomainAutoNumberRepository<T extends AggregateRoot<Long>>
         extends InMemoryDomainRepository<T, Long> {
+
     private static NumberSequenceGenerator gen = new NumberSequenceGenerator();
 
+    /**
+     *
+     */
     public InMemoryDomainAutoNumberRepository() {
         super(e -> gen.newId());
     }

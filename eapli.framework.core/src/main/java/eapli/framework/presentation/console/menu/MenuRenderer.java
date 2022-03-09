@@ -28,7 +28,7 @@ import eapli.framework.io.util.Console;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Base class for menu renderers using the console as I/O
+ * Base class for menu renderers using the console as I/O.
  *
  * @author Paulo Gandra de Sousa
  *

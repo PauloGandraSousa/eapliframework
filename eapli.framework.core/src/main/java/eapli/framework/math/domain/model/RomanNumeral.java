@@ -59,7 +59,7 @@ public class RomanNumeral implements ValueObject {
      *             if arabic is not in the range 1 to 3999 inclusive.
      *
      */
-    public RomanNumeral(final int arabic) {
+    protected RomanNumeral(final int arabic) {
         if (arabic < 1) {
             throw new NumberFormatException("Value of RomanNumeral must be positive.");
         }
@@ -72,58 +72,49 @@ public class RomanNumeral implements ValueObject {
     /**
      * Constructor. Creates the Roman number with the given representation. For example,
      * RomanNumeral("xvii") is 17. If the parameter is not a legal Roman numeral, a
-     * NumberFormatException is thrown. Both upper and lower case letters are allowed.
+     * {@code NumberFormatException} is thrown. Both upper and lower case letters are allowed.
      *
      * @param roman
      *            a roman literal, e.g., "xvii". Both upper and lower case letters are allowed.
      * @throws NumberFormatException
      *             If the parameter is not a legal Roman numeral
      */
-    public RomanNumeral(String roman) {
+    protected RomanNumeral(String roman) {
         if (roman.length() == 0) {
             throw new NumberFormatException("An empty string does not define a Roman numeral.");
         }
 
-        roman = roman.toUpperCase(); // Convert to upper case letters.
+        roman = roman.toUpperCase(); // normalize symbols to upper case
 
-        int i = 0; // A position in the string, roman
-        // Arabic numeral equivalent of the part of the string
-        // that has been converted so far.
+        // Arabic numeral equivalent of the part of the string that has been converted so far.
         int arabic = 0;
 
-        while (i < roman.length()) {
-            // Letter at current position in string.
-            final char letter = roman.charAt(i);
-            // Numerical equivalent of letter.
-            final int number = letterToNumber(letter);
-            i++; // Move on to next position in the string
+        int currentSymbolIndex = 0;
+        while (currentSymbolIndex < roman.length()) {
+            final char currentSymbol = roman.charAt(currentSymbolIndex);
+            final int currentSymbolNumber = letterToNumber(currentSymbol);
 
-            if (i == roman.length()) {
-                // There is no letter in the string following the one we have
-                // just processed.
-                // So just add the number corresponding to the single letter to
-                // arabic.
-                arabic += number;
+            // Move on to next position in the string
+            currentSymbolIndex++;
+
+            if (currentSymbolIndex == roman.length()) {
+                // just add the value of the current symbol
+                arabic += currentSymbolNumber;
             } else {
-                // Look at the next letter in the string. If it has a larger
-                // Roman numeral
-                // equivalent than number, then the two letters are counted
-                // together as
+                // Look at the next letter in the string. If it has a larger Roman numeral
+                // equivalent than number, then the two letters are counted together as
                 // a Roman numeral with value (nextNumber - number).
-                final int nextNumber = letterToNumber(roman.charAt(i));
-                if (nextNumber > number) {
-                    // Combine the two letters to get one value, and move on to
-                    // next position in string.
-                    arabic += (nextNumber - number);
-                    i++;
+                final int nextSymbolNumber = letterToNumber(roman.charAt(currentSymbolIndex));
+                if (nextSymbolNumber > currentSymbolNumber) {
+                    // Combine the two letters to get one value, and move on to next position
+                    arabic += (nextSymbolNumber - currentSymbolNumber);
+                    currentSymbolIndex++;
                 } else {
-                    // Don't combine the letters. Just add the value of the one
-                    // letter onto the number.
-                    arabic += number;
+                    // Don't combine the letters. Just add the value of the current symbol
+                    arabic += currentSymbolNumber;
                 }
             }
-
-        } // end while
+        }
 
         if (arabic > 3999) {
             throw new NumberFormatException("Roman numeral must have value 3999 or less.");
@@ -133,14 +124,27 @@ public class RomanNumeral implements ValueObject {
     }
 
     /**
-     * Factory method. constructs a Roman Numeral from a string literal.
+     * Factory method. Constructs a Roman Numeral from a string literal.
      *
      * @param roman
      *            a roman literal
      * @return a RomanNumeral object
+     * @throws NumberFormatException
+     *             if not a legal Roman numeral.
      */
     public static RomanNumeral valueOf(final String roman) {
         return new RomanNumeral(roman);
+    }
+
+    /**
+     * Factory method. Constructs a Roman Numeral from a decimal integer.
+     *
+     * @param decimal
+     *
+     * @return a RomanNumeral object
+     */
+    public static RomanNumeral valueOf(final int decimal) {
+        return new RomanNumeral(decimal);
     }
 
     /**

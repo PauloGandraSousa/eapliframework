@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -108,7 +108,8 @@ public class Menu {
     }
 
     /**
-     * Returns the collection of items in this menu. This collection can be directly manipulated by the
+     * Returns the collection of items in this menu. This collection can be directly manipulated by
+     * the
      * caller, that is, it is mutable, which allow for dynamic menus.
      *
      * @return the collection of items in this menu.

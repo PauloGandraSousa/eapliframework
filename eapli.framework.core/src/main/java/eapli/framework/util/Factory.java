@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -22,7 +22,6 @@ package eapli.framework.util;
 
 /**
  * A factory or <a href="https://refactoring.guru/design-patterns/builder">Builder</a> object.
- *
  * <p>
  * Factories will be very helpful to provide extension and modification in our code as they can hide
  * the actual object being created. Following the Dependency Inversion Principle (DIP), one should
@@ -34,18 +33,15 @@ package eapli.framework.util;
  *            the type of object this factory builds.
  *
  * @author Paulo Gandra de Sousa
- *
  *         <!--
- * @startuml factories.svg
  *
+ * @startuml factories.svg
  *           interface X{
  *           +mxa()
  *           }
- *
  *           class Client{
  *           +m()
  *           }
- *
  *           note left of Client
  *           m() {
  *           X x = factory.build();
@@ -54,25 +50,23 @@ package eapli.framework.util;
  *           . . .
  *           }
  *           end note
- *
  *           class XptoFactory{
  *           +build()
  *           }
- *
  *           Client .right..> X
  *           Client .down.> XptoFactory
- *
  *           X <|-up- X1
  *           X <|-up- X2
- *
  *           XptoFactory .up.> X
  *           XptoFactory ..> X1
  *           XptoFactory ..> X2
+ *
  * @enduml
  *         -->
  */
 @FunctionalInterface
 public interface Factory<T> {
+
     /**
      * Constructs a new instance. Most likely this method is the last step in
      * the building process (following the Builder GoF pattern) where a series

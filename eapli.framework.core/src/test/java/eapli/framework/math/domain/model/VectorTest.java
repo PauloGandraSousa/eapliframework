@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -27,7 +27,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import eapli.framework.math.domain.model.Vector;
 import eapli.framework.math.domain.model.Vector.VectorType;
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -36,6 +36,12 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 /**
+ * A role assignment of a user. Serves as history of roles(action rights) the user has/had.
+ * <p>
+ * This an example of a Value Object in the Domain but mapped as a Table (entity) in the relational
+ * model to overcome a limitation with Hibernate JPA that does not support embeddedable dentro de
+ * embeddeables.
+ *
  * @author Paulo Gandra Sousa
  */
 @Entity
@@ -58,7 +64,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     private boolean expired;
 
     /**
-     *
      * @param type
      */
     public RoleAssignment(final Role type) {
@@ -66,7 +71,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @param type
      * @param assignedOn
      */
@@ -85,7 +89,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @return
      */
     public boolean isExpired() {
@@ -122,7 +125,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @return
      */
     public Role type() {
@@ -130,8 +132,8 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
      * @param r
+     *
      * @return
      */
     public boolean isOf(final Role r) {
@@ -154,17 +156,6 @@ public class RoleAssignment implements ValueObject, Serializable {
     }
 
     /**
-     *
-     * @return
-     * @deprecated use {@link #unassignedOn}
-     */
-    @Deprecated(forRemoval = true)
-    public Optional<Calendar> getUnassignedOn() {
-        return unassignedOn();
-    }
-
-    /**
-     *
      * @return
      */
     public Optional<Calendar> unassignedOn() {

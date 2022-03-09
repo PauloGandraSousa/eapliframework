@@ -32,9 +32,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
 class ActionsTest {
 
@@ -67,7 +65,7 @@ class ActionsTest {
             assertEquals("Test", e.getMessage());
             return;
         }
-        fail("somethign terrible just happened...");
+        fail("something terrible just happened...");
     }
 
     @Test
@@ -89,7 +87,7 @@ class ActionsTest {
             assertEquals("Test", e.getMessage());
             return;
         }
-        fail("somethign terrible just happened...");
+        fail("something terrible just happened...");
     }
 
     @Test
@@ -100,7 +98,32 @@ class ActionsTest {
     }
 
     @Test
-    void ensureDoIfDoesnotExecuteIfFalse() {
+    void ensureDoIfWithBooleanInsteadOfLambda() {
+        final AdderHelper helper = new AdderHelper();
+        Actions.doIf(helper.adder(), true);
+        assertEquals(1, helper.current());
+    }
+
+    @Test
+    void ensureDoIfReturnsConsequenceTrue() {
+        final boolean actual = Actions.doIf(() -> true, () -> true);
+        assertTrue(actual);
+    }
+
+    @Test
+    void ensureDoIfReturnsConsequenceFalse() {
+        final boolean actual = Actions.doIf(() -> false, () -> true);
+        assertFalse(actual);
+    }
+
+    @Test
+    void ensureDoIfReturnsFalseIfConditionFails() {
+        final boolean actual = Actions.doIf(() -> true, () -> false);
+        assertFalse(actual);
+    }
+
+    @Test
+    void ensureDoIfDoesNotExecuteIfFalse() {
         final AdderHelper helper = new AdderHelper();
         Actions.doIf(helper.adder(), () -> false);
         assertEquals(0, helper.current());
@@ -114,7 +137,7 @@ class ActionsTest {
     }
 
     @Test
-    void ensureDoIfNotDoesnotExecuteIfTrue() {
+    void ensureDoIfNotDoesNotExecuteIfTrue() {
         final AdderHelper helper = new AdderHelper();
         Actions.doIfNot(helper.adder(), () -> true);
         assertEquals(0, helper.current());
@@ -150,7 +173,8 @@ class ActionsTest {
     void ensureRetryWorksAtFirst() {
         final AdderHelper helper = new AdderHelper();
         final boolean result = Actions.retry(helper.adder(), 10, 20);
-        assertTrue(result && helper.current() == 1);
+        assertTrue(result);
+        assertEquals(1, helper.current());
     }
 
     @Test
@@ -167,6 +191,20 @@ class ActionsTest {
             return false;
         };
         final boolean result = Actions.retry(add1AndFail, 10, 3);
-        assertTrue(!result && helper.current() == 3);
+        assertFalse(result);
+        assertEquals(3, helper.current());
+    }
+
+    @Test
+    void ensureRetryRunsNTimesIfActionFailsNotProgressive() {
+        final AdderHelper helper = new AdderHelper();
+        final Action add1AndFail = () -> {
+            helper.add1();
+            // returning false to force the retry
+            return false;
+        };
+        final boolean result = Actions.retry(add1AndFail, 10, 3, false);
+        assertFalse(result);
+        assertEquals(3, helper.current());
     }
 }

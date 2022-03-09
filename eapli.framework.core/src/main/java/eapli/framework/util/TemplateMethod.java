@@ -29,25 +29,21 @@ import java.lang.annotation.Target;
 
 /**
  * A Template Method is a GoF design pattern where a general algorithm is defined but some of the
- * steps of the algorithm
- * are customizable.
- *
+ * steps of the algorithm are customizable.
  * <p>
  * <img src="template-method.svg">
  * </p>
  *
  * @author Paulo Gandra Sousa 26/04/2020
- *
  *         <!--
- * @startuml template-method.svg
  *
+ * @startuml template-method.svg
  *           class ECafeteriaBaseApplication <<abstract>> {
  *           +<<final>> run()
  *           +printFooter()
  *           +printHeader()
  *           + {abstract} doMain()
  *           }
- *
  *           note right of ECafeteriaBaseApplication
  *           <font color="green">//run() is the template method
  *           void run() {
@@ -56,13 +52,12 @@ import java.lang.annotation.Target;
  *           printFooter();
  *           }
  *           end note
- *
  *           class ECafeteriaBackOfficeApplication {
  *           +doMain()
  *           +appTitle()
  *           }
- *
  *           ECafeteriaBaseApplication <|-- ECafeteriaBackOfficeApplication
+ *
  * @enduml
  *         -->
  */

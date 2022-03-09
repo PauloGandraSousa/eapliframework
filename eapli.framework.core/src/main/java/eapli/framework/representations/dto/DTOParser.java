@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -28,6 +28,7 @@ package eapli.framework.representations.dto;
  *            the type of the representation to parse
  * @param <T>
  *            the type of the business object to create from the representation
+ * 
  * @author Paulo Gandra Sousa
  *
  */

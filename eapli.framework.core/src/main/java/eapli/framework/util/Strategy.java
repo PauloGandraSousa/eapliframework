@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -36,10 +36,9 @@ import java.lang.annotation.Target;
  * </p>
  *
  * @author Paulo Gandra de Sousa 26/04/2020
- *
  *         <!--
- * @startuml strategy.svg
  *
+ * @startuml strategy.svg
  *           package Strategy {
  *           interface DishExporter {
  *           open(String output)
@@ -48,16 +47,15 @@ import java.lang.annotation.Target;
  *           }
  *           }
  *           DishExporter ..> Dish
- *
  *           package ConcreteStrategies {
  *           XmlDishExporter --|> DishExporter
  *           CsvDishExporter --|> DishExporter
  *           JsonDishExporter --|> DishExporter
  *           }
- *
  *           ExportDishController .right.> DishExporter
  *           ExportDishController .up.> DishExporterFactory
  *           DishExporterFactory ..> DishExporter
+ *
  * @enduml
  *         -->
  */

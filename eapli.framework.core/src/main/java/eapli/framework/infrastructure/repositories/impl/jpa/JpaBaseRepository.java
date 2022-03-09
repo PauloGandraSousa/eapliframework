@@ -417,8 +417,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
         assert args.length % 2 == 0 : "uneven number of arguments passed";
 
         final TypedQuery<T> q = query(locking, where);
-        boolean handleAsArgName = true;
-        String argName = "";
+        var handleAsArgName = true;
+        var argName = "";
         for (final Object o : args) {
             if (handleAsArgName) {
                 argName = (String) o;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -31,7 +31,6 @@ import java.util.List;
  * Common Iterable Utils</a>.
  *
  * @author Paulo Gandra Sousa
- *
  */
 @Utility
 public final class Collections {
@@ -46,12 +45,14 @@ public final class Collections {
      * as it needs to traverse the full iterator to determine its size.
      *
      * @param itens
+     *
      * @return the number of elements in an iterable.
      */
-    @SuppressWarnings({ "unused", "squid:S1481" })
+    @SuppressWarnings({ "squid:S1481" })
     public static int sizeOf(final Iterable<?> itens) {
-        int numberOfElements = 0;
-        for (final Object o : itens) {
+        var numberOfElements = 0;
+        for (@SuppressWarnings("unused")
+        final Object o : itens) {
             numberOfElements++;
         }
         return numberOfElements;
@@ -59,11 +60,11 @@ public final class Collections {
 
     /**
      * Returns the number of elements in an iterable. Since most of the times an Iterable will be an
-     * objecs that extends
-     * Collection, this more specialized overload of {@link #sizeOf(Iterable)} will provide better
-     * performance.
+     * object that extends Collection, the specialized overload {@link #sizeOf(Iterable)}
+     * will provide better performance.
      *
      * @param items
+     *
      * @return the number of elements in an iterable.
      */
     public static int sizeOf(final Collection<?> items) {
@@ -74,6 +75,7 @@ public final class Collections {
      * Creates a List with all the elements of an enum.
      *
      * @param e
+     *
      * @return a List with all the elements of an enum
      */
     public static <T extends Enum<T>> List<T> listFromEnum(final Class<T> e) {

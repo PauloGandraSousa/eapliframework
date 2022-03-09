@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,7 +23,6 @@
  */
 package eapli.framework.math.domain.model;
 
-import eapli.framework.math.domain.model.Vector;
 import eapli.framework.math.domain.model.Vector.VectorType;
 
 /**

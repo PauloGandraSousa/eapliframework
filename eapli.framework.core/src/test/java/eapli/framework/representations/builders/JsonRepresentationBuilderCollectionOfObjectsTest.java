@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,21 +23,26 @@
  */
 package eapli.framework.representations.builders;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class JsonRepresentationBuilderCollectionOfObjectsTest {
+/**
+ *
+ * @author Paulo Gandra de Sousa
+ *
+ */
+class JsonRepresentationBuilderCollectionOfObjectsTest {
     private JsonRepresentationBuilder subject;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         subject = new JsonRepresentationBuilder();
     }
 
     @Test
-    public void ensureCollectionOfOneObject() {
+    void ensureCollectionOfOneObject() {
         final String expected = "{\"name\":[{\"i\":1}]}";
         final String actual = subject.startObject("Test").startCollection("name").startObject("c1").withProperty("i", 1)
                 .endObject().endCollection().endObject().build();
@@ -50,7 +55,7 @@ public class JsonRepresentationBuilderCollectionOfObjectsTest {
     }
 
     @Test
-    public void ensureCollectionOfTwoObjects() {
+    void ensureCollectionOfTwoObjects() {
         final String expected = "{\"name\":[{\"i\":1},{\"i\":2}]}";
         final String actual = subject.startObject("Test").startCollection("name").startObject("c1").withProperty("i", 1)
                 .endObject().startObject("c2").withProperty("i", 2).endObject().endCollection().build();

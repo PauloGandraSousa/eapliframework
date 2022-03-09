@@ -23,6 +23,7 @@ package eapli.framework.infrastructure.repositories.impl.jpa;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -90,5 +91,17 @@ public abstract class JpaAbstractRepository {
      */
     protected <R> TypedQuery<R> createQuery(final String jpql, final Class<R> classz) {
         return entityManager().createQuery(jpql, classz);
+    }
+
+    /**
+     * Creates a native query.
+     *
+     * @param <R>
+     * @param sql
+     * @param classz
+     * @return
+     */
+    protected <R> Query createNativeQuery(final String sql, final Class<R> classz) {
+        return entityManager().createNativeQuery(sql, classz);
     }
 }

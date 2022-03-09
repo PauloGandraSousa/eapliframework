@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2021 the original author or authors.
  *
  * MIT License
  *
@@ -23,107 +23,116 @@
  */
 package eapli.framework.representations.builders;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import eapli.framework.general.domain.model.Money;
 import eapli.framework.time.util.Calendars;
 
-public class JsonRepresentationBuilderRootCollectionTest {
+/**
+ * @author Paulo Gandra de Sousa
+ */
+class JsonRepresentationBuilderRootCollectionTest {
     private JsonRepresentationBuilder subject;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         subject = new JsonRepresentationBuilder();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotEndCollectionWithoutStartingCollection() {
-        subject.endCollection().build();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotEndCollectionMoreThanOnce() {
-        subject.startCollection("name").withElement(1).endCollection().endCollection().build();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotAddPropertyAfterEndOfCollection() {
-        subject.startCollection("name").withElement(1).endCollection().withProperty("one", 1).build();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotAddCollectionAfterEndOfCollection() {
-        subject.startCollection("name").withElement(1).endCollection().startCollection("two").endCollection().build();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotAddObjectAfterEndOfCollection() {
-        subject.startCollection("name").withElement(1).endCollection().startObject("two").endObject().build();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotAddElementAfterEndOfCollection() {
-        subject.startCollection("name").withElement(1).endCollection().withElement(1).build();
+    @Test
+    void ensureCannotEndCollectionWithoutStartingCollection() {
+        assertThrows(IllegalStateException.class, () -> subject.endCollection());
     }
 
     @Test
-    public void ensureEmptyRootArray() {
+    void ensureCannotEndCollectionMoreThanOnce() {
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.endCollection());
+    }
+
+    @Test
+    void ensureCannotAddPropertyAfterEndOfCollection() {
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.withProperty("one", 1));
+    }
+
+    @Test
+    void ensureCannotAddCollectionAfterEndOfCollection() {
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.startCollection("two"));
+    }
+
+    @Test
+    void ensureCannotAddObjectAfterEndOfCollection() {
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.startObject("two"));
+    }
+
+    @Test
+    void ensureCannotAddElementAfterEndOfCollection() {
+        subject.startCollection("name").withElement(1).endCollection();
+        assertThrows(IllegalStateException.class, () -> subject.withElement(1));
+    }
+
+    @Test
+    void ensureEmptyRootArray() {
         final String actual = subject.startCollection("name").endCollection().build();
         assertEquals("[]", actual);
     }
 
     @Test
-    public void ensureEmptyRootArrayAutoFinish() {
+    void ensureEmptyRootArrayAutoFinish() {
         final String actual = subject.startCollection("name").build();
         assertEquals("[]", actual);
     }
 
     @Test
-    public void ensureRootArrayWithNullLongElement() {
+    void ensureRootArrayWithNullLongElement() {
         final Long value = null;
         final String actual = subject.startCollection("name").withElement(value).endCollection().build();
         assertEquals("[null]", actual);
     }
 
     @Test
-    public void ensureRootArrayWith1PrimitiveIntElement() {
+    void ensureRootArrayWith1PrimitiveIntElement() {
         final String actual = subject.startCollection("name").withElement(1).endCollection().build();
         assertEquals("[1]", actual);
     }
 
     @Test
-    public void ensureRootArrayWith2PrimitiveIntElements() {
+    void ensureRootArrayWith2PrimitiveIntElements() {
         final String actual = subject.startCollection("name").withElement(1).withElement(2).endCollection().build();
         assertEquals("[1,2]", actual);
     }
 
     @Test
-    public void ensureRootArrayWith1StringElement() {
+    void ensureRootArrayWith1StringElement() {
         final String actual = subject.startCollection("name").withElement("1").endCollection().build();
         assertEquals("[\"1\"]", actual);
     }
 
     @Test
-    public void ensureRootArrayWith2StringElements() {
+    void ensureRootArrayWith2StringElements() {
         final String actual = subject.startCollection("name").withElement("1").withElement("2").endCollection().build();
         assertEquals("[\"1\",\"2\"]", actual);
     }
 
     @Test
-    public void ensureRootArrayWith1StringAnd1NativeElements() {
+    void ensureRootArrayWith1StringAnd1NativeElements() {
         final String actual = subject.startCollection("name").withElement("1").withElement(2).endCollection().build();
         assertEquals("[\"1\",2]", actual);
     }
 
     @Test
-    public void ensureRootArrayWithLotsOfElements() {
+    void ensureRootArrayWithLotsOfElements() {
         final String expected = "[1,15,true,2.0,4.0,2,4,{\"amount\":50.0,\"currency\":\"EUR\"},\"abc\"]";
         final String actual = subject.startCollection("name").withElement(BigDecimal.ONE)
                 .withElement(BigInteger.valueOf(15)).withElement(true).withElement(2.0D).withElement(4.0F)
@@ -137,8 +146,8 @@ public class JsonRepresentationBuilderRootCollectionTest {
     }
 
     @Test
-    @Ignore("due to differences in time zones with bitbucket pipeline")
-    public void ensureRootArrayWithDateElement() {
+    @Disabled("due to differences in time zones with bitbucket pipeline")
+    void ensureRootArrayWithDateElement() {
         final String expected = "[\"2019-04-22T23:00Z\"]";
         final String actual = subject.startCollection("name").withElement(Calendars.of(2019, 4, 23)).endCollection()
                 .build();
@@ -151,7 +160,7 @@ public class JsonRepresentationBuilderRootCollectionTest {
     }
 
     @Test
-    public void ensureRootCollectionOfOneCollection() {
+    void ensureRootCollectionOfOneCollection() {
         final String expected = "[[1,2,3]]";
         final String actual = subject.startCollection("name").startCollection("c1").withElement(1).withElement(2)
                 .withElement(3).endCollection().endCollection().build();
@@ -164,7 +173,7 @@ public class JsonRepresentationBuilderRootCollectionTest {
     }
 
     @Test
-    public void ensureRootCollectionOfTwoCollections() {
+    void ensureRootCollectionOfTwoCollections() {
         final String expected = "[[1,2],[3,4]]";
         final String actual = subject.startCollection("name").startCollection("c1").withElement(1).withElement(2)
                 .endCollection().startCollection("c2").withElement(3).withElement(4).endCollection().endCollection()
@@ -178,7 +187,7 @@ public class JsonRepresentationBuilderRootCollectionTest {
     }
 
     @Test
-    public void ensureRootPolymorphicCollection() {
+    void ensureRootPolymorphicCollection() {
         final String expected = "[[1,2],\"a\",[3,4]]";
         final String actual = subject.startCollection("name").startCollection("c1").withElement(1).withElement(2)
                 .endCollection().withElement("a").startCollection("c2").withElement(3).withElement(4).endCollection()

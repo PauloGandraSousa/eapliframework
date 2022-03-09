@@ -39,7 +39,7 @@ public class RandomRawPassword {
     private static final String LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz";
     private static final String UPPER_CHARS = LOWER_CHARS.toUpperCase();
     private static final String NUMBERS = "0123456789";
-    private static final String SPECIAL = "_-+*/=#?!.&$€";
+    private static final String SPECIAL = "_-+*/@=><#?!.%():;[]|{}&$€";
 
     public static final String ALLOWED_CHARS = LOWER_CHARS + UPPER_CHARS + NUMBERS + SPECIAL;
 
@@ -58,7 +58,15 @@ public class RandomRawPassword {
      * @param length
      */
     public RandomRawPassword(final int length) {
-        rawPassword = Strings.randomString(length, ALLOWED_CHARS);
+        if (length < 3) {
+            throw new IllegalArgumentException("Lenght must be at least 3");
+        }
+        final String part1 = Strings.randomString(length - 3, LOWER_CHARS);
+        final String part2 = Strings.randomString(1, UPPER_CHARS);
+        final String part3 = Strings.randomString(1, NUMBERS);
+        final String part4 = Strings.randomString(1, SPECIAL);
+
+        rawPassword = Strings.shuffle(part1 + part2 + part3 + part4);
     }
 
     @Override

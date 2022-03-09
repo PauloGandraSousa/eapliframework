@@ -22,9 +22,7 @@ package eapli.framework.strings;
 
 /**
  * Represents a formatted string. Since strings are immutable objects, formatting them should be a
- * deterministic
- * function and as such the formatted string can safely be cached and reused. This class is
- * immutable.
+ * deterministic function and as such the formatted string can safely be cached and reused.
  *
  * <p>
  * This is a more OO way of thinking as opposed to utility classes with static methods.

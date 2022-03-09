@@ -25,7 +25,6 @@ package eapli.framework.math.domain.model.numeral;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -37,7 +36,6 @@ import eapli.framework.math.domain.model.NumeralSystem;
 
 /**
  * @author Paulo Gandra de Sousa
- *
  */
 class MyNumeralTest {
 
@@ -55,13 +53,10 @@ class MyNumeralTest {
     @Test
     void ensureBaseSymbols() {
         for (int i = 0; i < 10; i++) {
-            final String result = Numeral.valueOf(i).toBase(SYSTEM).toString();
+            final String actual = Numeral.valueOf(i).toBase(SYSTEM).toString();
             final String expected = String.valueOf(SYMBOLS.charAt(i));
-            if (!result.equals(expected)) {
-                fail("expected [" + expected + "] but was [" + result + "]");
-            }
+            assertEquals(expected, actual);
         }
-        assertTrue(true);
     }
 
     @Test

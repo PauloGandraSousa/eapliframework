@@ -35,10 +35,9 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A utility class for providing transactional context to JPA repositories not
- * running in containers. As such, this class creates its own
- * {@link javax.persistence.EntityManagerFactory EntityManagerFactory} instead of using an injected
- * EMF by the container.
+ * A utility class for providing transactional context to JPA repositories not running in
+ * containers. As such, this class creates its own {@link javax.persistence.EntityManagerFactory
+ * EntityManagerFactory} instead of using an injected EMF by the container.
  *
  * @author Paulo Gandra Sousa
  */

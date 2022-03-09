@@ -33,6 +33,9 @@ import java.lang.annotation.Target;
  * <p>
  * See Project Lombok's <code>&#64;Data</code> to generate the boilerplate code.
  *
+ * <p>
+ * See Project Lombok's <code>&#64;Data</code> to generate the boilerplate code.
+ *
  * @author Paulo Gandra Sousa
  *
  */

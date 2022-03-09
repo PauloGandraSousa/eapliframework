@@ -30,9 +30,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
 class PrefixedNumberSequenceGeneratorTest {
 
@@ -46,24 +44,23 @@ class PrefixedNumberSequenceGeneratorTest {
     }
 
     @Test
-    void ensurePrefixIsNotNull() {
-        assertThrows(IllegalArgumentException.class,
-                () -> instance = new PrefixedNumberSequenceGenerator(null, LENGTH));
+    void ensurePrefixIsMandatory() {
+        assertThrows(IllegalArgumentException.class, () -> new PrefixedNumberSequenceGenerator(null, LENGTH));
     }
 
     @Test
     void ensurePrefixIsNotEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> instance = new PrefixedNumberSequenceGenerator("", LENGTH));
+        assertThrows(IllegalArgumentException.class, () -> new PrefixedNumberSequenceGenerator("", LENGTH));
     }
 
     @Test
     void ensureLengthIsBiggerThanZero() {
-        assertThrows(IllegalArgumentException.class, () -> instance = new PrefixedNumberSequenceGenerator(PREFIX, 0));
+        assertThrows(IllegalArgumentException.class, () -> new PrefixedNumberSequenceGenerator(PREFIX, 0));
     }
 
     @Test
     void ensureLengthIsNotNegative() {
-        assertThrows(IllegalArgumentException.class, () -> instance = new PrefixedNumberSequenceGenerator(PREFIX, -1));
+        assertThrows(IllegalArgumentException.class, () -> new PrefixedNumberSequenceGenerator(PREFIX, -1));
     }
 
     @Test

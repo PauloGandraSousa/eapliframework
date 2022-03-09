@@ -48,11 +48,11 @@ public interface Identifiable<T> {
     /**
      * Checks if the object has a certain business identity.
      *
-     * @param otherId
+     * @param id
      *            the identity to compare
      * @return {@code true} if the object has that identity
      */
-    default boolean hasIdentity(final T otherId) {
-        return identity().equals(otherId);
+    default boolean hasIdentity(final T id) {
+        return identity().equals(id);
     }
 }

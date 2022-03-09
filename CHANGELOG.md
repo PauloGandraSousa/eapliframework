@@ -1,15 +1,85 @@
 # EAPLI Framework Changelog
 
 
-## 15.4.0-SNAPSHOT
+## 18.0.0 [ CORE ]
+
+## What's new
+
+- n.a.
+
+## Changed
+
+- removed `Macro.record`; use `with()`
+
+
+## 17.0.0 [ CORE ]
+
+## What's new
+
+- n.a.
+
+## Changed
+
+- removed deprecated `JpaAutoTxRepository.isInTransaction`. Use `isInTransactionalContext`.
+- `JpaAutoTxRepository.context` now returns an `Optional<TransactionalContext>`.
+- removed `Macro.record`; use `with()`
+
+
+## 17.1.0 [ AUTHZ ]
+
+## What's new
+
+- `Name` now supports dot (`.`), dash (`-`) and apostrophe (`'`)
+
+## Changed
+
+- removed deprecated `RoleAssignment.getUnassignedOn`. Use `unassignedOn`.
+
+
+## 16.6.0 [ CORE ]
+
+## What's new
+
+- `JpaAutoTxRepository.entityManager`
+
+## Changed
+
+- n.a.
+
+## 16.5.0 [ CORE ]
+
+## What's new
+
+- `JpaAbstractRepository.createNativeQuery`
+- `JpaAutoTxRepository.createNativeQuery`
+
+## Changed
+
+- n.a.
+
+
+## 17.0.0 [ AUTHZ ]
+
+### What's new
+
+### Changed
+
+- `Role` was mapped as a java object. it is now mapped as a VARCHAR column. 
+
+
+## 16.4.0
 
 ### What's new
 
 - `EmailAddress` implements `Comparable`
 
+- `Money.valueOf(double, String)`
+
+- `RomanNumeral.valueOf(int)`
+
 ### Changed
 
-- TBD
+- `RandomRawPassword` ensures at least a capital letter, a number and a symbol are present.
 
 
 ## 16.3.0
@@ -17,17 +87,23 @@
 ### What's new
 
 - `RoleAssignment.unassignedOn`
+
 - `TransactionalContext.isActive`
+
 - `DomainRepository.lock`
+
 - `JpaAutoTxRepository.isPartOfTransactionalContext`
+
 - `SpringDataLockableRepository`
+
 - `LockableRepository`
+
 - `LockableDomainRepository`
 
 ### Changed
 
 - deprecated 
-	- `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead
+	- `RoleAssignment.getUnassignedOn`; use `RoleAssignment.unassignedOn` instead 
 	- `JpaAutoTxRepository.isInTransaction`; use `JpaAutoTxRepository.isPartOfTransactionalContext` instead
 
 
