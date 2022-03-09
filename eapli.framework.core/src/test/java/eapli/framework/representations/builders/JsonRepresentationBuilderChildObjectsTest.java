@@ -34,89 +34,91 @@ import org.junit.jupiter.api.Test;
  *
  */
 class JsonRepresentationBuilderChildObjectsTest {
-    private JsonRepresentationBuilder subject;
+	private JsonRepresentationBuilder subject;
 
-    @BeforeEach
-    void setUp() throws Exception {
-        subject = new JsonRepresentationBuilder();
-    }
+	@BeforeEach
+	void setUp() throws Exception {
+		subject = new JsonRepresentationBuilder();
+	}
 
-    @Test
-    void ensureEmptyChildObject() {
-        final String expected = "{\"name\":{}}";
-        final String actual = subject.startObject("Test").startObject("name").endObject().build();
+	@Test
+	void ensureEmptyChildObject() {
+		final String expected = "{\"name\":{}}";
+		final String actual = subject.startObject("Test").startObject("name").endObject().build();
 
-        System.out.println("ensureEmptyChildObject");
-        System.out.println("Expected: " + expected);
-        System.out.println("Actual:   " + actual);
+		System.out.println("ensureEmptyChildObject");
+		System.out.println("Expected: " + expected);
+		System.out.println("Actual:   " + actual);
 
-        assertEquals(expected, actual);
-    }
+		assertEquals(expected, actual);
+	}
 
-    @Test
-    void ensureCannotBuildIfThereAreUnfinishedChildObjects() {
-        assertThrows(IllegalStateException.class, () -> subject.startObject("Test").startObject("name").build());
-    }
+	@Test
+	void ensureCannotBuildIfThereAreUnfinishedChildObjects() {
+		final var builder = subject.startObject("Test").startObject("name");
+		assertThrows(IllegalStateException.class, () -> builder.build());
+	}
 
-    @Test
-    void ensureCannotEndChildObjectWithoutStartingBuilder() {
-        assertThrows(IllegalStateException.class, () -> subject.endObject().build());
-    }
+	@Test
+	void ensureCannotEndChildObjectWithoutStartingBuilder() {
+		final var builder = subject.endObject();
+		assertThrows(IllegalStateException.class, () -> builder.build());
+	}
 
-    @Test
-    void ensureCannotEndChildMoreThanOnce() {
-        assertThrows(IllegalStateException.class,
-                () -> subject.startObject("name").withProperty("i", 1L).endObject().endObject().build());
-    }
+	@Test
+	void ensureCannotEndChildMoreThanOnce() {
+		final var builder = subject.startObject("name").withProperty("i", 1L).endObject().endObject();
+		assertThrows(IllegalStateException.class, () -> builder.build());
+	}
 
-    @Test
-    void ensureOneChildProperty() {
-        final String expected = "{\"name\":{\"i\":1}}";
-        final String actual = subject.startObject("Test").startObject("name").withProperty("i", 1L).endObject().build();
+	@Test
+	void ensureOneChildProperty() {
+		final String expected = "{\"name\":{\"i\":1}}";
+		final String actual = subject.startObject("Test").startObject("name").withProperty("i", 1L).endObject().build();
 
-        System.out.println("ensureOneChildProperty");
-        System.out.println("Expected: " + expected);
-        System.out.println("Actual:   " + actual);
+		System.out.println("ensureOneChildProperty");
+		System.out.println("Expected: " + expected);
+		System.out.println("Actual:   " + actual);
 
-        assertEquals(expected, actual);
-    }
+		assertEquals(expected, actual);
+	}
 
-    @Test
-    void ensureOnePropertyAndOneChildProperty() {
-        final String expected = "{\"one\":100,\"name\":{\"i\":1}}";
-        final String actual = subject.startObject("Test").withProperty("one", BigDecimal.valueOf(100))
-                .startObject("name").withProperty("i", 1L).endObject().build();
+	@Test
+	void ensureOnePropertyAndOneChildProperty() {
+		final String expected = "{\"one\":100,\"name\":{\"i\":1}}";
+		final String actual = subject.startObject("Test").withProperty("one", BigDecimal.valueOf(100))
+				.startObject("name").withProperty("i", 1L).endObject().build();
 
-        System.out.println("ensureOnePropertyAndOneChildProperty");
-        System.out.println("Expected: " + expected);
-        System.out.println("Actual:   " + actual);
+		System.out.println("ensureOnePropertyAndOneChildProperty");
+		System.out.println("Expected: " + expected);
+		System.out.println("Actual:   " + actual);
 
-        assertEquals(expected, actual);
-    }
+		assertEquals(expected, actual);
+	}
 
-    @Test
-    void ensureOneChildPropertyAndOneProperty() {
-        final String expected = "{\"name\":{\"i\":1},\"one\":100}";
-        final String actual = subject.startObject("Test").startObject("name").withProperty("i", 1L).endObject()
-                .withProperty("one", BigDecimal.valueOf(100)).build();
+	@Test
+	void ensureOneChildPropertyAndOneProperty() {
+		final String expected = "{\"name\":{\"i\":1},\"one\":100}";
+		final String actual = subject.startObject("Test").startObject("name").withProperty("i", 1L).endObject()
+				.withProperty("one", BigDecimal.valueOf(100)).build();
 
-        System.out.println("ensureOneChildPropertyAndOneProperty");
-        System.out.println("Expected: " + expected);
-        System.out.println("Actual:   " + actual);
+		System.out.println("ensureOneChildPropertyAndOneProperty");
+		System.out.println("Expected: " + expected);
+		System.out.println("Actual:   " + actual);
 
-        assertEquals(expected, actual);
-    }
+		assertEquals(expected, actual);
+	}
 
-    @Test
-    void ensureChildOfAChild() {
-        final String expected = "{\"one\":{\"i\":1,\"two\":{\"j\":2}},\"bd\":100}";
-        final String actual = subject.startObject("Test").startObject("one").withProperty("i", 1L).startObject("two")
-                .withProperty("j", 2).endObject().endObject().withProperty("bd", BigDecimal.valueOf(100)).build();
+	@Test
+	void ensureChildOfAChild() {
+		final String expected = "{\"one\":{\"i\":1,\"two\":{\"j\":2}},\"bd\":100}";
+		final String actual = subject.startObject("Test").startObject("one").withProperty("i", 1L).startObject("two")
+				.withProperty("j", 2).endObject().endObject().withProperty("bd", BigDecimal.valueOf(100)).build();
 
-        System.out.println("ensureChildOfAChild");
-        System.out.println("Expected: " + expected);
-        System.out.println("Actual:   " + actual);
+		System.out.println("ensureChildOfAChild");
+		System.out.println("Expected: " + expected);
+		System.out.println("Actual:   " + actual);
 
-        assertEquals(expected, actual);
-    }
+		assertEquals(expected, actual);
+	}
 }
