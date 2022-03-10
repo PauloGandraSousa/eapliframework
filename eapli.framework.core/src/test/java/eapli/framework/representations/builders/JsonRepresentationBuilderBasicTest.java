@@ -48,8 +48,7 @@ class JsonRepresentationBuilderBasicTest {
 
 	@Test
 	void ensureCannotAddPropertyBeforeStarting() {
-		final var builder = subject.withProperty("name", 1);
-		assertThrows(IllegalStateException.class, () -> builder.build());
+		assertThrows(IllegalStateException.class, () -> subject.withProperty("name", 1));
 	}
 
 	@Test

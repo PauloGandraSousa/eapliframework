@@ -61,14 +61,13 @@ class JsonRepresentationBuilderChildObjectsTest {
 
 	@Test
 	void ensureCannotEndChildObjectWithoutStartingBuilder() {
-		final var builder = subject.endObject();
-		assertThrows(IllegalStateException.class, () -> builder.build());
+		assertThrows(IllegalStateException.class, () -> subject.endObject());
 	}
 
 	@Test
 	void ensureCannotEndChildMoreThanOnce() {
-		final var builder = subject.startObject("name").withProperty("i", 1L).endObject().endObject();
-		assertThrows(IllegalStateException.class, () -> builder.build());
+		final var builder = subject.startObject("name").withProperty("i", 1L).endObject();
+		assertThrows(IllegalStateException.class, () -> builder.endObject());
 	}
 
 	@Test
