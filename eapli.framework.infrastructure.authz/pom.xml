@@ -21,11 +21,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>eapli</groupId>
 			<artifactId>eapli.framework.core</artifactId>
-			<version>17.1.0</version>
+			<version>18.1.0</version>
 		</dependency>
 	</dependencies>
 </project>
