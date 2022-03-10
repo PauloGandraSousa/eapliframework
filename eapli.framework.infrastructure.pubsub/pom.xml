@@ -6,7 +6,7 @@
 	<artifactId>eapli.framework.infrastructure.pubsub</artifactId>
 	<packaging>jar</packaging>
 	<name>eapli.framework.infrastructure.pubsub</name>
-	<version>16.5.0</version>
+	<version>16.6.0</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -17,7 +17,7 @@
 		<groupId>eapli</groupId>
 		<artifactId>eapli.framework</artifactId>
 		<relativePath>../</relativePath>
-		<version>16.5.0</version>
+		<version>16.6.0</version>
 	</parent>
 
 

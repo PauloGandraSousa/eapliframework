@@ -11,13 +11,13 @@
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<artifactId>eapli.framework.core</artifactId>
-	<version>17.1.0</version>
+	<version>18.1.0</version>
 
 	<parent>
 		<groupId>eapli</groupId>
 		<artifactId>eapli.framework</artifactId>
 		<relativePath>../</relativePath>
-		<version>16.5.0</version>
+		<version>16.6.0</version>
 	</parent>
 
 
