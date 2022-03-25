@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -34,85 +34,84 @@ import eapli.framework.validations.Invariants;
  *
  */
 public class ActionHistoryKeeper {
-    /**
-     * the history of actions already performed, i.e., an Undo list
-     */
-    private final Deque<UndoableAction> history = new ConcurrentLinkedDeque<>();
-    /**
-     * the actions that were undone and can eventually be redone
-     */
-    private final Deque<UndoableAction> forward = new ConcurrentLinkedDeque<>();
+	/**
+	 * the history of actions already performed, i.e., an Undo list
+	 */
+	private final Deque<UndoableAction> history = new ConcurrentLinkedDeque<>();
+	/**
+	 * the actions that were undone and can eventually be redone
+	 */
+	private final Deque<UndoableAction> forward = new ConcurrentLinkedDeque<>();
 
-    /**
-     * Eventough we use concurrent deques, we need to synchronize moving from one deque to another
-     */
-    private final Object lock = new Object();
+	/**
+	 * Eventough we use concurrent deques, we need to synchronize moving from one
+	 * deque to another
+	 */
+	private final Object lock = new Object();
 
-    /**
-     * Executes the action and saves it in the history.
-     *
-     * @param action
-     *            the action to execute and save
-     */
-    public void execute(final UndoableAction action) {
-        action.execute();
-        save(action);
-    }
+	/**
+	 * Executes the action and saves it in the history.
+	 *
+	 * @param action the action to execute and save
+	 */
+	public void execute(final UndoableAction action) {
+		action.execute();
+		save(action);
+	}
 
-    /**
-     * Saves an action in the history. Assumes, the caller already executed the
-     * action.
-     *
-     * @param action
-     *            the action to save
-     */
-    public void save(final UndoableAction action) {
-        synchronized (lock) {
-            history.push(action);
-            forward.clear();
-        }
-    }
+	/**
+	 * Saves an action in the history. Assumes, the caller already executed the
+	 * action.
+	 *
+	 * @param action the action to save
+	 */
+	public void save(final UndoableAction action) {
+		synchronized (lock) {
+			history.push(action);
+			forward.clear();
+		}
+	}
 
-    /**
-     * Undoes the last action. The action is removed from history and placed in
-     * the redo list.
-     */
-    public void undo() {
-        Invariants.ensure(canUndo());
+	/**
+	 * Undoes the last action. The action is removed from history and placed in the
+	 * redo list.
+	 */
+	public void undo() {
+		Invariants.ensure(canUndo());
 
-        UndoableAction action;
-        synchronized (lock) {
-            action = history.poll();
-            forward.push(action);
-        }
-        action.undo();
-    }
+		UndoableAction action;
+		synchronized (lock) {
+			action = history.poll();
+			forward.push(action);
+		}
+		action.undo();
+	}
 
-    /**
-     * Checks if there are any actions in the history.
-     *
-     * @return {@code true} if the history is not empty
-     */
-    public boolean canUndo() {
-        return !history.isEmpty();
-    }
+	/**
+	 * Checks if there are any actions in the history.
+	 *
+	 * @return {@code true} if the history is not empty
+	 */
+	public boolean canUndo() {
+		return !history.isEmpty();
+	}
 
-    /**
-     * Redo the last undone action.
-     */
-    public void redo() {
-        Invariants.ensure(canRedo());
+	/**
+	 * Redo the last undone action.
+	 */
+	public void redo() {
+		Invariants.ensure(canRedo());
 
-        final UndoableAction action = forward.poll();
-        execute(action);
-    }
+		final UndoableAction action = forward.poll();
+		execute(action);
+	}
 
-    /**
-     * Checks if there are any actions to redo.
-     *
-     * @return {@code true} if there are actions in the redo history
-     */
-    public boolean canRedo() {
-        return !forward.isEmpty();
-    }
+	/**
+	 * Checks if there are any actions to redo.
+	 *
+	 * @return {@code true} if there are actions in the redo history
+	 */
+	public boolean canRedo() {
+		return !forward.isEmpty();
+	}
 }

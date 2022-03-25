@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -28,28 +28,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * A Domain Service. When a responsibility/behavior is not naturally assigned to an existing domain
- * object, create a domain service to implement that behavior. Care should be taken not to
- * overpopulate the domain model with too many services - the domain entities and value objects
- * should be the main place to implement the business logic.
- * <p>
- * Services should be stateless (no properties) except for injected dependencies, e.g., other
- * services.
- * </p>
+ * A Domain Service. When a responsibility/behavior is not naturally assigned to
+ * an existing domain object, create a domain service to implement that
+ * behavior. Care should be taken not to overpopulate the domain model with too
+ * many services - the domain entities and value objects should be the main
+ * place to implement the business logic.
  *
  * <p>
- * For example, transferring money between two accounts in the same bank. Should this operation be
- * assigned to an {@code Account} object? If so, should it be named {code transferTo} or
- * {@code transferFrom}? Is one side of the relation more important than another? Are the business
- * rules about money transfers really part of the account? For instance, transferring money between
- * two accounts in different currencies?
+ * For example, transferring money between two accounts in the same bank. Should
+ * this operation be assigned to an {@code Account} object? If so, should it be
+ * named {code transferTo} or {@code transferFrom}? Is one side of the relation
+ * more important than another? Are the business rules about money transfers
+ * really part of the account? For instance, transferring money between two
+ * accounts in different currencies?
  *
  * <p>
  * <img src="domain-service.svg">
  * <p>
- * Services should preferably be stateless (no properties) except for injected dependencies, e.g.,
- * repositories
- * and services.
+ * Services should preferably be stateless (no properties) except for injected
+ * dependencies, e.g., repositories and services.
  * </p>
  *
  *
@@ -59,17 +56,18 @@ import java.lang.annotation.Target;
  * @startuml domain-service.svg
  *
  *           class IntraBankTransferService << domain service>>
+ * 
  *           class Account <<aggregate root>>
  *
  *           IntraBankTransferService ..> Account: from
+ * 
  *           IntraBankTransferService ..> Account: to
  *
- * @enduml
- *         -->
+ * @enduml -->
  */
 @Documented
 @Retention(SOURCE)
 @Target({ TYPE })
 public @interface DomainService {
-    // empty
+	// empty
 }
