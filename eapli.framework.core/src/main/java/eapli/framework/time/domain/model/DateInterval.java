@@ -51,12 +51,12 @@ public class DateInterval implements ValueObject {
     @XmlAttribute
     @JsonProperty
     @Temporal(TemporalType.DATE)
-    private final Calendar start;
+    private final Calendar dateStart;
 
     @XmlAttribute
     @JsonProperty
     @Temporal(TemporalType.DATE)
-    private final Calendar end;
+    private final Calendar dateEnd;
 
     @XmlTransient
     @JsonIgnore
@@ -72,9 +72,9 @@ public class DateInterval implements ValueObject {
     public DateInterval(final Calendar start, final Calendar end) {
         Preconditions.noneNull(start, end);
 
-        this.start = Calendars.dateOf(start);
-        this.end = Calendars.dateOf(end);
-        period = new TimeInterval(this.start, this.end);
+        this.dateStart = Calendars.dateOf(start);
+        this.dateEnd = Calendars.dateOf(end);
+        period = new TimeInterval(this.dateStart, this.dateEnd);
     }
 
     /**
@@ -85,23 +85,23 @@ public class DateInterval implements ValueObject {
     public DateInterval(final Calendar start) {
         Preconditions.nonNull(start);
 
-        this.start = Calendars.dateOf(start);
-        end = null;
-        period = new TimeInterval(this.start);
+        this.dateStart = Calendars.dateOf(start);
+        dateEnd = null;
+        period = new TimeInterval(this.dateStart);
     }
 
     protected DateInterval() {
         // ORM
-        start = end = null;
+        dateStart = dateEnd = null;
         period = null;
     }
 
     public Calendar start() {
-        return start;
+        return dateStart;
     }
 
     public Calendar end() {
-        return start;
+        return dateStart;
     }
 
     public boolean includes(final Calendar target) {

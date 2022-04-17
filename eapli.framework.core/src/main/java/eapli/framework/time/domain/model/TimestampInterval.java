@@ -47,11 +47,11 @@ public class TimestampInterval implements ValueObject {
 
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar start;
+    private final Calendar intervalStart;
 
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar end;
+    private final Calendar intervalEnd;
 
     @JsonProperty
     @Transient
@@ -66,14 +66,14 @@ public class TimestampInterval implements ValueObject {
     public TimestampInterval(final Calendar start, final Calendar end) {
         Preconditions.noneNull(start, end);
 
-        this.start = start;
-        this.end = end;
+        this.intervalStart = start;
+        this.intervalEnd = end;
         period = new TimeInterval(start, end);
     }
 
     protected TimestampInterval() {
         // ORM
-        start = end = null;
+        intervalStart = intervalEnd = null;
         period = null;
     }
 
@@ -83,7 +83,7 @@ public class TimestampInterval implements ValueObject {
      * @return the start of the interval.
      */
     public Calendar start() {
-        return start;
+        return intervalStart;
     }
 
     /**
@@ -92,7 +92,7 @@ public class TimestampInterval implements ValueObject {
      * @return the end of the interval
      */
     public Calendar end() {
-        return start;
+        return intervalStart;
     }
 
     /**
