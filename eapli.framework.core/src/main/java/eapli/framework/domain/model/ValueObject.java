@@ -23,11 +23,10 @@ package eapli.framework.domain.model;
 import java.io.Serializable;
 
 /**
- * A value object is a Domain-Driven Design pattern for domain concepts which do
- * not have a thread of continuity neither need to be tracked by their identity
- * but for the value of its attributes. These are {@link Immutable} objects which
- * can be freely shared and discarded and replaced by another instance. Equality
- * is done thru comparison of the attributes values.
+ * A value object is a Domain-Driven Design pattern for domain concepts which do not have a thread
+ * of continuity neither need to be tracked by their identity but for the value of its attributes.
+ * These are {@link Immutable} objects which can be freely shared and discarded and replaced by
+ * another instance. Equality is done thru comparison of the attributes values.
  * <p>
  * Typical examples are:
  * <ul>
@@ -37,7 +36,6 @@ import java.io.Serializable;
  * <li>Money
  * </ul>
  * </p>
- *
  * Quoting
  * <a href="https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf">Eric
  * Evans</a>:
@@ -48,18 +46,17 @@ import java.io.Serializable;
  * Functions that don’t depend on any mutable state. Don’t give a value object any identity
  * and avoid the design complexities necessary to maintain entities.
  * </blockquote>
- *
  * <p>
  * Check the <a href=
- * "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java
- * Time API naming conventions</a> for an excellent example on how to name
- * methods of a Value Object.
+ * "https://docs.oracle.com/javase/tutorial/datetime/overview/naming.html">Java Time API naming
+ * conventions</a> for an excellent example on how to name methods of a Value Object.
  * </p>
- *
  * <p>
  * Since we will provably persist entities using JPA we are also forcing the
  * implementation of {@code Serializable}.
  * </p>
+ * See <a href="https://projectlombok.org/features/Value">Project Lombok</a>'s
+ * <code>&#64;Value</code> to generate the boilerplate code and ensure immutability.
  *
  * @author Paulo Gandra Sousa
  */
@@ -76,7 +73,6 @@ public interface ValueObject extends Serializable {
 
     /**
      * Value objects are compared by the values of its properties.
-     *
      * <p>
      * See, for instance, <a href=
      * "https://www.sitepoint.com/implement-javas-equals-method-correctly/">https://www.sitepoint.com/implement-javas-equals-method-correctly/</a>
@@ -94,7 +90,6 @@ public interface ValueObject extends Serializable {
     /**
      * Hash code of this object according to java rules. i.e., the same fields
      * used in equals() should be used in hashCode().
-     *
      * <p>
      * see <a href=
      * "http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method">
