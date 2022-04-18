@@ -41,7 +41,6 @@ import eapli.framework.validations.Preconditions;
  * DateIntervals are closed ranges.
  *
  * @author Paulo Gandra Sousa
- *
  */
 @Embeddable
 public class DateInterval implements ValueObject {
@@ -101,7 +100,7 @@ public class DateInterval implements ValueObject {
     }
 
     public Calendar end() {
-        return dateStart;
+        return dateEnd;
     }
 
     public boolean includes(final Calendar target) {

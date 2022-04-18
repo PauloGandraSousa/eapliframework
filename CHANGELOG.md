@@ -1,7 +1,7 @@
 # EAPLI Framework Changelog
 
 
-## 18.0.0 [ CORE ]
+## 18.1.1 [ CORE ]
 
 ## What's new
 
@@ -10,6 +10,7 @@
 ## Changed
 
 - removed `Macro.record`; use `with()`
+- renamed `DateInterval` internal member names to `dateStart` and `dateEnd`
 
 
 ## 17.0.0 [ CORE ]
@@ -61,6 +62,8 @@
 ## 17.0.0 [ AUTHZ ]
 
 ### What's new
+
+- n.a.
 
 ### Changed
 
