@@ -76,14 +76,14 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 
     private volatile boolean timerInitialized;
 
-    private void storeConsumptionAndPublish(final EventRecord record) {
-        final EventConsumption entity = new EventConsumption(instanceKey, record);
+    private void storeConsumptionAndPublish(final EventRecord eventRecord) {
+        final EventConsumption entity = new EventConsumption(instanceKey, eventRecord);
         try {
             consumptionRepo.save(entity);
             LOGGER.trace("Stored event consumption {}", entity);
-            inprocPublisher.publish(record.event());
+            inprocPublisher.publish(eventRecord.event());
         } catch (ConcurrencyException | IntegrityViolationException e) {
-            LOGGER.error("Error storing consumption {} of event {}", entity, record, e);
+            LOGGER.error("Error storing consumption {} of event {}", entity, eventRecord, e);
         }
     }
 
@@ -116,9 +116,9 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     }
 
     private void storeEvent(final DomainEvent event) {
-        final EventRecord record = new EventRecord(instanceKey, event);
+        final EventRecord eventRecord = new EventRecord(instanceKey, event);
         try {
-            eventRepo.save(record);
+            eventRepo.save(eventRecord);
             LOGGER.trace("Stored event {}", event);
         } catch (ConcurrencyException | IntegrityViolationException e) {
             LOGGER.error("Error storing event {}", event, e);

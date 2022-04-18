@@ -43,16 +43,16 @@ public class CsvRecord {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
 
-    private final String record;
+    private final String sourceRecord;
     private final List<String> fields;
 
     /**
      * @param result
-     * @param record
+     * @param sourceRecord
      */
-    private CsvRecord(final List<String> result, final String record) {
+    private CsvRecord(final List<String> result, final String sourceRecord) {
         fields = result;
-        this.record = record;
+        this.sourceRecord = sourceRecord;
     }
 
     /**
@@ -283,6 +283,6 @@ public class CsvRecord {
      */
     @Override
     public String toString() {
-        return record;
+        return sourceRecord;
     }
 }
