@@ -10,7 +10,7 @@
 ## Changed
 
 - removed `Macro.record`; use `with()`
-- renamed `DateInterval` internal member names to `dateStart` and `dateEnd`
+- renamed `DateInterval` internal member names to `dateStart` and `dateEnd` due to conflicts with some RDBMS
 
 
 ## 17.0.0 [ CORE ]
