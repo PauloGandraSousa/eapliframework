@@ -65,6 +65,13 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.12.0</version>
 		</dependency>
+		<!-- Project Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.20</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -75,6 +82,13 @@
 				<version>3.8.1</version>
 				<configuration>
 					<release>11</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.20</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -84,6 +98,32 @@
 				<configuration>
 					<generateBackupPoms>false</generateBackupPoms>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+				<version>1.18.20.0</version>
+				<executions>
+					<execution>
+						<id>delombok</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>delombok</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+							<outputDirectory>${project.build.directory}/delombok</outputDirectory>
+							<addOutputDirectory>false</addOutputDirectory>
+							<formatPreferences>
+								<javaLangAsFQN>skip</javaLangAsFQN>
+							</formatPreferences>
+							<verbose>false</verbose>
+						</configuration>
+					</execution>
+					<!-- This is for delomboking also your tests sources. <execution> <id>test-delombok</id> 
+						<phase>generate-test-sources</phase> <goals> <goal>testDelombok</goal> </goals> 
+						<configuration> <verbose>false</verbose> </configuration> </execution> -->
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
