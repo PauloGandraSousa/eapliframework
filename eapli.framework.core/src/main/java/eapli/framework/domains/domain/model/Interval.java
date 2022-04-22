@@ -111,7 +111,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         /**
          * @param anchor
          *
-         * @return
+         * @return the newly created Interval
          */
         public Interval<R> closedTo(final R anchor) {
             this.end = anchor;
@@ -122,7 +122,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         /**
          * @param anchor
          *
-         * @return
+         * @return the newly created Interval
          */
         public Interval<R> openTo(final R anchor) {
             this.end = anchor;
@@ -131,7 +131,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
 
         /**
-         * @return
+         * @return the newly created Interval
          */
         public Interval<R> toInfinity() {
             this.end = null;
@@ -140,7 +140,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
 
         /**
-         * @return
+         * @return the newly created Interval
          */
         private Interval<R> build() {
             return new Interval<>(this.start, this.startBoundary, this.end, this.endBoundary);
@@ -249,7 +249,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * @return
+     * @return true if this interval is empty
      */
     public boolean isEmpty() {
         return start == end && start == null && endBoundary == startBoundary && endBoundary == null;
@@ -266,7 +266,9 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * @return
+     * Checks whether this interval is the universal interval, i.e., ]-oo, +oo[
+     *
+     * @return true if this interval is the universal interval
      */
     public boolean isUniversal() {
         return endBoundary == startBoundary && endBoundary == BoundaryLimitType.INFINITY;
@@ -317,14 +319,28 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return (!hasOpenEnd() || (target.compareTo(this.end) != 0));
     }
 
+    /**
+     * Checks if this interval is to infinity
+     *
+     * @return true if this interval is to infinity
+     */
     public boolean endsAtInfinity() {
         return this.endBoundary == BoundaryLimitType.INFINITY;
     }
 
+    /**
+     * Checks if this interval is from infinity
+     *
+     * @return true if this interval is from infinity
+     */
     public boolean startsAtInfinity() {
         return this.startBoundary == BoundaryLimitType.INFINITY;
     }
 
+    /**
+     *
+     * @return the start of the interval
+     */
     @JsonGetter
     public T start() {
         Invariants.ensure(!isEmpty());
@@ -332,6 +348,10 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return this.start;
     }
 
+    /**
+     *
+     * @return the end of the interval
+     */
     @JsonGetter
     public T end() {
         Invariants.ensure(!isEmpty());

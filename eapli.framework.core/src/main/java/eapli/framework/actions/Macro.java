@@ -50,6 +50,7 @@ public class Macro implements Action {
 
     /**
      * @param action
+     * @return this Macro so you can chain actions
      */
     public Macro with(final Action action) {
         actions.add(action);

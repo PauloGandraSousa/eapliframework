@@ -112,23 +112,40 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
         return new DiscreteDomain<>(Arrays.stream(elements));
     }
 
+    /**
+     * Checks if an element is contained in this domain.
+     *
+     * @param e
+     * @return true if e is contained in this domain
+     */
     public boolean contains(final T e) {
         return elements.contains(e);
     }
 
+    /**
+     * Checks whether this domain is empty.
+     *
+     * @return true if this domain is empty
+     */
     public boolean isEmpty() {
         return elements.isEmpty();
     }
 
+    /**
+     * Checks if this domain intersects another domain.
+     *
+     * @param other
+     * @return true if this domain intersects the other domain
+     */
     public boolean intersects(final DiscreteDomain<T> other) {
         return !this.intersection(other).isEmpty();
     }
 
     /**
-     * creates a new domain consisting of the intersection of elements between
+     * Creates a new domain consisting of the intersection of elements between
      * this domain and another domain.
      * <p>
-     * for instance,
+     * For instance,
      *
      * <pre>
      * <code>
@@ -158,10 +175,10 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
     }
 
     /**
-     * creates a new domain consisting of the union of elements between this
+     * Creates a new domain consisting of the union of elements between this
      * domain and another domain
      * <p>
-     * for instance,
+     * For instance,
      *
      * <pre>
      * <code>
@@ -193,7 +210,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * this domain if and only if those elements do not exist in the other
      * domain
      * <p>
-     * for instance,
+     * For instance,
      *
      * <pre>
      * <code>

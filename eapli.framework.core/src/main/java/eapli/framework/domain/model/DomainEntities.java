@@ -23,12 +23,14 @@ package eapli.framework.domain.model;
 import java.util.Objects;
 
 import eapli.framework.util.HashCoder;
+import eapli.framework.util.Utility;
 
 /**
  * Helper class for common domain entities operations.
  *
  * @author Paulo Gandra Sousa
  */
+@Utility
 public final class DomainEntities {
 
     private DomainEntities() {
