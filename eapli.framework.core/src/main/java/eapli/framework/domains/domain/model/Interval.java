@@ -29,8 +29,8 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Invariants;
+import lombok.EqualsAndHashCode;
 
 /**
  * A generic immutable interval class, i.e., a continuous domain.
@@ -47,6 +47,7 @@ import eapli.framework.validations.Invariants;
  * @param <T>
  */
 @Embeddable
+@EqualsAndHashCode
 public class Interval<T extends Serializable & Comparable<T>> implements ValueObject, Comparable<Interval<T>> {
 
     private static final long serialVersionUID = 1L;
@@ -593,28 +594,12 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (!(o instanceof Interval<?>)) {
-            return false;
-        }
-
-        @SuppressWarnings("unchecked")
-        final Interval<T> other = (Interval<T>) o;
-        return startIsTheSameAs(other) && endIsTheSameAs(other);
-    }
-
     private boolean startIsTheSameAs(final Interval<T> other) {
         return this.startBoundary == other.startBoundary && this.start == other.start;
     }
 
     private boolean endIsTheSameAs(final Interval<T> other) {
         return this.endBoundary == other.endBoundary && this.end == other.end;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(startBoundary).with(start).with(endBoundary).with(end).code();
     }
 
     /**

@@ -28,17 +28,17 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * A generic concept for a role that can be used by application code to classify
  * users.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Embeddable
+@EqualsAndHashCode
 public class Role implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,22 +63,5 @@ public class Role implements ValueObject, Serializable {
 
     public static Role valueOf(final String role) {
         return new Role(role);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        if (!(other instanceof Role)) {
-            return false;
-        }
-        if (this == other) {
-            return true;
-        }
-        final Role that = (Role) other;
-        return roleName.equals(that.roleName);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(roleName).code();
     }
 }

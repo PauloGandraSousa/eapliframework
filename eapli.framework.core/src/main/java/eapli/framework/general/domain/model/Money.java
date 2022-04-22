@@ -38,17 +38,16 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
 import eapli.framework.strings.XmlCurrencyAdapter;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * A money value (amount and currency).
- *
  * <p>
  * For a full description see the book Patterns of Enterprise Application Architecture (Martin
  * Fowler) page 488 or <a href="https://www.martinfowler.com/eaaCatalog/money.html">PoEAA Money</a>.
  * See also a <a href=
  * "https://deque.blog/2017/08/17/a-study-of-4-money-class-designs-featuring-martin-fowler-kent-beck-and-ward-cunningham-implementations/">good
  * discussion</a> about pros and cons and different approaches.
- *
  * <p>
  * <blockquote> A large proportion of the computers in this world manipulate money, so it's always
  * puzzled me that money isn't actually a first class data type in any mainstream programming
@@ -58,7 +57,6 @@ import eapli.framework.validations.Preconditions;
  * m_currency differences into account. The more subtle problem is with rounding. Monetary
  * calculations are often rounded to the smallest m_currency unit. When you do this it's easy to
  * lose pennies (or your local equivalent) because of rounding errors.
- *
  * <p>
  * The good thing about object-oriented programming is that you can fix these problems by creating a
  * Money class that handles them. Of course, it's still surprising that none of the mainstream base
@@ -77,12 +75,10 @@ import eapli.framework.validations.Preconditions;
  * assert expected.equals(result);
  * </code>
  * </pre>
- *
  * <p>
  * You'll notice there are no setters. Money is a Value Object and is thus immutable. It helps to
  * have a variety of constructors to make it easy to make monies. Constructors that convert from
  * basic numeric types are always useful.
- *
  * <p>
  * <strong>NOTE:</strong> The original source code was available at
  * <a href="http://martinfowler.com/eaaDev/quantity.html">MF bliki</a>, however that link is now
@@ -92,6 +88,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class Money implements Comparable<Money>, Serializable, ValueObject, FormattedString {
 
     private static final long serialVersionUID = 1L;
@@ -176,8 +173,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * you may want a special constructor for that currency.
      *
      * @param amount
-     * @return a Money object of {@code amount} EUR
      *
+     * @return a Money object of {@code amount} EUR
      */
     public static Money dollars(final double amount) {
         return new Money(amount, Currency.getInstance("USD"));
@@ -189,6 +186,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Author Paulo Gandra de Sousa
      *
      * @param amount
+     *
      * @return a Money object of amount EUR
      */
     public static Money euros(final double amount) {
@@ -201,6 +199,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Author Paulo Gandra de Sousa
      *
      * @param value
+     *
      * @return a new object corresponding to the value
      */
     public static Money valueOf(final String value) {
@@ -220,6 +219,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * @param amount
      * @param currency
      *            the currency code
+     *
      * @return a new object corresponding to the value
      */
     public static Money valueOf(final double amount, final String currency) {
@@ -237,6 +237,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Author Paulo Gandra de Sousa
      *
      * @param zero
+     *
      * @return a collector instance
      */
     public static Collector<Money, MoneyCollector, Money> collector(final Money zero) {
@@ -257,7 +258,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * A collector class to use with Java 8 Streams.
      *
      * @author Paulo Gandra de Sousa
-     *
      */
     private static class MoneyCollector {
         private Money current;
@@ -320,7 +320,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Adds two Money objects and returns the result as a new object.
      *
      * @param arg
+     *
      * @return a new Money with the value of the addition
+     *
      * @throws IllegalArgumentException
      *             if the currencies are not the same
      */
@@ -339,7 +341,9 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Subtracts two Money instances and returns a third one with the result.
      *
      * @param arg
+     *
      * @return a new value corresponding to the subtraction
+     *
      * @throws IllegalArgumentException
      *             if the currencies are not the same
      */
@@ -349,7 +353,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
     /**
      * Returns a new object which amount's sign is swapped, i.e., -this.amount. E.g.
-     *
      * <p>
      *
      * <pre>
@@ -374,8 +377,8 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * a grocery item.
      *
      * @param arg
-     * @return a new Money with the value of the multiplication
      *
+     * @return a new Money with the value of the multiplication
      */
     public Money multiply(final double arg) {
         return new Money(amountAsDouble() * arg, currency);
@@ -384,7 +387,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
     /**
      * Divides this Money object by a certain integer denominator doing the right allocation of
      * cents.
-     *
      * <p>
      * Multiplication is very straightforward. But division is not, as we have to take care of
      * errant
@@ -395,6 +397,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * array. Fairly in this sense means those at the beginning get the extra pennies.
      *
      * @param denominator
+     *
      * @return an array of Money objects corresponding to the allocation of each denominator
      */
     public Money[] divide(final int denominator) {
@@ -413,7 +416,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
     /**
      * Compares two Money objects.
-     *
      */
     @Override
     public int compareTo(final Money arg) {
@@ -429,6 +431,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Compares two Money objects checking if this money's amount is greater than the other
      *
      * @param arg
+     *
      * @return true if this money's amount is greater than the other
      */
     public boolean isGreaterThan(final Money arg) {
@@ -444,6 +447,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Compares two Money objects checking if this money's amount is less than the other
      *
      * @param arg
+     *
      * @return true if this money's amount is less than the other
      */
     public boolean isLessThan(final Money arg) {
@@ -462,6 +466,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Author Paulo Gandra de Sousa
      *
      * @param arg
+     *
      * @return {@code true} if this money's amount is greater than or equal to the other
      */
     public boolean isGreaterThanOrEqual(final Money arg) {
@@ -475,34 +480,11 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Author Paulo Gandra de Sousa
      *
      * @param arg
+     *
      * @return {@code true} if this money's amount is less than or equal to the other
      */
     public boolean isLessThanOrEqual(final Money arg) {
         return compareTo(arg) <= 0;
-    }
-
-    /**
-     * Since money is a value, it should override equals.
-     */
-    @Override
-    public boolean equals(final Object arg) {
-        if (!(arg instanceof Money)) {
-            return false;
-        }
-        final Money other = (Money) arg;
-        return currency.equals(other.currency) && amount.equals(other.amount);
-    }
-
-    /**
-     * Since you override equals, don't forget to also override hash (here's a simple suggestion for
-     * that).
-     */
-    @Override
-    public int hashCode() {
-        int result = 11;
-        result = 37 * result + amount.hashCode();
-        result = 37 * result + currency.hashCode();
-        return result;
     }
 
     public int signum() {
@@ -535,7 +517,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
     /**
      * Checks if this amount is zero.
-     *
      * <p>
      * Author Paulo Gandra de Sousa
      *
@@ -553,7 +534,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * Scraped from
      * <a href=
      * "http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html">cameotutorials</a>
-     *
      * <p>
      * Author Paulo Gandra de Sousa
      *

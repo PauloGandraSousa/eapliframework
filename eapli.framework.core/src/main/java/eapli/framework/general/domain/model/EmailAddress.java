@@ -29,8 +29,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * An email address.
@@ -38,6 +38,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
@@ -59,24 +60,6 @@ public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Seri
 
     public static EmailAddress valueOf(final String address) {
         return new EmailAddress(address);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof EmailAddress)) {
-            return false;
-        }
-
-        final EmailAddress that = (EmailAddress) o;
-        return email.equals(that.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(email).code();
     }
 
     @Override
