@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import eapli.framework.actions.TimedActions;
 import eapli.framework.domain.events.DomainEvent;
@@ -36,11 +37,11 @@ import eapli.framework.infrastructure.eventpubsub.EventPublisher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 
 /**
- * A simple event dispatcher using database tables to persist events and allow for out of process
- * publish-subscribe.
+ * A simple event dispatcher using database tables to persist events and allow
+ * for out of process publish-subscribe.
  * <p>
- * This class is just for demonstration purposes. you should consider using a true pub/sub mechanism
- * such as message queueing instead of this class.
+ * This class is just for demonstration purposes. you should consider using a
+ * true pub/sub mechanism such as message queueing instead of this class.
  * <p>
  * This class is only prepared to be used by Spring Dependency Injection
  *
@@ -50,103 +51,105 @@ import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub
 @Component
 public class SimplePersistentEventPubSub implements EventDispatcher, EventPublisher {
 
-    private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventPubSub.class);
+	private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventPubSub.class);
 
-    @Autowired
-    private EventRecordRepository eventRepo;
+	@Autowired
+	private EventRecordRepository eventRepo;
 
-    @Autowired
-    private EventConsumptionRepository consumptionRepo;
+	@Autowired
+	private EventConsumptionRepository consumptionRepo;
 
-    private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
-    private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
+	private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
+	private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
 
-    /**
-     * identify the consumer application instance. useful if you have multiple instances of the same
-     * application and want to dispatch events to all of them
-     */
-    @Value("${eapli.framework.pubsub.instanceKey}")
-    private String instanceKey;
+	/**
+	 * identify the consumer application instance. useful if you have multiple
+	 * instances of the same application and want to dispatch events to all of them
+	 */
+	@Value("${eapli.framework.pubsub.instanceKey}")
+	private String instanceKey;
 
-    /**
-     * interval (in milliseconds) between poolings to the event store
-     */
-    @Value("${eapli.framework.pubsub.poolInterval}")
-    private int poolInterval;
+	/**
+	 * interval (in milliseconds) between poolings to the event store
+	 */
+	@Value("${eapli.framework.pubsub.poolInterval}")
+	private int poolInterval;
 
-    private volatile boolean timerInitialized;
+	private volatile boolean timerInitialized;
 
-    private void storeConsumptionAndPublish(final EventRecord eventRecord) {
-        final EventConsumption entity = new EventConsumption(instanceKey, eventRecord);
-        try {
-            consumptionRepo.save(entity);
-            LOGGER.trace("Stored event consumption {}", entity);
-            inprocPublisher.publish(eventRecord.event());
-        } catch (ConcurrencyException | IntegrityViolationException e) {
-            LOGGER.error("Error storing consumption {} of event {}", entity, eventRecord, e);
-        }
-    }
+	@Transactional
+	private void storeConsumptionAndPublish(final EventRecord eventRecord) {
+		final var entity = new EventConsumption(instanceKey, eventRecord);
+		try {
+			consumptionRepo.save(entity);
+			LOGGER.trace("Stored event consumption {}", entity);
+			inprocPublisher.publish(eventRecord.event());
+		} catch (ConcurrencyException | IntegrityViolationException e) {
+			LOGGER.error("Error storing consumption {} of event {}", entity, eventRecord, e);
+		}
+	}
 
-    private boolean pollEvents() {
-        LOGGER.trace("Polling events from database");
-        try {
-            final Iterable<EventRecord> notConsumedEvents = eventRepo.findNotConsumed(instanceKey);
-            notConsumedEvents.forEach(this::storeConsumptionAndPublish);
-        } catch (final Exception e) {
-            LOGGER.error("Error polling events", e);
-        }
-        return true;
-    }
+	private boolean pollEvents() {
+		LOGGER.trace("Polling events from database");
+		try {
+			final var notConsumedEvents = eventRepo.findNotConsumed(instanceKey);
+			notConsumedEvents.forEach(this::storeConsumptionAndPublish);
+		} catch (final Exception e) {
+			LOGGER.error("Error polling events", e);
+		}
+		return true;
+	}
 
-    private void initTimersIfNeeded() {
-        if (!timerInitialized) {
-            TimedActions.atFixedRate(this::pollEvents, poolInterval);
-            timerInitialized = true;
-        }
-    }
+	private void initTimersIfNeeded() {
+		if (!timerInitialized) {
+			TimedActions.atFixedRate(this::pollEvents, poolInterval);
+			timerInitialized = true;
+		}
+	}
 
-    @Override
-    public void publish(final DomainEvent event) {
-        initTimersIfNeeded();
+	@Override
+	@Transactional
+	public void publish(final DomainEvent event) {
+		initTimersIfNeeded();
 
-        storeEvent(event);
+		storeEvent(event);
 
-        // we do not immediately publish the event in process as it will be
-        // polled and marked as consumed soon enough
-    }
+		// we do not immediately publish the event in process as it will be
+		// polled and marked as consumed soon enough
+	}
 
-    private void storeEvent(final DomainEvent event) {
-        final EventRecord eventRecord = new EventRecord(instanceKey, event);
-        try {
-            eventRepo.save(eventRecord);
-            LOGGER.trace("Stored event {}", event);
-        } catch (ConcurrencyException | IntegrityViolationException e) {
-            LOGGER.error("Error storing event {}", event, e);
-        }
-    }
+	private void storeEvent(final DomainEvent event) {
+		final var eventRecord = new EventRecord(instanceKey, event);
+		try {
+			eventRepo.save(eventRecord);
+			LOGGER.trace("Stored event {}", event);
+		} catch (ConcurrencyException | IntegrityViolationException e) {
+			LOGGER.error("Error storing event {}", event, e);
+		}
+	}
 
-    @Override
-    public void subscribe(final EventHandler observer,
-            @SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
-        initTimersIfNeeded();
+	@Override
+	public void subscribe(final EventHandler observer,
+			@SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
+		initTimersIfNeeded();
 
-        inprocDispatcher.subscribe(observer, events);
-    }
+		inprocDispatcher.subscribe(observer, events);
+	}
 
-    @Override
-    public void unsubscribe(final EventHandler observer,
-            @SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
-        inprocDispatcher.unsubscribe(observer, events);
-    }
+	@Override
+	public void unsubscribe(final EventHandler observer,
+			@SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
+		inprocDispatcher.unsubscribe(observer, events);
+	}
 
-    @Override
-    public void unsubscribe(final EventHandler observer) {
-        inprocDispatcher.unsubscribe(observer);
-    }
+	@Override
+	public void unsubscribe(final EventHandler observer) {
+		inprocDispatcher.unsubscribe(observer);
+	}
 
-    @Override
-    public void shutdown() {
-        TimedActions.shutdownRecurringTasks();
-        LOGGER.debug("Shuting down the event dispatcher");
-    }
+	@Override
+	public void shutdown() {
+		TimedActions.shutdownRecurringTasks();
+		LOGGER.debug("Shuting down the event dispatcher");
+	}
 }

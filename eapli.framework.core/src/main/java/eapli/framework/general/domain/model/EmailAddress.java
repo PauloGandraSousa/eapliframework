@@ -40,52 +40,52 @@ import eapli.framework.validations.Preconditions;
 @Embeddable
 public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Serializable, StringMixin {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @JsonProperty
-    private final String email;
+	@JsonProperty
+	private final String email;
 
-    protected EmailAddress(final String address) {
-        Preconditions.nonEmpty(address, "email address  should neither be null nor empty");
-        Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
+	protected EmailAddress(final String address) {
+		Preconditions.nonEmpty(address, "email address should neither be null nor empty");
+		Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
 
-        email = address;
-    }
+		email = address;
+	}
 
-    protected EmailAddress() {
-        // for ORM
-        email = "";
-    }
+	protected EmailAddress() {
+		// for ORM
+		email = "";
+	}
 
-    public static EmailAddress valueOf(final String address) {
-        return new EmailAddress(address);
-    }
+	public static EmailAddress valueOf(final String address) {
+		return new EmailAddress(address);
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof EmailAddress)) {
-            return false;
-        }
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof EmailAddress)) {
+			return false;
+		}
 
-        final EmailAddress that = (EmailAddress) o;
-        return email.equals(that.email);
-    }
+		final EmailAddress that = (EmailAddress) o;
+		return email.equals(that.email);
+	}
 
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(email).code();
-    }
+	@Override
+	public int hashCode() {
+		return new HashCoder().with(email).code();
+	}
 
-    @Override
-    public String toString() {
-        return email;
-    }
+	@Override
+	public String toString() {
+		return email;
+	}
 
-    @Override
-    public int compareTo(final EmailAddress o) {
-        return email.compareTo(o.email);
-    }
+	@Override
+	public int compareTo(final EmailAddress o) {
+		return email.compareTo(o.email);
+	}
 }
