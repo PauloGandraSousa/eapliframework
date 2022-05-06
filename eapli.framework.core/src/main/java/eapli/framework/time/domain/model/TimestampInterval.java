@@ -32,15 +32,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * A persistent time period. Both the date and the time part of calendar are
  * relevant.
  *
  * @author Paulo Gandra Sousa
- *
  */
 @Embeddable
+@EqualsAndHashCode
 public class TimestampInterval implements ValueObject {
 
     private static final long serialVersionUID = -4658136141745243778L;
@@ -99,6 +100,7 @@ public class TimestampInterval implements ValueObject {
      * Checks if the given date is within this interval.
      *
      * @param target
+     *
      * @return true if the given date is within this interval
      */
     public boolean includes(final Calendar target) {

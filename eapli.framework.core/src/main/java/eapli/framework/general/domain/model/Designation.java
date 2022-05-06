@@ -28,8 +28,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * Generic designation concept, e.g., name, short name, nickname. A designation
@@ -40,6 +40,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class Designation implements ValueObject, Comparable<Designation>, StringMixin {
 
 	private static final long serialVersionUID = 1L;
@@ -66,15 +67,16 @@ public class Designation implements ValueObject, Comparable<Designation>, String
 		name = null;
 	}
 
-	/**
-	 * Factory method for obtaining Designation value objects.
-	 *
-	 * @param name
-	 * @return a new object corresponding to the value
-	 */
-	public static Designation valueOf(final String name) {
-		return new Designation(name);
-	}
+    /**
+     * Factory method for obtaining Designation value objects.
+     *
+     * @param name
+     *
+     * @return a new object corresponding to the value
+     */
+    public static Designation valueOf(final String name) {
+        return new Designation(name);
+    }
 
 	@Override
 	public boolean equals(final Object o) {

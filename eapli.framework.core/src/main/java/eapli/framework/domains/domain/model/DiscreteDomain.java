@@ -32,8 +32,8 @@ import java.util.stream.Stream;
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * An immutable discrete domain, that is, a set of possible known values. Allows
@@ -45,9 +45,9 @@ import eapli.framework.validations.Preconditions;
  *            constraint
  *
  * @author Paulo Gandra Sousa
- *
  */
 @Embeddable
+@EqualsAndHashCode
 public final class DiscreteDomain<T extends Serializable> implements Iterable<T>, ValueObject {
 
     private static final long serialVersionUID = 1626025693468901924L;
@@ -93,6 +93,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * Factory method.
      *
      * @param data
+     *
      * @return a discrete domain based on the elements of the stream
      */
     public static <R extends Serializable> DiscreteDomain<R> from(final Stream<R> data) {
@@ -103,6 +104,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * Factory method.
      *
      * @param elements
+     *
      * @return a discrete domain
      */
     public static <R extends Serializable> DiscreteDomain<R> of(
@@ -110,40 +112,40 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
         return new DiscreteDomain<>(Arrays.stream(elements));
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (!(o instanceof DiscreteDomain<?>)) {
-            return false;
-        }
-
-        @SuppressWarnings("unchecked")
-        final DiscreteDomain<T> other = (DiscreteDomain<T>) o;
-        return elements.equals(other.elements);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(elements).code();
-    }
-
+    /**
+     * Checks if an element is contained in this domain.
+     *
+     * @param e
+     * @return true if e is contained in this domain
+     */
     public boolean contains(final T e) {
         return elements.contains(e);
     }
 
+    /**
+     * Checks whether this domain is empty.
+     *
+     * @return true if this domain is empty
+     */
     public boolean isEmpty() {
         return elements.isEmpty();
     }
 
+    /**
+     * Checks if this domain intersects another domain.
+     *
+     * @param other
+     * @return true if this domain intersects the other domain
+     */
     public boolean intersects(final DiscreteDomain<T> other) {
         return !this.intersection(other).isEmpty();
     }
 
     /**
-     * creates a new domain consisting of the intersection of elements between
+     * Creates a new domain consisting of the intersection of elements between
      * this domain and another domain.
-     *
      * <p>
-     * for instance,
+     * For instance,
      *
      * <pre>
      * <code>
@@ -159,6 +161,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * </pre>
      *
      * @param other
+     *
      * @return a new domain instance corresponding to the intersection
      */
     public DiscreteDomain<T> intersection(final DiscreteDomain<T> other) {
@@ -172,11 +175,10 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
     }
 
     /**
-     * creates a new domain consisting of the union of elements between this
+     * Creates a new domain consisting of the union of elements between this
      * domain and another domain
-     *
      * <p>
-     * for instance,
+     * For instance,
      *
      * <pre>
      * <code>
@@ -192,6 +194,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * </pre>
      *
      * @param other
+     *
      * @return a new domain instance corresponding to the union
      */
     public DiscreteDomain<T> union(final DiscreteDomain<T> other) {
@@ -206,9 +209,8 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * this domain and another domain, that is, a domain with the elements of
      * this domain if and only if those elements do not exist in the other
      * domain
-     *
      * <p>
-     * for instance,
+     * For instance,
      *
      * <pre>
      * <code>
@@ -224,6 +226,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * </pre>
      *
      * @param other
+     *
      * @return a new domain corresponding to the complement
      */
     public DiscreteDomain<T> without(final DiscreteDomain<T> other) {
@@ -234,6 +237,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * Creates a new domain without the desired element.
      *
      * @param someElement
+     *
      * @return a new domain corresponding to the complement
      */
     public DiscreteDomain<T> without(final T someElement) {
@@ -272,6 +276,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * Creates a new discrete domain by mapping each element of this domain.
      *
      * @param mapper
+     *
      * @return a new discrete domain
      */
     public <R extends Serializable> DiscreteDomain<R> map(final Function<T, R> mapper) {
@@ -282,6 +287,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * Creates a new discrete domain by mapping each element of this domain.
      *
      * @param mapper
+     *
      * @return a new discrete domain
      */
     public <R extends Serializable> DiscreteDomain<R> flatMap(

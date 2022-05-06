@@ -50,17 +50,19 @@ public class IdentityGenerators {
     }
 
     /**
-     * @return
+     * @return the single instance of the identity generators registry
      */
     public static IdentityGenerators instance() {
         return LazyHolder.INSTANCE;
     }
 
     /**
+     * Sets up a new identity generator in the registry
+     *
      * @param context
      * @param gen
      *
-     * @return
+     * @return this registry
      */
     public IdentityGenerators with(final String context, final IdentityGenerator<?> gen) {
         Preconditions.nonNull(gen);
@@ -71,10 +73,13 @@ public class IdentityGenerators {
     }
 
     /**
+     * Creates a new id using the specified generator
+     *
      * @param <T>
      * @param context
+     *            the name of the generator to use as it was registered in {@link #with}
      *
-     * @return
+     * @return a new id
      */
     @SuppressWarnings("unchecked")
     public <T> T newId(final String context) {

@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * A persistent date period. Only the date part of calendar is relevant.
@@ -43,6 +44,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class DateInterval implements ValueObject {
 
 	private static final long serialVersionUID = -3829067411069027990L;
