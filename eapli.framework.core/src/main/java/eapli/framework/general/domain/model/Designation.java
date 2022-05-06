@@ -42,65 +42,65 @@ import eapli.framework.validations.Preconditions;
 @Embeddable
 public class Designation implements ValueObject, Comparable<Designation>, StringMixin {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @XmlAttribute
-    @JsonProperty
-    private final String name;
+	@XmlAttribute
+	@JsonProperty
+	private final String name;
 
-    /**
-     * Protected constructor. To construct a new Designation instance use the
-     * {@link #valueOf(String)} method.
-     *
-     * @param name
-     */
-    protected Designation(final String name) {
-        Preconditions.ensure(StringPredicates.isPhrase(name),
-                "Name should neither be null nor empty nor have starting blank spaces");
+	/**
+	 * Protected constructor. To construct a new Designation instance use the
+	 * {@link #valueOf(String)} method.
+	 *
+	 * @param name
+	 */
+	protected Designation(final String name) {
+		Preconditions.ensure(StringPredicates.isPhrase(name),
+				"Name should neither be null nor empty nor have starting blank spaces");
 
-        this.name = name;
-    }
+		this.name = name;
+	}
 
-    protected Designation() {
-        // for ORM
-        name = null;
-    }
+	protected Designation() {
+		// for ORM
+		name = null;
+	}
 
-    /**
-     * Factory method for obtaining Designation value objects.
-     *
-     * @param name
-     * @return a new object corresponding to the value
-     */
-    public static Designation valueOf(final String name) {
-        return new Designation(name);
-    }
+	/**
+	 * Factory method for obtaining Designation value objects.
+	 *
+	 * @param name
+	 * @return a new object corresponding to the value
+	 */
+	public static Designation valueOf(final String name) {
+		return new Designation(name);
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Designation)) {
-            return false;
-        }
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Designation)) {
+			return false;
+		}
 
-        final Designation other = (Designation) o;
-        return name.equals(other.name);
-    }
+		final Designation other = (Designation) o;
+		return name.equals(other.name);
+	}
 
-    @Override
-    public String toString() {
-        return name;
-    }
+	@Override
+	public String toString() {
+		return name;
+	}
 
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(name).code();
-    }
+	@Override
+	public int hashCode() {
+		return new HashCoder().with(name).code();
+	}
 
-    @Override
-    public int compareTo(final Designation o) {
-        return name.compareTo(o.name);
-    }
+	@Override
+	public int compareTo(final Designation o) {
+		return name.compareTo(o.name);
+	}
 }

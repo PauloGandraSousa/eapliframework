@@ -1,7 +1,7 @@
 # EAPLI Framework Changelog
 
 
-## SNAPSHOT 18.2.x [ CORE ]
+## 18.2.0 [ CORE ]
 
 ## What's new
 
@@ -9,7 +9,8 @@
 
 ## Changed
 
-- TBD
+- Fix missing `PersistenceContext` annotation on `JpaAbstractRepository` for scenarios with Spring
+- Fix missing `Transactional` annotation for scenarios with Spring and JPA repositories (not Spring Data)
 
 ## 18.1.1 [ CORE ]
 
