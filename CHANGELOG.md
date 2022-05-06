@@ -1,6 +1,16 @@
 # EAPLI Framework Changelog
 
 
+## SNAPSHOT 18.2.x [ CORE ]
+
+## What's new
+
+- `Money.isOfSameCurrency`
+
+## Changed
+
+- TBD
+
 ## 18.1.1 [ CORE ]
 
 ## What's new
