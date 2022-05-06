@@ -63,24 +63,6 @@ public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Seri
 	}
 
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof EmailAddress)) {
-			return false;
-		}
-
-		final EmailAddress that = (EmailAddress) o;
-		return email.equals(that.email);
-	}
-
-	@Override
-	public int hashCode() {
-		return new HashCoder().with(email).code();
-	}
-
-	@Override
 	public String toString() {
 		return email;
 	}

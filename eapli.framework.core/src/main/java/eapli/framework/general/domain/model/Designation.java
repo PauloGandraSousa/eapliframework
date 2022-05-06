@@ -67,38 +67,20 @@ public class Designation implements ValueObject, Comparable<Designation>, String
 		name = null;
 	}
 
-    /**
-     * Factory method for obtaining Designation value objects.
-     *
-     * @param name
-     *
-     * @return a new object corresponding to the value
-     */
-    public static Designation valueOf(final String name) {
-        return new Designation(name);
-    }
-
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof Designation)) {
-			return false;
-		}
-
-		final Designation other = (Designation) o;
-		return name.equals(other.name);
+	/**
+	 * Factory method for obtaining Designation value objects.
+	 *
+	 * @param name
+	 *
+	 * @return a new object corresponding to the value
+	 */
+	public static Designation valueOf(final String name) {
+		return new Designation(name);
 	}
 
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	@Override
-	public int hashCode() {
-		return new HashCoder().with(name).code();
 	}
 
 	@Override
