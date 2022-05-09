@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
+package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +34,11 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.EventHandler;
 import eapli.framework.infrastructure.eventpubsub.EventPublisher;
-import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
+import eapli.framework.infrastructure.eventpubsub.impl.inprocess.service.InProcessPubSub;
+import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
+import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventRecord;
+import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventRecordRepository;
 
 /**
  * A simple event dispatcher using database tables to persist events and allow
@@ -53,11 +57,9 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 
 	private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventPubSub.class);
 
-	@Autowired
-	private EventRecordRepository eventRepo;
+	private final EventRecordRepository eventRepo;
 
-	@Autowired
-	private EventConsumptionRepository consumptionRepo;
+	private final EventConsumptionRepository consumptionRepo;
 
 	private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
 	private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
@@ -77,8 +79,14 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 
 	private volatile boolean timerInitialized;
 
+	@Autowired
+	public SimplePersistentEventPubSub(EventRecordRepository eventRepo, EventConsumptionRepository consumptionRepo) {
+		this.eventRepo = eventRepo;
+		this.consumptionRepo = consumptionRepo;
+	}
+
 	@Transactional
-	private void storeConsumptionAndPublish(final EventRecord eventRecord) {
+	void storeConsumptionAndPublish(final EventRecord eventRecord) {
 		final var entity = new EventConsumption(instanceKey, eventRecord);
 		try {
 			consumptionRepo.save(entity);
@@ -89,7 +97,8 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
 		}
 	}
 
-	private boolean pollEvents() {
+	@Transactional
+	boolean pollEvents() {
 		LOGGER.trace("Polling events from database");
 		try {
 			final var notConsumedEvents = eventRepo.findNotConsumed(instanceKey);

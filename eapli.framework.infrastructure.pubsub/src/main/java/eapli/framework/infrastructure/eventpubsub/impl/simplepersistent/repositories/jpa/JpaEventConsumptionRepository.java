@@ -21,20 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
+package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.jpa;
 
-import eapli.framework.domain.repositories.DomainRepository;
+import org.springframework.stereotype.Component;
+
+import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
+import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**
- * @author Paulo Gandra de Sousa
+ * @author Paulo Gandra de Sousa 2022.05.09
  *
  */
-interface EventRecordRepository extends DomainRepository<Long, EventRecord> {
+@Component
+public class JpaEventConsumptionRepository extends JpaBaseRepository<EventConsumption, Long, Long>
+		implements EventConsumptionRepository {
 
-    /**
-     *
-     * @param instanceKey
-     * @return
-     */
-    Iterable<EventRecord> findNotConsumed(String instanceKey);
+	public JpaEventConsumptionRepository() {
+		super("id");
+	}
+
 }

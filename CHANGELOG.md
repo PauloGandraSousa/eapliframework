@@ -1,6 +1,14 @@
 # EAPLI Framework Changelog
 
+## 17.0.0 [ PUB/SUB ]
 
+## Changed
+
+- added JPA repositories to SimplePersistent implementation
+- restructured packages
+	- `eapli.framework.infrastructure.eventpubsub.impl.inprocess` -> `eapli.framework.infrastructure.eventpubsub.impl.inprocess.service` 
+	- `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent` -> `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.service` 
+	
 ## 18.2.0 [ CORE ]
 
 ## What's new

@@ -63,4 +63,4 @@
  * @enduml
  *         -->
  */
-package eapli.framework.infrastructure.eventpubsub.impl.inprocess;
+package eapli.framework.infrastructure.eventpubsub.impl.inprocess.service;

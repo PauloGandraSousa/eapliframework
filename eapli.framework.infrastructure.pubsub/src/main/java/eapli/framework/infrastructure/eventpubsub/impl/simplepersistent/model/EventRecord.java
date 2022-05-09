@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
+package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model;
 
 import java.util.Calendar;
 
@@ -46,64 +46,66 @@ import eapli.framework.validations.Preconditions;
  */
 @Entity
 @Table(name = "PUBSUB_EVENT_RECORD")
-class EventRecord implements AggregateRoot<Long> {
+public class EventRecord implements AggregateRoot<Long> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private Long pk;
+	@Id
+	@GeneratedValue
+	private Long pk;
 
-    private final String eventName;
-    private final String publisherName;
-    @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar occurredAt;
+	private final String eventName;
 
-    @Lob
-    private final byte[] event;
+	private final String publisherName;
 
-    public EventRecord(final String publisherName, final DomainEvent event) {
-        Preconditions.nonNull(event);
+	@Temporal(TemporalType.TIMESTAMP)
+	private final Calendar occurredAt;
 
-        this.publisherName = publisherName;
-        eventName = event.getClass().getName();
-        this.event = SerializationUtils.serialize(event);
-        occurredAt = Calendars.now();
-    }
+	@Lob
+	private final byte[] event;
 
-    protected EventRecord() {
-        // for ORM
-        eventName = null;
-        event = null;
-        publisherName = null;
-        occurredAt = null;
-    }
+	public EventRecord(final String publisherName, final DomainEvent event) {
+		Preconditions.nonNull(event);
 
-    public DomainEvent event() {
-        return SerializationUtils.deserialize(event);
-    }
+		this.publisherName = publisherName;
+		eventName = event.getClass().getName();
+		this.event = SerializationUtils.serialize(event);
+		occurredAt = Calendars.now();
+	}
 
-    public String publisher() {
-        return publisherName;
-    }
+	protected EventRecord() {
+		// for ORM
+		eventName = null;
+		event = null;
+		publisherName = null;
+		occurredAt = null;
+	}
 
-    @Override
-    public boolean sameAs(final Object other) {
-        if (!(other instanceof EventRecord)) {
-            return false;
-        }
-        final EventRecord that = (EventRecord) other;
-        return new EqualsBuilder().append(pk, that.pk).append(event, that.event).append(eventName, that.eventName)
-                .isEquals();
-    }
+	public DomainEvent event() {
+		return SerializationUtils.deserialize(event);
+	}
 
-    @Override
-    public Long identity() {
-        return pk;
-    }
+	public String publisher() {
+		return publisherName;
+	}
 
-    @Override
-    public String toString() {
-        return "Record event " + event;
-    }
+	@Override
+	public boolean sameAs(final Object other) {
+		if (!(other instanceof EventRecord)) {
+			return false;
+		}
+		final var that = (EventRecord) other;
+		return new EqualsBuilder().append(pk, that.pk).append(event, that.event).append(eventName, that.eventName)
+				.isEquals();
+	}
+
+	@Override
+	public Long identity() {
+		return pk;
+	}
+
+	@Override
+	public String toString() {
+		return "Record event " + event;
+	}
 }
