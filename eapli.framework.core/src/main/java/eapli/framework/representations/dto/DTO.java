@@ -31,6 +31,9 @@ import java.lang.annotation.Target;
  * A Data Transfer Object is a "data bag" used for interfacing between systems such as remote
  * communication and the UI and the application layer.
  * <p>
+ * See Project Lombok's <code>&#64;Data</code> to generate the boilerplate code.
+ *
+ * <p>
  * See <a href="https://projectlombok.org/features/Data">Project Lombok</a>'s <code>&#64;Data</code>
  * to generate the boilerplate code.
  *

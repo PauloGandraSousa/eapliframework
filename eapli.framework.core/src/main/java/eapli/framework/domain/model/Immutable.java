@@ -80,6 +80,7 @@ import java.lang.annotation.Target;
  * and mark all your private fields as final (If you are using ORM tools you might need a default
  * constructor in which case you won't be able to make the fields final but that's a technicality).
  * </p>
+ * We are using Project Lombok's <code>&#64;Value</code> to enforce the imutability.
  * <p>
  * You should thrive to
  * <a href="https://www.yegor256.com/2014/06/09/objects-should-be-immutable.html">make all of your
@@ -87,6 +88,10 @@ import java.lang.annotation.Target;
  * by design.
  * <p>
  * Immutable classes are thread-safe by definition.
+ * <p>
+ * See Project Lombok's <code>&#64;Value</code> to generate the boilerplate code and ensure
+ * immutability.
+ *
  * <p>
  * See <a href="https://projectlombok.org/features/Value">Project Lombok</a>'s
  * <code>&#64;Value</code> to generate the boilerplate code and ensure immutability.
