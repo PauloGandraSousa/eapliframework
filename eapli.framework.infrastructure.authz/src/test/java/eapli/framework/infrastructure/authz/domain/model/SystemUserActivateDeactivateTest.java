@@ -27,7 +27,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import eapli.framework.time.util.Calendars;
+import eapli.framework.time.util.CalendarsCurrent;
 
 /**
  *
@@ -35,36 +35,36 @@ import eapli.framework.time.util.Calendars;
  *
  */
 public class SystemUserActivateDeactivateTest {
-    private SystemUser instance;
+	private SystemUser instance;
 
-    @Before
-    public void setUp() throws Exception {
-        instance = TestSystemUserFactory.dummyUser("abc");
-    }
+	@Before
+	public void setUp() throws Exception {
+		instance = TestSystemUserFactory.dummyUser("abc");
+	}
 
-    @Test
-    public void ensureAfterCreationUserIsActive() {
-        assertTrue(instance.isActive());
-    }
+	@Test
+	public void ensureAfterCreationUserIsActive() {
+		assertTrue(instance.isActive());
+	}
 
-    @Test(expected = IllegalStateException.class)
-    public void ensureCannotDeactivateAnInactiveUser() {
-        try {
-            instance.deactivate(Calendars.now());
-        } catch (@SuppressWarnings("unused") final Exception e) {
-            fail("something stange just happened. we are only interested in catching the exception on the second call to deactivate");
-        }
-        instance.deactivate(Calendars.now());
-    }
+	@Test(expected = IllegalStateException.class)
+	public void ensureCannotDeactivateAnInactiveUser() {
+		try {
+			instance.deactivate(CalendarsCurrent.now());
+		} catch (@SuppressWarnings("unused") final Exception e) {
+			fail("something stange just happened. we are only interested in catching the exception on the second call to deactivate");
+		}
+		instance.deactivate(CalendarsCurrent.now());
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureCannotDeactivatePriorToCreationDate() {
-        instance.deactivate(Calendars.yesterday());
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void ensureCannotDeactivatePriorToCreationDate() {
+		instance.deactivate(CalendarsCurrent.yesterday());
+	}
 
-    @Test
-    public void ensureAfterDeactivationUserIsInactive() {
-        instance.deactivate(Calendars.now());
-        assertFalse(instance.isActive());
-    }
+	@Test
+	public void ensureAfterDeactivationUserIsInactive() {
+		instance.deactivate(CalendarsCurrent.now());
+		assertFalse(instance.isActive());
+	}
 }

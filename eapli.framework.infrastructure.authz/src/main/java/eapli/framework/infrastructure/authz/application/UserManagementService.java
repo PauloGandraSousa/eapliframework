@@ -37,7 +37,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.time.util.Calendars;
+import eapli.framework.time.util.CalendarsCurrent;
 
 /**
  * User Management Service. Provides the typical application use cases for
@@ -101,7 +101,7 @@ public class UserManagementService {
 	@Transactional
 	public SystemUser registerNewUser(final String username, final String rawPassword, final String firstName,
 			final String lastName, final String email, final Set<Role> roles) {
-		return registerNewUser(username, rawPassword, firstName, lastName, email, roles, Calendars.now());
+		return registerNewUser(username, rawPassword, firstName, lastName, email, roles, CalendarsCurrent.now());
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class UserManagementService {
 	 */
 	@Transactional
 	public SystemUser deactivateUser(final SystemUser user) {
-		user.deactivate(Calendars.now());
+		user.deactivate(CalendarsCurrent.now());
 		return userRepository.save(user);
 	}
 }

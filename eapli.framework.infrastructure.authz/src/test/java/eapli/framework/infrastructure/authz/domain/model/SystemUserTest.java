@@ -33,7 +33,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.time.util.Calendars;
+import eapli.framework.time.util.CalendarsCurrent;
 
 /**
  *
@@ -41,74 +41,74 @@ import eapli.framework.time.util.Calendars;
  *
  */
 public class SystemUserTest {
-    private static final String PASSWORD1 = "Password1";
-    private SystemUser instance;
-    private Calendar dateOfCreation;
+	private static final String PASSWORD1 = "Password1";
+	private SystemUser instance;
+	private Calendar dateOfCreation;
 
-    @Before
-    public void setUp() throws Exception {
-        dateOfCreation = Calendars.now();
-        instance = new SystemUser(Username.valueOf("abc"), TestSystemUserFactory.dummyPass(PASSWORD1),
-                Name.valueOf("Ant", "Boocam"), EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
-    }
+	@Before
+	public void setUp() throws Exception {
+		dateOfCreation = CalendarsCurrent.now();
+		instance = new SystemUser(Username.valueOf("abc"), TestSystemUserFactory.dummyPass(PASSWORD1),
+				Name.valueOf("Ant", "Boocam"), EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureMustHaveUsername() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
-        new SystemUser(null, TestSystemUserFactory.dummyPass(PASSWORD1), Name.valueOf("Ant", "Silva"),
-                EmailAddress.valueOf("a@b.co"), roles);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void ensureMustHaveUsername() {
+		final Set<Role> roles = new HashSet<>();
+		roles.add(Role.valueOf("R"));
+		new SystemUser(null, TestSystemUserFactory.dummyPass(PASSWORD1), Name.valueOf("Ant", "Silva"),
+				EmailAddress.valueOf("a@b.co"), roles);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureMustHavePassword() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), null, Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"),
-                roles);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void ensureMustHavePassword() {
+		final Set<Role> roles = new HashSet<>();
+		roles.add(Role.valueOf("R"));
+		new SystemUser(Username.valueOf("username"), null, Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"),
+				roles);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureMustHaveName() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1), null,
-                EmailAddress.valueOf("a@b.co"), roles);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void ensureMustHaveName() {
+		final Set<Role> roles = new HashSet<>();
+		roles.add(Role.valueOf("R"));
+		new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1), null,
+				EmailAddress.valueOf("a@b.co"), roles);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureMustHaveEmail() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1),
-                Name.valueOf("Ant", "Silva"), null, roles);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void ensureMustHaveEmail() {
+		final Set<Role> roles = new HashSet<>();
+		roles.add(Role.valueOf("R"));
+		new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1),
+				Name.valueOf("Ant", "Silva"), null, roles);
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureMustHaveDateOfCreation() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
-        new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1),
-                Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, null);
-    }
+	@Test(expected = IllegalArgumentException.class)
+	public void ensureMustHaveDateOfCreation() {
+		final Set<Role> roles = new HashSet<>();
+		roles.add(Role.valueOf("R"));
+		new SystemUser(Username.valueOf("username"), TestSystemUserFactory.dummyPass(PASSWORD1),
+				Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, null);
+	}
 
-    @Test
-    public void ensureDateOfCreationIsSameAsCreatedOn() {
-        assertEquals(dateOfCreation, instance.createdOn());
-    }
+	@Test
+	public void ensureDateOfCreationIsSameAsCreatedOn() {
+		assertEquals(dateOfCreation, instance.createdOn());
+	}
 
-    @Test
-    public void ensureHasCreatedOn() {
-        assertNotNull(instance.createdOn());
-    }
+	@Test
+	public void ensureHasCreatedOn() {
+		assertNotNull(instance.createdOn());
+	}
 
-    @Test
-    public void ensurePasswordMatches() {
-        assertTrue(instance.passwordMatches(PASSWORD1, new PlainTextEncoder()));
-    }
+	@Test
+	public void ensurePasswordMatches() {
+		assertTrue(instance.passwordMatches(PASSWORD1, new PlainTextEncoder()));
+	}
 
-    @Test
-    public void ensurePasswordDoesntMatch() {
-        assertFalse(instance.passwordMatches(PASSWORD1 + "xpto", new PlainTextEncoder()));
-    }
+	@Test
+	public void ensurePasswordDoesntMatch() {
+		assertFalse(instance.passwordMatches(PASSWORD1 + "xpto", new PlainTextEncoder()));
+	}
 }

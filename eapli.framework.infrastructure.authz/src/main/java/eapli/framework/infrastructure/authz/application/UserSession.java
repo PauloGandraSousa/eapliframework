@@ -25,7 +25,7 @@ import java.util.UUID;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.time.util.Calendars;
+import eapli.framework.time.util.CalendarsCurrent;
 import eapli.framework.validations.Preconditions;
 import lombok.Value;
 import lombok.experimental.Accessors;
@@ -38,25 +38,25 @@ import lombok.experimental.Accessors;
 @Value
 @Accessors(fluent = true)
 public class UserSession implements ValueObject {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final SystemUser authenticatedUser;
-    private final UUID token;
-    private final Calendar startedOn;
+	private final SystemUser authenticatedUser;
+	private final UUID token;
+	private final Calendar startedOn;
 
-    /**
-     * @param user
-     */
-    public UserSession(final SystemUser user) {
-        Preconditions.nonNull(user, "user must not be null");
+	/**
+	 * @param user
+	 */
+	public UserSession(final SystemUser user) {
+		Preconditions.nonNull(user, "user must not be null");
 
-        this.authenticatedUser = user;
-        token = UUID.randomUUID();
-        startedOn = Calendars.now();
-    }
+		this.authenticatedUser = user;
+		token = UUID.randomUUID();
+		startedOn = CalendarsCurrent.now();
+	}
 
-    @Override
-    public String toString() {
-        return authenticatedUser.identity() + "@" + token;
-    }
+	@Override
+	public String toString() {
+		return authenticatedUser.identity() + "@" + token;
+	}
 }

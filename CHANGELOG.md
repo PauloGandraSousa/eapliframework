@@ -8,7 +8,7 @@
 
 ## Changed
 
-- TBD
+- `Calendars` and `CalendarPredicates` where split into `CalendarsCurrent` and `CalendarCurrentPredicates` to distinguish between pure deterministic utility functions and the ones that are not deterministic since they depend on the system clock
 
 ## 17.0.0 [ PUB/SUB ]
 
