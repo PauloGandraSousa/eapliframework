@@ -1,5 +1,15 @@
 # EAPLI Framework Changelog
 
+## SNAPSHOT [CORE]
+
+## What's new
+
+- Parametrizable `Command` pattern
+
+## Changed
+
+- TBD
+
 ## 17.0.0 [ PUB/SUB ]
 
 ## Changed
