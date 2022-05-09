@@ -33,26 +33,27 @@ import eapli.framework.validations.Preconditions;
  */
 public class PrefixedNumberSequenceGenerator implements IdentityGenerator<String> {
 
-    private final String prefix;
-    private final String mask;
-    // we rely on the thread-safety of {@link NumberSequenceGenerator}
-    private final NumberSequenceGenerator numberPartGenerator;
+	private final String prefix;
+	private final String mask;
 
-    public PrefixedNumberSequenceGenerator(final String prefix, final int length) {
-        this(prefix, length, 0L);
-    }
+	// we rely on the thread-safety of {@link NumberSequenceGenerator}
+	private final NumberSequenceGenerator numberPartGenerator;
 
-    public PrefixedNumberSequenceGenerator(final String prefix, final int length, final Long seed) {
-        Preconditions.nonEmpty(prefix);
-        Preconditions.isPositive(length);
+	public PrefixedNumberSequenceGenerator(final String prefix, final int length) {
+		this(prefix, length, 0L);
+	}
 
-        this.prefix = prefix;
-        mask = "%s%0" + length + "d";
-        numberPartGenerator = new NumberSequenceGenerator(seed);
-    }
+	public PrefixedNumberSequenceGenerator(final String prefix, final int length, final Long seed) {
+		Preconditions.nonEmpty(prefix);
+		Preconditions.isPositive(length);
 
-    @Override
-    public String newId() {
-        return String.format(mask, prefix, numberPartGenerator.newId());
-    }
+		this.prefix = prefix;
+		mask = "%s%0" + length + "d";
+		numberPartGenerator = new NumberSequenceGenerator(seed);
+	}
+
+	@Override
+	public String newId() {
+		return String.format(mask, prefix, numberPartGenerator.newId());
+	}
 }

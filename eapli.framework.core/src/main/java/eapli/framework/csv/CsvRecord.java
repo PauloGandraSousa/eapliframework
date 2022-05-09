@@ -31,258 +31,260 @@ import java.util.List;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A CSV record, one line. Can be used to either parse a CSV string or construct a CSV string. An OO
- * alternative to the utility class {@link eapli.framework.csv.util.CsvLineMarshaler
- * CsvLineMarshaler}.
+ * A CSV record, one line. Can be used to either parse a CSV string or construct
+ * a CSV string. An OO alternative to the utility class
+ * {@link eapli.framework.csv.util.CsvLineMarshaler CsvLineMarshaler}.
  *
  * @author Paulo Gandra Sousa 26/06/2020
  *
  */
 public class CsvRecord {
 
-    private static final char DEFAULT_SEPARATOR = ',';
-    private static final char DEFAULT_QUOTE = '"';
+	private static final char DEFAULT_SEPARATOR = ',';
+	private static final char DEFAULT_QUOTE = '"';
 
-    private final String sourceRecord;
-    private final List<String> fields;
+	private final String sourceRecord;
+	private final List<String> fields;
 
-    /**
-     * @param result
-     * @param sourceRecord
-     */
-    private CsvRecord(final List<String> result, final String sourceRecord) {
-        fields = result;
-        this.sourceRecord = sourceRecord;
-    }
+	/**
+	 * @param result
+	 * @param sourceRecord
+	 */
+	private CsvRecord(final List<String> result, final String sourceRecord) {
+		fields = result;
+		this.sourceRecord = sourceRecord;
+	}
 
-    /**
-     * Builds a CSV record where all fields (no matter what data type) are quoted.
-     *
-     * @param fields
-     * @return the newly built CsvRecord
-     */
-    public static CsvRecord valueOf(final Object[] fields) {
-        if (fields == null) {
-            return valueOf(null, null);
-        } else {
-            final boolean[] mask = new boolean[fields.length];
-            for (int i = 0; i < fields.length; i++) {
-                mask[i] = true;
-            }
-            return valueOf(fields, mask);
-        }
-    }
+	/**
+	 * Builds a CSV record where all fields (no matter what data type) are quoted.
+	 *
+	 * @param fields
+	 * @return the newly built CsvRecord
+	 */
+	public static CsvRecord valueOf(final Object[] fields) {
+		if (fields == null) {
+			return valueOf(null, null);
+		}
+		final boolean[] mask = new boolean[fields.length];
+		for (int i = 0; i < fields.length; i++) {
+			mask[i] = true;
+		}
+		return valueOf(fields, mask);
+	}
 
-    /**
-     * Builds a CSV record quoting each field according to a bitmask.
-     *
-     * @param fields
-     * @param quote
-     * @return the newly built CsvRecord
-     */
-    public static CsvRecord valueOf(final Object[] fields, final boolean[] quote) {
-        final List<String> result = new ArrayList<>();
-        if (fields == null || fields.length == 0) {
-            return new CsvRecord(result, "");
-        }
+	/**
+	 * Builds a CSV record quoting each field according to a bitmask.
+	 *
+	 * @param fields
+	 * @param quote
+	 * @return the newly built CsvRecord
+	 */
+	public static CsvRecord valueOf(final Object[] fields, final boolean[] quote) {
+		final List<String> result = new ArrayList<>();
+		if (fields == null || fields.length == 0) {
+			return new CsvRecord(result, "");
+		}
 
-        Preconditions.ensure(fields.length <= quote.length);
+		Preconditions.ensure(fields.length <= quote.length);
 
-        final var sb = new StringBuilder();
-        for (int i = 0; i < fields.length; i++) {
-            final Object f = fields[i];
-            var e = "";
-            if (f != null) {
-                if (quote[i]) {
-                    e = quote(escapeQuotes(f.toString()));
-                } else {
-                    e = f.toString();
-                }
-                sb.append(e);
-            }
-            sb.append(",");
-            result.add(e);
-        }
-        sb.deleteCharAt(sb.length() - 1);
+		final var sb = new StringBuilder();
+		for (int i = 0; i < fields.length; i++) {
+			final Object f = fields[i];
+			var e = "";
+			if (f != null) {
+				if (quote[i]) {
+					e = quote(escapeQuotes(f.toString()));
+				} else {
+					e = f.toString();
+				}
+				sb.append(e);
+			}
+			sb.append(",");
+			result.add(e);
+		}
+		sb.deleteCharAt(sb.length() - 1);
 
-        return new CsvRecord(result, sb.toString());
-    }
+		return new CsvRecord(result, sb.toString());
+	}
 
-    /**
-     * Helper state-holder for parser.
-     *
-     * @author Paulo Gandra de Sousa 2021.04.28
-     *
-     */
-    private static class ParseState {
-        private final List<String> result = new ArrayList<>();
-        private StringBuilder curVal = new StringBuilder();
-        private boolean inQuotes = false;
+	/**
+	 * Helper state-holder for parser.
+	 *
+	 * @author Paulo Gandra de Sousa 2021.04.28
+	 *
+	 */
+	private static class ParseState {
+		private final List<String> result = new ArrayList<>();
+		private StringBuilder curVal = new StringBuilder();
+		private boolean inQuotes = false;
 
-        void addToken() {
-            result.add(curVal.toString().trim());
-            curVal = new StringBuilder();
-        }
+		void addToken() {
+			result.add(curVal.toString().trim());
+			curVal = new StringBuilder();
+		}
 
-        void addChar(final char ch) {
-            curVal.append(ch);
-        }
+		void addChar(final char ch) {
+			curVal.append(ch);
+		}
 
-        void startQuotedField(final char customQuote) {
-            curVal.append(customQuote);
-            inQuotes = true;
-        }
+		void startQuotedField(final char customQuote) {
+			curVal.append(customQuote);
+			inQuotes = true;
+		}
 
-        void endQuotedField() {
-            inQuotes = false;
-        }
-    }
+		void endQuotedField() {
+			inQuotes = false;
+		}
+	}
 
-    /**
-     * Parse a CSV line with comma separator and double quotes.
-     *
-     * @param csvLine
-     * @return the newly built CsvRecord
-     * @throws ParseException
-     */
-    public static CsvRecord parse(final String csvLine) throws ParseException {
-        return parse(csvLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
-    }
+	/**
+	 * Parse a CSV line with comma separator and double quotes.
+	 *
+	 * @param csvLine
+	 * @return the newly built CsvRecord
+	 * @throws ParseException
+	 */
+	public static CsvRecord parse(final String csvLine) throws ParseException {
+		return parse(csvLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
+	}
 
-    /**
-     * Parse a CSV line with double quotes and the specified separator, e.g., comma or semicolon.
-     *
-     * @param csvLine
-     * @param separators
-     * @return the newly built CsvRecord
-     * @throws ParseException
-     */
-    public static CsvRecord parse(final String csvLine, final char separators) throws ParseException {
-        return parse(csvLine, separators, DEFAULT_QUOTE);
-    }
+	/**
+	 * Parse a CSV line with double quotes and the specified separator, e.g., comma
+	 * or semicolon.
+	 *
+	 * @param csvLine
+	 * @param separators
+	 * @return the newly built CsvRecord
+	 * @throws ParseException
+	 */
+	public static CsvRecord parse(final String csvLine, final char separators) throws ParseException {
+		return parse(csvLine, separators, DEFAULT_QUOTE);
+	}
 
-    /**
-     * Parse a CSV line of text. Empty strings produce no tokens. Empty fields count as a (empty)
-     * token. Quoted fields are not unquoted. Handles double quotes (escaped quotes).
-     *
-     * <p>
-     * Based on <a href="https://mkyong.com/java/how-to-read-and-parse-csv-file-in-java/">MKyong</a>
-     *
-     * @param csvLine
-     * @param separators
-     * @param customQuote
-     * @return the newly built CsvRecord
-     * @throws ParseException
-     */
-    public static CsvRecord parse(final String csvLine, final char separators, final char customQuote)
-            throws ParseException {
+	/**
+	 * Parse a CSV line of text. Empty strings produce no tokens. Empty fields count
+	 * as a (empty) token. Quoted fields are not unquoted. Handles double quotes
+	 * (escaped quotes).
+	 *
+	 * <p>
+	 * Based on <a href=
+	 * "https://mkyong.com/java/how-to-read-and-parse-csv-file-in-java/">MKyong</a>
+	 *
+	 * @param csvLine
+	 * @param separators
+	 * @param customQuote
+	 * @return the newly built CsvRecord
+	 * @throws ParseException
+	 */
+	public static CsvRecord parse(final String csvLine, final char separators, final char customQuote)
+			throws ParseException {
 
-        final var state = new ParseState();
+		final var state = new ParseState();
 
-        // if empty, return!
-        if (csvLine == null || csvLine.isEmpty()) {
-            return new CsvRecord(state.result, "");
-        }
+		// if empty, return!
+		if (csvLine == null || csvLine.isEmpty()) {
+			return new CsvRecord(state.result, "");
+		}
 
-        final char[] chars = csvLine.toCharArray();
-        int i = 0;
-        while (i < chars.length) {
-            final char ch = chars[i];
-            if (state.inQuotes) {
-                i = parseInQuotes(state, ch, customQuote, chars, i);
-            } else {
-                parseNotInQuotes(state, ch, separators, customQuote);
-            }
+		final char[] chars = csvLine.toCharArray();
+		int i = 0;
+		while (i < chars.length) {
+			final char ch = chars[i];
+			if (state.inQuotes) {
+				i = parseInQuotes(state, ch, customQuote, chars, i);
+			} else {
+				parseNotInQuotes(state, ch, separators, customQuote);
+			}
 
-            i++;
-        }
-        if (state.inQuotes) {
-            throw new ParseException("Unfinished quote", -1);
-        }
-        state.addToken();
+			i++;
+		}
+		if (state.inQuotes) {
+			throw new ParseException("Unfinished quote", -1);
+		}
+		state.addToken();
 
-        return new CsvRecord(state.result, csvLine);
-    }
+		return new CsvRecord(state.result, csvLine);
+	}
 
-    private static void parseNotInQuotes(final ParseState state, final char ch, final char separators,
-            final char customQuote) {
-        if (ch == customQuote) {
-            state.startQuotedField(customQuote);
-        } else if (ch == separators) {
-            state.addToken();
-        } else {
-            state.addChar(ch);
-        }
-    }
+	private static void parseNotInQuotes(final ParseState state, final char ch, final char separators,
+			final char customQuote) {
+		if (ch == customQuote) {
+			state.startQuotedField(customQuote);
+		} else if (ch == separators) {
+			state.addToken();
+		} else {
+			state.addChar(ch);
+		}
+	}
 
-    private static int parseInQuotes(final ParseState state, final char ch, final char customQuote, final char[] chars,
-            int i) {
-        state.addChar(ch);
-        if (ch == customQuote) {
-            if (i < chars.length - 1 && chars[i + 1] == customQuote) {
-                i++;
-                state.addChar(customQuote);
-            } else {
-                state.endQuotedField();
-            }
-        }
-        return i;
-    }
+	private static int parseInQuotes(final ParseState state, final char ch, final char customQuote, final char[] chars,
+			int i) {
+		state.addChar(ch);
+		if (ch == customQuote) {
+			if (i < chars.length - 1 && chars[i + 1] == customQuote) {
+				i++;
+				state.addChar(customQuote);
+			} else {
+				state.endQuotedField();
+			}
+		}
+		return i;
+	}
 
-    /**
-     * Prepares a quoted string to be represented as a properly escaped CSV field with double
-     * quotes.
-     *
-     * <pre>
-     * The girl said "hello"
-     * </pre>
-     *
-     * is transformed to:
-     *
-     * <pre>
-     * The girl said ""hello""
-     * </pre>
-     *
-     * @param field
-     * @return
-     */
-    private static String escapeQuotes(final String field) {
-        return field.replace("\"", "\"\"");
-    }
+	/**
+	 * Prepares a quoted string to be represented as a properly escaped CSV field
+	 * with double quotes.
+	 *
+	 * <pre>
+	 * The girl said "hello"
+	 * </pre>
+	 *
+	 * is transformed to:
+	 *
+	 * <pre>
+	 * The girl said ""hello""
+	 * </pre>
+	 *
+	 * @param field
+	 * @return
+	 */
+	private static String escapeQuotes(final String field) {
+		return field.replace("\"", "\"\"");
+	}
 
-    /**
-     * Adds quotes around a field content.
-     *
-     * <pre>
-     * "abc" -&gt; "abc"
-     *
-     * abc -&gt; "abc"
-     * </pre>
-     *
-     *
-     * @param field
-     * @return
-     */
-    private static String quote(final String field) {
-        if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
-            return field;
-        }
-        return "\"" + field + "\"";
-    }
+	/**
+	 * Adds quotes around a field content.
+	 *
+	 * <pre>
+	 * "abc" -&gt; "abc"
+	 *
+	 * abc -&gt; "abc"
+	 * </pre>
+	 *
+	 *
+	 * @param field
+	 * @return
+	 */
+	private static String quote(final String field) {
+		if (!field.isEmpty() && field.charAt(0) == '"' && field.charAt(field.length() - 1) == '"') {
+			return field;
+		}
+		return "\"" + field + "\"";
+	}
 
-    /**
-     *
-     * @return the list of fields of this record
-     */
-    public List<String> fields() {
-        return Collections.unmodifiableList(fields);
-    }
+	/**
+	 *
+	 * @return the list of fields of this record
+	 */
+	public List<String> fields() {
+		return Collections.unmodifiableList(fields);
+	}
 
-    /**
-     *
-     */
-    @Override
-    public String toString() {
-        return sourceRecord;
-    }
+	/**
+	 *
+	 */
+	@Override
+	public String toString() {
+		return sourceRecord;
+	}
 }

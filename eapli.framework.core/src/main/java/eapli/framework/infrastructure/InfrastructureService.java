@@ -28,13 +28,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * An infrastructure Service. Typically for providing some piece of functionality as a strategy to
- * access outside behavior not directly related to implementing business logic. For instance,
- * sending email or a text message.
+ * An infrastructure Service. Typically for providing some piece of
+ * functionality as a strategy to access outside behaviour not directly related
+ * to implementing business logic. For instance, sending email or a text
+ * message.
  * <p>
- * Services should preferably be stateless (no properties) except for injected dependencies, e.g.,
- * repositories
- * and services.
+ * Services should preferably be stateless (no properties) except for injected
+ * dependencies, e.g., repositories and services.
  * </p>
  *
  *
@@ -43,18 +43,17 @@ import java.lang.annotation.Target;
  *         <!--
  * @startuml domain-service.svg
  *
- *           class IntraBankTransferService << domain service>>
- *           class Account <<aggregate root>>
+ *           class IntraBankTransferService << domain service>> class Account
+ *           <<aggregate root>>
  *
- *           IntraBankTransferService ..> Account: from
- *           IntraBankTransferService ..> Account: to
+ *           IntraBankTransferService ..> Account: from IntraBankTransferService
+ *           ..> Account: to
  *
- * @enduml
- *         -->
+ * @enduml -->
  */
 @Documented
 @Retention(SOURCE)
 @Target({ TYPE })
 public @interface InfrastructureService {
-    // empty
+	// empty
 }

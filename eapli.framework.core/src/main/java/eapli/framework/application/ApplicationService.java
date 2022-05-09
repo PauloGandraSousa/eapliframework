@@ -28,11 +28,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * An Application Service. Usually to factor out common behavior from several use case controllers.
+ * An Application Service. Usually to factor out common behaviour from several
+ * use case controllers.
  *
  * <p>
- * Services should be stateless (no properties) except for injected dependencies, e.g., repositories
- * and services.
+ * Services should be stateless (no properties) except for injected
+ * dependencies, e.g., repositories and services.
  * </p>
  *
  *
@@ -42,5 +43,5 @@ import java.lang.annotation.Target;
 @Retention(SOURCE)
 @Target({ TYPE })
 public @interface ApplicationService {
-    // empty
+	// empty
 }

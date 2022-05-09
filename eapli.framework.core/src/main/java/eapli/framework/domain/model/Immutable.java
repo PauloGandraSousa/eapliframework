@@ -28,16 +28,18 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * An immutable object; that is, one that cannot change state after it is created. A java String is
- * an excellent example of an immutable object, as it is the Java 8 Time classes.
+ * An immutable object; that is, one that cannot change state after it is
+ * created. A java String is an excellent example of an immutable object, as it
+ * is the Java 8 Time classes.
  * <p>
- * Immutable objects are quite helpful as they represent a thing in the real world and since they
- * cannot change we are always certain it represents the one thing they were created for. Immutable
- * objects usually participate in operations with other objects creating new objects to represent
- * the new state.
+ * Immutable objects are quite helpful as they represent a thing in the real
+ * world and since they cannot change we are always certain it represents the
+ * one thing they were created for. Immutable objects usually participate in
+ * operations with other objects creating new objects to represent the new
+ * state.
  * <p>
- * For instance, a Color does not change when we mix two colors, what happens is that a third color
- * is created.
+ * For instance, a Color does not change when we mix two colors, what happens is
+ * that a third color is created.
  *
  * <pre>
  * <code>
@@ -48,9 +50,9 @@ import java.lang.annotation.Target;
  * </code>
  * </pre>
  *
- * In the previous example, {@code x} will be equivalent to the color yellow but both {@code green}
- * and {@code red} will still be the same as they were and will always be the same no matter how
- * many times we use them.
+ * In the previous example, {@code x} will be equivalent to the color yellow but
+ * both {@code green} and {@code red} will still be the same as they were and
+ * will always be the same no matter how many times we use them.
  * <p>
  * A simple definition for this Color class would look like:
  *
@@ -75,26 +77,29 @@ import java.lang.annotation.Target;
  * </code>
  * </pre>
  *
- * Look at the final declaration so that this class cannot be extended and the lack of any mutator
- * method. Make sure you don't provide mutator methods, always construct the object in a valid state
- * and mark all your private fields as final (If you are using ORM tools you might need a default
- * constructor in which case you won't be able to make the fields final but that's a technicality).
+ * Look at the final declaration so that this class cannot be extended and the
+ * lack of any mutator method. Make sure you don't provide mutator methods,
+ * always construct the object in a valid state and mark all your private fields
+ * as final (If you are using ORM tools you might need a default constructor in
+ * which case you won't be able to make the fields final but that's a
+ * technicality).
  * </p>
- * We are using Project Lombok's <code>&#64;Value</code> to enforce the imutability.
+ * We are using Project Lombok's <code>&#64;Value</code> to enforce the
+ * immutability.
  * <p>
- * You should thrive to
- * <a href="https://www.yegor256.com/2014/06/09/objects-should-be-immutable.html">make all of your
- * objects immutable</a>
- * by design.
+ * You should thrive to <a href=
+ * "https://www.yegor256.com/2014/06/09/objects-should-be-immutable.html">make
+ * all of your objects immutable</a> by design.
  * <p>
  * Immutable classes are thread-safe by definition.
  * <p>
- * See Project Lombok's <code>&#64;Value</code> to generate the boilerplate code and ensure
- * immutability.
+ * See Project Lombok's <code>&#64;Value</code> to generate the boilerplate code
+ * and ensure immutability.
  *
  * <p>
  * See <a href="https://projectlombok.org/features/Value">Project Lombok</a>'s
- * <code>&#64;Value</code> to generate the boilerplate code and ensure immutability.
+ * <code>&#64;Value</code> to generate the boilerplate code and ensure
+ * immutability.
  *
  * @author Paulo Gandra de Sousa 28/04/2020
  */

@@ -28,35 +28,37 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * A Use case controller is the API to the domain translating from the outside world (e.g., DTO) to
- * the inside world (domain). Use case controllers do not perform any business logic but
- * coordinate/dispatch the execution to the right business object. Usually a couple of lines of code
- * are enough:
+ * A Use case controller is the API to the domain translating from the outside
+ * world (e.g., DTO) to the inside world (domain). Use case controllers do not
+ * perform any business logic but coordinate/dispatch the execution to the right
+ * business object. Usually a couple of lines of code are enough:
  * <ol>
  * <li>translate input DTOs to domain Value Objects
- * <li>lookup the necessary Aggregate Root in the repository, based on the input/value objects
+ * <li>lookup the necessary Aggregate Root in the repository, based on the
+ * input/value objects
  * <li>call a domain logic business method on the aggregate
  * <li>save the modified aggregate back to the repository
  * </ol>
  * <p>
- * Controllers should be stateless (no properties) except for injected dependencies, e.g.,
- * repositories and services. That is, even if the user has to enter name, email, and other
- * "fields", the controller should not have a Person object as its state neither have a setName(),
- * setEmail(), and alike methods.
+ * Controllers should be stateless (no properties) except for injected
+ * dependencies, e.g., repositories and services. That is, even if the user has
+ * to enter name, email, and other "fields", the controller should not have a
+ * Person object as its state neither have a setName(), setEmail(), and alike
+ * methods.
  * </p>
  * <p>
- * Another important rule, is that a use case controller should only modify one single object
- * (aggregate root) and transactional controllers that modify more than object should be avoided.
+ * Another important rule, is that a use case controller should only modify one
+ * single object (aggregate root) and transactional controllers that modify more
+ * than object should be avoided.
  * </p>
  * <p>
- * For example, consider the following use case in an hypothetical agenda application:
- * <blockquote> <strong>Add a new contact</strong>
+ * For example, consider the following use case in an hypothetical agenda
+ * application: <blockquote> <strong>Add a new contact</strong>
  * <p>
- * As a User I want to enter a new contact by providing the name, email, and phone number of a
- * person. Optionally I want to provide the full address (including country) of residence and the
- * date of birth of the person.
- * </blockquote>
- * A controller for this use case would look like:
+ * As a User I want to enter a new contact by providing the name, email, and
+ * phone number of a person. Optionally I want to provide the full address
+ * (including country) of residence and the date of birth of the person.
+ * </blockquote> A controller for this use case would look like:
  *
  * <pre>
  * <code>
@@ -93,9 +95,9 @@ import java.lang.annotation.Target;
  * </code>
  * </pre>
  * <p>
- * Controllers can also perform some infrastructure jobs like ensuring permissions (authentication
- * and authorization) to access the method, eventough that is better delegated to some framework,
- * e.g., Spring Security.
+ * Controllers can also perform some infrastructure jobs like ensuring
+ * permissions (authentication and authorisation) to access the method,
+ * eventough that is better delegated to some framework, e.g., Spring Security.
  * </p>
  *
  * @author Paulo Gandra Sousa
@@ -104,5 +106,5 @@ import java.lang.annotation.Target;
 @Retention(SOURCE)
 @Target({ TYPE })
 public @interface UseCaseController {
-    // empty
+	// empty
 }

@@ -38,97 +38,94 @@ import javax.xml.transform.stream.StreamSource;
 import eapli.framework.util.Utility;
 
 /**
- * A pretty formatted XML string.
+ * A concrete Factory to build pretty formatted XML string.
  *
  * @author Paulo Gandra Sousa 13/05/2020
  *
  */
 @Utility
 public class PrettyXmlString {
-    private PrettyXmlString() {
-    }
+	private PrettyXmlString() {
+	}
 
-    /**
-     * Constructs a pretty formatted XML string from a string with unformatted XML content.
-     *
-     * @param input
-     *            XML content
-     * @return a pretty formatted XML string
-     */
-    public static FormattedString fromString(final String input) {
-        return fromString(input, 2);
-    }
+	/**
+	 * Constructs a pretty formatted XML string from a string with unformatted XML
+	 * content.
+	 *
+	 * @param input XML content
+	 * @return a pretty formatted XML string
+	 */
+	public static FormattedString fromString(final String input) {
+		return fromString(input, 2);
+	}
 
-    /**
-     * Constructs a pretty formatted string from a string with unformatted XML content.
-     *
-     * @param input
-     *            XML content
-     * @param indent
-     *            indentation size
-     * @return a pretty formatted XML string
-     */
-    public static FormattedString fromString(final String input, final int indent) {
-        return new FormattedString() {
-            /**
-             * Returns a formated XML output.
-             * <p>
-             * Based in code from
-             * <a href=
-             * "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java"> stack
-             * overflow</a>
-             *
-             * @return a formated XML
-             */
-            @Override
-            public String toString() {
-                try {
-                    final TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                    transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-                    transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
-                    transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-                    transformerFactory.setAttribute("indent-number", indent);
-                    final Transformer transformer = transformerFactory.newTransformer();
-                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	/**
+	 * Constructs a pretty formatted string from a string with unformatted XML
+	 * content.
+	 *
+	 * @param input  XML content
+	 * @param indent indentation size
+	 * @return a pretty formatted XML string
+	 */
+	public static FormattedString fromString(final String input, final int indent) {
+		return new FormattedString() {
+			/**
+			 * Returns a formated XML output.
+			 * <p>
+			 * Based in code from <a href=
+			 * "http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java">
+			 * stack overflow</a>
+			 *
+			 * @return a formated XML
+			 */
+			@Override
+			public String toString() {
+				try {
+					final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+					transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+					transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+					transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+					transformerFactory.setAttribute("indent-number", indent);
+					final Transformer transformer = transformerFactory.newTransformer();
+					transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-                    final Source xmlInput = new StreamSource(new StringReader(input));
-                    final StreamResult xmlOutput = new StreamResult(new StringWriter());
-                    transformer.transform(xmlInput, xmlOutput);
-                    return xmlOutput.getWriter().toString();
-                } catch (final TransformerException e) {
-                    throw new FormatingOrTransformationException(e);
-                }
-            }
+					final Source xmlInput = new StreamSource(new StringReader(input));
+					final StreamResult xmlOutput = new StreamResult(new StringWriter());
+					transformer.transform(xmlInput, xmlOutput);
+					return xmlOutput.getWriter().toString();
+				} catch (final TransformerException e) {
+					throw new FormatingOrTransformationException(e);
+				}
+			}
 
-        };
-    }
+		};
+	}
 
-    /**
-     * Constructs a pretty formatted XML string from an object with JAX-B annotations.
-     *
-     * @param <T>
-     * @param input
-     *            a java object to marshal as an XML string
-     * @param clazz
-     *            the type of object to map
-     * @return a pretty formatted XML string
-     */
-    public static <T> FormattedString fromObject(final T input, final Class<T> clazz) {
+	/**
+	 * Constructs a pretty formatted XML string from an object with JAX-B
+	 * annotations.
+	 *
+	 * @param <T>
+	 * @param input a java object to marshal as an XML string
+	 * @param clazz the type of object to map
+	 * @return a pretty formatted XML string
+	 */
+	public static <T> FormattedString fromObject(final T input, final Class<T> clazz) {
 
-        return new FormattedString() {
-            @Override
-            public final String toString() {
-                final StringWriter writer = new StringWriter();
-                try {
-                    final JAXBContext context = JAXBContext.newInstance(clazz);
-                    final Marshaller mar = context.createMarshaller();
-                    mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                    mar.marshal(input, writer);
-                } catch (final JAXBException e) {
-                    throw new FormatingOrTransformationException(e);
-                }
-                return writer.toString();
-            }
-        };
-    }
+		return new FormattedString() {
+			@Override
+			public final String toString() {
+				final StringWriter writer = new StringWriter();
+				try {
+					final JAXBContext context = JAXBContext.newInstance(clazz);
+					final Marshaller mar = context.createMarshaller();
+					mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+					mar.marshal(input, writer);
+				} catch (final JAXBException e) {
+					throw new FormatingOrTransformationException(e);
+				}
+				return writer.toString();
+			}
+		};
+	}
 }

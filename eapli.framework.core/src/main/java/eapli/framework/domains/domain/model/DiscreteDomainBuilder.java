@@ -38,59 +38,59 @@ import eapli.framework.validations.Preconditions;
  */
 public class DiscreteDomainBuilder<T extends Serializable> implements Factory<DiscreteDomain<T>> {
 
-    private final Set<T> from = new HashSet<>();
+	private final Set<T> from = new HashSet<>();
 
-    /**
-     * Adds an element to the domain
-     *
-     * @param e
-     * @return this builder
-     */
-    public DiscreteDomainBuilder<T> with(final T e) {
-        Preconditions.nonNull(e);
+	/**
+	 * Adds an element to the domain.
+	 *
+	 * @param e
+	 * @return this builder
+	 */
+	public DiscreteDomainBuilder<T> with(final T e) {
+		Preconditions.nonNull(e);
 
-        from.add(e);
-        return this;
-    }
+		from.add(e);
+		return this;
+	}
 
-    /**
-     * Adds some elements to the domain
-     *
-     * @param elements
-     * @return this builder
-     */
-    public DiscreteDomainBuilder<T> with(@SuppressWarnings("unchecked") final T... elements) {
-        from.addAll(Arrays.asList(elements));
-        return this;
-    }
+	/**
+	 * Adds some elements to the domain.
+	 *
+	 * @param elements
+	 * @return this builder
+	 */
+	public DiscreteDomainBuilder<T> with(@SuppressWarnings("unchecked") final T... elements) {
+		from.addAll(Arrays.asList(elements));
+		return this;
+	}
 
-    /**
-     * Adds elements from a stream
-     *
-     * @param stream
-     * @return this builder
-     */
-    public DiscreteDomainBuilder<T> with(final Stream<T> stream) {
-        Preconditions.nonNull(stream);
-        stream.forEach(from::add);
-        return this;
-    }
+	/**
+	 * Adds elements from a stream.
+	 *
+	 * @param stream
+	 * @return this builder
+	 */
+	public DiscreteDomainBuilder<T> with(final Stream<T> stream) {
+		Preconditions.nonNull(stream);
+		stream.forEach(from::add);
+		return this;
+	}
 
-    /**
-     * Removes an element previously added to the domain
-     *
-     * @param e
-     * @return this builder
-     */
-    public DiscreteDomainBuilder<T> without(final T e) {
-        Preconditions.nonNull(e);
+	/**
+	 * Removes an element previously added to the domain.
+	 *
+	 * @param e
+	 * @return this builder
+	 */
+	public DiscreteDomainBuilder<T> without(final T e) {
+		Preconditions.nonNull(e);
 
-        from.remove(e);
-        return this;
-    }
+		from.remove(e);
+		return this;
+	}
 
-    @Override
-    public DiscreteDomain<T> build() {
-        return new DiscreteDomain<>(from);
-    }
+	@Override
+	public DiscreteDomain<T> build() {
+		return new DiscreteDomain<>(from);
+	}
 }

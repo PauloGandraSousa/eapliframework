@@ -21,13 +21,14 @@
 package eapli.framework.memento;
 
 /**
- * An opaque object representing the internal state of an object.
- * This a behavioral <a href="https://refactoring.guru/design-patterns/memento">GoF</a> design
+ * An opaque object representing the internal state of an object. This a
+ * behavioural
+ * <a href="https://refactoring.guru/design-patterns/memento">GoF</a> design
  * pattern.
  *
  * @author Paulo Gandra Sousa
  *
  */
 public interface Memento {
-    // empty
+	// empty
 }

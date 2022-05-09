@@ -27,62 +27,62 @@ import eapli.framework.util.Singleton;
 import eapli.framework.validations.Preconditions;
 
 /**
- * Helper class to act as a registry of identity generators and generate new ids based on an opaque
- * context.
+ * Helper class to act as a registry of identity generators and generate new ids
+ * based on an opaque context.
  *
  * @author Paulo Gandra de Sousa
  */
 @Singleton
 public class IdentityGenerators {
 
-    private static class LazyHolder {
-        private static final IdentityGenerators INSTANCE = new IdentityGenerators();
+	private static class LazyHolder {
+		private static final IdentityGenerators INSTANCE = new IdentityGenerators();
 
-        private LazyHolder() {
+		private LazyHolder() {
 
-        }
-    }
+		}
+	}
 
-    private final Map<String, IdentityGenerator<?>> generators = new ConcurrentHashMap<>();
+	private final Map<String, IdentityGenerator<?>> generators = new ConcurrentHashMap<>();
 
-    private IdentityGenerators() {
-        // ensure singleton
-    }
+	private IdentityGenerators() {
+		// ensure singleton
+	}
 
-    /**
-     * @return the single instance of the identity generators registry
-     */
-    public static IdentityGenerators instance() {
-        return LazyHolder.INSTANCE;
-    }
+	/**
+	 * @return the single instance of the identity generators registry
+	 */
+	public static IdentityGenerators instance() {
+		return LazyHolder.INSTANCE;
+	}
 
-    /**
-     * Sets up a new identity generator in the registry
-     *
-     * @param context
-     * @param gen
-     *
-     * @return this registry
-     */
-    public IdentityGenerators with(final String context, final IdentityGenerator<?> gen) {
-        Preconditions.nonNull(gen);
-        Preconditions.nonEmpty(context);
+	/**
+	 * Sets up a new identity generator in the registry.
+	 *
+	 * @param context
+	 * @param gen
+	 *
+	 * @return this registry
+	 */
+	public IdentityGenerators with(final String context, final IdentityGenerator<?> gen) {
+		Preconditions.nonNull(gen);
+		Preconditions.nonEmpty(context);
 
-        generators.put(context, gen);
-        return this;
-    }
+		generators.put(context, gen);
+		return this;
+	}
 
-    /**
-     * Creates a new id using the specified generator
-     *
-     * @param <T>
-     * @param context
-     *            the name of the generator to use as it was registered in {@link #with}
-     *
-     * @return a new id
-     */
-    @SuppressWarnings("unchecked")
-    public <T> T newId(final String context) {
-        return (T) generators.get(context).newId();
-    }
+	/**
+	 * Creates a new id using the specified generator.
+	 *
+	 * @param <T>
+	 * @param context the name of the generator to use as it was registered in
+	 *                {@link #with}
+	 *
+	 * @return a new id
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T newId(final String context) {
+		return (T) generators.get(context).newId();
+	}
 }

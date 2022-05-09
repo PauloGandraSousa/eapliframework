@@ -28,9 +28,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * A Domain Service. When a responsibility/behavior is not naturally assigned to
- * an existing domain object, create a domain service to implement that
- * behavior. Care should be taken not to overpopulate the domain model with too
+ * A Domain Service. When a responsibility/behaviour is not naturally assigned
+ * to an existing domain object, create a domain service to implement that
+ * behaviour. Care should be taken not to overpopulate the domain model with too
  * many services - the domain entities and value objects should be the main
  * place to implement the business logic.
  *
@@ -56,11 +56,11 @@ import java.lang.annotation.Target;
  * @startuml domain-service.svg
  *
  *           class IntraBankTransferService << domain service>>
- * 
+ *
  *           class Account <<aggregate root>>
  *
  *           IntraBankTransferService ..> Account: from
- * 
+ *
  *           IntraBankTransferService ..> Account: to
  *
  * @enduml -->

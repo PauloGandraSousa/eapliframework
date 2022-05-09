@@ -112,8 +112,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * For ORM tool only
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 */
 	protected Money() {
 		amount = null;
@@ -147,8 +145,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 	 * SELECT NEW JPQL queries <strong>only</strong>.
 	 * <p/>
 	 * This is an example of a <strong>"public but not published"</strong> interface
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @param amount
 	 * @param currency
@@ -186,8 +182,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * Factory method to construct a Money object of amount EUR.
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @param amount
 	 * @return a Money object of amount EUR
@@ -198,8 +192,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * Parses a string representation of a money, e.g., "123.50 EUR".
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @param value
 	 * @return a new object corresponding to the value
@@ -215,8 +207,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * Builds a Money.
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @param amount
 	 * @param currency the currency code
@@ -232,8 +222,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 	 * reduction style. That is, since Money is an immutable object, collecting
 	 * Money objects from streams have the implication of creating a new Money
 	 * object for each collect step which might impact performance.
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @param zero
 	 * @return a collector instance
@@ -252,8 +240,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * A collector class to use with Java 8 Streams.
-	 *
-	 * @author Paulo Gandra de Sousa
 	 *
 	 */
 	private static class MoneyCollector {
@@ -459,8 +445,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 	/**
 	 * Compares two Money objects checking if this money's amount is greater than or
 	 * equal to the other.
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @param arg
 	 * @return {@code true} if this money's amount is greater than or equal to the
@@ -473,8 +457,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 	/**
 	 * Compares two Money objects checking if this money's amount is less than or
 	 * equal to the other.
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @param arg
 	 * @return {@code true} if this money's amount is less than or equal to the
@@ -514,8 +496,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * Checks if this amount is negative.
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @return {@code true} if this amount is negative
 	 */
@@ -526,8 +506,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * Checks if this amount is positive.
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @return {@code true} if this amount is positive
 	 */
@@ -538,9 +516,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 
 	/**
 	 * Checks if this amount is zero.
-	 *
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @return {@code true} if this amount is zero
 	 */
@@ -555,9 +530,6 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
 	 * <p>
 	 * Scraped from <a href=
 	 * "http://cameotutorials.blogspot.com/2009/06/money-class-for-use-in-currency.html">cameotutorials</a>
-	 *
-	 * <p>
-	 * Author Paulo Gandra de Sousa
 	 *
 	 * @return a formatted representation of this Money value based on the rules
 	 *         defined by the currency Locale
