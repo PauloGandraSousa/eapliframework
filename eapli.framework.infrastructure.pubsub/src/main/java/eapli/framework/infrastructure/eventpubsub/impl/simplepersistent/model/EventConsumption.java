@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
+package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model;
 
 import java.util.Calendar;
 
@@ -44,52 +44,54 @@ import eapli.framework.validations.Preconditions;
  */
 @Entity
 @Table(name = "PUBSUB_EVENT_CONSUMPTION")
-class EventConsumption implements AggregateRoot<Long> {
-    private static final long serialVersionUID = 1L;
+public class EventConsumption implements AggregateRoot<Long> {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    @ManyToOne
-    private final EventRecord event;
-    private final String consumerName;
-    @Temporal(TemporalType.TIMESTAMP)
-    private final Calendar occurredAt;
+	@ManyToOne
+	private final EventRecord event;
 
-    public EventConsumption(final String consumerName, final EventRecord event) {
-        Preconditions.nonNull(event);
-        Preconditions.nonEmpty(consumerName);
+	private final String consumerName;
 
-        this.consumerName = consumerName;
-        this.event = event;
-        occurredAt = Calendars.now();
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	private final Calendar occurredAt;
 
-    protected EventConsumption() {
-        // for ORM
-        consumerName = null;
-        event = null;
-        occurredAt = null;
-    }
+	public EventConsumption(final String consumerName, final EventRecord event) {
+		Preconditions.nonNull(event);
+		Preconditions.nonEmpty(consumerName);
 
-    @Override
-    public boolean sameAs(final Object other) {
-        if (!(other instanceof EventConsumption)) {
-            return false;
-        }
-        final EventConsumption that = (EventConsumption) other;
-        return new EqualsBuilder().append(id, that.id).append(event, that.event).append(consumerName, that.consumerName)
-                .isEquals();
-    }
+		this.consumerName = consumerName;
+		this.event = event;
+		occurredAt = Calendars.now();
+	}
 
-    @Override
-    public Long identity() {
-        return id;
-    }
+	protected EventConsumption() {
+		// for ORM
+		consumerName = null;
+		event = null;
+		occurredAt = null;
+	}
 
-    @Override
-    public String toString() {
-        return consumerName + " consumed event " + event;
-    }
+	@Override
+	public boolean sameAs(final Object other) {
+		if (!(other instanceof EventConsumption)) {
+			return false;
+		}
+		final var that = (EventConsumption) other;
+		return new EqualsBuilder().append(id, that.id).append(event, that.event).append(consumerName, that.consumerName)
+				.isEquals();
+	}
+
+	@Override
+	public Long identity() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return consumerName + " consumed event " + event;
+	}
 }

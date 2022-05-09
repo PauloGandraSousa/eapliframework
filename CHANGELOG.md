@@ -1,5 +1,35 @@
 # EAPLI Framework Changelog
 
+## 17.0.0 [ PUB/SUB ]
+
+## Changed
+
+- added JPA repositories to SimplePersistent implementation
+- restructured packages
+	- `eapli.framework.infrastructure.eventpubsub.impl.inprocess` -> `eapli.framework.infrastructure.eventpubsub.impl.inprocess.service` 
+	- `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent` -> `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.service` 
+	
+## 18.2.0 [ CORE ]
+
+## What's new
+
+- `Money.isOfSameCurrency`
+
+## Changed
+
+- Fix missing `PersistenceContext` annotation on `JpaAbstractRepository` for scenarios with Spring
+- Fix missing `Transactional` annotation for scenarios with Spring and JPA repositories (not Spring Data)
+
+## 18.1.1 [ CORE ]
+
+## What's new
+
+- n.a.
+
+## Changed
+
+- removed `Macro.record`; use `with()`
+- renamed `DateInterval` internal member names to `dateStart` and `dateEnd` due to conflicts with some RDBMS
 
 ## 18.0.0 [ CORE ]
 
@@ -61,6 +91,8 @@
 ## 17.0.0 [ AUTHZ ]
 
 ### What's new
+
+- n.a.
 
 ### Changed
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -50,6 +50,7 @@ public class Macro implements Action {
 
     /**
      * @param action
+     * @return this Macro so you can chain actions
      */
     public Macro with(final Action action) {
         actions.add(action);

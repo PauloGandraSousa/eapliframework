@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -21,6 +21,7 @@
 package eapli.framework.math.domain.model;
 
 import eapli.framework.domain.model.ValueObject;
+import lombok.EqualsAndHashCode;
 
 /**
  * A Roman numeral representation of an integer number. An object of type RomanNumeral is an integer
@@ -28,7 +29,6 @@ import eapli.framework.domain.model.ValueObject;
  * a Roman numeral in this range. The function {@link #toString()} will return a standardized Roman
  * numeral representation of the number. The function {@link #toInt()} will return the number as a
  * value of type {@code int}.
- *
  * <p>
  * This code is based on <a href=
  * "http://math.hws.edu/eck/cs124/javanotes6/c8/ex3-ans.html">http://math.hws.edu/eck/cs124/javanotes6/c8/ex3-ans.html</a>
@@ -36,6 +36,7 @@ import eapli.framework.domain.model.ValueObject;
  * @author David J. Eck eck@hws.edu
  * @author Paulo Gandra de Sousa
  */
+@EqualsAndHashCode
 public class RomanNumeral implements ValueObject {
 
     private static final long serialVersionUID = -2871632714426865406L;
@@ -55,9 +56,9 @@ public class RomanNumeral implements ValueObject {
      *
      * @param arabic
      *            the number we want to express as a Roman literal
+     *
      * @throws NumberFormatException
      *             if arabic is not in the range 1 to 3999 inclusive.
-     *
      */
     protected RomanNumeral(final int arabic) {
         if (arabic < 1) {
@@ -76,6 +77,7 @@ public class RomanNumeral implements ValueObject {
      *
      * @param roman
      *            a roman literal, e.g., "xvii". Both upper and lower case letters are allowed.
+     *
      * @throws NumberFormatException
      *             If the parameter is not a legal Roman numeral
      */
@@ -128,7 +130,9 @@ public class RomanNumeral implements ValueObject {
      *
      * @param roman
      *            a roman literal
+     *
      * @return a RomanNumeral object
+     *
      * @throws NumberFormatException
      *             if not a legal Roman numeral.
      */

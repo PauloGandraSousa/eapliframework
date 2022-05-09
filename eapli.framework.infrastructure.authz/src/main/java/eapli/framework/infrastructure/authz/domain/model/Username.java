@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -27,8 +27,8 @@ import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * A user name. It must not be empty.
@@ -36,6 +36,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class Username implements ValueObject, Serializable, Comparable<Username> {
 
     private static final long serialVersionUID = 1L;
@@ -58,6 +59,7 @@ public class Username implements ValueObject, Serializable, Comparable<Username>
      * Factory method.
      *
      * @param username
+     *
      * @return a new Username object
      */
     public static Username valueOf(final String username) {
@@ -65,28 +67,8 @@ public class Username implements ValueObject, Serializable, Comparable<Username>
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Username)) {
-            return false;
-        }
-
-        final Username other = (Username) o;
-
-        return value.equals(other.value);
-
-    }
-
-    @Override
     public String toString() {
         return value;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(value).code();
     }
 
     @Override

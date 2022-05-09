@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -21,16 +21,16 @@
 package eapli.framework.math.domain.model;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * An integer number in any base. Allows to easily convert to/from decimal,
  * binary, octal and hexadecimal bases.
  *
  * @author Paulo Gandra de Sousa
- *
  */
+@EqualsAndHashCode
 public class Numeral implements ValueObject {
 
     private static final long serialVersionUID = 1L;
@@ -80,6 +80,7 @@ public class Numeral implements ValueObject {
      *            the representation of the number
      * @param system
      *            the numeral system used in the representation
+     *
      * @return the new Numeral
      */
     public static Numeral valueOf(final String value, final NumeralSystem system) {
@@ -91,6 +92,7 @@ public class Numeral implements ValueObject {
      *
      * @param value
      * @param base
+     *
      * @return the new Numeral
      */
     public static Numeral valueOf(final String value, final int base) {
@@ -101,6 +103,7 @@ public class Numeral implements ValueObject {
      * Factory method for decimals.
      *
      * @param decimal
+     *
      * @return the new Numeral
      */
     public static Numeral valueOf(final long decimal) {
@@ -129,23 +132,6 @@ public class Numeral implements ValueObject {
 
     public Numeral toBase(final NumeralSystem base) {
         return new Numeral(value, base);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (!(other instanceof Numeral)) {
-            return false;
-        }
-        final Numeral that = (Numeral) other;
-        return value == that.value && system.equals(that.system);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(system).with(value).code();
     }
 
     @Override

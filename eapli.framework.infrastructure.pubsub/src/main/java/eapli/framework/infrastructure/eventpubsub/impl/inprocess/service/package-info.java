@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -63,4 +63,4 @@
  * @enduml
  *         -->
  */
-package eapli.framework.infrastructure.eventpubsub.impl.inprocess;
+package eapli.framework.infrastructure.eventpubsub.impl.inprocess.service;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -27,49 +27,36 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
+import lombok.Value;
+import lombok.experimental.Accessors;
 
 /**
  * The session of an authenticated user.
  *
  * @author Paulo Gandra Sousa
- *
  */
+@Value
+@Accessors(fluent = true)
 public class UserSession implements ValueObject {
     private static final long serialVersionUID = 1L;
 
-    private final SystemUser user;
+    private final SystemUser authenticatedUser;
     private final UUID token;
     private final Calendar startedOn;
 
     /**
-     *
      * @param user
      */
     public UserSession(final SystemUser user) {
         Preconditions.nonNull(user, "user must not be null");
 
-        this.user = user;
+        this.authenticatedUser = user;
         token = UUID.randomUUID();
         startedOn = Calendars.now();
     }
 
-    /**
-     *
-     * @return the currently authenticated user
-     */
-    public SystemUser authenticatedUser() {
-        return user;
-    }
-
-    /**
-     * @return the startedOn
-     */
-    public Calendar startedOn() {
-        return startedOn;
-    }
-
     @Override
     public String toString() {
-        return user.identity() + "@" + token;
+        return authenticatedUser.identity() + "@" + token;
     }
 }

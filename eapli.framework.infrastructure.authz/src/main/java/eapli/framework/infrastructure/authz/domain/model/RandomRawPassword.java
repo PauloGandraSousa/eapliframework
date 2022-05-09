@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -22,55 +22,59 @@ package eapli.framework.infrastructure.authz.domain.model;
 
 import eapli.framework.domain.model.Immutable;
 import eapli.framework.strings.util.Strings;
+import lombok.EqualsAndHashCode;
 
 /**
- * A random password. Can be used to present as a suggestion to the user upon registration.
+ * A random password. Can be used to present as a suggestion to the user upon
+ * registration.
  * <p>
- * Inspired by <a href="https://mkyong.com/java/java-password-generator-example/">MKyong</a>.
+ * Inspired by <a href=
+ * "https://mkyong.com/java/java-password-generator-example/">MKyong</a>.
  *
  * @author Paulo Gandra Sousa 28/05/2020
  *
  */
 @Immutable
+@EqualsAndHashCode
 public class RandomRawPassword {
 
-    private static final int DEFAULT_LENGTH = 12;
+	private static final int DEFAULT_LENGTH = 12;
 
-    private static final String LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz";
-    private static final String UPPER_CHARS = LOWER_CHARS.toUpperCase();
-    private static final String NUMBERS = "0123456789";
-    private static final String SPECIAL = "_-+*/@=><#?!.%():;[]|{}&$€";
+	private static final String LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz";
+	private static final String UPPER_CHARS = LOWER_CHARS.toUpperCase();
+	private static final String NUMBERS = "0123456789";
+	private static final String SPECIAL = "_-+*/@=><#?!.%():;[]|{}&$€";
 
-    public static final String ALLOWED_CHARS = LOWER_CHARS + UPPER_CHARS + NUMBERS + SPECIAL;
+	public static final String ALLOWED_CHARS = LOWER_CHARS + UPPER_CHARS + NUMBERS + SPECIAL;
 
-    private final String rawPassword;
+	private final String rawPassword;
 
-    /**
-     * Constructs a random password with the default length.
-     */
-    public RandomRawPassword() {
-        this(DEFAULT_LENGTH);
-    }
+	/**
+	 * Constructs a random password with the default length.
+	 */
+	public RandomRawPassword() {
+		this(DEFAULT_LENGTH);
+	}
 
-    /**
-     * Constructs a random password with the desired length.
-     *
-     * @param length
-     */
-    public RandomRawPassword(final int length) {
-        if (length < 3) {
-            throw new IllegalArgumentException("Lenght must be at least 3");
-        }
-        final String part1 = Strings.randomString(length - 3, LOWER_CHARS);
-        final String part2 = Strings.randomString(1, UPPER_CHARS);
-        final String part3 = Strings.randomString(1, NUMBERS);
-        final String part4 = Strings.randomString(1, SPECIAL);
+	/**
+	 * Constructs a random password with the desired length.
+	 *
+	 * @param length
+	 */
+	public RandomRawPassword(final int length) {
+		if (length < 3) {
+			throw new IllegalArgumentException("Lenght must be at least 3");
+		}
+		final String part1 = Strings.randomString(length - 3, LOWER_CHARS);
+		final String part2 = Strings.randomString(1, UPPER_CHARS);
+		final String part3 = Strings.randomString(1, NUMBERS);
+		final String part4 = Strings.randomString(1, SPECIAL);
 
-        rawPassword = Strings.shuffle(part1 + part2 + part3 + part4);
-    }
+		rawPassword = Strings.shuffle(part1 + part2 + part3 + part4);
+	}
 
-    @Override
-    public String toString() {
-        return rawPassword;
-    }
+	@Override
+	public String toString() {
+		return rawPassword;
+	}
 }

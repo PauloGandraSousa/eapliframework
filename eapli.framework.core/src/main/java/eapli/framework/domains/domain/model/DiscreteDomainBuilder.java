@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -44,7 +44,7 @@ public class DiscreteDomainBuilder<T extends Serializable> implements Factory<Di
      * Adds an element to the domain
      *
      * @param e
-     * @return this bulder
+     * @return this builder
      */
     public DiscreteDomainBuilder<T> with(final T e) {
         Preconditions.nonNull(e);

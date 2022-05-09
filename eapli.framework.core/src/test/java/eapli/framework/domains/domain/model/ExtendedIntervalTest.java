@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -30,18 +30,20 @@ import org.junit.jupiter.api.Test;
  */
 class ExtendedIntervalTest extends IntervalTestBase {
 
-    private static final Long NEW_START = END + 2;
-    private static final Long NEW_END = START - 2;
+	private static final Long NEW_START = END + 2;
+	private static final Long NEW_END = START - 2;
 
-    @Test
-    void ensureNewStartCannotBeAfterEnd() {
-        assertThrows(IllegalArgumentException.class,
-                () -> subject = Interval.closedFrom(START).closedTo(END).withStart(NEW_START));
-    }
+	@Test
+	void ensureNewStartCannotBeAfterEnd() {
+		subject = Interval.closedFrom(START).closedTo(END);
 
-    @Test
-    void ensureNewEndCannotBeBeforeStart() {
-        assertThrows(IllegalArgumentException.class,
-                () -> subject = Interval.closedFrom(START).closedTo(END).withEnd(NEW_END));
-    }
+		assertThrows(IllegalArgumentException.class, () -> subject.withStart(NEW_START));
+	}
+
+	@Test
+	void ensureNewEndCannotBeBeforeStart() {
+		subject = Interval.closedFrom(START).closedTo(END);
+
+		assertThrows(IllegalArgumentException.class, () -> subject.withEnd(NEW_END));
+	}
 }

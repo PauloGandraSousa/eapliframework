@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -34,23 +34,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.util.Factory;
-import eapli.framework.util.HashCoder;
+import lombok.EqualsAndHashCode;
 
 /**
  * A Text composed of lines. lines are separated by the \n character; words are
  * separated by any white space character. end of sentence punctuation is the
  * period, the exclamation and the question mark. A Text object will always have
  * content, even if it is an empty string
- *
  * <p>
  * if the last character of the text is a new line, the line count will take
  * that into consideration. example, the text "the red fox" has one line while
  * the text "the red fox\n" has two lines
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Embeddable
+@EqualsAndHashCode
 public class Text implements ValueObject, StringMixin {
 
     private static final long serialVersionUID = 1L;
@@ -61,7 +60,6 @@ public class Text implements ValueObject, StringMixin {
 
     /**
      * Text builder.
-     *
      */
     public static class TextBuilder implements Factory<Text> {
         private final StringBuilder builder = new StringBuilder("");
@@ -79,6 +77,7 @@ public class Text implements ValueObject, StringMixin {
          * Appends the text followed by a new line.
          *
          * @param text
+         *
          * @return the builder
          */
         public TextBuilder appendLine(final String text) {
@@ -89,6 +88,7 @@ public class Text implements ValueObject, StringMixin {
          * Appends the text.
          *
          * @param text
+         *
          * @return the builder
          */
         public TextBuilder append(final String text) {
@@ -108,6 +108,7 @@ public class Text implements ValueObject, StringMixin {
      * Fluent builder interface starting point.
      *
      * @param text
+     *
      * @return a builder
      */
     public static TextBuilder with(final String text) {
@@ -118,6 +119,7 @@ public class Text implements ValueObject, StringMixin {
      * Factory method.
      *
      * @param fromText
+     *
      * @return a Text object
      */
     public static Text valueOf(final String fromText) {
@@ -132,7 +134,6 @@ public class Text implements ValueObject, StringMixin {
      * helper Collector
      *
      * @author Paulo Gandra de Sousa
-     *
      */
     private class WordCounterCollector {
         Map<String, Integer> freq = new HashMap<>();
@@ -195,24 +196,6 @@ public class Text implements ValueObject, StringMixin {
     @Override
     public String toString() {
         return value;
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        if (!(other instanceof Text)) {
-            return false;
-        }
-        if (this == other) {
-            return true;
-        }
-
-        final Text that = (Text) other;
-        return value.equals(that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(value).code();
     }
 
     /**

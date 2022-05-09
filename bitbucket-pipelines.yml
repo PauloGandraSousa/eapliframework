@@ -11,7 +11,7 @@ pipelines:
         caches:
           - maven
         script: 
-          - mvn -B verify -Dmaven.test.failure.ignore=true -Dmaven.javadoc.skip=true
+          - mvn -B verify -Dmaven.javadoc.skip=true
     - step:
         trigger: manual
         caches:

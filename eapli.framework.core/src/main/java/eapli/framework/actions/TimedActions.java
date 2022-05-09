@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -69,7 +69,7 @@ public final class TimedActions {
      * @param sleep
      *            the original delay interval
      * @param factor
-     *            the factor of progression to apply
+     *            the factor of progression to apply. 1 is the original sleep value
      */
     public static void delay(final int sleep, final int factor) {
         try {

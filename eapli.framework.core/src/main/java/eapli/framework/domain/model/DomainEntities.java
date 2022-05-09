@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -23,12 +23,14 @@ package eapli.framework.domain.model;
 import java.util.Objects;
 
 import eapli.framework.util.HashCoder;
+import eapli.framework.util.Utility;
 
 /**
  * Helper class for common domain entities operations.
  *
  * @author Paulo Gandra Sousa
  */
+@Utility
 public final class DomainEntities {
 
     private DomainEntities() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -21,29 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
+package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories;
 
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataDomainBaseRepository;
+import eapli.framework.domain.repositories.DomainRepository;
+import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-interface SpringDataEventConsumptionRepository
-        extends EventConsumptionRepository, SpringDataDomainBaseRepository<Long, Long, EventConsumption> {
-
-    @Override
-    @Query("SELECT e FROM #{#entityName} e WHERE e.id = :id")
-    Optional<EventConsumption> ofIdentity(@Param("id") Long entityId);
-
-    @Override
-    @Modifying
-    @Query("DELETE FROM #{#entityName} e WHERE e.id = :id")
-    void deleteOfIdentity(@Param("id") Long entityId);
+public interface EventConsumptionRepository extends DomainRepository<Long, EventConsumption> {
+	// empty
 }

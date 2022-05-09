@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -28,8 +28,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * Generic designation concept, e.g., name, short name, nickname. A designation
@@ -40,67 +40,51 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class Designation implements ValueObject, Comparable<Designation>, StringMixin {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @XmlAttribute
-    @JsonProperty
-    private final String name;
+	@XmlAttribute
+	@JsonProperty
+	private final String name;
 
-    /**
-     * Protected constructor. To construct a new Designation instance use the
-     * {@link #valueOf(String)} method.
-     *
-     * @param name
-     */
-    protected Designation(final String name) {
-        Preconditions.ensure(StringPredicates.isPhrase(name),
-                "Name should neither be null nor empty nor have starting blank spaces");
+	/**
+	 * Protected constructor. To construct a new Designation instance use the
+	 * {@link #valueOf(String)} method.
+	 *
+	 * @param name
+	 */
+	protected Designation(final String name) {
+		Preconditions.ensure(StringPredicates.isPhrase(name),
+				"Name should neither be null nor empty nor have starting blank spaces");
 
-        this.name = name;
-    }
+		this.name = name;
+	}
 
-    protected Designation() {
-        // for ORM
-        name = null;
-    }
+	protected Designation() {
+		// for ORM
+		name = null;
+	}
 
-    /**
-     * Factory method for obtaining Designation value objects.
-     *
-     * @param name
-     * @return a new object corresponding to the value
-     */
-    public static Designation valueOf(final String name) {
-        return new Designation(name);
-    }
+	/**
+	 * Factory method for obtaining Designation value objects.
+	 *
+	 * @param name
+	 *
+	 * @return a new object corresponding to the value
+	 */
+	public static Designation valueOf(final String name) {
+		return new Designation(name);
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Designation)) {
-            return false;
-        }
+	@Override
+	public String toString() {
+		return name;
+	}
 
-        final Designation other = (Designation) o;
-        return name.equals(other.name);
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(name).code();
-    }
-
-    @Override
-    public int compareTo(final Designation o) {
-        return name.compareTo(o.name);
-    }
+	@Override
+	public int compareTo(final Designation o) {
+		return name.compareTo(o.name);
+	}
 }

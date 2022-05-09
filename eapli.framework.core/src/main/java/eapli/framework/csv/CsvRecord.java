@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -43,23 +43,23 @@ public class CsvRecord {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
 
-    private final String record;
+    private final String sourceRecord;
     private final List<String> fields;
 
     /**
      * @param result
-     * @param record
+     * @param sourceRecord
      */
-    private CsvRecord(final List<String> result, final String record) {
+    private CsvRecord(final List<String> result, final String sourceRecord) {
         fields = result;
-        this.record = record;
+        this.sourceRecord = sourceRecord;
     }
 
     /**
      * Builds a CSV record where all fields (no matter what data type) are quoted.
      *
      * @param fields
-     * @return
+     * @return the newly built CsvRecord
      */
     public static CsvRecord valueOf(final Object[] fields) {
         if (fields == null) {
@@ -78,7 +78,7 @@ public class CsvRecord {
      *
      * @param fields
      * @param quote
-     * @return
+     * @return the newly built CsvRecord
      */
     public static CsvRecord valueOf(final Object[] fields, final boolean[] quote) {
         final List<String> result = new ArrayList<>();
@@ -142,7 +142,7 @@ public class CsvRecord {
      * Parse a CSV line with comma separator and double quotes.
      *
      * @param csvLine
-     * @return
+     * @return the newly built CsvRecord
      * @throws ParseException
      */
     public static CsvRecord parse(final String csvLine) throws ParseException {
@@ -154,7 +154,7 @@ public class CsvRecord {
      *
      * @param csvLine
      * @param separators
-     * @return
+     * @return the newly built CsvRecord
      * @throws ParseException
      */
     public static CsvRecord parse(final String csvLine, final char separators) throws ParseException {
@@ -171,7 +171,7 @@ public class CsvRecord {
      * @param csvLine
      * @param separators
      * @param customQuote
-     * @return
+     * @return the newly built CsvRecord
      * @throws ParseException
      */
     public static CsvRecord parse(final String csvLine, final char separators, final char customQuote)
@@ -272,7 +272,7 @@ public class CsvRecord {
 
     /**
      *
-     * @return
+     * @return the list of fields of this record
      */
     public List<String> fields() {
         return Collections.unmodifiableList(fields);
@@ -283,6 +283,6 @@ public class CsvRecord {
      */
     @Override
     public String toString() {
-        return record;
+        return sourceRecord;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -30,19 +30,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.infrastructure.authz.application.PasswordPolicy;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * A password of a user. Password policy and encoding is done outside of this
  * class by {@link SystemUserBuilder} and {@link PasswordEncoder}.
- *
  * <p>
  * <b>IMPORTANT</b>: passwords should never be stored in plain format
  *
  * @author Paulo Gandra Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class Password implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,6 +67,7 @@ public class Password implements ValueObject, Serializable {
      * @param rawPassword
      * @param policy
      * @param encoder
+     *
      * @return the new Password or an empty Optional if the passwords does not
      *         satisfies the password policy
      */
@@ -79,24 +80,6 @@ public class Password implements ValueObject, Serializable {
             return Optional.of(new Password(encoder.encode(rawPassword)));
         }
         return Optional.empty();
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Password)) {
-            return false;
-        }
-
-        final Password other = (Password) o;
-        return value.equals(other.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(value).code();
     }
 
     /**

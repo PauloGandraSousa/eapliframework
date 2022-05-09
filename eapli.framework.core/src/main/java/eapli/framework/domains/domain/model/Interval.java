@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -29,8 +29,8 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Invariants;
+import lombok.EqualsAndHashCode;
 
 /**
  * A generic immutable interval class, i.e., a continuous domain.
@@ -47,6 +47,7 @@ import eapli.framework.validations.Invariants;
  * @param <T>
  */
 @Embeddable
+@EqualsAndHashCode
 public class Interval<T extends Serializable & Comparable<T>> implements ValueObject, Comparable<Interval<T>> {
 
     private static final long serialVersionUID = 1L;
@@ -110,7 +111,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         /**
          * @param anchor
          *
-         * @return
+         * @return the newly created Interval
          */
         public Interval<R> closedTo(final R anchor) {
             this.end = anchor;
@@ -121,7 +122,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         /**
          * @param anchor
          *
-         * @return
+         * @return the newly created Interval
          */
         public Interval<R> openTo(final R anchor) {
             this.end = anchor;
@@ -130,7 +131,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
 
         /**
-         * @return
+         * @return the newly created Interval
          */
         public Interval<R> toInfinity() {
             this.end = null;
@@ -139,7 +140,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
 
         /**
-         * @return
+         * @return the newly created Interval
          */
         private Interval<R> build() {
             return new Interval<>(this.start, this.startBoundary, this.end, this.endBoundary);
@@ -248,7 +249,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * @return
+     * @return true if this interval is empty
      */
     public boolean isEmpty() {
         return start == end && start == null && endBoundary == startBoundary && endBoundary == null;
@@ -265,7 +266,9 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     /**
-     * @return
+     * Checks whether this interval is the universal interval, i.e., ]-oo, +oo[
+     *
+     * @return true if this interval is the universal interval
      */
     public boolean isUniversal() {
         return endBoundary == startBoundary && endBoundary == BoundaryLimitType.INFINITY;
@@ -316,14 +319,28 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return (!hasOpenEnd() || (target.compareTo(this.end) != 0));
     }
 
+    /**
+     * Checks if this interval is to infinity
+     *
+     * @return true if this interval is to infinity
+     */
     public boolean endsAtInfinity() {
         return this.endBoundary == BoundaryLimitType.INFINITY;
     }
 
+    /**
+     * Checks if this interval is from infinity
+     *
+     * @return true if this interval is from infinity
+     */
     public boolean startsAtInfinity() {
         return this.startBoundary == BoundaryLimitType.INFINITY;
     }
 
+    /**
+     *
+     * @return the start of the interval
+     */
     @JsonGetter
     public T start() {
         Invariants.ensure(!isEmpty());
@@ -331,6 +348,10 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         return this.start;
     }
 
+    /**
+     *
+     * @return the end of the interval
+     */
     @JsonGetter
     public T end() {
         Invariants.ensure(!isEmpty());
@@ -593,28 +614,12 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
         }
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (!(o instanceof Interval<?>)) {
-            return false;
-        }
-
-        @SuppressWarnings("unchecked")
-        final Interval<T> other = (Interval<T>) o;
-        return startIsTheSameAs(other) && endIsTheSameAs(other);
-    }
-
     private boolean startIsTheSameAs(final Interval<T> other) {
         return this.startBoundary == other.startBoundary && this.start == other.start;
     }
 
     private boolean endIsTheSameAs(final Interval<T> other) {
         return this.endBoundary == other.endBoundary && this.end == other.end;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(startBoundary).with(start).with(endBoundary).with(end).code();
     }
 
     /**

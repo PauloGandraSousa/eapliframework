@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -27,61 +27,66 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import eapli.framework.domains.domain.model.Interval.IntervalBuilder;
+
 /**
  *
  * @author Paulo Gandra Sousa
  */
 class IntervalTest extends IntervalTestBase {
 
-    @BeforeAll
-    static void setUpClass() {
-        System.out.println("Range");
-        subject = Interval.openFrom(START).openTo(END);
-    }
+	@BeforeAll
+	static void setUpClass() {
+		System.out.println("Range");
+		subject = Interval.openFrom(START).openTo(END);
+	}
 
-    @Test
-    void ensureStartBiggerThanEndIsNotAllowed() {
-        System.out.println("ensureStartBiggerThanEndIsNotAllowed");
-        assertThrows(IllegalArgumentException.class, () -> Interval.openFrom(END).openTo(START));
-    }
+	@Test
+	void ensureStartBiggerThanEndIsNotAllowed() {
+		System.out.println("ensureStartBiggerThanEndIsNotAllowed");
+		final IntervalBuilder<Long> builder = Interval.openFrom(END);
 
-    @Test
-    void ensureLowerIsNotInRange() {
-        System.out.println("ensureLowerIsNotInRange");
-        final Long target = Long.valueOf(START_VALUE - DELTA_VALUE);
-        final boolean result = subject.includes(target);
-        assertFalse(result, "value lower than start cannot be part of an open range");
-    }
+		assertThrows(IllegalArgumentException.class, () -> builder.openTo(START));
+	}
 
-    @Test
-    void ensureUpperIsNotInRange() {
-        System.out.println("ensureUpperIsNotInRange");
-        final Long target = Long.valueOf(END_VALUE + DELTA_VALUE);
-        final boolean result = subject.includes(target);
-        assertFalse(result, "value greater than end cannot be part of an open range");
-    }
+	@Test
+	void ensureLowerIsNotInRange() {
+		System.out.println("ensureLowerIsNotInRange");
+		final Long target = Long.valueOf(START_VALUE - DELTA_VALUE);
+		final boolean result = subject.includes(target);
+		assertFalse(result, "value lower than start cannot be part of an open range");
+	}
 
-    @Test
-    void ensureMiddleIsInRange() {
-        System.out.println("ensureMiddleIsInRange");
-        final Long target = Long.valueOf(START_VALUE + DELTA_VALUE / 2);
-        final boolean result = subject.includes(target);
-        assertTrue(result, "value in the middle is part of an open range");
-    }
+	@Test
+	void ensureUpperIsNotInRange() {
+		System.out.println("ensureUpperIsNotInRange");
+		final Long target = Long.valueOf(END_VALUE + DELTA_VALUE);
+		final boolean result = subject.includes(target);
+		assertFalse(result, "value greater than end cannot be part of an open range");
+	}
 
-    @Test
-    void ensureEmptyRangeIsNotAllowed() {
-        System.out.println("ensureEmptyRangeIsNotAllowed");
-        assertThrows(IllegalArgumentException.class, () -> Interval.openFrom(START).openTo(START));
-    }
+	@Test
+	void ensureMiddleIsInRange() {
+		System.out.println("ensureMiddleIsInRange");
+		final Long target = Long.valueOf(START_VALUE + DELTA_VALUE / 2);
+		final boolean result = subject.includes(target);
+		assertTrue(result, "value in the middle is part of an open range");
+	}
 
-    @Test
-    void ensureIsNotEmpty() {
-        assertFalse(subject.isEmpty());
-    }
+	@Test
+	void ensureEmptyRangeIsNotAllowed() {
+		System.out.println("ensureEmptyRangeIsNotAllowed");
+		final IntervalBuilder<Long> builder = Interval.openFrom(START);
+		assertThrows(IllegalArgumentException.class, () -> builder.openTo(START));
+	}
 
-    @Test
-    void ensureUniversalIsUniversal() {
-        assertTrue(Interval.universal().isUniversal());
-    }
+	@Test
+	void ensureIsNotEmpty() {
+		assertFalse(subject.isEmpty());
+	}
+
+	@Test
+	void ensureUniversalIsUniversal() {
+		assertTrue(Interval.universal().isUniversal());
+	}
 }

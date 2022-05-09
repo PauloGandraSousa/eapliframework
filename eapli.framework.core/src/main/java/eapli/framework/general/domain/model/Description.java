@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 the original author or authors.
+ * Copyright (c) 2013-2022 the original author or authors.
  *
  * MIT License
  *
@@ -30,8 +30,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
-import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * Generic description concept. It must have some content but no special rules
@@ -40,6 +40,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa
  */
 @Embeddable
+@EqualsAndHashCode
 public class Description implements ValueObject, Serializable, StringMixin {
 
     private static final long serialVersionUID = 1L;
@@ -75,6 +76,7 @@ public class Description implements ValueObject, Serializable, StringMixin {
      * Factory method for obtaining Designation value objects.
      *
      * @param name
+     *
      * @return a new object corresponding to the value
      */
     public static Description valueOf(final String name) {
@@ -82,25 +84,7 @@ public class Description implements ValueObject, Serializable, StringMixin {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Description)) {
-            return false;
-        }
-
-        final Description other = (Description) o;
-        return value.equals(other.value);
-    }
-
-    @Override
     public String toString() {
         return value;
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCoder().with(value).code();
     }
 }
