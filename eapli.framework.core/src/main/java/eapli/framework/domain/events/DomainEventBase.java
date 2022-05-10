@@ -25,7 +25,7 @@ import java.util.Calendar;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -47,7 +47,7 @@ public abstract class DomainEventBase implements DomainEvent {
 	 * Constructs the object registering its occurrence at the current instant.
 	 */
 	protected DomainEventBase() {
-		occuredAt = registeredAt = CalendarsCurrent.now();
+		occuredAt = registeredAt = CurrentTimeCalendars.now();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public abstract class DomainEventBase implements DomainEvent {
 		Preconditions.nonNull(occuredAt);
 
 		this.occuredAt = occuredAt;
-		registeredAt = CalendarsCurrent.now();
+		registeredAt = CurrentTimeCalendars.now();
 	}
 
 	@Override

@@ -34,7 +34,7 @@ import eapli.framework.util.Utility;
  *
  */
 @Utility
-public final class CalendarCurrentPredicates {
+public final class CurrentTimeCalendarPredicates {
 
 	/**
 	 * Checks if the calendar date (Year, Month and Day) is before today.
@@ -47,7 +47,7 @@ public final class CalendarCurrentPredicates {
 	 *         otherwise.
 	 */
 	public static boolean isBeforeToday(final Calendar a) {
-		return CalendarPredicates.isBefore(a, CalendarsCurrent.now());
+		return CalendarPredicates.isBefore(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -61,7 +61,7 @@ public final class CalendarCurrentPredicates {
 	 *         otherwise.
 	 */
 	public static boolean isUntilToday(final Calendar a) {
-		return CalendarPredicates.isUntil(a, CalendarsCurrent.now());
+		return CalendarPredicates.isUntil(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -75,7 +75,7 @@ public final class CalendarCurrentPredicates {
 	 *         otherwise.
 	 */
 	public static boolean isToday(final Calendar a) {
-		return CalendarPredicates.areSameDate(a, CalendarsCurrent.now());
+		return CalendarPredicates.areSameDate(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -89,7 +89,7 @@ public final class CalendarCurrentPredicates {
 	 *         otherwise.
 	 */
 	public static boolean isTodayOnwards(final Calendar a) {
-		return CalendarPredicates.isOnwards(a, CalendarsCurrent.now());
+		return CalendarPredicates.isOnwards(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -103,7 +103,7 @@ public final class CalendarCurrentPredicates {
 	 *         otherwise.
 	 */
 	public static boolean isAfterToday(final Calendar a) {
-		return CalendarPredicates.isAfter(a, CalendarsCurrent.now());
+		return CalendarPredicates.isAfter(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -118,7 +118,7 @@ public final class CalendarCurrentPredicates {
 	 *         time or {@code false} otherwise.
 	 */
 	public static boolean isBeforeNow(final Calendar a) {
-		return CalendarPredicates.isBeforeTime(a, CalendarsCurrent.now());
+		return CalendarPredicates.isBeforeTime(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -133,7 +133,7 @@ public final class CalendarCurrentPredicates {
 	 *         {@code false} otherwise.
 	 */
 	public static boolean isUntilNow(final Calendar a) {
-		return CalendarPredicates.isUntilTime(a, CalendarsCurrent.now());
+		return CalendarPredicates.isUntilTime(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -148,7 +148,7 @@ public final class CalendarCurrentPredicates {
 	 *         {@code false} otherwise.
 	 */
 	public static boolean isNow(final Calendar a) {
-		return CalendarPredicates.haveSameTime(a, CalendarsCurrent.now());
+		return CalendarPredicates.haveSameTime(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -163,7 +163,7 @@ public final class CalendarCurrentPredicates {
 	 *         after or {@code false} otherwise.
 	 */
 	public static boolean isNowOnwards(final Calendar a) {
-		return CalendarPredicates.isTimeOnwards(a, CalendarsCurrent.now());
+		return CalendarPredicates.isTimeOnwards(a, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -178,10 +178,10 @@ public final class CalendarCurrentPredicates {
 	 *         {@code false} otherwise.
 	 */
 	public static boolean isAfterNow(final Calendar a) {
-		return CalendarPredicates.isAfterTime(a, CalendarsCurrent.now());
+		return CalendarPredicates.isAfterTime(a, CurrentTimeCalendars.now());
 	}
 
-	private CalendarCurrentPredicates() {
+	private CurrentTimeCalendarPredicates() {
 		// ensure utility
 	}
 }

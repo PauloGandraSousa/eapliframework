@@ -45,8 +45,8 @@ import eapli.framework.util.Utility;
  * @author Paulo Gandra Sousa
  */
 @Utility
-public final class CalendarsCurrent {
-	private static final Logger LOGGER = LogManager.getLogger(CalendarsCurrent.class);
+public final class CurrentTimeCalendars {
+	private static final Logger LOGGER = LogManager.getLogger(CurrentTimeCalendars.class);
 
 	private static final int DAYS_TILL_END_OF_WEEK = 6;
 
@@ -59,7 +59,7 @@ public final class CalendarsCurrent {
 	@SuppressWarnings("squid:S2885") //
 	private static Calendar frozenTime;
 
-	private static Supplier<Calendar> nowFunction = CalendarsCurrent::realNow;
+	private static Supplier<Calendar> nowFunction = CurrentTimeCalendars::realNow;
 
 	private static synchronized Calendar fakeNow() {
 		return frozenTime;
@@ -69,7 +69,7 @@ public final class CalendarsCurrent {
 		return new GregorianCalendar();
 	}
 
-	private CalendarsCurrent() {
+	private CurrentTimeCalendars() {
 		// ensure no instantiation as this is a utility class
 	}
 
@@ -77,8 +77,8 @@ public final class CalendarsCurrent {
 	 * Overrides the use of the system clock to allow unit testing.
 	 */
 	/* package */ static synchronized void setNow(final Calendar frozenTime) {
-		CalendarsCurrent.frozenTime = frozenTime;
-		nowFunction = CalendarsCurrent::fakeNow;
+		CurrentTimeCalendars.frozenTime = frozenTime;
+		nowFunction = CurrentTimeCalendars::fakeNow;
 	}
 
 	/**

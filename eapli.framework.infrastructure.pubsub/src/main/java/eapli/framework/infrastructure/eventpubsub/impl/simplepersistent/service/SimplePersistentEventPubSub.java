@@ -87,6 +87,15 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     }
 
     /**
+     * Helper method for scenarios without Spring
+     *
+     * @param instanceKey
+     */
+    /* package */void setInstanceKey(final String instanceKey) {
+        this.instanceKey = instanceKey;
+    }
+
+    /**
      * This method is public but "not published" - it should never be
      * called directly from client code.
      * <p>

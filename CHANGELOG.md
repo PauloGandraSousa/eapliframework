@@ -9,7 +9,7 @@
 ## Changed
 
 - use of Spring Scheduled for persistent event pooling
-- `Calendars` and `CalendarPredicates` where split into `CalendarsCurrent` and `CalendarCurrentPredicates` to distinguish between pure deterministic utility functions and the ones that are not deterministic since they depend on the system clock
+- `Calendars` and `CalendarPredicates` where split into `CurrentTimeCalendars` and `CurrentTimeCalendarPredicates` to distinguish between pure deterministic utility functions and the ones that are not deterministic since they depend on the system clock
 
 ## 17.0.0 [ PUB/SUB ]
 

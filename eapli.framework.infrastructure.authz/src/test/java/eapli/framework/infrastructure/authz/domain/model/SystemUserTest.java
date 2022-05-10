@@ -33,7 +33,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 
 /**
  *
@@ -47,7 +47,7 @@ public class SystemUserTest {
 
 	@Before
 	public void setUp() throws Exception {
-		dateOfCreation = CalendarsCurrent.now();
+		dateOfCreation = CurrentTimeCalendars.now();
 		instance = new SystemUser(Username.valueOf("abc"), TestSystemUserFactory.dummyPass(PASSWORD1),
 				Name.valueOf("Ant", "Boocam"), EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
 	}

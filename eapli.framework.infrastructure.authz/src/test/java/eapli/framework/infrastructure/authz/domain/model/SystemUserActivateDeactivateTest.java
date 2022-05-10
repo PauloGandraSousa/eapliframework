@@ -27,7 +27,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 
 /**
  *
@@ -50,21 +50,21 @@ public class SystemUserActivateDeactivateTest {
 	@Test(expected = IllegalStateException.class)
 	public void ensureCannotDeactivateAnInactiveUser() {
 		try {
-			instance.deactivate(CalendarsCurrent.now());
+			instance.deactivate(CurrentTimeCalendars.now());
 		} catch (@SuppressWarnings("unused") final Exception e) {
 			fail("something stange just happened. we are only interested in catching the exception on the second call to deactivate");
 		}
-		instance.deactivate(CalendarsCurrent.now());
+		instance.deactivate(CurrentTimeCalendars.now());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void ensureCannotDeactivatePriorToCreationDate() {
-		instance.deactivate(CalendarsCurrent.yesterday());
+		instance.deactivate(CurrentTimeCalendars.yesterday());
 	}
 
 	@Test
 	public void ensureAfterDeactivationUserIsInactive() {
-		instance.deactivate(CalendarsCurrent.now());
+		instance.deactivate(CurrentTimeCalendars.now());
 		assertFalse(instance.isActive());
 	}
 }

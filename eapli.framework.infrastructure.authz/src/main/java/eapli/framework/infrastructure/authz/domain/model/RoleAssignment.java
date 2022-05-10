@@ -31,7 +31,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
@@ -68,7 +68,7 @@ public class RoleAssignment implements ValueObject, Serializable {
 	 * @param type
 	 */
 	public RoleAssignment(final Role type) {
-		this(type, CalendarsCurrent.now());
+		this(type, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class RoleAssignment implements ValueObject, Serializable {
 		}
 
 		expired = true;
-		unassignedOn = CalendarsCurrent.now();
+		unassignedOn = CurrentTimeCalendars.now();
 		return true;
 	}
 

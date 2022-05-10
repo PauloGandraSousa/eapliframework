@@ -35,17 +35,17 @@ import org.junit.Test;
  *
  * @author Paulo Gandra Sousa
  */
-public class CalendarsCurrentTest {
+public class CurrentTimeCalendarsTest {
 	@BeforeClass
 	public static void setup() {
 		// setup test date to be July 26th, 2019
-		CalendarsCurrent.setNow(new GregorianCalendar(2019, Calendar.JULY, 26));
+		CurrentTimeCalendars.setNow(new GregorianCalendar(2019, Calendar.JULY, 26));
 	}
 
 	@Test
 	public void ensureFakeNow() {
 		final Calendar expected = new GregorianCalendar(2019, Calendar.JULY, 26);
-		assertEquals(expected, CalendarsCurrent.now());
+		assertEquals(expected, CurrentTimeCalendars.now());
 	}
 
 }

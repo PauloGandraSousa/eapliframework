@@ -33,7 +33,7 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -65,7 +65,7 @@ public class EventConsumption implements AggregateRoot<Long> {
 
 		this.consumerName = consumerName;
 		this.event = event;
-		occurredAt = CalendarsCurrent.now();
+		occurredAt = CurrentTimeCalendars.now();
 	}
 
 	protected EventConsumption() {

@@ -43,7 +43,7 @@ import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.identities.impl.UUIDGenerator;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.representations.dto.GeneralDTO;
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Invariants;
 import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitable;
@@ -105,7 +105,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 	 */
 	/* package */ SystemUser(final Username username, final Password password, final Name name,
 			final EmailAddress email, final Set<Role> roles) {
-		this(username, password, name, email, roles, CalendarsCurrent.now());
+		this(username, password, name, email, roles, CurrentTimeCalendars.now());
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 	 */
 	/* package */ SystemUser(final Username username, final Password password, final Name name,
 			final EmailAddress email, final RoleSet roles) {
-		this(username, password, name, email, roles, CalendarsCurrent.now());
+		this(username, password, name, email, roles, CurrentTimeCalendars.now());
 	}
 
 	/**

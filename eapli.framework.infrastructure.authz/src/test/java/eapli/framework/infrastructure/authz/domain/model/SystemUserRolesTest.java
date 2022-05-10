@@ -35,7 +35,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 
 /**
  *
@@ -67,7 +67,7 @@ public class SystemUserRolesTest {
 		final SystemUser newUser = new SystemUser(Username.valueOf("username"),
 				Password.encodedAndValid(PASSWORD1, new NilPasswordPolicy(), new PlainTextEncoder())
 						.orElseThrow(IllegalStateException::new),
-				Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, CalendarsCurrent.now());
+				Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, CurrentTimeCalendars.now());
 		assertNotNull(newUser);
 	}
 

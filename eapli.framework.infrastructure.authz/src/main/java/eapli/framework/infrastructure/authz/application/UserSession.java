@@ -25,7 +25,7 @@ import java.util.UUID;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.time.util.CalendarsCurrent;
+import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
 import lombok.Value;
 import lombok.experimental.Accessors;
@@ -52,7 +52,7 @@ public class UserSession implements ValueObject {
 
 		this.authenticatedUser = user;
 		token = UUID.randomUUID();
-		startedOn = CalendarsCurrent.now();
+		startedOn = CurrentTimeCalendars.now();
 	}
 
 	@Override
