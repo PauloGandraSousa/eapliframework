@@ -12,9 +12,14 @@
 
 ## SNAPSHOT [ PUB/SUB ]
 
+## new
+
+- `SimplePersistentPubSub` for scenarios without spring injection
+
 ## Changed
 
 - use of Spring Scheduled for persistent event pooling
+- renamed `SimplePersistentEventPubSub` top `SimplePersistentPublisherDispatcher`
 
 ## 17.0.0 [ PUB/SUB ]
 

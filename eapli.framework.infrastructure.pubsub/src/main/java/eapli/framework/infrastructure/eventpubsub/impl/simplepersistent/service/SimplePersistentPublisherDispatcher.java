@@ -47,21 +47,22 @@ import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.reposito
  * This class is just for demonstration purposes. you should consider using a
  * true pub/sub mechanism such as message queueing instead of this class.
  * <p>
- * This class is only prepared to be used by Spring Dependency Injection.
+ * This class is prepared to be used by Spring Dependency Injection.
  *
  * @author Paulo Gandra de Sousa
- *
+ * @see SimplePersistentPubSub
  */
 @Component
-public class SimplePersistentEventPubSub implements EventDispatcher, EventPublisher {
+public class SimplePersistentPublisherDispatcher implements EventDispatcher, EventPublisher {
 
-    private static final Logger LOGGER = LogManager.getLogger(SimplePersistentEventPubSub.class);
+    private static final Logger LOGGER = LogManager.getLogger(SimplePersistentPublisherDispatcher.class);
 
     private final EventRecordRepository eventRepo;
 
     private final EventConsumptionRepository consumptionRepo;
 
     private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
+
     private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
 
     /**
@@ -77,10 +78,8 @@ public class SimplePersistentEventPubSub implements EventDispatcher, EventPublis
     @Value("${eapli.framework.pubsub.poolInterval}")
     private int poolInterval;
 
-    private volatile boolean timerInitialized;
-
     @Autowired
-    public SimplePersistentEventPubSub(final EventRecordRepository eventRepo,
+    public SimplePersistentPublisherDispatcher(final EventRecordRepository eventRepo,
             final EventConsumptionRepository consumptionRepo) {
         this.eventRepo = eventRepo;
         this.consumptionRepo = consumptionRepo;

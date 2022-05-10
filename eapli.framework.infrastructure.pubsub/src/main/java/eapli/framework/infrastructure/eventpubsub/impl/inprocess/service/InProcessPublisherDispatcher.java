@@ -44,13 +44,13 @@ import eapli.framework.validations.Preconditions;
  * <p>
  * Publishing an event is performed in a separate thread of execution from the calling thread.
  * <p>
- * This class can be used a Spring Component.
+ * This class can be used as a Spring Component.
  *
  * @author Paulo Gandra de Sousa
- *
+ * @see InProcessPubSub
  */
 @Component
-/* package */class InProcessPublisherDispatcher implements EventDispatcher, EventPublisher {
+public class InProcessPublisherDispatcher implements EventDispatcher, EventPublisher {
 
     private static final Logger LOGGER = LogManager.getLogger(InProcessPublisherDispatcher.class);
 

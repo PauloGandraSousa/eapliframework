@@ -32,7 +32,7 @@ import eapli.framework.util.Utility;
  * scenarios without spring dependency injection.
  *
  * @author Paulo Gandra de Sousa 13/06/2019
- *
+ * @see InProcessPublisherDispatcher
  */
 @Utility
 public final class InProcessPubSub {
