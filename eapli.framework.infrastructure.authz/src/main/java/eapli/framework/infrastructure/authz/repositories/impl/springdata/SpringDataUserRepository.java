@@ -21,36 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.authz.repositories.impl;
+package eapli.framework.infrastructure.authz.repositories.impl.springdata;
 
-import java.util.Map;
+import java.util.Optional;
 
-import eapli.framework.domain.repositories.TransactionalContext;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBaseRepository;
 
 /**
- * The JPA implementation for scenarios where the application is not running in
- * a container.
+ * The Spring Data implementation.
+ * 
+ * @author Paulo Gandra de Sousa
  *
- * @author Paulo Gandra de Sousa.
  */
-public class JpaAutoTxUserRepository extends JpaAutoTxRepository<SystemUser, Username, Username>
-        implements UserRepository {
-
-    public JpaAutoTxUserRepository(final TransactionalContext autoTx) {
-        super(autoTx, "username");
-    }
-
-    public JpaAutoTxUserRepository(final String puname,
-            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties) {
-        super(puname, properties, "username");
-    }
+public interface SpringDataUserRepository extends UserRepository, SpringDataBaseRepository<SystemUser, Username> {
 
     @Override
-    public Iterable<SystemUser> findByActive(final boolean active) {
-        return match(UserRepositoryConstants.FIND_BY_ACTIVE, "active", active);
-    }
+    @Modifying
+    @Query("DELETE FROM #{#entityName} e WHERE e.username = :id")
+    void deleteOfIdentity(@Param("id") Username entityId);
+
+    @Override
+    @Query("SELECT e FROM #{#entityName} e WHERE e.username = :id")
+    Optional<SystemUser> ofIdentity(@Param("id") Username entityId);
 }

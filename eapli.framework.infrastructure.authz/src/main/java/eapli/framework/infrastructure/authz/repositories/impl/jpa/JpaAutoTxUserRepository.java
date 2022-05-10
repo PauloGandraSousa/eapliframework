@@ -21,25 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.authz.repositories.impl;
+package eapli.framework.infrastructure.authz.repositories.impl.jpa;
 
-import org.springframework.stereotype.Component;
+import java.util.Map;
 
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
- * The JPA implementation for scenarios running in a container.
+ * The JPA implementation for scenarios where the application is not running in
+ * a container.
  *
- * @author nuno on 20/03/16.
+ * @author Paulo Gandra de Sousa.
  */
-@Component
-class JpaUserRepository extends JpaBaseRepository<SystemUser, Username, Username> implements UserRepository {
+public class JpaAutoTxUserRepository extends JpaAutoTxRepository<SystemUser, Username, Username>
+        implements UserRepository {
 
-    public JpaUserRepository() {
-        super("username");
+    public JpaAutoTxUserRepository(final TransactionalContext autoTx) {
+        super(autoTx, "username");
+    }
+
+    public JpaAutoTxUserRepository(final String puname,
+            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties) {
+        super(puname, properties, "username");
     }
 
     @Override

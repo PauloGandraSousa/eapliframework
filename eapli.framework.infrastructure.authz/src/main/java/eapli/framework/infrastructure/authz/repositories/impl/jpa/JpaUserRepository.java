@@ -21,23 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.authz.repositories.impl;
+package eapli.framework.infrastructure.authz.repositories.impl.jpa;
+
+import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**
- * The in-memory user repository.
+ * The JPA implementation for scenarios running in a container.
  *
  * @author nuno on 20/03/16.
  */
-public class InMemoryUserRepository extends InMemoryDomainRepository<SystemUser, Username>
-        implements UserRepository {
+@Component
+class JpaUserRepository extends JpaBaseRepository<SystemUser, Username, Username> implements UserRepository {
+
+    public JpaUserRepository() {
+        super("username");
+    }
 
     @Override
     public Iterable<SystemUser> findByActive(final boolean active) {
-        return match(e -> e.isActive() == active);
+        return match(UserRepositoryConstants.FIND_BY_ACTIVE, "active", active);
     }
 }
