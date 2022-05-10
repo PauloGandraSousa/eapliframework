@@ -23,7 +23,7 @@ package eapli.framework.infrastructure.authz.application;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import eapli.framework.util.Singleton;
+import eapli.framework.util.Utility;
 import eapli.framework.validations.Invariants;
 
 /**
@@ -34,7 +34,6 @@ import eapli.framework.validations.Invariants;
  * configure} method in the start of the application to inject the proper
  * {@link eapli.framework.infrastructure.authz.domain.repositories.UserRepository
  * UserRepository} implementation.
- *
  * <p>
  * For instance,
  *
@@ -72,9 +71,8 @@ import eapli.framework.validations.Invariants;
  * </pre>
  *
  * @author Paulo Gandra de Sousa
- *
  */
-@Singleton
+@Utility
 public final class AuthzRegistry {
 
     private static AuthorizationService authorizationSvc;
@@ -102,7 +100,6 @@ public final class AuthzRegistry {
     }
 
     /**
-     *
      * @return the {@link UserManagementService}
      */
     public static UserManagementService userService() {
@@ -111,7 +108,6 @@ public final class AuthzRegistry {
     }
 
     /**
-     *
      * @return the {@link AuthenticationService}
      */
     public static AuthenticationService authenticationService() {
@@ -120,7 +116,6 @@ public final class AuthzRegistry {
     }
 
     /**
-     *
      * @return the {@link AuthorizationService}
      */
     public static AuthorizationService authorizationService() {

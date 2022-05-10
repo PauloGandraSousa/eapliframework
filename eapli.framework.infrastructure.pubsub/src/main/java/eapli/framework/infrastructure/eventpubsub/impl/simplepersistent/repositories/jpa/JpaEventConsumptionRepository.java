@@ -31,14 +31,13 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**
  * @author Paulo Gandra de Sousa 2022.05.09
- *
  */
 @Component
 public class JpaEventConsumptionRepository extends JpaBaseRepository<EventConsumption, Long, Long>
-		implements EventConsumptionRepository {
+        implements EventConsumptionRepository {
 
-	public JpaEventConsumptionRepository() {
-		super("id");
-	}
+    public JpaEventConsumptionRepository() {
+        super("id");
+    }
 
 }

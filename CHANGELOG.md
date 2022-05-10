@@ -14,7 +14,7 @@
 
 ## new
 
-- `SimplePersistentPubSub` for scenarios without spring injection
+- `SimplePersistentPubSub` and `PubSubRegistry` for scenarios without spring injection
 
 ## Changed
 

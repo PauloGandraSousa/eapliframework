@@ -24,15 +24,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.function.Supplier;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import eapli.framework.util.Utility;
 
 /**
  * Utility class for Calendar manipulation and several date and time related
  * functions.
- *
  * <p>
  * If you are using Java 8+, you should use the Time API:
  * <li><a href=
@@ -46,100 +42,97 @@ import eapli.framework.util.Utility;
  */
 @Utility
 public final class CurrentTimeCalendars {
-	private static final Logger LOGGER = LogManager.getLogger(CurrentTimeCalendars.class);
 
-	private static final int DAYS_TILL_END_OF_WEEK = 6;
+    /**
+     * Mock the system clock for unit testing.
+     * <p>
+     * suppress warning squid:S2885 - we are protecting the variable with
+     * synchronize getter
+     */
+    @SuppressWarnings("squid:S2885") //
+    private static Calendar frozenTime;
 
-	/**
-	 * Mock the system clock for unit testing.
-	 * <p>
-	 * suppress warning squid:S2885 - we are protecting the variable with
-	 * synchronize getter
-	 */
-	@SuppressWarnings("squid:S2885") //
-	private static Calendar frozenTime;
+    private static Supplier<Calendar> nowFunction = CurrentTimeCalendars::realNow;
 
-	private static Supplier<Calendar> nowFunction = CurrentTimeCalendars::realNow;
+    private static synchronized Calendar fakeNow() {
+        return frozenTime;
+    }
 
-	private static synchronized Calendar fakeNow() {
-		return frozenTime;
-	}
+    private static Calendar realNow() {
+        return new GregorianCalendar();
+    }
 
-	private static Calendar realNow() {
-		return new GregorianCalendar();
-	}
+    private CurrentTimeCalendars() {
+        // ensure no instantiation as this is a utility class
+    }
 
-	private CurrentTimeCalendars() {
-		// ensure no instantiation as this is a utility class
-	}
+    /**
+     * Overrides the use of the system clock to allow unit testing.
+     */
+    /* package */ static synchronized void setNow(final Calendar frozenTime) {
+        CurrentTimeCalendars.frozenTime = frozenTime;
+        nowFunction = CurrentTimeCalendars::fakeNow;
+    }
 
-	/**
-	 * Overrides the use of the system clock to allow unit testing.
-	 */
-	/* package */ static synchronized void setNow(final Calendar frozenTime) {
-		CurrentTimeCalendars.frozenTime = frozenTime;
-		nowFunction = CurrentTimeCalendars::fakeNow;
-	}
+    /**
+     * Returns the current date of the system.
+     *
+     * @return the current date of the system.
+     */
+    public static Calendar now() {
+        return nowFunction.get();
+    }
 
-	/**
-	 * Returns the current date of the system.
-	 *
-	 * @return the current date of the system.
-	 */
-	public static Calendar now() {
-		return nowFunction.get();
-	}
+    public static int currentWeekNumber() {
+        return Calendars.weekNumber(now());
+    }
 
-	public static int currentWeekNumber() {
-		return Calendars.weekNumber(now());
-	}
+    /**
+     * Returns the date of the last day of the current month.
+     *
+     * @return the date of the last day of the current month.
+     */
+    public static Calendar endOfCurrentMonth() {
+        return Calendars.endOfMonth(now());
+    }
 
-	/**
-	 * Returns the date of the last day of the current month.
-	 *
-	 * @return the date of the last day of the current month.
-	 */
-	public static Calendar endOfCurrentMonth() {
-		return Calendars.endOfMonth(now());
-	}
+    /**
+     * returns the current year.
+     *
+     * @return the current year
+     */
+    public static int currentYear() {
+        return now().get(Calendar.YEAR);
+    }
 
-	/**
-	 * returns the current year.
-	 *
-	 * @return the current year
-	 */
-	public static int currentYear() {
-		return now().get(Calendar.YEAR);
-	}
+    /**
+     * returns the current month of the year
+     *
+     * @return current month (1 - 12) of the year
+     */
+    public static int currentMonth() {
+        return now().get(Calendar.MONTH) + 1;
+    }
 
-	/**
-	 * returns the current month of the year
-	 *
-	 * @return current month (1 - 12) of the year
-	 */
-	public static int currentMonth() {
-		return now().get(Calendar.MONTH) + 1;
-	}
+    /**
+     * Returns yesterday's date.
+     *
+     * @return yesterday's date.
+     */
+    public static Calendar yesterday() {
+        final Calendar yesterday = now();
+        yesterday.add(Calendar.DATE, -1);
+        return yesterday;
+    }
 
-	/**
-	 * Returns yesterday's date.
-	 *
-	 * @return yesterday's date.
-	 */
-	public static Calendar yesterday() {
-		final Calendar yesterday = now();
-		yesterday.add(Calendar.DATE, -1);
-		return yesterday;
-	}
-
-	/**
-	 * Returns tomorrow's date.
-	 *
-	 * @return tomorrow's date
-	 */
-	public static Calendar tomorrow() {
-		final Calendar yesterday = now();
-		yesterday.add(Calendar.DATE, 1);
-		return yesterday;
-	}
+    /**
+     * Returns tomorrow's date.
+     *
+     * @return tomorrow's date
+     */
+    public static Calendar tomorrow() {
+        final Calendar yesterday = now();
+        yesterday.add(Calendar.DATE, 1);
+        return yesterday;
+    }
 }

@@ -25,6 +25,7 @@ package eapli.framework.infrastructure.eventpubsub.impl.inprocess.service;
 
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.EventPublisher;
+import eapli.framework.util.Singleton;
 import eapli.framework.util.Utility;
 
 /**
@@ -32,11 +33,14 @@ import eapli.framework.util.Utility;
  * scenarios without spring dependency injection.
  *
  * @author Paulo Gandra de Sousa 13/06/2019
+ *
  * @see InProcessPublisherDispatcher
  */
 @Utility
 public final class InProcessPubSub {
+
     // make sure that there is only one instance of the Pub/sub
+    @Singleton
     private static class LazyHolder {
         private static final InProcessPublisherDispatcher INSTANCE = new InProcessPublisherDispatcher();
 

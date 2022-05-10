@@ -47,9 +47,11 @@ import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.reposito
  * This class is just for demonstration purposes. you should consider using a
  * true pub/sub mechanism such as message queueing instead of this class.
  * <p>
- * This class is prepared to be used by Spring Dependency Injection.
+ * This class is prepared to be used by Spring Dependency Injection. The client application must
+ * enable spring scheduling thru the use of <code>@EnableScheduling</code>
  *
  * @author Paulo Gandra de Sousa
+ *
  * @see SimplePersistentPubSub
  */
 @Component
@@ -61,8 +63,10 @@ public class SimplePersistentPublisherDispatcher implements EventDispatcher, Eve
 
     private final EventConsumptionRepository consumptionRepo;
 
+    // reuse in process dispatcher
     private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
 
+    // reuse in process publisher
     private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
 
     /**
