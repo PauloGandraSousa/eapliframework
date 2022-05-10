@@ -42,7 +42,9 @@ import eapli.framework.validations.Preconditions;
  * potentially causing a "memory leak" if you forget to unsubscribe as the garbage collector won't
  * be able to reclaim the used memory.
  * <p>
- * publishing an event is performed in a separate thread of execution from the calling thread
+ * Publishing an event is performed in a separate thread of execution from the calling thread.
+ * <p>
+ * This class can be used a Spring Component.
  *
  * @author Paulo Gandra de Sousa
  *

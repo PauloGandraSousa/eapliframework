@@ -5,6 +5,7 @@
 ## Changed
 
 - added JPA repositories to SimplePersistent implementation
+- use of Spring Scheduled for persistent event pooling
 - restructured packages
 	- `eapli.framework.infrastructure.eventpubsub.impl.inprocess` -> `eapli.framework.infrastructure.eventpubsub.impl.inprocess.service` 
 	- `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent` -> `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.service` 
