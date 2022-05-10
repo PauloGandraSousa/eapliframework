@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.authz.repositories.impl;
+package eapli.framework.infrastructure.authz.repositories.impl.jpa;
 
 import eapli.framework.util.Utility;
 

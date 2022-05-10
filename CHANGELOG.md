@@ -3,6 +3,16 @@
 ## SNAPSHOT
 
 
+## 18.0.0 SNAPSHOT [AUTHZ]
+
+## What's new
+
+- TBD
+
+## Changed
+
+- Each repository implementation is in its own package
+
 ## 19.0.0 [CORE]
 
 ## What's new
