@@ -7,7 +7,7 @@
 
 ## What's new
 
-- TBD
+- N.A.
 
 ## Changed
 
@@ -17,7 +17,7 @@
 
 ## new
 
-- TBD
+- N.A.
 
 ## Changed
 
