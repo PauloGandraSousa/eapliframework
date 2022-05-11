@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.jpa;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.jpa;
 
 import java.util.Map;
 
 import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventRecord;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventRecordRepository;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventRecord;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventRecordRepository;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**

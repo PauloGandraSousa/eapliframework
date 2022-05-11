@@ -21,30 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.jpa;
+package eapli.framework.infrastructure.pubsub;
 
-import org.springframework.stereotype.Component;
-
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventRecord;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventRecordRepository;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
+import eapli.framework.domain.events.DomainEvent;
 
 /**
- * @author Paulo Gandra de Sousa 2022.05.09
+ * An Event publisher publishes events to interested parties. Parties would have
+ * mentioned their interest via an EventDispatcher.
+ *
+ * @author Paulo Gandra de Sousa
  *
  */
-@Component
-public class JpaEventRecordRepository extends JpaBaseRepository<EventRecord, Long, Long>
-		implements EventRecordRepository {
-
-	public JpaEventRecordRepository() {
-		super("pk");
-	}
-
-	@Override
-	public Iterable<EventRecord> findNotConsumed(String instanceKey) {
-		return match(
-				"e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)",
-				"instance", instanceKey);
-	}
+public interface EventPublisher {
+    /**
+     * publishes an event in the system, triggering notification of all
+     * interested parties. each implementation may deal differently with
+     * asynchronicity of this operation; for instance, by executing the
+     * notification in a separate thread or in a parallel way
+     *
+     * @param event
+     */
+    void publish(DomainEvent event);
 }

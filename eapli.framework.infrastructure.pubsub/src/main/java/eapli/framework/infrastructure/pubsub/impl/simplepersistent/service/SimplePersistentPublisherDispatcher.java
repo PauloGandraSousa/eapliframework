@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.service;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,14 +31,14 @@ import org.springframework.transaction.annotation.Transactional;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
-import eapli.framework.infrastructure.eventpubsub.EventHandler;
-import eapli.framework.infrastructure.eventpubsub.EventPublisher;
-import eapli.framework.infrastructure.eventpubsub.impl.inprocess.service.InProcessPubSub;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventRecord;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventRecordRepository;
+import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.framework.infrastructure.pubsub.EventHandler;
+import eapli.framework.infrastructure.pubsub.EventPublisher;
+import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventConsumption;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventRecord;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventRecordRepository;
 
 /**
  * A simple event dispatcher using database tables to persist events and allow
@@ -116,6 +116,8 @@ public class SimplePersistentPublisherDispatcher implements EventDispatcher, Eve
             notConsumedEvents.forEach(this::storeConsumptionAndPublish);
         } catch (final Exception e) {
             LOGGER.error("Error polling events", e);
+            // TODO we should have some kind of exception handling here, but since this an
+            // asynchronous call it is tricky...
         }
         return true;
     }
@@ -128,6 +130,8 @@ public class SimplePersistentPublisherDispatcher implements EventDispatcher, Eve
             inprocPublisher.publish(eventRecord.event());
         } catch (ConcurrencyException | IntegrityViolationException e) {
             LOGGER.error("Error storing consumption {} of event {}", entity, eventRecord, e);
+            // TODO we should have some kind of exception handling here, but since this an
+            // asynchronous call it is tricky...
         }
     }
 
@@ -136,8 +140,8 @@ public class SimplePersistentPublisherDispatcher implements EventDispatcher, Eve
     public void publish(final DomainEvent event) {
         storeEvent(event);
 
-        // we do not immediately publish the event in process as it will be
-        // polled and marked as consumed soon enough
+        // we just store the event; it will be polled and marked as consumed by the scheduled taks
+        // and will be propagated in memory
     }
 
     private void storeEvent(final DomainEvent event) {
@@ -147,6 +151,7 @@ public class SimplePersistentPublisherDispatcher implements EventDispatcher, Eve
             LOGGER.trace("Stored event {}", event);
         } catch (ConcurrencyException | IntegrityViolationException e) {
             LOGGER.error("Error storing event {}", event, e);
+            throw e;
         }
     }
 

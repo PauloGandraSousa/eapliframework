@@ -21,24 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.jpa;
 
-import eapli.framework.domain.events.DomainEvent;
+import org.springframework.stereotype.Component;
+
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventConsumption;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**
- * An observer of domain events.
- *
- * @author Paulo Gandra de Sousa
- *
+ * @author Paulo Gandra de Sousa 2022.05.09
  */
-@FunctionalInterface
-public interface EventHandler {
+@Component
+public class JpaEventConsumptionRepository extends JpaBaseRepository<EventConsumption, Long, Long>
+        implements EventConsumptionRepository {
 
-    /**
-     * Handles the event. Implementations should make no assumption about thread-affinity and should
-     * be prepared to the fact that this method call is executed in its own thread.
-     *
-     * @param domainEvent
-     */
-    void onEvent(DomainEvent domainEvent);
+    public JpaEventConsumptionRepository() {
+        super("id");
+    }
+
 }

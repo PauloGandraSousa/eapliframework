@@ -21,36 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub;
+package eapli.framework.infrastructure.pubsub.impl.inprocess.service;
 
+import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.framework.infrastructure.pubsub.EventPublisher;
+import eapli.framework.util.Singleton;
 import eapli.framework.util.Utility;
-import eapli.framework.validations.Invariants;
 
 /**
- * Simple global registry of the Pub/Sub engine for scenarios without dependency injection.
+ * Provides access to the in process event publisher and dispatcher for
+ * scenarios without spring dependency injection.
  *
  * @author Paulo Gandra de Sousa 13/06/2019
+ *
+ * @see InProcessPublisherDispatcher
  */
 @Utility
-public final class PubSubRegistry {
+public final class InProcessPubSub {
 
-    private static EventDispatcher dispatcher;
-    private static EventPublisher publisher;
+    // make sure that there is only one instance of the Pub/sub
+    @Singleton
+    private static class LazyHolder {
+        private static final InProcessPublisherDispatcher INSTANCE = new InProcessPublisherDispatcher();
 
-    private PubSubRegistry() {
-        // avoid instantiation
+        private LazyHolder() {
+        }
     }
 
-    /**
-     * Helper method to initialize the registry.
-     *
-     * @param dispatcher
-     * @param publisher
-     */
-    public static void configure(final EventDispatcher dispatcher, final EventPublisher publisher) {
-        Invariants.ensure(PubSubRegistry.dispatcher == null && PubSubRegistry.publisher == null);
-        PubSubRegistry.dispatcher = dispatcher;
-        PubSubRegistry.publisher = publisher;
+    private InProcessPubSub() {
+        // avoid instantiation
     }
 
     /**
@@ -60,8 +59,7 @@ public final class PubSubRegistry {
      * @return the dispatcher
      */
     public static EventDispatcher dispatcher() {
-        Invariants.noneNull(dispatcher, publisher);
-        return dispatcher;
+        return LazyHolder.INSTANCE;
     }
 
     /**
@@ -71,7 +69,6 @@ public final class PubSubRegistry {
      * @return the publisher
      */
     public static EventPublisher publisher() {
-        Invariants.noneNull(dispatcher, publisher);
-        return publisher;
+        return LazyHolder.INSTANCE;
     }
 }

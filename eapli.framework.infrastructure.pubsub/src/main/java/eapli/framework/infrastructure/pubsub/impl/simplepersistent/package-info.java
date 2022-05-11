@@ -135,4 +135,4 @@
  * @enduml
  *         -->
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent;

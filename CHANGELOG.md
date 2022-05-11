@@ -13,6 +13,16 @@
 
 - Each repository implementation is in its own package
 
+## 19.0.0 [ PUB/SUB ]
+
+## new
+
+- TBD
+
+## Changed
+
+- renamed package structure from `eapli.infrastructure.eventpubsub` to `eapli.infrastructure.pubsub`
+
 ## 19.0.0 [CORE]
 
 ## What's new

@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.model;
 
 import java.util.Calendar;
 

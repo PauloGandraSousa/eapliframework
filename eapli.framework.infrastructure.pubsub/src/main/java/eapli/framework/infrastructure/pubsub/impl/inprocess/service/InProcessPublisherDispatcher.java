@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.inprocess.service;
+package eapli.framework.infrastructure.pubsub.impl.inprocess.service;
 
 import java.util.Map;
 import java.util.Queue;
@@ -30,9 +30,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import eapli.framework.domain.events.DomainEvent;
-import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
-import eapli.framework.infrastructure.eventpubsub.EventHandler;
-import eapli.framework.infrastructure.eventpubsub.EventPublisher;
+import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.framework.infrastructure.pubsub.EventHandler;
+import eapli.framework.infrastructure.pubsub.EventPublisher;
 import eapli.framework.validations.Preconditions;
 
 /**

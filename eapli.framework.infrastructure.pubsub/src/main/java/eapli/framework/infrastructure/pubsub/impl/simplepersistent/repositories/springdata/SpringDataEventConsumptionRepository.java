@@ -21,21 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.springdata;
 
-import eapli.framework.domain.repositories.DomainRepository;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventRecord;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventConsumption;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataDomainBaseRepository;
 
 /**
  * @author Paulo Gandra de Sousa
  *
  */
-public interface EventRecordRepository extends DomainRepository<Long, EventRecord> {
+interface SpringDataEventConsumptionRepository
+        extends EventConsumptionRepository, SpringDataDomainBaseRepository<Long, Long, EventConsumption> {
 
-	/**
-	 *
-	 * @param instanceKey
-	 * @return
-	 */
-	Iterable<EventRecord> findNotConsumed(String instanceKey);
+    @Override
+    @Query("SELECT e FROM #{#entityName} e WHERE e.id = :id")
+    Optional<EventConsumption> ofIdentity(@Param("id") Long entityId);
+
+    @Override
+    @Modifying
+    @Query("DELETE FROM #{#entityName} e WHERE e.id = :id")
+    void deleteOfIdentity(@Param("id") Long entityId);
 }

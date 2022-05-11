@@ -21,31 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.jpa;
+package eapli.framework.infrastructure.pubsub;
 
-import java.util.Map;
-
-import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+import eapli.framework.domain.events.DomainEvent;
 
 /**
- * The JPA implementation for scenarios where the application is not running in
- * a container.
+ * An observer of domain events.
  *
- * @author Paulo Gandra de Sousa 2022.05.10
+ * @author Paulo Gandra de Sousa
+ *
  */
-public class JpaAutoTxEventConsumptionRepository extends JpaAutoTxRepository<EventConsumption, Long, Long>
-        implements EventConsumptionRepository {
+@FunctionalInterface
+public interface EventHandler {
 
-    public JpaAutoTxEventConsumptionRepository(final TransactionalContext autoTx) {
-        super(autoTx, "id");
-    }
-
-    public JpaAutoTxEventConsumptionRepository(final String puname,
-            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties) {
-        super(puname, properties, "id");
-    }
-
+    /**
+     * Handles the event. Implementations should make no assumption about thread-affinity and should
+     * be prepared to the fact that this method call is executed in its own thread.
+     *
+     * @param domainEvent
+     */
+    void onEvent(DomainEvent domainEvent);
 }

@@ -21,23 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.jpa;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.jpa;
 
 import org.springframework.stereotype.Component;
 
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventRecord;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventRecordRepository;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
 
 /**
  * @author Paulo Gandra de Sousa 2022.05.09
+ *
  */
 @Component
-public class JpaEventConsumptionRepository extends JpaBaseRepository<EventConsumption, Long, Long>
-        implements EventConsumptionRepository {
+public class JpaEventRecordRepository extends JpaBaseRepository<EventRecord, Long, Long>
+		implements EventRecordRepository {
 
-    public JpaEventConsumptionRepository() {
-        super("id");
-    }
+	public JpaEventRecordRepository() {
+		super("pk");
+	}
 
+	@Override
+	public Iterable<EventRecord> findNotConsumed(String instanceKey) {
+		return match(
+				"e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)",
+				"instance", instanceKey);
+	}
 }

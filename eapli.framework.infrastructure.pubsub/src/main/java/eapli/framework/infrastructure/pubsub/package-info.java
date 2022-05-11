@@ -69,4 +69,4 @@
  *         -->
  *
  */
-package eapli.framework.infrastructure.eventpubsub;
+package eapli.framework.infrastructure.pubsub;

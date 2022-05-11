@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories;
 
 import eapli.framework.domain.repositories.DomainRepository;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventConsumption;
 
 /**
  * @author Paulo Gandra de Sousa

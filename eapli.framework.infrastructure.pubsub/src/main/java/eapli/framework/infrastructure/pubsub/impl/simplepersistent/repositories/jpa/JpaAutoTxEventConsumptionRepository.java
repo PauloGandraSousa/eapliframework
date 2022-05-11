@@ -21,31 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.springdata;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.jpa;
 
-import java.util.Optional;
+import java.util.Map;
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventConsumption;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
-import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataDomainBaseRepository;
+import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventConsumption;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
- * @author Paulo Gandra de Sousa
+ * The JPA implementation for scenarios where the application is not running in
+ * a container.
  *
+ * @author Paulo Gandra de Sousa 2022.05.10
  */
-interface SpringDataEventConsumptionRepository
-        extends EventConsumptionRepository, SpringDataDomainBaseRepository<Long, Long, EventConsumption> {
+public class JpaAutoTxEventConsumptionRepository extends JpaAutoTxRepository<EventConsumption, Long, Long>
+        implements EventConsumptionRepository {
 
-    @Override
-    @Query("SELECT e FROM #{#entityName} e WHERE e.id = :id")
-    Optional<EventConsumption> ofIdentity(@Param("id") Long entityId);
+    public JpaAutoTxEventConsumptionRepository(final TransactionalContext autoTx) {
+        super(autoTx, "id");
+    }
 
-    @Override
-    @Modifying
-    @Query("DELETE FROM #{#entityName} e WHERE e.id = :id")
-    void deleteOfIdentity(@Param("id") Long entityId);
+    public JpaAutoTxEventConsumptionRepository(final String puname,
+            @SuppressWarnings({ "rawtypes", "java:S3740" }) final Map properties) {
+        super(puname, properties, "id");
+    }
+
 }

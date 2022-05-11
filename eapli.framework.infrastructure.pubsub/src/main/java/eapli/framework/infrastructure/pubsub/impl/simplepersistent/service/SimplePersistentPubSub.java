@@ -18,18 +18,18 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.service;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.framework.actions.TimedActions;
 import eapli.framework.domain.events.DomainEvent;
-import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
-import eapli.framework.infrastructure.eventpubsub.EventHandler;
-import eapli.framework.infrastructure.eventpubsub.EventPublisher;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventRecordRepository;
+import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.framework.infrastructure.pubsub.EventHandler;
+import eapli.framework.infrastructure.pubsub.EventPublisher;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventConsumptionRepository;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventRecordRepository;
 import eapli.framework.util.Utility;
 import eapli.framework.validations.Invariants;
 

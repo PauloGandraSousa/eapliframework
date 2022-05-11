@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.springdata;
+package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.springdata;
 
 import java.util.Optional;
 
@@ -29,8 +29,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.model.EventRecord;
-import eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.repositories.EventRecordRepository;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventRecord;
+import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.EventRecordRepository;
 import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataDomainBaseRepository;
 
 /**
