@@ -21,6 +21,7 @@
 package eapli.framework.infrastructure.authz.domain.model;
 
 import eapli.framework.domain.model.Immutable;
+import eapli.framework.strings.RandomString;
 import eapli.framework.strings.util.Strings;
 import lombok.EqualsAndHashCode;
 
@@ -36,45 +37,45 @@ import lombok.EqualsAndHashCode;
  */
 @Immutable
 @EqualsAndHashCode
-public class RandomRawPassword {
+public final class RandomRawPassword {
 
-	private static final int DEFAULT_LENGTH = 12;
+    private static final int DEFAULT_LENGTH = 12;
 
-	private static final String LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz";
-	private static final String UPPER_CHARS = LOWER_CHARS.toUpperCase();
-	private static final String NUMBERS = "0123456789";
-	private static final String SPECIAL = "_-+*/@=><#?!.%():;[]|{}&$€";
+    private static final String LOWER_CHARS = "abcdefghijklmnopqrstuvwxyz";
+    private static final String UPPER_CHARS = LOWER_CHARS.toUpperCase();
+    private static final String NUMBERS = "0123456789";
+    private static final String SPECIAL = "_-+*/@=><#?!.%():;[]|{}&$€";
 
-	public static final String ALLOWED_CHARS = LOWER_CHARS + UPPER_CHARS + NUMBERS + SPECIAL;
+    public static final String ALLOWED_CHARS = LOWER_CHARS + UPPER_CHARS + NUMBERS + SPECIAL;
 
-	private final String rawPassword;
+    private final String rawPassword;
 
-	/**
-	 * Constructs a random password with the default length.
-	 */
-	public RandomRawPassword() {
-		this(DEFAULT_LENGTH);
-	}
+    /**
+     * Constructs a random password with the default length.
+     */
+    public RandomRawPassword() {
+        this(DEFAULT_LENGTH);
+    }
 
-	/**
-	 * Constructs a random password with the desired length.
-	 *
-	 * @param length
-	 */
-	public RandomRawPassword(final int length) {
-		if (length < 3) {
-			throw new IllegalArgumentException("Lenght must be at least 3");
-		}
-		final String part1 = Strings.randomString(length - 3, LOWER_CHARS);
-		final String part2 = Strings.randomString(1, UPPER_CHARS);
-		final String part3 = Strings.randomString(1, NUMBERS);
-		final String part4 = Strings.randomString(1, SPECIAL);
+    /**
+     * Constructs a random password with the desired length.
+     *
+     * @param length
+     */
+    public RandomRawPassword(final int length) {
+        if (length < 3) {
+            throw new IllegalArgumentException("Lenght must be at least 3");
+        }
+        final String part1 = new RandomString(length - 3, LOWER_CHARS).toString();
+        final String part2 = new RandomString(1, UPPER_CHARS).toString();
+        final String part3 = new RandomString(1, NUMBERS).toString();
+        final String part4 = new RandomString(1, SPECIAL).toString();
 
-		rawPassword = Strings.shuffle(part1 + part2 + part3 + part4);
-	}
+        rawPassword = Strings.shuffle(part1 + part2 + part3 + part4);
+    }
 
-	@Override
-	public String toString() {
-		return rawPassword;
-	}
+    @Override
+    public String toString() {
+        return rawPassword;
+    }
 }

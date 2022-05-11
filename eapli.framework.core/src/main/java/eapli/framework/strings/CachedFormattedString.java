@@ -24,7 +24,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * A cached formatted string. If the formatted value is needed in several places, there is no need to format it every
+ * A cached formatted string. If the formatted value is needed in several places, there is no need
+ * to format it every
  * time it is needed. This class is thread-safe.
  * <p>
  * This is an application of the Decorator GoF pattern.

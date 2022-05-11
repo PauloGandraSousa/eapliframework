@@ -1,133 +1,190 @@
 # EAPLI Framework Changelog
 
-## SNAPSHOT
+## R.20.0.0 - SNAPSHOT
+
+### 20.0.0 [CORE]
+
+#### what's new
+
+- `RandomString`
+
+#### Changed
+
+- removed methods `randomString` from class `Strings`
+
+### 19.0.0 [AUTHZ]
+
+#### what's new
+
+- TBD
+
+#### Changed
+
+- marked as final classes
+-- `Name`
+-- `NilPasswordPolicy`
+-- `Password`
+-- `PlainTextEncoder`
+-- `RandomRawPassword`
+-- `Username`
+-- `UserSession`
+
+
+### 20.0.0 [PUBSUB]
+
+#### what's new
+
+- TBD
+
+#### Changed
+
+- marked as final classes
+-- `SimplePersistentPubSub`
+-- `EventRecord`
+-- `EventConsumption`
 
 
 ## 18.0.0 [AUTHZ]
 
-## What's new
+### What's new
 
 - N.A.
 
-## Changed
+### Changed
 
 - Each repository implementation is in its own package
 
+
 ## 19.0.0 [ PUB/SUB ]
 
-## new
+### new
 
 - N.A.
 
-## Changed
+### Changed
 
 - renamed package structure from `eapli.infrastructure.eventpubsub` to `eapli.infrastructure.pubsub`
 
+
 ## 19.0.0 [CORE]
 
-## What's new
+### What's new
 
 - Parametrizable `Command` pattern
 
-## Changed
+### Changed
 
 - `Calendars` and `CalendarPredicates` where split into `CurrentTimeCalendars` and `CurrentTimeCalendarPredicates` to distinguish between pure deterministic utility functions and the ones that are not deterministic since they depend on the system clock
 
+
 ## 18.0.0 [ PUB/SUB ]
 
-## new
+### What's new
 
 - `SimplePersistentPubSub` and `PubSubRegistry` for scenarios without spring injection
 
-## Changed
+### Changed
 
 - use of Spring Scheduled for persistent event pooling
+
 - renamed `SimplePersistentEventPubSub` top `SimplePersistentPublisherDispatcher`
+
 
 ## 17.0.0 [ PUB/SUB ]
 
-## Changed
+### Changed
 
 - added JPA repositories to SimplePersistent implementation
+
 - restructured packages
+
 	- `eapli.framework.infrastructure.eventpubsub.impl.inprocess` -> `eapli.framework.infrastructure.eventpubsub.impl.inprocess.service` 
+	
 	- `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent` -> `eapli.framework.infrastructure.eventpubsub.impl.simplepersistent.service` 
+	
 	
 ## 18.2.0 [ CORE ]
 
-## What's new
+### What's new
 
 - `Money.isOfSameCurrency`
 
-## Changed
+### Changed
 
 - Fix missing `PersistenceContext` annotation on `JpaAbstractRepository` for scenarios with Spring
+
 - Fix missing `Transactional` annotation for scenarios with Spring and JPA repositories (not Spring Data)
+
 
 ## 18.1.1 [ CORE ]
 
-## What's new
+### What's new
 
 - n.a.
 
-## Changed
+### Changed
 
 - removed `Macro.record`; use `with()`
+
 - renamed `DateInterval` internal member names to `dateStart` and `dateEnd` due to conflicts with some RDBMS
+
 
 ## 18.0.0 [ CORE ]
 
-## What's new
+### What's new
 
 - n.a.
 
-## Changed
+### Changed
 
 - removed `Macro.record`; use `with()`
 
 
 ## 17.0.0 [ CORE ]
 
-## What's new
+### What's new
 
 - n.a.
 
-## Changed
+### Changed
 
 - removed deprecated `JpaAutoTxRepository.isInTransaction`. Use `isInTransactionalContext`.
+
 - `JpaAutoTxRepository.context` now returns an `Optional<TransactionalContext>`.
+
 - removed `Macro.record`; use `with()`
 
 
 ## 17.1.0 [ AUTHZ ]
 
-## What's new
+### What's new
 
 - `Name` now supports dot (`.`), dash (`-`) and apostrophe (`'`)
 
-## Changed
+### Changed
 
 - removed deprecated `RoleAssignment.getUnassignedOn`. Use `unassignedOn`.
 
 
 ## 16.6.0 [ CORE ]
 
-## What's new
+### What's new
 
 - `JpaAutoTxRepository.entityManager`
 
-## Changed
+### Changed
 
 - n.a.
 
 ## 16.5.0 [ CORE ]
 
-## What's new
+### What's new
 
 - `JpaAbstractRepository.createNativeQuery`
+
 - `JpaAutoTxRepository.createNativeQuery`
 
-## Changed
+### Changed
 
 - n.a.
 

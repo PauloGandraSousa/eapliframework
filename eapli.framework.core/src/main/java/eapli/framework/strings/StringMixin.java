@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Mixin for adding common functionality to objects that can be thought of as
- * Strings, e.g., the name concept Designation.
+ * Strings, e.g., the concept "Designation".
  *
  *
  * @author Paulo Gandra de Sousa

@@ -44,54 +44,54 @@ import eapli.framework.validations.Preconditions;
  */
 @Entity
 @Table(name = "PUBSUB_EVENT_CONSUMPTION")
-public class EventConsumption implements AggregateRoot<Long> {
-	private static final long serialVersionUID = 1L;
+public final class EventConsumption implements AggregateRoot<Long> {
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@ManyToOne
-	private final EventRecord event;
+    @ManyToOne
+    private final EventRecord event;
 
-	private final String consumerName;
+    private final String consumerName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private final Calendar occurredAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private final Calendar occurredAt;
 
-	public EventConsumption(final String consumerName, final EventRecord event) {
-		Preconditions.nonNull(event);
-		Preconditions.nonEmpty(consumerName);
+    public EventConsumption(final String consumerName, final EventRecord event) {
+        Preconditions.nonNull(event);
+        Preconditions.nonEmpty(consumerName);
 
-		this.consumerName = consumerName;
-		this.event = event;
-		occurredAt = CurrentTimeCalendars.now();
-	}
+        this.consumerName = consumerName;
+        this.event = event;
+        occurredAt = CurrentTimeCalendars.now();
+    }
 
-	protected EventConsumption() {
-		// for ORM
-		consumerName = null;
-		event = null;
-		occurredAt = null;
-	}
+    protected EventConsumption() {
+        // for ORM
+        consumerName = null;
+        event = null;
+        occurredAt = null;
+    }
 
-	@Override
-	public boolean sameAs(final Object other) {
-		if (!(other instanceof EventConsumption)) {
-			return false;
-		}
-		final var that = (EventConsumption) other;
-		return new EqualsBuilder().append(id, that.id).append(event, that.event).append(consumerName, that.consumerName)
-				.isEquals();
-	}
+    @Override
+    public boolean sameAs(final Object other) {
+        if (!(other instanceof EventConsumption)) {
+            return false;
+        }
+        final var that = (EventConsumption) other;
+        return new EqualsBuilder().append(id, that.id).append(event, that.event).append(consumerName, that.consumerName)
+                .isEquals();
+    }
 
-	@Override
-	public Long identity() {
-		return id;
-	}
+    @Override
+    public Long identity() {
+        return id;
+    }
 
-	@Override
-	public String toString() {
-		return consumerName + " consumed event " + event;
-	}
+    @Override
+    public String toString() {
+        return consumerName + " consumed event " + event;
+    }
 }

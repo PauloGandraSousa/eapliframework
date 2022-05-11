@@ -48,118 +48,118 @@ import eapli.framework.validations.Preconditions;
 @Entity
 public class RoleAssignment implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue // (strategy = GenerationType.IDENTITY)
-	private Long pk;
+    @Id
+    @GeneratedValue // (strategy = GenerationType.IDENTITY)
+    private Long pk;
 
-	private final Role type;
+    private final Role type;
 
-	@Temporal(TemporalType.DATE)
-	private final Calendar assignedOn;
+    @Temporal(TemporalType.DATE)
+    private final Calendar assignedOn;
 
-	@Temporal(TemporalType.DATE)
-	private Calendar unassignedOn;
+    @Temporal(TemporalType.DATE)
+    private Calendar unassignedOn;
 
-	private boolean expired;
+    private boolean expired;
 
-	/**
-	 * @param type
-	 */
-	public RoleAssignment(final Role type) {
-		this(type, CurrentTimeCalendars.now());
-	}
+    /**
+     * @param type
+     */
+    public RoleAssignment(final Role type) {
+        this(type, CurrentTimeCalendars.now());
+    }
 
-	/**
-	 * @param type
-	 * @param assignedOn
-	 */
-	public RoleAssignment(final Role type, final Calendar assignedOn) {
-		Preconditions.noneNull(type, assignedOn);
+    /**
+     * @param type
+     * @param assignedOn
+     */
+    public RoleAssignment(final Role type, final Calendar assignedOn) {
+        Preconditions.noneNull(type, assignedOn);
 
-		this.type = type;
-		this.assignedOn = assignedOn;
-		expired = false;
-	}
+        this.type = type;
+        this.assignedOn = assignedOn;
+        expired = false;
+    }
 
-	protected RoleAssignment() {
-		// for ORM
-		type = null;
-		assignedOn = null;
-	}
+    protected RoleAssignment() {
+        // for ORM
+        type = null;
+        assignedOn = null;
+    }
 
-	/**
-	 * @return
-	 */
-	public boolean isExpired() {
-		return expired;
-	}
+    /**
+     * @return <code>true</code> if the role is expired
+     */
+    public boolean isExpired() {
+        return expired;
+    }
 
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof RoleAssignment)) {
-			return false;
-		}
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof RoleAssignment)) {
+            return false;
+        }
 
-		final RoleAssignment other = (RoleAssignment) o;
-		final boolean b = type == other.type && assignedOn.equals(other.assignedOn) && expired == other.expired;
-		if (!b) {
-			return false;
-		}
+        final RoleAssignment other = (RoleAssignment) o;
+        final boolean b = type == other.type && assignedOn.equals(other.assignedOn) && expired == other.expired;
+        if (!b) {
+            return false;
+        }
 
-		return ((unassignedOn != null && unassignedOn.equals(other.unassignedOn))
-				|| unassignedOn == null && other.unassignedOn == null);
-	}
+        return ((unassignedOn != null && unassignedOn.equals(other.unassignedOn))
+                || unassignedOn == null && other.unassignedOn == null);
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCoder().with(type).with(assignedOn).with(expired).with(unassignedOn).code();
-	}
+    @Override
+    public int hashCode() {
+        return new HashCoder().with(type).with(assignedOn).with(expired).with(unassignedOn).code();
+    }
 
-	@Override
-	public String toString() {
-		return type + "@" + assignedOn;
-	}
+    @Override
+    public String toString() {
+        return type + "@" + assignedOn;
+    }
 
-	/**
-	 * @return
-	 */
-	public Role type() {
-		return type;
-	}
+    /**
+     * @return the role
+     */
+    public Role type() {
+        return type;
+    }
 
-	/**
-	 * @param r
-	 *
-	 * @return
-	 */
-	public boolean isOf(final Role r) {
-		return type.equals(r);
-	}
+    /**
+     * @param r
+     *
+     * @return <code>true</code> if this assignment if of a certain {@link Role}
+     */
+    public boolean isOf(final Role r) {
+        return type.equals(r);
+    }
 
-	/**
-	 * Unassigns this role, marking it as expired.
-	 *
-	 * @return false if the role was already expired.
-	 */
-	public boolean unassign() {
-		if (expired) {
-			return false;
-		}
+    /**
+     * Unassigns this role, marking it as expired.
+     *
+     * @return false if the role was already expired.
+     */
+    public boolean unassign() {
+        if (expired) {
+            return false;
+        }
 
-		expired = true;
-		unassignedOn = CurrentTimeCalendars.now();
-		return true;
-	}
+        expired = true;
+        unassignedOn = CurrentTimeCalendars.now();
+        return true;
+    }
 
-	/**
-	 * @return
-	 */
-	public Optional<Calendar> unassignedOn() {
-		return Optional.ofNullable(unassignedOn);
-	}
+    /**
+     * @return the date the role was unassigned
+     */
+    public Optional<Calendar> unassignedOn() {
+        return Optional.ofNullable(unassignedOn);
+    }
 }

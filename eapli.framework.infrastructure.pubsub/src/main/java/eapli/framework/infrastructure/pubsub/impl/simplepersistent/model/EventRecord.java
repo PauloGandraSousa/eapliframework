@@ -46,66 +46,66 @@ import eapli.framework.validations.Preconditions;
  */
 @Entity
 @Table(name = "PUBSUB_EVENT_RECORD")
-public class EventRecord implements AggregateRoot<Long> {
+public final class EventRecord implements AggregateRoot<Long> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	private Long pk;
+    @Id
+    @GeneratedValue
+    private Long pk;
 
-	private final String eventName;
+    private final String eventName;
 
-	private final String publisherName;
+    private final String publisherName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private final Calendar occurredAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private final Calendar occurredAt;
 
-	@Lob
-	private final byte[] event;
+    @Lob
+    private final byte[] event;
 
-	public EventRecord(final String publisherName, final DomainEvent event) {
-		Preconditions.nonNull(event);
+    public EventRecord(final String publisherName, final DomainEvent event) {
+        Preconditions.nonNull(event);
 
-		this.publisherName = publisherName;
-		eventName = event.getClass().getName();
-		this.event = SerializationUtils.serialize(event);
-		occurredAt = CurrentTimeCalendars.now();
-	}
+        this.publisherName = publisherName;
+        eventName = event.getClass().getName();
+        this.event = SerializationUtils.serialize(event);
+        occurredAt = CurrentTimeCalendars.now();
+    }
 
-	protected EventRecord() {
-		// for ORM
-		eventName = null;
-		event = null;
-		publisherName = null;
-		occurredAt = null;
-	}
+    protected EventRecord() {
+        // for ORM
+        eventName = null;
+        event = null;
+        publisherName = null;
+        occurredAt = null;
+    }
 
-	public DomainEvent event() {
-		return SerializationUtils.deserialize(event);
-	}
+    public DomainEvent event() {
+        return SerializationUtils.deserialize(event);
+    }
 
-	public String publisher() {
-		return publisherName;
-	}
+    public String publisher() {
+        return publisherName;
+    }
 
-	@Override
-	public boolean sameAs(final Object other) {
-		if (!(other instanceof EventRecord)) {
-			return false;
-		}
-		final var that = (EventRecord) other;
-		return new EqualsBuilder().append(pk, that.pk).append(event, that.event).append(eventName, that.eventName)
-				.isEquals();
-	}
+    @Override
+    public boolean sameAs(final Object other) {
+        if (!(other instanceof EventRecord)) {
+            return false;
+        }
+        final var that = (EventRecord) other;
+        return new EqualsBuilder().append(pk, that.pk).append(event, that.event).append(eventName, that.eventName)
+                .isEquals();
+    }
 
-	@Override
-	public Long identity() {
-		return pk;
-	}
+    @Override
+    public Long identity() {
+        return pk;
+    }
 
-	@Override
-	public String toString() {
-		return "Record event " + event;
-	}
+    @Override
+    public String toString() {
+        return "Record event " + event;
+    }
 }

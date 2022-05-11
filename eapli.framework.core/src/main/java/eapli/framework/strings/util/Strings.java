@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import eapli.framework.math.util.NumberGenerator;
 import eapli.framework.util.Utility;
 
 /**
@@ -45,44 +44,8 @@ import eapli.framework.util.Utility;
 @Utility
 public final class Strings {
 
-    private static final String CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
     private Strings() {
         // ensure no instantiation as this is a utility class
-    }
-
-    /**
-     * Returns a random string with a specified length consisting only of
-     * letters (capitals and lower) and digits.
-     *
-     * @param len
-     *            the desired length of the string to generate
-     * @return a random string with a specified length consisting only of
-     *         letters (capitals and lower) and digits
-     */
-    public static String randomString(final int len) {
-        return randomString(len, CHARSET);
-    }
-
-    /**
-     * Returns a random string with a specified length based on characters in a
-     * specified char set.
-     *
-     * @param len
-     *            the desired length
-     * @param charSet
-     *            the set of allowable characters to include in the random
-     *            string
-     * @return a random string with a specified length based on characters in a
-     *         specified char set
-     */
-    public static String randomString(final int len, final String charSet) {
-        final var sb = new StringBuilder();
-        for (int i = 0; i < len; i++) {
-            final int c = NumberGenerator.anInt(charSet.length());
-            sb.append(charSet.charAt(c));
-        }
-        return sb.toString();
     }
 
     /**

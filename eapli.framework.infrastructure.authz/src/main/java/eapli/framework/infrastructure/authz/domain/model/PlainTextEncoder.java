@@ -29,7 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author Paulo Gandra de Sousa 27/05/2019
  *
  */
-public class PlainTextEncoder implements PasswordEncoder {
+public final class PlainTextEncoder implements PasswordEncoder {
 
     /*
      * (non-Javadoc)

@@ -105,7 +105,7 @@ public class SimplePersistentPublisherDispatcher implements EventDispatcher, Eve
      * The method needs to be public due to the use of the
      * {@link org.springframework.transaction.annotation.Transactional Transactional} annotation.
      *
-     * @return
+     * @return <code>true</code>
      */
     @Transactional
     @Scheduled(fixedDelayString = "${eapli.framework.pubsub.poolInterval}")

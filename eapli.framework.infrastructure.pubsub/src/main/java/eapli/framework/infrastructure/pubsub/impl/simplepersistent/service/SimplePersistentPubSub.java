@@ -46,7 +46,7 @@ import eapli.framework.validations.Invariants;
  * @see SimplePersistentPublisherDispatcher
  */
 @Utility
-public class SimplePersistentPubSub {
+public final class SimplePersistentPubSub {
 
     private static final Logger LOGGER = LogManager.getLogger(SimplePersistentPubSub.class);
 
@@ -107,6 +107,11 @@ public class SimplePersistentPubSub {
      * Helper method to initialize the registry in case you are not using Spring Dependency
      * Injection. This method should be called <strong>only once</strong> on application
      * startup.
+     *
+     * @param eventRepo
+     * @param consumptionRepo
+     * @param instanceKey
+     * @param poolInterval
      */
     public static synchronized void configure(final EventRecordRepository eventRepo,
             final EventConsumptionRepository consumptionRepo,
@@ -116,11 +121,14 @@ public class SimplePersistentPubSub {
     }
 
     public static EventDispatcher dispatcher() {
-        Invariants.noneNull(instance, "Pub/Sub was  not configured");
-        return instance;
+        return instance();
     }
 
     public static EventPublisher publisher() {
+        return instance();
+    }
+
+    private static PubSubWrapper instance() {
         Invariants.noneNull(instance, "Pub/Sub was  not configured");
         return instance;
     }

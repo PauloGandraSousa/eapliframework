@@ -37,26 +37,26 @@ import lombok.experimental.Accessors;
  */
 @Value
 @Accessors(fluent = true)
-public class UserSession implements ValueObject {
-	private static final long serialVersionUID = 1L;
+public final class UserSession implements ValueObject {
+    private static final long serialVersionUID = 1L;
 
-	private final SystemUser authenticatedUser;
-	private final UUID token;
-	private final Calendar startedOn;
+    private final SystemUser authenticatedUser;
+    private final UUID token;
+    private final Calendar startedOn;
 
-	/**
-	 * @param user
-	 */
-	public UserSession(final SystemUser user) {
-		Preconditions.nonNull(user, "user must not be null");
+    /**
+     * @param user
+     */
+    public UserSession(final SystemUser user) {
+        Preconditions.nonNull(user, "user must not be null");
 
-		this.authenticatedUser = user;
-		token = UUID.randomUUID();
-		startedOn = CurrentTimeCalendars.now();
-	}
+        authenticatedUser = user;
+        token = UUID.randomUUID();
+        startedOn = CurrentTimeCalendars.now();
+    }
 
-	@Override
-	public String toString() {
-		return authenticatedUser.identity() + "@" + token;
-	}
+    @Override
+    public String toString() {
+        return authenticatedUser.identity() + "@" + token;
+    }
 }

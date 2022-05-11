@@ -37,7 +37,7 @@ import lombok.EqualsAndHashCode;
  */
 @Embeddable
 @EqualsAndHashCode
-public class Username implements ValueObject, Serializable, Comparable<Username> {
+public final class Username implements ValueObject, Serializable, Comparable<Username> {
 
     private static final long serialVersionUID = 1L;
 
