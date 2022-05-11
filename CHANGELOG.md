@@ -1,13 +1,10 @@
 # EAPLI Framework Changelog
 
-## SNAPSHOT
-
-
 ## 18.0.0 SNAPSHOT [AUTHZ]
 
 ## What's new
 
-- TBD
+- N.A.
 
 ## Changed
 
@@ -17,7 +14,7 @@
 
 ## new
 
-- TBD
+- N.A.
 
 ## Changed
 
