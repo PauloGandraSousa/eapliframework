@@ -3,11 +3,11 @@
 ## SNAPSHOT
 
 
-## 18.0.0 SNAPSHOT [AUTHZ]
+## 18.0.0 [AUTHZ]
 
 ## What's new
 
-- TBD
+- N.A.
 
 ## Changed
 
@@ -17,7 +17,7 @@
 
 ## new
 
-- TBD
+- N.A.
 
 ## Changed
 
