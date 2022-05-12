@@ -23,8 +23,9 @@
  */
 package eapli.framework.general.domain.model;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Tag;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -32,41 +33,40 @@ import org.junit.jupiter.api.Test;
  * @author Paulo Gandra de Sousa
  *
  */
-@Tag("junit5")
 class DesignationTest {
 
-    @Test
-    void ensureNotNull() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(null));
-    }
+	@Test
+	void ensureNotNull() {
+		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(null));
+	}
 
-    @Test
-    void ensureNotEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(""));
-    }
+	@Test
+	void ensureNotEmpty() {
+		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(""));
+	}
 
-    @Test
-    void ensureNoHeadingWhitespace() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC"));
-    }
+	@Test
+	void ensureNoHeadingWhitespace() {
+		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC"));
+	}
 
-    @Test
-    void ensureNoTrailingWhitespace() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("ABC   "));
-    }
+	@Test
+	void ensureNoTrailingWhitespace() {
+		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("ABC   "));
+	}
 
-    @Test
-    void ensureNoHeadingNorTrailingWhitespace() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC  "));
-    }
+	@Test
+	void ensureNoHeadingNorTrailingWhitespace() {
+		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC  "));
+	}
 
-    @Test
-    void ensureNoWhitespaceOnly() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("    "));
-    }
+	@Test
+	void ensureNoWhitespaceOnly() {
+		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("    "));
+	}
 
-    @Test
-    void ensureStartsWithSomething() {
-        Assertions.assertNotNull(Designation.valueOf("ABC"));
-    }
+	@Test
+	void ensureStartsWithSomething() {
+		assertNotNull(Designation.valueOf("ABC"));
+	}
 }

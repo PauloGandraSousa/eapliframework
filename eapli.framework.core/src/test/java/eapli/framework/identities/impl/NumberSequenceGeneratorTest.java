@@ -33,34 +33,33 @@ import org.junit.jupiter.api.Test;
  */
 class NumberSequenceGeneratorTest {
 
-    private static final long SEED = 20L;
-    private NumberSequenceGenerator instance;
+	private static final long SEED = 20L;
+	private NumberSequenceGenerator instance;
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeEach
-    void setUp() throws Exception {
-        instance = new NumberSequenceGenerator();
-    }
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@BeforeEach
+	void setUp() throws Exception {
+		instance = new NumberSequenceGenerator(SEED);
+	}
 
-    @Test
-    void ensureIdAfterSeed() {
-        instance = new NumberSequenceGenerator(SEED);
-        final var actual = instance.newId();
-        assertTrue(actual >= SEED);
-    }
+	@Test
+	void ensureIdAfterSeed() {
+		final var actual = instance.newId();
+		assertTrue(actual >= SEED);
+	}
 
-    @Test
-    void ensure100IdsAreDifferentAndSequential() {
-        final long[] ids = new long[100];
+	@Test
+	void ensure100IdsAreDifferentAndSequential() {
+		final var ids = new long[100];
 
-        for (int i = 0; i < ids.length; i++) {
-            ids[i] = instance.newId();
-        }
+		for (var i = 0; i < ids.length; i++) {
+			ids[i] = instance.newId();
+		}
 
-        for (int j = 1; j < ids.length; j++) {
-            assertTrue(ids[j] > ids[j - 1]);
-        }
-    }
+		for (var j = 1; j < ids.length; j++) {
+			assertTrue(ids[j] > ids[j - 1]);
+		}
+	}
 }
