@@ -54,4 +54,12 @@ public class JpaAutoTxEventRecordRepository extends JpaAutoTxRepository<EventRec
                 "e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)",
                 "instance", instanceKey);
     }
+
+    @Override
+    public void deleteSelfConsumed(final String instanceKey) {
+        final var q = entityManager().createQuery(
+                "DELETE FROM EventRecord e WHERE e IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance AND e.publisherName = :instance)");
+        q.setParameter("instance", instanceKey);
+        q.executeUpdate();
+    }
 }

@@ -92,6 +92,6 @@ public final class EventConsumption implements AggregateRoot<Long> {
 
     @Override
     public String toString() {
-        return consumerName + " consumed event " + event;
+        return "{ consumer: " + consumerName + ", event: " + event + " }";
     }
 }

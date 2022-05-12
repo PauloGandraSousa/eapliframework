@@ -91,7 +91,7 @@ public final class SimplePersistentPubSub {
         }
 
         @Override
-        public void shutdown() {
+        public void shutdown(final boolean deleteSelfConsumed) {
             TimedActions.shutdownRecurringTasks();
             LOGGER.debug("Shuting down the event dispatcher");
         }

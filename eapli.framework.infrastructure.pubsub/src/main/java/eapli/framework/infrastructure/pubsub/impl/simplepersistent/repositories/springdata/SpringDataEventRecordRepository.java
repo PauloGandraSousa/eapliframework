@@ -39,9 +39,15 @@ import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataDom
  */
 interface SpringDataEventRecordRepository
         extends EventRecordRepository, SpringDataDomainBaseRepository<Long, Long, EventRecord> {
+
     @Override
     @Query("SELECT e FROM #{#entityName} e WHERE e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)")
     Iterable<EventRecord> findNotConsumed(@Param("instance") String instanceKey);
+
+    @Override
+    @Query("DELETE FROM EventRecord e WHERE e IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance AND e.publisherName = :instance)")
+    @Modifying
+    void deleteSelfConsumed(@Param("instance") String instanceKey);
 
     @Override
     @Query("SELECT e FROM #{#entityName} e WHERE e.id = :id")

@@ -106,6 +106,6 @@ public final class EventRecord implements AggregateRoot<Long> {
 
     @Override
     public String toString() {
-        return "Record event " + event;
+        return "{ publisher:" + publisherName + ", event: " + eventName + " }";
     }
 }

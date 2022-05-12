@@ -23,6 +23,8 @@
  */
 package eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.jpa;
 
+import javax.persistence.LockModeType;
+
 import org.springframework.stereotype.Component;
 
 import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventRecord;
@@ -35,16 +37,24 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaBaseRepository;
  */
 @Component
 public class JpaEventRecordRepository extends JpaBaseRepository<EventRecord, Long, Long>
-		implements EventRecordRepository {
+        implements EventRecordRepository {
 
-	public JpaEventRecordRepository() {
-		super("pk");
-	}
+    public JpaEventRecordRepository() {
+        super("pk");
+    }
 
-	@Override
-	public Iterable<EventRecord> findNotConsumed(String instanceKey) {
-		return match(
-				"e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)",
-				"instance", instanceKey);
-	}
+    @Override
+    public Iterable<EventRecord> findNotConsumed(final String instanceKey) {
+        return match(
+                "e NOT IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance)",
+                "instance", instanceKey);
+    }
+
+    @Override
+    public void deleteSelfConsumed(final String instanceKey) {
+        final var q = query(LockModeType.OPTIMISTIC,
+                "DELETE FROM EventRecord e WHERE e IN (SELECT e FROM EventRecord e, EventConsumption c WHERE c.event = e AND c.consumerName = :instance AND e.publisherName = :instance)");
+        q.setParameter("instance", instanceKey);
+        q.executeUpdate();
+    }
 }

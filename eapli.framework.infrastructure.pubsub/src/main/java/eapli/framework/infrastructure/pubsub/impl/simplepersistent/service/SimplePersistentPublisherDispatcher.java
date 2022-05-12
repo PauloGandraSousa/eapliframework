@@ -174,7 +174,11 @@ public class SimplePersistentPublisherDispatcher implements EventDispatcher, Eve
     }
 
     @Override
-    public void shutdown() {
-        // NOP
+    @Transactional
+    public void shutdown(final boolean deleteSelfConsumed) {
+        if (deleteSelfConsumed) {
+            eventRepo.deleteSelfConsumed(instanceKey);
+            LOGGER.info("Deleting self-consumed events.");
+        }
     }
 }

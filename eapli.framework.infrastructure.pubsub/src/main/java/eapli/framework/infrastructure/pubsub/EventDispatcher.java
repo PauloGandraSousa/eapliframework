@@ -32,13 +32,14 @@ import eapli.framework.domain.events.DomainEvent;
 public interface EventDispatcher {
 
     /**
-     * Subscribe interest to certain events in the domain. when those events happen in the system the
+     * Subscribe interest to certain events in the domain. when those events happen in the system
+     * the
      * observer will be notified via the {@link EventHandler#onEvent(DomainEvent)} method.
      *
      * @param observer
-     *                 the interested party
+     *            the interested party
      * @param events
-     *                 the events it is interested in
+     *            the events it is interested in
      */
     void subscribe(EventHandler observer, @SuppressWarnings("unchecked") Class<? extends DomainEvent>... events);
 
@@ -46,10 +47,10 @@ public interface EventDispatcher {
      * Unsubscribe from certain events.
      *
      * @param observer
-     *                 a previous registered observer
+     *            a previous registered observer
      * @param events
-     *                 the events it is unsubscribing from. if some event was not subscribed in the
-     *                 first place it is simply ignored and no exception is thrown
+     *            the events it is unsubscribing from. if some event was not subscribed in the
+     *            first place it is simply ignored and no exception is thrown
      */
     void unsubscribe(EventHandler observer, @SuppressWarnings("unchecked") Class<? extends DomainEvent>... events);
 
@@ -61,8 +62,15 @@ public interface EventDispatcher {
     void unsubscribe(EventHandler observer);
 
     /**
-     * Signals the event dispatcher that the application no longer wants to process any event (typically
-     * because it is closing) and that any pending thread should stop execution as soon as possible.
+     * Signals the event dispatcher that the application no longer wants to process any event
+     * (typically because it is closing) and that any pending thread should stop execution as soon
+     * as possible.
+     *
+     * @param deleteSelfConsumed
+     *            if <code>true</code> the events created and consumed by this dispatcher are
+     *            permanently deleted and will not be consumed by other applications afterwards.
+     *            Other applications that were running prior to this call might have received and
+     *            consumed the events
      */
-    void shutdown();
+    void shutdown(boolean deleteSelfConsumed);
 }

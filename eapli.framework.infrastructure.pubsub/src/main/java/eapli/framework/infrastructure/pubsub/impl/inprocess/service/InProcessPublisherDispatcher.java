@@ -151,7 +151,7 @@ public class InProcessPublisherDispatcher implements EventDispatcher, EventPubli
     }
 
     @Override
-    public void shutdown() {
+    public void shutdown(final boolean deleteSelfConsumed) {
         // nothing to do
     }
 }

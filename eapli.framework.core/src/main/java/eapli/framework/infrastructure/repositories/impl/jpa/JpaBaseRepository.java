@@ -404,7 +404,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     }
 
     /**
-     * Helper method to create a typed query with a where clause.
+     * Helper method to create a typed query with a WHERE clause.
      *
      * @param where
      * @param params

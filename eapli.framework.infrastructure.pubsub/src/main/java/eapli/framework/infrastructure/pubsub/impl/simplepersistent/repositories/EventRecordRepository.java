@@ -39,4 +39,10 @@ public interface EventRecordRepository extends DomainRepository<Long, EventRecor
      * @return the events that were not yet consumed
      */
     Iterable<EventRecord> findNotConsumed(String instanceKey);
+
+    /**
+     *
+     * @param instanceKey
+     */
+    void deleteSelfConsumed(String instanceKey);
 }
