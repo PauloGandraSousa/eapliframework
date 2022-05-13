@@ -50,7 +50,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
  *
  */
 @Component
-public final class AuthorizationService {
+public class AuthorizationService {
     private static final Logger LOGGER = LogManager.getLogger(AuthorizationService.class);
 
     /**
