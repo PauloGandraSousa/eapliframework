@@ -24,8 +24,8 @@
 package eapli.framework.general.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,66 +35,66 @@ import org.junit.jupiter.api.Test;
  */
 class MoneyAddTest {
 
-    @Test
-    void ensureAdd0() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(0);
-        final Money expected = Money.euros(1);
-        assertEquals(expected, subject.add(other));
-    }
+	@Test
+	void ensureAdd0() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(0);
+		final var expected = Money.euros(1);
+		assertEquals(expected, subject.add(other));
+	}
 
-    @Test
-    void ensureAdd1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(1);
-        final Money expected = Money.euros(2);
-        assertEquals(expected, subject.add(other));
-    }
+	@Test
+	void ensureAdd1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
+		final var expected = Money.euros(2);
+		assertEquals(expected, subject.add(other));
+	}
 
-    @Test
-    void ensureAddCents() {
-        final Money subject = Money.euros(0.99);
-        final Money other = Money.euros(0.01);
-        final Money expected = Money.euros(1);
-        assertEquals(expected, subject.add(other));
-    }
+	@Test
+	void ensureAddCents() {
+		final var subject = Money.euros(0.99);
+		final var other = Money.euros(0.01);
+		final var expected = Money.euros(1);
+		assertEquals(expected, subject.add(other));
+	}
 
-    @Test
-    void ensureAddCents2() {
-        final Money subject = Money.euros(1.65);
-        final Money other = Money.euros(0.40);
-        final Money expected = Money.euros(2.05);
-        assertEquals(expected, subject.add(other));
-    }
+	@Test
+	void ensureAddCents2() {
+		final var subject = Money.euros(1.65);
+		final var other = Money.euros(0.40);
+		final var expected = Money.euros(2.05);
+		assertEquals(expected, subject.add(other));
+	}
 
-    @Test
-    void ensureAdd50Cents() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(0.5);
-        final Money expected = Money.euros(1.5);
-        assertEquals(expected, subject.add(other));
-    }
+	@Test
+	void ensureAdd50Cents() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(0.5);
+		final var expected = Money.euros(1.5);
+		assertEquals(expected, subject.add(other));
+	}
 
-    @Test
-    void ensureAddMinus1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(-1);
-        final Money expected = Money.euros(0);
-        assertEquals(expected, subject.add(other));
-    }
+	@Test
+	void ensureAddMinus1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(-1);
+		final var expected = Money.euros(0);
+		assertEquals(expected, subject.add(other));
+	}
 
-    @Test
-    void ensureAddMinus50Cents() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(-0.5);
-        final Money expected = Money.euros(0.5);
-        assertEquals(expected, subject.add(other));
-    }
+	@Test
+	void ensureAddMinus50Cents() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(-0.5);
+		final var expected = Money.euros(0.5);
+		assertEquals(expected, subject.add(other));
+	}
 
-    @Test
-    void ensureCannotAddDifferentCurrencies() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.dollars(0.5);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> subject.add(other));
-    }
+	@Test
+	void ensureCannotAddDifferentCurrencies() {
+		final var subject = Money.euros(1);
+		final var other = Money.dollars(0.5);
+		assertThrows(IllegalArgumentException.class, () -> subject.add(other));
+	}
 }

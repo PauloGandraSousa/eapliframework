@@ -23,6 +23,9 @@
  */
 package eapli.framework.general.domain.model;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,33 +35,33 @@ import org.junit.jupiter.api.Test;
  */
 class EmailAddressTest {
 
-    @Test
-    void testEmailAddress() {
-        Assertions.assertNotNull(new EmailAddress("geral@acme.com"));
-    }
+	@Test
+	void testEmailAddress() {
+		assertNotNull(new EmailAddress("geral@acme.com"));
+	}
 
-    @Test
-    void ensureEmailAddressHasAt() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geralATacme.com"));
-    }
+	@Test
+	void ensureEmailAddressHasAt() {
+		assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geralATacme.com"));
+	}
 
-    @Test
-    void ensureEmailAddressHasHostAndDomain() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geral@acme"));
-    }
+	@Test
+	void ensureEmailAddressHasHostAndDomain() {
+		assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geral@acme"));
+	}
 
-    @Test
-    void ensureEmailAddressHasName() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress("@acme.com"));
-    }
+	@Test
+	void ensureEmailAddressHasName() {
+		assertThrows(IllegalArgumentException.class, () -> new EmailAddress("@acme.com"));
+	}
 
-    @Test
-    void ensureEmailAddressIsNotNull() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(null));
-    }
+	@Test
+	void ensureEmailAddressIsNotNull() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(null));
+	}
 
-    @Test
-    void ensureEmailAddressIsNotEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(""));
-    }
+	@Test
+	void ensureEmailAddressIsNotEmpty() {
+		assertThrows(IllegalArgumentException.class, () -> new EmailAddress(""));
+	}
 }

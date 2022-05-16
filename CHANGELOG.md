@@ -44,7 +44,7 @@
 -- `EventConsumption`
 
 
-## 18.0.0 [AUTHZ]
+## 18.0.1 [AUTHZ]
 
 ### What's new
 
@@ -53,6 +53,7 @@
 ### Changed
 
 - Each repository implementation is in its own package
+- removed `final` specifier of `AuthorizationService`
 
 
 ## 19.0.0 [ PUB/SUB ]
