@@ -7,6 +7,7 @@
 #### what's new
 
 - `RandomString`
+- `Files.getExtension`
 
 #### Changed
 
@@ -44,7 +45,7 @@
 -- `EventConsumption`
 
 
-## 18.0.0 [AUTHZ]
+## 18.0.1 [AUTHZ]
 
 ### What's new
 
