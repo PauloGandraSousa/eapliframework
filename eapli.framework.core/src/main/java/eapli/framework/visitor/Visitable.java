@@ -24,7 +24,8 @@
 package eapli.framework.visitor;
 
 /**
- * an interface for the visitee role of the visitor (GoF) pattern
+ * The <em>visitee</em> role of the
+ * <a href="https://refactoring.guru/design-patterns/visitor">visitor (GoF)</a> pattern.
  *
  * @author Paulo Gandra Sousa
  * @param <T>
@@ -33,8 +34,25 @@ package eapli.framework.visitor;
 @FunctionalInterface
 public interface Visitable<T> {
     /**
-     * allows the object to decide if it accepts the visitor. in case the object
-     * accepts the visitor it must call the visit() method of the visitor
+     * Allows the object to decide if it accepts the visitor. In case the object
+     * accepts the visitor it must call the {@link Visitor#visit} method of the visitor (double
+     * delegation).
+     * <p>
+     *
+     * <pre>
+     * <code>
+     * class Subject implements Visitable<Subject> {
+     *
+     *      ...
+     *
+     *      public void accept(Visitor<Subject> visitor) {
+     *          ...
+     *
+     *          visitor.visit(this);
+     *      }
+     * }
+     * </code>
+     * </pre>
      *
      * @param visitor
      */
