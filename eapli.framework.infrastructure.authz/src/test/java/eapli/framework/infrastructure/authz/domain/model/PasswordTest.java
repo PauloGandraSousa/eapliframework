@@ -23,16 +23,53 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 
 /**
  * @author Paulo Gandra de Sousa 24/05/2019
  *
  */
-public class PasswordTest {
+class PasswordTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureNotNull() {
-        new Password(null);
+    @Test
+    void ensurePasswordCannotBeNull() {
+        assertThrows(IllegalArgumentException.class, () -> new Password(null));
     }
+
+    @Test
+    void givenPasswordSatisfiesPolicyThenPasswordIsEncoded() {
+        final PasswordPolicy policy = mock(PasswordPolicy.class);
+        final PasswordEncoder encoder = mock(PasswordEncoder.class);
+
+        when(policy.isSatisfiedBy("abc123")).thenReturn(true);
+        when(encoder.encode("abc123")).thenReturn("encoded");
+
+        final var result = Password.encodedAndValid("abc123", policy, encoder);
+
+        assertTrue(result.isPresent());
+        assertEquals("encoded", result.get().value());
+    }
+
+    @Test
+    void givenPasswordThatDoesNotSatisfiesPolicyThenReturnEmptyOptional() {
+        final PasswordPolicy policy = mock(PasswordPolicy.class);
+        final PasswordEncoder encoder = mock(PasswordEncoder.class);
+
+        when(policy.isSatisfiedBy("abc123")).thenReturn(false);
+
+        final var result = Password.encodedAndValid("abc123", policy, encoder);
+
+        assertFalse(result.isPresent());
+    }
+
 }

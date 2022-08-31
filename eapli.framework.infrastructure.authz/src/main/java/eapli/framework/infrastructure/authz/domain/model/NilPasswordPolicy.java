@@ -29,7 +29,7 @@ import eapli.framework.infrastructure.authz.application.PasswordPolicy;
  * @author Paulo Gandra de Sousa 24/05/2019
  *
  */
-public class NilPasswordPolicy implements PasswordPolicy {
+public final class NilPasswordPolicy implements PasswordPolicy {
 
     /*
      * (non-Javadoc)

@@ -43,7 +43,7 @@ import lombok.EqualsAndHashCode;
  */
 @Embeddable
 @EqualsAndHashCode
-public class Password implements ValueObject, Serializable {
+public final class Password implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -87,11 +87,11 @@ public class Password implements ValueObject, Serializable {
      */
     @Override
     public String toString() {
-        return "********";
+        return "************";
     }
 
     /**
-     * for supporting Spring Security UserDetails
+     * For supporting Spring Security UserDetails
      */
     /* package */String value() {
         return value;

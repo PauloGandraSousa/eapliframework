@@ -32,10 +32,11 @@ import eapli.framework.infrastructure.pubsub.impl.simplepersistent.model.EventRe
  */
 public interface EventRecordRepository extends DomainRepository<Long, EventRecord> {
 
-	/**
-	 *
-	 * @param instanceKey
-	 * @return
-	 */
-	Iterable<EventRecord> findNotConsumed(String instanceKey);
+    /**
+     * Searches for events that were not yet consumed.
+     *
+     * @param instanceKey
+     * @return the events that were not yet consumed
+     */
+    Iterable<EventRecord> findNotConsumed(String instanceKey);
 }

@@ -23,7 +23,7 @@ package eapli.framework.infrastructure.authz.domain.model;
 /**
  * @author Paulo Gandra de Sousa
  */
-public final class TestSystemUserFactory {
+final class TestDataSubjects {
 
     public static Password dummyPass(final String pass) {
         return Password.encodedAndValid(pass, new NilPasswordPolicy(), new PlainTextEncoder())

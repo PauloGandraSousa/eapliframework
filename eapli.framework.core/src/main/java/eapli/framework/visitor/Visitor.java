@@ -37,7 +37,7 @@ package eapli.framework.visitor;
 public interface Visitor<T> {
 
     /**
-     * visits a specific object
+     * Visits a specific object.
      *
      * @param visitee
      *            the object to visit

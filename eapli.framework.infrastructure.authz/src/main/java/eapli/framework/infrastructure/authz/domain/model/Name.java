@@ -36,7 +36,7 @@ import lombok.experimental.Accessors;
 @Embeddable
 @Value
 @Accessors(fluent = true)
-public class Name implements ValueObject, Serializable {
+public final class Name implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,8 +48,8 @@ public class Name implements ValueObject, Serializable {
     private final String lastName;
 
     protected Name(final String firstName, final String lastName) {
-        Preconditions.nonEmpty(firstName);
-        Preconditions.nonEmpty(lastName, "First name and last name should neither be null nor empty");
+        Preconditions.nonEmpty(firstName, "First name should neither be null nor empty");
+        Preconditions.nonEmpty(lastName, "Last name should neither be null nor empty");
         Preconditions.matches(VALID_NAME_REGEX, firstName, "Invalid First Name: " + firstName);
         Preconditions.matches(VALID_NAME_REGEX, lastName, "Invalid Last Name: " + lastName);
 
