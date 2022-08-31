@@ -1,6 +1,6 @@
 # EAPLI Framework Changelog
 
-## R.20.0.0 - SNAPSHOT
+## R.20.0.0
 
 ### 20.0.0 [CORE]
 
@@ -17,7 +17,7 @@
 
 #### what's new
 
-- TBD
+- n.a.
 
 #### Changed
 
@@ -35,7 +35,7 @@
 
 #### what's new
 
-- TBD
+- n.a.
 
 #### Changed
 
