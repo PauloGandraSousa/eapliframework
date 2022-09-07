@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.framework.general.domain.model;
+package eapli.framework.quantities.domain.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -47,11 +47,11 @@ import eapli.framework.validations.Preconditions;
  * money, so it's always puzzled me that money isn't actually a first class data
  * type in any mainstream programming language. The lack of a type causes
  * problems, the most obvious surrounding currencies. If all your calculations
- * are done in a single m_currency, this isn't a huge problem, but once you
+ * are done in a single currency, this isn't a huge problem, but once you
  * involve multiple currencies you want to avoid adding your dollars to your yen
- * without taking the m_currency differences into account. The more subtle
+ * without taking the currency differences into account. The more subtle
  * problem is with rounding. Monetary calculations are often rounded to the
- * smallest m_currency unit. When you do this it's easy to lose pennies (or your
+ * smallest currency unit. When you do this it's easy to lose pennies (or your
  * local equivalent) because of rounding errors.
  *
  * <p>
@@ -69,12 +69,12 @@ import eapli.framework.validations.Preconditions;
  * discussion</a> about pros and cons and different approaches.
  * Mathias Verraes has an interesting article titled
  * "<a href="https://verraes.net/2019/06/emergent-contexts-through-refinement/">Emergent Contexts
- * through Refinement</a>" where he
- * describes how to refine a model and its language until opportunities for better Bounded Contexts
- * emerge. In it he talks about <em>Money</em> and different representations for the <em>Money</em>
+ * through Refinement</a>" where he describes how to refine a model and its language until
+ * opportunities for better Bounded Contexts emerge. In it he talks about <em>Money</em> and
+ * different representations for the <em>Money</em>
  * concept.
  *
- * 
+ *
  * <p>
  * Example Usage:
  *
@@ -404,7 +404,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      * @return {@code true} if this object is of the same currency than another
      *         object
      */
-    public boolean isOfSameCurrency(Money other) {
+    public boolean isOfSameCurrency(final Money other) {
         return this.currency().equals(other.currency());
     }
 

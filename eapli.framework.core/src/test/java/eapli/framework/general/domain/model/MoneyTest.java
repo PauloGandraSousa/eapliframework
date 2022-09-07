@@ -32,6 +32,8 @@ import java.util.Currency;
 
 import org.junit.jupiter.api.Test;
 
+import eapli.framework.quantities.domain.model.Money;
+
 /**
  *
  * @author Paulo Gandra de Sousa

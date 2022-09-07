@@ -28,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import eapli.framework.quantities.domain.model.Money;
+
 /**
  *
  * @author Paulo Gandra de Sousa
