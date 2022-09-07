@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * A string with JSON content pretty formatted for output.
  *
  * @author Paulo Gandra Sousa 13/05/2020
- *
  */
 public class PrettyJsonString implements FormattedString {
 
@@ -39,10 +38,16 @@ public class PrettyJsonString implements FormattedString {
      *
      * @param input
      *            a json-encoded content
+     *
      * @return a PrettyJsonString
      */
-    public static FormattedString fromString(final String input) {
-        return new PrettyJsonString(input);
+    public static FormattedString of(final String input) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            return new PrettyJsonString(mapper.readValue(input, Object.class));
+        } catch (final JsonProcessingException e) {
+            throw new FormatingOrTransformationException("Formatting to JSON:" + input, e);
+        }
     }
 
     /**
@@ -50,25 +55,11 @@ public class PrettyJsonString implements FormattedString {
      *
      * @param input
      *            the java object to map to JSON
+     *
      * @return a PrettyJsonString
      */
-    public static FormattedString fromObject(final Object input) {
+    public static FormattedString of(final Object input) {
         return new PrettyJsonString(input);
-    }
-
-    /**
-     * Constructs a pretty formatted string from a string with unformatted JSON content.
-     *
-     * @param input
-     *            a json-encoded string
-     */
-    public PrettyJsonString(final String input) {
-        try {
-            final ObjectMapper mapper = new ObjectMapper();
-            this.input = mapper.readValue(input, Object.class);
-        } catch (final JsonProcessingException e) {
-            throw new FormatingOrTransformationException("Formatting to JSON:" + input, e);
-        }
     }
 
     /**
@@ -83,7 +74,6 @@ public class PrettyJsonString implements FormattedString {
 
     /**
      * Returns a pretty formatted JSON string.
-     *
      * <p>
      * From
      * <a href=

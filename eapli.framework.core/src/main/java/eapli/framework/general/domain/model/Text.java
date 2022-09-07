@@ -37,13 +37,13 @@ import eapli.framework.util.Factory;
 import lombok.EqualsAndHashCode;
 
 /**
- * A Text composed of lines. lines are separated by the \n character; words are
- * separated by any white space character. end of sentence punctuation is the
+ * A Text composed of 0 or more lines. Lines are separated by the \n character; words are
+ * separated by any white space character. End of sentence punctuation is the
  * period, the exclamation and the question mark. A Text object will always have
- * content, even if it is an empty string
+ * content, even if it is an empty string.
  * <p>
- * if the last character of the text is a new line, the line count will take
- * that into consideration. example, the text "the red fox" has one line while
+ * If the last character of the text is a new line, the line count will take
+ * that into consideration. Example, the text "the red fox" has one line while
  * the text "the red fox\n" has two lines
  *
  * @author Paulo Gandra de Sousa
