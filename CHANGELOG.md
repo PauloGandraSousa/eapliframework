@@ -1,7 +1,7 @@
 # EAPLI Framework Changelog
 
 
-## R.21.0.0-SNAPSHOT
+## v21.0.0-SNAPSHOT
 
 ### 21.0.0 [CORE]
 
@@ -31,7 +31,7 @@
 
 
 
-## R.20.0.0
+## v20.0.0-RELEASE
 
 ### 20.0.0 [CORE]
 
