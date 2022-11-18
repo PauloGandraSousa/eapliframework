@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.general.domain.model;
+package eapli.framework.quantities.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,12 +34,12 @@ import org.junit.jupiter.api.Test;
 import eapli.framework.quantities.domain.model.Money;
 
 /**
- * Test cases for the toString() method of the class Money.
+ * Test cases for the toSimpleString() method of the class Money.
  *
  * @author Paulo Gandra Sousa
  *
  */
-class MoneyToStringTest {
+class MoneyToSimpleStringTest {
 
     private static Locale oldDefault;
 
@@ -57,35 +57,35 @@ class MoneyToStringTest {
     @Test
     void oneDecimalPlace() {
         final Money instance = Money.euros(125.5);
-        final String expected = "€\u00A0125.50";
-        assertEquals(expected, instance.toString());
+        final String expected = "125.5 EUR";
+        assertEquals(expected, instance.toSimpleString());
     }
 
     @Test
     void threeDecimalPlace() {
         final Money instance = Money.euros(125.527);
-        final String expected = "€\u00A0125.53";
-        assertEquals(expected, instance.toString());
+        final String expected = "125.53 EUR";
+        assertEquals(expected, instance.toSimpleString());
     }
 
     @Test
     void onlyCents() {
-        final String expected = "€\u00A00.09";
+        final String expected = "0.09 EUR";
         final Money instance = Money.euros(0.09);
-        assertEquals(expected, instance.toString());
+        assertEquals(expected, instance.toSimpleString());
     }
 
     @Test
     void noDecimalPlaces() {
-        final String expected = "€\u00A09.00";
+        final String expected = "9.0 EUR";
         final Money instance = Money.euros(9);
-        assertEquals(expected, instance.toString());
+        assertEquals(expected, instance.toSimpleString());
     }
 
     @Test
     void bigAmount() {
-        final String expected = "€\u00A0999,999,999,999.53";
-        final Money instance = Money.euros(999999999999.53);
-        assertEquals(expected, instance.toString());
+        final String expected = "1000000.53 EUR";
+        final Money instance = Money.euros(1000000.53);
+        assertEquals(expected, instance.toSimpleString());
     }
 }
