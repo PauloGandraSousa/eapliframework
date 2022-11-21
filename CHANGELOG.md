@@ -13,9 +13,9 @@
 - `Percentage` class
 - `FrequencyTable.frequencyOfAsPercentage` method
 - `FrequencyTable.entrySet` method
+- `Temperature` class
 
-
-### Changed
+#### Changed
 
 - removed `RandomString` constructor. use factory `of` method
 - removed `PrettyJsonString(String)` constructor. use factory `of` method 
@@ -28,7 +28,6 @@
 - renamed `FrequencyTable.sortedEntriesByFrequency` method to `FrequencyTable.entriesSortedByFrequency` 
 - renamed `FrequencyTable.sortedEntriesByToken` method to `FrequencyTable.entriesSortedByToken`
 - fixed descending sorting order of `FrequencyTable.sortedEntriesByFrequency` 
-
 
 
 ## v20.0.0-RELEASE
@@ -60,7 +59,6 @@
 -- `RandomRawPassword`
 -- `Username`
 -- `UserSession`
-
 
 ### 20.0.0 [PUBSUB]
 
