@@ -21,20 +21,25 @@
 package eapli.framework.quantities.domain.model;
 
 /**
+ * A quantifiable concept. That is, something that is characterised by a
+ * magnitude and an unit of measure.
+ *
  * @author Paulo Gandra de Sousa 06/09/2022
- * @param <U>
+ *
+ * @param <U> magnitude
+ * @param <T> unit of measure
  *
  */
-public interface Quantifiable<U> {
-    U magnitude();
+public interface Quantifiable<U, T> {
+	U magnitude();
 
-    Unit unitOfMeasure();
+	T unit();
 
-    Quantifiable<U> add(Quantifiable<U> o);
+	Quantifiable<U, T> add(Quantifiable<U, T> o);
 
-    Quantifiable<U> increase(U o);
+	Quantifiable<U, T> increase(U o);
 
-    Quantifiable<U> subtract(Quantifiable<U> o);
+	Quantifiable<U, T> subtract(Quantifiable<U, T> o);
 
-    Quantifiable<U> decrease(U o);
+	Quantifiable<U, T> decrease(U o);
 }
