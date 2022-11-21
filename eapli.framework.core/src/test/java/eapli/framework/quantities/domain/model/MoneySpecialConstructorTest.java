@@ -30,8 +30,6 @@ import java.math.BigInteger;
 
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.quantities.domain.model.Money;
-
 /**
  *
  * @author Paulo Gandra de Sousa
@@ -39,25 +37,25 @@ import eapli.framework.quantities.domain.model.Money;
  */
 class MoneySpecialConstructorTest {
 
-    @Test
-    void ensureSpecialConstructorThrowsOnNullCurrency() {
-        assertThrows(NullPointerException.class, () -> new Money(BigInteger.ONE, null));
-    }
+	@Test
+	void ensureSpecialConstructorThrowsOnNullCurrency() {
+		assertThrows(NullPointerException.class, () -> new Money(BigInteger.ONE, null));
+	}
 
-    @Test
-    void ensureSpecialConstructorThrowsOnInvalidCurrency() {
-        assertThrows(IllegalArgumentException.class, () -> new Money(BigInteger.ONE, "xpto"));
-    }
+	@Test
+	void ensureSpecialConstructorThrowsOnInvalidCurrency() {
+		assertThrows(IllegalArgumentException.class, () -> new Money(BigInteger.ONE, "xpto"));
+	}
 
-    @Test
-    void ensureSpecialConstructorHandlesNullAmount() {
-        final Money subject = new Money(null, "EUR");
-        assertEquals(subject, Money.euros(0));
-    }
+	@Test
+	void ensureSpecialConstructorHandlesNullAmount() {
+		final var subject = new Money(null, "EUR");
+		assertEquals(subject, Money.euros(0));
+	}
 
-    @Test
-    void ensureSpecialConstructor() {
-        final Money subject = new Money(BigInteger.ONE, "EUR");
-        assertEquals(subject, Money.euros(0.01));
-    }
+	@Test
+	void ensureSpecialConstructor() {
+		final var subject = new Money(BigInteger.ONE, "EUR");
+		assertEquals(subject, Money.euros(0.01));
+	}
 }

@@ -31,8 +31,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.quantities.domain.model.Money;
-
 /**
  * Test cases for the toString() method of the class Money.
  *
@@ -41,51 +39,51 @@ import eapli.framework.quantities.domain.model.Money;
  */
 class MoneyToStringTest {
 
-    private static Locale oldDefault;
+	private static Locale oldDefault;
 
-    @BeforeAll
-    static void setUpClass() {
-        oldDefault = Locale.getDefault();
-        Locale.setDefault(new Locale("pt-PT"));
-    }
+	@BeforeAll
+	static void setUpClass() {
+		oldDefault = Locale.getDefault();
+		Locale.setDefault(new Locale("pt-PT"));
+	}
 
-    @AfterAll
-    static void tearDownClass() {
-        Locale.setDefault(oldDefault);
-    }
+	@AfterAll
+	static void tearDownClass() {
+		Locale.setDefault(oldDefault);
+	}
 
-    @Test
-    void oneDecimalPlace() {
-        final Money instance = Money.euros(125.5);
-        final String expected = "€\u00A0125.50";
-        assertEquals(expected, instance.toString());
-    }
+	@Test
+	void oneDecimalPlace() {
+		final var instance = Money.euros(125.5);
+		final var expected = "€\u00A0125.50";
+		assertEquals(expected, instance.toString());
+	}
 
-    @Test
-    void threeDecimalPlace() {
-        final Money instance = Money.euros(125.527);
-        final String expected = "€\u00A0125.53";
-        assertEquals(expected, instance.toString());
-    }
+	@Test
+	void threeDecimalPlace() {
+		final var instance = Money.euros(125.527);
+		final var expected = "€\u00A0125.53";
+		assertEquals(expected, instance.toString());
+	}
 
-    @Test
-    void onlyCents() {
-        final String expected = "€\u00A00.09";
-        final Money instance = Money.euros(0.09);
-        assertEquals(expected, instance.toString());
-    }
+	@Test
+	void onlyCents() {
+		final var expected = "€\u00A00.09";
+		final var instance = Money.euros(0.09);
+		assertEquals(expected, instance.toString());
+	}
 
-    @Test
-    void noDecimalPlaces() {
-        final String expected = "€\u00A09.00";
-        final Money instance = Money.euros(9);
-        assertEquals(expected, instance.toString());
-    }
+	@Test
+	void noDecimalPlaces() {
+		final var expected = "€\u00A09.00";
+		final var instance = Money.euros(9);
+		assertEquals(expected, instance.toString());
+	}
 
-    @Test
-    void bigAmount() {
-        final String expected = "€\u00A0999,999,999,999.53";
-        final Money instance = Money.euros(999999999999.53);
-        assertEquals(expected, instance.toString());
-    }
+	@Test
+	void bigAmount() {
+		final var expected = "€\u00A0999,999,999,999.53";
+		final var instance = Money.euros(999999999999.53);
+		assertEquals(expected, instance.toString());
+	}
 }

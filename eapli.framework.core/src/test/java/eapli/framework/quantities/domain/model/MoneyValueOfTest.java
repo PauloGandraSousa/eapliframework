@@ -30,8 +30,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import eapli.framework.quantities.domain.model.Money;
-
 /**
  * test cases for the valueOf() method of the Money class
  *
@@ -40,29 +38,23 @@ import eapli.framework.quantities.domain.model.Money;
  */
 class MoneyValueOfTest {
 
-    @ParameterizedTest
-    @CsvSource({
-            "125.50 EUR, 125.5",
-            "125.527 EUR, 125.53",
-            "0.09 EUR, 0.09",
-            "9 EUR, 9",
-            "999999999999.50 EUR, 999999999999.50"
-    })
-    void properString(final String test, final double e) {
-        final Money instance = Money.valueOf(test);
-        final Money expected = Money.euros(e);
-        assertEquals(expected, instance);
-    }
+	@ParameterizedTest
+	@CsvSource({ "125.50 EUR, 125.5", "125.527 EUR, 125.53", "0.09 EUR, 0.09", "9 EUR, 9",
+			"999999999999.50 EUR, 999999999999.50" })
+	void properString(final String test, final double e) {
+		final var instance = Money.valueOf(test);
+		final var expected = Money.euros(e);
+		assertEquals(expected, instance);
+	}
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "2X9 EUR", // invalid amount
-            "29 AAA", // invalid currency
-            "9EUR", // no spaces
-            "9.4", // no currency
-            "USD" // no amount
-    })
-    void ensureInvalidStringThrows(final String test) {
-        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
-    }
+	@ParameterizedTest
+	@ValueSource(strings = { "2X9 EUR", // invalid amount
+			"29 AAA", // invalid currency
+			"9EUR", // no spaces
+			"9.4", // no currency
+			"USD" // no amount
+	})
+	void ensureInvalidStringThrows(final String test) {
+		assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
+	}
 }

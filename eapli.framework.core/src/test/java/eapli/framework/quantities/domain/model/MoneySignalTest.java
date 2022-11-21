@@ -29,97 +29,95 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.quantities.domain.model.Money;
-
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
 class MoneySignalTest {
-    @Test
-    void testNegateAPositive() {
-        final Money subject = Money.euros(1);
-        final Money expected = Money.euros(-1);
-        assertEquals(expected, subject.negate());
-    }
+	@Test
+	void testNegateAPositive() {
+		final var subject = Money.euros(1);
+		final var expected = Money.euros(-1);
+		assertEquals(expected, subject.negate());
+	}
 
-    @Test
-    void testNegateANegative() {
-        final Money subject = Money.euros(-1);
-        final Money expected = Money.euros(1);
-        assertEquals(expected, subject.negate());
-    }
+	@Test
+	void testNegateANegative() {
+		final var subject = Money.euros(-1);
+		final var expected = Money.euros(1);
+		assertEquals(expected, subject.negate());
+	}
 
-    @Test
-    void ensureSignumOfPositive() {
-        final Money subject = Money.euros(150);
-        assertEquals(1, subject.signum());
-    }
+	@Test
+	void ensureSignumOfPositive() {
+		final var subject = Money.euros(150);
+		assertEquals(1, subject.signum());
+	}
 
-    @Test
-    void ensureSignumOfNegative() {
-        final Money subject = Money.euros(-0.99);
-        assertEquals(-1, subject.signum());
-    }
+	@Test
+	void ensureSignumOfNegative() {
+		final var subject = Money.euros(-0.99);
+		assertEquals(-1, subject.signum());
+	}
 
-    @Test
-    void ensureSignumOfZero() {
-        final Money subject = Money.euros(0);
-        assertEquals(0, subject.signum());
-    }
+	@Test
+	void ensureSignumOfZero() {
+		final var subject = Money.euros(0);
+		assertEquals(0, subject.signum());
+	}
 
-    @Test
-    void ensureNegativeIsNegative() {
-        final Money subject = Money.euros(-150);
-        assertTrue(subject.isNegative());
-    }
+	@Test
+	void ensureNegativeIsNegative() {
+		final var subject = Money.euros(-150);
+		assertTrue(subject.isNegative());
+	}
 
-    @Test
-    void ensurePositiveIsNotNegative() {
-        final Money subject = Money.euros(150);
-        assertFalse(subject.isNegative());
-    }
+	@Test
+	void ensurePositiveIsNotNegative() {
+		final var subject = Money.euros(150);
+		assertFalse(subject.isNegative());
+	}
 
-    @Test
-    void ensureZeroIsNotNegative() {
-        final Money subject = Money.euros(0);
-        assertFalse(subject.isNegative());
-    }
+	@Test
+	void ensureZeroIsNotNegative() {
+		final var subject = Money.euros(0);
+		assertFalse(subject.isNegative());
+	}
 
-    @Test
-    void ensureZeroIsNotPositive() {
-        final Money subject = Money.euros(0);
-        assertFalse(subject.isPositive());
-    }
+	@Test
+	void ensureZeroIsNotPositive() {
+		final var subject = Money.euros(0);
+		assertFalse(subject.isPositive());
+	}
 
-    @Test
-    void ensureNegativeIsNotPositive() {
-        final Money subject = Money.euros(-150);
-        assertFalse(subject.isPositive());
-    }
+	@Test
+	void ensureNegativeIsNotPositive() {
+		final var subject = Money.euros(-150);
+		assertFalse(subject.isPositive());
+	}
 
-    @Test
-    void ensurePositiveIsPositive() {
-        final Money subject = Money.euros(150);
-        assertTrue(subject.isPositive());
-    }
+	@Test
+	void ensurePositiveIsPositive() {
+		final var subject = Money.euros(150);
+		assertTrue(subject.isPositive());
+	}
 
-    @Test
-    void ensureZeroIsZero() {
-        final Money subject = Money.euros(0);
-        assertTrue(subject.isZero());
-    }
+	@Test
+	void ensureZeroIsZero() {
+		final var subject = Money.euros(0);
+		assertTrue(subject.isZero());
+	}
 
-    @Test
-    void ensureNegativeIsNotZero() {
-        final Money subject = Money.euros(-150);
-        assertFalse(subject.isZero());
-    }
+	@Test
+	void ensureNegativeIsNotZero() {
+		final var subject = Money.euros(-150);
+		assertFalse(subject.isZero());
+	}
 
-    @Test
-    void ensurePositiveIsNotZero() {
-        final Money subject = Money.euros(150);
-        assertFalse(subject.isZero());
-    }
+	@Test
+	void ensurePositiveIsNotZero() {
+		final var subject = Money.euros(150);
+		assertFalse(subject.isZero());
+	}
 }

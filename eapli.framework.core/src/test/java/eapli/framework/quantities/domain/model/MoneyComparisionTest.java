@@ -29,116 +29,114 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.quantities.domain.model.Money;
-
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
 class MoneyComparisionTest {
-    @Test
-    void ensure1CompareTo0() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(0);
-        assertEquals(1, subject.compareTo(other));
-    }
+	@Test
+	void ensure1CompareTo0() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(0);
+		assertEquals(1, subject.compareTo(other));
+	}
 
-    @Test
-    void ensure0CompareTo1() {
-        final Money subject = Money.euros(0);
-        final Money other = Money.euros(1);
-        assertEquals(-1, subject.compareTo(other));
-    }
+	@Test
+	void ensure0CompareTo1() {
+		final var subject = Money.euros(0);
+		final var other = Money.euros(1);
+		assertEquals(-1, subject.compareTo(other));
+	}
 
-    @Test
-    void ensure1CompareTo1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(1);
-        assertEquals(0, subject.compareTo(other));
-    }
+	@Test
+	void ensure1CompareTo1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
+		assertEquals(0, subject.compareTo(other));
+	}
 
-    @Test
-    void ensure1GreaterThan0() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(0);
-        assertTrue(subject.isGreaterThan(other));
-    }
+	@Test
+	void ensure1GreaterThan0() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(0);
+		assertTrue(subject.isGreaterThan(other));
+	}
 
-    @Test
-    void ensure1NotGreaterThan1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(1);
-        assertFalse(subject.isGreaterThan(other));
-    }
+	@Test
+	void ensure1NotGreaterThan1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
+		assertFalse(subject.isGreaterThan(other));
+	}
 
-    @Test
-    void ensure0NotGreaterThan1() {
-        final Money subject = Money.euros(0);
-        final Money other = Money.euros(1);
-        assertFalse(subject.isGreaterThan(other));
-    }
+	@Test
+	void ensure0NotGreaterThan1() {
+		final var subject = Money.euros(0);
+		final var other = Money.euros(1);
+		assertFalse(subject.isGreaterThan(other));
+	}
 
-    @Test
-    void ensure1NotLessThan0() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(0);
-        assertFalse(subject.isLessThan(other));
-    }
+	@Test
+	void ensure1NotLessThan0() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(0);
+		assertFalse(subject.isLessThan(other));
+	}
 
-    @Test
-    void ensure1NotLessThan1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(1);
-        assertFalse(subject.isLessThan(other));
-    }
+	@Test
+	void ensure1NotLessThan1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
+		assertFalse(subject.isLessThan(other));
+	}
 
-    @Test
-    void ensure0LessThan1() {
-        final Money subject = Money.euros(0);
-        final Money other = Money.euros(1);
-        assertTrue(subject.isLessThan(other));
-    }
+	@Test
+	void ensure0LessThan1() {
+		final var subject = Money.euros(0);
+		final var other = Money.euros(1);
+		assertTrue(subject.isLessThan(other));
+	}
 
-    @Test
-    void ensure2GreaterThanOrEqualTo1() {
-        final Money subject = Money.euros(2);
-        final Money other = Money.euros(1);
-        assertTrue(subject.isGreaterThanOrEqual(other));
-    }
+	@Test
+	void ensure2GreaterThanOrEqualTo1() {
+		final var subject = Money.euros(2);
+		final var other = Money.euros(1);
+		assertTrue(subject.isGreaterThanOrEqual(other));
+	}
 
-    @Test
-    void ensure1GreaterThanOrEqualTo1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(1);
-        assertTrue(subject.isGreaterThanOrEqual(other));
-    }
+	@Test
+	void ensure1GreaterThanOrEqualTo1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
+		assertTrue(subject.isGreaterThanOrEqual(other));
+	}
 
-    @Test
-    void ensure0NotGreaterThanOrEqualTo1() {
-        final Money subject = Money.euros(0);
-        final Money other = Money.euros(1);
-        assertFalse(subject.isGreaterThanOrEqual(other));
-    }
+	@Test
+	void ensure0NotGreaterThanOrEqualTo1() {
+		final var subject = Money.euros(0);
+		final var other = Money.euros(1);
+		assertFalse(subject.isGreaterThanOrEqual(other));
+	}
 
-    @Test
-    void ensure2NotLessThanOrEqualTo1() {
-        final Money subject = Money.euros(2);
-        final Money other = Money.euros(1);
-        assertFalse(subject.isLessThanOrEqual(other));
-    }
+	@Test
+	void ensure2NotLessThanOrEqualTo1() {
+		final var subject = Money.euros(2);
+		final var other = Money.euros(1);
+		assertFalse(subject.isLessThanOrEqual(other));
+	}
 
-    @Test
-    void ensure1LessThanOrEqualTo1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(1);
-        assertTrue(subject.isLessThanOrEqual(other));
-    }
+	@Test
+	void ensure1LessThanOrEqualTo1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
+		assertTrue(subject.isLessThanOrEqual(other));
+	}
 
-    @Test
-    void ensure0LessThanOrEqualTo1() {
-        final Money subject = Money.euros(0);
-        final Money other = Money.euros(1);
-        assertTrue(subject.isLessThanOrEqual(other));
-    }
+	@Test
+	void ensure0LessThanOrEqualTo1() {
+		final var subject = Money.euros(0);
+		final var other = Money.euros(1);
+		assertTrue(subject.isLessThanOrEqual(other));
+	}
 }

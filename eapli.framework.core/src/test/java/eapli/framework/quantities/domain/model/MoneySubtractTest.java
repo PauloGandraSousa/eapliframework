@@ -28,8 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.quantities.domain.model.Money;
-
 /**
  *
  * @author Paulo Gandra de Sousa
@@ -37,66 +35,66 @@ import eapli.framework.quantities.domain.model.Money;
  */
 class MoneySubtractTest {
 
-    @Test
-    void ensureSubtract0() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(0);
-        final Money expected = Money.euros(1);
-        assertEquals(expected, subject.subtract(other));
-    }
+	@Test
+	void ensureSubtract0() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(0);
+		final var expected = Money.euros(1);
+		assertEquals(expected, subject.subtract(other));
+	}
 
-    @Test
-    void ensureSubtract1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(1);
-        final Money expected = Money.euros(0);
-        assertEquals(expected, subject.subtract(other));
-    }
+	@Test
+	void ensureSubtract1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
+		final var expected = Money.euros(0);
+		assertEquals(expected, subject.subtract(other));
+	}
 
-    @Test
-    void ensureSubtractCents() {
-        final Money subject = Money.euros(0.99);
-        final Money other = Money.euros(0.01);
-        final Money expected = Money.euros(0.98);
-        assertEquals(expected, subject.subtract(other));
-    }
+	@Test
+	void ensureSubtractCents() {
+		final var subject = Money.euros(0.99);
+		final var other = Money.euros(0.01);
+		final var expected = Money.euros(0.98);
+		assertEquals(expected, subject.subtract(other));
+	}
 
-    @Test
-    void ensureSubtractCents2() {
-        final Money subject = Money.euros(1.35);
-        final Money other = Money.euros(0.40);
-        final Money expected = Money.euros(0.95);
-        assertEquals(expected, subject.subtract(other));
-    }
+	@Test
+	void ensureSubtractCents2() {
+		final var subject = Money.euros(1.35);
+		final var other = Money.euros(0.40);
+		final var expected = Money.euros(0.95);
+		assertEquals(expected, subject.subtract(other));
+	}
 
-    @Test
-    void ensureSubtract50Cents() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(0.5);
-        final Money expected = Money.euros(0.5);
-        assertEquals(expected, subject.subtract(other));
-    }
+	@Test
+	void ensureSubtract50Cents() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(0.5);
+		final var expected = Money.euros(0.5);
+		assertEquals(expected, subject.subtract(other));
+	}
 
-    @Test
-    void ensureSubtractMinus1() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(-1);
-        final Money expected = Money.euros(2);
-        assertEquals(expected, subject.subtract(other));
-    }
+	@Test
+	void ensureSubtractMinus1() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(-1);
+		final var expected = Money.euros(2);
+		assertEquals(expected, subject.subtract(other));
+	}
 
-    @Test
-    void ensureSubtractMinus50Cents() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.euros(-0.5);
-        final Money expected = Money.euros(1.5);
-        assertEquals(expected, subject.subtract(other));
-    }
+	@Test
+	void ensureSubtractMinus50Cents() {
+		final var subject = Money.euros(1);
+		final var other = Money.euros(-0.5);
+		final var expected = Money.euros(1.5);
+		assertEquals(expected, subject.subtract(other));
+	}
 
-    @Test
-    void ensureCannotSubtractDifferentCurrencies() {
-        final Money subject = Money.euros(1);
-        final Money other = Money.dollars(0.5);
-        assertThrows(IllegalArgumentException.class, () -> subject.subtract(other));
-    }
+	@Test
+	void ensureCannotSubtractDifferentCurrencies() {
+		final var subject = Money.euros(1);
+		final var other = Money.dollars(0.5);
+		assertThrows(IllegalArgumentException.class, () -> subject.subtract(other));
+	}
 }
