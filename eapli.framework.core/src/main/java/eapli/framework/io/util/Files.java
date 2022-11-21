@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
@@ -90,6 +91,7 @@ public final class Files {
      *
      * @param is
      *            the input stream
+     * @param encoding
      * @return the correspondent UTF-8 String
      * @throws IOException
      */
@@ -123,6 +125,7 @@ public final class Files {
      * Simple utility to call the default OS application to open a file.
      *
      * @param path
+     * @return the return code of the spawned process
      * @throws IOException
      * @throws InterruptedException
      */
@@ -146,5 +149,29 @@ public final class Files {
         final var streamGobbler = new StreamGobbler(process.getInputStream(), LOGGER::info);
         Executors.newSingleThreadExecutor().submit(streamGobbler);
         return process.waitFor();
+    }
+
+    /**
+     * Returns the file extension of a filename.
+     * <p>
+     * This method will check for the dot ‘.' occurrence in the given filename. If it exists, then
+     * it will find the last position of the dot ‘.' and return the characters
+     * after that, the characters after the last dot ‘.' known as the file extension.
+     * <p>
+     * Special Cases:
+     * <ul>
+     * <li>No extension – this method will return an empty Optional<String></li>
+     * <li>Only extension – this method will return the String after the dot, e.g. “gitignore”</li>
+     * </ul>
+     * <p>
+     * Extracted from <a href="https://www.baeldung.com/java-file-extension">Baeldung</a>
+     *
+     * @param filename
+     * @return the file extension
+     */
+    public static Optional<String> getExtension(final String filename) {
+        return Optional.ofNullable(filename)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 }

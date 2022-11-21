@@ -64,12 +64,12 @@ public final class RandomRawPassword {
      */
     public RandomRawPassword(final int length) {
         if (length < 3) {
-            throw new IllegalArgumentException("Lenght must be at least 3");
+            throw new IllegalArgumentException("Lenght must be at least 4");
         }
-        final String part1 = new RandomString(length - 3, LOWER_CHARS).toString();
-        final String part2 = new RandomString(1, UPPER_CHARS).toString();
-        final String part3 = new RandomString(1, NUMBERS).toString();
-        final String part4 = new RandomString(1, SPECIAL).toString();
+        final String part1 = RandomString.of(length - 3, LOWER_CHARS).toString();
+        final String part2 = RandomString.of(1, UPPER_CHARS).toString();
+        final String part3 = RandomString.of(1, NUMBERS).toString();
+        final String part4 = RandomString.of(1, SPECIAL).toString();
 
         rawPassword = Strings.shuffle(part1 + part2 + part3 + part4);
     }

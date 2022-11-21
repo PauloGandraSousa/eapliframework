@@ -135,6 +135,18 @@ public class FrequencyTable<T> {
     }
 
     /**
+     * Returns the frequency of a certain "token". If the token does not exist in the table returns
+     * 0.
+     *
+     * @param token
+     *            the desired "token"
+     * @return the frequency of the specified "token"
+     */
+    public Percentage frequencyOfAsPercentage(final T token) {
+        return Percentage.ofRatio(frequencies.getOrDefault(token, 0L), totalOccurrences());
+    }
+
+    /**
      * Returns the "tokens" present in the frequency table.
      *
      * @return the "tokens" present in the frequency table
@@ -164,12 +176,21 @@ public class FrequencyTable<T> {
     }
 
     /**
-     * Returns all the entries in the table as a tuple ("token", frequency).
+     * Returns all the entries in the table as a set of tuples ("token", frequency).
      *
      * @return all the entries in the table
      */
-    public Set<Entry<T, Long>> entries() {
+    public Set<Entry<T, Long>> entrySet() {
         return frequencies.entrySet();
+    }
+
+    /**
+     * Returns all the entries in the table as a stream of tuples ("token", frequency).
+     *
+     * @return all the entries in the table
+     */
+    public Stream<Entry<T, Long>> entries() {
+        return entrySet().stream();
     }
 
     /**
@@ -177,7 +198,7 @@ public class FrequencyTable<T> {
      *
      * @return a stream of tuples ordered by the "token"
      */
-    public Stream<Entry<T, Long>> sortedEntriesByToken() {
+    public Stream<Entry<T, Long>> entriesSortedByToken() {
         final Map<T, Long> sorted = new TreeMap<>(frequencies);
         return sorted.entrySet().stream();
     }
@@ -187,8 +208,8 @@ public class FrequencyTable<T> {
      *
      * @return a stream of tuples ordered by the frequency
      */
-    public Stream<Entry<T, Long>> sortedEntriesByFrequency() {
-        return frequencies.entrySet().stream().sorted(Entry.comparingByValue());
+    public Stream<Entry<T, Long>> entriesSortedByFrequency() {
+        return entries().sorted((a, b) -> (int) (b.getValue() - a.getValue()));
     }
 
     /**
@@ -207,7 +228,7 @@ public class FrequencyTable<T> {
      * @return the total occurrences
      */
     public long totalOccurrences() {
-        return entries().stream().map(Entry::getValue).reduce(0L, (a, b) -> a + b);
+        return entries().map(Entry::getValue).reduce(0L, (a, b) -> a + b);
     }
 
     /**

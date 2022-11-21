@@ -45,7 +45,7 @@ class PrettyJsonStringFromStringTest {
 
     @Test
     void testOne() {
-        final FormattedString p = PrettyJsonString.fromString(TEST_ONE);
+        final FormattedString p = PrettyJsonString.of(TEST_ONE);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(3, fmtd.split("\n").length);
@@ -53,22 +53,22 @@ class PrettyJsonStringFromStringTest {
 
     @Test
     void testWrongOne() {
-        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_ONE));
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.of(TEST_WRONG_ONE));
     }
 
     @Test
     void testWrongCol1() {
-        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_COL_1));
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.of(TEST_WRONG_COL_1));
     }
 
     @Test
     void testWrongCol2() {
-        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.fromString(TEST_WRONG_COL_2));
+        assertThrows(FormatingOrTransformationException.class, () -> PrettyJsonString.of(TEST_WRONG_COL_2));
     }
 
     @Test
     void testCol1() {
-        final FormattedString p = PrettyJsonString.fromString(TEST_COL_1);
+        final FormattedString p = PrettyJsonString.of(TEST_COL_1);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(5, fmtd.split("\n").length);
@@ -76,7 +76,7 @@ class PrettyJsonStringFromStringTest {
 
     @Test
     void testCol2() {
-        final FormattedString p = PrettyJsonString.fromString(TEST_COL_2);
+        final FormattedString p = PrettyJsonString.of(TEST_COL_2);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(1, fmtd.split("\n").length);
@@ -84,7 +84,7 @@ class PrettyJsonStringFromStringTest {
 
     @Test
     void testChild() {
-        final FormattedString p = PrettyJsonString.fromString(TEST_CHILD);
+        final FormattedString p = PrettyJsonString.of(TEST_CHILD);
         final String fmtd = p.toString();
         LOGGER.info(fmtd);
         assertEquals(6, fmtd.split("\n").length);

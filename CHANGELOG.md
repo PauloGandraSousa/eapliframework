@@ -1,12 +1,44 @@
 # EAPLI Framework Changelog
 
-## R.20.0.0 - SNAPSHOT
+
+## R.21.0.0-SNAPSHOT
+
+### 21.0.0 [CORE]
+
+#### What's new
+
+- `RandomString` factory `of` method
+- `PrettyJsonString` factory `of` method
+- `PrettyXmlString` factory `of` method
+- `Percentage` class
+- `FrequencyTable.frequencyOfAsPercentage` method
+- `FrequencyTable.entrySet` method
+
+
+### Changed
+
+- removed `RandomString` constructor. use factory `of` method
+- removed `PrettyJsonString(String)` constructor. use factory `of` method 
+- removed `PrettyJsonString.fromString` method. use factory `of` method
+- removed `PrettyJsonString.fromObject` method. use factory `of` method
+- removed `PrettyXmlString.fromString` method. use factory `of` method
+- removed `PrettyXmlString.fromObject` method. use factory `of` method
+- `Money` class moved to package `eapli.framework.quantities.domain.model`
+- `FrequencyTable.entries` method returns a Stream instead of Set
+- renamed `FrequencyTable.sortedEntriesByFrequency` method to `FrequencyTable.entriesSortedByFrequency` 
+- renamed `FrequencyTable.sortedEntriesByToken` method to `FrequencyTable.entriesSortedByToken`
+- fixed descending sorting order of `FrequencyTable.sortedEntriesByFrequency` 
+
+
+
+## R.20.0.0
 
 ### 20.0.0 [CORE]
 
 #### what's new
 
 - `RandomString`
+- `Files.getExtension`
 
 #### Changed
 
@@ -14,9 +46,9 @@
 
 ### 19.0.0 [AUTHZ]
 
-#### what's new
+#### What's new
 
-- TBD
+- n.a.
 
 #### Changed
 
@@ -32,9 +64,9 @@
 
 ### 20.0.0 [PUBSUB]
 
-#### what's new
+#### What's new
 
-- TBD
+- n.a.
 
 #### Changed
 

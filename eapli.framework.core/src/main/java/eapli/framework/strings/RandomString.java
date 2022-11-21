@@ -29,7 +29,6 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author Paulo Gandra de Sousa 11/05/2022
- *
  */
 @Immutable
 @EqualsAndHashCode
@@ -45,8 +44,8 @@ public final class RandomString {
      * @param len
      *            the desired length of the string to generate
      */
-    public RandomString(final int len) {
-        this(len, CHARSET);
+    public static RandomString of(final int len) {
+        return of(len, CHARSET);
     }
 
     /**
@@ -59,13 +58,22 @@ public final class RandomString {
      *            the set of allowable characters to include in the random
      *            string
      */
-    public RandomString(final int len, final String charSet) {
+    public static RandomString of(final int len, final String charSet) {
         final var sb = new StringBuilder();
         for (int i = 0; i < len; i++) {
             final int c = NumberGenerator.anInt(charSet.length());
             sb.append(charSet.charAt(c));
         }
-        value = sb.toString();
+        return new RandomString(sb.toString());
+    }
+
+    /**
+     * constructor.
+     *
+     * @param value
+     */
+    private RandomString(final String value) {
+        this.value = value;
     }
 
     @Override

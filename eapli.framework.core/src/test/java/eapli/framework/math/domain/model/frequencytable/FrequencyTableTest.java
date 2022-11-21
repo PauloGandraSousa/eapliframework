@@ -25,13 +25,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import eapli.framework.math.domain.model.FrequencyTable;
+import eapli.framework.math.domain.model.Percentage;
 
 /**
  * Test Frequency Table accepting with any value.
@@ -101,6 +106,57 @@ class FrequencyTableTest {
     }
 
     @Test
+    void ensureSortedByFrequency() {
+        subject.collect("c");
+        subject.collect("b");
+        subject.collect("c");
+        subject.collect("a");
+        subject.collect("a");
+        subject.collect("c");
+
+        final var result = subject.entriesSortedByFrequency().collect(Collectors.toList());
+
+        final List<Entry<String, Long>> expected = Arrays
+                .asList(new AbstractMap.SimpleImmutableEntry<>("c", 3L),
+                        new AbstractMap.SimpleImmutableEntry<>("a", 2L),
+                        new AbstractMap.SimpleImmutableEntry<>("b", 1L));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureSortedByToken() {
+        subject.collect("c");
+        subject.collect("b");
+        subject.collect("c");
+        subject.collect("a");
+        subject.collect("a");
+        subject.collect("c");
+
+        final var result = subject.entriesSortedByToken().collect(Collectors.toList());
+
+        final List<Entry<String, Long>> expected = Arrays
+                .asList(new AbstractMap.SimpleImmutableEntry<>("a", 2L),
+                        new AbstractMap.SimpleImmutableEntry<>("b", 1L),
+                        new AbstractMap.SimpleImmutableEntry<>("c", 3L));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureHasRightFrequenciesAsPercentage() {
+        subject.collect("a");
+        subject.collect("b");
+        subject.collect("a");
+        subject.collect("c");
+        subject.collect("a");
+
+        assertEquals(Percentage.ofRatio(3, 5), subject.frequencyOfAsPercentage("a"));
+        assertEquals(Percentage.ofRatio(1, 5), subject.frequencyOfAsPercentage("b"));
+        assertEquals(Percentage.ofRatio(1, 5), subject.frequencyOfAsPercentage("c"));
+    }
+
+    @Test
     void ensureUnknownTokenHasFrequency0() {
         subject.collect("a");
         subject.collect("b");
@@ -126,7 +182,7 @@ class FrequencyTableTest {
     void testSortedByToken() {
         initData();
 
-        final Stream<Entry<String, Long>> r = subject.sortedEntriesByToken();
+        final Stream<Entry<String, Long>> r = subject.entriesSortedByToken();
 
         System.out.println("Sorted by value ascending");
         final String last = "";
@@ -155,7 +211,7 @@ class FrequencyTableTest {
     void testSortedByFrequency() {
         initData();
 
-        final Stream<Entry<String, Long>> r = subject.sortedEntriesByFrequency();
+        final Stream<Entry<String, Long>> r = subject.entriesSortedByFrequency();
 
         System.out.println("Sorted by frequency descending");
         final Long last = 0L;

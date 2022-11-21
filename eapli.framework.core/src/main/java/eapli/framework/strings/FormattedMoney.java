@@ -23,7 +23,7 @@ package eapli.framework.strings;
 import java.util.Currency;
 import java.util.Locale;
 
-import eapli.framework.general.domain.model.Money;
+import eapli.framework.quantities.domain.model.Money;
 
 /**
  * Formatted money values (even if we are not using the Money class).
