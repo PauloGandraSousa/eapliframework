@@ -2,6 +2,12 @@
 
 ## v21.X.X-SNAPSHOT
 
+### 21.1.0 [CORE]
+
+#### What's new
+
+- `TemperatureUnit.zero()` method
+
 
 ## v21.0.0
 
