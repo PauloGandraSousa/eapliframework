@@ -45,6 +45,16 @@ class PercentageTest {
     }
 
     @ParameterizedTest
+    @CsvSource({ "1,1,1.01", "1,0,1", "99,1,99.01", "1,0.5,1.005"
+    })
+    void ensureIncreaseBasePoints(final double a, final double b, final double r) {
+        final Percentage pa = new Percentage(a);
+        final Percentage expected = new Percentage(r);
+        final Percentage result = pa.increase(b);
+        assertEquals(expected, result);
+    }
+
+    @ParameterizedTest
     @CsvSource({ "1,1,0", "1,0,1", "99,1,98", "1,0.5,0.5"
     })
     void ensureDecreasing(final double a, final double b, final double r) {

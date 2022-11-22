@@ -90,12 +90,39 @@ public class Percentage implements ValueObject, Comparable<Percentage>, Serializ
     }
 
     /**
+     * Adds two percentages.
+     * <p>
+     * For example:
+     * <ul>
+     * <li>2.25% + 1% = 3.25%
+     * <li>2.25% + 0.25% = 2.5%
+     * </ul>
      *
      * @param other
      * @return
      */
     public Percentage increase(final Percentage other) {
         return new Percentage(value.add(other.value));
+    }
+
+    /**
+     * Increases the current percentage by <em>n</em> basis points (BP). A basis point is a unit
+     * frequently used in finance and corresponds to the hundredth part of 1%, or 1 permyriad.
+     * <p>
+     * For example,
+     * <ul>
+     * <li>2.25% + 1 bps = 2.26%
+     * <li>2.25% + 25 bps = 2.5%
+     * <li>2.50% + 0.5 bps = 2.505%
+     * </ul>
+     *
+     * @param basisPoints
+     *
+     * @return
+     */
+    public Percentage increase(final double basisPoints) {
+        final var bps = BigDecimal.valueOf(basisPoints).divide(BigDecimal.valueOf(100));
+        return new Percentage(value.add(bps));
     }
 
     /**

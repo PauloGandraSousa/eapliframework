@@ -8,6 +8,7 @@
 
 - `Temperature.parse(String)` method
 - `TemperatureUnit.zero()` method
+- `Percentage.increase(double)` method
 
 
 ## v21.0.0
