@@ -6,6 +6,7 @@
 
 #### What's new
 
+- `Temperature.parse(String)` method
 - `TemperatureUnit.zero()` method
 
 

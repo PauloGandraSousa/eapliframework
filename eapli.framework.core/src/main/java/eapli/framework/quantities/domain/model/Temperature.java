@@ -23,6 +23,7 @@ package eapli.framework.quantities.domain.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.stream.Collector;
 
 import javax.persistence.Embeddable;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
+import eapli.framework.strings.util.Strings;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -158,6 +160,17 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
         abstract BigDecimal toFarenheit(BigDecimal org);
 
         abstract Temperature zero();
+
+        /**
+         * @param parsedUnit
+         * @return
+         */
+        static TemperatureUnit ofSymbol(final String parsedUnit) {
+            final var found = Arrays.stream(TemperatureUnit.values()).filter(u -> u.symbol.equals(parsedUnit))
+                    .findFirst();
+
+            return found.orElseThrow(IllegalArgumentException::new);
+        }
     }
 
     private static final long serialVersionUID = 1L;
@@ -586,6 +599,23 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
      */
     @Override
     public String toString() {
-        return magnitude + " " + unit;
+        return magnitude + " " + unit.symbol;
+    }
+
+    /**
+     * @param in
+     * @return
+     */
+    public static Temperature parse(final String in) {
+        Preconditions.nonNull(in);
+        Preconditions.ensure(in.length() >= 2);
+
+        final String parsedUnit = Strings.right(in, 1);
+        final double parsedMagnitude = Double.parseDouble(in.substring(0, in.length() - 1));
+
+        final var unit = TemperatureUnit.ofSymbol(parsedUnit);
+        final var magnitude = BigDecimal.valueOf(parsedMagnitude);
+
+        return new Temperature(magnitude, unit);
     }
 }
