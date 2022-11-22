@@ -264,18 +264,33 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
     }
 
     /**
+     * Parses a string representation of a Temperature, e.g., "123.50 C", "+123.50 C", "-123.50 C",
+     * "123.50C", "-123.50C".
+     *
+     * @param value
+     * @return a new object corresponding to the value
+     */
+    public static Temperature parse(final String value) {
+        Preconditions.nonNull(value);
+        Preconditions.ensure(value.length() >= 2);
+
+        final String parsedUnit = Strings.right(value, 1);
+        final double parsedMagnitude = Double.parseDouble(value.substring(0, value.length() - 1));
+
+        final var unit = TemperatureUnit.ofSymbol(parsedUnit);
+        final var magnitude = BigDecimal.valueOf(parsedMagnitude);
+
+        return new Temperature(magnitude, unit);
+    }
+
+    /**
      * Parses a string representation of a Temperature, e.g., "123.50 C".
      *
      * @param value
      * @return a new object corresponding to the value
      */
     public static Temperature valueOf(final String value) {
-        final var parts = value.split(" ");
-        Preconditions.areEqual(parts.length, 2);
-
-        final var am = Double.parseDouble(parts[0]);
-        final var curr = TemperatureUnit.valueOf(parts[1]);
-        return new Temperature(am, curr);
+        return parse(value);
     }
 
     /**
@@ -600,22 +615,5 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
     @Override
     public String toString() {
         return magnitude + " " + unit.symbol;
-    }
-
-    /**
-     * @param in
-     * @return
-     */
-    public static Temperature parse(final String in) {
-        Preconditions.nonNull(in);
-        Preconditions.ensure(in.length() >= 2);
-
-        final String parsedUnit = Strings.right(in, 1);
-        final double parsedMagnitude = Double.parseDouble(in.substring(0, in.length() - 1));
-
-        final var unit = TemperatureUnit.ofSymbol(parsedUnit);
-        final var magnitude = BigDecimal.valueOf(parsedMagnitude);
-
-        return new Temperature(magnitude, unit);
     }
 }

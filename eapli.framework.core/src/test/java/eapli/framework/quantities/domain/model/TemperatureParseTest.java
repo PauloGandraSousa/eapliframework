@@ -38,7 +38,14 @@ import eapli.framework.quantities.domain.model.Temperature.TemperatureUnit;
 class TemperatureParseTest {
 
     @ParameterizedTest
-    @CsvSource({ "0K,0", "0 K,0", "37.5K,37.5", "42.5 K,42.5", "+37.5K,37.5", "+42.5 K,42.5" })
+    @CsvSource({ "0K,0", "0 K,0", ".5 K,0.5", "+.5 K,0.5", "37.5K,37.5", "42.5 K,42.5", "+37.5K,37.5", "+42.5 K,42.5",
+            "5778 K,5778",
+            // center of the sun
+            "15000273.15 K,15000273.15",
+            // "atom smasher" at the Brookhaven National Laboratory in Upton
+            "40000000000000000273.15 K,40000000000000000273.15"
+    })
+
     void ensureParsesKelvin(final String in, final double value) {
         final var subject = Temperature.parse(in);
 
@@ -47,8 +54,13 @@ class TemperatureParseTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "0C,0", "0 C,0", "37.5C,37.5", "42.5 C,42.5", "-273.15C,-273.15", "-273.15 C,-273.15",
-            "+273.15C,273.15", "+273.15 C,273.15" })
+    @CsvSource({ "0C,0", "0 C,0", ".5 C,0.5", "+.5 C,0.5", "-.5 C,-0.5", "37.5C,37.5", "42.5 C,42.5",
+            "-273.15C,-273.15", "-273.15 C,-273.15", "+273.15C,273.15", "+273.15 C,273.15",
+            "5505 C,5505",
+            // center of the sun
+            "15000000 C,15000000",
+            // "atom smasher" at the Brookhaven National Laboratory in Upton
+            "40000000000000000000 C,40000000000000000000" })
     void ensureParsesCelsius(final String in, final double value) {
         final var subject = Temperature.parse(in);
 
@@ -57,8 +69,13 @@ class TemperatureParseTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "0F,0", "0 F,0", "37.5F,37.5", "42.5 F,42.5", "-273.15F,-273.15", "-273.15 F,-273.15",
-            "+273.15F,273.15", "+273.15 F,273.15" })
+    @CsvSource({ "0F,0", "0 F,0", ".5 F,0.5", "+.5 F,0.5", "-.5 F,-0.5", "37.5F,37.5", "42.5 F,42.5",
+            "-273.15F,-273.15", "-273.15 F,-273.15", "+273.15F,273.15", "+273.15 F,273.15", "9941 F, 9941",
+            // center of the sun
+            "27000032 F,27000032",
+            // "atom smasher" at the Brookhaven National Laboratory in Upton
+            "72000000000000000000 F,72000000000000000000"
+    })
     void ensureParsesFarenheit(final String in, final double value) {
         final var subject = Temperature.parse(in);
 
