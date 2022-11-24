@@ -21,11 +21,15 @@
 package eapli.framework.quantities.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import eapli.framework.quantities.domain.model.Temperature.TemperatureUnit;
 
@@ -35,95 +39,109 @@ import eapli.framework.quantities.domain.model.Temperature.TemperatureUnit;
  */
 class TemperatureTest {
 
-    // ----------
+	// ----------
 
-    @ParameterizedTest
-    @CsvSource({ "0,0,0.0",
-            "0,10,0.0",
-            "0,-10,0.0",
-            "0,0.5,0.0",
-            "0,-0.5,0.0",
+	@ParameterizedTest
+	@CsvSource({ "0,0,0.0", "0,10,0.0", "0,-10,0.0", "0,0.5,0.0", "0,-0.5,0.0",
 
-            "1,0,0",
-            "1,10,10",
-            "1,0.5,0.5",
+			"1,0,0", "1,10,10", "1,0.5,0.5",
 
-            "100,0,0",
-            "100,10,1000",
-            "100,0.5,50",
+			"100,0,0", "100,10,1000", "100,0.5,50",
 
-            "200.5,0,0",
-            "200.5,10,2005",
-            "200.5,0.5,100.25" })
-    void ensureScalesKelvin(final double temperature, final double scale, final double expected) {
-        final var subject = Temperature.kelvin(temperature);
-        final var result = subject.scale(scale);
+			"200.5,0,0", "200.5,10,2005", "200.5,0.5,100.25" })
+	void ensureScalesKelvin(final double temperature, final double scale, final double expected) {
+		final var subject = Temperature.kelvin(temperature);
+		final var result = subject.scale(scale);
 
-        assertEquals(0, BigDecimal.valueOf(expected).compareTo(result.value()));
-        assertEquals(TemperatureUnit.KELVIN, result.unit());
-    }
+		assertEquals(0, BigDecimal.valueOf(expected).compareTo(result.value()));
+		assertEquals(TemperatureUnit.KELVIN, result.unit());
+	}
 
-    @ParameterizedTest
-    @CsvSource({ "0,0,0.0",
-            "0,10,0.0",
-            "0,-10,0.0",
-            "0,0.5,0.0",
-            "0,-0.5,0.0",
+	@ParameterizedTest
+	@CsvSource({ "0,0,0.0", "0,10,0.0", "0,-10,0.0", "0,0.5,0.0", "0,-0.5,0.0",
 
-            "1,0,0",
-            "1,10,10",
-            "1,-10,-10",
-            "1,0.5,0.5",
-            "1,-0.5,-0.5",
+			"1,0,0", "1,10,10", "1,-10,-10", "1,0.5,0.5", "1,-0.5,-0.5",
 
-            "100,0,0",
-            "100,10,1000",
-            "100,-2,-200",
-            "100,0.5,50",
-            "100,-0.5,-50",
+			"100,0,0", "100,10,1000", "100,-2,-200", "100,0.5,50", "100,-0.5,-50",
 
-            "200.5,0,0",
-            "200.5,10,2005",
-            "10.5,-2,-21",
-            "200.5,0.5,100.25",
-            "200.5,-0.5,-100.25" })
-    void ensureScalesCelsius(final double temperature, final double scale, final double expected) {
-        final var subject = Temperature.celsius(temperature);
-        final var result = subject.scale(scale);
+			"200.5,0,0", "200.5,10,2005", "10.5,-2,-21", "200.5,0.5,100.25", "200.5,-0.5,-100.25" })
+	void ensureScalesCelsius(final double temperature, final double scale, final double expected) {
+		final var subject = Temperature.celsius(temperature);
+		final var result = subject.scale(scale);
 
-        assertEquals(0, BigDecimal.valueOf(expected).compareTo(result.value()));
-        assertEquals(TemperatureUnit.CELSIUS, result.unit());
-    }
+		assertEquals(0, BigDecimal.valueOf(expected).compareTo(result.value()));
+		assertEquals(TemperatureUnit.CELSIUS, result.unit());
+	}
 
-    @ParameterizedTest
-    @CsvSource({ "0,0,0.0",
-            "0,10,0.0",
-            "0,-10,0.0",
-            "0,0.5,0.0",
-            "0,-0.5,0.0",
+	@ParameterizedTest
+	@CsvSource({ "0,0,0.0", "0,10,0.0", "0,-10,0.0", "0,0.5,0.0", "0,-0.5,0.0",
 
-            "1,0,0",
-            "1,10,10",
-            "1,-10,-10",
-            "1,0.5,0.5",
-            "1,-0.5,-0.5",
+			"1,0,0", "1,10,10", "1,-10,-10", "1,0.5,0.5", "1,-0.5,-0.5",
 
-            "100,0,0",
-            "100,10,1000",
-            "100,-2,-200",
-            "100,0.5,50",
-            "100,-0.5,-50",
+			"100,0,0", "100,10,1000", "100,-2,-200", "100,0.5,50", "100,-0.5,-50",
 
-            "200.5,0,0",
-            "200.5,10,2005",
-            "10.5,-2,-21",
-            "200.5,0.5,100.25",
-            "200.5,-0.5,-100.25" })
-    void ensureScalesFarenheit(final double temperature, final double scale, final double expected) {
-        final var subject = Temperature.farenheit(temperature);
-        final var result = subject.scale(scale);
+			"200.5,0,0", "200.5,10,2005", "10.5,-2,-21", "200.5,0.5,100.25", "200.5,-0.5,-100.25" })
+	void ensureScalesFarenheit(final double temperature, final double scale, final double expected) {
+		final var subject = Temperature.farenheit(temperature);
+		final var result = subject.scale(scale);
 
-        assertEquals(0, BigDecimal.valueOf(expected).compareTo(result.value()));
-        assertEquals(TemperatureUnit.FARENHEIT, result.unit());
-    }
+		assertEquals(0, BigDecimal.valueOf(expected).compareTo(result.value()));
+		assertEquals(TemperatureUnit.FARENHEIT, result.unit());
+	}
+
+//---------------
+	@ParameterizedTest
+	@CsvSource({ "0,0", "0.01,1", "1,1", "10,1", "-0.01,-1", "-1,-1", "-10,-1" })
+	void ensureSignum(double in, int expected) {
+		final var subject = Temperature.celsius(in);
+
+		assertEquals(expected, subject.signum());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0.01, 1, 10 })
+	void ensureIsPositive(double in) {
+		final var subject = Temperature.celsius(in);
+
+		assertTrue(subject.isPositive());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { -0.01, -1, -10 })
+	void ensureIsNegative(double in) {
+		final var subject = Temperature.celsius(in);
+
+		assertTrue(subject.isNegative());
+	}
+
+	@Test
+	void ensureIsZero() {
+		final var subject = Temperature.celsius(0);
+
+		assertTrue(subject.isZero());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0.01, 1, 10, -0.01, -1, -10 })
+	void ensureNotZero(double in) {
+		final var subject = Temperature.celsius(in);
+
+		assertFalse(subject.isZero());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0, -0.01, -1, -10 })
+	void ensureNotPositive(double in) {
+		final var subject = Temperature.celsius(in);
+
+		assertFalse(subject.isPositive());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0, 0.01, 1, 10 })
+	void ensureNotNegative(double in) {
+		final var subject = Temperature.celsius(in);
+
+		assertFalse(subject.isNegative());
+	}
 }

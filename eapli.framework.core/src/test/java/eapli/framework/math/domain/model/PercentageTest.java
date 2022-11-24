@@ -98,55 +98,55 @@ class PercentageTest {
 	@ParameterizedTest
 	@CsvSource({ "0,0", "0.01,1", "1,1", "10,1", "-0.01,-1", "-1,-1", "-10,-1" })
 	void ensureSignum(double in, int expected) {
-		final var p = new Percentage(in);
+		final var subject = new Percentage(in);
 
-		assertEquals(expected, p.signum());
+		assertEquals(expected, subject.signum());
 	}
 
 	@ParameterizedTest
 	@ValueSource(doubles = { 0.01, 1, 10 })
 	void ensureIsPositive(double in) {
-		final var p = new Percentage(in);
+		final var subject = new Percentage(in);
 
-		assertTrue(p.isPositive());
+		assertTrue(subject.isPositive());
 	}
 
 	@ParameterizedTest
 	@ValueSource(doubles = { -0.01, -1, -10 })
 	void ensureIsNegative(double in) {
-		final var p = new Percentage(in);
+		final var subject = new Percentage(in);
 
-		assertTrue(p.isNegative());
+		assertTrue(subject.isNegative());
 	}
 
 	@Test
 	void ensureIsZero() {
-		final var p = new Percentage(0);
+		final var subject = new Percentage(0);
 
-		assertTrue(p.isZero());
+		assertTrue(subject.isZero());
 	}
 
 	@ParameterizedTest
 	@ValueSource(doubles = { 0.01, 1, 10, -0.01, -1, -10 })
 	void ensureNotZero(double in) {
-		final var p = new Percentage(in);
+		final var subject = new Percentage(in);
 
-		assertFalse(p.isZero());
+		assertFalse(subject.isZero());
 	}
 
 	@ParameterizedTest
 	@ValueSource(doubles = { 0, -0.01, -1, -10 })
 	void ensureNotPositive(double in) {
-		final var p = new Percentage(in);
+		final var subject = new Percentage(in);
 
-		assertFalse(p.isPositive());
+		assertFalse(subject.isPositive());
 	}
 
 	@ParameterizedTest
 	@ValueSource(doubles = { 0, 0.01, 1, 10 })
 	void ensureNotNegative(double in) {
-		final var p = new Percentage(in);
+		final var subject = new Percentage(in);
 
-		assertFalse(p.isNegative());
+		assertFalse(subject.isNegative());
 	}
 }
