@@ -21,41 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.general.domain.model;
+package eapli.framework.quantities.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.math.BigInteger;
-
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
+ * test cases for the valueOf() method of the Money class
  *
- * @author Paulo Gandra de Sousa
+ * @author Paulo Gandra Sousa
  *
  */
-class MoneySpecialConstructorTest {
+class MoneyValueOfTest {
 
-    @Test
-    void ensureSpecialConstructorThrowsOnNullCurrency() {
-        assertThrows(NullPointerException.class, () -> new Money(BigInteger.ONE, null));
-    }
+	@ParameterizedTest
+	@CsvSource({ "125.50 EUR, 125.5", "125.527 EUR, 125.53", "0.09 EUR, 0.09", "9 EUR, 9",
+			"999999999999.50 EUR, 999999999999.50" })
+	void properString(final String test, final double e) {
+		final var instance = Money.valueOf(test);
+		final var expected = Money.euros(e);
+		assertEquals(expected, instance);
+	}
 
-    @Test
-    void ensureSpecialConstructorThrowsOnInvalidCurrency() {
-        assertThrows(IllegalArgumentException.class, () -> new Money(BigInteger.ONE, "xpto"));
-    }
-
-    @Test
-    void ensureSpecialConstructorHandlesNullAmount() {
-        final Money subject = new Money(null, "EUR");
-        assertEquals(subject, Money.euros(0));
-    }
-
-    @Test
-    void ensureSpecialConstructor() {
-        final Money subject = new Money(BigInteger.ONE, "EUR");
-        assertEquals(subject, Money.euros(0.01));
-    }
+	@ParameterizedTest
+	@ValueSource(strings = { "2X9 EUR", // invalid amount
+			"29 AAA", // invalid currency
+			"9EUR", // no spaces
+			"9.4", // no currency
+			"USD" // no amount
+	})
+	void ensureInvalidStringThrows(final String test) {
+		assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
+	}
 }

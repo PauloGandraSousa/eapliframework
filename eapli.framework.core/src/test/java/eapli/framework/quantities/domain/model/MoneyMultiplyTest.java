@@ -21,46 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.general.domain.model;
+package eapli.framework.quantities.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 /**
- * test cases for the valueOf() method of the Money class
  *
- * @author Paulo Gandra Sousa
+ * @author Paulo Gandra de Sousa
  *
  */
-class MoneyValueOfTest {
+class MoneyMultiplyTest {
 
-    @ParameterizedTest
-    @CsvSource({
-            "125.50 EUR, 125.5",
-            "125.527 EUR, 125.53",
-            "0.09 EUR, 0.09",
-            "9 EUR, 9",
-            "999999999999.50 EUR, 999999999999.50"
-    })
-    void properString(final String test, final double e) {
-        final Money instance = Money.valueOf(test);
-        final Money expected = Money.euros(e);
-        assertEquals(expected, instance);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "2X9 EUR", // invalid amount
-            "29 AAA", // invalid currency
-            "9EUR", // no spaces
-            "9.4", // no currency
-            "USD" // no amount
-    })
-    void ensureInvalidStringThrows(final String test) {
-        assertThrows(IllegalArgumentException.class, () -> Money.valueOf(test));
-    }
+	@ParameterizedTest
+	@CsvSource({ "0, 0", "1, 10", "0.5, 5", "12, 120" })
+	void ensureMultiplyBy(final double m, final double r) {
+		final var subject = Money.euros(10);
+		final var expected = Money.euros(r);
+		assertEquals(expected, subject.multiply(m));
+	}
 }

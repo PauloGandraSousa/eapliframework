@@ -21,30 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.general.domain.model;
+package eapli.framework.quantities.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import java.math.BigInteger;
+
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Paulo Gandra de Sousa
  *
  */
-class MoneyMultiplyTest {
+class MoneySpecialConstructorTest {
 
-    @ParameterizedTest
-    @CsvSource({
-            "0, 0",
-            "1, 10",
-            "0.5, 5",
-            "12, 120"
-    })
-    void ensureMultiplyBy(final double m, final double r) {
-        final Money subject = Money.euros(10);
-        final Money expected = Money.euros(r);
-        assertEquals(expected, subject.multiply(m));
-    }
+	@Test
+	void ensureSpecialConstructorThrowsOnNullCurrency() {
+		assertThrows(NullPointerException.class, () -> new Money(BigInteger.ONE, null));
+	}
+
+	@Test
+	void ensureSpecialConstructorThrowsOnInvalidCurrency() {
+		assertThrows(IllegalArgumentException.class, () -> new Money(BigInteger.ONE, "xpto"));
+	}
+
+	@Test
+	void ensureSpecialConstructorHandlesNullAmount() {
+		final var subject = new Money(null, "EUR");
+		assertEquals(subject, Money.euros(0));
+	}
+
+	@Test
+	void ensureSpecialConstructor() {
+		final var subject = new Money(BigInteger.ONE, "EUR");
+		assertEquals(subject, Money.euros(0.01));
+	}
 }

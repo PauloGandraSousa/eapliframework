@@ -1,12 +1,58 @@
 # EAPLI Framework Changelog
 
-## R.20.0.0 - SNAPSHOT
+## v21.X.X-SNAPSHOT
+
+### 21.1.0 [CORE]
+
+#### What's new
+
+- `Temperature.parse(String)` method
+- `TemperatureUnit.zero()` method
+- `Percentage.increase(double)` method
+- `Percentage.decrease(double)` method
+- `Percentage.signum()` method
+- `Percentage.isNegative()` method
+- `Percentage.iPositive()` method
+- `Percentage.isZero()` method
+
+
+## v21.0.0
+
+### 21.0.0 [CORE]
+
+#### What's new
+
+- `RandomString` factory `of` method
+- `PrettyJsonString` factory `of` method
+- `PrettyXmlString` factory `of` method
+- `Percentage` class
+- `FrequencyTable.frequencyOfAsPercentage` method
+- `FrequencyTable.entrySet` method
+- `Temperature` class
+
+#### Changed
+
+- removed `RandomString` constructor. use factory `of` method
+- removed `PrettyJsonString(String)` constructor. use factory `of` method 
+- removed `PrettyJsonString.fromString` method. use factory `of` method
+- removed `PrettyJsonString.fromObject` method. use factory `of` method
+- removed `PrettyXmlString.fromString` method. use factory `of` method
+- removed `PrettyXmlString.fromObject` method. use factory `of` method
+- `Money` class moved to package `eapli.framework.quantities.domain.model`
+- `FrequencyTable.entries` method returns a Stream instead of Set
+- renamed `FrequencyTable.sortedEntriesByFrequency` method to `FrequencyTable.entriesSortedByFrequency` 
+- renamed `FrequencyTable.sortedEntriesByToken` method to `FrequencyTable.entriesSortedByToken`
+- fixed descending sorting order of `FrequencyTable.sortedEntriesByFrequency` 
+
+
+## v20.0.0-RELEASE
 
 ### 20.0.0 [CORE]
 
 #### what's new
 
 - `RandomString`
+- `Files.getExtension`
 
 #### Changed
 
@@ -14,9 +60,9 @@
 
 ### 19.0.0 [AUTHZ]
 
-#### what's new
+#### What's new
 
-- TBD
+- n.a.
 
 #### Changed
 
@@ -29,12 +75,11 @@
 -- `Username`
 -- `UserSession`
 
-
 ### 20.0.0 [PUBSUB]
 
-#### what's new
+#### What's new
 
-- TBD
+- n.a.
 
 #### Changed
 
@@ -44,7 +89,7 @@
 -- `EventConsumption`
 
 
-## 18.0.0 [AUTHZ]
+## 18.0.1 [AUTHZ]
 
 ### What's new
 
@@ -53,6 +98,7 @@
 ### Changed
 
 - Each repository implementation is in its own package
+- removed `final` specifier of `AuthorizationService`
 
 
 ## 19.0.0 [ PUB/SUB ]

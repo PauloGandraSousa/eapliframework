@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.general.domain.model;
+package eapli.framework.quantities.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -41,60 +41,60 @@ class MoneyTest {
 
 	@Test
 	void ensureDollarsHasRightCurrency() {
-		final Money subject = Money.dollars(1);
+		final var subject = Money.dollars(1);
 		assertEquals(Currency.getInstance("USD"), subject.currency());
 	}
 
 	@Test
 	void ensureEurosHasRightCurrency() {
-		final Money subject = Money.euros(1);
+		final var subject = Money.euros(1);
 		assertEquals(Currency.getInstance("EUR"), subject.currency());
 	}
 
 	@Test
 	void ensureDollarsHasRightAmount() {
-		final Money subject = Money.dollars(1);
+		final var subject = Money.dollars(1);
 		assertEquals(1, subject.amountAsDouble(), 0.01);
 	}
 
 	@Test
 	void ensureEurosHasRightAmount() {
-		final Money subject = Money.euros(1);
+		final var subject = Money.euros(1);
 		assertEquals(1, subject.amountAsDouble(), 0.01);
 	}
 
 	@Test
 	void ensureEqualsObject() {
-		final Money subject = Money.euros(1);
-		final Money other = Money.euros(1);
+		final var subject = Money.euros(1);
+		final var other = Money.euros(1);
 		assertEquals(subject, other);
 	}
 
 	@Test
 	void ensureNotEqualIfDifferentCurrency() {
-		final Money subject = Money.euros(1);
-		final Money other = Money.dollars(2);
+		final var subject = Money.euros(1);
+		final var other = Money.dollars(2);
 		assertNotEquals(subject, other);
 	}
 
 	@Test
 	void ensureNotEqualIfDifferentAmount() {
-		final Money subject = Money.euros(1);
-		final Money other = Money.euros(2);
+		final var subject = Money.euros(1);
+		final var other = Money.euros(2);
 		assertNotEquals(subject, other);
 	}
 
 	@Test
 	void ensureEurosAreOfSameCurrency() {
-		final Money subject = Money.euros(1);
-		final Money other = Money.euros(2);
+		final var subject = Money.euros(1);
+		final var other = Money.euros(2);
 		assertTrue(subject.isOfSameCurrency(other));
 	}
 
 	@Test
 	void ensureEurosAndDollarsAreNotOfSameCurrency() {
-		final Money subject = Money.euros(1);
-		final Money other = Money.dollars(1);
+		final var subject = Money.euros(1);
+		final var other = Money.dollars(1);
 		assertFalse(subject.isOfSameCurrency(other));
 	}
 }
