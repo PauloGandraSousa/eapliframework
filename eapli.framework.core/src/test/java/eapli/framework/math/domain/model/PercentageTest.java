@@ -21,11 +21,15 @@
 package eapli.framework.math.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * @author Paulo Gandra de Sousa 06/09/2022
@@ -89,5 +93,60 @@ class PercentageTest {
 		final var expected = Percentage.valueOf(BigDecimal.valueOf(r));
 		final var result = Percentage.ofRatio(a, t);
 		assertEquals(expected, result);
+	}
+
+	@ParameterizedTest
+	@CsvSource({ "0,0", "0.01,1", "1,1", "10,1", "-0.01,-1", "-1,-1", "-10,-1" })
+	void ensureSignum(double in, int expected) {
+		final var p = new Percentage(in);
+
+		assertEquals(expected, p.signum());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0.01, 1, 10 })
+	void ensureIsPositive(double in) {
+		final var p = new Percentage(in);
+
+		assertTrue(p.isPositive());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { -0.01, -1, -10 })
+	void ensureIsNegative(double in) {
+		final var p = new Percentage(in);
+
+		assertTrue(p.isNegative());
+	}
+
+	@Test
+	void ensureIsZero() {
+		final var p = new Percentage(0);
+
+		assertTrue(p.isZero());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0.01, 1, 10, -0.01, -1, -10 })
+	void ensureNotZero(double in) {
+		final var p = new Percentage(in);
+
+		assertFalse(p.isZero());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0, -0.01, -1, -10 })
+	void ensureNotPositive(double in) {
+		final var p = new Percentage(in);
+
+		assertFalse(p.isPositive());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0, 0.01, 1, 10 })
+	void ensureNotNegative(double in) {
+		final var p = new Percentage(in);
+
+		assertFalse(p.isNegative());
 	}
 }

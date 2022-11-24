@@ -27,6 +27,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
@@ -174,6 +175,47 @@ public class Percentage implements ValueObject, Comparable<Percentage>, Serializ
 	 */
 	public BigDecimal outOf(final BigDecimal value) {
 		return this.value.divide(BigDecimal.valueOf(100)).multiply(value);
+	}
+
+	/**
+	 * Checks the "signal" of this percentage. That is, if it is negative, zero, or
+	 * positive.
+	 *
+	 * @return -1 if the percentage value is negative, 1 if the percentage value is
+	 *         positive, 0 otherwise.
+	 */
+	public int signum() {
+		return value.signum();
+	}
+
+	/**
+	 * Checks if this magnitude is negative.
+	 *
+	 * @return {@code true} if this magnitude is negative
+	 */
+	@JsonIgnore
+	public boolean isNegative() {
+		return signum() == -1;
+	}
+
+	/**
+	 * Checks if this magnitude is positive.
+	 *
+	 * @return {@code true} if this magnitude is positive
+	 */
+	@JsonIgnore
+	public boolean isPositive() {
+		return signum() == 1;
+	}
+
+	/**
+	 * Checks if this magnitude is zero.
+	 *
+	 * @return {@code true} if this magnitude is zero
+	 */
+	@JsonIgnore
+	public boolean isZero() {
+		return signum() == 0;
 	}
 
 	@Override

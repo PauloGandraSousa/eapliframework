@@ -10,6 +10,10 @@
 - `TemperatureUnit.zero()` method
 - `Percentage.increase(double)` method
 - `Percentage.decrease(double)` method
+- `Percentage.signum()` method
+- `Percentage.isNegative()` method
+- `Percentage.iPositive()` method
+- `Percentage.isZero()` method
 
 
 ## v21.0.0

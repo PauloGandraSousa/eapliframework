@@ -523,10 +523,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	public int compareTo(final Temperature arg) {
 		Preconditions.areEqual(unit, arg.unit, "Cannot add different currencies");
 
-		/*
-		 * Next we'll look at comparing monies, in Java the approach is to implement
-		 * comparable.
-		 */
 		return magnitude.compareTo(arg.magnitude);
 	}
 
@@ -538,10 +534,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	 * @return true if this Temperature's magnitude is greater than the other
 	 */
 	public boolean isGreaterThan(final Temperature arg) {
-		/*
-		 * It's also useful to provide some better named operations such as greaterThan.
-		 * That makes methods that need the comparison much easier to read.
-		 */
 		return compareTo(arg) > 0;
 	}
 
@@ -553,10 +545,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	 * @return true if this Temperature's magnitude is less than the other
 	 */
 	public boolean isLessThan(final Temperature arg) {
-		/*
-		 * It's also useful to provide some better named operations such as greaterThan.
-		 * That makes methods that need the comparison much easier to read.
-		 */
 		return compareTo(arg) < 0;
 	}
 
@@ -608,6 +596,13 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 		return result;
 	}
 
+	/**
+	 * Checks the "signal" of this temperature. That is, if it is negative, zero, or
+	 * positive.
+	 *
+	 * @return -1 if the temperature value is negative, 1 if the temperature value
+	 *         is positive, 0 otherwise.
+	 */
 	public int signum() {
 		return magnitude.signum();
 	}
