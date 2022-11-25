@@ -74,6 +74,18 @@ class PercentageTest {
 		final var result = pa.decrease(pb);
 		assertEquals(expected, result);
 	}
+    @ParameterizedTest
+    @CsvSource({ "0,100,0", "1,100,1", "10,100,10", "100,100,100", "0.5,100,0.5", "150,100,150",
+            "0,1000,0", "1,1000,10", "10,1000,100", "100,1000,1000", "0.5,1000,5", "150,1000,1500",
+            "0,50,0", "1,50,0.5", "10,5,0.5", "100,50,50", "0.5,50,0.25", "150,50,75",
+    })
+    void ensureOutOf(final double perc, final double value, final double r) {
+        final Percentage tax = new Percentage(perc);
+        final BigDecimal baseValue = BigDecimal.valueOf(value);
+        final BigDecimal expected = BigDecimal.valueOf(r).stripTrailingZeros();
+        final BigDecimal result = tax.outOf(baseValue).stripTrailingZeros();
+        assertEquals(expected, result);
+    }
 
 	@ParameterizedTest
 	@CsvSource({ "0,100,0", "1,100,1", "10,100,10", "100,100,100", "0.5,100,0.5", "150,100,150", "0,1000,0",
@@ -149,4 +161,12 @@ class PercentageTest {
 
 		assertFalse(subject.isNegative());
 	}
+    @ParameterizedTest
+    @CsvSource({ "0,100,0", "1,2,50", "1,4,25", "2,1,200", "5,5,100", "1,3,33.33333333333333"
+    })
+    void ensureOfRatio(final long a, final long t, final double r) {
+        final var expected = Percentage.valueOf(BigDecimal.valueOf(r));
+        final var result = Percentage.ofRatio(a, t);
+        assertEquals(expected, result);
+    }
 }
