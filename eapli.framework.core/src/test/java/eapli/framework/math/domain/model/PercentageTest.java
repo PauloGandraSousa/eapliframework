@@ -34,13 +34,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PercentageTest {
 
     @ParameterizedTest
-    @CsvSource({ "1,1,2", "1,0,1", "99,1,100", "1,0.5,1.5"
-    })
+    @CsvSource({ "1,1,2", "1,0,1", "99,1,100", "1,0.5,1.5" })
     void ensureIncreasing(final double a, final double b, final double r) {
-        final Percentage pa = new Percentage(a);
-        final Percentage pb = new Percentage(b);
-        final Percentage expected = new Percentage(r);
-        final Percentage result = pa.increase(pb);
+        final var pa = new Percentage(a);
+        final var pb = new Percentage(b);
+        final var expected = new Percentage(r);
+        final var result = pa.increase(pb);
         assertEquals(expected, result);
     }
 
@@ -55,13 +54,11 @@ class PercentageTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "1,1,0", "1,0,1", "99,1,98", "1,0.5,0.5"
-    })
-    void ensureDecreasing(final double a, final double b, final double r) {
-        final Percentage pa = new Percentage(a);
-        final Percentage pb = new Percentage(b);
-        final Percentage expected = new Percentage(r);
-        final Percentage result = pa.decrease(pb);
+    @CsvSource({ "1,1,0.99", "1,0,1", "99,1,98.99", "1,0.5,0.995" })
+    void ensureDecreaseBasisPoints(final double a, final double b, final double r) {
+        final var pa = new Percentage(a);
+        final var expected = new Percentage(r);
+        final var result = pa.decrease(b);
         assertEquals(expected, result);
     }
 
@@ -79,6 +76,16 @@ class PercentageTest {
     }
 
     @ParameterizedTest
+    @CsvSource({ "1,1,0", "1,0,1", "99,1,98", "1,0.5,0.5" })
+    void ensureDecreasing(final double a, final double b, final double r) {
+        final var pa = new Percentage(a);
+        final var pb = new Percentage(b);
+        final var expected = new Percentage(r);
+        final var result = pa.decrease(pb);
+        assertEquals(expected, result);
+    }
+
+    @ParameterizedTest
     @CsvSource({ "0,100,0", "1,2,50", "1,4,25", "2,1,200", "5,5,100", "1,3,33.33333333333333"
     })
     void ensureOfRatio(final long a, final long t, final double r) {
@@ -86,4 +93,5 @@ class PercentageTest {
         final var result = Percentage.ofRatio(a, t);
         assertEquals(expected, result);
     }
+
 }
