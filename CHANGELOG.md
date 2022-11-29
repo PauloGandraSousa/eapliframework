@@ -15,6 +15,12 @@
 - `Percentage.iPositive()` method
 - `Percentage.isZero()` method
 
+### 19.1.0 [AUTHZ]
+
+#### What's new
+
+- `Authenticator` interface
+
 
 ## v21.0.0
 
