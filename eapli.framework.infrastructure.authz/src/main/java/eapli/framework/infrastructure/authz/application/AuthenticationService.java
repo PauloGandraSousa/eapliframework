@@ -40,7 +40,7 @@ import eapli.framework.validations.Preconditions;
  *
  */
 @Component
-public class AuthenticationService {
+public class AuthenticationService implements Authenticator {
 
     private final UserRepository repo;
     private final AuthorizationService authz;
@@ -78,7 +78,8 @@ public class AuthenticationService {
      *             if the username or password cannot be constructed from the
      *             passed string arguments
      */
-    public Optional<UserSession> authenticate(final String username, final String rawPassword,
+    @Override
+	public Optional<UserSession> authenticate(final String username, final String rawPassword,
             final Role... requiredRoles) {
         Preconditions.nonEmpty(username, "a username must be provided");
         Preconditions.nonEmpty(rawPassword, "a password must be provided");

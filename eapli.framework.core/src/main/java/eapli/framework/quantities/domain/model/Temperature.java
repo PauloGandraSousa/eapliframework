@@ -23,6 +23,7 @@ package eapli.framework.quantities.domain.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.stream.Collector;
 
 import javax.persistence.Embeddable;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
+import eapli.framework.strings.util.Strings;
 import eapli.framework.validations.Preconditions;
 
 /**
@@ -69,60 +71,84 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	 *
 	 */
 	public enum TemperatureUnit {
+		/**
+		 * Kelvin scale.
+		 */
 		KELVIN("K") {
 			@Override
-			BigDecimal toCelsius(BigDecimal org) {
+			BigDecimal toCelsius(final BigDecimal org) {
 				// 0K − 273.15
 				return org.subtract(KELVIN_DELTA);
 			}
 
 			@Override
-			BigDecimal toKelvin(BigDecimal org) {
+			BigDecimal toKelvin(final BigDecimal org) {
 				return org;
 			}
 
 			@Override
-			BigDecimal toFarenheit(BigDecimal org) {
+			BigDecimal toFarenheit(final BigDecimal org) {
 				// (0K − 273.15) × 9/5 + 32
 				return CELSIUS.toFarenheit(toCelsius(org));
 			}
+
+			@Override
+			Temperature zero() {
+				return Temperature.ZERO_KELVIN;
+			}
 		},
 
+		/**
+		 * Celsius scale.
+		 */
 		CELSIUS("C") {
 			@Override
-			BigDecimal toCelsius(BigDecimal org) {
+			BigDecimal toCelsius(final BigDecimal org) {
 				return org;
 			}
 
 			@Override
-			BigDecimal toKelvin(BigDecimal org) {
+			BigDecimal toKelvin(final BigDecimal org) {
 				// 0°C + 273.15
 				return org.add(KELVIN_DELTA);
 			}
 
 			@Override
-			BigDecimal toFarenheit(BigDecimal org) {
+			BigDecimal toFarenheit(final BigDecimal org) {
 				// (0°C × 9/5) + 32
 				return org.multiply(BigDecimal.valueOf(1.8d)).add(FARENHEIT_DELTA);
 			}
+
+			@Override
+			Temperature zero() {
+				return Temperature.ZERO_CELSIUS;
+			}
 		},
 
+		/**
+		 * Farenheit scale.
+		 */
 		FARENHEIT("F") {
 			@Override
-			BigDecimal toCelsius(BigDecimal org) {
+			BigDecimal toCelsius(final BigDecimal org) {
 				// (32°F − 32) × 5/9
 				return org.subtract(FARENHEIT_DELTA).multiply(BigDecimal.valueOf(5)).divide(BigDecimal.valueOf(9), 7,
 						RoundingMode.HALF_UP);
 			}
 
 			@Override
-			BigDecimal toKelvin(BigDecimal org) {
+			BigDecimal toKelvin(final BigDecimal org) {
 				return CELSIUS.toKelvin(toCelsius(org));
 			}
 
 			@Override
-			BigDecimal toFarenheit(BigDecimal org) {
+			BigDecimal toFarenheit(final BigDecimal org) {
 				return org;
+			}
+
+			@Override
+			Temperature zero() {
+				return Temperature.ZERO_FARENHEIT;
 			}
 		};
 
@@ -141,13 +167,45 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 		abstract BigDecimal toKelvin(BigDecimal org);
 
 		abstract BigDecimal toFarenheit(BigDecimal org);
+
+		abstract Temperature zero();
+
+		/**
+		 * Parses a symbol and creates the corresponding TemperatureUnit, for instance
+		 * "C" will return the CELSIUS instance. {@link valueOf} will parse "CELSIUS" to
+		 * the CELSIUS instance.
+		 *
+		 * @param parsedUnit
+		 * @return
+		 */
+		static TemperatureUnit ofSymbol(final String parsedUnit) {
+			final var found = Arrays.stream(TemperatureUnit.values()).filter(u -> u.symbol.equals(parsedUnit))
+					.findFirst();
+
+			return found.orElseThrow(IllegalArgumentException::new);
+		}
 	}
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 *
+	 */
 	public static final Temperature ZERO_KELVIN = kelvin(0);
+
+	/**
+	 *
+	 */
 	public static final Temperature ZERO_CELSIUS = celsius(0);
+
+	/**
+	 *
+	 */
 	public static final Temperature HUNDRED_CELSIUS = celsius(100);
+
+	/**
+	 *
+	 */
 	public static final Temperature ZERO_FARENHEIT = farenheit(0);
 
 	@XmlAttribute
@@ -221,16 +279,51 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 		return new Temperature(magnitude, TemperatureUnit.FARENHEIT);
 	}
 
+	/**
+	 * Returns a new object with the value of this convert to the Celsius scale.
+	 *
+	 * @return a new object with the value of this convert to the Celsius scale
+	 */
 	public Temperature toCelsius() {
 		return new Temperature(unit.toCelsius(magnitude), TemperatureUnit.CELSIUS);
 	}
 
+	/**
+	 * Returns a new object with the value of this convert to the Kelvin scale.
+	 *
+	 * @return a new object with the value of this convert to the Kelvin scale
+	 */
 	public Temperature toKelvin() {
 		return new Temperature(unit.toKelvin(magnitude), TemperatureUnit.KELVIN);
 	}
 
+	/**
+	 * Returns a new object with the value of this convert to the Farenheit scale.
+	 *
+	 * @return a new object with the value of this convert to the Farenheit scale
+	 */
 	public Temperature toFarenheit() {
 		return new Temperature(unit.toFarenheit(magnitude), TemperatureUnit.FARENHEIT);
+	}
+
+	/**
+	 * Parses a string representation of a Temperature, e.g., "123.50 C", "+123.50
+	 * C", "-123.50 C", "123.50C", "-123.50C".
+	 *
+	 * @param value
+	 * @return a new object corresponding to the value
+	 */
+	public static Temperature parse(final String value) {
+		Preconditions.nonNull(value);
+		Preconditions.ensure(value.length() >= 2);
+
+		final var parsedUnit = Strings.right(value, 1);
+		final var parsedMagnitude = Double.parseDouble(value.substring(0, value.length() - 1));
+
+		final var unit = TemperatureUnit.ofSymbol(parsedUnit);
+		final var magnitude = BigDecimal.valueOf(parsedMagnitude);
+
+		return new Temperature(magnitude, unit);
 	}
 
 	/**
@@ -240,12 +333,7 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	 * @return a new object corresponding to the value
 	 */
 	public static Temperature valueOf(final String value) {
-		final var parts = value.split(" ");
-		Preconditions.areEqual(parts.length, 2);
-
-		final var am = Double.parseDouble(parts[0]);
-		final var curr = TemperatureUnit.valueOf(parts[1]);
-		return new Temperature(am, curr);
+		return parse(value);
 	}
 
 	/**
@@ -390,7 +478,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	/**
 	 * Returns a new object which magnitude's sign is swapped, i.e.,
 	 * -this.magnitude. E.g.
-	 *
 	 * <p>
 	 *
 	 * <pre>
@@ -436,10 +523,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	public int compareTo(final Temperature arg) {
 		Preconditions.areEqual(unit, arg.unit, "Cannot add different currencies");
 
-		/*
-		 * Next we'll look at comparing monies, in Java the approach is to implement
-		 * comparable.
-		 */
 		return magnitude.compareTo(arg.magnitude);
 	}
 
@@ -451,10 +534,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	 * @return true if this Temperature's magnitude is greater than the other
 	 */
 	public boolean isGreaterThan(final Temperature arg) {
-		/*
-		 * It's also useful to provide some better named operations such as greaterThan.
-		 * That makes methods that need the comparison much easier to read.
-		 */
 		return compareTo(arg) > 0;
 	}
 
@@ -466,10 +545,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	 * @return true if this Temperature's magnitude is less than the other
 	 */
 	public boolean isLessThan(final Temperature arg) {
-		/*
-		 * It's also useful to provide some better named operations such as greaterThan.
-		 * That makes methods that need the comparison much easier to read.
-		 */
 		return compareTo(arg) < 0;
 	}
 
@@ -521,6 +596,13 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 		return result;
 	}
 
+	/**
+	 * Checks the "signal" of this temperature. That is, if it is negative, zero, or
+	 * positive.
+	 *
+	 * @return -1 if the temperature value is negative, 1 if the temperature value
+	 *         is positive, 0 otherwise.
+	 */
 	public int signum() {
 		return magnitude.signum();
 	}
@@ -567,6 +649,6 @@ public class Temperature implements Comparable<Temperature>, Serializable, Value
 	 */
 	@Override
 	public String toString() {
-		return magnitude + " " + unit;
+		return magnitude + " " + unit.symbol;
 	}
 }

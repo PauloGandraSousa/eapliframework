@@ -1,7 +1,28 @@
 # EAPLI Framework Changelog
 
+## v21.X.X-SNAPSHOT
 
-## v21.0.0-RELEASE
+### 21.1.0 [CORE]
+
+#### What's new
+
+- `Temperature.parse(String)` method
+- `TemperatureUnit.zero()` method
+- `Percentage.increase(double)` method
+- `Percentage.decrease(double)` method
+- `Percentage.signum()` method
+- `Percentage.isNegative()` method
+- `Percentage.iPositive()` method
+- `Percentage.isZero()` method
+
+### 19.1.0 [AUTHZ]
+
+#### What's new
+
+- `Authenticator` interface
+
+
+## v21.0.0
 
 ### 21.0.0 [CORE]
 

@@ -37,129 +37,118 @@ import eapli.framework.validations.Preconditions;
 @Utility
 public final class Math {
 
-    private Math() {
-        // ensure no instantiation as this is a utility class
-    }
+	private Math() {
+		// ensure no instantiation as this is a utility class
+	}
 
-    /**
-     * Permite efectuar a conversão de um valor para outra escala.
-     * <p>
-     * Author NMB
-     *
-     * @param oldMin
-     *            - exemplo 0
-     * @param oldMax
-     *            - exemplo 100
-     * @param newMin
-     *            - exemplo 0
-     * @param newMax
-     *            - exemplo 10
-     * @param oldValue
-     *            - exemplo 50
-     * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
-     */
-    public static float simpleLinearConversion(final float oldMin, final float oldMax,
-            final float newMin,
-            final float newMax, final float oldValue) {
-        return ((oldValue - oldMin) / (oldMax - oldMin)) * (newMax - newMin) + newMin;
-    }
+	/**
+	 * Permite efectuar a conversão de um valor para outra escala.
+	 * <p>
+	 * Author NMB
+	 *
+	 * @param oldMin   - exemplo 0
+	 * @param oldMax   - exemplo 100
+	 * @param newMin   - exemplo 0
+	 * @param newMax   - exemplo 10
+	 * @param oldValue - exemplo 50
+	 * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
+	 */
+	public static float simpleLinearConversion(final float oldMin, final float oldMax, final float newMin,
+			final float newMax, final float oldValue) {
+		return ((oldValue - oldMin) / (oldMax - oldMin)) * (newMax - newMin) + newMin;
+	}
 
-    /**
-     * Permite efectuar a conversão de um valor para outra escala.
-     * <p>
-     * Author NMB
-     *
-     * @param oldMin
-     *            - exemplo 0
-     * @param oldMax
-     *            - exemplo 100
-     * @param newMin
-     *            - exemplo 0
-     * @param newMax
-     *            - exemplo 10
-     * @param oldValue
-     *            - exemplo 50
-     * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
-     */
-    public static BigDecimal simpleLinearConversion(final BigDecimal oldMin,
-            final BigDecimal oldMax,
-            final BigDecimal newMin, final BigDecimal newMax, final BigDecimal oldValue) {
-        final BigDecimal a = oldValue.subtract(oldMin);
-        final BigDecimal b = oldMax.subtract(oldMin);
-        final BigDecimal c = a.divide(b, 1, RoundingMode.HALF_UP);
-        final BigDecimal d = newMax.subtract(newMin);
-        return c.multiply(d).add(newMin);
-    }
+	/**
+	 * Permite efectuar a conversão de um valor para outra escala.
+	 * <p>
+	 * Author NMB
+	 *
+	 * @param oldMin   - exemplo 0
+	 * @param oldMax   - exemplo 100
+	 * @param newMin   - exemplo 0
+	 * @param newMax   - exemplo 10
+	 * @param oldValue - exemplo 50
+	 * @return retorna o novo valor aplicando uma conversão linear - exemplo 5
+	 */
+	public static BigDecimal simpleLinearConversion(final BigDecimal oldMin, final BigDecimal oldMax,
+			final BigDecimal newMin, final BigDecimal newMax, final BigDecimal oldValue) {
+		final var a = oldValue.subtract(oldMin);
+		final var b = oldMax.subtract(oldMin);
+		final var c = a.divide(b, 1, RoundingMode.HALF_UP);
+		final var d = newMax.subtract(newMin);
+		return c.multiply(d).add(newMin);
+	}
 
-    /**
-     * Calculates {@code base} to the power of {@code exp} as a long value
-     * instead of double from the standard Java Library.
-     *
-     * @param base
-     * @param exp
-     * @return base to the power of exp
-     */
-    public static long pow(final int base, final int exp) {
-        long s = 1;
-        for (int i = 0; i < exp; i++) {
-            s *= base;
-        }
-        return s;
-    }
+	/**
+	 * Calculates {@code base} to the power of {@code exp} as a long value instead
+	 * of double from the standard Java Library.
+	 *
+	 * @param base
+	 * @param exp
+	 * @return base to the power of exp
+	 * @Deprecated use {@link java.lang.Math.pow()} instead
+	 */
+	public static long pow(final int base, final int exp) {
+		var s = 1L;
+		for (var i = 0; i < exp; i++) {
+			s *= base;
+		}
+		return s;
+	}
 
-    /**
-     * Calculates the <i>n</i>th element of the
-     * <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci sequence</a>.
-     *
-     * <p>
-     * Scrapped from <a href="https://mkyong.com/java/java-fibonacci-examples/">MKyong</a>
-     *
-     * @param n
-     *            the index of the desired element. The classic non-extended Fibonacci sequence
-     *            starts at 0.
-     * @return the <i>n</i>th element of the Fibonacci sequence
-     */
-    public static BigInteger fibonacci(final int n) {
-        return fibonacciSequence(n).reduce((a, b) -> b).orElse(BigInteger.ZERO);
-    }
+	/**
+	 * Calculates the <i>n</i>th element of the
+	 * <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci
+	 * sequence</a>.
+	 *
+	 * <p>
+	 * Scrapped from
+	 * <a href="https://mkyong.com/java/java-fibonacci-examples/">MKyong</a>
+	 *
+	 * @param n the index of the desired element. The classic non-extended Fibonacci
+	 *          sequence starts at 0.
+	 * @return the <i>n</i>th element of the Fibonacci sequence
+	 */
+	public static BigInteger fibonacci(final int n) {
+		return fibonacciSequence(n).reduce((a, b) -> b).orElse(BigInteger.ZERO);
+	}
 
-    /**
-     * Calculates the <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci
-     * sequence</a> up to a certain index.
-     * <p>
-     * Scrapped from <a href="https://mkyong.com/java/java-fibonacci-examples/">MKyong</a>
-     * <p>
-     * If you need to get a {@code List} instead of a {@code Stream} just use one of the standard
-     * collectors, e.g.:
-     *
-     * <pre>
-     * <code>
-     * List<BigInteger> l = Math.fibionacciSerires(10).collect(Collectors.toList());
-     * </code>
-     * </pre>
-     *
-     * @param upperIndex
-     *            the upper limit of the sequence. The classic non-extended Fibonacci sequence
-     *            starts at 1.
-     * @return a stream with the Fibonacci sequence
-     */
-    public static Stream<BigInteger> fibonacciSequence(final int upperIndex) {
-        Preconditions.nonNegative(upperIndex, "The Fibonacci (non-extended) sequence only works for natural numbers");
+	/**
+	 * Calculates the
+	 * <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci
+	 * sequence</a> up to a certain index.
+	 * <p>
+	 * Scrapped from
+	 * <a href="https://mkyong.com/java/java-fibonacci-examples/">MKyong</a>
+	 * <p>
+	 * If you need to get a {@code List} instead of a {@code Stream} just use one of
+	 * the standard collectors, e.g.:
+	 *
+	 * <pre>
+	 * <code>
+	 * List<BigInteger> l = Math.fibionacciSerires(10).collect(Collectors.toList());
+	 * </code>
+	 * </pre>
+	 *
+	 * @param upperIndex the upper limit of the sequence. The classic non-extended
+	 *                   Fibonacci sequence starts at 1.
+	 * @return a stream with the Fibonacci sequence
+	 */
+	public static Stream<BigInteger> fibonacciSequence(final int upperIndex) {
+		Preconditions.nonNegative(upperIndex, "The Fibonacci (non-extended) sequence only works for natural numbers");
 
-        return Stream
-                .iterate(new BigInteger[] { BigInteger.ZERO, BigInteger.ONE },
-                        t -> new BigInteger[] { t[1], t[0].add(t[1]) })
-                .limit(upperIndex + 1L)
-                .map(i -> i[0]);
-    }
+		return Stream.iterate(new BigInteger[] { BigInteger.ZERO, BigInteger.ONE },
+				t -> new BigInteger[] { t[1], t[0].add(t[1]) }).limit(upperIndex + 1L).map(i -> i[0]);
+	}
 
-    /**
-     * Fifty/fifty chance.
-     *
-     * @return {@code true} or {@code false} in what tends to be a 50/50 distribution
-     */
-    public static boolean heads() {
-        return NumberGenerator.anInt() % 2 == 0;
-    }
+	/**
+	 * Fifty/fifty chance.
+	 *
+	 * @return {@code true} or {@code false} in what tends to be a 50/50
+	 *         distribution
+	 */
+	public static boolean heads() {
+		return NumberGenerator.anInt() % 2 == 0;
+	}
 
 }

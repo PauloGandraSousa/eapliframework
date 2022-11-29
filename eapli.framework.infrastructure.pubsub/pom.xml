@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>eapli</groupId>
 			<artifactId>eapli.framework.core</artifactId>
-			<version>21.0.0</version>
+			<version>21.1.0</version>
 		</dependency>
 	</dependencies>
 </project>

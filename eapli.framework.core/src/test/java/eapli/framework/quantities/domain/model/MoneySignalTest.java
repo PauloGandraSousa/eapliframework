@@ -28,6 +28,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  *
@@ -119,5 +122,61 @@ class MoneySignalTest {
 	void ensurePositiveIsNotZero() {
 		final var subject = Money.euros(150);
 		assertFalse(subject.isZero());
+	}
+
+	// ---------------
+	@ParameterizedTest
+	@CsvSource({ "0,0", "0.01,1", "1,1", "10,1", "-0.01,-1", "-1,-1", "-10,-1" })
+	void ensureSignum(double in, int expected) {
+		final var subject = Money.euros(in);
+
+		assertEquals(expected, subject.signum());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0.01, 1, 10 })
+	void ensureIsPositive(double in) {
+		final var subject = Money.euros(in);
+
+		assertTrue(subject.isPositive());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { -0.01, -1, -10 })
+	void ensureIsNegative(double in) {
+		final var subject = Money.euros(in);
+
+		assertTrue(subject.isNegative());
+	}
+
+	@Test
+	void ensureIsZero() {
+		final var subject = Money.euros(0);
+
+		assertTrue(subject.isZero());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0.01, 1, 10, -0.01, -1, -10 })
+	void ensureNotZero(double in) {
+		final var subject = Money.euros(in);
+
+		assertFalse(subject.isZero());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0, -0.01, -1, -10 })
+	void ensureNotPositive(double in) {
+		final var subject = Money.euros(in);
+
+		assertFalse(subject.isPositive());
+	}
+
+	@ParameterizedTest
+	@ValueSource(doubles = { 0, 0.01, 1, 10 })
+	void ensureNotNegative(double in) {
+		final var subject = Money.euros(in);
+
+		assertFalse(subject.isNegative());
 	}
 }
