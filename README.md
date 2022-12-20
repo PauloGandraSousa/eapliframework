@@ -3,8 +3,8 @@
 ## What is this repository for?
 
 Application Framework for teaching Domain Driven Design and JPA Persistence in 
-the course unit "Engenharia de Aplicações" (Software Application Engineering) of 
-the course "Licenciatura em Engenharia Informática" (Informatics Engineering) of 
+the course unit "Engenharia de Aplicaï¿½ï¿½es" (Software Application Engineering) of 
+the course "Licenciatura em Engenharia Informï¿½tica" (Informatics Engineering) of 
 the [Instituto Superior de Engenharia do Porto](http://www.isep.ipp.pt).
 
 Feel free to fork and pull-request.
@@ -20,7 +20,7 @@ Paulo Gandra de Sousa [pag@isep.ipp.pt](emailto:pag@isep.ipp.pt) / [pagsousa@gma
 
 ## License and copyright
 
-Copyright (c) 2013-2021 the original author or authors.
+Copyright (c) 2013-2023 the original author or authors.
 
 MIT License
 
