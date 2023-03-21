@@ -6,7 +6,7 @@
 	<artifactId>eapli.framework.infrastructure.pubsub</artifactId>
 	<packaging>jar</packaging>
 	<name>eapli.framework.infrastructure.pubsub</name>
-	<version>20.1.1</version>
+	<version>20.1.2</version>
 	
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>

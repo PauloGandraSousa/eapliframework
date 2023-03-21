@@ -43,7 +43,6 @@ import eapli.framework.validations.Preconditions;
  * transaction in each method. If you need fine control over when to commit or rollback your
  * transactions or need to enroll more than one repository in the same transaction use the
  * {@link JpaAutoTxRepository} class.
- *
  * <p>
  * We are closing the entity manager at the end of each method (in the finally block) because this
  * code is running in a non-container managed way. If it was the case to be running under an
@@ -128,6 +127,7 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
      * database.
      *
      * @param entity
+     *
      * @throws IntegrityViolationException
      * @throws RollbackException
      */
@@ -148,6 +148,7 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
      * Removes the entity with the specified ID from the repository.
      *
      * @param entityId
+     *
      * @throws IntegrityViolationException
      * @throws UnsupportedOperationException
      *             if the delete operation makes no sense for this repository
@@ -169,7 +170,9 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
      * Adds <b>and commits</b> a new entity to the persistence store.
      *
      * @param entity
+     *
      * @return the newly created persistent object
+     *
      * @throws IntegrityViolationException
      * @throws RollbackException
      */
@@ -190,7 +193,6 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
 
     /**
      * Inserts or updates an entity.
-     *
      * <p>
      * Note that you should reference the return value to use the persisted entity, as the original
      * object passed as argument might be copied to a new object.
@@ -205,7 +207,6 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
      * ...
      * </code>
      * </pre>
-     *
      * <p>
      * check
      * <a href=
@@ -213,7 +214,9 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
      * > JPA implementation patterns</a> for a discussion on saveOrUpdate() Behaviour and merge()
      *
      * @param entity
+     *
      * @return the persisted entity - might be a different object than the parameter
+     *
      * @throws ConcurrencyException
      * @throws IntegrityViolationException
      * @throws RollbackException
@@ -236,17 +239,21 @@ public class JpaTransactionalRepository<T, K, I> extends JpaWithTransactionalCon
         return entity;
     }
 
-    private RuntimeException handleRollbackException(final RollbackException e) {
-        // get the cause PersistenceException
-        final Throwable ex = e.getCause();
-        if (ex.getCause() instanceof OptimisticLockException) {
-            throw new ConcurrencyException(e);
+    private RuntimeException handleRollbackException(final RollbackException ex) {
+        final Throwable directCause = ex.getCause();
+        if (directCause instanceof OptimisticLockException) {
+            throw new ConcurrencyException(ex);
         }
-        if (ex.getCause() instanceof EntityExistsException
-                || ex.getCause() instanceof ConstraintViolationException) {
-            throw new IntegrityViolationException(e);
+        // get the cause PersistenceException
+        final Throwable indirectCause = directCause.getCause();
+        if (indirectCause instanceof OptimisticLockException) {
+            throw new ConcurrencyException(ex);
+        }
+        if (indirectCause instanceof EntityExistsException
+                || indirectCause instanceof ConstraintViolationException) {
+            throw new IntegrityViolationException(ex);
         } else {
-            throw e;
+            throw ex;
         }
     }
 }

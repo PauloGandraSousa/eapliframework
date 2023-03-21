@@ -1,5 +1,13 @@
 # EAPLI Framework Changelog
 
+## v21.1.1
+
+### 21.1.1 [CORE]
+
+#### Fixed
+
+- handling of `OptimisticLockException` in `JpaTransactionalRepository`
+
 ## v21.1.0
 
 ### 21.1.0 [CORE]
