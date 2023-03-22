@@ -38,6 +38,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
@@ -48,6 +49,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Entity
+@Table(name = "T_ROLESET")
 /* package */ class RoleSet implements Set<RoleAssignment>, Serializable {
 
     private static final long serialVersionUID = 1L;

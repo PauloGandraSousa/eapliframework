@@ -31,6 +31,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -62,6 +63,7 @@ import eapli.framework.visitor.Visitor;
  * @author Paulo Gandra Sousa
  */
 @Entity
+@Table(name = "T_SYSTEMUSER")
 public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>, Visitable<GeneralDTO>, Serializable {
 
     private static final long serialVersionUID = 1L;
