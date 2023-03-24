@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 	<name>eapli.framework.core</name>
 	<artifactId>eapli.framework.core</artifactId>
-	<version>21.1.3</version>
+	<version>21.2.0</version>
 
 	<parent>
 		<groupId>eapli</groupId>

@@ -26,9 +26,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
-import eapli.framework.validations.Preconditions;
+import eapli.framework.validations.TryIf;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -43,48 +44,65 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class Designation implements ValueObject, Comparable<Designation>, StringMixin {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@XmlAttribute
-	@JsonProperty
-	private final String name;
+    @XmlAttribute
+    @JsonProperty
+    private final String name;
 
-	/**
-	 * Protected constructor. To construct a new Designation instance use the
-	 * {@link #valueOf(String)} method.
-	 *
-	 * @param name
-	 */
-	protected Designation(final String name) {
-		Preconditions.ensure(StringPredicates.isPhrase(name),
-				"Name should neither be null nor empty nor have starting blank spaces");
+    /**
+     * Protected constructor. To construct a new Designation instance use the
+     * {@link #valueOf(String)} or {@link #tryValueOf(String)} method.
+     *
+     * @param name
+     */
+    protected Designation(final String name) {
+        this.name = name;
+    }
 
-		this.name = name;
-	}
+    protected Designation() {
+        // for ORM
+        name = null;
+    }
 
-	protected Designation() {
-		// for ORM
-		name = null;
-	}
+    /**
+     * Factory method for obtaining Designation value objects.
+     * <p>
+     * This factory method constructs the object or throws an exception if it is not possible to
+     * create the value object due to business rules.
+     *
+     * @param name
+     *
+     * @return a new object corresponding to the value
+     *
+     * @throws IllegalArgumentException
+     */
+    public static Designation valueOf(final String name) {
+        return tryValueOf(name).rightValueOrElseThrow(IllegalArgumentException::new);
+    }
 
-	/**
-	 * Factory method for obtaining Designation value objects.
-	 *
-	 * @param name
-	 *
-	 * @return a new object corresponding to the value
-	 */
-	public static Designation valueOf(final String name) {
-		return new Designation(name);
-	}
+    /**
+     * Factory method for obtaining Designation value objects.
+     * <p>
+     * This factory method avoids the use of exceptions as a way to control the execution flow and
+     * instead makes it explicit that creation of the value object might fail due to business rules.
+     *
+     * @param name
+     *
+     * @return
+     */
+    public static Either<String, Designation> tryValueOf(final String name) {
+        return TryIf.tryEnsuringThat(StringPredicates.isPhrase(name), () -> new Designation(name),
+                () -> "Name should neither be null nor empty nor have starting blank spaces");
+    }
 
-	@Override
-	public String toString() {
-		return name;
-	}
+    @Override
+    public String toString() {
+        return name;
+    }
 
-	@Override
-	public int compareTo(final Designation o) {
-		return name.compareTo(o.name);
-	}
+    @Override
+    public int compareTo(final Designation o) {
+        return name.compareTo(o.name);
+    }
 }

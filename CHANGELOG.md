@@ -1,5 +1,23 @@
 # EAPLI Framework Changelog
 
+## v21.2.0
+
+### 21.2.0 [CORE]
+
+#### What's new
+
+- `TryIf` class
+- `Designation.tryValueOf` method
+- `Description.tryValueOf` method
+
+## v21.1.3
+
+### 21.1.1 [CORE]
+
+#### Fixed
+
+- workaround for use of SpringBoot 2.7.9 native queries
+
 ## v21.1.1
 
 ### 21.1.1 [CORE]

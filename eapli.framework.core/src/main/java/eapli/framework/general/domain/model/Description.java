@@ -29,8 +29,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
-import eapli.framework.validations.Preconditions;
+import eapli.framework.validations.TryIf;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -57,8 +58,6 @@ public class Description implements ValueObject, Serializable, StringMixin {
      * @param name
      */
     protected Description(final String name) {
-        Preconditions.nonEmpty(name, "Description should neither be null nor empty");
-
         value = name;
     }
 
@@ -67,20 +66,40 @@ public class Description implements ValueObject, Serializable, StringMixin {
         value = null;
     }
 
-    @Override
-    public int length() {
-        return value.length();
-    }
-
     /**
      * Factory method for obtaining Designation value objects.
+     * <p>
+     * This factory method constructs the object or throws an exception if it is not possible to
+     * create the value object due to business rules.
      *
      * @param name
+     *
+     * @throws IllegalArgumentException
      *
      * @return a new object corresponding to the value
      */
     public static Description valueOf(final String name) {
-        return new Description(name);
+        return tryValueOf(name).rightValueOrElseThrow(IllegalArgumentException::new);
+    }
+
+    /**
+     * Factory method for obtaining Designation value objects.
+     * <p>
+     * This factory method avoids the use of exceptions as a way to control the execution flow and
+     * instead makes it explicit that creation of the value object might fail due to business rules.
+     *
+     * @param name
+     *
+     * @return
+     */
+    public static Either<String, Description> tryValueOf(final String name) {
+        return TryIf.tryEnsuringNonEmpty(name, () -> new Description(name),
+                () -> "Description should neither be null nor empty");
+    }
+
+    @Override
+    public int length() {
+        return value.length();
     }
 
     @Override

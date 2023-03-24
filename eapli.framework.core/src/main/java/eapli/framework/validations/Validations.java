@@ -34,12 +34,23 @@ import eapli.framework.util.Utility;
  * Utility class for executing actions based on validations.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Utility
 /* package */ class Validations {
     protected Validations() {
         // ensure utility
+    }
+
+    /**
+     * Asserts the "trueness" of a function's result. If the function result is not
+     * {@code true } then the specified action is performed
+     *
+     * @param test
+     * @param consequence
+     *            the action to execute if the test fails
+     */
+    public static void ensure(final boolean test, final Action consequence) {
+        Actions.doIfNot(consequence, test);
     }
 
     /**
@@ -51,7 +62,11 @@ import eapli.framework.util.Utility;
      *            the action to execute of the test fails
      */
     public static void ensureAreEqual(final long a, final long b, final Action consequence) {
-        ensure(a == b, consequence);
+        ensure(areEqual(a, b), consequence);
+    }
+
+    static boolean areEqual(final long a, final long b) {
+        return a == b;
     }
 
     /**
@@ -63,11 +78,15 @@ import eapli.framework.util.Utility;
      *            the action to execute of the test fails
      */
     public static void ensureAreEqual(final Object a, final Object b, final Action consequence) {
-        ensure(Objects.equals(a, b), consequence);
+        ensure(areEqual(a, b), consequence);
+    }
+
+    static boolean areEqual(final Object a, final Object b) {
+        return Objects.equals(a, b);
     }
 
     /**
-     * checks if a string matches a regular expression
+     * Checks if a string matches a regular expression.
      *
      * @param regex
      * @param arg
@@ -75,19 +94,11 @@ import eapli.framework.util.Utility;
      *            the action to execute of the test fails
      */
     public static void ensureMatches(final Pattern regex, final String arg, final Action consequence) {
-        ensure(regex.matcher(arg).find(), consequence);
+        ensure(matches(regex, arg), consequence);
     }
 
-    /**
-     * Asserts the "trueness" of a function's result. if the function result is not
-     * true then the specified action is performed
-     *
-     * @param test
-     * @param consequence
-     *            the action to execute of the test fails
-     */
-    public static void ensure(final boolean test, final Action consequence) {
-        Actions.doIfNot(consequence, test);
+    static boolean matches(final Pattern regex, final String arg) {
+        return regex.matcher(arg).find();
     }
 
     /**
@@ -99,8 +110,12 @@ import eapli.framework.util.Utility;
      */
     public static void ensureNoneNull(final Action consequence, final Object... objects) {
         for (final Object each : objects) {
-            Actions.doIfNot(consequence, Objects.nonNull(each));
+            Actions.doIfNot(consequence, nonNull(each));
         }
+    }
+
+    static boolean nonNull(final Object each) {
+        return Objects.nonNull(each);
     }
 
     /**
@@ -112,7 +127,11 @@ import eapli.framework.util.Utility;
      *            the action to execute of the collection is null or empty
      */
     public static void ensureNonEmpty(final Collection<?> arg, final Action consequence) {
-        ensure(arg != null && !arg.isEmpty(), consequence);
+        ensure(isEmpty(arg), consequence);
+    }
+
+    static boolean isEmpty(final Collection<?> arg) {
+        return arg != null && !arg.isEmpty();
     }
 
     /**
@@ -124,7 +143,11 @@ import eapli.framework.util.Utility;
      *            the action to execute of the test fails
      */
     public static void ensureNonEmpty(final String arg, final Action consequence) {
-        Actions.doIfNot(consequence, !StringPredicates.isNullOrWhiteSpace(arg));
+        ensure(nonEmpty(arg), consequence);
+    }
+
+    static boolean nonEmpty(final String arg) {
+        return !StringPredicates.isNullOrWhiteSpace(arg);
     }
 
     /**
@@ -135,7 +158,11 @@ import eapli.framework.util.Utility;
      *            the action to execute of the test fails
      */
     public static void ensureIsPositive(final long arg, final Action consequence) {
-        Actions.doIfNot(consequence, NumberPredicates.isPositive(arg));
+        ensure(isPositive(arg), consequence);
+    }
+
+    static boolean isPositive(final long arg) {
+        return NumberPredicates.isPositive(arg);
     }
 
     /**
@@ -146,6 +173,11 @@ import eapli.framework.util.Utility;
      *            the action to execute of the test fails
      */
     public static void ensureNonNegative(final long arg, final Action consequence) {
-        Actions.doIfNot(consequence, NumberPredicates.isNonNegative(arg));
+        ensure(isNonNegative(arg), consequence);
     }
+
+    static boolean isNonNegative(final long arg) {
+        return NumberPredicates.isNonNegative(arg);
+    }
+
 }
