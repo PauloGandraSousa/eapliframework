@@ -93,7 +93,7 @@ public class Description implements ValueObject, Serializable, StringMixin {
      * @return
      */
     public static Either<String, Description> tryValueOf(final String name) {
-        return TryIf.tryEnsuringNonEmpty(name, () -> new Description(name),
+        return TryIf.nonEmpty(name, () -> new Description(name),
                 () -> "Description should neither be null nor empty");
     }
 

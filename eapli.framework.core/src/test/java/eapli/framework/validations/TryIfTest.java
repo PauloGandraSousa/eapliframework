@@ -36,93 +36,91 @@ import org.junit.jupiter.api.Test;
  */
 class TryIfTest {
 
-    private static final String MESSAGE = "message";
-
     @Test
     void ensureAreEqualLong() {
-        final var result = TryIf.tryEnsuringAreEqual(42, 42, () -> true, () -> false);
+        final var result = TryIf.areEqual(42, 42, () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualLongFail() {
-        final var result = TryIf.tryEnsuringAreEqual(42, -1, () -> true, () -> false);
+        final var result = TryIf.areEqual(42, -1, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObject() {
-        final var result = TryIf.tryEnsuringAreEqual("abc", "abc", () -> true, () -> false);
+        final var result = TryIf.areEqual("abc", "abc", () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObjectFail() {
-        final var result = TryIf.tryEnsuringAreEqual("abc", "xpto", () -> true, () -> false);
+        final var result = TryIf.areEqual("abc", "xpto", () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObjectFailOn1Null() {
-        final var result = TryIf.tryEnsuringAreEqual(null, "xpto", () -> true, () -> false);
+        final var result = TryIf.areEqual(null, "xpto", () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObjectFailOn2Null() {
-        final var result = TryIf.tryEnsuringAreEqual("abc", null, () -> true, () -> false);
+        final var result = TryIf.areEqual("abc", null, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureMatches() {
-        final var result = TryIf.tryEnsuringMatches(Pattern.compile("A"), "bcdA234", () -> true, () -> false);
+        final var result = TryIf.matches(Pattern.compile("A"), "bcdA234", () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureMatchesFail() {
         final Pattern pat = Pattern.compile("x");
-        final var result = TryIf.tryEnsuringMatches(pat, "bcdA234", () -> true, () -> false);
+        final var result = TryIf.matches(pat, "bcdA234", () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureEnsureBoolean() {
-        final var result = TryIf.tryEnsuringThat(true, () -> true, () -> false);
+        final var result = TryIf.succeeds(true, () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureEnsureBooleanFail() {
-        final var result = TryIf.tryEnsuringThat(false, () -> true, () -> false);
+        final var result = TryIf.succeeds(false, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNoneNullObject() {
-        final var result = TryIf.tryEnsuringNoneNull(() -> true, () -> false, "abc");
+        final var result = TryIf.noneNull(() -> true, () -> false, "abc");
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNoneNullObjectFail() {
         final String x = null;
-        final var result = TryIf.tryEnsuringNoneNull(() -> true, () -> false, x);
+        final var result = TryIf.noneNull(() -> true, () -> false, x);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
-    void ensureNonNullObjectArray() {
-        final var result = TryIf.tryEnsuringNoneNull(() -> true, () -> false, "abc", Integer.valueOf(42),
+    void ensureNoneNullObjectArray() {
+        final var result = TryIf.noneNull(() -> true, () -> false, "abc", Integer.valueOf(42),
                 BigDecimal.ONE);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
-    void ensureNonNullObjectArrayFail() {
+    void ensureNoneNullObjectArrayFail() {
         final Integer fortytwo = Integer.valueOf(42);
-        final var result = TryIf.tryEnsuringNoneNull(() -> true, () -> false, "abc", fortytwo, null, BigDecimal.ONE);
+        final var result = TryIf.noneNull(() -> true, () -> false, "abc", fortytwo, null, BigDecimal.ONE);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
@@ -130,82 +128,82 @@ class TryIfTest {
     void ensureNonEmptyCollection() {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
-        final var result = TryIf.tryEnsuringNonEmpty(items, () -> true, () -> false);
+        final var result = TryIf.nonEmpty(items, () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyCollectionFailOnEmpty() {
         final var items = new ArrayList<>();
-        final var result = TryIf.tryEnsuringNonEmpty(items, () -> true, () -> false);
+        final var result = TryIf.nonEmpty(items, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyCollectionFailOnNull() {
         final List<?> items = null;
-        final var result = TryIf.tryEnsuringNonEmpty(items, () -> true, () -> false);
+        final var result = TryIf.nonEmpty(items, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyString() {
-        final var result = TryIf.tryEnsuringNonEmpty("abc", () -> true, () -> false);
+        final var result = TryIf.nonEmpty("abc", () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyStringFailOnEmpty() {
-        final var result = TryIf.tryEnsuringNonEmpty("", () -> true, () -> false);
+        final var result = TryIf.nonEmpty("", () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyStringFailOnEmpty2() {
-        final var result = TryIf.tryEnsuringNonEmpty("   ", () -> true, () -> false);
+        final var result = TryIf.nonEmpty("   ", () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyStringFailOnNull() {
         final String x = null;
-        final var result = TryIf.tryEnsuringNonEmpty(x, () -> true, () -> false);
+        final var result = TryIf.nonEmpty(x, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureIsPositiveLong() {
-        final var result = TryIf.tryEnsuringIsPositive(42, () -> true, () -> false);
+        final var result = TryIf.isPositive(42, () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureIsPositiveLongFailsOnZero() {
-        final var result = TryIf.tryEnsuringIsPositive(0, () -> true, () -> false);
+        final var result = TryIf.isPositive(0, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureIsPositiveLongFailsOnNegative() {
-        final var result = TryIf.tryEnsuringIsPositive(-10, () -> true, () -> false);
+        final var result = TryIf.isPositive(-10, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonNegativeLong() {
-        final var result = TryIf.tryEnsuringNonNegative(42, () -> true, () -> false);
+        final var result = TryIf.nonNegative(42, () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonNegativeLong0() {
-        final var result = TryIf.tryEnsuringNonNegative(0, () -> true, () -> false);
+        final var result = TryIf.nonNegative(0, () -> true, () -> false);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonNegativeLongFail() {
-        final var result = TryIf.tryEnsuringNonNegative(-10, () -> true, () -> false);
+        final var result = TryIf.nonNegative(-10, () -> true, () -> false);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 }

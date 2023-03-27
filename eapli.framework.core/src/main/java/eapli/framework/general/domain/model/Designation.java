@@ -92,7 +92,7 @@ public class Designation implements ValueObject, Comparable<Designation>, String
      * @return
      */
     public static Either<String, Designation> tryValueOf(final String name) {
-        return TryIf.tryEnsuringThat(StringPredicates.isPhrase(name), () -> new Designation(name),
+        return TryIf.succeeds(StringPredicates.isPhrase(name), () -> new Designation(name),
                 () -> "Name should neither be null nor empty nor have starting blank spaces");
     }
 

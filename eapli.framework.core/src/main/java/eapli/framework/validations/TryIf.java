@@ -32,7 +32,9 @@ import eapli.framework.util.Utility;
  * success or error. The methods in this class make use of
  * {@link eapli.framework.functional.Either<E,T> Either<E,T>}.
  *
- * @author Paulo Gandra de Sousa
+ * @author Paulo Gandra de Sousa 2023.03.24
+ *
+ * @see Try
  */
 @Utility
 public class TryIf {
@@ -49,7 +51,7 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringThat(final boolean test, final Supplier<T> success,
+    public static <E, T> Either<E, T> succeeds(final boolean test, final Supplier<T> success,
             final Supplier<E> error) {
         if (test) {
             return Either.right(success.get());
@@ -68,9 +70,9 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringAreEqual(final long a, final long b, final Supplier<T> success,
+    public static <E, T> Either<E, T> areEqual(final long a, final long b, final Supplier<T> success,
             final Supplier<E> error) {
-        return tryEnsuringThat(Validations.areEqual(a, b), success, error);
+        return succeeds(Validations.areEqual(a, b), success, error);
     }
 
     /**
@@ -83,9 +85,9 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringAreEqual(final Object a, final Object b, final Supplier<T> success,
+    public static <E, T> Either<E, T> areEqual(final Object a, final Object b, final Supplier<T> success,
             final Supplier<E> error) {
-        return tryEnsuringThat(Validations.areEqual(a, b), success, error);
+        return succeeds(Validations.areEqual(a, b), success, error);
     }
 
     /**
@@ -98,9 +100,10 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringMatches(final Pattern regex, final String arg, final Supplier<T> success,
+    public static <E, T> Either<E, T> matches(final Pattern regex, final String arg,
+            final Supplier<T> success,
             final Supplier<E> error) {
-        return tryEnsuringThat(Validations.matches(regex, arg), success, error);
+        return succeeds(Validations.matches(regex, arg), success, error);
     }
 
     /**
@@ -112,7 +115,7 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringNoneNull(final Supplier<T> success,
+    public static <E, T> Either<E, T> noneNull(final Supplier<T> success,
             final Supplier<E> error, final Object... objects) {
         boolean allNull = true;
         for (final Object each : objects) {
@@ -138,9 +141,9 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringNonEmpty(final Collection<?> arg, final Supplier<T> success,
+    public static <E, T> Either<E, T> nonEmpty(final Collection<?> arg, final Supplier<T> success,
             final Supplier<E> error) {
-        return tryEnsuringThat(Validations.isEmpty(arg), success, error);
+        return succeeds(Validations.isEmpty(arg), success, error);
     }
 
     /**
@@ -153,9 +156,9 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringNonEmpty(final String arg, final Supplier<T> success,
+    public static <E, T> Either<E, T> nonEmpty(final String arg, final Supplier<T> success,
             final Supplier<E> error) {
-        return tryEnsuringThat(Validations.nonEmpty(arg), success, error);
+        return succeeds(Validations.nonEmpty(arg), success, error);
     }
 
     /**
@@ -167,9 +170,9 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringIsPositive(final long arg, final Supplier<T> success,
+    public static <E, T> Either<E, T> isPositive(final long arg, final Supplier<T> success,
             final Supplier<E> error) {
-        return tryEnsuringThat(Validations.isPositive(arg), success, error);
+        return succeeds(Validations.isPositive(arg), success, error);
     }
 
     /**
@@ -181,8 +184,8 @@ public class TryIf {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public static <E, T> Either<E, T> tryEnsuringNonNegative(final long arg, final Supplier<T> success,
+    public static <E, T> Either<E, T> nonNegative(final long arg, final Supplier<T> success,
             final Supplier<E> error) {
-        return tryEnsuringThat(Validations.isNonNegative(arg), success, error);
+        return succeeds(Validations.isNonNegative(arg), success, error);
     }
 }

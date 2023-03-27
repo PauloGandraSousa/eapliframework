@@ -27,9 +27,11 @@ import javax.persistence.Embeddable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
+import eapli.framework.validations.Try;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -41,34 +43,61 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Serializable, StringMixin {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@JsonProperty
-	private final String email;
+    @JsonProperty
+    private final String email;
 
-	protected EmailAddress(final String address) {
-		Preconditions.nonEmpty(address, "email address should neither be null nor empty");
-		Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
+    protected EmailAddress(final String address) {
+        email = address;
+    }
 
-		email = address;
-	}
+    protected EmailAddress() {
+        // for ORM
+        email = "";
+    }
 
-	protected EmailAddress() {
-		// for ORM
-		email = "";
-	}
+    /**
+     * Factory method.
+     *
+     * @param address
+     *
+     * @return
+     *
+     * @throws IllegalArgumentException
+     */
+    public static EmailAddress valueOf(final String address) {
+        Preconditions.nonEmpty(address, "email address should neither be null nor empty");
+        Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
 
-	public static EmailAddress valueOf(final String address) {
-		return new EmailAddress(address);
-	}
+        return new EmailAddress(address);
+    }
 
-	@Override
-	public String toString() {
-		return email;
-	}
+    /**
+     * Factory method.
+     *
+     * @param address
+     *
+     * @return
+     */
+    public static Either<String, EmailAddress> tryValueOf(final String address) {
+        // return TryIf.tryEnsuringThat(StringPredicates.isNonEmpty(address) &&
+        // StringPredicates.isEmail(address),
+        // () -> new EmailAddress(address), () -> "null or empty, or invalid E-mail format");
 
-	@Override
-	public int compareTo(final EmailAddress o) {
-		return email.compareTo(o.email);
-	}
+        return new Try<String, EmailAddress>()
+                .failIfNonEmpty(address, () -> "email address should neither be null nor empty")
+                .failIfNot(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
+                .elseSucceeds(() -> new EmailAddress(address));
+    }
+
+    @Override
+    public String toString() {
+        return email;
+    }
+
+    @Override
+    public int compareTo(final EmailAddress o) {
+        return email.compareTo(o.email);
+    }
 }

@@ -1,0 +1,216 @@
+/*
+ * Copyright (c) 2013-2023 the original author or authors.
+ *
+ * MIT License
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+package eapli.framework.validations;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.junit.jupiter.api.Test;
+
+/**
+ * @author Paulo Gandra de Sousa 2023.03.27
+ */
+class TryTest {
+
+    @Test
+    void ensureAreEqualLong() {
+        final var result = new Try<Boolean, Boolean>().failIfNotEqual(42, 42, () -> false).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureAreEqualLongFail() {
+        final var result = new Try<Boolean, Boolean>().failIfNotEqual(42, -1, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureAreEqualObject() {
+        final var result = new Try<Boolean, Boolean>().failIfNotEqual("abc", "abc", () -> false)
+                .elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureAreEqualObjectFail() {
+        final var result = new Try<Boolean, Boolean>().failIfNotEqual("abc", "xpto", () -> false)
+                .elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureAreEqualObjectFailOn1Null() {
+        final var result = new Try<Boolean, Boolean>().failIfNotEqual(null, "abc", () -> false)
+                .elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureAreEqualObjectFailOn2Null() {
+        final var result = new Try<Boolean, Boolean>().failIfNotEqual("abc", null, () -> false)
+                .elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureMatches() {
+        final var result = new Try<Boolean, Boolean>().failIfNotMatches(Pattern.compile("A"), "bcdA234", () -> false)
+                .elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureMatchesFail() {
+        final var result = new Try<Boolean, Boolean>().failIfNotMatches(Pattern.compile("X"), "bcdA234", () -> false)
+                .elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureIfNot() {
+        final boolean test = true;
+        final var result = new Try<Boolean, Boolean>().failIfNot(test, () -> false).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureIfNotFail() {
+        final boolean test = false;
+        final var result = new Try<Boolean, Boolean>().failIfNot(test, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureSomeNullObject() {
+        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, "abc").elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureSomeNullObjectFail() {
+        final String x = null;
+        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, x).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureSomeNullObjectArray() {
+        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, "abc", Integer.valueOf(42),
+                BigDecimal.ONE).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureSomeNullObjectArrayFail() {
+        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, "abc", Integer.valueOf(42),
+                null, BigDecimal.ONE).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonEmptyCollection() {
+        final Collection<String> items = new ArrayList<>();
+        items.add("abc");
+        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonEmptyCollectionFailOnEmpty() {
+        final var items = new ArrayList<>();
+        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonEmptyCollectionFailOnNull() {
+        final List<?> items = null;
+        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonEmptyString() {
+        final var result = new Try<Boolean, Boolean>().failIfNonEmpty("abc", () -> false).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonEmptyStringFailOnEmpty() {
+        final var result = new Try<Boolean, Boolean>().failIfNonEmpty("", () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonEmptyStringFailOnEmpty2() {
+        final var result = new Try<Boolean, Boolean>().failIfNonEmpty("   ", () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonEmptyStringFailOnNull() {
+        final String x = null;
+        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(x, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureIsPositiveLong() {
+        final var result = new Try<Boolean, Boolean>().failIfNotPositive(42, () -> false).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureIsPositiveLongFailsOnZero() {
+        final var result = new Try<Boolean, Boolean>().failIfNotPositive(0, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureIsPositiveLongFailsOnNegative() {
+        final var result = new Try<Boolean, Boolean>().failIfNotPositive(-10, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonNegativeLong() {
+        final var result = new Try<Boolean, Boolean>().failIfNonNegative(42, () -> false).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonNegativeLong0() {
+        final var result = new Try<Boolean, Boolean>().failIfNonNegative(0, () -> false).elseSucceeds(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureNonNegativeLongFail() {
+        final var result = new Try<Boolean, Boolean>().failIfNonNegative(-10, () -> false).elseSucceeds(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+}

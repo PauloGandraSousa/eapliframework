@@ -28,7 +28,6 @@ import eapli.framework.util.Utility;
 /**
  * String predicates. Predicates are functions that test a condition and return a boolean value; in
  * this case the test is done over a String argument.
- *
  * <p>
  * For most of the functions, the signature is:
  *
@@ -40,7 +39,6 @@ import eapli.framework.util.Utility;
  * "https://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html">org.apache.commons.lang3.StringUtils</a>
  *
  * @author Paulo Gandra Sousa
- *
  */
 @Utility
 public final class StringPredicates {
@@ -57,12 +55,12 @@ public final class StringPredicates {
 
     /**
      * Checks if a string is a valid email address.
-     *
      * <p>
      * See also (and favor the use of) <a href=
      * "http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/EmailValidator.html">org.apache.commons.validator.routines.EmailValidator</a>
      *
      * @param text
+     *
      * @return wether a string is a valid email address or not
      */
     public static boolean isEmail(final String text) {
@@ -75,6 +73,7 @@ public final class StringPredicates {
      * spaces.
      *
      * @param text
+     *
      * @return wether a string is a "phrase" or not
      */
     @SuppressWarnings("squid:S4784")
@@ -87,6 +86,7 @@ public final class StringPredicates {
      * Checks if a string is composed of a single "word", i.e., does not contain separating spaces.
      *
      * @param text
+     *
      * @return true if a string is composed of a single "word"
      */
     public static boolean isSingleWord(final String text) {
@@ -97,6 +97,7 @@ public final class StringPredicates {
      * Checks whether a String is empty (zero length) or null.
      *
      * @param text
+     *
      * @return whether a String is empty (zero length) or null, or not
      */
     public static boolean isNullOrEmpty(final String text) {
@@ -107,6 +108,7 @@ public final class StringPredicates {
      * Checks whether a String is empty (zero length or all spaces) or null.
      *
      * @param text
+     *
      * @return whether a String is empty (zero length or all spaces) or null
      */
     public static boolean isNullOrWhiteSpace(final String text) {
@@ -114,9 +116,21 @@ public final class StringPredicates {
     }
 
     /**
+     * Checks if a String is non empty (not null and not blank).
+     *
+     * @param text
+     *
+     * @return whether a String is non empty
+     */
+    public static boolean isNonEmpty(final String arg) {
+        return !isNullOrWhiteSpace(arg);
+    }
+
+    /**
      * Checks if a string contains at least one digit character.
      *
      * @param text
+     *
      * @return true if a string contains at least one digit character
      */
     @SuppressWarnings("squid:S4784")
@@ -128,6 +142,7 @@ public final class StringPredicates {
      * Checks if a string contains at least one alphabetic character (regular Latin alphabet).
      *
      * @param text
+     *
      * @return true if a string contains at least one alphabetic character
      */
     @SuppressWarnings("squid:S4784")
@@ -139,6 +154,7 @@ public final class StringPredicates {
      * Checks whether a string contains at least one capital letter (regular Latin alphabet).
      *
      * @param text
+     *
      * @return whether a string contains at least one capital letter
      */
     @SuppressWarnings("squid:S4784")
@@ -153,6 +169,7 @@ public final class StringPredicates {
      *
      * @param subject
      * @param chars
+     *
      * @return whether a string contains any of the characters of the second
      */
     public static boolean containsAny(final String subject, final String chars) {

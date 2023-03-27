@@ -147,7 +147,7 @@ import eapli.framework.util.Utility;
     }
 
     static boolean nonEmpty(final String arg) {
-        return !StringPredicates.isNullOrWhiteSpace(arg);
+        return StringPredicates.isNonEmpty(arg);
     }
 
     /**

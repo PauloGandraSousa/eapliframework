@@ -6,9 +6,12 @@
 
 #### What's new
 
-- `TryIf` class
+- `Try`class
+- `TryIf` utility class
 - `Designation.tryValueOf` method
 - `Description.tryValueOf` method
+- `StringPredicates.isNonEmpty` method
+- `EmailAddress.tryValueOf` method
 
 ## v21.1.3
 
