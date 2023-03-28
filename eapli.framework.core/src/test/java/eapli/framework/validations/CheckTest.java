@@ -28,6 +28,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
@@ -104,6 +105,20 @@ class CheckTest {
     @Test
     void ensureIfNotFail() {
         final boolean test = false;
+        final var result = new Check<Boolean, Boolean>().failIf().not(test, () -> false).elseSucceed(() -> true);
+        assertFalse(result.left().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureIfNotSupplier() {
+        final BooleanSupplier test = () -> true;
+        final var result = new Check<Boolean, Boolean>().failIf().not(test, () -> false).elseSucceed(() -> true);
+        assertTrue(result.right().orElseThrow(IllegalStateException::new));
+    }
+
+    @Test
+    void ensureIfNotSupplierFail() {
+        final BooleanSupplier test = () -> false;
         final var result = new Check<Boolean, Boolean>().failIf().not(test, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }

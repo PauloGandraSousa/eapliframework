@@ -21,6 +21,7 @@
 package eapli.framework.validations;
 
 import java.util.Collection;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
@@ -168,6 +169,20 @@ public class Check<E, T> {
      */
     public Check<E, T> not(final boolean test, final Supplier<E> error) {
         if (!test) {
+            return new FailedTry<>(error);
+        } else {
+            return new FollowupTry<>();
+        }
+    }
+
+    /**
+     * @param test
+     * @param error
+     *
+     * @return
+     */
+    public Check<E, T> not(final BooleanSupplier test, final Supplier<E> error) {
+        if (!test.getAsBoolean()) {
             return new FailedTry<>(error);
         } else {
             return new FollowupTry<>();
