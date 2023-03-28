@@ -21,7 +21,6 @@
 package eapli.framework.validations;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
@@ -43,17 +42,89 @@ import eapli.framework.functional.Either;
  *
  * @author Paulo Gandra de Sousa 2023.03.24
  *
- * @see TryIf
+ * @see CheckIf
  */
 public class Try<E, T> {
-    private final Supplier<E> error;
 
-    protected Try(final Supplier<E> error) {
-        this.error = error;
+    /**
+     * Special case
+     *
+     * @author Paulo Gandra de Sousa 2023.03.28
+     *
+     * @param <E>
+     * @param <T>
+     */
+    private static class FailedTry<E, T> extends Try<E, T> {
+        private final Supplier<E> error;
+
+        FailedTry(final Supplier<E> error) {
+            this.error = error;
+        }
+
+        @Override
+        public Either<E, T> elseSucceed(final Supplier<T> success) {
+            return Either.left(this.error.get());
+        }
+
+        @Override
+        public Try<E, T> failIfNot(final boolean test, final Supplier<E> error) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfNotEqual(final long a, final long b, final Supplier<E> error) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfNotEqual(final Object a, final Object b, final Supplier<E> error) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfNotMatches(final Pattern regex, final String arg, final Supplier<E> error) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfSomeNull(final Supplier<E> error, final Object... objects) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfNonEmpty(final Collection<?> arg, final Supplier<E> error) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfNonEmpty(final String arg, final Supplier<E> error) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfNotPositive(final long arg, final Supplier<E> error) {
+            return this;
+        }
+
+        @Override
+        public Try<E, T> failIfNonNegative(final long arg, final Supplier<E> error) {
+            return this;
+        }
     }
 
-    public Try() {
-        error = null;
+    /**
+     * Special case
+     *
+     * @author Paulo Gandra de Sousa 2023.03.28
+     *
+     * @param <E>
+     * @param <T>
+     */
+    private static class FollowupTry<E, T> extends Try<E, T> {
+        @Override
+        public Either<E, T> elseSucceed(final Supplier<T> success) {
+            return Either.right(success.get());
+        }
     }
 
     /**
@@ -65,23 +136,21 @@ public class Try<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Either<E, T> elseSucceeds(final Supplier<T> success) {
-        if (Objects.isNull(error)) {
-            return Either.right(success.get());
-        } else {
-            return Either.left(error.get());
-        }
+    public Either<E, T> elseSucceed(final Supplier<T> success) {
+        throw new IllegalStateException("At least on fail condition must be specified");
     }
 
+    /**
+     * @param test
+     * @param error
+     *
+     * @return
+     */
     public Try<E, T> failIfNot(final boolean test, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
-
         if (!test) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -96,13 +165,10 @@ public class Try<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Try<E, T> failIfNotEqual(final long a, final long b, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
         if (!Validations.areEqual(a, b)) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -115,13 +181,10 @@ public class Try<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Try<E, T> failIfNotEqual(final Object a, final Object b, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
         if (!Validations.areEqual(a, b)) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -134,13 +197,10 @@ public class Try<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Try<E, T> failIfNotMatches(final Pattern regex, final String arg, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
         if (!Validations.matches(regex, arg)) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -160,9 +220,9 @@ public class Try<E, T> {
             }
         }
         if (!allNull) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -175,13 +235,10 @@ public class Try<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Try<E, T> failIfNonEmpty(final Collection<?> arg, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
         if (!Validations.isEmpty(arg)) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -194,13 +251,10 @@ public class Try<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Try<E, T> failIfNonEmpty(final String arg, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
         if (!Validations.nonEmpty(arg)) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -212,13 +266,10 @@ public class Try<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Try<E, T> failIfNotPositive(final long arg, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
         if (!Validations.isPositive(arg)) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 
@@ -231,13 +282,10 @@ public class Try<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Try<E, T> failIfNonNegative(final long arg, final Supplier<E> error) {
-        if (!Objects.isNull(error)) {
-            return this;
-        }
         if (!Validations.isNonNegative(arg)) {
-            return new Try<>(error);
+            return new FailedTry<>(error);
         } else {
-            return this;
+            return new FollowupTry<>();
         }
     }
 }

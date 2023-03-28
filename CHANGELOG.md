@@ -7,7 +7,7 @@
 #### What's new
 
 - `Try`class
-- `TryIf` utility class
+- `CheckIf` utility class
 - `Designation.tryValueOf` method
 - `Description.tryValueOf` method
 - `StringPredicates.isNonEmpty` method

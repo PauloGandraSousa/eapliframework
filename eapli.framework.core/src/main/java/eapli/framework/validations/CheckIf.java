@@ -37,8 +37,8 @@ import eapli.framework.util.Utility;
  * @see Try
  */
 @Utility
-public class TryIf {
-    protected TryIf() {
+public class CheckIf {
+    protected CheckIf() {
         // ensure utility
     }
 

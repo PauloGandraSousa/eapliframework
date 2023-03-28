@@ -29,7 +29,7 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
-import eapli.framework.validations.TryIf;
+import eapli.framework.validations.CheckIf;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -92,7 +92,7 @@ public class Designation implements ValueObject, Comparable<Designation>, String
      * @return
      */
     public static Either<String, Designation> tryValueOf(final String name) {
-        return TryIf.succeeds(StringPredicates.isPhrase(name), () -> new Designation(name),
+        return CheckIf.succeeds(StringPredicates.isPhrase(name), () -> new Designation(name),
                 () -> "Name should neither be null nor empty nor have starting blank spaces");
     }
 

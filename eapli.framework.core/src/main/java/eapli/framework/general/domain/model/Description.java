@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
-import eapli.framework.validations.TryIf;
+import eapli.framework.validations.CheckIf;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -93,7 +93,7 @@ public class Description implements ValueObject, Serializable, StringMixin {
      * @return
      */
     public static Either<String, Description> tryValueOf(final String name) {
-        return TryIf.nonEmpty(name, () -> new Description(name),
+        return CheckIf.nonEmpty(name, () -> new Description(name),
                 () -> "Description should neither be null nor empty");
     }
 
