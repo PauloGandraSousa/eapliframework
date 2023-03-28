@@ -82,13 +82,13 @@ import eapli.framework.validations.Preconditions;
  *
  * <pre>
  * Either&lt;ErrorReason, User&gt; result = authz.login(username, pass);
- * result.left().consume(() -&gt; {
+ * result.left().consume((l) -&gt; {
  *    // the user is not authenticated so let's treat it
  *    // e.g., ask for the username/password again
  *    ...
  * });
  *
- * result.right().consume(() -&gt; {
+ * result.right().consume((r) -&gt; {
  *    // the user is authenticated so let's do our job
  *    // e.g. present main menu
  *    ...
@@ -99,12 +99,12 @@ import eapli.framework.validations.Preconditions;
  *
  * <pre>
  * authz.login(username, pass)
- *      .onLeft(() -&gt; {
+ *      .onLeft((l) -&gt; {
  *          // the user is not authenticated so let's treat it
  *          // e.g., ask for the username/password again
  *          ...
  *      })
- *      .onRight(() -&gt; {
+ *      .onRight((r) -&gt; {
  *          // the user is authenticated so let's do our job
  *          // e.g. present main menu
  *          ...

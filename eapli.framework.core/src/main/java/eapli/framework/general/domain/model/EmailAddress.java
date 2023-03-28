@@ -59,12 +59,28 @@ public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Seri
 
     /**
      * Factory method.
+     * <p>
+     * This method throws an {@code IllegalArgumentException} if any of the business rules are not
+     * fulfilled. This means that a {@code try-catch} statement must be used when creating
+     * {@code EmailAddress } objects, thus using exceptions for program flow control.
+     * <p>
+     *
+     * <pre>
+     * try {
+     *     var e = EmailAddress.valueOf("a@b.com");
+     *     user1.setEmail(e);
+     * } catch (IllegalArgumentException e) {
+     *     System.out.println("Invalid email");
+     * }
+     * </pre>
      *
      * @param address
      *
      * @return
      *
      * @throws IllegalArgumentException
+     *
+     * @see #tryValueOf
      */
     public static EmailAddress valueOf(final String address) {
         Preconditions.nonEmpty(address, "email address should neither be null nor empty");
@@ -75,6 +91,21 @@ public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Seri
 
     /**
      * Factory method.
+     * <p>
+     * This method returns either a new instance of {@code  EmailAddress } or a {@code String } with
+     * an error message, thus avoiding the use of {@code try-catch } statements for program flow
+     * control.
+     * <p>
+     *
+     * <pre>
+     * EmailAddress.tryValueOf("a@b.com")
+     *         .onLeft((m) -&gt; {
+     *             System.out.println("Invalid email" + m);
+     *         })
+     *         .onRight((e) -&gt; {
+     *             user1.setEmail(e);
+     *         });
+     * </pre>
      *
      * @param address
      *
