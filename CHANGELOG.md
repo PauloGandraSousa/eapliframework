@@ -6,6 +6,7 @@
 
 #### What's new
 
+- `Try`class
 - `Check`class
 - `CheckIf` utility class
 - `Designation.tryValueOf` method

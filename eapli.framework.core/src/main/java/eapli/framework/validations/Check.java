@@ -34,7 +34,7 @@ import eapli.framework.functional.Either;
  * <p>
  *
  * <pre>
- * return new Try<String, EmailAddress>()
+ * return new Check<String, EmailAddress>()
  *         .failIfNonEmpty(address, () -> "email address should neither be null nor empty")
  *         .failIfNot(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
  *         .elseSucceeds(() -> new EmailAddress(address));
@@ -45,6 +45,16 @@ import eapli.framework.functional.Either;
  * @see CheckIf
  */
 public class Check<E, T> {
+
+    //
+    // more fluent interface?
+    //
+    // return new Try<String, EmailAddress>(() -> new EmailAddress(address))
+    // .ensuring()
+    // .NonNull(address, () -> "address must not be null")
+    // .NonEmpty(address, () -> "email address should neither be null nor empty")
+    // .and(StringPredicates.isEmail(address), () -> "Invalid E-mail format");
+    //
 
     /**
      * Special case

@@ -30,8 +30,8 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
-import eapli.framework.validations.Preconditions;
 import eapli.framework.validations.Check;
+import eapli.framework.validations.Preconditions;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -85,12 +85,6 @@ public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Seri
                 .failIfNonEmpty(address, () -> "email address should neither be null nor empty")
                 .failIfNot(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
                 .elseSucceed(() -> new EmailAddress(address));
-
-        // return new Try<String, EmailAddress>(() -> new EmailAddress(address))
-        // .ensuring()
-        // .NonNull(address, () -> "address must not be null")
-        // .NonEmpty(address, () -> "email address should neither be null nor empty")
-        // .and(StringPredicates.isEmail(address), () -> "Invalid E-mail format");
     }
 
     @Override
