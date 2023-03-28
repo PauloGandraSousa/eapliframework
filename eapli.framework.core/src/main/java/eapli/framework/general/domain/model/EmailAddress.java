@@ -82,8 +82,9 @@ public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Seri
      */
     public static Either<String, EmailAddress> tryValueOf(final String address) {
         return new Check<String, EmailAddress>()
-                .failIfNonEmpty(address, () -> "email address should neither be null nor empty")
-                .failIfNot(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
+                .failIf()
+                .isEmpty(address, () -> "email address should neither be null nor empty")
+                .not(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
                 .elseSucceed(() -> new EmailAddress(address));
     }
 

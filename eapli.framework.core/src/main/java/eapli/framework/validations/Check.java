@@ -35,8 +35,9 @@ import eapli.framework.functional.Either;
  *
  * <pre>
  * return new Check<String, EmailAddress>()
- *         .failIfNonEmpty(address, () -> "email address should neither be null nor empty")
- *         .failIfNot(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
+ *         .failIf()
+ *         .nonEmpty(address, () -> "email address should neither be null nor empty")
+ *         .not(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
  *         .elseSucceeds(() -> new EmailAddress(address));
  * </pre>
  *
@@ -77,47 +78,47 @@ public class Check<E, T> {
         }
 
         @Override
-        public Check<E, T> failIfNot(final boolean test, final Supplier<E> error) {
+        public Check<E, T> not(final boolean test, final Supplier<E> error) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfNotEqual(final long a, final long b, final Supplier<E> error) {
+        public Check<E, T> notEqual(final long a, final long b, final Supplier<E> error) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfNotEqual(final Object a, final Object b, final Supplier<E> error) {
+        public Check<E, T> notEqual(final Object a, final Object b, final Supplier<E> error) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfNotMatches(final Pattern regex, final String arg, final Supplier<E> error) {
+        public Check<E, T> notMatches(final Pattern regex, final String arg, final Supplier<E> error) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfSomeNull(final Supplier<E> error, final Object... objects) {
+        public Check<E, T> someNull(final Supplier<E> error, final Object... objects) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfNonEmpty(final Collection<?> arg, final Supplier<E> error) {
+        public Check<E, T> isEmpty(final Collection<?> arg, final Supplier<E> error) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfNonEmpty(final String arg, final Supplier<E> error) {
+        public Check<E, T> isEmpty(final String arg, final Supplier<E> error) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfNotPositive(final long arg, final Supplier<E> error) {
+        public Check<E, T> notPositive(final long arg, final Supplier<E> error) {
             return this;
         }
 
         @Override
-        public Check<E, T> failIfNonNegative(final long arg, final Supplier<E> error) {
+        public Check<E, T> isNegative(final long arg, final Supplier<E> error) {
             return this;
         }
     }
@@ -135,6 +136,15 @@ public class Check<E, T> {
         public Either<E, T> elseSucceed(final Supplier<T> success) {
             return Either.right(success.get());
         }
+    }
+
+    /**
+     * "Connector" for a fluent interface.
+     *
+     * @return
+     */
+    public Check<E, T> failIf() {
+        return this;
     }
 
     /**
@@ -156,7 +166,7 @@ public class Check<E, T> {
      *
      * @return
      */
-    public Check<E, T> failIfNot(final boolean test, final Supplier<E> error) {
+    public Check<E, T> not(final boolean test, final Supplier<E> error) {
         if (!test) {
             return new FailedTry<>(error);
         } else {
@@ -174,7 +184,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfNotEqual(final long a, final long b, final Supplier<E> error) {
+    public Check<E, T> notEqual(final long a, final long b, final Supplier<E> error) {
         if (!Validations.areEqual(a, b)) {
             return new FailedTry<>(error);
         } else {
@@ -190,7 +200,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfNotEqual(final Object a, final Object b, final Supplier<E> error) {
+    public Check<E, T> notEqual(final Object a, final Object b, final Supplier<E> error) {
         if (!Validations.areEqual(a, b)) {
             return new FailedTry<>(error);
         } else {
@@ -206,7 +216,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfNotMatches(final Pattern regex, final String arg, final Supplier<E> error) {
+    public Check<E, T> notMatches(final Pattern regex, final String arg, final Supplier<E> error) {
         if (!Validations.matches(regex, arg)) {
             return new FailedTry<>(error);
         } else {
@@ -221,7 +231,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfSomeNull(final Supplier<E> error, final Object... objects) {
+    public Check<E, T> someNull(final Supplier<E> error, final Object... objects) {
         boolean allNull = true;
         for (final Object each : objects) {
             if (!Validations.nonNull(each)) {
@@ -244,7 +254,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfNonEmpty(final Collection<?> arg, final Supplier<E> error) {
+    public Check<E, T> isEmpty(final Collection<?> arg, final Supplier<E> error) {
         if (!Validations.isEmpty(arg)) {
             return new FailedTry<>(error);
         } else {
@@ -260,7 +270,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfNonEmpty(final String arg, final Supplier<E> error) {
+    public Check<E, T> isEmpty(final String arg, final Supplier<E> error) {
         if (!Validations.nonEmpty(arg)) {
             return new FailedTry<>(error);
         } else {
@@ -275,7 +285,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfNotPositive(final long arg, final Supplier<E> error) {
+    public Check<E, T> notPositive(final long arg, final Supplier<E> error) {
         if (!Validations.isPositive(arg)) {
             return new FailedTry<>(error);
         } else {
@@ -291,7 +301,7 @@ public class Check<E, T> {
      * @param error
      *            the action to execute and return value if the test fails
      */
-    public Check<E, T> failIfNonNegative(final long arg, final Supplier<E> error) {
+    public Check<E, T> isNegative(final long arg, final Supplier<E> error) {
         if (!Validations.isNonNegative(arg)) {
             return new FailedTry<>(error);
         } else {
