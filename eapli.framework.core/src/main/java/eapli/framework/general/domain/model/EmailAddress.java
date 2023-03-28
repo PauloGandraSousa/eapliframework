@@ -31,7 +31,7 @@ import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
-import eapli.framework.validations.Try;
+import eapli.framework.validations.Check;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -81,11 +81,7 @@ public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Seri
      * @return
      */
     public static Either<String, EmailAddress> tryValueOf(final String address) {
-        // return TryIf.tryEnsuringThat(StringPredicates.isNonEmpty(address) &&
-        // StringPredicates.isEmail(address),
-        // () -> new EmailAddress(address), () -> "null or empty, or invalid E-mail format");
-
-        return new Try<String, EmailAddress>()
+        return new Check<String, EmailAddress>()
                 .failIfNonEmpty(address, () -> "email address should neither be null nor empty")
                 .failIfNot(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
                 .elseSucceed(() -> new EmailAddress(address));

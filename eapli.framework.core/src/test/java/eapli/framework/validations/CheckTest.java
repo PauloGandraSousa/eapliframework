@@ -36,58 +36,58 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Paulo Gandra de Sousa 2023.03.27
  */
-class TryTest {
+class CheckTest {
 
     @Test
     void ensureAreEqualLong() {
-        final var result = new Try<Boolean, Boolean>().failIfNotEqual(42, 42, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNotEqual(42, 42, () -> false).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualLongFail() {
-        final var result = new Try<Boolean, Boolean>().failIfNotEqual(42, -1, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNotEqual(42, -1, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObject() {
-        final var result = new Try<Boolean, Boolean>().failIfNotEqual("abc", "abc", () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNotEqual("abc", "abc", () -> false)
                 .elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObjectFail() {
-        final var result = new Try<Boolean, Boolean>().failIfNotEqual("abc", "xpto", () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNotEqual("abc", "xpto", () -> false)
                 .elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObjectFailOn1Null() {
-        final var result = new Try<Boolean, Boolean>().failIfNotEqual(null, "abc", () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNotEqual(null, "abc", () -> false)
                 .elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureAreEqualObjectFailOn2Null() {
-        final var result = new Try<Boolean, Boolean>().failIfNotEqual("abc", null, () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNotEqual("abc", null, () -> false)
                 .elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureMatches() {
-        final var result = new Try<Boolean, Boolean>().failIfNotMatches(Pattern.compile("A"), "bcdA234", () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNotMatches(Pattern.compile("A"), "bcdA234", () -> false)
                 .elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureMatchesFail() {
-        final var result = new Try<Boolean, Boolean>().failIfNotMatches(Pattern.compile("X"), "bcdA234", () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNotMatches(Pattern.compile("X"), "bcdA234", () -> false)
                 .elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
@@ -95,40 +95,40 @@ class TryTest {
     @Test
     void ensureIfNot() {
         final boolean test = true;
-        final var result = new Try<Boolean, Boolean>().failIfNot(test, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNot(test, () -> false).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureIfNotFail() {
         final boolean test = false;
-        final var result = new Try<Boolean, Boolean>().failIfNot(test, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNot(test, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureSomeNullObject() {
-        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, "abc").elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfSomeNull(() -> false, "abc").elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureSomeNullObjectFail() {
         final String x = null;
-        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, x).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfSomeNull(() -> false, x).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureSomeNullObjectArray() {
-        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, "abc", Integer.valueOf(42),
+        final var result = new Check<Boolean, Boolean>().failIfSomeNull(() -> false, "abc", Integer.valueOf(42),
                 BigDecimal.ONE).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureSomeNullObjectArrayFail() {
-        final var result = new Try<Boolean, Boolean>().failIfSomeNull(() -> false, "abc", Integer.valueOf(42),
+        final var result = new Check<Boolean, Boolean>().failIfSomeNull(() -> false, "abc", Integer.valueOf(42),
                 null, BigDecimal.ONE).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
@@ -137,95 +137,95 @@ class TryTest {
     void ensureNonEmptyCollection() {
         final Collection<String> items = new ArrayList<>();
         items.add("abc");
-        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyCollectionFailOnEmpty() {
         final var items = new ArrayList<>();
-        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyCollectionFailOnNull() {
         final List<?> items = null;
-        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonEmpty(items, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyString() {
-        final var result = new Try<Boolean, Boolean>().failIfNonEmpty("abc", () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonEmpty("abc", () -> false).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyStringFailOnEmpty() {
-        final var result = new Try<Boolean, Boolean>().failIfNonEmpty("", () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonEmpty("", () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyStringFailOnEmpty2() {
-        final var result = new Try<Boolean, Boolean>().failIfNonEmpty("   ", () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonEmpty("   ", () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonEmptyStringFailOnNull() {
         final String x = null;
-        final var result = new Try<Boolean, Boolean>().failIfNonEmpty(x, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonEmpty(x, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureIsPositiveLong() {
-        final var result = new Try<Boolean, Boolean>().failIfNotPositive(42, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNotPositive(42, () -> false).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureIsPositiveLongFailsOnZero() {
-        final var result = new Try<Boolean, Boolean>().failIfNotPositive(0, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNotPositive(0, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureIsPositiveLongFailsOnNegative() {
-        final var result = new Try<Boolean, Boolean>().failIfNotPositive(-10, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNotPositive(-10, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonNegativeLong() {
-        final var result = new Try<Boolean, Boolean>().failIfNonNegative(42, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonNegative(42, () -> false).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonNegativeLong0() {
-        final var result = new Try<Boolean, Boolean>().failIfNonNegative(0, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonNegative(0, () -> false).elseSucceed(() -> true);
         assertTrue(result.right().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureNonNegativeLongFail() {
-        final var result = new Try<Boolean, Boolean>().failIfNonNegative(-10, () -> false).elseSucceed(() -> true);
+        final var result = new Check<Boolean, Boolean>().failIfNonNegative(-10, () -> false).elseSucceed(() -> true);
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
     }
 
     @Test
     void ensureTryWithoutFailThorws() {
         final Supplier<Boolean> succ = () -> true;
-        final Try<Boolean, Boolean> subject = new Try<>();
+        final Check<Boolean, Boolean> subject = new Check<>();
         assertThrows(IllegalStateException.class, () -> subject.elseSucceed(succ));
     }
 
     @Test
     void ensureCompositionFail1() {
-        final var result = new Try<Boolean, Boolean>().failIfNonNegative(-10, () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNonNegative(-10, () -> false)
                 .failIfNotPositive(10, () -> false).failIfNonEmpty("abc", () -> false).elseSucceed(() -> true);
 
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
@@ -233,7 +233,7 @@ class TryTest {
 
     @Test
     void ensureCompositionFail2() {
-        final var result = new Try<Boolean, Boolean>().failIfNonNegative(10, () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNonNegative(10, () -> false)
                 .failIfNotPositive(-10, () -> false).failIfNonEmpty("abc", () -> false).elseSucceed(() -> true);
 
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
@@ -241,7 +241,7 @@ class TryTest {
 
     @Test
     void ensureCompositionFail3() {
-        final var result = new Try<Boolean, Boolean>().failIfNonNegative(10, () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNonNegative(10, () -> false)
                 .failIfNotPositive(10, () -> false).failIfNonEmpty(" ", () -> false).elseSucceed(() -> true);
 
         assertFalse(result.left().orElseThrow(IllegalStateException::new));
@@ -249,7 +249,7 @@ class TryTest {
 
     @Test
     void ensureCompositionSucceeds() {
-        final var result = new Try<Boolean, Boolean>().failIfNonNegative(10, () -> false)
+        final var result = new Check<Boolean, Boolean>().failIfNonNegative(10, () -> false)
                 .failIfNotPositive(10, () -> false).failIfNonEmpty("abc", () -> false).elseSucceed(() -> true);
 
         assertTrue(result.right().orElseThrow(IllegalStateException::new));

@@ -34,7 +34,7 @@ import eapli.framework.util.Utility;
  *
  * @author Paulo Gandra de Sousa 2023.03.24
  *
- * @see Try
+ * @see Check
  */
 @Utility
 public class CheckIf {
