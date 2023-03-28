@@ -55,7 +55,7 @@ public class Check<E, T> {
     // .ensuring()
     // .NonNull(address, () -> "address must not be null")
     // .NonEmpty(address, () -> "email address should neither be null nor empty")
-    // .and(StringPredicates.isEmail(address), () -> "Invalid E-mail format");
+    // .and(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
     //
 
     /**
