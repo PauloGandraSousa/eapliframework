@@ -1,5 +1,15 @@
 # EAPLI Framework Changelog
 
+## v21.3.0
+
+### 21.3.0 [CORE]
+
+#### What's new
+
+- `Functions.ffx` method
+- `MathFunctions.add1` method
+- `MathFunctions.twice` method
+
 ## v21.2.0
 
 ### 21.2.0 [CORE]

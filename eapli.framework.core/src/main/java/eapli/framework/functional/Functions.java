@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 import eapli.framework.actions.TimedActions;
 import eapli.framework.util.Utility;
@@ -32,7 +33,6 @@ import eapli.framework.util.Utility;
  * A utility class to build and work with Functions.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 @Utility
 public final class Functions {
@@ -51,6 +51,7 @@ public final class Functions {
      * </pre>
      *
      * @param c
+     *
      * @return a {@code Function} that will always return the same value {@code c}
      */
     public static <T> Function<T, T> constant(final T c) {
@@ -63,11 +64,24 @@ public final class Functions {
      *
      * @param g
      * @param f
+     *
      * @return a function which is the composition of g after f
      */
     public static <A, B, C> Function<A, C> composition(final Function<B, C> g,
             final Function<A, B> f) {
         return x -> g.apply((f.apply(x)));
+    }
+
+    /**
+     * Composes a function that applies itself twice, that is, {@code f(f(x))}
+     *
+     * @param <T>
+     * @param f
+     *
+     * @return
+     */
+    public static <T> UnaryOperator<T> ffx(final UnaryOperator<T> f) {
+        return x -> f.apply(f.apply(x));
     }
 
     /**
@@ -80,6 +94,7 @@ public final class Functions {
      *            the supplier in case of success of the predicate
      * @param failure
      *            the supplier in case of insuccess of the predicate
+     *
      * @return the value supplied by either {@code success} or {@code failure}
      */
     public static <T, R> Function<T, R> conditionalGet(final Predicate<T> condition,
@@ -104,6 +119,7 @@ public final class Functions {
      *            set to true
      * @param maxAttempts
      * @param progressive
+     *
      * @return an optional with a value, an empty optional if the maximum number of
      *         attempts has been reached
      */
@@ -135,6 +151,7 @@ public final class Functions {
      *            progressively increase between attempts if progressive is
      *            set to true
      * @param maxAttempts
+     *
      * @return an optional with a value, an empty optional if the maximum number of
      *         attempts has been reached
      */
