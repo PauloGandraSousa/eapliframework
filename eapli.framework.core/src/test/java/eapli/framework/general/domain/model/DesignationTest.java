@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -23,50 +23,53 @@
  */
 package eapli.framework.general.domain.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
 class DesignationTest {
 
-	@Test
-	void ensureNotNull() {
-		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(null));
-	}
+    @Test
+    void ensureNotNull() {
+        assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(null));
+    }
 
-	@Test
-	void ensureNotEmpty() {
-		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(""));
-	}
+    @ParameterizedTest
+    @ValueSource(strings = { "    ", "  ABC  ", "ABC   ", "  ABC", "" })
+    void ensureThrowsOnInvalidInput(final String input) {
+        assertThrows(IllegalArgumentException.class, () -> Designation.valueOf(input));
+    }
 
-	@Test
-	void ensureNoHeadingWhitespace() {
-		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC"));
-	}
+    @Test
+    void ensureStartsWithSomething() {
+        assertNotNull(Designation.valueOf("ABC"));
+    }
 
-	@Test
-	void ensureNoTrailingWhitespace() {
-		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("ABC   "));
-	}
+    // TRY methods
 
-	@Test
-	void ensureNoHeadingNorTrailingWhitespace() {
-		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("  ABC  "));
-	}
+    @Test
+    void ensureTryNotNull() {
+        final var result = Designation.tryValueOf(null).left().orElseThrow(IllegalStateException::new);
+        assertEquals(String.class, result.getClass());
+    }
 
-	@Test
-	void ensureNoWhitespaceOnly() {
-		assertThrows(IllegalArgumentException.class, () -> Designation.valueOf("    "));
-	}
+    @ParameterizedTest
+    @ValueSource(strings = { "    ", "  ABC  ", "ABC   ", "  ABC", "" })
+    void ensureTryFailsOnInvalidInput(final String input) {
+        final var result = Designation.tryValueOf(input).left().orElseThrow(IllegalStateException::new);
+        assertEquals(String.class, result.getClass());
+    }
 
-	@Test
-	void ensureStartsWithSomething() {
-		assertNotNull(Designation.valueOf("ABC"));
-	}
+    @Test
+    void ensureTryStartsWithSomething() {
+        final var result = Designation.tryValueOf("ABC").right().orElseThrow(IllegalStateException::new);
+        assertEquals(Designation.class, result.getClass());
+    }
 }

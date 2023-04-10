@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -33,7 +33,6 @@ import eapli.framework.validations.Preconditions;
 /**
  * A simple approach to the functional Monad Either. Consider using a well-tested and proven java
  * functional library instead, e.g., <a href="https://www.vavr.io/">vavr</a>
- *
  * <p>
  * Objects of this class can represent one (1) value of either {@code L} or
  * {@code R}. Useful for error handling where, by convention, the left type is
@@ -83,13 +82,13 @@ import eapli.framework.validations.Preconditions;
  *
  * <pre>
  * Either&lt;ErrorReason, User&gt; result = authz.login(username, pass);
- * result.left().consume(() -&gt; {
+ * result.left().consume((l) -&gt; {
  *    // the user is not authenticated so let's treat it
  *    // e.g., ask for the username/password again
  *    ...
  * });
  *
- * result.right().consume(() -&gt; {
+ * result.right().consume((r) -&gt; {
  *    // the user is authenticated so let's do our job
  *    // e.g. present main menu
  *    ...
@@ -100,12 +99,12 @@ import eapli.framework.validations.Preconditions;
  *
  * <pre>
  * authz.login(username, pass)
- *      .onLeft(() -&gt; {
+ *      .onLeft((l) -&gt; {
  *          // the user is not authenticated so let's treat it
  *          // e.g., ask for the username/password again
  *          ...
  *      })
- *      .onRight(() -&gt; {
+ *      .onRight((r) -&gt; {
  *          // the user is authenticated so let's do our job
  *          // e.g. present main menu
  *          ...
@@ -128,6 +127,7 @@ import eapli.framework.validations.Preconditions;
  * </pre>
  *
  * @author Paulo Gandra de Sousa
+ *
  * @param <L>
  *            "left" type; by convention, the error result
  * @param <R>
@@ -136,15 +136,14 @@ import eapli.framework.validations.Preconditions;
 public interface Either<L, R> {
 
     /**
-     *
      * @author Paulo Gandra de Sousa 03/03/2021
      *
      * @param <L>
      */
     interface LeftProjection<L> {
         /**
-         *
          * @param mapper
+         *
          * @return a new either resulting from the projection
          */
         <T> LeftProjection<T> map(final Function<? super L, ? extends T> mapper);
@@ -154,28 +153,27 @@ public interface Either<L, R> {
          * satisfies
          * the predicate, the returned {@code Either} will be the "same", otherwise, an "empty"
          * {@code either} will be returned.
-         *
          * Since this method
          * returns a new {@code Either} it is suitable for composition.
          *
          * @param predicate
+         *
          * @return a new either resulting from the projection
          */
         LeftProjection<L> filter(final Predicate<? super L> predicate);
 
         /**
-         * Folds the current value using {@code def} as the
-         * initial folding value.
+         * Folds the current value using {@code def} as the initial folding value.
          *
          * @param accum
          * @param def
          *            default/initial value
+         *
          * @return the folded value
          */
         <T> T fold(final BiFunction<T, ? super L, ? extends T> accum, final T def);
 
         /**
-         *
          * @param consumer
          * @param rightConsumer
          */
@@ -204,7 +202,6 @@ public interface Either<L, R> {
     }
 
     /**
-     *
      * @author Paulo Gandra de Sousa 03/03/2021
      *
      * @param <R>
@@ -212,40 +209,37 @@ public interface Either<L, R> {
     interface RightProjection<R> {
 
         /**
-         *
          * @param <T>
          * @param mapper
+         *
          * @return a new projection based on the application of the mapping function
          */
         <T> RightProjection<T> map(final Function<? super R, ? extends T> mapper);
 
         /**
          * Creates a new {@code Either} by filtering the current value. If the current value
-         * satisfies
-         * the predicate, the returned {@code Either} will be the "same", otherwise, an "empty"
-         * {@code either} will be returned.
-         *
-         * Since this method
-         * returns a new {@code Either} it is suitable for composition.
+         * satisfies the predicate, the returned {@code Either} will be the "same", otherwise, an
+         * "empty" {@code either} will be returned.
+         * Since this method returns a new {@code Either} it is suitable for composition.
          *
          * @param predicate
+         *
          * @return a new either resulting from the projection
          */
         RightProjection<R> filter(final Predicate<? super R> predicate);
 
         /**
-         * Folds the current value using {@code def} as the
-         * initial folding value.
+         * Folds the current value using {@code def} as the initial folding value.
          *
          * @param accum
          * @param def
          *            default/initial value
+         *
          * @return the folded value
          */
         <T> T fold(final BiFunction<T, ? super R, ? extends T> accum, final T def);
 
         /**
-         *
          * @param consumer
          */
         void consume(final Consumer<? super R> consumer);
@@ -276,6 +270,7 @@ public interface Either<L, R> {
      * Factory method to create a left value Either.
      *
      * @param left
+     *
      * @return a new Either
      */
     static <T, U> Either<T, U> left(final T left) {
@@ -290,6 +285,7 @@ public interface Either<L, R> {
      * Factory method to create a right value Either.
      *
      * @param right
+     *
      * @return a new Either
      */
     static <T, U> Either<T, U> right(final U right) {
@@ -312,13 +308,13 @@ public interface Either<L, R> {
     RightProjection<R> right();
 
     /**
-     * Applies the "normal" function to the left value if this Either instance holds
-     * a left value, otherwise applies the "error" function to the right value.
+     * Maps the current value to a new value.
      * Since this method returns a new {@code Either} it is suitable for
      * composition.
      *
      * @param leftMapper
      * @param rightMapper
+     *
      * @return a new either resulting from the projection
      */
     <T, U> Either<T, U> map(final Function<? super L, ? extends T> leftMapper,
@@ -328,12 +324,11 @@ public interface Either<L, R> {
      * Creates a new {@code Either} by filtering the current value. If the current value satisfies
      * the predicate, the returned {@code Either} will be the "same", otherwise, an "empty"
      * {@code either} will be returned.
-     *
-     * Since this method
-     * returns a new {@code Either} it is suitable for composition.
+     * Since this method returns a new {@code Either} it is suitable for composition.
      *
      * @param leftPredicate
      * @param rightPredicate
+     *
      * @return a new either resulting from the projection
      */
     Either<L, R> filter(final Predicate<? super L> leftPredicate,
@@ -347,6 +342,7 @@ public interface Either<L, R> {
      * @param rightAccum
      * @param def
      *            default/initial value
+     *
      * @return the folded value
      */
     <T> T fold(final BiFunction<T, ? super L, ? extends T> leftAccum,
@@ -356,6 +352,7 @@ public interface Either<L, R> {
      * Acts on the value of this Either instance if it is a left. Chainable.
      *
      * @param consumer
+     *
      * @return this Either
      */
     Either<L, R> onLeft(final Consumer<? super L> consumer);
@@ -364,14 +361,13 @@ public interface Either<L, R> {
      * Acts on the value of this Either instance if it is a right. Chainable.
      *
      * @param consumer
+     *
      * @return this Either
      */
     Either<L, R> onRight(final Consumer<? super R> consumer);
 
     /**
-     * Acts on the value of this Either instance, executing the "normal" function
-     * with the left value if this Either instance holds a left value, otherwise
-     * executes the "error" function with the right value
+     * Consumes the value of this Either instance.
      *
      * @param leftConsumer
      * @param rightConsumer

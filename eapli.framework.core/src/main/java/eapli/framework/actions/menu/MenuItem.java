@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -35,6 +35,11 @@ public abstract class MenuItem {
 
     private final String text;
 
+    /**
+     * Implementation of a menu item that executes an action.
+     *
+     * @author Paulo Gandra Sousa
+     */
     private static class ActionableMenuItem extends MenuItem {
         private final int option;
         private final Action action;
@@ -76,6 +81,11 @@ public abstract class MenuItem {
         }
     }
 
+    /**
+     * Implementation of a menu item that works a label with no action.
+     *
+     * @author Paulo Gandra Sousa
+     */
     private static class NonActionableMenuItem extends MenuItem {
 
         protected NonActionableMenuItem(final String label) {
@@ -103,6 +113,11 @@ public abstract class MenuItem {
         }
     }
 
+    /**
+     * Implementation of a sub menu.
+     *
+     * @author Paulo Gandra Sousa
+     */
     private static class SubMenuItem extends MenuItem {
         private final int option;
         private final Menu sub;
@@ -177,6 +192,7 @@ public abstract class MenuItem {
      * @param option
      * @param text
      * @param action
+     *
      * @return a new menu item
      */
     public static MenuItem of(final int option, final String text, final Action action) {
@@ -188,6 +204,7 @@ public abstract class MenuItem {
      *
      * @param option
      * @param sub
+     *
      * @return a sub menu
      */
     public static MenuItem submenu(final int option, final Menu sub) {
@@ -220,13 +237,11 @@ public abstract class MenuItem {
     public abstract boolean select();
 
     /**
-     *
      * @return true if the item is a submenu.
      */
     public abstract boolean isSubmenu();
 
     /**
-     *
      * @return the submenu or an empty optional if this item is not a submenu
      */
     public abstract Optional<Menu> submenu();

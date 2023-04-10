@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -31,37 +31,36 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author Paulo Gandra Sousa
- *
  */
 class EmailAddressTest {
 
-	@Test
-	void testEmailAddress() {
-		assertNotNull(new EmailAddress("geral@acme.com"));
-	}
+    @Test
+    void testEmailAddress() {
+        assertNotNull(EmailAddress.valueOf("geral@acme.com"));
+    }
 
-	@Test
-	void ensureEmailAddressHasAt() {
-		assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geralATacme.com"));
-	}
+    @Test
+    void ensureEmailAddressHasAt() {
+        assertThrows(IllegalArgumentException.class, () -> EmailAddress.valueOf("geralATacme.com"));
+    }
 
-	@Test
-	void ensureEmailAddressHasHostAndDomain() {
-		assertThrows(IllegalArgumentException.class, () -> new EmailAddress("geral@acme"));
-	}
+    @Test
+    void ensureEmailAddressHasHostAndDomain() {
+        assertThrows(IllegalArgumentException.class, () -> EmailAddress.valueOf("geral@acme"));
+    }
 
-	@Test
-	void ensureEmailAddressHasName() {
-		assertThrows(IllegalArgumentException.class, () -> new EmailAddress("@acme.com"));
-	}
+    @Test
+    void ensureEmailAddressHasName() {
+        assertThrows(IllegalArgumentException.class, () -> EmailAddress.valueOf("@acme.com"));
+    }
 
-	@Test
-	void ensureEmailAddressIsNotNull() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new EmailAddress(null));
-	}
+    @Test
+    void ensureEmailAddressIsNotNull() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> EmailAddress.valueOf(null));
+    }
 
-	@Test
-	void ensureEmailAddressIsNotEmpty() {
-		assertThrows(IllegalArgumentException.class, () -> new EmailAddress(""));
-	}
+    @Test
+    void ensureEmailAddressIsNotEmpty() {
+        assertThrows(IllegalArgumentException.class, () -> EmailAddress.valueOf(""));
+    }
 }

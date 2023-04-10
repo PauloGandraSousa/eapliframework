@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -20,171 +20,135 @@
  */
 package eapli.framework.validations;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import org.junit.Test;
-
-import eapli.framework.actions.Actions;
+import org.junit.jupiter.api.Test;
 
 /**
- * @author Paulo Gandra de Sousa
+ * @author Paulo Gandra de Sousa 2023.03.24
  */
-public class ValidationsTest {
+class ValidationsTest {
 
     @Test
-    public void testAreEqualLongDoesNothingIfTrue() {
-        Validations.ensureAreEqual(42, 42, Actions.THROW_STATE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualLongFail() {
-        Validations.ensureAreEqual(42, 24, Actions.THROW_STATE);
+    void testAreEqualLong() {
+        assertTrue(Validations.areEqual(42, 42));
     }
 
     @Test
-    public void testAreEqualObjectDoesNothingIfTrue() {
-        Validations.ensureAreEqual("abc", "abc", Actions.THROW_STATE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualObjectFail() {
-        Validations.ensureAreEqual("abc", "xpto", Actions.THROW_STATE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualObjectFailOn1Null() {
-        Validations.ensureAreEqual(null, "xpto", Actions.THROW_STATE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testAreEqualObjectFailOn2Null() {
-        Validations.ensureAreEqual("abc", null, Actions.THROW_STATE);
+    void testAreEqualLongFail() {
+        assertFalse(Validations.areEqual(42, 24));
     }
 
     @Test
-    public void testMatchesDoNothingIfTrue() {
-        Validations.ensureMatches(Pattern.compile("A"), "bcdA234", Actions.THROW_STATE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testMatchesDoesSomethingIfFalse() {
-        Validations.ensureMatches(Pattern.compile("x"), "bcdA234", Actions.THROW_STATE);
+    void testAreEqualObject() {
+        assertTrue(Validations.areEqual("abc", "abc"));
     }
 
     @Test
-    public void testEnsureDoesNothingIfTrue() {
-        Validations.ensure(Boolean.TRUE, Actions.THROW_STATE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testEnsureDoesSomethingIfFalse() {
-        Validations.ensure(Boolean.FALSE, Actions.THROW_STATE);
+    void testAreEqualObjectFail() {
+        assertFalse(Validations.areEqual("abc", "xpto"));
     }
 
     @Test
-    public void testNonNullDoesNothingIfTrue() {
-        Validations.ensureNoneNull(Actions.THROW_STATE, "abc");
-        assertTrue(true);
+    void testAreEqualObjectFailOn1Null() {
+        assertFalse(Validations.areEqual(null, "xpto"));
     }
 
     @Test
-    public void testNonNullDoesNothingIfTrueForMoreThanOneObject() {
-        Validations.ensureNoneNull(Actions.THROW_STATE, new String(), Double.valueOf(1), "abc");
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonNullDoesSomethingIfFalse() {
-        final Object x = null;
-        Validations.ensureNoneNull(Actions.THROW_STATE, x);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonNullDoesSomethingIfFalseForAtLeastOneObject() {
-        final Object x = null;
-        Validations.ensureNoneNull(Actions.THROW_STATE, "abc", x, Integer.valueOf(1));
+    void testAreEqualObjectFailOn2Null() {
+        assertFalse(Validations.areEqual("abc", null));
     }
 
     @Test
-    public void testNonEmptyCollectionDoesNothingIfTrue() {
+    void testMatches() {
+        assertTrue(Validations.matches(Pattern.compile("A"), "bcdA234"));
+    }
+
+    @Test
+    void testMatchesDoesnt() {
+        assertFalse(Validations.matches(Pattern.compile("x"), "bcdA234"));
+    }
+
+    @Test
+    void testNonNull() {
+        assertTrue(Validations.nonNull("abc"));
+    }
+
+    @Test
+    void testNonNullFail() {
+        assertFalse(Validations.nonNull(null));
+    }
+
+    @Test
+    void testNonEmptyCollection() {
         final Collection<String> col = new ArrayList<>();
         col.add("abc");
-        Validations.ensureNonEmpty(col, Actions.THROW_STATE);
-        assertTrue(true);
+        assertTrue(Validations.isEmpty(col));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyCollectionDoesSomethingIfNull() {
-        final Collection<String> col = null;
-        Validations.ensureNonEmpty(col, Actions.THROW_STATE);
+    @Test
+    void testNonEmptyCollectionNull() {
+        assertFalse(Validations.isEmpty(null));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyCollectionDoesSomethingIfEmpty() {
+    @Test
+    void testEnsureNonEmptyCollectionFailsIfEmpty() {
         final Collection<String> col = new ArrayList<>();
-        Validations.ensureNonEmpty(col, Actions.THROW_STATE);
+        assertFalse(Validations.isEmpty(col));
     }
 
     @Test
-    public void testNonEmptyStringDoesNothingIfTrue() {
-        Validations.ensureNonEmpty("abc", Actions.THROW_STATE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringDoesSomethingIfNull() {
-        final String x = null;
-        Validations.ensureNonEmpty(x, Actions.THROW_STATE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringDoesSomethingIfEmpty() {
-        Validations.ensureNonEmpty("", Actions.THROW_STATE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testNonEmptyStringDoesSomethingIfEmpty2() {
-        Validations.ensureNonEmpty("  ", Actions.THROW_STATE);
+    void testNonEmptyString() {
+        assertTrue(Validations.nonEmpty("abc"));
     }
 
     @Test
-    public void testIsPositiveDoesNothingIfTrue() {
-        Validations.ensureIsPositive(42, Actions.THROW_STATE);
-        assertTrue(true);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testIsPositiveDoesSomethingIfZero() {
-        Validations.ensureIsPositive(0, Actions.THROW_STATE);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testIsPositiveDoesSomethingIfNegative() {
-        Validations.ensureIsPositive(-10, Actions.THROW_STATE);
+    void testNonEmptyStringFailsIfNull() {
+        assertFalse(Validations.nonEmpty(null));
     }
 
     @Test
-    public void testNonNegativeDoesNothingIfPositive() {
-        Validations.ensureNonNegative(42, Actions.THROW_STATE);
-        assertTrue(true);
+    void testNonEmptyStringFailsIfEmpty() {
+        assertFalse(Validations.nonEmpty(""));
     }
 
     @Test
-    public void testNonNegativeDoesNothingIfZero() {
-        Validations.ensureNonNegative(0, Actions.THROW_STATE);
-        assertTrue(true);
+    void testNonEmptyStringDoesSomethingIfEmpty2() {
+        assertFalse(Validations.nonEmpty("  "));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testNonNegativeDoesSomethingIfNegative() {
-        Validations.ensureNonNegative(-10, Actions.THROW_STATE);
+    @Test
+    void testIsPositive() {
+        assertTrue(Validations.isPositive(42));
+    }
+
+    @Test
+    void testIsPositiveFailsIfZero() {
+        assertFalse(Validations.isPositive(0));
+    }
+
+    @Test
+    void testIsPositiveFailsIfNegative() {
+        assertFalse(Validations.isPositive(-10));
+    }
+
+    @Test
+    void testIsNonNegativeFailsIfNegative() {
+        assertFalse(Validations.isNonNegative(-42));
+    }
+
+    @Test
+    void testIsNonNegativeZero() {
+        assertTrue(Validations.isNonNegative(0));
+    }
+
+    @Test
+    void testIsNonNegative() {
+        assertTrue(Validations.isNonNegative(10));
     }
 }

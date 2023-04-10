@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -42,7 +42,6 @@ public class Menu {
 
     /**
      * Constructs a Menu.
-     *
      */
     public Menu() {
         title = "";
@@ -67,8 +66,6 @@ public class Menu {
     public void addItem(final MenuItem item) {
         Preconditions.nonNull(item);
 
-        itens.add(item);
-
         item.option().ifPresent(i -> {
             if (itemByOption.containsKey(i)) {
                 throw new IllegalStateException(
@@ -76,6 +73,7 @@ public class Menu {
             }
             itemByOption.put(i, item);
         });
+        itens.add(item);
     }
 
     /**
@@ -100,7 +98,6 @@ public class Menu {
     }
 
     /**
-     *
      * @return the title of the menu
      */
     public String title() {
@@ -122,6 +119,7 @@ public class Menu {
      * Returns the MenuItem associated with an option in the menu.
      *
      * @param option
+     *
      * @return the MenuItem associated with an option in the menu.
      */
     public Optional<MenuItem> item(final int option) {

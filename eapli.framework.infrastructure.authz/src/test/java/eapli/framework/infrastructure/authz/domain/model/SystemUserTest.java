@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -37,20 +37,22 @@ import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.time.util.CurrentTimeCalendars;
 
 /**
- *
  * @author Paulo Gandra de Sousa
- *
  */
 class SystemUserTest {
+    private static final Username USERNAME = Username.valueOf("username");
+    private static final EmailAddress ANTONIO_AT_SILVA_DOT_COM = EmailAddress.valueOf("antonio@silva.com");
+    private static final Name ANTONIO_SILVA = Name.valueOf("Ant", "Silva");
     private static final String PASSWORD1 = "Password1";
+    private static final Password DUMMY_PASS = TestDataSubjects.dummyPass(PASSWORD1);
     private SystemUser instance;
     private Calendar dateOfCreation;
 
     @BeforeEach
     void setUp() throws Exception {
         dateOfCreation = CurrentTimeCalendars.now();
-        instance = new SystemUser(Username.valueOf("abc"), TestDataSubjects.dummyPass(PASSWORD1),
-                Name.valueOf("Ant", "Boocam"), EmailAddress.valueOf("a@b.com"), new HashSet<>(), dateOfCreation);
+        instance = new SystemUser(USERNAME, DUMMY_PASS,
+                ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM, new HashSet<>(), dateOfCreation);
     }
 
     @Test
@@ -59,8 +61,7 @@ class SystemUserTest {
         roles.add(Role.valueOf("R"));
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(null, TestDataSubjects.dummyPass(PASSWORD1), Name.valueOf("Ant", "Silva"),
-                        EmailAddress.valueOf("a@b.co"), roles));
+                () -> new SystemUser(null, DUMMY_PASS, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM, roles));
     }
 
     @Test
@@ -69,8 +70,7 @@ class SystemUserTest {
         roles.add(Role.valueOf("R"));
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(Username.valueOf("username"), null, Name.valueOf("Ant", "Silva"),
-                        EmailAddress.valueOf("a@b.co"),
+                () -> new SystemUser(USERNAME, null, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM,
                         roles));
     }
 
@@ -80,8 +80,7 @@ class SystemUserTest {
         roles.add(Role.valueOf("R"));
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(Username.valueOf("username"), TestDataSubjects.dummyPass(PASSWORD1), null,
-                        EmailAddress.valueOf("a@b.co"), roles));
+                () -> new SystemUser(USERNAME, DUMMY_PASS, null, ANTONIO_AT_SILVA_DOT_COM, roles));
     }
 
     @Test
@@ -90,8 +89,7 @@ class SystemUserTest {
         roles.add(Role.valueOf("R"));
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(Username.valueOf("username"), TestDataSubjects.dummyPass(PASSWORD1),
-                        Name.valueOf("Ant", "Silva"), null, roles));
+                () -> new SystemUser(USERNAME, DUMMY_PASS, ANTONIO_SILVA, null, roles));
     }
 
     @Test
@@ -100,8 +98,8 @@ class SystemUserTest {
         roles.add(Role.valueOf("R"));
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(Username.valueOf("username"), TestDataSubjects.dummyPass(PASSWORD1),
-                        Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, null));
+                () -> new SystemUser(USERNAME, DUMMY_PASS, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM,
+                        roles, null));
     }
 
     @Test

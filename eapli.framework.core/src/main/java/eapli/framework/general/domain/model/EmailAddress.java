@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -27,8 +27,10 @@ import javax.persistence.Embeddable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
+import eapli.framework.validations.Check;
 import eapli.framework.validations.Preconditions;
 import lombok.EqualsAndHashCode;
 
@@ -41,34 +43,89 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class EmailAddress implements ValueObject, Comparable<EmailAddress>, Serializable, StringMixin {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@JsonProperty
-	private final String email;
+    @JsonProperty
+    private final String email;
 
-	protected EmailAddress(final String address) {
-		Preconditions.nonEmpty(address, "email address should neither be null nor empty");
-		Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
+    protected EmailAddress(final String address) {
+        email = address;
+    }
 
-		email = address;
-	}
+    protected EmailAddress() {
+        // for ORM
+        email = "";
+    }
 
-	protected EmailAddress() {
-		// for ORM
-		email = "";
-	}
+    /**
+     * Factory method.
+     * <p>
+     * This method throws an {@code IllegalArgumentException} if any of the business rules are not
+     * fulfilled. This means that a {@code try-catch} statement must be used when creating
+     * {@code EmailAddress } objects, thus using exceptions for program flow control.
+     * <p>
+     *
+     * <pre>
+     * try {
+     *     var e = EmailAddress.valueOf("a@b.com");
+     *     user1.setEmail(e);
+     * } catch (IllegalArgumentException e) {
+     *     System.out.println("Invalid email");
+     * }
+     * </pre>
+     *
+     * @param address
+     *
+     * @return
+     *
+     * @throws IllegalArgumentException
+     *
+     * @see #tryValueOf
+     */
+    public static EmailAddress valueOf(final String address) {
+        Preconditions.nonEmpty(address, "email address should neither be null nor empty");
+        Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
 
-	public static EmailAddress valueOf(final String address) {
-		return new EmailAddress(address);
-	}
+        return new EmailAddress(address);
+    }
 
-	@Override
-	public String toString() {
-		return email;
-	}
+    /**
+     * Factory method.
+     * <p>
+     * This method returns either a new instance of {@code  EmailAddress } or a {@code String } with
+     * an error message, thus avoiding the use of {@code try-catch } statements for program flow
+     * control.
+     * <p>
+     *
+     * <pre>
+     * EmailAddress.tryValueOf("a@b.com")
+     *         .onLeft((m) -&gt; {
+     *             System.out.println("Invalid email" + m);
+     *         })
+     *         .onRight((e) -&gt; {
+     *             user1.setEmail(e);
+     *         });
+     * </pre>
+     *
+     * @param address
+     *
+     * @return
+     */
+    public static Either<String, EmailAddress> tryValueOf(final String address) {
+        return new Check<String, EmailAddress>()
+                .failIf()
+                .isEmpty(address, () -> "email address should neither be null nor empty")
+                .not(StringPredicates.isEmail(address), () -> "Invalid E-mail format")
+                .elseSucceed(() -> new EmailAddress(address));
+    }
 
-	@Override
-	public int compareTo(final EmailAddress o) {
-		return email.compareTo(o.email);
-	}
+    @Override
+    public String toString() {
+        return email;
+    }
+
+    @Override
+    public int compareTo(final EmailAddress o) {
+        return email.compareTo(o.email);
+    }
 }

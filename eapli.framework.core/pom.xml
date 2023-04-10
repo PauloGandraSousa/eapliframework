@@ -7,13 +7,13 @@
 	<packaging>jar</packaging>
 	<name>eapli.framework.core</name>
 	<artifactId>eapli.framework.core</artifactId>
-	<version>21.1.0</version>
+	<version>21.2.0</version>
 
 	<parent>
 		<groupId>eapli</groupId>
 		<artifactId>eapli.framework</artifactId>
 		<relativePath>../</relativePath>
-		<version>16.6.0</version>
+		<version>16.7.0</version>
 	</parent>
 	
 	<dependencies>

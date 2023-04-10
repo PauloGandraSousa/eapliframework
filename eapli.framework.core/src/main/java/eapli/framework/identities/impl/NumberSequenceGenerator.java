@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 the original author or authors.
+ * Copyright (c) 2013-2023 the original author or authors.
  *
  * MIT License
  *
@@ -33,11 +33,11 @@ import eapli.framework.identities.IdentityGenerator;
  * This class is thead-safe.
  *
  * @author Paulo Gandra de Sousa
- *
  */
 public class NumberSequenceGenerator implements IdentityGenerator<Long> {
     private static final Logger LOGGER = LogManager.getLogger(NumberSequenceGenerator.class);
 
+    // thread safety thru AtomicLong
     private final AtomicLong lastId;
 
     public NumberSequenceGenerator() {
