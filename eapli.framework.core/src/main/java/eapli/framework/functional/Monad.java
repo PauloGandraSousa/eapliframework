@@ -26,14 +26,13 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * A Monad is a parametrized Wrapper type that is immutable and does not provide
+ * A Monad is a parameterized Wrapper type that is immutable and does not provide
  * direct access to the value it is wrapping. In order to use the value one must
  * map it or fold it.
  *
- *
  * @param <T>
- * @author Paulo Gandra de Sousa 25/06/2019
  *
+ * @author Paulo Gandra de Sousa 25/06/2019
  */
 public interface Monad<T> {
 
@@ -43,6 +42,7 @@ public interface Monad<T> {
      *
      * @param mapper
      *            a mapper function from <code>T</code> to <code>R</code>
+     *
      * @return a new Monad wrapping the result of the mapping
      */
     <R> Monad<R> map(final Function<? super T, R> mapper);
@@ -58,6 +58,7 @@ public interface Monad<T> {
      *
      * @param mapper
      *            a mapper function from <code>T</code> to <code>Monad&lt;R&gt;</code>
+     *
      * @return a new Monad wrapping the result of the mapping
      */
     <R> Monad<R> flatMap(final Function<? super T, ? extends Monad<R>> mapper);
@@ -66,20 +67,21 @@ public interface Monad<T> {
      * Filters the value(s) of the Monad based on a condition.
      *
      * @param filter
+     *
      * @return a new Monad without the filtered value(s).
      */
     Monad<T> filter(Predicate<T> filter);
 
     /**
-     *
      * @param def
+     *
      * @return the wrapped value or the default value if this Monad is empty
      */
     T orElse(T def);
 
     /**
-     *
      * @param defFunc
+     *
      * @return the wrapped value or the value provided by the default supplier
      *         if this Monad is empty
      */
@@ -90,6 +92,7 @@ public interface Monad<T> {
      *
      * @param initial
      * @param folder
+     *
      * @return the value
      */
     <R> R fold(R initial, BiFunction<R, T, R> folder);
@@ -99,6 +102,7 @@ public interface Monad<T> {
      *
      * @param initial
      * @param folder
+     *
      * @return the value
      */
     <R> R foldr(R initial, BiFunction<R, T, R> folder);

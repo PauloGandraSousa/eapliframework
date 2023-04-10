@@ -29,47 +29,50 @@ import eapli.framework.util.Utility;
  */
 @Utility
 public final class StandardFunctions {
-	private StandardFunctions() {
-		// ensure utility
-	}
+    private StandardFunctions() {
+        // ensure utility
+    }
 
-	/**
-	 * Identity function.
-	 *
-	 * <pre>
-	 * <code>
-	 * T -> T : x -> x
-	 * </code>
-	 * </pre>
-	 *
-	 * @param x
-	 * @return the same object passed as input parameter
-	 */
-	public static <T> T identity(final T x) {
-		return x;
-	}
+    /**
+     * Identity function.
+     *
+     * <pre>
+     * <code>
+     * T -> T : x -> x
+     * </code>
+     * </pre>
+     *
+     * @param x
+     *
+     * @return the same object passed as input parameter
+     *
+     * @see java.util.function.Function#identity
+     */
+    public static <T> T identity(final T x) {
+        return x;
+    }
 
-	/**
-	 * Nil Operation.
-	 */
-	public static void nop() {
-		// do noting
-	}
+    /**
+     * Nil Operation.
+     */
+    public static void nop() {
+        // do noting
+    }
 
-	/**
-	 * Nil operation, i.e., do nothing on the parameter of the function.
-	 *
-	 * <pre>
-	 * <code>
-	 * T -> void : x -> void
-	 * </code>
-	 * </pre>
-	 *
-	 * @param x
-	 * @param <T>
-	 */
-	@SuppressWarnings("squid:S1172")
-	public static <T> void ignore(final T x) {
-		// do noting
-	}
+    /**
+     * Nil operation, i.e., do nothing on the parameter of the function.
+     *
+     * <pre>
+     * <code>
+     * T -> void : x -> void
+     * </code>
+     * </pre>
+     *
+     * @param x
+     * @param <T>
+     */
+    @SuppressWarnings("squid:S1172")
+    public static <T> void ignore(final T x) {
+        // do noting
+    }
 }

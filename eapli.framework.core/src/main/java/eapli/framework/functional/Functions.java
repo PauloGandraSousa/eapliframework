@@ -66,6 +66,8 @@ public final class Functions {
      * @param f
      *
      * @return a function which is the composition of g after f
+     *
+     * @see java.util.function.Function#compose
      */
     public static <A, B, C> Function<A, C> composition(final Function<B, C> g,
             final Function<A, B> f) {

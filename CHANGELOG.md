@@ -6,6 +6,7 @@
 
 #### What's new
 
+- `CashFlow` class
 - `Functions.ffx` method
 - `MathFunctions.add1` method
 - `MathFunctions.twice` method
