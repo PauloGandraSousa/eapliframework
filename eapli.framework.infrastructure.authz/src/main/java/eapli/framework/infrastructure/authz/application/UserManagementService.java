@@ -162,7 +162,7 @@ public class UserManagementService {
 
 	/**
 	 * Deactivates a user. Client code must not reference the input parameter after
-	 * calling this method and must use the return object instead.
+	 * calling this method and must use the returned object instead.
 	 *
 	 * @param user
 	 * @return the updated user.
