@@ -33,7 +33,7 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eapli.framework.util.Collections;
+import eapli.framework.collections.util.Collections;
 
 /**
  *

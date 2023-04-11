@@ -33,7 +33,7 @@ import java.time.Instant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.util.Collections;
+import eapli.framework.collections.util.Collections;
 
 /**
  * @author Paulo Gandra de Sousa 25/06/2019

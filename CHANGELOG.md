@@ -14,7 +14,7 @@
 #### what's changed
 
 - `Money` class moved to `eapli.framework.money.domain.model`
-- `Arrays` and `ArrayPredicates` classes moved to `eapli.framework.collections.util`
+- `Arrays`, `ArrayPredicates` and `Collections` classes moved to `eapli.framework.collections.util`
 
 
 ## v21.2.0
