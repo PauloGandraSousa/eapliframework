@@ -25,6 +25,8 @@ package eapli.framework.functional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.function.UnaryOperator;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -34,31 +36,33 @@ import org.junit.jupiter.params.provider.ValueSource;
  */
 class FunctionsTest {
 
-    @ParameterizedTest
-    @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 910 })
-    void ensureConstantInt(final int x) {
-        final var subject = Functions.constant(3);
-        assertEquals(3, subject.apply(x));
-    }
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 910 })
+	void ensureConstantInt(final int x) {
+		final var subject = Functions.constant(3);
+		assertEquals(3, subject.apply(x));
+	}
 
-    @ParameterizedTest
-    @ValueSource(strings = { "1", "2", "3", "4", "5", "6", "7", "8", "910" })
-    void ensureConstantString(final String x) {
-        final var subject = Functions.constant("A");
-        assertEquals("A", subject.apply(x));
-    }
+	@ParameterizedTest
+	@ValueSource(strings = { "1", "2", "3", "4", "5", "6", "7", "8", "910" })
+	void ensureConstantString(final String x) {
+		final var subject = Functions.constant("A");
+		assertEquals("A", subject.apply(x));
+	}
 
-    @ParameterizedTest
-    @CsvSource({ "1, 3", "2, 4", "3, 5", "4, 6", "5, 7", "6, 8", "7, 9", "8, 10", "910, 912" })
-    void ensureFFX(final long x, final long expected) {
-        final var subject = Functions.ffx(MathFunctions::add1);
-        assertEquals(expected, subject.apply(x));
-    }
+	@ParameterizedTest
+	@CsvSource({ "1, 3", "2, 4", "3, 5", "4, 6", "5, 7", "6, 8", "7, 9", "8, 10", "910, 912" })
+	void ensureFFX(final long x, final long expected) {
+		final var subject = Functions.ffx(eapli.framework.math.util.Math::add1);
+		assertEquals(expected, subject.apply(x));
+	}
 
-    @ParameterizedTest
-    @CsvSource({ "1, 3", "2, 5", "3, 7", "4, 9", "5, 11", "6, 13", "7, 15", "8, 17", "10, 21" })
-    void ensureComposition(final long x, final long expected) {
-        final var subject = Functions.composition(MathFunctions::add1, MathFunctions::twice);
-        assertEquals(expected, subject.apply(x));
-    }
+	@ParameterizedTest
+	@CsvSource({ "1, 3", "2, 5", "3, 7", "4, 9", "5, 11", "6, 13", "7, 15", "8, 17", "10, 21" })
+	void ensureComposition(final long x, final long expected) {
+		final UnaryOperator<Long> add1 = eapli.framework.math.util.Math::add1;
+		final UnaryOperator<Long> twice = eapli.framework.math.util.Math::twice;
+		final var subject = Functions.composition(add1, twice);
+		assertEquals(expected, subject.apply(x));
+	}
 }

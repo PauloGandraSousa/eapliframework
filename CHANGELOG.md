@@ -6,16 +6,20 @@
 
 #### What's new
 
+- `ValueList` and `ValueSet`
 - `CashFlow` class
 - `Functions.ffx` method
-- `MathFunctions.add1` method
-- `MathFunctions.twice` method
+- `Math.add1` method
+- `Math.twice` method
 
-#### what's changed
+#### What's changed
 
 - `Money` class moved to `eapli.framework.money.domain.model`
 - `Arrays`, `ArrayPredicates` and `Collections` classes moved to `eapli.framework.collections.util`
 
+#### Fixed
+
+- `NumberPredicates.isPrime` handles the special case for number 2 correctly
 
 ## v21.2.0
 

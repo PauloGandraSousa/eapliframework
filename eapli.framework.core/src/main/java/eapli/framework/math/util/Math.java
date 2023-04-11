@@ -151,4 +151,25 @@ public final class Math {
 		return NumberGenerator.anInt() % 2 == 0;
 	}
 
+	/**
+	 * Adds 1 to the input value.
+	 *
+	 * @param x
+	 *
+	 * @return
+	 */
+	public static long add1(final long x) {
+		return x + 1;
+	}
+
+	/**
+	 * Doubles the input value.
+	 *
+	 * @param x
+	 *
+	 * @return
+	 */
+	public static long twice(final long x) {
+		return 2 * x;
+	}
 }
