@@ -23,7 +23,7 @@ package eapli.framework.representations.builders;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import eapli.framework.quantities.domain.model.Money;
+import eapli.framework.money.domain.model.Money;
 import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.validations.Invariants;
 

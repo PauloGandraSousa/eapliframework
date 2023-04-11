@@ -1,8 +1,8 @@
 # EAPLI Framework Changelog
 
-## v21.3.0
+## v22.0.0
 
-### 21.3.0 [CORE]
+### 22.0.0 [CORE]
 
 #### What's new
 
@@ -10,6 +10,12 @@
 - `Functions.ffx` method
 - `MathFunctions.add1` method
 - `MathFunctions.twice` method
+
+#### what's changed
+
+- `Money` class moved to `eapli.framework.money.domain.model`
+- `Arrays` and `ArrayPredicates` classes moved to `eapli.framework.collections.util`
+
 
 ## v21.2.0
 

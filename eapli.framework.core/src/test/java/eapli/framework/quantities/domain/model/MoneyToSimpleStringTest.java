@@ -31,6 +31,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import eapli.framework.money.domain.model.Money;
+
 /**
  * Test cases for the toSimpleString() method of the class Money.
  *

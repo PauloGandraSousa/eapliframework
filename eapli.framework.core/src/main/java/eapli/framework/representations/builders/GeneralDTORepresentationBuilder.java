@@ -27,7 +27,7 @@ import java.util.Calendar;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.quantities.domain.model.Money;
+import eapli.framework.money.domain.model.Money;
 import eapli.framework.representations.RepresentationBuilder;
 import eapli.framework.representations.dto.GeneralDTO;
 

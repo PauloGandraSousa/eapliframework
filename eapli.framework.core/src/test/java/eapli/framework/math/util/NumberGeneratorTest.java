@@ -27,7 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.util.ArrayPredicates;
+import eapli.framework.collections.util.ArrayPredicates;
 
 /**
  * Since the {@link NumberGenerator} class is based on random generation the tests cannot really

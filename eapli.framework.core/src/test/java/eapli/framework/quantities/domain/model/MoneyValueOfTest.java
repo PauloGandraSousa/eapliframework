@@ -30,6 +30,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import eapli.framework.money.domain.model.Money;
+
 /**
  * test cases for the valueOf() method of the Money class
  *

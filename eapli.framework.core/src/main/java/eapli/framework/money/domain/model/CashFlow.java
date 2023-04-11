@@ -30,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.quantities.domain.model.Money;
 import eapli.framework.strings.FormattedString;
 import eapli.framework.validations.Preconditions;
 

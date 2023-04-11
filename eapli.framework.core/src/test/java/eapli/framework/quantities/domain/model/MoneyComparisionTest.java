@@ -29,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import eapli.framework.money.domain.model.Money;
+
 /**
  *
  * @author Paulo Gandra de Sousa

@@ -29,6 +29,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.collections.util.Arrays;
+
 /**
  *
  * @author Paulo Gandra de Sousa 28/05/2020

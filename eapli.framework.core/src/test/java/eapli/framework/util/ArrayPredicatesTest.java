@@ -29,6 +29,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import eapli.framework.collections.util.ArrayPredicates;
+
 /**
  *
  * @author Paulo Gandra de Sousa 28/05/2020

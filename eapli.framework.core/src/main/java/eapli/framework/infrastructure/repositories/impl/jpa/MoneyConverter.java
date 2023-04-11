@@ -23,7 +23,7 @@ package eapli.framework.infrastructure.repositories.impl.jpa;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import eapli.framework.quantities.domain.model.Money;
+import eapli.framework.money.domain.model.Money;
 
 /**
  * To avoid breaking the information hiding principle, we convert the value

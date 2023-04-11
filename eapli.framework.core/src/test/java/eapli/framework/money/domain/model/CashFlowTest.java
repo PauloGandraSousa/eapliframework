@@ -27,8 +27,6 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import eapli.framework.quantities.domain.model.Money;
-
 /**
  * @author Paulo Gandra de Sousa 2023.03.31
  */
