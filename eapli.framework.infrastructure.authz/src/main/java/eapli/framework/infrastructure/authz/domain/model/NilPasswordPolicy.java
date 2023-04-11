@@ -26,19 +26,21 @@ package eapli.framework.infrastructure.authz.domain.model;
 import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 
 /**
+ * A password policy object to represent "no policy".
+ *
  * @author Paulo Gandra de Sousa 24/05/2019
  *
  */
 public final class NilPasswordPolicy implements PasswordPolicy {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see eapli.framework.infrastructure.authz.domain.model.PasswordPolicy#
-     * meetsRequeriments(java.lang.String)
-     */
-    @Override
-    public boolean isSatisfiedBy(final String rawPassword) {
-        return true;
-    }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see eapli.framework.infrastructure.authz.domain.model.PasswordPolicy#
+	 * meetsRequeriments(java.lang.String)
+	 */
+	@Override
+	public boolean isSatisfiedBy(final String rawPassword) {
+		return true;
+	}
 }
