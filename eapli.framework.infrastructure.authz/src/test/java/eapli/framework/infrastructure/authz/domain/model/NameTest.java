@@ -23,9 +23,12 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  * @author Paulo Gandra de Sousa 11/05/2022
@@ -33,34 +36,40 @@ import org.junit.jupiter.api.Test;
  */
 class NameTest {
 
-    @Test
-    void ensureFirstNameIsNotNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Name(null, "Smith"));
-    }
+	@Test
+	void ensureFirstNameIsNotNull() {
+		assertThrows(IllegalArgumentException.class, () -> new Name(null, "Smith"));
+	}
 
-    @Test
-    void ensureFirstNameIsNotEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> new Name("", "Smith"));
-    }
+	@Test
+	void ensureFirstNameIsNotEmpty() {
+		assertThrows(IllegalArgumentException.class, () -> new Name("", "Smith"));
+	}
 
-    @Test
-    void ensureLastNameIsNotNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Name("Mary", null));
-    }
+	@Test
+	void ensureLastNameIsNotNull() {
+		assertThrows(IllegalArgumentException.class, () -> new Name("Mary", null));
+	}
 
-    @Test
-    void ensureLastNameIsNotEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> new Name("Mary", ""));
-    }
+	@Test
+	void ensureLastNameIsNotEmpty() {
+		assertThrows(IllegalArgumentException.class, () -> new Name("Mary", ""));
+	}
 
-    @Test
-    void ensureFirstNameDoesNotContainIllegalCharacters() {
-        assertThrows(IllegalArgumentException.class, () -> new Name("Ma$ry", "Smith"));
-    }
+	@Test
+	void ensureFirstNameDoesNotContainIllegalCharacters() {
+		assertThrows(IllegalArgumentException.class, () -> new Name("Ma$ry", "Smith"));
+	}
 
-    @Test
-    void ensureLastNameDoesNotContainIllegalCharacters() {
-        assertThrows(IllegalArgumentException.class, () -> new Name("Mary", "Smit_"));
-    }
+	@Test
+	void ensureLastNameDoesNotContainIllegalCharacters() {
+		assertThrows(IllegalArgumentException.class, () -> new Name("Mary", "Smit_"));
+	}
 
+	@ParameterizedTest
+	@CsvSource({ "Alicia, Keys", "António, Mc'Rib", "Eça, de Queróis", "Camilo, Castelo-Branco" })
+	void ensureRightNames(String first, String last) {
+		final var result = new Name(first, last);
+		assertNotNull(result);
+	}
 }
