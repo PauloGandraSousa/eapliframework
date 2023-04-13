@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -53,7 +54,7 @@ class HashValueSetEmptySetTest {
 
 	@Test
 	void ensureIsEmpty() {
-		assertTrue(subject.isEmpty());
+		assertDoesNotChangeThisSet();
 	}
 
 	@ParameterizedTest
@@ -67,6 +68,7 @@ class HashValueSetEmptySetTest {
 		final var s = HashValueSet.of(1, 2, 3);
 		final var result = subject.union(s);
 		assertEquals(s, result);
+		assertDoesNotChangeThisSet();
 	}
 
 	@Test
@@ -77,18 +79,21 @@ class HashValueSetEmptySetTest {
 		final var result = subject.intersection(s);
 
 		assertEquals(expected, result);
+		assertDoesNotChangeThisSet();
 	}
 
 	@Test
 	void ensureFilteringIsAnEmptySet() {
 		final var result = subject.filter(i -> true);
 		assertTrue(result.isEmpty());
+		assertDoesNotChangeThisSet();
 	}
 
 	@Test
 	void ensureMappingIsAnEmptySet() {
 		final var result = subject.map(i -> 2 * i);
 		assertTrue(result.isEmpty());
+		assertDoesNotChangeThisSet();
 	}
 
 	@Test
@@ -96,6 +101,7 @@ class HashValueSetEmptySetTest {
 		final int initial = 1;
 		final int result = subject.fold(initial, (a, b) -> a + b);
 		assertEquals(initial, result);
+		assertDoesNotChangeThisSet();
 	}
 
 	@Test
@@ -105,6 +111,7 @@ class HashValueSetEmptySetTest {
 		final var result = subject.add(1);
 
 		assertEquals(expected, result);
+		assertDoesNotChangeThisSet();
 	}
 
 	@Test
@@ -115,6 +122,7 @@ class HashValueSetEmptySetTest {
 		final var result = subject.complement(s);
 
 		assertEquals(expected, result);
+		assertDoesNotChangeThisSet();
 	}
 
 	@Test
@@ -125,5 +133,11 @@ class HashValueSetEmptySetTest {
 		final var result = subject.complement(s);
 
 		assertEquals(expected, result);
+		assertDoesNotChangeThisSet();
+	}
+
+	@AfterEach
+	void assertDoesNotChangeThisSet() {
+		assertTrue(subject.isEmpty());
 	}
 }

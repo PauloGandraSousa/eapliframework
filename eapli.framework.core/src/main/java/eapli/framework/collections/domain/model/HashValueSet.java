@@ -168,10 +168,9 @@ public class HashValueSet<T> implements ValueSet<T> {
 
 	@Override
 	public ValueSet<T> complement(ValueSet<T> other) {
-		final var c1 = stream().filter(e -> !other.contains(e)).collect(Collectors.toSet());
-		final var c2 = other.stream().filter(e -> !this.contains(e)).collect(Collectors.toSet());
-		c1.addAll(c2);
+		final var c1 = this.filter(e -> !other.contains(e));
+		final var c2 = other.filter(e -> !this.contains(e));
 
-		return new HashValueSet<>(c1);
+		return c1.union(c2);
 	}
 }
