@@ -31,7 +31,9 @@ import java.util.stream.Stream;
 
 /**
  * An immutable list of immutable values. A List by definition is an ordered
- * sequence of values. Repeated values are allowed.
+ * sequence of values. Repeated values are allowed. <code>null</code> values are
+ * not allowed.
+ *
  *
  * @author Paulo Gandra de Sousa 2023.04.10
  *
@@ -51,7 +53,15 @@ public interface ValueList<T /* extends ValueObject */> {
 	 *
 	 * @return the length (number of elements) of this list
 	 */
-	int length();
+	int size();
+
+	/**
+	 * Checks if the element exists in the list.
+	 *
+	 * @param element value to check
+	 * @return if the element exists in the list
+	 */
+	boolean contains(T element);
 
 	/**
 	 * Returns the first element of this list. If the list is empty, an empty

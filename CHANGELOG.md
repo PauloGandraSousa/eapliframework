@@ -6,7 +6,8 @@
 
 #### What's new
 
-- `ValueList` and `ValueSet`
+- `ValueList` and `ValueSet` interfaces
+- `HashValueSet` class
 - `CashFlow` class
 - `Functions.ffx` method
 - `Math.add1` method

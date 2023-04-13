@@ -28,15 +28,18 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import eapli.framework.domain.model.ValueObject;
+
 /**
  * An immutable set of immutable values. A set by definition is an unordered
  * sequence of values and thus does not allow for repeated values.
+ * <code>null</code> values are not allowed.
  *
  * @author Paulo Gandra de Sousa 2023.04.11
  *
  * @param <T>
  */
-public interface ValueSet<T /* extends ValueObject */> {
+public interface ValueSet<T /* extends ValueObject */> extends ValueObject {
 
 	/**
 	 * Checks if this set is empty.
@@ -50,7 +53,15 @@ public interface ValueSet<T /* extends ValueObject */> {
 	 *
 	 * @return the length (number of elements) of this set
 	 */
-	int length();
+	int size();
+
+	/**
+	 * Checks if the element exists in the set.
+	 *
+	 * @param element value to check
+	 * @return if the element exists in the set
+	 */
+	boolean contains(T element);
 
 	/**
 	 * Returns a new set with all the elements of this set plus a new element.
@@ -67,7 +78,16 @@ public interface ValueSet<T /* extends ValueObject */> {
 	 * @param other
 	 * @return
 	 */
-	ValueSet<T> add(ValueSet<T> other);
+	ValueSet<T> union(ValueSet<T> other);
+
+	/**
+	 * Returns a new set with the elements that belong both to this set and the
+	 * other set.
+	 *
+	 * @param other
+	 * @return
+	 */
+	ValueSet<T> intersection(ValueSet<T> other);
 
 	/**
 	 * Returns a new set with the elements of this set that meet the specified
