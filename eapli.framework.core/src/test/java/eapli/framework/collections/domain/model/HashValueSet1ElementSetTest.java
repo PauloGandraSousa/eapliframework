@@ -158,4 +158,34 @@ class HashValueSet1ElementSetTest {
 
 		assertEquals(expected, result);
 	}
+
+	@Test
+	void ensureComplementOfEmptyIsThisSet() {
+		final var expected = HashValueSet.of(1);
+
+		final var s = new HashValueSet<Integer>();
+		final var result = subject.complement(s);
+
+		assertEquals(expected, result);
+	}
+
+	@Test
+	void ensureComplementOfDisjointIsUnion() {
+		final var expected = HashValueSet.of(1, 900, 901);
+
+		final var s = HashValueSet.of(900, 901);
+		final var result = subject.complement(s);
+
+		assertEquals(expected, result);
+	}
+
+	@Test
+	void ensureComplement() {
+		final var expected = HashValueSet.of(900, 901);
+
+		final var s = HashValueSet.of(1, 900, 901);
+		final var result = subject.complement(s);
+
+		assertEquals(expected, result);
+	}
 }

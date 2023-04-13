@@ -49,9 +49,9 @@ public interface ValueSet<T /* extends ValueObject */> extends ValueObject {
 	boolean isEmpty();
 
 	/**
-	 * Returns the length (number of elements) of this set.
+	 * Returns the number of elements of this set.
 	 *
-	 * @return the length (number of elements) of this set
+	 * @return the number of elements of this set
 	 */
 	int size();
 
@@ -74,6 +74,14 @@ public interface ValueSet<T /* extends ValueObject */> extends ValueObject {
 	/**
 	 * Returns a new set with all the elements of this set plus all the elements of
 	 * the other set.
+	 * <p>
+	 *
+	 * <pre>
+	 * A = [1 2 3]
+	 * B = [4 5 6]
+	 *
+	 * C = A union B = [1 2 3 4 5 6]
+	 * </pre>
 	 *
 	 * @param other
 	 * @return
@@ -81,13 +89,36 @@ public interface ValueSet<T /* extends ValueObject */> extends ValueObject {
 	ValueSet<T> union(ValueSet<T> other);
 
 	/**
-	 * Returns a new set with the elements that belong both to this set and the
-	 * other set.
+	 * Returns a new set with just the elements that belong to both sets.
+	 * <p>
+	 *
+	 * <pre>
+	 * A = [1 2 3]
+	 * B = [3 4 5]
+	 *
+	 * C = A intersection B = [3]
+	 * </pre>
 	 *
 	 * @param other
 	 * @return
 	 */
 	ValueSet<T> intersection(ValueSet<T> other);
+
+	/**
+	 * Returns a new set with the elements that do not belong to both sets.
+	 * <p>
+	 *
+	 * <pre>
+	 * A = [1 2 3]
+	 * B = [3 4 5]
+	 *
+	 * C = A complement B = [1 2 4 5]
+	 * </pre>
+	 *
+	 * @param other
+	 * @return
+	 */
+	ValueSet<T> complement(ValueSet<T> other);
 
 	/**
 	 * Returns a new set with the elements of this set that meet the specified

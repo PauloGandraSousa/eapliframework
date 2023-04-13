@@ -79,6 +79,15 @@ public class HashValueSet<T> implements ValueSet<T> {
 	 *
 	 * @param values
 	 */
+	private HashValueSet(Stream<T> values) {
+		this(values.collect(Collectors.toSet()));
+	}
+
+	/**
+	 * helper "copy" constructor
+	 *
+	 * @param values
+	 */
 	private HashValueSet(Set<T> values) {
 		data = new HashSet<>(values);
 	}
@@ -130,17 +139,17 @@ public class HashValueSet<T> implements ValueSet<T> {
 
 	@Override
 	public ValueSet<T> intersection(ValueSet<T> other) {
-		return new HashValueSet<>(stream().filter(other::contains).collect(Collectors.toSet()));
+		return filter(other::contains);
 	}
 
 	@Override
 	public ValueSet<T> filter(Predicate<T> filter) {
-		return new HashValueSet<>(stream().filter(filter).collect(Collectors.toSet()));
+		return new HashValueSet<>(stream().filter(filter));
 	}
 
 	@Override
 	public <U> ValueSet<U> map(Function<T, U> mapper) {
-		return new HashValueSet<>(stream().map(mapper).collect(Collectors.toSet()));
+		return new HashValueSet<>(stream().map(mapper));
 	}
 
 	@Override
@@ -155,5 +164,14 @@ public class HashValueSet<T> implements ValueSet<T> {
 	@Override
 	public Stream<T> stream() {
 		return data.stream();
+	}
+
+	@Override
+	public ValueSet<T> complement(ValueSet<T> other) {
+		final var c1 = stream().filter(e -> !other.contains(e)).collect(Collectors.toSet());
+		final var c2 = other.stream().filter(e -> !this.contains(e)).collect(Collectors.toSet());
+		c1.addAll(c2);
+
+		return new HashValueSet<>(c1);
 	}
 }

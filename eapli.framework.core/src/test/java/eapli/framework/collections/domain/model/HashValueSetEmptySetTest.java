@@ -106,4 +106,24 @@ class HashValueSetEmptySetTest {
 
 		assertEquals(expected, result);
 	}
+
+	@Test
+	void ensureComplementOfEmptyIsThisSet() {
+		final var expected = new HashValueSet<Integer>();
+
+		final var s = new HashValueSet<Integer>();
+		final var result = subject.complement(s);
+
+		assertEquals(expected, result);
+	}
+
+	@Test
+	void ensureComplementOfDisjointIsUnion() {
+		final var expected = HashValueSet.of(900, 901);
+
+		final var s = HashValueSet.of(900, 901);
+		final var result = subject.complement(s);
+
+		assertEquals(expected, result);
+	}
 }
