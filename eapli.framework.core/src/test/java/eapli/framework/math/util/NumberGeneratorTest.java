@@ -22,6 +22,7 @@ package eapli.framework.math.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,10 +39,34 @@ import eapli.framework.collections.util.ArrayPredicates;
  * specification.
  *
  * @author Paulo Gandra Sousa 28/05/2020
- *
  */
 class NumberGeneratorTest {
     private static final Logger LOGGER = LogManager.getLogger(NumberGeneratorTest.class);
+
+    @Test
+    void ensureNIntsRandomness() {
+        final Integer[] r = NumberGenerator.nInts(100);
+        LOGGER.debug("Generated n ints »» {} ««", (Object[]) r);
+
+        assertEquals(100, r.length);
+        assertTrue(ArrayPredicates.areAllDistinct(r));
+    }
+
+    @Test
+    void ensureNIntsRandomnessExcluding() {
+        final Integer[] exclusion = NumberGenerator.nInts(100);
+
+        final Integer[] r = NumberGenerator.nInts(100, exclusion);
+
+        assertEquals(100, r.length);
+        assertTrue(ArrayPredicates.areAllDistinct(r));
+        for (final Integer v : r) {
+            if (ArrayPredicates.contains(exclusion, v)) {
+                LOGGER.debug("Generated {} which belongs to the exclusion list", v);
+                fail("excluded value is in list");
+            }
+        }
+    }
 
     @Test
     void ensureIntRandomness() {

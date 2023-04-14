@@ -21,14 +21,16 @@
 package eapli.framework.math.util;
 
 import java.security.SecureRandom;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
+import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.strings.util.Strings;
 import eapli.framework.util.Utility;
 
 /**
  * Very simple secure random generator support.
- *
  * <p>
  * Make sure you check <a href=
  * "https://sonarcloud.io/organizations/pag_isep-bitbucket/rules?open=squid%3AS2245&rule_key=squid%3AS2245">Sonar
@@ -45,7 +47,6 @@ public final class NumberGenerator {
     }
 
     /**
-     *
      * @return a random integer
      */
     public static int anInt() {
@@ -53,8 +54,34 @@ public final class NumberGenerator {
     }
 
     /**
+     * Generates <em>n</em> random integers ensuring that it doesn't generate any of the values in
+     * the exclusion list.
      *
+     * @return n random integers
+     */
+    public static Integer[] nInts(final int n, final Integer[] excluding) {
+        final Set<Integer> numbers = new HashSet<>();
+        while (numbers.size() < n) {
+            final int v = RANDOM_GEN.nextInt();
+            if (!ArrayPredicates.contains(excluding, v)) {
+                numbers.add(v);
+            }
+        }
+        return numbers.toArray(new Integer[n]);
+    }
+
+    /**
+     * Generates <em>n</em> random integers.
+     *
+     * @return n random integers
+     */
+    public static Integer[] nInts(final int n) {
+        return nInts(n, new Integer[0]);
+    }
+
+    /**
      * @param bound
+     *
      * @return a random integer between 0 (inclusive) and {@code bound}
      *         (exclusive)
      */
@@ -63,7 +90,6 @@ public final class NumberGenerator {
     }
 
     /**
-     *
      * @return a random float between 0 and 1
      */
     public static float aFloat() {
@@ -71,8 +97,8 @@ public final class NumberGenerator {
     }
 
     /**
-     *
      * @param n
+     *
      * @return an array of random bytes
      */
     public static byte[] nBytes(final int n) {
@@ -82,8 +108,8 @@ public final class NumberGenerator {
     }
 
     /**
-     *
      * @param length
+     *
      * @return a random hexadecimal string
      */
     public static String anHex(final int length) {
