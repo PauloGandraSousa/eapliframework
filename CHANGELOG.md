@@ -12,6 +12,7 @@
 - `Functions.ffx` method
 - `Math.add1` method
 - `Math.twice` method
+- `NumberGenerator.nInts` method
 
 #### What's changed
 
