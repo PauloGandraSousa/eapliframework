@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
 import eapli.framework.validations.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * A cash flow, i.e., an income or expenditure on a certain date.
@@ -52,6 +53,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra de Sousa 2023.03.31
  */
 @Embeddable
+@EqualsAndHashCode
 public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject, FormattedString {
 
     private static final long serialVersionUID = 1L;
@@ -172,23 +174,6 @@ public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject
         } else {
             return amount.compareTo(arg.amount);
         }
-    }
-
-    @Override
-    public boolean equals(final Object arg) {
-        if (!(arg instanceof CashFlow)) {
-            return false;
-        }
-        final CashFlow other = (CashFlow) arg;
-        return happeneddOn.equals(other.happeneddOn) && amount.equals(other.amount);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 11;
-        result = 37 * result + amount.hashCode();
-        result = 37 * result + happeneddOn.hashCode();
-        return result;
     }
 
     /**

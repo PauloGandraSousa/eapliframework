@@ -42,6 +42,11 @@ import eapli.framework.functional.Either;
  *         .elseSucceeds(() -> new EmailAddress(address));
  * </pre>
  *
+ * @param <E>
+ *            the type of "error" object
+ * @param <T>
+ *            the type of success object
+ *
  * @author Paulo Gandra de Sousa 2023.03.24
  *
  * @see CheckIf
@@ -270,7 +275,7 @@ public class Check<E, T> {
      *            the action to execute and return value if the test fails
      */
     public Check<E, T> isEmpty(final Collection<?> arg, final Supplier<E> error) {
-        if (!Validations.isEmpty(arg)) {
+        if (!Validations.notEmpty(arg)) {
             return new FailedTry<>(error);
         } else {
             return new FollowupTry<>();

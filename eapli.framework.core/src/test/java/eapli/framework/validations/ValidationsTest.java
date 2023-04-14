@@ -88,18 +88,18 @@ class ValidationsTest {
     void testNonEmptyCollection() {
         final Collection<String> col = new ArrayList<>();
         col.add("abc");
-        assertTrue(Validations.isEmpty(col));
+        assertTrue(Validations.notEmpty(col));
     }
 
     @Test
     void testNonEmptyCollectionNull() {
-        assertFalse(Validations.isEmpty(null));
+        assertFalse(Validations.notEmpty(null));
     }
 
     @Test
     void testEnsureNonEmptyCollectionFailsIfEmpty() {
         final Collection<String> col = new ArrayList<>();
-        assertFalse(Validations.isEmpty(col));
+        assertFalse(Validations.notEmpty(col));
     }
 
     @Test

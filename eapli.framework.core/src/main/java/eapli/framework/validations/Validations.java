@@ -127,10 +127,10 @@ import eapli.framework.util.Utility;
      *            the action to execute of the collection is null or empty
      */
     public static void ensureNonEmpty(final Collection<?> arg, final Action consequence) {
-        ensure(isEmpty(arg), consequence);
+        ensure(notEmpty(arg), consequence);
     }
 
-    static boolean isEmpty(final Collection<?> arg) {
+    static boolean notEmpty(final Collection<?> arg) {
         return arg != null && !arg.isEmpty();
     }
 

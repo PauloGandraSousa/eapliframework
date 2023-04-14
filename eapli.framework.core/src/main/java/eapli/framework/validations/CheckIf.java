@@ -143,7 +143,7 @@ public class CheckIf {
      */
     public static <E, T> Either<E, T> nonEmpty(final Collection<?> arg, final Supplier<T> success,
             final Supplier<E> error) {
-        return succeeds(Validations.isEmpty(arg), success, error);
+        return succeeds(Validations.notEmpty(arg), success, error);
     }
 
     /**
