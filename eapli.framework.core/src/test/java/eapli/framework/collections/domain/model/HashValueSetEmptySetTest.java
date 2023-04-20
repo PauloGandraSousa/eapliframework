@@ -25,6 +25,7 @@ package eapli.framework.collections.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
@@ -36,108 +37,112 @@ import org.junit.jupiter.params.provider.ValueSource;
  * Test of ValueSet for the case of an empty set.
  *
  * @author Paulo Gandra de Sousa 2023.04.12
- *
  */
 class HashValueSetEmptySetTest {
 
-	/*
-	 * one element - size=1 - is empty = false - contains true/false - add - does
-	 * not change size
-	 */
+    /*
+     * one element - size=1 - is empty = false - contains true/false - add - does
+     * not change size
+     */
 
-	private final HashValueSet<Integer> subject = new HashValueSet<>();
+    private final HashValueSet<Integer> subject = new HashValueSet<>();
 
-	@Test
-	void ensureSizeIs0() {
-		assertEquals(0, subject.size());
-	}
+    @Test
+    void ensureSizeIs0() {
+        assertEquals(0, subject.size());
+    }
 
-	@Test
-	void ensureIsEmpty() {
-		assertDoesNotChangeThisSet();
-	}
+    @Test
+    void ensureIsEmpty() {
+        assertDoesNotChangeThisSet();
+    }
 
-	@ParameterizedTest
-	@ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-	void ensureDoesNotContain(int v) {
-		assertFalse(subject.contains(v));
-	}
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
+    void ensureDoesNotContain(final int v) {
+        assertFalse(subject.contains(v));
+    }
 
-	@Test
-	void ensureUnionWithAnotherSetIsTheOtherSet() {
-		final var s = HashValueSet.of(1, 2, 3);
-		final var result = subject.union(s);
-		assertEquals(s, result);
-		assertDoesNotChangeThisSet();
-	}
+    @Test
+    void ensureUnionWithAnotherSetIsTheOtherSet() {
+        final var s = HashValueSet.of(1, 2, 3);
+        final var result = subject.union(s);
+        assertEquals(s, result);
+        assertDoesNotChangeThisSet();
+    }
 
-	@Test
-	void ensureIntersectionWithAnotherSetIsTheEmptySet() {
-		final var expected = new HashValueSet<Integer>();
+    @Test
+    void ensureIntersectionWithAnotherSetIsTheEmptySet() {
+        final var expected = new HashValueSet<Integer>();
 
-		final var s = HashValueSet.of(1, 2, 3);
-		final var result = subject.intersection(s);
+        final var s = HashValueSet.of(1, 2, 3);
+        final var result = subject.intersection(s);
 
-		assertEquals(expected, result);
-		assertDoesNotChangeThisSet();
-	}
+        assertEquals(expected, result);
+        assertDoesNotChangeThisSet();
+    }
 
-	@Test
-	void ensureFilteringIsAnEmptySet() {
-		final var result = subject.filter(i -> true);
-		assertTrue(result.isEmpty());
-		assertDoesNotChangeThisSet();
-	}
+    @Test
+    void ensureFilteringIsAnEmptySet() {
+        final var result = subject.filter(i -> true);
+        assertTrue(result.isEmpty());
+        assertDoesNotChangeThisSet();
+    }
 
-	@Test
-	void ensureMappingIsAnEmptySet() {
-		final var result = subject.map(i -> 2 * i);
-		assertTrue(result.isEmpty());
-		assertDoesNotChangeThisSet();
-	}
+    @Test
+    void ensureMappingIsAnEmptySet() {
+        final var result = subject.map(i -> 2 * i);
+        assertTrue(result.isEmpty());
+        assertDoesNotChangeThisSet();
+    }
 
-	@Test
-	void ensureFoldingReturnsTheInitialValue() {
-		final int initial = 1;
-		final int result = subject.fold(initial, (a, b) -> a + b);
-		assertEquals(initial, result);
-		assertDoesNotChangeThisSet();
-	}
+    @Test
+    void ensureFoldingReturnsTheInitialValue() {
+        final int initial = 1;
+        final int result = subject.fold(initial, (a, b) -> a + b);
+        assertEquals(initial, result);
+        assertDoesNotChangeThisSet();
+    }
 
-	@Test
-	void ensureAddingAnElementReturnsANewSetWithJustThatElement() {
-		final var expected = HashValueSet.of(1);
+    @Test
+    void ensureAddingAnElementReturnsANewSetWithJustThatElement() {
+        final var expected = HashValueSet.of(1);
 
-		final var result = subject.add(1);
+        final var result = subject.add(1);
 
-		assertEquals(expected, result);
-		assertDoesNotChangeThisSet();
-	}
+        assertEquals(expected, result);
+        assertDoesNotChangeThisSet();
+    }
 
-	@Test
-	void ensureComplementOfEmptyIsThisSet() {
-		final var expected = new HashValueSet<Integer>();
+    @Test
+    void ensureCannotAddNull() {
+        assertThrows(IllegalArgumentException.class, () -> subject.add(null));
+    }
 
-		final var s = new HashValueSet<Integer>();
-		final var result = subject.complement(s);
+    @Test
+    void ensureComplementOfEmptyIsThisSet() {
+        final var expected = new HashValueSet<Integer>();
 
-		assertEquals(expected, result);
-		assertDoesNotChangeThisSet();
-	}
+        final var s = new HashValueSet<Integer>();
+        final var result = subject.complement(s);
 
-	@Test
-	void ensureComplementOfDisjointIsUnion() {
-		final var expected = HashValueSet.of(900, 901);
+        assertEquals(expected, result);
+        assertDoesNotChangeThisSet();
+    }
 
-		final var s = HashValueSet.of(900, 901);
-		final var result = subject.complement(s);
+    @Test
+    void ensureComplementOfDisjointIsUnion() {
+        final var expected = HashValueSet.of(900, 901);
 
-		assertEquals(expected, result);
-		assertDoesNotChangeThisSet();
-	}
+        final var s = HashValueSet.of(900, 901);
+        final var result = subject.complement(s);
 
-	@AfterEach
-	void assertDoesNotChangeThisSet() {
-		assertTrue(subject.isEmpty());
-	}
+        assertEquals(expected, result);
+        assertDoesNotChangeThisSet();
+    }
+
+    @AfterEach
+    void assertDoesNotChangeThisSet() {
+        assertTrue(subject.isEmpty());
+    }
 }

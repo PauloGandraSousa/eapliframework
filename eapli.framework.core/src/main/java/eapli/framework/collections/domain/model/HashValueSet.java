@@ -25,6 +25,7 @@ package eapli.framework.collections.domain.model;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -32,6 +33,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import eapli.framework.validations.Preconditions;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -46,131 +48,138 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class HashValueSet<T> implements ValueSet<T> {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	private final Set<T> data;
+    private final Set<T> data;
 
-	/**
-	 * Constructs an empty set.
-	 */
-	public HashValueSet() {
-		data = new HashSet<>();
-	}
+    /**
+     * Constructs an empty set.
+     */
+    public HashValueSet() {
+        data = new HashSet<>();
+    }
 
-	/**
-	 * Factory method.
-	 *
-	 * @param <T>
-	 * @param args
-	 * @return
-	 */
-	@SafeVarargs
-	public static <T> ValueSet<T> of(T... args) {
-		final var s = new HashSet<T>();
-		Collections.addAll(s, args);
-		return new HashValueSet<>(s);
-	}
+    /**
+     * Factory method.
+     *
+     * @param <T>
+     * @param args
+     *
+     * @return
+     */
+    @SafeVarargs
+    public static <T> ValueSet<T> of(final T... args) {
+        final var s = new HashSet<T>();
+        Collections.addAll(s, args);
+        return new HashValueSet<>(s);
+    }
 
-	/**
-	 * helper "copy" constructor
-	 *
-	 * @param values
-	 */
-	private HashValueSet(Stream<T> values) {
-		this(values.collect(Collectors.toSet()));
-	}
+    /**
+     * helper "copy" constructor
+     *
+     * @param values
+     */
+    private HashValueSet(final Stream<T> values) {
+        this(values.collect(Collectors.toSet()));
+    }
 
-	/**
-	 * helper "copy" constructor
-	 *
-	 * @param values
-	 */
-	private HashValueSet(Set<T> values) {
-		data = new HashSet<>(values);
-	}
+    /**
+     * helper "copy" constructor
+     *
+     * @param values
+     */
+    private HashValueSet(final Set<T> values) {
+        data = new HashSet<>(values);
+    }
 
-	/**
-	 * helper "copy" constructor
-	 *
-	 * @param values
-	 */
-	private HashValueSet(Set<T> values, T newElement) {
-		this(values);
-		data.add(newElement);
-	}
+    /**
+     * helper "copy" constructor
+     *
+     * @param values
+     */
+    private HashValueSet(final Set<T> values, final T newElement) {
+        this(values);
+        Preconditions.nonNull(newElement);
+        data.add(newElement);
+    }
 
-	/**
-	 * helper "copy" constructor
-	 *
-	 * @param values
-	 */
-	private HashValueSet(Set<T> values, ValueSet<T> other) {
-		this(values);
-		other.stream().forEach(data::add);
-	}
+    /**
+     * helper "copy" constructor
+     *
+     * @param values
+     */
+    private HashValueSet(final Set<T> values, final ValueSet<T> other) {
+        this(values);
+        other.stream().forEach(data::add);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return data.isEmpty();
-	}
+    @Override
+    public boolean isEmpty() {
+        return data.isEmpty();
+    }
 
-	@Override
-	public int size() {
-		return data.size();
-	}
+    @Override
+    public int size() {
+        return data.size();
+    }
 
-	@Override
-	public boolean contains(T element) {
-		return data.contains(element);
-	}
+    @Override
+    public boolean contains(final T element) {
+        return data.contains(element);
+    }
 
-	@Override
-	public HashValueSet<T> add(T other) {
-		return new HashValueSet<>(data, other);
-	}
+    @Override
+    public HashValueSet<T> add(final T other) {
+        return new HashValueSet<>(data, other);
+    }
 
-	@Override
-	public ValueSet<T> union(ValueSet<T> other) {
-		return new HashValueSet<>(data, other);
-	}
+    @Override
+    public ValueSet<T> union(final ValueSet<T> other) {
+        return new HashValueSet<>(data, other);
+    }
 
-	@Override
-	public ValueSet<T> intersection(ValueSet<T> other) {
-		return filter(other::contains);
-	}
+    @Override
+    public ValueSet<T> intersection(final ValueSet<T> other) {
+        return filter(other::contains);
+    }
 
-	@Override
-	public ValueSet<T> filter(Predicate<T> filter) {
-		return new HashValueSet<>(stream().filter(filter));
-	}
+    @Override
+    public ValueSet<T> filter(final Predicate<T> filter) {
+        return new HashValueSet<>(stream().filter(filter));
+    }
 
-	@Override
-	public <U> ValueSet<U> map(Function<T, U> mapper) {
-		return new HashValueSet<>(stream().map(mapper));
-	}
+    @Override
+    public <U> ValueSet<U> map(final Function<T, U> mapper) {
+        return new HashValueSet<>(stream().map(mapper));
+    }
 
-	@Override
-	public <R> R fold(R initial, BiFunction<R, T, R> folder) {
-		R result = initial;
-		for (final var e : data) {
-			result = folder.apply(result, e);
-		}
-		return result;
-	}
+    @Override
+    public <R> R fold(final R initial, final BiFunction<R, T, R> folder) {
+        R result = initial;
+        for (final var e : data) {
+            result = folder.apply(result, e);
+        }
+        return result;
+    }
 
-	@Override
-	public Stream<T> stream() {
-		return data.stream();
-	}
+    @Override
+    public Stream<T> stream() {
+        return data.stream();
+    }
 
-	@Override
-	public ValueSet<T> complement(ValueSet<T> other) {
-		final var c1 = this.filter(e -> !other.contains(e));
-		final var c2 = other.filter(e -> !this.contains(e));
+    @Override
+    public ValueSet<T> complement(final ValueSet<T> other) {
+        final var c1 = this.filter(e -> !other.contains(e));
+        final var c2 = other.filter(e -> !this.contains(e));
 
-		return c1.union(c2);
-	}
+        return c1.union(c2);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return data.iterator();
+    }
 }
