@@ -90,6 +90,17 @@ public final class NumberGenerator {
     }
 
     /**
+     * @param lower
+     * @param upper
+     *
+     * @return a random integer between {@code lower} (inclusive) and {@code upper}
+     *         (exclusive)
+     */
+    public static int anInt(final int lower, final int upper) {
+        return lower + RANDOM_GEN.nextInt(upper - lower);
+    }
+
+    /**
      * @return a random float between 0 and 1
      */
     public static float aFloat() {
