@@ -35,21 +35,21 @@ class CashFlowTest {
     @Test
     void ensureMoneyIsMandatory() {
         final var now = LocalDate.now();
-        assertThrows(IllegalArgumentException.class, () -> new CashFlow(null, now));
+        assertThrows(IllegalArgumentException.class, () -> new CashFlow(now, null));
     }
 
     @Test
     void ensureDateIsMandatory() {
         final var two = Money.dollars(2);
-        assertThrows(IllegalArgumentException.class, () -> new CashFlow(two, null));
+        assertThrows(IllegalArgumentException.class, () -> new CashFlow(null, two));
     }
 
     @Test
     void ensureAddOnTheSameDay() {
         final var today = LocalDate.now();
-        final var a = new CashFlow(Money.dollars(1), today);
-        final var b = new CashFlow(Money.dollars(2), today);
-        final var expected = new CashFlow(Money.dollars(3.00), today);
+        final var a = new CashFlow(today, Money.dollars(1));
+        final var b = new CashFlow(today, Money.dollars(2));
+        final var expected = new CashFlow(today, Money.dollars(3.00));
         final var result = a.add(b);
         assertEquals(expected, result);
     }
@@ -57,17 +57,17 @@ class CashFlowTest {
     @Test
     void ensureCannotAddOnDifferentDays() {
         final var today = LocalDate.now();
-        final var a = new CashFlow(Money.dollars(1), today);
-        final var b = new CashFlow(Money.dollars(2), today.minusDays(1));
+        final var a = new CashFlow(today, Money.dollars(1));
+        final var b = new CashFlow(today.minusDays(1), Money.dollars(2));
         assertThrows(IllegalArgumentException.class, () -> a.add(b));
     }
 
     @Test
     void ensureSubtractOnTheSameDay() {
         final var today = LocalDate.now();
-        final var a = new CashFlow(Money.dollars(1), today);
-        final var b = new CashFlow(Money.dollars(2), today);
-        final var expected = new CashFlow(Money.dollars(-1.00), today);
+        final var a = new CashFlow(today, Money.dollars(1));
+        final var b = new CashFlow(today, Money.dollars(2));
+        final var expected = new CashFlow(today, Money.dollars(-1.00));
         final var result = a.subtract(b);
         assertEquals(expected, result);
     }
@@ -75,8 +75,8 @@ class CashFlowTest {
     @Test
     void ensureCannotSubtractOnDifferentDays() {
         final var today = LocalDate.now();
-        final var a = new CashFlow(Money.dollars(1), today);
-        final var b = new CashFlow(Money.dollars(2), today.minusDays(1));
+        final var a = new CashFlow(today, Money.dollars(1));
+        final var b = new CashFlow(today.minusDays(1), Money.dollars(2));
         assertThrows(IllegalArgumentException.class, () -> a.subtract(b));
     }
 
@@ -84,8 +84,8 @@ class CashFlowTest {
     void whenTwoCashFlowsHaveSameAmountAndSameDateThenCompareIs0() {
         final var today = LocalDate.now();
         final var amt = Money.dollars(1);
-        final var a = new CashFlow(amt, today);
-        final var b = new CashFlow(amt, today);
+        final var a = new CashFlow(today, amt);
+        final var b = new CashFlow(today, amt);
         assertEquals(0, a.compareTo(b));
     }
 
@@ -93,8 +93,8 @@ class CashFlowTest {
     void whenACashFlowHasPreviousDateThanAnotherThenCompareIsMinus1() {
         final var today = LocalDate.now();
         final var amt = Money.dollars(1);
-        final var a = new CashFlow(amt, today.minusDays(1));
-        final var b = new CashFlow(amt, today);
+        final var a = new CashFlow(today.minusDays(1), amt);
+        final var b = new CashFlow(today, amt);
         assertEquals(-1, a.compareTo(b));
     }
 
@@ -102,8 +102,8 @@ class CashFlowTest {
     void whenACashFlowHasPosteriorDateThanAnotherThenCompareIs1() {
         final var today = LocalDate.now();
         final var amt = Money.dollars(1);
-        final var a = new CashFlow(amt, today.plusDays(1));
-        final var b = new CashFlow(amt, today);
+        final var a = new CashFlow(today.plusDays(1), amt);
+        final var b = new CashFlow(today, amt);
         assertEquals(1, a.compareTo(b));
     }
 
@@ -112,8 +112,8 @@ class CashFlowTest {
         final var today = LocalDate.now();
         final var amt1 = Money.dollars(1);
         final var amt2 = Money.dollars(2);
-        final var a = new CashFlow(amt1, today);
-        final var b = new CashFlow(amt2, today);
+        final var a = new CashFlow(today, amt1);
+        final var b = new CashFlow(today, amt2);
         assertEquals(-1, a.compareTo(b));
     }
 
@@ -122,8 +122,8 @@ class CashFlowTest {
         final var today = LocalDate.now();
         final var amt1 = Money.dollars(10);
         final var amt2 = Money.dollars(2);
-        final var a = new CashFlow(amt1, today);
-        final var b = new CashFlow(amt2, today);
+        final var a = new CashFlow(today, amt1);
+        final var b = new CashFlow(today, amt2);
         assertEquals(1, a.compareTo(b));
     }
 }

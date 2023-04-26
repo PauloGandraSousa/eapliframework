@@ -31,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
+import eapli.framework.time.domain.model.TemporalEvent;
 import eapli.framework.validations.Preconditions;
 import lombok.EqualsAndHashCode;
 
@@ -54,7 +55,8 @@ import lombok.EqualsAndHashCode;
  */
 @Embeddable
 @EqualsAndHashCode
-public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject, FormattedString {
+public class CashFlow
+        implements TemporalEvent<LocalDate, Money>, Comparable<CashFlow>, Serializable, ValueObject, FormattedString {
 
     private static final long serialVersionUID = 1L;
 
@@ -77,7 +79,7 @@ public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject
     /**
      * Constructs a new cash flow.
      */
-    public CashFlow(final Money amount, final LocalDate on) {
+    public CashFlow(final LocalDate on, final Money amount) {
         Preconditions.noneNull(amount, on);
 
         this.amount = amount;
@@ -98,7 +100,8 @@ public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject
      *
      * @return the date
      */
-    public LocalDate happenedOn() {
+    @Override
+    public LocalDate occurredAt() {
         return happeneddOn;
     }
 
@@ -120,7 +123,7 @@ public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject
          */
         Preconditions.areEqual(happeneddOn, arg.happeneddOn, "Cannot add different currencies");
 
-        return new CashFlow(amount.add(arg.amount), happeneddOn);
+        return new CashFlow(happeneddOn, amount.add(arg.amount));
     }
 
     /**
@@ -151,7 +154,7 @@ public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject
      * @return a new object which amount's sign is swapped
      */
     public CashFlow negate() {
-        return new CashFlow(amount.negate(), happeneddOn);
+        return new CashFlow(happeneddOn, amount.negate());
     }
 
     /**
@@ -221,5 +224,17 @@ public class CashFlow implements Comparable<CashFlow>, Serializable, ValueObject
     @Override
     public String toString() {
         return amount() + " (" + happeneddOn + ")";
+    }
+
+    @Override
+    public Money event() {
+        return amount();
+    }
+
+    @Override
+    public TemporalEvent<LocalDate, Money> merge(final TemporalEvent<LocalDate, Money> other) {
+        Preconditions.ensure(isSameDate(other));
+
+        return new CashFlow(occurredAt(), amount().add(other.event()));
     }
 }

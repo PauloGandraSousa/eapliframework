@@ -9,10 +9,12 @@
 - `ValueList` and `ValueSet` interfaces
 - `HashValueSet` class
 - `CashFlow` class
+- `CashFlowSeries` class
 - `Functions.ffx` method
 - `Math.add1` method
 - `Math.twice` method
 - `NumberGenerator.nInts` method
+- `NumberGenerator.anInt(int, int)` method
 
 #### What's changed
 

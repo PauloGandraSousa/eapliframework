@@ -58,7 +58,16 @@ public interface ValueSet<T /* extends ValueObject */> extends ValueObject, Iter
      *
      * @return the number of elements of this set
      */
-    int size();
+    default int size() {
+        return cardinality();
+    }
+
+    /**
+     * Returns the number of elements of this set.
+     *
+     * @return the number of elements of this set
+     */
+    int cardinality();
 
     /**
      * Checks if the element exists in the set.
