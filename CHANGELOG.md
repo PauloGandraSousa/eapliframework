@@ -25,6 +25,13 @@
 
 - `NumberPredicates.isPrime` handles the special case for number 2 correctly
 
+### 19.2.0 [AUTHZ]
+
+#### What's new
+
+- `User.activate()`
+- `UserService.activate()`
+
 ## v21.2.0
 
 ### 21.2.0 [CORE]

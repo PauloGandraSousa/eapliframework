@@ -327,6 +327,18 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         invalidateResetToken();
     }
 
+    /**
+     */
+    public void activate() {
+        if (isActive()) {
+            return;
+        }
+
+        active = true;
+        this.deactivatedOn = null;
+        invalidateResetToken();
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);
