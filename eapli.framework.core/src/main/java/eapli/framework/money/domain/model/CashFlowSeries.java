@@ -22,10 +22,16 @@ package eapli.framework.money.domain.model;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAmount;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Optional;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -40,25 +46,25 @@ import eapli.framework.domain.model.ValueObject;
  *
  * @author Paulo Gandra Sousa 2023.04.21
  */
-public class CashFlowSeries implements ValueObject {
+public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
 
     private static final long serialVersionUID = 1L;
 
-    private final Set<CashFlow> data;
+    private final List<CashFlow> data;
 
     /**
      * @return
      */
     public static CashFlowSeries of(final CashFlow... cashFlows) {
-        // TODO Auto-generated method stub
-        return null;
+        // O(n)
+        return new CashFlowSeries(Arrays.asList(cashFlows));
     }
 
     /**
      * Constructs an empty series.
      */
     public CashFlowSeries() {
-        data = new TreeSet<>();
+        data = new LinkedList<>();
     }
 
     /**
@@ -66,8 +72,14 @@ public class CashFlowSeries implements ValueObject {
      *
      * @param collect
      */
-    private CashFlowSeries(final Set<CashFlow> collect) {
-        data = new TreeSet<>(collect);
+    private CashFlowSeries(final Collection<CashFlow> collect) {
+        // O(n)
+        final Map<LocalDate, CashFlow> s = new HashMap<>();
+        collect.forEach(cf -> s.merge(cf.occurredAt(), cf, CashFlow::add));
+
+        // O(n) + O(n)
+        data = new LinkedList<>(s.values());
+        Collections.sort(data);
     }
 
     /**
@@ -76,11 +88,9 @@ public class CashFlowSeries implements ValueObject {
      * @return
      */
     public CashFlowSeries add(final CashFlow event) {
-        return new CashFlowSeries(copyMerge(data, event).collect(Collectors.toSet()));
-    }
-
-    private Stream<CashFlow> copyMerge(final Set<CashFlow> values, final CashFlow newElement) {
-        return values.stream().map(cf -> cf.isSameDate(newElement) ? cf.add(newElement) : cf);
+        final List<CashFlow> other = new ArrayList<>();
+        other.add(event);
+        return merge(data, other);
     }
 
     /**
@@ -89,13 +99,20 @@ public class CashFlowSeries implements ValueObject {
      * @return
      */
     public CashFlowSeries merge(final CashFlowSeries other) {
+        return merge(data, other.data);
+    }
+
+    private CashFlowSeries merge(final Collection<CashFlow> one, final Collection<CashFlow> other) {
         final Map<LocalDate, CashFlow> s = new HashMap<>();
 
-        data.forEach(cf -> s.put(cf.occurredAt(), cf));
+        // O(n)
+        one.forEach(cf -> s.merge(cf.occurredAt(), cf, CashFlow::add));
 
-        other.data.forEach(cf -> s.merge(cf.occurredAt(), cf, CashFlow::add));
+        // O(n)
+        other.forEach(cf -> s.merge(cf.occurredAt(), cf, CashFlow::add));
 
-        return new CashFlowSeries(s.values().stream().collect(Collectors.toSet()));
+        // O(n)
+        return new CashFlowSeries(s.values());
     }
 
     /**
@@ -105,6 +122,7 @@ public class CashFlowSeries implements ValueObject {
      * @return
      */
     public Money fold(final Money initial, final BinaryOperator<Money> folder) {
+        // O(n)
         return stream().map(CashFlow::amount).reduce(initial, folder);
     }
 
@@ -114,7 +132,8 @@ public class CashFlowSeries implements ValueObject {
      * @return
      */
     public CashFlowSeries map(final UnaryOperator<CashFlow> mapper) {
-        return new CashFlowSeries(stream().map(mapper).collect(Collectors.toSet()));
+        // O(n)
+        return new CashFlowSeries(stream().map(mapper).collect(Collectors.toList()));
     }
 
     /**
@@ -123,8 +142,9 @@ public class CashFlowSeries implements ValueObject {
      * @return
      */
     public CashFlowSeries shift(final UnaryOperator<LocalDate> adjuster) {
+        // O(n)
         return new CashFlowSeries(stream().map(cf -> new CashFlow(adjuster.apply(cf.occurredAt()), cf.amount()))
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toList()));
     }
 
     public CashFlowSeries shift(final TemporalAmount adjustement) {
@@ -141,11 +161,8 @@ public class CashFlowSeries implements ValueObject {
      * @return
      */
     public CashFlowSeries filter(final Predicate<CashFlow> filter) {
-        return new CashFlowSeries(stream().filter(filter).collect(Collectors.toSet()));
-    }
-
-    public Money valueAt(final LocalDate when) {
-        return null;
+        // O(n)
+        return new CashFlowSeries(stream().filter(filter).collect(Collectors.toList()));
     }
 
     /**
@@ -155,14 +172,60 @@ public class CashFlowSeries implements ValueObject {
         return data.stream();
     }
 
+    /**
+     * @param of
+     *
+     * @return
+     */
     public int indexOf(final LocalDate of) {
-        // TODO Auto-generated method stub
-        return 0;
+        // O(n)
+        int idx = 1;
+        for (final CashFlow cf : data) {
+            if (cf.occurredAt().equals(of)) {
+                return idx;
+            }
+            idx++;
+        }
+
+        return -1;
     }
 
-    public CashFlow nth(final int i) {
-        // TODO Auto-generated method stub
-        return null;
+    /**
+     * @param when
+     *
+     * @return
+     */
+    public Optional<Money> valueAt(final LocalDate when) {
+        // O(n)
+        for (final CashFlow cf : data) {
+            if (cf.occurredAt().equals(when)) {
+                return Optional.of(cf.amount());
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    /**
+     * @param i
+     *
+     * @return
+     */
+    public Optional<CashFlow> nth(final int i) {
+        if (i < 1) {
+            return Optional.empty();
+        }
+
+        // O(n)
+        int idx = 1;
+        for (final CashFlow cf : data) {
+            if (idx == i) {
+                return Optional.of(cf);
+            }
+            idx++;
+        }
+
+        return Optional.empty();
     }
 
     public CashFlowSeries[] slice(final Function<CashFlow, Integer> slicer) {
@@ -176,4 +239,17 @@ public class CashFlowSeries implements ValueObject {
         return data.size();
     }
 
+    @Override
+    public Iterator<CashFlow> iterator() {
+        return data.iterator();
+    }
+
+    /**
+     * @param cf
+     *
+     * @return
+     */
+    public boolean contains(final CashFlow cf) {
+        return data.contains(cf);
+    }
 }
