@@ -9,7 +9,6 @@
 - `ValueList` and `ValueSet` interfaces
 - `HashValueSet` class
 - `CashFlow` class
-- `CashFlowSeries` class
 - `Functions.ffx` method
 - `Math.add1` method
 - `Math.twice` method
