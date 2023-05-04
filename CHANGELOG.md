@@ -7,6 +7,7 @@
 #### What's new
 
 - `TemporalEvent.shift` method
+- `CashFlowSeries` class
 
 ## v22.2.0
 
@@ -17,7 +18,6 @@
 - `ValueList` and `ValueSet` interfaces
 - `HashValueSet` class
 - `CashFlow` class
-- `CashFlowSeries` class
 - `Functions.ffx` method
 - `Math.add1` method
 - `Math.twice` method

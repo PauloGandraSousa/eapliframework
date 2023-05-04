@@ -21,9 +21,9 @@
 package eapli.framework.money.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -154,8 +154,8 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureAddingAnElementToTheEnd() {
-        final int d = NumberGenerator.anInt(28);
-        final int m = NumberGenerator.anInt(12);
+        final int d = NumberGenerator.anInt(1, 29);
+        final int m = NumberGenerator.anInt(1, 13);
         final var cf = new CashFlow(LocalDate.of(REF_YEAR + 10, m, d), Money.euros(1));
 
         final var result = subject.add(cf);
@@ -210,18 +210,52 @@ class CashFlowSeriesTest {
         }
     }
 
-    @Test
-    void testAlt2() {
-        fail("Not yet implemented");
+    void ensureFilterAnEmptySeriesResultsInEmptySeries() {
+        // TODO
+    }
 
+    @Test
+    void ensureFilteringAnElementRemovesAllOtherElements() {
+        final var cf = subject.nth(1).orElseThrow();
+        final var result = subject.filter(t -> t.equals(cf));
+
+        assertNotNull(result);
+        assertEquals(1, result.length());
+        ensureRespectsOrdering(result);
+    }
+
+    @Test
+    void ensureFilteringOutAnElementRemovesThatElement() {
+        final var cf = subject.nth(1).orElseThrow();
+        final var result = subject.filter(t -> !t.equals(cf));
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements - 1, result.length());
+        assertFalse(result.contains(cf));
+        ensureRespectsOrdering(result);
+    }
+
+    @Test
+    void ensureFilteringAllResultsInEmptySeries() {
+        final var result = subject.filter(t -> false);
+
+        assertNotNull(result);
+        assertEquals(0, result.length());
+    }
+
+    @Test
+    void ensureFilteringNoneResultsInTheOriginalSeries() {
+        final var result = subject.filter(t -> true);
+
+        assertEquals(subject, result);
+    }
+
+    // TODO
+    void missingTests() {
         // adding a new event places it in the right temporal order
         final var cf = new CashFlow(LocalDate.of(2023, 1, 7), Money.euros(15));
         final CashFlowSeries ts2 = subject.add(cf);
         assert ts2.indexOf(LocalDate.of(2023, 1, 7)).orElseThrow() == 2;
-
-        // filter
-        subject.filter(c -> c.amount().isLessThan(Money.euros(0))
-                && c.occurredAt().compareTo(LocalDate.of(2023, 1, 31)) < 0);
 
         // merging two time series combines the values of the same date point
         subject.merge(ts2);
