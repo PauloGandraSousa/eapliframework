@@ -22,12 +22,15 @@ package eapli.framework.time.domain.model;
 
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAmount;
+import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
+
+import eapli.framework.domain.model.ValueObject;
 
 /**
  * A temporal series, i.e., a series of temporal events.
@@ -35,28 +38,39 @@ import java.util.stream.Stream;
  * @author Paulo Gandra Sousa 2023.04.14
  *
  * @param <D>
- * @param <V>
  * @param <T>
  */
-public interface TemporalSeries<D extends Temporal, V, T extends TemporalEvent<D, V>> {
+public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iterable<T> {
 
-    TemporalSeries<D, V, T> add(T event);
+    TemporalSeries<D, T> add(D when, T event);
 
-    TemporalSeries<D, V, T> merge(TemporalSeries<D, V, T> other, BinaryOperator<T> combinator);
+    TemporalSeries<D, T> merge(TemporalSeries<D, T> other, BinaryOperator<T> combinator);
 
     <R> R fold(R initial, BiFunction<R, T, R> folder);
 
-    <S extends Temporal, U, R extends TemporalEvent<S, U>> TemporalSeries<S, U, R> map(Function<T, R> mapper);
+    <S extends Temporal, U> TemporalSeries<S, U> map(Function<T, U> mapper);
 
-    TemporalSeries<D, V, T> shift(UnaryOperator<D> adjuster);
+    TemporalSeries<D, T> shift(UnaryOperator<D> adjuster);
 
-    TemporalSeries<D, V, T> shift(TemporalAmount adjustement);
+    TemporalSeries<D, T> shift(TemporalAmount adjustement);
 
-    TemporalSeries<D, V, T> between(D lower, D upper);
+    TemporalSeries<D, T> between(D lower, D upper);
 
-    TemporalSeries<D, V, T> filter(Predicate<T> filter);
+    TemporalSeries<D, T> filter(BiPredicate<D, T> filter);
 
-    V valueAt(D when);
+    TemporalSeries<D, T>[] slice(final BiFunction<D, T, Integer> slicer);
+
+    Optional<T> valueAt(D when);
+
+    Optional<T> nth(int idx);
+
+    Optional<Integer> indexOf(T event);
+
+    Optional<D> dateOf(T event);
+
+    Optional<Integer> indexOf(D when);
 
     Stream<T> stream();
+
+    int length();
 }

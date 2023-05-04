@@ -40,12 +40,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import eapli.framework.domain.model.ValueObject;
+import lombok.EqualsAndHashCode;
 
 /**
- * A cash flow series.
+ * A cash flow series. If repeated values are added to the series a single value is kept with the
+ * sum of the amounts.
  *
  * @author Paulo Gandra Sousa 2023.04.21
  */
+@EqualsAndHashCode
 public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
 
     private static final long serialVersionUID = 1L;
@@ -177,17 +180,17 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
      *
      * @return
      */
-    public int indexOf(final LocalDate of) {
+    public Optional<Integer> indexOf(final LocalDate of) {
         // O(n)
         int idx = 1;
         for (final CashFlow cf : data) {
             if (cf.occurredAt().equals(of)) {
-                return idx;
+                return Optional.of(idx);
             }
             idx++;
         }
 
-        return -1;
+        return Optional.empty();
     }
 
     /**

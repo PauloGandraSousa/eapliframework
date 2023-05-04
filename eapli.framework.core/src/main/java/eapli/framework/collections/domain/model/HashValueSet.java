@@ -122,7 +122,7 @@ public class HashValueSet<T> implements ValueSet<T> {
     }
 
     @Override
-    public int size() {
+    public int cardinality() {
         return data.size();
     }
 

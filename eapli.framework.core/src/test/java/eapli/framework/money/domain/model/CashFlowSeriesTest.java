@@ -78,7 +78,7 @@ class CashFlowSeriesTest {
     }
 
     @AfterEach
-    void ensureDoesNotChange() {
+    void ensureDoesNotChangeOriginalSeries() {
         // keeps the same number of elements
         assertEquals(initialNumberOfElements, subject.length());
 
@@ -103,6 +103,7 @@ class CashFlowSeriesTest {
     void ensureCreatingOfWithDistinctDatesOrdered() {
         final var result = CashFlowSeries.of(CASH_FLOW_1_1, CASH_FLOW_1_10, CASH_FLOW_1_20,
                 CASH_FLOW_2_5, CASH_FLOW_2_15);
+
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(50), result.fold(Money.euros(0), (a, b) -> b.add(a)));
@@ -113,6 +114,7 @@ class CashFlowSeriesTest {
     void ensureCreatingOfWithSomeCommonDatesOrdered() {
         final var result = CashFlowSeries.of(CASH_FLOW_1_1, CASH_FLOW_1_1, CASH_FLOW_1_10, CASH_FLOW_1_20,
                 CASH_FLOW_2_5, CASH_FLOW_2_15, CASH_FLOW_2_15);
+
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(90), result.fold(Money.euros(0), (a, b) -> b.add(a)));
@@ -123,6 +125,7 @@ class CashFlowSeriesTest {
     void ensureCreatingOfWithSomeCommonDatesUnordered() {
         final var result = CashFlowSeries.of(CASH_FLOW_1_10, CASH_FLOW_1_1, CASH_FLOW_1_20,
                 CASH_FLOW_2_15, CASH_FLOW_2_5, CASH_FLOW_2_15, CASH_FLOW_1_1);
+
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(90), result.fold(Money.euros(0), (a, b) -> b.add(a)));
@@ -177,20 +180,35 @@ class CashFlowSeriesTest {
     }
 
     @Test
+    void ensureTransforms() {
+        final int amt = NumberGenerator.anInt();
+        final var result = subject.map(a -> new CashFlow(a.occurredAt(), Money.euros(amt)));
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements, result.length());
+        assertTrue(result.stream().allMatch(cf -> cf.amount().equals(Money.euros(amt))));
+        assertTrue(result.stream().allMatch(cf -> subject.indexOf(cf.occurredAt()).isPresent()));
+        ensureRespectsOrdering(result);
+    }
+
+    void ensureShift() {
+        final var result = subject.shift(t -> t.plus(Duration.ofDays(2)));
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements, result.length());
+        ensureRespectsOrdering(result);
+    }
+
+    @Test
     void testAlt2() {
         fail("Not yet implemented");
 
         // adding a new event places it in the right temporal order
         final var cf = new CashFlow(LocalDate.of(2023, 1, 7), Money.euros(15));
         final CashFlowSeries ts2 = subject.add(cf);
-        assert ts2.indexOf(LocalDate.of(2023, 1, 7)) == 2;
-
-        // transforming the time series creates a new time series with the same date points but
-        // transformed values
-        subject.map(a -> new CashFlow(a.occurredAt(), a.amount().multiply(2)));
+        assert ts2.indexOf(LocalDate.of(2023, 1, 7)).orElseThrow() == 2;
 
         // shifting a time series, adjusts the date points of the series but keeps the values
-        subject.shift(t -> t.plus(Duration.ofDays(2)));
         subject.shift(Duration.ofDays(2));
 
         // filter

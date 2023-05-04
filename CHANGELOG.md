@@ -1,6 +1,6 @@
 # EAPLI Framework Changelog
 
-## v22.0.0
+## v22.2.0
 
 ### 22.0.0 [CORE]
 
