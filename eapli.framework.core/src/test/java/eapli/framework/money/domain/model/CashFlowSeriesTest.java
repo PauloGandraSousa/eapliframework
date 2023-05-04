@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -191,12 +190,24 @@ class CashFlowSeriesTest {
         ensureRespectsOrdering(result);
     }
 
+    @Test
     void ensureShift() {
-        final var result = subject.shift(t -> t.plus(Duration.ofDays(2)));
+        final var result = subject.shift(t -> t.plusDays(2));
 
         assertNotNull(result);
         assertEquals(initialNumberOfElements, result.length());
+        ensureHasShifted(result);
         ensureRespectsOrdering(result);
+    }
+
+    private void ensureHasShifted(final CashFlowSeries result) {
+        final var its = subject.iterator();
+        for (final CashFlow cfr : result) {
+            final var cfs = its.next();
+
+            assertEquals(cfs.amount(), cfr.amount());
+            assertEquals(cfs.occurredAt().plusDays(2), cfr.occurredAt());
+        }
     }
 
     @Test
@@ -207,9 +218,6 @@ class CashFlowSeriesTest {
         final var cf = new CashFlow(LocalDate.of(2023, 1, 7), Money.euros(15));
         final CashFlowSeries ts2 = subject.add(cf);
         assert ts2.indexOf(LocalDate.of(2023, 1, 7)).orElseThrow() == 2;
-
-        // shifting a time series, adjusts the date points of the series but keeps the values
-        subject.shift(Duration.ofDays(2));
 
         // filter
         subject.filter(c -> c.amount().isLessThan(Money.euros(0))

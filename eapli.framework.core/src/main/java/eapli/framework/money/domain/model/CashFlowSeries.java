@@ -21,7 +21,6 @@
 package eapli.framework.money.domain.model;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -146,12 +145,7 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
      */
     public CashFlowSeries shift(final UnaryOperator<LocalDate> adjuster) {
         // O(n)
-        return new CashFlowSeries(stream().map(cf -> new CashFlow(adjuster.apply(cf.occurredAt()), cf.amount()))
-                .collect(Collectors.toList()));
-    }
-
-    public CashFlowSeries shift(final TemporalAmount adjustement) {
-        return null;
+        return new CashFlowSeries(stream().map(cf -> (CashFlow) cf.shift(adjuster)).collect(Collectors.toList()));
     }
 
     public CashFlowSeries between(final LocalDate lower, final LocalDate upper) {

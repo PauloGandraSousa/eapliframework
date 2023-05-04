@@ -1,5 +1,13 @@
 # EAPLI Framework Changelog
 
+## v22.X.X
+
+### 22.X.X [CORE]
+
+#### What's new
+
+- `TemporalEvent.shift` method
+
 ## v22.2.0
 
 ### 22.0.0 [CORE]

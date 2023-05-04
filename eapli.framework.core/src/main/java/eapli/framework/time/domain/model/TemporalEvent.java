@@ -22,6 +22,7 @@ package eapli.framework.time.domain.model;
 
 import java.time.LocalDate;
 import java.time.temporal.Temporal;
+import java.util.function.UnaryOperator;
 
 import eapli.framework.money.domain.model.Money;
 
@@ -43,6 +44,9 @@ public interface TemporalEvent<T extends Temporal, S> {
      */
     T occurredAt();
 
+    /**
+     * @return
+     */
     S event();
 
     /**
@@ -54,6 +58,15 @@ public interface TemporalEvent<T extends Temporal, S> {
      * @return
      */
     TemporalEvent<T, S> merge(TemporalEvent<T, S> other);
+
+    /**
+     * Shifts the date of the event.
+     *
+     * @param adjuster
+     *
+     * @return a new instance of the temporal event with its date adjusted but with the same value
+     */
+    TemporalEvent<T, S> shift(final UnaryOperator<T> adjuster);
 
     /**
      * @param other
