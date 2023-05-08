@@ -42,8 +42,11 @@ import eapli.framework.domain.model.ValueObject;
 import lombok.EqualsAndHashCode;
 
 /**
- * A cash flow series. If repeated values are added to the series a single value is kept with the
- * sum of the amounts.
+ * A cash flow series, i.e., an ordered list of cash flows. If repeated values are added to the
+ * series a single value is kept with the sum of the amounts. The series is temporal-ordered.
+ * <p>
+ * This is a value object, as such there are no mutable operations. All methods return a new series
+ * and keep this object unmodified.
  *
  * @author Paulo Gandra Sousa 2023.04.21
  */
@@ -56,8 +59,7 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
 
     /**
      * Factory method. If cash flows of the same date are passed as parameter, the resulting series
-     * will
-     * include a cashflow for the same date and the sum of the amounts.
+     * will include a cash flow for the same date and the sum of the amounts.
      *
      * @return
      */
@@ -95,8 +97,7 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
 
     /**
      * Creates a new series with the element added. If a cash flow already exists for the same date,
-     * the
-     * resulting series will include a cashflow with the same date and sum of the amounts.
+     * the resulting series will include a cash flow with the same date and sum of the amounts.
      *
      * @param event
      *
@@ -109,6 +110,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Merges two series. Cash flows on the same date are summed together.
+     *
      * @param other
      *
      * @return
@@ -131,6 +134,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Folds (reduces) the series given an initial value.
+     *
      * @param initial
      * @param folder
      *
@@ -142,6 +147,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Transforms the series.
+     *
      * @param mapper
      *
      * @return
@@ -152,6 +159,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Shifts the temporal dimension of the series keeping the amounts.
+     *
      * @param adjuster
      *
      * @return
@@ -162,6 +171,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Filters the series between (inclusive) two dates.
+     *
      * @param lower
      * @param upper
      *
@@ -172,16 +183,20 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
-     * @param filter
+     * Filter the series according to a criteria.
+     *
+     * @param criteria
      *
      * @return
      */
-    public CashFlowSeries filter(final Predicate<CashFlow> filter) {
+    public CashFlowSeries filter(final Predicate<CashFlow> criteria) {
         // O(n)
-        return new CashFlowSeries(stream().filter(filter).collect(Collectors.toList()));
+        return new CashFlowSeries(stream().filter(criteria).collect(Collectors.toList()));
     }
 
     /**
+     * Returns the ordered stream of cash flows.
+     *
      * @return
      */
     public Stream<CashFlow> stream() {
@@ -189,6 +204,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Returns the index of the cash flow at a certain date.
+     *
      * @param of
      *
      * @return
@@ -207,6 +224,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Returns the amount of the cash flow at a certain date.
+     *
      * @param when
      *
      * @return
@@ -223,6 +242,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Return the <em>nth</em> cash flow of the series.
+     *
      * @param i
      *
      * @return
@@ -245,6 +266,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Slices the series in several series according to a criteria.
+     *
      * @param slicer
      *
      * @return
@@ -266,6 +289,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Return the length of the series, ie.e, the number of elements.
+     *
      * @return
      */
     public int length() {
@@ -278,6 +303,8 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Checks if a cash flow is part of this series.
+     *
      * @param cf
      *
      * @return
