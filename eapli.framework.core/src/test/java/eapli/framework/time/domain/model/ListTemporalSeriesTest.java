@@ -30,7 +30,7 @@ import eapli.framework.money.domain.model.Money;
 /**
  * @author Paulo Gandra Sousa 2023.04.14
  */
-class TemporalSeriesTest {
+class ListTemporalSeriesTest {
 
     void testAlt1() {
         // TODO
@@ -58,22 +58,23 @@ class TemporalSeriesTest {
 
         // adding a new event places it in the right temporal order
         // does not change original series
-        final TemporalSeries<LocalDate, Money> ts2 = ts.add(LocalDate.of(2023, 1, 7), Money.euros(15));
+        final TemporalSeries<LocalDate, Money> ts2 = ts.add(LocalDate.of(2023, 1, 7), Money.euros(15),
+                (a, b) -> a.add(b));
         assert ts2.indexOf(LocalDate.of(2023, 1, 7)).orElseThrow() == 2;
 
         // adding a new event for an existing date point combines the values
         // does not change original series
-        final TemporalSeries<LocalDate, Money> ts3 = ts.add(LocalDate.of(2023, 1, 1), Money.euros(15));
-        assert ts3.valueAt(LocalDate.of(2023, 1, 1)).equals(Money.euros(25));
-        assert ts3.nth(1).equals(Money.euros(25));
+        final TemporalSeries<LocalDate, Money> ts3 = ts.add(LocalDate.of(2023, 1, 1), Money.euros(15),
+                (a, b) -> a.add(b));
+        assert ts3.valueAt(LocalDate.of(2023, 1, 1)).orElseThrow().equals(Money.euros(25));
+        assert ts3.nth(1).orElseThrow().equals(Money.euros(25));
 
         ts.map(a -> a.multiply(2));
 
         ts.shift(t -> t.plusDays(2));
         ts.shift(Duration.ofDays(2));
 
-        ts
-                .filter((t, a) -> a.isLessThan(Money.euros(0)) && t.compareTo(LocalDate.of(2023, 1, 31)) < 0);
+        ts.filter((t, a) -> a.isLessThan(Money.euros(0)) && t.compareTo(LocalDate.of(2023, 1, 31)) < 0);
 
         ts.merge(ts2, (a, b) -> a.add(b));
 

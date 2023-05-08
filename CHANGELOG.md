@@ -8,6 +8,9 @@
 
 - `TemporalEvent.shift` method
 - `CashFlowSeries` class
+- `TemporalSeries` interface
+- `ListTemporalSeries` class
+
 
 ## v22.2.0
 
