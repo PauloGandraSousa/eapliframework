@@ -27,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -41,17 +43,21 @@ import eapli.framework.math.util.NumberGenerator;
  */
 class CashFlowSeriesTest {
 
-    private static final int REF_YEAR = 2022;
+    private static final int REF_YEAR = NumberGenerator.anInt(2000, 2100);
 
     private static final CashFlow CASH_FLOW_2_15 = new CashFlow(LocalDate.of(2023, 2, 15), Money.euros(30));
+    private static final CashFlow CASH_FLOW_2_15b = new CashFlow(LocalDate.of(2023, 2, 15), Money.euros(40));
     private static final CashFlow CASH_FLOW_2_5 = new CashFlow(LocalDate.of(2023, 2, 5), Money.euros(20));
     private static final CashFlow CASH_FLOW_1_20 = new CashFlow(LocalDate.of(2023, 1, 20), Money.euros(-30));
     private static final CashFlow CASH_FLOW_1_10 = new CashFlow(LocalDate.of(2023, 1, 10), Money.euros(20));
     private static final CashFlow CASH_FLOW_1_1 = new CashFlow(LocalDate.of(2023, 1, 1), Money.euros(10));
+    private static final CashFlow CASH_FLOW_1_1b = new CashFlow(LocalDate.of(2023, 1, 1), Money.euros(20));
 
     private static CashFlowSeries subject;
+
     private static int initialNumberOfElements;
     private static CashFlow[] data;
+    private static final Set<Integer> dataMonths = new HashSet<>();
 
     @BeforeAll
     static void setup() {
@@ -63,6 +69,8 @@ class CashFlowSeriesTest {
         while (unique.size() < initialNumberOfElements) {
             final int d = NumberGenerator.anInt(1, 29);
             final int m = NumberGenerator.anInt(1, 13);
+
+            dataMonths.add(m);
             unique.add(Pair.of(m, d));
         }
 
@@ -82,7 +90,7 @@ class CashFlowSeriesTest {
         assertEquals(initialNumberOfElements, subject.length());
 
         // respects ordering (date sorting)
-        ensureRespectsOrdering(subject);
+        assertRespectsOrdering(subject);
 
         // keeps same data
         for (final var cf : data) {
@@ -90,7 +98,7 @@ class CashFlowSeriesTest {
         }
     }
 
-    private void ensureRespectsOrdering(final CashFlowSeries s) {
+    private void assertRespectsOrdering(final CashFlowSeries s) {
         CashFlow previous = null;
         for (final var cf : s) {
             assertTrue(previous == null || cf.compareTo(previous) >= 0);
@@ -106,18 +114,29 @@ class CashFlowSeriesTest {
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(50), result.fold(Money.euros(0), (a, b) -> b.add(a)));
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
     }
 
     @Test
-    void ensureCreatingOfWithSomeCommonDatesOrdered() {
+    void ensureCreatingOfWithSomeEqualCashFlowsOrdered() {
         final var result = CashFlowSeries.of(CASH_FLOW_1_1, CASH_FLOW_1_1, CASH_FLOW_1_10, CASH_FLOW_1_20,
                 CASH_FLOW_2_5, CASH_FLOW_2_15, CASH_FLOW_2_15);
 
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(90), result.fold(Money.euros(0), (a, b) -> b.add(a)));
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
+    }
+
+    @Test
+    void ensureCreatingOfWithSomeCommonDatesOrdered() {
+        final var result = CashFlowSeries.of(CASH_FLOW_1_1, CASH_FLOW_1_1b, CASH_FLOW_1_10, CASH_FLOW_1_20,
+                CASH_FLOW_2_5, CASH_FLOW_2_15, CASH_FLOW_2_15b);
+
+        assertNotNull(result);
+        assertEquals(5, result.length());
+        assertEquals(Money.euros(110), result.fold(Money.euros(0), (a, b) -> b.add(a)));
+        assertRespectsOrdering(result);
     }
 
     @Test
@@ -128,7 +147,7 @@ class CashFlowSeriesTest {
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(90), result.fold(Money.euros(0), (a, b) -> b.add(a)));
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
     }
 
     @Test
@@ -149,7 +168,7 @@ class CashFlowSeriesTest {
         assertNotNull(result);
         assertEquals(initialNumberOfElements + 1, result.length());
         assertEquals(cf, result.nth(1).orElseThrow());
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
     }
 
     @Test
@@ -162,20 +181,41 @@ class CashFlowSeriesTest {
         assertNotNull(result);
         assertEquals(initialNumberOfElements + 1, result.length());
         assertEquals(cf, result.nth(initialNumberOfElements + 1).orElseThrow());
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
+    }
+
+    @Test
+    void ensureAddingAnElementPlacesItInTheRightTemporalOrder() {
+        int d, m;
+        do {
+            d = NumberGenerator.anInt(1, 29);
+            m = NumberGenerator.anInt(1, 13);
+        } while (subject.valueAt(LocalDate.of(REF_YEAR, m, d)).isPresent());
+
+        final var cf = new CashFlow(LocalDate.of(REF_YEAR, m, d), Money.euros(1));
+
+        final var result = subject.add(cf);
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements + 1, result.length());
+        assertRespectsOrdering(result);
     }
 
     @Test
     void ensureAddingAnElementForAnExistingDateCombinesTheValues() {
         final var idx = NumberGenerator.anInt(1, initialNumberOfElements + 1);
         final var d = subject.nth(idx).orElseThrow().occurredAt();
-        final CashFlowSeries result = subject.add(new CashFlow(d, Money.euros(7)));
+        final var amt = Money.euros(NumberGenerator.anInt());
+
+        final var expectedAmount = amt.add(subject.nth(idx).orElseThrow().amount());
+
+        final CashFlowSeries result = subject.add(new CashFlow(d, amt));
 
         assertNotNull(result);
         assertEquals(initialNumberOfElements, result.length());
-        assertEquals(Money.euros(8), result.valueAt(d).orElseThrow());
-        assertEquals(Money.euros(8), result.nth(idx).orElseThrow().amount());
-        ensureRespectsOrdering(result);
+        assertEquals(expectedAmount, result.valueAt(d).orElseThrow());
+        assertEquals(expectedAmount, result.nth(idx).orElseThrow().amount());
+        assertRespectsOrdering(result);
     }
 
     @Test
@@ -187,7 +227,7 @@ class CashFlowSeriesTest {
         assertEquals(initialNumberOfElements, result.length());
         assertTrue(result.stream().allMatch(cf -> cf.amount().equals(Money.euros(amt))));
         assertTrue(result.stream().allMatch(cf -> subject.indexOf(cf.occurredAt()).isPresent()));
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
     }
 
     @Test
@@ -196,11 +236,11 @@ class CashFlowSeriesTest {
 
         assertNotNull(result);
         assertEquals(initialNumberOfElements, result.length());
-        ensureHasShifted(result);
-        ensureRespectsOrdering(result);
+        assertHasShifted(result);
+        assertRespectsOrdering(result);
     }
 
-    private void ensureHasShifted(final CashFlowSeries result) {
+    private void assertHasShifted(final CashFlowSeries result) {
         final var its = subject.iterator();
         for (final CashFlow cfr : result) {
             final var cfs = its.next();
@@ -210,8 +250,12 @@ class CashFlowSeriesTest {
         }
     }
 
+    @Test
     void ensureFilterAnEmptySeriesResultsInEmptySeries() {
-        // TODO
+        final var result = CashFlowSeries.EMPTY.filter(t -> true);
+
+        assertNotNull(result);
+        assertEquals(0, result.length());
     }
 
     @Test
@@ -221,7 +265,7 @@ class CashFlowSeriesTest {
 
         assertNotNull(result);
         assertEquals(1, result.length());
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
     }
 
     @Test
@@ -232,11 +276,11 @@ class CashFlowSeriesTest {
         assertNotNull(result);
         assertEquals(initialNumberOfElements - 1, result.length());
         assertFalse(result.contains(cf));
-        ensureRespectsOrdering(result);
+        assertRespectsOrdering(result);
     }
 
     @Test
-    void ensureFilteringAllResultsInEmptySeries() {
+    void ensureFilteringOutAllResultsInEmptySeries() {
         final var result = subject.filter(t -> false);
 
         assertNotNull(result);
@@ -250,27 +294,153 @@ class CashFlowSeriesTest {
         assertEquals(subject, result);
     }
 
-    // TODO
-    void missingTests() {
-        // adding a new event places it in the right temporal order
-        final var cf = new CashFlow(LocalDate.of(2023, 1, 7), Money.euros(15));
-        final CashFlowSeries ts2 = subject.add(cf);
-        assert ts2.indexOf(LocalDate.of(2023, 1, 7)).orElseThrow() == 2;
+    @Test
+    void ensureMergingWithEmptySeriesResultsInTheOriginalSeries() {
+        final var result = subject.merge(CashFlowSeries.EMPTY);
 
-        // merging two time series combines the values of the same date point
-        subject.merge(ts2);
+        assertEquals(subject, result);
+    }
 
+    @Test
+    void ensureMergingTheEmptySeriesWithAnySeriesResultsInTheOtherSeries() {
+        final var result = CashFlowSeries.EMPTY.merge(subject);
+
+        assertEquals(subject, result);
+    }
+
+    @Test
+    void ensureMergingWithDistinctElementsResultsInUnionOfSeries() {
+        final int d = NumberGenerator.anInt(1, 29);
+        final int m = NumberGenerator.anInt(1, 13);
+        final var cf = new CashFlow(LocalDate.of(REF_YEAR + 10, m, d), Money.euros(1));
+
+        final var ts = CashFlowSeries.of(cf);
+
+        final var result = subject.merge(ts);
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements + 1, result.length());
+        assertEquals(cf, result.nth(initialNumberOfElements + 1).orElseThrow());
+        assertRespectsOrdering(result);
+    }
+
+    @Test
+    void ensureMergingWithCommonElementsAddsTheValuesOnTheSameDate() {
+        final var idx = NumberGenerator.anInt(1, initialNumberOfElements + 1);
+        final var d = subject.nth(idx).orElseThrow().occurredAt();
+        final var amt = Money.euros(NumberGenerator.anInt());
+        final var ts = CashFlowSeries.of(new CashFlow(d, amt));
+
+        final var expectedAmount = amt.add(subject.nth(idx).orElseThrow().amount());
+
+        final CashFlowSeries result = subject.merge(ts);
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements, result.length());
+        assertEquals(expectedAmount, result.valueAt(d).orElseThrow());
+        assertEquals(expectedAmount, result.nth(idx).orElseThrow().amount());
+        assertRespectsOrdering(result);
+    }
+
+    @Test
+    void ensureSlice() {
         // slicing a time series by a temporal "dimension"
-        subject.slice(e -> e.occurredAt().getMonthValue());
+        final var result = subject.slice(e -> e.occurredAt().getMonthValue());
 
-        // subtimeseries, a window
-        subject.between(LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 31));
+        assertNotNull(result);
+        assertEquals(dataMonths.size(), result.size());
+        assertTotalCountOfElementsNoElementsAreLost(result);
+        assertAllValuesArePresentAndEachSlotHasTheSameMonth(result);
+    }
+
+    private void assertTotalCountOfElementsNoElementsAreLost(final Map<Integer, CashFlowSeries> result) {
+        // total count of elements - no elements are lost
+        int totalCount = 0;
+        for (final Entry<Integer, CashFlowSeries> e : result.entrySet()) {
+            totalCount += e.getValue().length();
+        }
+        assertEquals(initialNumberOfElements, totalCount);
+    }
+
+    private void assertAllValuesArePresentAndEachSlotHasTheSameMonth(final Map<Integer, CashFlowSeries> result) {
+        // all values are present and each slot has the same month
+        for (final Entry<Integer, CashFlowSeries> e : result.entrySet()) {
+            final int currentMonth = e.getKey();
+            for (final CashFlow cf : e.getValue()) {
+                // each slot has same month
+                assertEquals(currentMonth, cf.occurredAt().getMonthValue());
+                // value is present in the original series
+                assertTrue(subject.contains(cf));
+            }
+        }
+    }
+
+    @Test
+    void ensureSlicingAllInTheSameSlot() {
+        final var result = subject.slice(e -> 0);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        final var ts = result.get(0);
+        assertEquals(subject, ts);
+    }
+
+    @Test
+    void ensureBetweenFulfillsCriteria() {
+        final var n = NumberGenerator.anInt(1, initialNumberOfElements);
+        final var idx = NumberGenerator.anInt(1, initialNumberOfElements + 1 - n);
+        final var lower = subject.nth(idx).orElseThrow().occurredAt();
+        final var upper = subject.nth(idx + n - 1).orElseThrow().occurredAt();
+
+        final var result = subject.between(lower, upper);
+
+        assertNotNull(result);
+        assertEquals(n, result.length());
+        // all elements in the range
+        int i = idx;
+        for (final CashFlow cf : result) {
+            final var expected = subject.nth(i).orElseThrow();
+            assertEquals(expected, cf);
+            i++;
+        }
+    }
+
+    @Test
+    void ensureBetweenSingleDate() {
+        final var idx = NumberGenerator.anInt(1, initialNumberOfElements + 1);
+        final var expectedCashFlow = subject.nth(idx);
+        final var date = expectedCashFlow.orElseThrow().occurredAt();
+
+        final var result = subject.between(date, date);
+
+        assertNotNull(result);
+        assertEquals(1, result.length());
+        assertEquals(expectedCashFlow, result.nth(1));
+    }
+
+    @Test
+    void ensureBetweenFindsNoElements() {
+        final var result = subject.between(LocalDate.of(REF_YEAR - 1, 1, 1), LocalDate.of(REF_YEAR - 1, 1, 31));
+
+        assertNotNull(result);
+        assertEquals(0, result.length());
+    }
+
+    @Test
+    void ensureBetweenIncludesAllElements() {
+        final var result = subject.between(LocalDate.of(REF_YEAR - 1, 1, 1), LocalDate.of(REF_YEAR + 1, 1, 31));
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements, result.length());
+        assertEquals(subject, result);
+    }
+
+    void missingTests() {
+        // TODO
 
         // nth, indexOf, valueAt
         // <1
         // > size()
-
         // empty series
     }
-
 }

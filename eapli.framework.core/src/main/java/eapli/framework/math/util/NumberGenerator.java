@@ -57,7 +57,10 @@ public final class NumberGenerator {
      * Generates <em>n</em> random integers ensuring that it doesn't generate any of the values in
      * the exclusion list.
      *
-     * @return n random integers
+     * @param n
+     * @param excluding
+     *
+     * @return <em>n</em> random integers
      */
     public static Integer[] nInts(final int n, final Integer[] excluding) {
         final Set<Integer> numbers = new HashSet<>();

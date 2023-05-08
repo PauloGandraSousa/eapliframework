@@ -18,6 +18,7 @@
 - `ValueList` and `ValueSet` interfaces
 - `HashValueSet` class
 - `CashFlow` class
+- `TemporalEvent` interface
 - `Functions.ffx` method
 - `Math.add1` method
 - `Math.twice` method

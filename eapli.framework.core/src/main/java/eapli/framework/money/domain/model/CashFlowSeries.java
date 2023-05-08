@@ -55,6 +55,10 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     private final List<CashFlow> data;
 
     /**
+     * Factory method. If cash flows of the same date are passed as parameter, the resulting series
+     * will
+     * include a cashflow for the same date and the sum of the amounts.
+     *
      * @return
      */
     public static CashFlowSeries of(final CashFlow... cashFlows) {
@@ -63,9 +67,14 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Empty cash flow series.
+     */
+    public static final CashFlowSeries EMPTY = new CashFlowSeries();
+
+    /**
      * Constructs an empty series.
      */
-    public CashFlowSeries() {
+    private CashFlowSeries() {
         data = new LinkedList<>();
     }
 
@@ -85,6 +94,10 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
+     * Creates a new series with the element added. If a cash flow already exists for the same date,
+     * the
+     * resulting series will include a cashflow with the same date and sum of the amounts.
+     *
      * @param event
      *
      * @return
@@ -148,8 +161,14 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
         return new CashFlowSeries(stream().map(cf -> (CashFlow) cf.shift(adjuster)).collect(Collectors.toList()));
     }
 
+    /**
+     * @param lower
+     * @param upper
+     *
+     * @return
+     */
     public CashFlowSeries between(final LocalDate lower, final LocalDate upper) {
-        return null;
+        return filter(cf -> cf.occurredAt().compareTo(lower) >= 0 && cf.occurredAt().compareTo(upper) <= 0);
     }
 
     /**
@@ -225,8 +244,25 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
         return Optional.empty();
     }
 
-    public CashFlowSeries[] slice(final Function<CashFlow, Integer> slicer) {
-        return null;
+    /**
+     * @param slicer
+     *
+     * @return
+     */
+    public <U> Map<U, CashFlowSeries> slice(final Function<CashFlow, U> slicer) {
+        final Map<U, CashFlowSeries> ret = new HashMap<>();
+
+        for (final CashFlow cf : data) {
+            final U idx = slicer.apply(cf);
+            final CashFlowSeries s = ret.get(idx);
+            if (s == null) {
+                ret.put(idx, CashFlowSeries.of(cf));
+            } else {
+                ret.put(idx, s.merge(CashFlowSeries.of(cf)));
+            }
+        }
+
+        return ret;
     }
 
     /**
