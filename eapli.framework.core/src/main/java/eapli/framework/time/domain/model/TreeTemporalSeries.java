@@ -145,8 +145,12 @@ public class TreeTemporalSeries<D extends Temporal, T> implements TemporalSeries
 
     @Override
     public TemporalSeries<D, T> shift(final TemporalAmount adjustement) {
-        // TODO Auto-generated method stub
-        return null;
+        // O(n)
+        @SuppressWarnings("unchecked")
+        final var s = stream().map(t -> TemporalEvent.of((D) (t.occurredAt().plus(adjustement)), t.event()));
+        // O(n)
+        return new TreeTemporalSeries<>(
+                s.collect(Collectors.toMap(TemporalEvent::occurredAt, TemporalEvent::event)));
     }
 
     @Override

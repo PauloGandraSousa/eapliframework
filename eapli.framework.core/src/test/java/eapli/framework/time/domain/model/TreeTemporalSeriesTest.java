@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -279,6 +280,16 @@ class TreeTemporalSeriesTest {
     @Test
     void ensureShift() {
         final var result = subject.shift(t -> t.plusDays(2));
+
+        assertNotNull(result);
+        assertEquals(initialNumberOfElements, result.length());
+        assertHasShifted(result);
+        assertRespectsOrdering(result);
+    }
+
+    @Test
+    void ensureShiftTemporalAdjustment() {
+        final var result = subject.shift(Period.ofDays(2));
 
         assertNotNull(result);
         assertEquals(initialNumberOfElements, result.length());
