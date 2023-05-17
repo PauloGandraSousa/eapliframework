@@ -22,6 +22,7 @@ package eapli.framework.money.domain.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.function.UnaryOperator;
 
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -232,9 +233,7 @@ public class CashFlow
     }
 
     @Override
-    public TemporalEvent<LocalDate, Money> merge(final TemporalEvent<LocalDate, Money> other) {
-        Preconditions.ensure(isSameDate(other));
-
-        return new CashFlow(occurredAt(), amount().add(other.event()));
+    public TemporalEvent<LocalDate, Money> shift(final UnaryOperator<LocalDate> adjuster) {
+        return new CashFlow(adjuster.apply(occurredAt()), amount());
     }
 }

@@ -31,7 +31,7 @@ import eapli.framework.validations.Preconditions;
 import lombok.EqualsAndHashCode;
 
 /**
- * A user name. It must not be empty.
+ * A user name. It must not be empty and must not contain white spaces.
  *
  * @author Paulo Gandra Sousa
  */
