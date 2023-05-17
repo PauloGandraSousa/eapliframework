@@ -233,13 +233,6 @@ public class CashFlow
     }
 
     @Override
-    public TemporalEvent<LocalDate, Money> merge(final TemporalEvent<LocalDate, Money> other) {
-        Preconditions.ensure(isSameDate(other));
-
-        return new CashFlow(occurredAt(), amount().add(other.event()));
-    }
-
-    @Override
     public TemporalEvent<LocalDate, Money> shift(final UnaryOperator<LocalDate> adjuster) {
         return new CashFlow(adjuster.apply(occurredAt()), amount());
     }

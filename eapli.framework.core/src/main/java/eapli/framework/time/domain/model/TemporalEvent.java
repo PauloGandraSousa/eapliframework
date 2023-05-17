@@ -25,6 +25,7 @@ import java.time.temporal.Temporal;
 import java.util.function.UnaryOperator;
 
 import eapli.framework.money.domain.model.Money;
+import eapli.framework.util.HashCoder;
 
 /**
  * A timed event, i.e., something that occurred at a specific point in time.
@@ -50,16 +51,6 @@ public interface TemporalEvent<T extends Temporal, S> {
     S event();
 
     /**
-     * Merges two temporal events for the same date. It is the responsibility of the implementing
-     * class to check if the two events occur in the same date.
-     *
-     * @param other
-     *
-     * @return
-     */
-    TemporalEvent<T, S> merge(TemporalEvent<T, S> other);
-
-    /**
      * Shifts the date of the event.
      *
      * @param adjuster
@@ -75,5 +66,48 @@ public interface TemporalEvent<T extends Temporal, S> {
      */
     default boolean isSameDate(final TemporalEvent<T, S> other) {
         return occurredAt().equals(other.occurredAt());
+    }
+
+    /**
+     * @param <A>
+     * @param <B>
+     * @param when
+     * @param what
+     *
+     * @return
+     */
+    public static <A extends Temporal, B> TemporalEvent<A, B> of(final A when, final B what) {
+        return new TemporalEvent<>() {
+
+            @Override
+            public A occurredAt() {
+                return when;
+            }
+
+            @Override
+            public B event() {
+                return what;
+            }
+
+            @Override
+            public TemporalEvent<A, B> shift(final UnaryOperator<A> adjuster) {
+                return of(adjuster.apply(occurredAt()), event());
+            }
+
+            @Override
+            public boolean equals(final Object arg) {
+                if (!(arg instanceof TemporalEvent)) {
+                    return false;
+                }
+                @SuppressWarnings("unchecked")
+                final TemporalEvent<A, B> other = (TemporalEvent<A, B>) arg;
+                return occurredAt().equals(other.occurredAt()) && event().equals(other.event());
+            }
+
+            @Override
+            public int hashCode() {
+                return new HashCoder().with(when).with(what).code();
+            }
+        };
     }
 }

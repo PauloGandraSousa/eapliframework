@@ -171,7 +171,7 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
     }
 
     /**
-     * Filters the series between (inclusive) two dates.
+     * Filters the series between the lower (inclusive) and upper (excluding) dates.
      *
      * @param lower
      * @param upper
@@ -179,7 +179,7 @@ public class CashFlowSeries implements ValueObject, Iterable<CashFlow> {
      * @return
      */
     public CashFlowSeries between(final LocalDate lower, final LocalDate upper) {
-        return filter(cf -> cf.occurredAt().compareTo(lower) >= 0 && cf.occurredAt().compareTo(upper) <= 0);
+        return filter(cf -> cf.occurredAt().compareTo(lower) >= 0 && cf.occurredAt().compareTo(upper) < 0);
     }
 
     /**

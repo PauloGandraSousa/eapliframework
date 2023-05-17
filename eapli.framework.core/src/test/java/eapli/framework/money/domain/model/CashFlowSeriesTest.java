@@ -160,27 +160,23 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureAddingAnElementToTheStart() {
-        final int d = NumberGenerator.anInt(1, 28);
-        final int m = NumberGenerator.anInt(1, 12);
-        final var cf = new CashFlow(LocalDate.of(REF_YEAR - 10, m, d), Money.euros(1));
-
-        final var result = subject.add(cf);
-        assertNotNull(result);
-        assertEquals(initialNumberOfElements + 1, result.length());
-        assertEquals(cf, result.nth(1).orElseThrow());
-        assertRespectsOrdering(result);
+        addElementAndAssert(REF_YEAR - 10, 1);
     }
 
     @Test
     void ensureAddingAnElementToTheEnd() {
+        addElementAndAssert(REF_YEAR + 10, initialNumberOfElements + 1);
+    }
+
+    private void addElementAndAssert(final int year, final int expectedIndex) {
         final int d = NumberGenerator.anInt(1, 29);
         final int m = NumberGenerator.anInt(1, 13);
-        final var cf = new CashFlow(LocalDate.of(REF_YEAR + 10, m, d), Money.euros(1));
+        final var cf = new CashFlow(LocalDate.of(year, m, d), Money.euros(1));
 
         final var result = subject.add(cf);
         assertNotNull(result);
         assertEquals(initialNumberOfElements + 1, result.length());
-        assertEquals(cf, result.nth(initialNumberOfElements + 1).orElseThrow());
+        assertEquals(cf, result.nth(expectedIndex).orElseThrow());
         assertRespectsOrdering(result);
     }
 
@@ -395,7 +391,7 @@ class CashFlowSeriesTest {
         final var result = subject.between(lower, upper);
 
         assertNotNull(result);
-        assertEquals(n, result.length());
+        assertEquals(n - 1, result.length());
         // all elements in the range
         int i = idx;
         for (final CashFlow cf : result) {
@@ -407,6 +403,20 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureBetweenSingleDate() {
+        final var idx = NumberGenerator.anInt(1, initialNumberOfElements);
+        final var expectedCashFlow = subject.nth(idx);
+        final var date = expectedCashFlow.orElseThrow().occurredAt();
+        final var nextDate = subject.nth(idx + 1).orElseThrow().occurredAt();
+
+        final var result = subject.between(date, nextDate);
+
+        assertNotNull(result);
+        assertEquals(1, result.length());
+        assertEquals(expectedCashFlow, result.nth(1));
+    }
+
+    @Test
+    void ensureBetweenSameDateReturns0() {
         final var idx = NumberGenerator.anInt(1, initialNumberOfElements + 1);
         final var expectedCashFlow = subject.nth(idx);
         final var date = expectedCashFlow.orElseThrow().occurredAt();
@@ -414,8 +424,7 @@ class CashFlowSeriesTest {
         final var result = subject.between(date, date);
 
         assertNotNull(result);
-        assertEquals(1, result.length());
-        assertEquals(expectedCashFlow, result.nth(1));
+        assertEquals(0, result.length());
     }
 
     @Test

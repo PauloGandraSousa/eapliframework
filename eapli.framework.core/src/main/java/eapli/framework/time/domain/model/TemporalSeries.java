@@ -22,18 +22,18 @@ package eapli.framework.time.domain.model;
 
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAmount;
+import java.util.Map;
 import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 import eapli.framework.domain.model.ValueObject;
 
 /**
- * A temporal series, i.e., a series of temporal events.
+ * A temporal series, i.e., a series of temporal events. The series is ordered by date.
  *
  * @author Paulo Gandra Sousa 2023.04.14
  *
@@ -42,7 +42,8 @@ import eapli.framework.domain.model.ValueObject;
  * @param <T>
  *            the value of the series, e.g., Money
  */
-public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iterable<T> {
+public interface TemporalSeries<D extends Temporal, T>
+        extends ValueObject, Iterable<TemporalEvent<D, T>> {
 
     /**
      * Creates a new series with the element added. If a value already exists for the same date,
@@ -69,13 +70,12 @@ public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iter
     /**
      * Folds (reduces) the series given an initial value.
      *
-     * @param <R>
      * @param initial
      * @param folder
      *
      * @return
      */
-    <R> R fold(R initial, BiFunction<R, T, R> folder);
+    T fold(T initial, BinaryOperator<T> folder);
 
     /**
      * Transforms the series.
@@ -86,7 +86,7 @@ public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iter
      *
      * @return
      */
-    <S extends Temporal, U> TemporalSeries<S, U> map(Function<T, U> mapper);
+    <S extends Temporal, U> TemporalSeries<S, U> map(Function<TemporalEvent<D, T>, TemporalEvent<S, U>> mapper);
 
     /**
      * Shifts the temporal dimension of the series keeping the values.
@@ -103,7 +103,7 @@ public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iter
     TemporalSeries<D, T> shift(TemporalAmount adjustement);
 
     /**
-     * Filters the series between (inclusive) two dates.
+     * Filters the series between {@code lower} (inclusive) and {@code upper} (excluding) dates.
      *
      * @param lower
      * @param upper
@@ -119,16 +119,29 @@ public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iter
      *
      * @return
      */
-    TemporalSeries<D, T> filter(BiPredicate<D, T> filter);
+    TemporalSeries<D, T> filter(Predicate<TemporalEvent<D, T>> filter);
 
     /**
-     * Slices the series in several series according to a criteria.
+     * Removes a date point and respective value from the series.
      *
-     * @param slicer
+     * @param when
      *
      * @return
      */
-    TemporalSeries<D, T>[] slice(final BiFunction<D, T, Integer> slicer);
+    default TemporalSeries<D, T> without(final D when) {
+        return filter(e -> e.occurredAt().equals(when));
+    }
+
+    /**
+     * Slices the series in several series according to a criteria. Implementations may require to
+     * create and merge series while slicing.
+     *
+     * @param slicer
+     * @param combinator
+     *
+     * @return
+     */
+    <U> Map<U, TemporalSeries<D, T>> slice(final Function<TemporalEvent<D, T>, U> slicer, BinaryOperator<T> combinator);
 
     /**
      * Returns the value at a certain date.
@@ -146,16 +159,16 @@ public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iter
      *
      * @return
      */
-    Optional<T> nth(int idx);
+    Optional<TemporalEvent<D, T>> nth(int idx);
 
     /**
-     * Returns the first index of the value.
+     * Returns the index of a certain date.
      *
      * @param event
      *
      * @return
      */
-    Optional<Integer> indexOf(T event);
+    Optional<Integer> indexOf(D when);
 
     /**
      * Checks if a value is part of this series.
@@ -165,7 +178,18 @@ public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iter
      * @return
      */
     default boolean contains(final T event) {
-        return indexOf(event).isPresent();
+        return dateOf(event).isPresent();
+    }
+
+    /**
+     * Checks if a date is part of this series.
+     *
+     * @param event
+     *
+     * @return
+     */
+    default boolean hasDate(final D when) {
+        return indexOf(when).isPresent();
     }
 
     /**
@@ -178,20 +202,21 @@ public interface TemporalSeries<D extends Temporal, T> extends ValueObject, Iter
     Optional<D> dateOf(T event);
 
     /**
-     * Returns the index of a certain date.
+     * Returns the date a value appears after a certain date.
      *
      * @param event
+     * @param after
      *
      * @return
      */
-    Optional<Integer> indexOf(D when);
+    Optional<D> dateOf(T event, D after);
 
     /**
-     * Returns the ordered stream of cash flows.
+     * Returns the ordered stream of values.
      *
      * @return
      */
-    Stream<T> stream();
+    Stream<TemporalEvent<D, T>> stream();
 
     /**
      * Return the length of the series, ie.e, the number of elements.

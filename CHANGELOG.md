@@ -1,15 +1,21 @@
 # EAPLI Framework Changelog
 
-## v22.X.X
+## v23.X.X
 
-### 22.X.X [CORE]
+### 23.X.X [CORE]
 
 #### What's new
 
 - `TemporalEvent.shift` method
+- `TemporalEvent.of` static method
 - `CashFlowSeries` class
 - `TemporalSeries` interface
-- `ListTemporalSeries` class
+- `TreeTemporalSeries` class
+
+#### What's changed
+
+- removed method `TemporalEvent.merge` 
+- removed method `CashFlow.merge` 
 
 
 ## v22.2.0
