@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>eapli</groupId>
 			<artifactId>eapli.framework.core</artifactId>
-			<version>22.0.0</version>
+			<version>23.0.0</version>
 		</dependency>
 	</dependencies>
 </project>

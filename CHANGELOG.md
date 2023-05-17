@@ -1,8 +1,8 @@
 # EAPLI Framework Changelog
 
-## v23.X.X
+## v23.0.0
 
-### 23.X.X [CORE]
+### 23.0.0 [CORE]
 
 #### What's new
 
@@ -18,7 +18,7 @@
 - removed method `CashFlow.merge` 
 
 
-## v22.2.0
+## v22.2.0_RELEASE
 
 *note* This was supposed to be version 22.0.0 but due to a typo was published as 22.2.0
 
@@ -52,7 +52,7 @@
 - `User.activate()`
 - `UserService.activate()`
 
-## v21.2.0
+## v21.2.0-RELEASE
 
 ### 21.2.0 [CORE]
 
@@ -66,7 +66,7 @@
 - `StringPredicates.isNonEmpty` method
 - `EmailAddress.tryValueOf` method
 
-## v21.1.3
+## v21.1.3-RELEASE
 
 ### 21.1.1 [CORE]
 
@@ -74,7 +74,7 @@
 
 - workaround for use of SpringBoot 2.7.9 native queries
 
-## v21.1.1
+## v21.1.1-RELEASE
 
 ### 21.1.1 [CORE]
 
@@ -82,7 +82,7 @@
 
 - handling of `OptimisticLockException` in `JpaTransactionalRepository`
 
-## v21.1.0
+## v21.1.0-RELEASE
 
 ### 21.1.0 [CORE]
 
@@ -104,7 +104,7 @@
 - `Authenticator` interface
 
 
-## v21.0.0
+## v21.0.0-RELEASE
 
 ### 21.0.0 [CORE]
 
