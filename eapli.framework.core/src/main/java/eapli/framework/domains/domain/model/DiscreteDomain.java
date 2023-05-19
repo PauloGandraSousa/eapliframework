@@ -116,6 +116,7 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
      * Checks if an element is contained in this domain.
      *
      * @param e
+     *
      * @return true if e is contained in this domain
      */
     public boolean contains(final T e) {
@@ -132,9 +133,19 @@ public final class DiscreteDomain<T extends Serializable> implements Iterable<T>
     }
 
     /**
+     * Returns the number of elements of this domain.
+     *
+     * @return the number of elements of this domain
+     */
+    public int size() {
+        return elements.size();
+    }
+
+    /**
      * Checks if this domain intersects another domain.
      *
      * @param other
+     *
      * @return true if this domain intersects the other domain
      */
     public boolean intersects(final DiscreteDomain<T> other) {

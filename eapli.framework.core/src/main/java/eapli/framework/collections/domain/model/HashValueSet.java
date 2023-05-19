@@ -48,9 +48,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class HashValueSet<T> implements ValueSet<T> {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     private final Set<T> data;

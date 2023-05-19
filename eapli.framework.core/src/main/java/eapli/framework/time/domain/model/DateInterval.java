@@ -47,67 +47,67 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class DateInterval implements ValueObject {
 
-	private static final long serialVersionUID = -3829067411069027990L;
+    private static final long serialVersionUID = -3829067411069027990L;
 
-	@XmlAttribute
-	@JsonProperty
-	@Temporal(TemporalType.DATE)
-	private final Calendar dateStart;
+    @XmlAttribute
+    @JsonProperty
+    @Temporal(TemporalType.DATE)
+    private final Calendar dateStart;
 
-	@XmlAttribute
-	@JsonProperty
-	@Temporal(TemporalType.DATE)
-	private final Calendar dateEnd;
+    @XmlAttribute
+    @JsonProperty
+    @Temporal(TemporalType.DATE)
+    private final Calendar dateEnd;
 
-	@XmlTransient
-	@JsonIgnore
-	@Transient
-	private final TimeInterval period;
+    @XmlTransient
+    @JsonIgnore
+    @Transient
+    private final TimeInterval period;
 
-	/**
-	 * constructs a closed range between start and end
-	 *
-	 * @param start
-	 * @param end
-	 */
-	public DateInterval(final Calendar start, final Calendar end) {
-		Preconditions.noneNull(start, end);
+    /**
+     * constructs a closed range between start and end
+     *
+     * @param start
+     * @param end
+     */
+    public DateInterval(final Calendar start, final Calendar end) {
+        Preconditions.noneNull(start, end);
 
-		this.dateStart = Calendars.dateOf(start);
-		this.dateEnd = Calendars.dateOf(end);
-		period = new TimeInterval(this.dateStart, this.dateEnd);
-	}
+        this.dateStart = Calendars.dateOf(start);
+        this.dateEnd = Calendars.dateOf(end);
+        period = new TimeInterval(this.dateStart, this.dateEnd);
+    }
 
-	/**
-	 * constructs a closed range starting at start ad infinitum
-	 *
-	 * @param start
-	 */
-	public DateInterval(final Calendar start) {
-		Preconditions.nonNull(start);
+    /**
+     * Constructs a closed range from {@code start} <em>ad infinitum</em>
+     *
+     * @param start
+     */
+    public DateInterval(final Calendar start) {
+        Preconditions.nonNull(start);
 
-		this.dateStart = Calendars.dateOf(start);
-		dateEnd = null;
-		period = new TimeInterval(this.dateStart);
-	}
+        this.dateStart = Calendars.dateOf(start);
+        dateEnd = null;
+        period = new TimeInterval(this.dateStart);
+    }
 
-	protected DateInterval() {
-		// ORM
-		dateStart = dateEnd = null;
-		period = null;
-	}
+    protected DateInterval() {
+        // ORM
+        dateStart = dateEnd = null;
+        period = null;
+    }
 
-	public Calendar start() {
-		return dateStart;
-	}
+    public Calendar start() {
+        return dateStart;
+    }
 
-	public Calendar end() {
-		return dateEnd;
-	}
+    public Calendar end() {
+        return dateEnd;
+    }
 
-	public boolean includes(final Calendar target) {
-		Preconditions.nonNull(target);
+    public boolean includes(final Calendar target) {
+        Preconditions.nonNull(target);
 
-		return period.includes(target);
-	}
+        return period.includes(target);
+    }
 }

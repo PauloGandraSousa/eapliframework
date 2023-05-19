@@ -31,8 +31,10 @@ import eapli.framework.functional.Either.RightProjection;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A simple approach to the functional Monad Either. Consider using a well-tested and proven java
- * functional library instead, e.g., <a href="https://www.vavr.io/">vavr</a>
+ * A simple approach to the functional Monad <em>Either</em>.
+ * <p>
+ * <em>Note:</em> Consider using a well-tested and proven java
+ * functional library, e.g., <a href="https://www.vavr.io/">vavr</a>
  * <p>
  * Objects of this class can represent one (1) value of either {@code L} or
  * {@code R}. Useful for error handling where, by convention, the left type is

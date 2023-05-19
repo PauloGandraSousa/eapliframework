@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 /**
  * A Monad is a parameterized Wrapper type that is immutable and does not provide
  * direct access to the value it is wrapping. In order to use the value one must
- * map it or fold it.
+ * {@code map} it or {@code fold} it.
  *
  * @param <T>
  *
