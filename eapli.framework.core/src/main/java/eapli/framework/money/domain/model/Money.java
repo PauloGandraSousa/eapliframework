@@ -40,7 +40,7 @@ import eapli.framework.strings.XmlCurrencyAdapter;
 import eapli.framework.validations.Preconditions;
 
 /**
- * A money value (amount and currency) with a precision of two decimals.
+ * A money value (amount and currency) with a precision of <b>two</b> decimals.
  *
  * <p>
  * <blockquote> A large proportion of the computers in this world manipulate
@@ -134,6 +134,18 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      */
     public Money(final double amount, final Currency currency) {
         this.amount = BigInteger.valueOf(Math.round(amount * HUNDRED));
+        this.currency = currency;
+    }
+
+    /**
+     * Constructs a new Money object.
+     *
+     * @param amount
+     *            the amount in the units of currency, e.g., 100.50 EUR
+     * @param currency
+     */
+    public Money(final BigDecimal amount, final Currency currency) {
+        this.amount = BigInteger.valueOf(amount.multiply(BigDecimal.valueOf(HUNDRED)).longValue());
         this.currency = currency;
     }
 

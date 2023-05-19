@@ -11,6 +11,8 @@
 - `CashFlowSeries` class
 - `TemporalSeries` interface
 - `TreeTemporalSeries` class
+- `ForeignExchnage` interface
+- `ConversionRate` class
 
 #### What's changed
 
