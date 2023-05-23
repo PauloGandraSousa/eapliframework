@@ -34,96 +34,133 @@ class CashFlowTest {
 
     @Test
     void ensureMoneyIsMandatory() {
+        // ARRANGE
         final var now = LocalDate.now();
+
+        // ACT - ASSERT
         assertThrows(IllegalArgumentException.class, () -> new CashFlow(now, null));
     }
 
     @Test
     void ensureDateIsMandatory() {
+        // ARRANGE
         final var two = Money.dollars(2);
+
+        // ACT - ASSERT
         assertThrows(IllegalArgumentException.class, () -> new CashFlow(null, two));
     }
 
     @Test
     void ensureAddOnTheSameDay() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var a = new CashFlow(today, Money.dollars(1));
         final var b = new CashFlow(today, Money.dollars(2));
         final var expected = new CashFlow(today, Money.dollars(3.00));
+
+        // ACT
         final var result = a.add(b);
+
+        // ASSERT
         assertEquals(expected, result);
     }
 
     @Test
     void ensureCannotAddOnDifferentDays() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var a = new CashFlow(today, Money.dollars(1));
         final var b = new CashFlow(today.minusDays(1), Money.dollars(2));
+
+        // ACT - ASSERT
         assertThrows(IllegalArgumentException.class, () -> a.add(b));
     }
 
     @Test
     void ensureSubtractOnTheSameDay() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var a = new CashFlow(today, Money.dollars(1));
         final var b = new CashFlow(today, Money.dollars(2));
         final var expected = new CashFlow(today, Money.dollars(-1.00));
+
+        // ACT
         final var result = a.subtract(b);
+
+        // ASSERT
         assertEquals(expected, result);
     }
 
     @Test
     void ensureCannotSubtractOnDifferentDays() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var a = new CashFlow(today, Money.dollars(1));
         final var b = new CashFlow(today.minusDays(1), Money.dollars(2));
+
+        // ACT - ASSERT
         assertThrows(IllegalArgumentException.class, () -> a.subtract(b));
     }
 
     @Test
     void whenTwoCashFlowsHaveSameAmountAndSameDateThenCompareIs0() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var amt = Money.dollars(1);
         final var a = new CashFlow(today, amt);
         final var b = new CashFlow(today, amt);
+
+        // ACT - ASSERT
         assertEquals(0, a.compareTo(b));
     }
 
     @Test
     void whenACashFlowHasPreviousDateThanAnotherThenCompareIsMinus1() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var amt = Money.dollars(1);
         final var a = new CashFlow(today.minusDays(1), amt);
         final var b = new CashFlow(today, amt);
+
+        // ACT - ASSERT
         assertEquals(-1, a.compareTo(b));
     }
 
     @Test
     void whenACashFlowHasPosteriorDateThanAnotherThenCompareIs1() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var amt = Money.dollars(1);
         final var a = new CashFlow(today.plusDays(1), amt);
         final var b = new CashFlow(today, amt);
+
+        // ACT - ASSERT
         assertEquals(1, a.compareTo(b));
     }
 
     @Test
     void whenTwoCashFlowsHaveTheSameDateButOneHasASmallerAmountThenCompareIsMinus1() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var amt1 = Money.dollars(1);
         final var amt2 = Money.dollars(2);
         final var a = new CashFlow(today, amt1);
         final var b = new CashFlow(today, amt2);
+
+        // ACT - ASSERT
         assertEquals(-1, a.compareTo(b));
     }
 
     @Test
     void whenTwoCashFlowsHaveTheSameDateButOneHasABiggerAmountThenCompareIs1() {
+        // ARRANGE
         final var today = LocalDate.now();
         final var amt1 = Money.dollars(10);
         final var amt2 = Money.dollars(2);
         final var a = new CashFlow(today, amt1);
         final var b = new CashFlow(today, amt2);
+
+        // ACT - ASSERT
         assertEquals(1, a.compareTo(b));
     }
 }

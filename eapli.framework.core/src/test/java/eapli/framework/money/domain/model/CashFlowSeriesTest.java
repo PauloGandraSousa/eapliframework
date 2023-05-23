@@ -109,9 +109,11 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureCreatingOfWithDistinctDatesOrdered() {
+        // ARRANGE - ACT
         final var result = CashFlowSeries.of(CASH_FLOW_1_1, CASH_FLOW_1_10, CASH_FLOW_1_20,
                 CASH_FLOW_2_5, CASH_FLOW_2_15);
 
+        // ASSERT
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(50), result.fold(Money.euros(0), (a, b) -> b.add(a)));
@@ -120,9 +122,11 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureCreatingOfWithSomeEqualCashFlowsOrdered() {
+        // ARRANGE - ACT
         final var result = CashFlowSeries.of(CASH_FLOW_1_1, CASH_FLOW_1_1, CASH_FLOW_1_10, CASH_FLOW_1_20,
                 CASH_FLOW_2_5, CASH_FLOW_2_15, CASH_FLOW_2_15);
 
+        // ASSERT
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(90), result.fold(Money.euros(0), (a, b) -> b.add(a)));
@@ -131,9 +135,11 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureCreatingOfWithSomeCommonDatesOrdered() {
+        // ARRANGE - ACT
         final var result = CashFlowSeries.of(CASH_FLOW_1_1, CASH_FLOW_1_1b, CASH_FLOW_1_10, CASH_FLOW_1_20,
                 CASH_FLOW_2_5, CASH_FLOW_2_15, CASH_FLOW_2_15b);
 
+        // ASSERT
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(110), result.fold(Money.euros(0), (a, b) -> b.add(a)));
@@ -142,9 +148,11 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureCreatingOfWithSomeCommonDatesUnordered() {
+        // ARRANGE - ACT
         final var result = CashFlowSeries.of(CASH_FLOW_1_10, CASH_FLOW_1_1, CASH_FLOW_1_20,
                 CASH_FLOW_2_15, CASH_FLOW_2_5, CASH_FLOW_2_15, CASH_FLOW_1_1);
 
+        // ASSERT
         assertNotNull(result);
         assertEquals(5, result.length());
         assertEquals(Money.euros(90), result.fold(Money.euros(0), (a, b) -> b.add(a)));
@@ -153,9 +161,13 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureFolding() {
+        // ARRANGE
         final Money expected = Money.euros(initialNumberOfElements);
+
+        // ACT
         final Money result = subject.fold(Money.euros(0), (a, b) -> b.add(a));
 
+        // ASSERT
         assertEquals(expected, result);
     }
 
