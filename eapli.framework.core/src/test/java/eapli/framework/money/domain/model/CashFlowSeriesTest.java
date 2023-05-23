@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.AfterEach;
@@ -169,11 +170,15 @@ class CashFlowSeriesTest {
     }
 
     private void addElementAndAssert(final int year, final int expectedIndex) {
+        // ARRANGE
         final int d = NumberGenerator.anInt(1, 29);
         final int m = NumberGenerator.anInt(1, 13);
         final var cf = new CashFlow(LocalDate.of(year, m, d), Money.euros(1));
 
+        // ACT
         final var result = subject.add(cf);
+
+        // ASSERT
         assertNotNull(result);
         assertEquals(initialNumberOfElements + 1, result.length());
         assertEquals(cf, result.nth(expectedIndex).orElseThrow());
@@ -182,6 +187,7 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureAddingAnElementPlacesItInTheRightTemporalOrder() {
+        // ARRANGE
         int d, m;
         do {
             d = NumberGenerator.anInt(1, 29);
@@ -190,8 +196,10 @@ class CashFlowSeriesTest {
 
         final var cf = new CashFlow(LocalDate.of(REF_YEAR, m, d), Money.euros(1));
 
+        // ACT
         final var result = subject.add(cf);
 
+        // ASSERT
         assertNotNull(result);
         assertEquals(initialNumberOfElements + 1, result.length());
         assertRespectsOrdering(result);
@@ -199,14 +207,17 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureAddingAnElementForAnExistingDateCombinesTheValues() {
+        // ARRANGE
         final var idx = NumberGenerator.anInt(1, initialNumberOfElements + 1);
         final var d = subject.nth(idx).orElseThrow().occurredAt();
         final var amt = Money.euros(NumberGenerator.anInt());
 
         final var expectedAmount = amt.add(subject.nth(idx).orElseThrow().amount());
 
+        // ACT
         final CashFlowSeries result = subject.add(new CashFlow(d, amt));
 
+        // ASSERT
         assertNotNull(result);
         assertEquals(initialNumberOfElements, result.length());
         assertEquals(expectedAmount, result.valueAt(d).orElseThrow());
@@ -216,9 +227,13 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureTransforms() {
+        // ARRANGE
         final int amt = NumberGenerator.anInt();
+
+        // ACT
         final var result = subject.map(a -> new CashFlow(a.occurredAt(), Money.euros(amt)));
 
+        // ASSERT
         assertNotNull(result);
         assertEquals(initialNumberOfElements, result.length());
         assertTrue(result.stream().allMatch(cf -> cf.amount().equals(Money.euros(amt))));
@@ -228,8 +243,13 @@ class CashFlowSeriesTest {
 
     @Test
     void ensureShift() {
-        final var result = subject.shift(t -> t.plusDays(2));
+        // ARRANGE
+        final UnaryOperator<LocalDate> adjuster = t -> t.plusDays(2);
 
+        // ACT
+        final var result = subject.shift(adjuster);
+
+        // ASSERT
         assertNotNull(result);
         assertEquals(initialNumberOfElements, result.length());
         assertHasShifted(result);
@@ -238,11 +258,11 @@ class CashFlowSeriesTest {
 
     private void assertHasShifted(final CashFlowSeries result) {
         final var its = subject.iterator();
-        for (final CashFlow cfr : result) {
-            final var cfs = its.next();
+        for (final CashFlow resultCashFlow : result) {
+            final var originalCashFlow = its.next();
 
-            assertEquals(cfs.amount(), cfr.amount());
-            assertEquals(cfs.occurredAt().plusDays(2), cfr.occurredAt());
+            assertEquals(originalCashFlow.amount(), resultCashFlow.amount());
+            assertEquals(originalCashFlow.occurredAt().plusDays(2), resultCashFlow.occurredAt());
         }
     }
 
