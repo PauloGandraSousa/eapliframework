@@ -20,7 +20,7 @@
  */
 package eapli.framework.money.domain.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Currency;
 
 /**
@@ -42,5 +42,5 @@ public interface ForeignExchange {
      * @param asOf
      * @return
      */
-    ConversionRate rateAsOf(Currency from, Currency to, LocalDate asOf);
+    ConversionRate rateAsOf(Currency from, Currency to, LocalDateTime asOf);
 }

@@ -1,6 +1,6 @@
 # EAPLI Framework Changelog
 
-## v23.0.0
+## v23.0.0-SNAPSHOT
 
 ### 23.0.0 [CORE]
 

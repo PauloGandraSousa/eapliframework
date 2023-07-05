@@ -20,7 +20,7 @@
  */
 package eapli.framework.money.domain.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Currency;
 
 import javax.persistence.Embeddable;
@@ -50,7 +50,7 @@ public class ConversionRate implements ValueObject {
     private Currency from;
     private Currency to;
     private double rate;
-    private LocalDate asOf;
+    private LocalDateTime asOf;
 
     /**
      * Applies this conversion rate to a value.
