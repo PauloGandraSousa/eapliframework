@@ -3,40 +3,32 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<packaging>pom</packaging>
 	<groupId>eapli</groupId>
 	<version>16.7.0</version>
 	<name>eapli.framework</name>
 	<artifactId>eapli.framework</artifactId>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.11</version>
+		<version>2.7.13</version>
 	</parent>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
 		<sonar.exclusions>src/main/java/**/*/package-info.java</sonar.exclusions>
-
 		<downloadSources>true</downloadSources>
 		<downloadJavadocs>true</downloadJavadocs>
 	</properties>
-
 	<modules>
 		<module>eapli.framework.core</module>
 		<module>eapli.framework.infrastructure.authz</module>
 		<module>eapli.framework.infrastructure.pubsub</module>
 	</modules>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -51,13 +43,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
 		<!-- keep junit4 for now -->
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <scope>test</scope>
-        </dependency>       
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- Apache Commons Lang 3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -70,14 +61,45 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
+			<!-- mutation testing -->
 			<plugin>
 				<groupId>org.pitest</groupId>
 				<artifactId>pitest-maven</artifactId>
 				<version>1.6.7</version>
 			</plugin>
+			<!-- test coverage -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- lombok code generation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -92,6 +114,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			<!-- version plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
@@ -99,6 +122,7 @@
 					<generateBackupPoms>false</generateBackupPoms>
 				</configuration>
 			</plugin>
+			<!-- delombok -->
 			<plugin>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-maven-plugin</artifactId>
@@ -125,6 +149,7 @@
 						<configuration> <verbose>false</verbose> </configuration> </execution> -->
 				</executions>
 			</plugin>
+			<!-- javadoc generation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -133,7 +158,6 @@
 					<!-- <source>1.8</source> <javadocVersion>1.8.0</javadocVersion> <taglet>org.jdrupes.taglets.plantUml.Taglet</taglet> 
 						<tagletArtifact> <groupId>org.jdrupes.taglets</groupId> <artifactId>plantuml-taglet</artifactId> 
 						<version>1.0.5</version> </tagletArtifact> -->
-
 					<!-- UML DocLet JDK 9+ -->
 					<doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
 					<docletArtifact>
@@ -141,7 +165,6 @@
 						<artifactId>umldoclet</artifactId>
 						<version>2.0.12</version>
 					</docletArtifact>
-
 					<!-- params -->
 					<doclint>none</doclint>
 					<additionalOptions>
@@ -159,7 +182,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<!-- attach sources -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -174,7 +197,7 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<!-- Nexus repository for EAPLI artifacts -->
 	<repositories>
 		<repository>
 			<id>jitpack.io</id>

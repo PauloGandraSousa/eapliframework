@@ -1,1 +1,1 @@
-mvn -B %1 verify org.pitest:pitest-maven:mutationCoverage -D withHistory -D maven.javadoc.skip=true
+mvn -B %1 dependency:copy-dependencies verify -D maven.javadoc.skip=true
