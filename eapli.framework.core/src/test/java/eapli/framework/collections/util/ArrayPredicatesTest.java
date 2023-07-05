@@ -23,25 +23,21 @@
  */
 package eapli.framework.collections.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import eapli.framework.collections.util.ArrayPredicates;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paulo Gandra de Sousa 28/05/2020
- *
  */
-public class ArrayPredicatesTest {
+class ArrayPredicatesTest {
 
     private final String[] originalStrings = { "aa", "bb", "cc", "dd" };
     private final String[] testStrings = new String[originalStrings.length];
 
-    @Before
+    @BeforeAll
     public void setUp() throws Exception {
         for (int i = 0; i < originalStrings.length; i++) {
             testStrings[i] = originalStrings[i];
@@ -49,47 +45,47 @@ public class ArrayPredicatesTest {
     }
 
     @Test
-    public void ensureContainsAA() {
+    void ensureContainsAA() {
         assertTrue(ArrayPredicates.contains(testStrings, "aa"));
     }
 
     @Test
-    public void ensureDoesNotContainXX() {
+    void ensureDoesNotContainXX() {
         assertFalse(ArrayPredicates.contains(testStrings, "xx"));
     }
 
     @Test
-    public void ensureDistinctArrayElements() {
+    void ensureDistinctArrayElements() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         assertTrue(ArrayPredicates.areAllDistinct(test));
     }
 
     @Test
-    public void ensureNotDistintictArrayElements() {
+    void ensureNotDistintictArrayElements() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
         assertFalse(ArrayPredicates.areAllDistinct(test));
     }
 
     @Test
-    public void ensureAll() {
+    void ensureAll() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
         assertTrue(ArrayPredicates.all(test, i -> i < 50));
     }
 
     @Test
-    public void ensureAllNot() {
+    void ensureAllNot() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
         assertFalse(ArrayPredicates.all(test, i -> i < 5));
     }
 
     @Test
-    public void ensureAny() {
+    void ensureAny() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
         assertTrue(ArrayPredicates.any(test, i -> i > 5));
     }
 
     @Test
-    public void ensureAnyNot() {
+    void ensureAnyNot() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
         assertFalse(ArrayPredicates.any(test, i -> i > 50));
     }

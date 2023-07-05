@@ -23,44 +23,40 @@
  */
 package eapli.framework.collections.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import eapli.framework.collections.util.Arrays;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paulo Gandra de Sousa 28/05/2020
- *
  */
-public class ArraysTest {
+class ArraysTest {
 
     private final String[] originalStrings = { "aa", "bb", "cc", "dd" };
     private final String[] testStrings = new String[originalStrings.length];
     private final double[] testDoubles = { 1, 2, 3, 4, 5, 6 };
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeAll
+    void setUp() throws Exception {
         for (int i = 0; i < originalStrings.length; i++) {
             testStrings[i] = originalStrings[i];
         }
     }
 
     @Test
-    public void ensureIndexOfAAIs0() {
+    void ensureIndexOfAAIs0() {
         assertEquals(0, Arrays.indexOf(testStrings, "aa"));
     }
 
     @Test
-    public void ensureIndexOfXXIsMinus1() {
+    void ensureIndexOfXXIsMinus1() {
         assertEquals(-1, Arrays.indexOf(testStrings, "xx"));
     }
 
     @Test
-    public void ensureMapStringToInt() {
+    void ensureMapStringToInt() {
         final Integer[] subject = Arrays.map(testStrings, Integer[]::new, x -> x.length());
 
         assertEquals(testStrings.length, subject.length);
@@ -70,14 +66,14 @@ public class ArraysTest {
     }
 
     @Test
-    public void ensureMapStringToIntKeepsOriginal() {
+    void ensureMapStringToIntKeepsOriginal() {
         Arrays.map(testStrings, Integer[]::new, x -> x.length());
 
         assertArrayEquals(originalStrings, testStrings);
     }
 
     @Test
-    public void ensureMapPrimitiveDouble() {
+    void ensureMapPrimitiveDouble() {
         final double[] subject = Arrays.map(testDoubles, x -> x * 2);
 
         assertEquals(testDoubles.length, subject.length);
@@ -87,7 +83,7 @@ public class ArraysTest {
     }
 
     @Test
-    public void ensureMapPrimitiveDoubleKeepsOriginal() {
+    void ensureMapPrimitiveDoubleKeepsOriginal() {
         Arrays.map(testDoubles, x -> x * 2);
 
         for (int i = 0; i < testDoubles.length; i++) {
@@ -96,19 +92,19 @@ public class ArraysTest {
     }
 
     @Test
-    public void ensureCountOfUnexistingElementIsZero() {
+    void ensureCountOfUnexistingElementIsZero() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         assertEquals(0, Arrays.countOf(test, 42));
     }
 
     @Test
-    public void ensureCountOfExistingSingleElementIsOne() {
+    void ensureCountOfExistingSingleElementIsOne() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         assertEquals(1, Arrays.countOf(test, 2));
     }
 
     @Test
-    public void ensureCountOfExistingTripleElementIsThree() {
+    void ensureCountOfExistingTripleElementIsThree() {
         final Integer[] test = new Integer[] { 1, 2, 3, 4, 2, 5, 6, 7, 8, 2, 9, 10 };
         assertEquals(3, Arrays.countOf(test, 2));
     }
