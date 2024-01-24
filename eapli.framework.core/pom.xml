@@ -7,20 +7,20 @@
 	<packaging>jar</packaging>
 	<name>eapli.framework.core</name>
 	<artifactId>eapli.framework.core</artifactId>
-	<version>23.0.0</version>
+	<version>23.0.1</version>
 
 	<parent>
 		<groupId>eapli</groupId>
 		<artifactId>eapli.framework</artifactId>
 		<relativePath>../</relativePath>
-		<version>16.7.0</version>
+		<version>16.7.1</version>
 	</parent>
 	
 	<dependencies>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.11.0</version>
+			<version>2.15.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vmlens</groupId>
