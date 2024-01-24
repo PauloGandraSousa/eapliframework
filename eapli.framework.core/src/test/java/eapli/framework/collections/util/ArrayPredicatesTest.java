@@ -26,7 +26,7 @@ package eapli.framework.collections.util;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,7 +37,7 @@ class ArrayPredicatesTest {
     private final String[] originalStrings = { "aa", "bb", "cc", "dd" };
     private final String[] testStrings = new String[originalStrings.length];
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         for (int i = 0; i < originalStrings.length; i++) {
             testStrings[i] = originalStrings[i];
