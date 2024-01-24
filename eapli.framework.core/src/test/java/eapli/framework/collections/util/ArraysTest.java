@@ -26,7 +26,7 @@ package eapli.framework.collections.util;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -38,7 +38,7 @@ class ArraysTest {
     private final String[] testStrings = new String[originalStrings.length];
     private final double[] testDoubles = { 1, 2, 3, 4, 5, 6 };
 
-    @BeforeAll
+    @BeforeEach
     void setUp() throws Exception {
         for (int i = 0; i < originalStrings.length; i++) {
             testStrings[i] = originalStrings[i];
