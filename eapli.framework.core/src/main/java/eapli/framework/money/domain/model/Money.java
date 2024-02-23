@@ -218,7 +218,7 @@ public class Money implements Comparable<Money>, Serializable, ValueObject, Form
      */
     public static Money valueOf(final String value) {
         final String[] parts = value.split(" ");
-        Preconditions.areEqual(parts.length, 2);
+        Preconditions.areEqual(parts.length, 2, "Invalid money format: " + value);
 
         final double am = Double.parseDouble(parts[0]);
         final Currency curr = Currency.getInstance(parts[1]);
