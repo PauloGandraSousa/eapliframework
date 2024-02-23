@@ -6,13 +6,13 @@
 	<artifactId>eapli.framework.infrastructure.authz</artifactId>
 	<packaging>jar</packaging>
 	<name>eapli.framework.infrastructure.authz</name>
-	<version>19.2.2</version>
+	<version>20.0.0</version>
 
 	<parent>
 		<groupId>eapli</groupId>
 		<artifactId>eapli.framework</artifactId>
 		<relativePath>../</relativePath>
-		<version>16.7.1</version>
+		<version>17.0.0</version>
 	</parent>
 
 	<dependencies>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>eapli</groupId>
 			<artifactId>eapli.framework.core</artifactId>
-			<version>23.0.2</version>
+			<version>24.0.0</version>
 		</dependency>
 	</dependencies>
 </project>
