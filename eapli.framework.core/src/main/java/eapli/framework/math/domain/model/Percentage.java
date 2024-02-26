@@ -23,15 +23,14 @@ package eapli.framework.math.domain.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.xml.bind.annotation.XmlAttribute;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -87,7 +86,7 @@ public class Percentage implements ValueObject, Comparable<Percentage>, Serializ
     }
 
     /**
-     * 
+     *
      * @param perc
      * @return
      */

@@ -23,13 +23,12 @@ package eapli.framework.domains.domain.model;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import javax.persistence.Embeddable;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Invariants;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -114,8 +113,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
          * @return the newly created Interval
          */
         public Interval<R> closedTo(final R anchor) {
-            this.end = anchor;
-            this.endBoundary = BoundaryLimitType.CLOSED;
+            end = anchor;
+            endBoundary = BoundaryLimitType.CLOSED;
             return build();
         }
 
@@ -125,8 +124,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
          * @return the newly created Interval
          */
         public Interval<R> openTo(final R anchor) {
-            this.end = anchor;
-            this.endBoundary = BoundaryLimitType.OPEN;
+            end = anchor;
+            endBoundary = BoundaryLimitType.OPEN;
             return build();
         }
 
@@ -134,8 +133,8 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
          * @return the newly created Interval
          */
         public Interval<R> toInfinity() {
-            this.end = null;
-            this.endBoundary = BoundaryLimitType.INFINITY;
+            end = null;
+            endBoundary = BoundaryLimitType.INFINITY;
             return build();
         }
 
@@ -143,7 +142,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
          * @return the newly created Interval
          */
         private Interval<R> build() {
-            return new Interval<>(this.start, this.startBoundary, this.end, this.endBoundary);
+            return new Interval<>(start, startBoundary, end, endBoundary);
         }
     }
 
@@ -284,39 +283,39 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     public boolean includes(final T target) {
         if (isEmpty()) {
             return false;
-        } else if (this.startBoundary != BoundaryLimitType.INFINITY
-                && this.endBoundary != BoundaryLimitType.INFINITY) {
+        } else if (startBoundary != BoundaryLimitType.INFINITY
+                && endBoundary != BoundaryLimitType.INFINITY) {
             return includesInFiniteRanges(target);
-        } else if (this.endBoundary == BoundaryLimitType.INFINITY) {
+        } else if (endBoundary == BoundaryLimitType.INFINITY) {
             return includesInToInfinityRanges(target);
         } else {
-            assert this.startBoundary == BoundaryLimitType.INFINITY;
+            assert startBoundary == BoundaryLimitType.INFINITY;
             return includesInFromInfinityRanges(target);
         }
     }
 
     private boolean includesInFromInfinityRanges(final T target) {
-        if (target.compareTo(this.end) > 0) {
+        if (target.compareTo(end) > 0) {
             return false;
         }
-        return (!hasOpenEnd() || (target.compareTo(this.end) != 0));
+        return (!hasOpenEnd() || (target.compareTo(end) != 0));
     }
 
     private boolean includesInToInfinityRanges(final T target) {
-        if (target.compareTo(this.start) < 0) {
+        if (target.compareTo(start) < 0) {
             return false;
         }
-        return (!hasOpenStart() || (target.compareTo(this.start) != 0));
+        return (!hasOpenStart() || (target.compareTo(start) != 0));
     }
 
     private boolean includesInFiniteRanges(final T target) {
-        if (target.compareTo(this.start) < 0 || target.compareTo(this.end) > 0) {
+        if (target.compareTo(start) < 0 || target.compareTo(end) > 0) {
             return false;
         }
-        if (hasOpenStart() && target.compareTo(this.start) == 0) {
+        if (hasOpenStart() && target.compareTo(start) == 0) {
             return false;
         }
-        return (!hasOpenEnd() || (target.compareTo(this.end) != 0));
+        return (!hasOpenEnd() || (target.compareTo(end) != 0));
     }
 
     /**
@@ -325,7 +324,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @return true if this interval is to infinity
      */
     public boolean endsAtInfinity() {
-        return this.endBoundary == BoundaryLimitType.INFINITY;
+        return endBoundary == BoundaryLimitType.INFINITY;
     }
 
     /**
@@ -334,7 +333,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @return true if this interval is from infinity
      */
     public boolean startsAtInfinity() {
-        return this.startBoundary == BoundaryLimitType.INFINITY;
+        return startBoundary == BoundaryLimitType.INFINITY;
     }
 
     /**
@@ -345,7 +344,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     public T start() {
         Invariants.ensure(!isEmpty());
 
-        return this.start;
+        return start;
     }
 
     /**
@@ -356,7 +355,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     public T end() {
         Invariants.ensure(!isEmpty());
 
-        return this.end;
+        return end;
     }
 
     /**
@@ -392,7 +391,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @return a new interval corresponding to the expansion/contraction
      */
     public Interval<T> withStart(final T newStart) {
-        return new Interval<>(newStart, this.startBoundary, this.end, this.endBoundary);
+        return new Interval<>(newStart, startBoundary, end, endBoundary);
     }
 
     /**
@@ -405,7 +404,7 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
      * @return a new interval corresponding to the extension/contraction
      */
     public Interval<T> withEnd(final T newEnd) {
-        return new Interval<>(this.start, this.startBoundary, newEnd, this.endBoundary);
+        return new Interval<>(start, startBoundary, newEnd, endBoundary);
     }
 
     /**
@@ -439,12 +438,12 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     public boolean hasOpenEnd() {
-        return this.endBoundary == BoundaryLimitType.OPEN
+        return endBoundary == BoundaryLimitType.OPEN
                 || endBoundary == BoundaryLimitType.INFINITY;
     }
 
     public boolean hasOpenStart() {
-        return this.startBoundary == BoundaryLimitType.OPEN
+        return startBoundary == BoundaryLimitType.OPEN
                 || startBoundary == BoundaryLimitType.INFINITY;
     }
 
@@ -615,11 +614,11 @@ public class Interval<T extends Serializable & Comparable<T>> implements ValueOb
     }
 
     private boolean startIsTheSameAs(final Interval<T> other) {
-        return this.startBoundary == other.startBoundary && this.start == other.start;
+        return startBoundary == other.startBoundary && start == other.start;
     }
 
     private boolean endIsTheSameAs(final Interval<T> other) {
-        return this.endBoundary == other.endBoundary && this.end == other.end;
+        return endBoundary == other.endBoundary && end == other.end;
     }
 
     /**

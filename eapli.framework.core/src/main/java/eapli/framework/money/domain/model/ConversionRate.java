@@ -23,10 +23,9 @@ package eapli.framework.money.domain.model;
 import java.time.LocalDateTime;
 import java.util.Currency;
 
-import javax.persistence.Embeddable;
-
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
 import lombok.Value;
 import lombok.experimental.Accessors;
 

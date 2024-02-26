@@ -26,14 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.LockModeType;
-import javax.persistence.NoResultException;
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
-import javax.persistence.PessimisticLockException;
-import javax.persistence.TypedQuery;
-
 import org.hibernate.exception.ConstraintViolationException;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -42,6 +34,13 @@ import eapli.framework.infrastructure.repositories.IterableRepository;
 import eapli.framework.infrastructure.repositories.LockableRepository;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.PessimisticLockException;
+import jakarta.persistence.TypedQuery;
 
 /**
  * An utility class for implementing JPA repositories. This class' methods don't
@@ -145,7 +144,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      * @return
      */
     protected Optional<T> read(final K id, final LockModeType locking) {
-        return Optional.ofNullable(this.entityManager().find(this.entityClass, id, locking));
+        return Optional.ofNullable(this.entityManager().find(entityClass, id, locking));
     }
 
     /**
@@ -357,8 +356,8 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
      * @return
      */
     protected TypedQuery<T> queryAll() {
-        final String className = this.entityClass.getSimpleName();
-        return entityManager().createQuery(SELECT_E_FROM + className + " e ", this.entityClass);
+        final String className = entityClass.getSimpleName();
+        return entityManager().createQuery(SELECT_E_FROM + className + " e ", entityClass);
     }
 
     /**
@@ -377,9 +376,9 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
     private TypedQuery<T> query(final LockModeType locking, final String where) {
         assert !StringPredicates.isNullOrEmpty(where) : QUERY_MUST_NOT_BE_NULL_OR_EMPTY;
 
-        final String className = this.entityClass.getSimpleName();
+        final String className = entityClass.getSimpleName();
         final var query = entityManager().createQuery(SELECT_E_FROM + className + " e WHERE " + where,
-                this.entityClass);
+                entityClass);
         if (locking != null) {
             query.setLockMode(locking);
         }
@@ -697,7 +696,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
 
         private JpaPagedIterator(final JpaBaseRepository<T, K, I> repository, final int pagesize) {
             this.repository = repository;
-            this.pageSize = pagesize;
+            pageSize = pagesize;
         }
 
         @Override
@@ -705,7 +704,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
             if (needsToLoadPage()) {
                 loadNextPage();
             }
-            return this.currentPage.hasNext();
+            return currentPage.hasNext();
         }
 
         @Override
@@ -713,7 +712,7 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
             if (needsToLoadPage()) {
                 loadNextPage();
             }
-            return this.currentPage.next();
+            return currentPage.next();
         }
 
         @Override
@@ -722,14 +721,14 @@ public class JpaBaseRepository<T, K, I> extends JpaAbstractRepository
         }
 
         private void loadNextPage() {
-            final List<T> page = this.repository.page(++this.currentPageNumber, this.pageSize);
-            this.currentPage = page.iterator();
+            final List<T> page = repository.page(++currentPageNumber, pageSize);
+            currentPage = page.iterator();
         }
 
         private boolean needsToLoadPage() {
             // either we do not have an iterator yet or we have reached the end
             // of the (current) iterator
-            return this.currentPage == null || !this.currentPage.hasNext();
+            return currentPage == null || !currentPage.hasNext();
         }
     }
 }

@@ -26,14 +26,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.util.Factory;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -135,7 +134,7 @@ public class Text implements ValueObject, StringMixin {
      *
      * @author Paulo Gandra de Sousa
      */
-    private class WordCounterCollector {
+    private static class WordCounterCollector {
         Map<String, Integer> freq = new HashMap<>();
 
         public void merge(final String word) {

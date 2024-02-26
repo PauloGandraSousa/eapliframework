@@ -20,10 +20,9 @@
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
 import eapli.framework.domain.repositories.TransactionalContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 /**
  * An utility class for implementing JPA repositories not running in containers.
@@ -80,7 +79,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
         if (!(txCtx instanceof JpaTransactionalContext)) {
             throw new IllegalArgumentException();
         }
-        this.txContext = (JpaTransactionalContext) txCtx;
+        txContext = (JpaTransactionalContext) txCtx;
     }
 
     @Override

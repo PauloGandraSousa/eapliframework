@@ -22,13 +22,13 @@ package eapli.framework.infrastructure.repositories.impl.springdata;
 
 import java.util.Optional;
 
-import javax.persistence.LockModeType;
-
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;
+
+import jakarta.persistence.LockModeType;
 
 /**
  * Base interface for Spring Data repositories with pessimistic lock support. Note that this

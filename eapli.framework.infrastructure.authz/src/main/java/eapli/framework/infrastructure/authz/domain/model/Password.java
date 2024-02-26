@@ -23,14 +23,13 @@ package eapli.framework.infrastructure.authz.domain.model;
 import java.io.Serializable;
 import java.util.Optional;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
 /**

@@ -26,16 +26,6 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eapli.framework.domain.model.AggregateRoot;
@@ -49,6 +39,15 @@ import eapli.framework.validations.Invariants;
 import eapli.framework.validations.Preconditions;
 import eapli.framework.visitor.Visitable;
 import eapli.framework.visitor.Visitor;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Version;
 
 /**
  * An application user. Objects are constructed thru {@link SystemUserBuilder}
@@ -335,7 +334,7 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
         }
 
         active = true;
-        this.deactivatedOn = null;
+        deactivatedOn = null;
         invalidateResetToken();
     }
 

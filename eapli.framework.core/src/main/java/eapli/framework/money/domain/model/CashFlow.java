@@ -24,9 +24,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.function.UnaryOperator;
 
-import javax.persistence.Embeddable;
-import javax.xml.bind.annotation.XmlAttribute;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -34,6 +31,8 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
 import eapli.framework.time.domain.model.TemporalEvent;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -84,7 +83,7 @@ public class CashFlow
         Preconditions.noneNull(amount, on);
 
         this.amount = amount;
-        this.happeneddOn = on;
+        happeneddOn = on;
     }
 
     /**

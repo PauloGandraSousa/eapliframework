@@ -28,16 +28,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.IterableRepository;
 import eapli.framework.infrastructure.repositories.LockableRepository;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 /**
  * A JPA repository implementation to handle transactions, for use with applications <em>not

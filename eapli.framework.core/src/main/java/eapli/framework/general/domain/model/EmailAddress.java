@@ -22,8 +22,6 @@ package eapli.framework.general.domain.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
@@ -32,6 +30,7 @@ import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Check;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
 /**

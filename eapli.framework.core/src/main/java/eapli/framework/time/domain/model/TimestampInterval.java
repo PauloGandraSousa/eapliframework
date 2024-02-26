@@ -22,16 +22,15 @@ package eapli.framework.time.domain.model;
 
 import java.util.Calendar;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -67,8 +66,8 @@ public class TimestampInterval implements ValueObject {
     public TimestampInterval(final Calendar start, final Calendar end) {
         Preconditions.noneNull(start, end);
 
-        this.intervalStart = start;
-        this.intervalEnd = end;
+        intervalStart = start;
+        intervalEnd = end;
         period = new TimeInterval(start, end);
     }
 

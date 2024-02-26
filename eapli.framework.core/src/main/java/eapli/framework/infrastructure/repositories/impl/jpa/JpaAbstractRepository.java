@@ -20,12 +20,12 @@
  */
 package eapli.framework.infrastructure.repositories.impl.jpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceUnit;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 /**
  * A utility class for implementing simple agnostic JPA repositories, that is,
@@ -49,63 +49,63 @@ import javax.persistence.TypedQuery;
  */
 public abstract class JpaAbstractRepository {
 
-	@PersistenceUnit
-	private EntityManagerFactory emFactory;
+    @PersistenceUnit
+    private EntityManagerFactory emFactory;
 
-	@PersistenceContext
-	private EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-	/**
-	 * Constructor.
-	 */
-	protected JpaAbstractRepository() {
-	}
+    /**
+     * Constructor.
+     */
+    protected JpaAbstractRepository() {
+    }
 
-	/**
-	 * Provides access to the underlying entity manager factory. In principle,
-	 * derived classes should not need to use this method. neither override it.
-	 *
-	 * @return
-	 */
-	protected EntityManagerFactory entityManagerFactory() {
-		return emFactory;
-	}
+    /**
+     * Provides access to the underlying entity manager factory. In principle,
+     * derived classes should not need to use this method. neither override it.
+     *
+     * @return
+     */
+    protected EntityManagerFactory entityManagerFactory() {
+        return emFactory;
+    }
 
-	/**
-	 * Provides access to the underlying entity manager. In principle, derived
-	 * classes should not need to use this method. neither override it.
-	 *
-	 * @return
-	 */
-	protected EntityManager entityManager() {
-		if (entityManager == null || !entityManager.isOpen()) {
-			entityManager = entityManagerFactory().createEntityManager();
-		}
-		return entityManager;
-	}
+    /**
+     * Provides access to the underlying entity manager. In principle, derived
+     * classes should not need to use this method. neither override it.
+     *
+     * @return
+     */
+    protected EntityManager entityManager() {
+        if (entityManager == null || !entityManager.isOpen()) {
+            entityManager = entityManagerFactory().createEntityManager();
+        }
+        return entityManager;
+    }
 
-	/**
-	 * Allows to create a typed query (SELECT, INSERT, UPDATE, DELETE) in case the
-	 * {@code match*()} family of methods is not enough.
-	 *
-	 * @param <R>
-	 * @param jpql
-	 * @param classz
-	 * @return
-	 */
-	protected <R> TypedQuery<R> createQuery(final String jpql, final Class<R> classz) {
-		return entityManager().createQuery(jpql, classz);
-	}
+    /**
+     * Allows to create a typed query (SELECT, INSERT, UPDATE, DELETE) in case the
+     * {@code match*()} family of methods is not enough.
+     *
+     * @param <R>
+     * @param jpql
+     * @param classz
+     * @return
+     */
+    protected <R> TypedQuery<R> createQuery(final String jpql, final Class<R> classz) {
+        return entityManager().createQuery(jpql, classz);
+    }
 
-	/**
-	 * Creates a native query.
-	 *
-	 * @param <R>
-	 * @param sql
-	 * @param classz
-	 * @return
-	 */
-	protected <R> Query createNativeQuery(final String sql, final Class<R> classz) {
-		return entityManager().createNativeQuery(sql, classz);
-	}
+    /**
+     * Creates a native query.
+     *
+     * @param <R>
+     * @param sql
+     * @param classz
+     * @return
+     */
+    protected <R> Query createNativeQuery(final String sql, final Class<R> classz) {
+        return entityManager().createNativeQuery(sql, classz);
+    }
 }

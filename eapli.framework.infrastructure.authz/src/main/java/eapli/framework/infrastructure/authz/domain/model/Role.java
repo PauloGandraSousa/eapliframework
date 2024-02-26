@@ -25,10 +25,9 @@ package eapli.framework.infrastructure.authz.domain.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
-
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
 /**

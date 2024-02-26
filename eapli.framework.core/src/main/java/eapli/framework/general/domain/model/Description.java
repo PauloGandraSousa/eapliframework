@@ -22,16 +22,15 @@ package eapli.framework.general.domain.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.xml.bind.annotation.XmlAttribute;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.functional.Either;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.validations.CheckIf;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import lombok.EqualsAndHashCode;
 
 /**

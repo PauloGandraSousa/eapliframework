@@ -22,19 +22,18 @@ package eapli.framework.infrastructure.pubsub.impl.simplepersistent.model;
 
 import java.util.Calendar;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * A record of consumption of one event.

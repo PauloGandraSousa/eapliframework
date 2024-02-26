@@ -22,11 +22,10 @@ package eapli.framework.domain.events;
 
 import java.util.Calendar;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import eapli.framework.time.util.CurrentTimeCalendars;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * Base class for domain events.
@@ -35,40 +34,40 @@ import eapli.framework.validations.Preconditions;
  */
 public abstract class DomainEventBase implements DomainEvent {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private final Calendar occuredAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private final Calendar occuredAt;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private final Calendar registeredAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private final Calendar registeredAt;
 
-	/**
-	 * Constructs the object registering its occurrence at the current instant.
-	 */
-	protected DomainEventBase() {
-		occuredAt = registeredAt = CurrentTimeCalendars.now();
-	}
+    /**
+     * Constructs the object registering its occurrence at the current instant.
+     */
+    protected DomainEventBase() {
+        occuredAt = registeredAt = CurrentTimeCalendars.now();
+    }
 
-	/**
-	 * Constructs the object registering its occurrence at the specified instant.
-	 *
-	 * @param occuredAt
-	 */
-	protected DomainEventBase(final Calendar occuredAt) {
-		Preconditions.nonNull(occuredAt);
+    /**
+     * Constructs the object registering its occurrence at the specified instant.
+     *
+     * @param occuredAt
+     */
+    protected DomainEventBase(final Calendar occuredAt) {
+        Preconditions.nonNull(occuredAt);
 
-		this.occuredAt = occuredAt;
-		registeredAt = CurrentTimeCalendars.now();
-	}
+        this.occuredAt = occuredAt;
+        registeredAt = CurrentTimeCalendars.now();
+    }
 
-	@Override
-	public Calendar occurredAt() {
-		return occuredAt;
-	}
+    @Override
+    public Calendar occurredAt() {
+        return occuredAt;
+    }
 
-	@Override
-	public Calendar registeredAt() {
-		return registeredAt;
-	}
+    @Override
+    public Calendar registeredAt() {
+        return registeredAt;
+    }
 }

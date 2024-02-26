@@ -22,10 +22,11 @@ package eapli.framework.strings;
 
 import java.util.Currency;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * An utility for converting {@link java.util.Currency} objects to an XML string value with the country code and back.
+ * An utility for converting {@link java.util.Currency} objects to an XML string value with the
+ * country code and back.
  *
  * @author Paulo Gandra Sousa 18/05/2020
  *
@@ -33,12 +34,12 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 public class XmlCurrencyAdapter extends XmlAdapter<String, Currency> {
 
     @Override
-    public Currency unmarshal(String currencyCode) throws Exception {
+    public Currency unmarshal(final String currencyCode) throws Exception {
         return Currency.getInstance(currencyCode);
     }
 
     @Override
-    public String marshal(Currency v) throws Exception {
+    public String marshal(final Currency v) throws Exception {
         return v.getCurrencyCode();
     }
 }

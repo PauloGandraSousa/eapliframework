@@ -22,19 +22,18 @@ package eapli.framework.time.domain.model;
 
 import java.util.Calendar;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -73,9 +72,9 @@ public class DateInterval implements ValueObject {
     public DateInterval(final Calendar start, final Calendar end) {
         Preconditions.noneNull(start, end);
 
-        this.dateStart = Calendars.dateOf(start);
-        this.dateEnd = Calendars.dateOf(end);
-        period = new TimeInterval(this.dateStart, this.dateEnd);
+        dateStart = Calendars.dateOf(start);
+        dateEnd = Calendars.dateOf(end);
+        period = new TimeInterval(dateStart, dateEnd);
     }
 
     /**
@@ -86,9 +85,9 @@ public class DateInterval implements ValueObject {
     public DateInterval(final Calendar start) {
         Preconditions.nonNull(start);
 
-        this.dateStart = Calendars.dateOf(start);
+        dateStart = Calendars.dateOf(start);
         dateEnd = null;
-        period = new TimeInterval(this.dateStart);
+        period = new TimeInterval(dateStart);
     }
 
     protected DateInterval() {

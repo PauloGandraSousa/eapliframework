@@ -22,15 +22,14 @@ package eapli.framework.infrastructure.repositories.impl.jpa;
 
 import java.util.Map;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.OptimisticLockException;
-import javax.persistence.RollbackException;
-
 import org.hibernate.exception.ConstraintViolationException;
 
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.RollbackException;
 
 /**
  * An utility class for implementing JPA repositories not running in containers and not relying on

@@ -27,10 +27,6 @@ import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.stream.Collector;
 
-import javax.persistence.Embeddable;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -38,6 +34,9 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.FormattedString;
 import eapli.framework.strings.XmlCurrencyAdapter;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * A money value (amount and currency) with a precision of <b>two</b> decimals.
