@@ -35,7 +35,7 @@ import jakarta.persistence.Persistence;
 
 /**
  * A utility class for providing transactional context to JPA repositories not running in
- * containers. As such, this class creates its own {@link javax.persistence.EntityManagerFactory
+ * containers. As such, this class creates its own {@link jakarta.persistence.EntityManagerFactory
  * EntityManagerFactory} instead of using an injected EMF by the container.
  *
  * @author Paulo Gandra Sousa
