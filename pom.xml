@@ -23,6 +23,7 @@
 
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.release>17</maven.compiler.release>
 
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
 		<sonar.exclusions>src/main/java/**/*/package-info.java</sonar.exclusions>
