@@ -20,7 +20,7 @@ Paulo Gandra de Sousa [pag@isep.ipp.pt](emailto:pag@isep.ipp.pt) / [pagsousa@gma
 
 ## License and copyright
 
-Copyright (c) 2013-2023 the original author or authors.
+Copyright (c) 2013-2024 the original author or authors.
 
 MIT License
 
