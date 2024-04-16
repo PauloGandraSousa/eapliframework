@@ -6,7 +6,7 @@
 	<artifactId>eapli.framework.infrastructure.authz</artifactId>
 	<packaging>jar</packaging>
 	<name>eapli.framework.infrastructure.authz</name>
-	<version>21.0.0</version>
+	<version>21.1.0</version>
 
 	<parent>
 		<groupId>eapli</groupId>

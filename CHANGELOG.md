@@ -1,6 +1,24 @@
 # EAPLI Framework Changelog
 
-## v23.0.0-SNAPSHOT
+## SNAPSHOT
+
+### 21.1.0 [Authz]
+
+#### What's new
+
+- `SystemUserBuilder.withEmailAsUsername` helper method to use the email address as username
+
+#### What's changed
+
+- n.a.
+
+## v24.0.0_RELEASE
+
+- upgrade to spring boot 3
+
+## v23.0.0_RELEASE
+
+- upgrade to JDK 17
 
 ### 23.0.0 [CORE]
 
@@ -20,7 +38,7 @@
 - removed method `CashFlow.merge` 
 
 
-## v22.2.0_RELEASE
+## v22.3.0_RELEASE
 
 *note* This was supposed to be version 22.0.0 but due to a typo was published as 22.2.0
 
