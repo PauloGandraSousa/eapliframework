@@ -35,36 +35,36 @@ import eapli.framework.time.util.CurrentTimeCalendars;
  *
  */
 public class SystemUserActivateDeactivateTest {
-	private SystemUser instance;
+	private SystemUser subject;
 
 	@Before
 	public void setUp() throws Exception {
-		instance = TestDataSubjects.dummyUser("abc");
+		subject = TestDataSubjects.dummyUser("abc");
 	}
 
 	@Test
 	public void ensureAfterCreationUserIsActive() {
-		assertTrue(instance.isActive());
+		assertTrue(subject.isActive());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void ensureCannotDeactivateAnInactiveUser() {
 		try {
-			instance.deactivate(CurrentTimeCalendars.now());
+			subject.deactivate(CurrentTimeCalendars.now());
 		} catch (@SuppressWarnings("unused") final Exception e) {
 			fail("something stange just happened. we are only interested in catching the exception on the second call to deactivate");
 		}
-		instance.deactivate(CurrentTimeCalendars.now());
+		subject.deactivate(CurrentTimeCalendars.now());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void ensureCannotDeactivatePriorToCreationDate() {
-		instance.deactivate(CurrentTimeCalendars.yesterday());
+		subject.deactivate(CurrentTimeCalendars.yesterday());
 	}
 
 	@Test
 	public void ensureAfterDeactivationUserIsInactive() {
-		instance.deactivate(CurrentTimeCalendars.now());
-		assertFalse(instance.isActive());
+		subject.deactivate(CurrentTimeCalendars.now());
+		assertFalse(subject.isActive());
 	}
 }

@@ -43,177 +43,229 @@ import eapli.framework.validations.Preconditions;
  *
  * <p>
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
- * interface; it acts as a Builder (GoF). For a class such as {@link SystemUser} there is not really
- * a need for a builder
- * and a simple factory or even the constructor would suffice.
+ * interface; it acts as a Builder (GoF). For a class such as {@link SystemUser}
+ * there is not really a need for a builder and a simple factory or even the
+ * constructor would suffice.
  */
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
-    private static final Logger LOGGER = LogManager.getLogger(SystemUserBuilder.class);
+	private static final Logger LOGGER = LogManager.getLogger(SystemUserBuilder.class);
 
-    private Username username;
-    private Password password;
-    private Name name;
-    private EmailAddress email;
-    private Calendar createdOn;
-    private final RoleSet roles;
+	private Username username;
+	private Password password;
+	private Name name;
+	private EmailAddress email;
+	private Calendar createdOn;
+	private final RoleSet roles;
 
-    private final PasswordPolicy policy;
-    private final PasswordEncoder encoder;
+	private final PasswordPolicy policy;
+	private final PasswordEncoder encoder;
 
-    public SystemUserBuilder(final PasswordPolicy policy, final PasswordEncoder encoder) {
-        this.policy = policy;
-        this.encoder = encoder;
-        roles = new RoleSet();
-    }
+	/**
+	 * 
+	 * @param policy
+	 * @param encoder
+	 */
+	public SystemUserBuilder(final PasswordPolicy policy, final PasswordEncoder encoder) {
+		Preconditions.noneNull(policy, encoder);
 
-    /**
-     * Helper for the most common and mandatory properties of a SystemUser
-     *
-     * @param userName
-     * @param password
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @return this builder
-     */
-    public SystemUserBuilder with(final String userName, final String password,
-            final String firstName,
-            final String lastName, final String email) {
-        withUsername(userName);
-        withPassword(password);
-        withName(firstName, lastName);
-        withEmail(email);
-        return this;
-    }
+		this.policy = policy;
+		this.encoder = encoder;
+		roles = new RoleSet();
+	}
 
-    /**
-     * Helper for the most common and mandatory properties of a SystemUser. Note
-     * that {@code password} is assumed to be already validated and encoded.
-     *
-     * @param username
-     * @param password
-     * @param name
-     * @param email
-     * @return this builder
-     */
-    public SystemUserBuilder with(final Username username, final Password password, final Name name,
-            final EmailAddress email) {
-        withUsername(username);
-        withPassword(password);
-        withName(name);
-        withEmail(email);
-        return this;
-    }
+	/**
+	 * Helper for the most common and mandatory properties of a SystemUser.
+	 *
+	 * @param userName
+	 * @param password
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @return this builder
+	 */
+	public SystemUserBuilder with(final String userName, final String password, final String firstName,
+			final String lastName, final String email) {
+		withUsername(userName);
+		withPassword(password);
+		withName(firstName, lastName);
+		withEmail(email);
+		return this;
+	}
 
-    public SystemUserBuilder withUsername(final String username) {
-        this.username = Username.valueOf(username);
-        return this;
-    }
+	/**
+	 * Helper for the most common and mandatory properties of a SystemUser. Note
+	 * that {@code password} is assumed to be already validated and encoded.
+	 *
+	 * @param username
+	 * @param password
+	 * @param name
+	 * @param email
+	 * @return this builder
+	 */
+	public SystemUserBuilder with(final Username username, final Password password, final Name name,
+			final EmailAddress email) {
+		withUsername(username);
+		withPassword(password);
+		withName(name);
+		withEmail(email);
+		return this;
+	}
 
-    public SystemUserBuilder withUsername(final Username username) {
-        this.username = username;
-        return this;
-    }
+	/**
+	 * Sets up the builder for the most common properties when we want to use the
+	 * email as the username. Helper for the most common and mandatory properties of
+	 * a SystemUser. Note that {@code password} is assumed to be already validated
+	 * and encoded.
+	 *
+	 * @param email
+	 * @param password
+	 * @param name
+	 * @return this builder
+	 */
+	public SystemUserBuilder with(final EmailAddress email, final Password password, final Name name) {
+		withEmailAsUsername(email);
+		withPassword(password);
+		withName(name);
+		return this;
+	}
 
-    /**
-     * Sets the password of the user <strong>performing</strong> policy
-     * enforcement and encoding. If the password does not meet the requirements
-     * of the policy, an {@code IllegalArgumentException} is thrown.
-     *
-     * @param rawPassword
-     * @throws IllegalArgumentException
-     * @return this builder
-     */
-    public SystemUserBuilder withPassword(final String rawPassword) {
-        password = Password.encodedAndValid(rawPassword, policy, encoder)
-                .orElseThrow(IllegalArgumentException::new);
-        return this;
-    }
+	/**
+	 * Sets the username of the user.
+	 * 
+	 * @see #withEmailAsUsername(String)
+	 * @param username
+	 * @return
+	 */
+	public SystemUserBuilder withUsername(final String username) {
+		this.username = Username.valueOf(username);
+		return this;
+	}
 
-    /**
-     * Sets the password of the user. This method is mostly to be used to
-     * support the registration process where a password has already been
-     * validated and encoded.
-     *
-     * @param password
-     * @return this builder
-     */
-    public SystemUserBuilder withPassword(final Password password) {
-        Preconditions.nonNull(password);
-        this.password = password;
-        return this;
-    }
+	/**
+	 * Sets the username of the user.
+	 * 
+	 * @see #withEmailAsUsername(EmailAddress)
+	 * @param username
+	 * @return
+	 */
+	public SystemUserBuilder withUsername(final Username username) {
+		this.username = username;
+		return this;
+	}
 
-    public SystemUserBuilder withName(final String firstName, final String lastName) {
-        name = new Name(firstName, lastName);
-        return this;
-    }
+	/**
+	 * Sets the email pf the user as the username.
+	 * 
+	 * @see #withUsername(String)
+	 * @param email
+	 * @return
+	 */
+	public SystemUserBuilder withEmailAsUsername(final String email) {
+		return withUsername(email).withEmail(email);
+	}
 
-    public SystemUserBuilder withName(final Name name) {
-        this.name = name;
-        return this;
-    }
+	/**
+	 * Sets the email pf the user as the username.
+	 * 
+	 * @see #withUsername(Username)
+	 * @param email
+	 * @return
+	 */
+	public SystemUserBuilder withEmailAsUsername(final EmailAddress email) {
+		return withUsername(email.toString()).withEmail(email);
+	}
 
-    public SystemUserBuilder withEmail(final String email) {
-        this.email = EmailAddress.valueOf(email);
-        return this;
-    }
+	public SystemUserBuilder withEmail(final String email) {
+		this.email = EmailAddress.valueOf(email);
+		return this;
+	}
 
-    public SystemUserBuilder withEmail(final EmailAddress email) {
-        this.email = email;
-        return this;
-    }
+	public SystemUserBuilder withEmail(final EmailAddress email) {
+		this.email = email;
+		return this;
+	}
 
-    public SystemUserBuilder withRoles(final Role... onlyWithThis) {
-        for (final Role each : onlyWithThis) {
-            roles.add(new RoleAssignment(each));
-        }
-        return this;
-    }
+	/**
+	 * Sets the password of the user <strong>performing</strong> policy enforcement
+	 * and encoding. If the password does not meet the requirements of the policy,
+	 * an {@code IllegalArgumentException} is thrown.
+	 *
+	 * @param rawPassword
+	 * @throws IllegalArgumentException
+	 * @return this builder
+	 */
+	public SystemUserBuilder withPassword(final String rawPassword) {
+		password = Password.encodedAndValid(rawPassword, policy, encoder).orElseThrow(IllegalArgumentException::new);
+		return this;
+	}
 
-    public SystemUserBuilder withRole(final RoleAssignment role) {
-        roles.add(role);
-        return this;
-    }
+	/**
+	 * Sets the password of the user. This method is mostly to be used to support
+	 * the registration process where a password has already been validated and
+	 * encoded.
+	 *
+	 * @param password
+	 * @return this builder
+	 */
+	public SystemUserBuilder withPassword(final Password password) {
+		Preconditions.nonNull(password);
+		this.password = password;
+		return this;
+	}
 
-    public SystemUserBuilder createdOn(final Calendar createdOn) {
-        this.createdOn = createdOn;
-        return this;
-    }
+	public SystemUserBuilder withName(final String firstName, final String lastName) {
+		name = new Name(firstName, lastName);
+		return this;
+	}
 
-    public SystemUserBuilder withRoles(final Set<Role> someRoles) {
-        List<RoleAssignment> theRoles;
-        if (createdOn == null) {
-            theRoles = someRoles.stream().map(RoleAssignment::new).collect(Collectors.toList());
-        } else {
-            theRoles = someRoles.stream().map(rt -> new RoleAssignment(rt, createdOn))
-                    .collect(Collectors.toList());
-        }
-        roles.addAll(theRoles);
-        return this;
-    }
+	public SystemUserBuilder withName(final Name name) {
+		this.name = name;
+		return this;
+	}
 
-    public SystemUserBuilder withRoles(final RoleSet roles) {
-        this.roles.addAll(roles);
-        return this;
-    }
+	public SystemUserBuilder withRoles(final Role... onlyWithThis) {
+		for (final Role each : onlyWithThis) {
+			roles.add(new RoleAssignment(each));
+		}
+		return this;
+	}
 
-    @Override
-    public SystemUser build() {
-        // since the factory knows that all the parts are needed it could throw
-        // an exception. however, we will leave that to the constructor
-        SystemUser user;
-        if (createdOn != null) {
-            user = new SystemUser(username, password, name, email, roles, createdOn);
-        } else {
-            user = new SystemUser(username, password, name, email, roles);
-        }
-        if (LOGGER.isDebugEnabled()) {
-            final String roleLog = roles.roleTypes().toString();
-            LOGGER.debug("Creating new user [{}] {} ({} {}) with roles {}", user, username, name,
-                    email, roleLog);
-        }
-        return user;
-    }
+	public SystemUserBuilder withRole(final RoleAssignment role) {
+		roles.add(role);
+		return this;
+	}
+
+	public SystemUserBuilder createdOn(final Calendar createdOn) {
+		this.createdOn = createdOn;
+		return this;
+	}
+
+	public SystemUserBuilder withRoles(final Set<Role> someRoles) {
+		List<RoleAssignment> theRoles;
+		if (createdOn == null) {
+			theRoles = someRoles.stream().map(RoleAssignment::new).collect(Collectors.toList());
+		} else {
+			theRoles = someRoles.stream().map(rt -> new RoleAssignment(rt, createdOn)).collect(Collectors.toList());
+		}
+		roles.addAll(theRoles);
+		return this;
+	}
+
+	public SystemUserBuilder withRoles(final RoleSet roles) {
+		this.roles.addAll(roles);
+		return this;
+	}
+
+	@Override
+	public SystemUser build() {
+		// since the factory knows that all the parts are needed it could throw
+		// an exception. however, we will leave that to the constructor
+		final var user = new SystemUser(username, password, name, email, roles, createdOn);
+		if (LOGGER.isDebugEnabled()) {
+			final var roleLog = roles.roleTypes().toString();
+			LOGGER.debug("Creating new user [{}] {} ({} {}) with roles {}", user, username, name, email, roleLog);
+		}
+		return user;
+	}
 }

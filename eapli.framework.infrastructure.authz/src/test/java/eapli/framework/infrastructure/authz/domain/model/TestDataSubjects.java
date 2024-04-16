@@ -25,14 +25,18 @@ package eapli.framework.infrastructure.authz.domain.model;
  */
 final class TestDataSubjects {
 
-    public static Password dummyPass(final String pass) {
-        return Password.encodedAndValid(pass, new NilPasswordPolicy(), new PlainTextEncoder())
-                .orElseThrow(IllegalStateException::new);
-    }
+	public static Password dummyPass(final String pass) {
+		return Password.encodedAndValid(pass, new NilPasswordPolicy(), new PlainTextEncoder())
+				.orElseThrow(IllegalStateException::new);
+	}
 
-    public static SystemUser dummyUser(final String username, final Role... roles) {
-        // should we load from spring context?
-        final SystemUserBuilder userBuilder = new SystemUserBuilder(new NilPasswordPolicy(), new PlainTextEncoder());
-        return userBuilder.with(username, "duMMy1", "dummy", "dummy", "a@b.ro").withRoles(roles).build();
-    }
+	public static SystemUser dummyUser(final String username, final Role... roles) {
+		// should we load from spring context?
+		final var userBuilder = new SystemUserBuilder(new NilPasswordPolicy(), new PlainTextEncoder());
+		return userBuilder.with(username, "duMMy1", "dummy", "dummy", "a@b.ro").withRoles(roles).build();
+	}
+
+	public static SystemUser dummy1() {
+		return dummyUser("dummy1", Role.valueOf("R"));
+	}
 }

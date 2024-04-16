@@ -27,8 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,85 +38,78 @@ import eapli.framework.time.util.CurrentTimeCalendars;
  * @author Paulo Gandra de Sousa
  */
 class SystemUserTest {
-    private static final Username USERNAME = Username.valueOf("username");
-    private static final EmailAddress ANTONIO_AT_SILVA_DOT_COM = EmailAddress.valueOf("antonio@silva.com");
-    private static final Name ANTONIO_SILVA = Name.valueOf("Ant", "Silva");
-    private static final String PASSWORD1 = "Password1";
-    private static final Password DUMMY_PASS = TestDataSubjects.dummyPass(PASSWORD1);
-    private SystemUser instance;
-    private Calendar dateOfCreation;
+	private static final Username USERNAME = Username.valueOf("username");
+	private static final EmailAddress ANTONIO_AT_SILVA_DOT_COM = EmailAddress.valueOf("antonio@silva.com");
+	private static final Name ANTONIO_SILVA = Name.valueOf("Ant", "Silva");
+	private static final String PASSWORD1 = "Password1";
+	private static final Password DUMMY_PASS = TestDataSubjects.dummyPass(PASSWORD1);
+	private SystemUser instance;
+	private Calendar dateOfCreation;
 
-    @BeforeEach
-    void setUp() throws Exception {
-        dateOfCreation = CurrentTimeCalendars.now();
-        instance = new SystemUser(USERNAME, DUMMY_PASS,
-                ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM, new HashSet<>(), dateOfCreation);
-    }
+	@BeforeEach
+	void setUp() throws Exception {
+		dateOfCreation = CurrentTimeCalendars.now();
+		instance = new SystemUser(USERNAME, DUMMY_PASS, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM, new RoleSet(),
+				dateOfCreation);
+	}
 
-    @Test
-    void ensureMustHaveUsername() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
+	@Test
+	void ensureMustHaveUsername() {
+		final var roles = new RoleSet();
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(null, DUMMY_PASS, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM, roles));
-    }
+		assertThrows(IllegalArgumentException.class,
+				() -> new SystemUser(null, DUMMY_PASS, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM, roles, null));
+	}
 
-    @Test
-    void ensureMustHavePassword() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
+	@Test
+	void ensureMustHavePassword() {
+		final var roles = new RoleSet();
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(USERNAME, null, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM,
-                        roles));
-    }
+		assertThrows(IllegalArgumentException.class,
+				() -> new SystemUser(USERNAME, null, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM, roles, null));
+	}
 
-    @Test
-    void ensureMustHaveName() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
+	@Test
+	void ensureMustHaveName() {
+		final var roles = new RoleSet();
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(USERNAME, DUMMY_PASS, null, ANTONIO_AT_SILVA_DOT_COM, roles));
-    }
+		assertThrows(IllegalArgumentException.class,
+				() -> new SystemUser(USERNAME, DUMMY_PASS, null, ANTONIO_AT_SILVA_DOT_COM, roles, null));
+	}
 
-    @Test
-    void ensureMustHaveEmail() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
+	@Test
+	void ensureMustHaveEmail() {
+		final var roles = new RoleSet();
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(USERNAME, DUMMY_PASS, ANTONIO_SILVA, null, roles));
-    }
+		assertThrows(IllegalArgumentException.class,
+				() -> new SystemUser(USERNAME, DUMMY_PASS, ANTONIO_SILVA, null, roles, null));
+	}
 
-    @Test
-    void ensureMustHaveDateOfCreation() {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(Role.valueOf("R"));
+	@Test
+	void ensureUsernameCanBeEmail() {
+		final var roles = new RoleSet();
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new SystemUser(USERNAME, DUMMY_PASS, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM,
-                        roles, null));
-    }
+		assertNotNull(new SystemUser(Username.valueOf("a@b.com"), DUMMY_PASS, ANTONIO_SILVA, ANTONIO_AT_SILVA_DOT_COM,
+				roles, null));
+	}
 
-    @Test
-    void ensureDateOfCreationIsSameAsCreatedOn() {
-        assertEquals(dateOfCreation, instance.createdOn());
-    }
+	@Test
+	void ensureDateOfCreationIsSameAsCreatedOn() {
+		assertEquals(dateOfCreation, instance.createdOn());
+	}
 
-    @Test
-    void ensureHasCreatedOn() {
-        assertNotNull(instance.createdOn());
-    }
+	@Test
+	void ensureHasCreatedOn() {
+		assertNotNull(instance.createdOn());
+	}
 
-    @Test
-    void ensurePasswordMatches() {
-        assertTrue(instance.passwordMatches(PASSWORD1, new PlainTextEncoder()));
-    }
+	@Test
+	void ensurePasswordMatches() {
+		assertTrue(instance.passwordMatches(PASSWORD1, new PlainTextEncoder()));
+	}
 
-    @Test
-    void ensurePasswordDoesntMatch() {
-        assertFalse(instance.passwordMatches(PASSWORD1 + "xpto", new PlainTextEncoder()));
-    }
+	@Test
+	void ensurePasswordDoesntMatch() {
+		assertFalse(instance.passwordMatches(PASSWORD1 + "xpto", new PlainTextEncoder()));
+	}
 }

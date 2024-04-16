@@ -28,9 +28,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,8 +60,9 @@ public class SystemUserRolesTest {
 
 	@Test
 	public void ensureCanHaveNoRole() {
-		final Set<Role> roles = new HashSet<>();
-		final SystemUser newUser = new SystemUser(Username.valueOf("username"),
+		final var roles = new RoleSet();
+
+		final var newUser = new SystemUser(Username.valueOf("username"),
 				Password.encodedAndValid(PASSWORD1, new NilPasswordPolicy(), new PlainTextEncoder())
 						.orElseThrow(IllegalStateException::new),
 				Name.valueOf("Ant", "Silva"), EmailAddress.valueOf("a@b.co"), roles, CurrentTimeCalendars.now());
@@ -85,7 +83,7 @@ public class SystemUserRolesTest {
 
 	@Test
 	public void ensureAssignRoleAddsRole() {
-		final int nRoles = subject.roleTypes().size();
+		final var nRoles = subject.roleTypes().size();
 		subject.assignToRole(ROLE_R2);
 		assertEquals(nRoles + 1, subject.roleTypes().size());
 	}
