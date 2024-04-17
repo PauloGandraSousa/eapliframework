@@ -47,8 +47,9 @@ import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.
  * This class is just for demonstration purposes. you should consider using a
  * true pub/sub mechanism such as message queueing instead of this class.
  * <p>
- * This class is prepared to be used by Spring Dependency Injection. The client application must
- * enable spring scheduling thru the use of <code>@EnableScheduling</code>
+ * This class is prepared to be used by Spring Dependency Injection. The client
+ * application must enable spring scheduling thru the use of
+ * <code>@EnableScheduling</code>
  *
  * @author Paulo Gandra de Sousa
  *
@@ -57,124 +58,125 @@ import eapli.framework.infrastructure.pubsub.impl.simplepersistent.repositories.
 @Component
 public class SimplePersistentPublisherDispatcher implements EventDispatcher, EventPublisher {
 
-    private static final Logger LOGGER = LogManager.getLogger(SimplePersistentPublisherDispatcher.class);
+	private static final Logger LOGGER = LogManager.getLogger(SimplePersistentPublisherDispatcher.class);
 
-    private final EventRecordRepository eventRepo;
+	private final EventRecordRepository eventRepo;
 
-    private final EventConsumptionRepository consumptionRepo;
+	private final EventConsumptionRepository consumptionRepo;
 
-    // reuse in process dispatcher
-    private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
+	// reuse in process dispatcher
+	private final EventDispatcher inprocDispatcher = InProcessPubSub.dispatcher();
 
-    // reuse in process publisher
-    private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
+	// reuse in process publisher
+	private final EventPublisher inprocPublisher = InProcessPubSub.publisher();
 
-    /**
-     * Identify the consumer application instance. useful if you have multiple
-     * instances of the same application and want to dispatch events to all of them.
-     */
-    @Value("${eapli.framework.pubsub.instanceKey}")
-    private String instanceKey;
+	/**
+	 * Identify the consumer application instance. useful if you have multiple
+	 * instances of the same application and want to dispatch events to all of them.
+	 */
+	@Value("${eapli.framework.pubsub.instanceKey}")
+	private String instanceKey;
 
-    /**
-     * Interval (in milliseconds) between poolings to the event store.
-     */
-    @Value("${eapli.framework.pubsub.poolInterval}")
-    private int poolInterval;
+	/**
+	 * Interval (in milliseconds) between poolings to the event store.
+	 */
+	@Value("${eapli.framework.pubsub.poolInterval}")
+	private int poolInterval;
 
-    @Autowired
-    public SimplePersistentPublisherDispatcher(final EventRecordRepository eventRepo,
-            final EventConsumptionRepository consumptionRepo) {
-        this.eventRepo = eventRepo;
-        this.consumptionRepo = consumptionRepo;
-    }
+	@Autowired
+	public SimplePersistentPublisherDispatcher(final EventRecordRepository eventRepo,
+			final EventConsumptionRepository consumptionRepo) {
+		this.eventRepo = eventRepo;
+		this.consumptionRepo = consumptionRepo;
+	}
 
-    /**
-     * Helper method for scenarios without Spring
-     *
-     * @param instanceKey
-     */
-    /* package */void setInstanceKey(final String instanceKey) {
-        this.instanceKey = instanceKey;
-    }
+	/**
+	 * Helper method for scenarios without Spring
+	 *
+	 * @param instanceKey
+	 */
+	/* package */void setInstanceKey(final String instanceKey) {
+		this.instanceKey = instanceKey;
+	}
 
-    /**
-     * This method is public but "not published" - it should never be
-     * called directly from client code.
-     * <p>
-     * The method needs to be public due to the use of the
-     * {@link org.springframework.transaction.annotation.Transactional Transactional} annotation.
-     *
-     * @return <code>true</code>
-     */
-    @Transactional
-    @Scheduled(fixedDelayString = "${eapli.framework.pubsub.poolInterval}")
-    public boolean pollEvents() {
-        LOGGER.trace("Polling events from database");
-        try {
-            final var notConsumedEvents = eventRepo.findNotConsumed(instanceKey);
-            notConsumedEvents.forEach(this::storeConsumptionAndPublish);
-        } catch (final Exception e) {
-            LOGGER.error("Error polling events", e);
-            // TODO we should have some kind of exception handling here, but since this an
-            // asynchronous call it is tricky...
-        }
-        return true;
-    }
+	/**
+	 * This method is public but "not published" - it should never be called
+	 * directly from client code.
+	 * <p>
+	 * The method needs to be public due to the use of the
+	 * {@link org.springframework.transaction.annotation.Transactional
+	 * Transactional} annotation.
+	 *
+	 * @return <code>true</code>
+	 */
+	@Transactional
+	@Scheduled(fixedDelayString = "${eapli.framework.pubsub.poolInterval}")
+	public boolean pollEvents() {
+		LOGGER.trace("Polling events from database");
+		try {
+			final var notConsumedEvents = eventRepo.findNotConsumed(instanceKey);
+			notConsumedEvents.forEach(this::storeConsumptionAndPublish);
+		} catch (final Exception e) {
+			LOGGER.error("Error polling events", e);
+			// TODO we should have some kind of exception handling here, but since this an
+			// asynchronous call it is tricky...
+		}
+		return true;
+	}
 
-    private void storeConsumptionAndPublish(final EventRecord eventRecord) {
-        final var entity = new EventConsumption(instanceKey, eventRecord);
-        try {
-            consumptionRepo.save(entity);
-            LOGGER.trace("Stored event consumption {}", entity);
-            inprocPublisher.publish(eventRecord.event());
-        } catch (ConcurrencyException | IntegrityViolationException e) {
-            LOGGER.error("Error storing consumption {} of event {}", entity, eventRecord, e);
-            // TODO we should have some kind of exception handling here, but since this an
-            // asynchronous call it is tricky...
-        }
-    }
+	private void storeConsumptionAndPublish(final EventRecord eventRecord) {
+		final var entity = new EventConsumption(instanceKey, eventRecord);
+		try {
+			consumptionRepo.save(entity);
+			LOGGER.trace("Stored event consumption {}", entity);
+			inprocPublisher.publish(eventRecord.event());
+		} catch (ConcurrencyException | IntegrityViolationException e) {
+			LOGGER.error("Error storing consumption {} of event {}", entity, eventRecord, e);
+			// TODO we should have some kind of exception handling here, but since this an
+			// asynchronous call it is tricky...
+		}
+	}
 
-    @Override
-    @Transactional
-    public void publish(final DomainEvent event) {
-        storeEvent(event);
+	@Override
+	@Transactional
+	public void publish(final DomainEvent event) {
+		storeEvent(event);
 
-        // we just store the event; it will be polled and marked as consumed by the scheduled taks
-        // and will be propagated in memory
-    }
+		// we just store the event; it will be polled and marked as consumed by the
+		// scheduled tasks and will be propagated in memory
+	}
 
-    private void storeEvent(final DomainEvent event) {
-        final var eventRecord = new EventRecord(instanceKey, event);
-        try {
-            eventRepo.save(eventRecord);
-            LOGGER.trace("Stored event {}", event);
-        } catch (ConcurrencyException | IntegrityViolationException e) {
-            LOGGER.error("Error storing event {}", event, e);
-            throw e;
-        }
-    }
+	private void storeEvent(final DomainEvent event) {
+		final var eventRecord = new EventRecord(instanceKey, event);
+		try {
+			eventRepo.save(eventRecord);
+			LOGGER.trace("Stored event {}", event);
+		} catch (ConcurrencyException | IntegrityViolationException e) {
+			LOGGER.error("Error storing event {}", event, e);
+			throw e;
+		}
+	}
 
-    @Override
-    public void subscribe(final EventHandler observer,
-            @SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
+	@Override
+	public void subscribe(final EventHandler observer,
+			@SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
 
-        inprocDispatcher.subscribe(observer, events);
-    }
+		inprocDispatcher.subscribe(observer, events);
+	}
 
-    @Override
-    public void unsubscribe(final EventHandler observer,
-            @SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
-        inprocDispatcher.unsubscribe(observer, events);
-    }
+	@Override
+	public void unsubscribe(final EventHandler observer,
+			@SuppressWarnings("unchecked") final Class<? extends DomainEvent>... events) {
+		inprocDispatcher.unsubscribe(observer, events);
+	}
 
-    @Override
-    public void unsubscribe(final EventHandler observer) {
-        inprocDispatcher.unsubscribe(observer);
-    }
+	@Override
+	public void unsubscribe(final EventHandler observer) {
+		inprocDispatcher.unsubscribe(observer);
+	}
 
-    @Override
-    public void shutdown() {
-        // NOP
-    }
+	@Override
+	public void shutdown() {
+		inprocDispatcher.shutdown();
+	}
 }

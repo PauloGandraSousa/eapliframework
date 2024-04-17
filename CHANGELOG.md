@@ -12,6 +12,17 @@
 
 - n.a.
 
+### 22.1.0 [PubSub]
+
+#### What's new
+
+- n.a.
+
+#### What's changed
+
+- use a thread pool for the event propagation 
+- handle shutdown of all threads
+
 ## v24.0.0_RELEASE
 
 - upgrade to spring boot 3
