@@ -1,6 +1,6 @@
 # EAPLI Framework Changelog
 
-## SNAPSHOT
+## v24.1.0_RELEASE
 
 ### 21.1.0 [Authz]
 
@@ -21,7 +21,7 @@
 #### What's changed
 
 - use a thread pool for the event propagation 
-- handle shutdown of all threads
+- fix shutdown of all threads
 
 ## v24.0.0_RELEASE
 
