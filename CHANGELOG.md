@@ -1,4 +1,16 @@
-# EAPLI Framework Changelog
+# EAPLI Framework Change log
+
+## SNAPSHOT
+
+### M.m.R [???]
+
+#### What's new
+
+- TBD
+
+#### What's changed
+
+- TBD
 
 ## v24.1.0_RELEASE
 
