@@ -14,6 +14,16 @@
 
 ## v24.2.0_RELEASE
 
+### 25.0.1 [Core]
+
+#### What's new
+
+- n.a.
+
+#### What's changed
+
+- fix TreeTemporalSeries test to properly consider the indexes
+
 ### 21.2.0 [Authz]
 
 #### What's new
