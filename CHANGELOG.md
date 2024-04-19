@@ -12,6 +12,19 @@
 
 - TBD
 
+## v24.2.0_RELEASE
+
+### 21.2.0 [Authz]
+
+#### What's new
+
+- `UserManagementService.registerNewUser` overload to use the email address as username
+- `UserManagementService.registerUser` overload to use the email address as username
+
+#### What's changed
+
+- n.a.
+
 ## v24.1.0_RELEASE
 
 ### 21.1.0 [Authz]
