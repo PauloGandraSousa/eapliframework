@@ -35,37 +35,37 @@ import org.junit.jupiter.params.provider.ValueSource;
  */
 class RandomRawPasswordTest {
 
-    @Test
-    void ensureMinLength3() {
-        assertThrows(IllegalArgumentException.class, () -> new RandomRawPassword(2));
-    }
+	@Test
+	void ensureMinLength3() {
+		assertThrows(IllegalArgumentException.class, () -> new RandomRawPassword(2));
+	}
 
-    @Test
-    void ensureDefault() {
-        final RandomRawPassword rrp = new RandomRawPassword();
+	@Test
+	void ensureDefault() {
+		final var rrp = new RandomRawPassword();
 
-        assertNotNull(rrp.toString());
-        assertTrue(rrp.toString().length() > 0);
-    }
+		assertNotNull(rrp.toString());
+		assertTrue(rrp.toString().length() > 0);
+	}
 
-    @ParameterizedTest
-    @ValueSource(ints = { 3, 4, 6, 8, 10, 24 })
-    void ensureLength(final int n) {
-        final RandomRawPassword rrp = new RandomRawPassword(n);
+	@ParameterizedTest
+	@ValueSource(ints = { 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 20, 24 })
+	void ensureLength(final int n) {
+		final var rrp = new RandomRawPassword(n);
 
-        System.out.println("Random password: " + rrp.toString());
+		System.out.println("Random password: " + rrp.toString());
 
-        assertNotNull(rrp.toString());
-        assertEquals(rrp.toString().length(), n);
-    }
+		assertNotNull(rrp.toString());
+		assertEquals(rrp.toString().length(), n);
+	}
 
-    @Test
-    void ensureOnlyHasAllowedCharacters() {
-        final int N = 124;
-        final RandomRawPassword rrp = new RandomRawPassword(N);
+	@Test
+	void ensureOnlyHasAllowedCharacters() {
+		final var N = 124;
+		final var rrp = new RandomRawPassword(N);
 
-        for (final char c : rrp.toString().toCharArray()) {
-            assertTrue(RandomRawPassword.ALLOWED_CHARS.indexOf(c) >= 0);
-        }
-    }
+		for (final char c : rrp.toString().toCharArray()) {
+			assertTrue(RandomRawPassword.ALLOWED_CHARS.indexOf(c) >= 0);
+		}
+	}
 }

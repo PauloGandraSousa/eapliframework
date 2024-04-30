@@ -45,7 +45,84 @@ import eapli.framework.validations.Preconditions;
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
  * interface; it acts as a Builder (GoF). For a class such as {@link SystemUser}
  * there is not really a need for a builder and a simple factory or even the
- * constructor would suffice.
+ * constructor would suffice, however since the user might have several roles,
+ * the builder's fluent interface might become handy.
+ * 
+ * <p>
+ * Scenario: fluent
+ * <p>
+ * 
+ * <pre>
+ * <code>
+ * PasswordPolicy policy = ...
+ * PasswordEncoder encoder = ...
+ * SystemUserBuilder builder = new SystemUserBuilder(policy, encoder);
+ * builder.withUsername("u123")
+ *        .withPassword("myPass01!")
+ *        .withName("Joe Doe")
+ *        .withEmail("joe@doe.com");
+ * SystemUser user = builder.build(); 
+ * </code>
+ * </pre>
+ * 
+ * <p>
+ * Scenario: simplified
+ * <p>
+ * 
+ * <pre>
+ * <code>
+ * PasswordPolicy policy = ...
+ * PasswordEncoder encoder = ...
+ * SystemUserBuilder builder = new SystemUserBuilder(policy, encoder);
+ * builder.with("u123", "myPass01!", "Joe Doe", "joe@doe.com");
+ * SystemUser user = builder.build(); 
+ * </code>
+ * </pre>
+ * 
+ * <p>
+ * Scenario: email as username (fluent)
+ * <p>
+ * 
+ * <pre>
+ * <code>
+ * PasswordPolicy policy = ...
+ * PasswordEncoder encoder = ...
+ * SystemUserBuilder builder = new SystemUserBuilder(policy, encoder);
+ * builder.withEmailAsUsername("joe@doe.com")
+ *        .withPassword("myPass01!")
+ *        .withName("Joe Doe");
+ * SystemUser user = builder.build(); 
+ * </code>
+ * </pre>
+ * <p>
+ * Scenario: email as username
+ * <p>
+ * 
+ * <pre>
+ * <code>
+ * PasswordPolicy policy = ...
+ * PasswordEncoder encoder = ...
+ * SystemUserBuilder builder = new SystemUserBuilder(policy, encoder);
+ * builder.with("joe@doe.com", "myPass01!", "Joe Doe");
+ * SystemUser user = builder.build(); 
+ * </code>
+ * </pre>
+ * <p>
+ * Scenario: with roles
+ * <p>
+ * 
+ * <pre>
+ * <code>
+ * PasswordPolicy policy = ...
+ * PasswordEncoder encoder = ...
+ * SystemUserBuilder builder = new SystemUserBuilder(policy, encoder);
+ * builder.with("joe@doe.com", "myPass01!", "Joe Doe")
+ * 	      .withRole(Role.valueOf("R1"))
+ * 	      .withRole(Role.valueOf("R2"))
+ * 	      .withRole(Role.valueOf("R3"));
+ * SystemUser user = builder.build(); 
+ * </code>
+ * </pre>
  */
 public class SystemUserBuilder implements DomainFactory<SystemUser> {
 
