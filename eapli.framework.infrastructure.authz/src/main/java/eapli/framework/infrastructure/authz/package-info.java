@@ -72,7 +72,7 @@
  * {@link eapli.framework.infrastructure.authz.domain.model.Password Password}
  * and {@link eapli.framework.infrastructure.authz.domain.model.Role Role}.
  * Passwords are validated according to
- * {@link eapli.framework.infrastructure.authz.application.PasswordPolicy
+ * {@link eapli.framework.infrastructure.authz.domain.model.PasswordPolicy
  * PasswordPolicy} and are encrypted according to a
  * {@link org.springframework.security.crypto.password.PasswordEncoder
  * PasswordEncoder}.
@@ -101,7 +101,7 @@
  * {@link eapli.framework.infrastructure.authz.application.AuthzRegistry
  * AuthzRegistry} will provide a singleton instance of each service. In order to
  * properly use the registry it is necessary to call its
- * {@link eapli.framework.infrastructure.authz.application.AuthzRegistry#configure(eapli.framework.infrastructure.authz.domain.repositories.UserRepository, eapli.framework.infrastructure.authz.application.PasswordPolicy, org.springframework.security.crypto.password.PasswordEncoder)
+ * {@link eapli.framework.infrastructure.authz.application.AuthzRegistry#configure(eapli.framework.infrastructure.authz.domain.repositories.UserRepository, eapli.framework.infrastructure.authz.domain.model.PasswordPolicy, org.springframework.security.crypto.password.PasswordEncoder)
  * configure}
  * method in the start of the application to inject the proper
  * {@link eapli.framework.infrastructure.authz.domain.repositories.UserRepository

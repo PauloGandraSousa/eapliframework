@@ -26,7 +26,6 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

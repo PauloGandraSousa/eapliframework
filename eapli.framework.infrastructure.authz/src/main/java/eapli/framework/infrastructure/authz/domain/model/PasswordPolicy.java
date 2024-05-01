@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.framework.infrastructure.authz.application;
+package eapli.framework.infrastructure.authz.domain.model;
 
 /**
  * Defines a password policy, e.g., at least 8 characters, one capital, one

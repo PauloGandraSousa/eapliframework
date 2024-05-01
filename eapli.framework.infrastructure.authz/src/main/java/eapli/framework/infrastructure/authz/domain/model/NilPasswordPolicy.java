@@ -23,8 +23,6 @@
  */
 package eapli.framework.infrastructure.authz.domain.model;
 
-import eapli.framework.infrastructure.authz.application.PasswordPolicy;
-
 /**
  * A password policy object to represent "no policy".
  *

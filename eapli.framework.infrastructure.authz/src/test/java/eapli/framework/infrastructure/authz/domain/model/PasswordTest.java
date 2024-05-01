@@ -33,8 +33,6 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import eapli.framework.infrastructure.authz.application.PasswordPolicy;
-
 /**
  * @author Paulo Gandra de Sousa 24/05/2019
  *

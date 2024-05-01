@@ -22,6 +22,7 @@ package eapli.framework.infrastructure.authz.application;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import eapli.framework.infrastructure.authz.domain.model.PasswordPolicy;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.util.Utility;
 import eapli.framework.validations.Invariants;
@@ -30,7 +31,7 @@ import eapli.framework.validations.Invariants;
  * Registry of all authz service objects. Helper class for scenarios without
  * spring Dependency Injection. In order to properly use the registry it is
  * necessary to call its
- * {@link AuthzRegistry#configure(eapli.framework.infrastructure.authz.domain.repositories.UserRepository, eapli.framework.infrastructure.authz.application.PasswordPolicy, org.springframework.security.crypto.password.PasswordEncoder)
+ * {@link AuthzRegistry#configure(eapli.framework.infrastructure.authz.domain.repositories.UserRepository, eapli.framework.infrastructure.authz.domain.model.PasswordPolicy, org.springframework.security.crypto.password.PasswordEncoder)
  * configure} method in the start of the application to inject the proper
  * {@link eapli.framework.infrastructure.authz.domain.repositories.UserRepository
  * UserRepository} implementation.
