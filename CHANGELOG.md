@@ -1,5 +1,17 @@
 # EAPLI Framework Change log
 
+## SNAPSHOT
+
+### M.m.R [???]
+
+#### What's new
+
+- TBD
+
+#### What's changed
+
+- TBD
+
 ## 25.0.0_RELEASE
 
 ### 22.0.0 [Authz]
@@ -11,6 +23,7 @@
 #### What's changed
 
 - class `PasswordPolicy` moved to domain layer
+- better distribution of characters for random password 
 
 ## v24.2.0_RELEASE
 
