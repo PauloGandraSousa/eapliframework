@@ -2,6 +2,17 @@
 
 ## SNAPSHOT
 
+### 25.1.0 [Core]
+
+#### What's new
+
+- `Strings.quote`
+- `Strings.unquote`
+
+#### What's changed
+
+- TBD
+
 ### M.m.R [???]
 
 #### What's new
