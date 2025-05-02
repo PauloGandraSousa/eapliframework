@@ -1,5 +1,12 @@
 # EAPLI Framework Change log
 
+## 25.2.0_RELEASE
+
+upgrade to springboot parent 3.4.5
+- core: 26.0.0
+- authz: 23.0.0
+- pubsub: 23.0.0
+
 ## 25.1.0_RELEASE
 
 ### 25.1.0 [Core]
