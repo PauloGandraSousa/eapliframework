@@ -305,6 +305,8 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 	 * @param newPassword
 	 */
 	public void changePassword(final Password newPassword) {
+		Preconditions.nonNull(newPassword);
+
 		password = newPassword;
 		invalidateResetToken();
 	}
@@ -314,7 +316,20 @@ public class SystemUser implements AggregateRoot<Username>, DTOable<GeneralDTO>,
 	}
 
 	/**
-	 * initiates the process to reset a password by generating a validation token.
+	 * Updates the general user data.
+	 * 
+	 * @param name
+	 * @param email
+	 */
+	public void changeData(final Name name, final EmailAddress email) {
+		Preconditions.noneNull(name, email);
+
+		this.name = name;
+		this.email = email;
+	}
+
+	/**
+	 * Initiates the process to reset a password by generating a validation token.
 	 *
 	 * @return the validation token to use to complete the password reset
 	 */

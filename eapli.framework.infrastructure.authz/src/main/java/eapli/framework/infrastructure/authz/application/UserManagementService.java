@@ -244,4 +244,19 @@ public class UserManagementService {
 		user.activate();
 		return userRepository.save(user);
 	}
+
+	/**
+	 * Update the user's general data.
+	 * 
+	 * @param user
+	 * @param name
+	 * @param email
+	 * @return
+	 */
+	@Transactional
+	public SystemUser changeUserData(final SystemUser user, final Name name, final EmailAddress email) {
+		user.changeData(name, email);
+		return userRepository.save(user);
+	}
+
 }

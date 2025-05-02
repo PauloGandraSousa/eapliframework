@@ -1,6 +1,6 @@
 # EAPLI Framework Change log
 
-## SNAPSHOT
+## 25.1.0_RELEASE
 
 ### 25.1.0 [Core]
 
@@ -11,13 +11,18 @@
 
 #### What's changed
 
-- TBD
+- n.a.
 
-### M.m.R [???]
+### 22.1.0 [Authz]
 
 #### What's new
 
-- TBD
+- `UserManagementService.changeUserData`
+- `SystemUser.changeData`
+
+#### What's changed
+
+- n.a.
 
 #### What's changed
 
